@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="第十六章 string类和标准模板库16.1 string 类头文件：  string：支持的是string类 string.h / cstring：　支持的是C-风格字符串的C库字符串函数  16.1.1 构造字符串string类的构造函数如下（用ctor标识，这是传统C++中构造函数的缩写，表中的NBTS（null-terminated string）标识以空字符结束的字符串——传统的C字符串">
+<meta name="keywords" content="读书笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《C++ PrimerPlus》 第十六章">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Cpp-Book-CppPrimerPlusChapter16/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="第十六章 string类和标准模板库16.1 string 类头文件：  string：支持的是string类 string.h / cstring：　支持的是C-风格字符串的C库字符串函数  16.1.1 构造字符串string类的构造函数如下（用ctor标识，这是传统C++中构造函数的缩写，表中的NBTS（null-terminated string）标识以空字符结束的字符串——传统的C字符串">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-15T02:37:09.290Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《C++ PrimerPlus》 第十六章">
+<meta name="twitter:description" content="第十六章 string类和标准模板库16.1 string 类头文件：  string：支持的是string类 string.h / cstring：　支持的是C-风格字符串的C库字符串函数  16.1.1 构造字符串string类的构造函数如下（用ctor标识，这是传统C++中构造函数的缩写，表中的NBTS（null-terminated string）标识以空字符结束的字符串——传统的C字符串">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/Cpp-Book-CppPrimerPlusChapter16/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>《C++ PrimerPlus》 第十六章 | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">131</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-linux">
+    <a href="/categories/Linux/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-面试">
+    <a href="/categories/面试/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其它">
+    <a href="/categories/其它/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其它</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">25</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-life">
+    <a href="/life/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-child"></i> <br />生活杂记</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/Cpp-Book-CppPrimerPlusChapter16/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">《C++ PrimerPlus》 第十六章
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-20 09:41:04" itemprop="dateCreated datePublished" datetime="2018-09-20T09:41:04+08:00">2018-09-20</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Cpp/" itemprop="url" rel="index"><span itemprop="name">Cpp</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">9.1k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">8 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="第十六章-string类和标准模板库"><a href="#第十六章-string类和标准模板库" class="headerlink" title="第十六章 string类和标准模板库"></a>第十六章 string类和标准模板库</h1><h2 id="16-1-string-类"><a href="#16-1-string-类" class="headerlink" title="16.1 string 类"></a>16.1 string 类</h2><p>头文件：</p>
+<ul>
+<li>string：支持的是string类</li>
+<li>string.h / cstring：　支持的是C-风格字符串的C库字符串函数</li>
+</ul>
+<h3 id="16-1-1-构造字符串"><a href="#16-1-1-构造字符串" class="headerlink" title="16.1.1 构造字符串"></a>16.1.1 构造字符串</h3><p>string类的构造函数如下（用<code>ctor</code>标识，这是传统C++中构造函数的缩写，表中的NBTS（null-terminated string）标识以空字符结束的字符串——传统的C字符串，<code>size_type</code> 是一个依赖于实现的整型，在头文件<code>string</code>中定义）：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>构造函数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>string(const char *s)</td>
+<td>将<code>string</code>对象初始化为s指向的NBTS</td>
+</tr>
+<tr>
+<td>string(size_type n, char c)</td>
+<td>创建一个包含n个元素的string对象，其中每个元素都被初始化为字符c</td>
+</tr>
+<tr>
+<td>string(const string &amp;str)</td>
+<td>将一个<code>string</code>对象初始化为<code>string</code>对象<code>str</code>（复制构造函数）</td>
+</tr>
+<tr>
+<td>string()</td>
+<td>创建一个默认的<code>string</code>对象，长度为0（默认构造函数）</td>
+</tr>
+<tr>
+<td>string(const char *, size_type n)</td>
+<td>将<code>string</code>对象初始化为s指向的NBTS的前n个字符，即使超过了NBTS的结尾</td>
+</tr>
+<tr>
+<td>template<class iter\=""> <br> string(Iter begin, Iter end)</class></td>
+<td>将<code>string</code>对象初始化为区间<code>[begin,end)</code>内的字符，其中<code>begin</code>和<code>end</code>的行为就像指针，用于指定位置，范围包括<code>begin</code>在内，但不包括<code>end</code></td>
+</tr>
+<tr>
+<td>string(const string &amp;str,  size_type pos = 0, size_type n = npos)</td>
+<td>将一个<code>stirng</code>对象初始化为对象<code>str</code>从位置<code>pos</code>开始到结尾的字符，或从<code>pos</code>开始的n个字符</td>
+</tr>
+<tr>
+<td>string(string &amp;&amp; str) noexcept</td>
+<td>C++11新增，它将一个<code>string</code>对象初始化为对象<code>str</code>，并可能修改<code>str</code>（移动构造函数）</td>
+</tr>
+<tr>
+<td>string(initializer_list<char> il)</char></td>
+<td>C++11新增，它将一个<code>string</code>对象初始化为初始化列表<code>il</code>中的字符</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>在使用构造函数时都进行了简化，即隐藏了这样一个事实：string实际上是模板具体化<code>basic_string&lt;char&gt;</code>的一个<code>typedef</code>，同时省略了与内存管理相关的参数</p>
+<h3 id="16-1-2-string类输入"><a href="#16-1-2-string类输入" class="headerlink" title="16.1.2 string类输入"></a>16.1.2 string类输入</h3><p>对于C-风格字符串，有3种方式：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">char</span> info[<span class="number">100</span>];</span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; info; <span class="comment">//read a word 遇到空格换行停止</span></span><br><span class="line"><span class="built_in">cin</span>.getline(info, <span class="number">100</span>); <span class="comment">// read a line, discard \n</span></span><br><span class="line"><span class="built_in">cin</span>.get(info, <span class="number">100</span>); <span class="comment">// read a line, leave \n in queue</span></span><br></pre></td></tr></table></figure></p>
+<p>对于string对象，有两种方式：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> stuff;</span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; stuff;  <span class="comment">// read a word</span></span><br><span class="line">getline(<span class="built_in">cin</span>, stuff);  <span class="comment">// read a line, discard \n</span></span><br></pre></td></tr></table></figure></p>
+<p>两个版本的<code>getline</code>都有一个可选参数，用于指定使用哪个字符来确定输入的边界。在功能上，它们之间主要的区别在于，<code>string</code>版本的<code>getline()</code>将自动调整目标<code>string</code>对象的大小，使之刚好能够存储输入的字符。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">char</span> fname[<span class="number">10</span>];</span><br><span class="line"><span class="built_in">string</span> lname;</span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; fname; <span class="comment">// could be a problem if input size &gt; 9 ch</span></span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; lname; <span class="comment">// can read a very,very long word</span></span><br><span class="line"><span class="built_in">cin</span>.getline(fname,<span class="number">10</span>); <span class="comment">// may truncate input</span></span><br><span class="line">getline(<span class="built_in">cin</span>, fname);  <span class="comment">// no truncation</span></span><br></pre></td></tr></table></figure></p>
+<p>在设计方面的一个区别是，读取C-风格字符串的函数是<code>istream</code>类的方法，而<code>string</code>版本是独立的函数。这就是对于C-风格字符串输入，cin是调用对象；而对于<code>string</code>对象输入，<code>cin</code>是一个函数参数的原因。这种规则也适用于<code>&lt;&lt;</code>形式：1<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">cin</span>.<span class="keyword">operator</span>&gt;&gt;(fname);</span><br><span class="line"><span class="keyword">operator</span>&gt;&gt;(<span class="built_in">cin</span>, lname);</span><br></pre></td></tr></table></figure></p>
+<p><code>string</code>类可以自动调整对象的大小，使之与输入匹配，但也存在一些限制：</p>
+<ul>
+<li>string对象的最大允许长度： 由常量<code>string::npos</code> 指定，通常是最大的<code>unsigned int</code>值</li>
+<li>程序可以使用的内存量</li>
+</ul>
+<p><code>string</code>版本的<code>getline()</code>函数从输入中读取字符，并将其存储到目标<code>string</code>中，知道发生下列三种情况之一：</p>
+<ul>
+<li>到达文件尾，在这种情况下，输入流的<code>eofbit</code>将被设置，这意味着方法<code>fail()</code>和<code>eof()</code>都将返回<code>true</code>；</li>
+<li>遇到分界字符（默认为<code>\n</code>），在这种情况下，将把分解字符从输入流中删除，但不存储它</li>
+<li>读取的字符数打到最大允许值（<code>string::npos</code>与可供分配的内存字节数中较小的一个），在这种情况下，将设置输入流的<code>failbit</code>，这意味着方法<code>fail()</code>返回<code>true</code>。</li>
+</ul>
+<h3 id="16-1-3-使用字符串"><a href="#16-1-3-使用字符串" class="headerlink" title="16.1.3 使用字符串"></a>16.1.3 使用字符串</h3><p>C++对每个关系运算符进行了重载，以便能够将<code>string</code>对象与另一个<code>string</code>对象或C-风格字符穿进行比较：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">operator&lt;(const string &amp;, const string &amp;);</span><br><span class="line">operator==(const string &amp;, const char *);</span><br><span class="line">operator!=(const char *, const string &amp;);</span><br></pre></td></tr></table></figure></p>
+<p><code>size()</code>和<code>length()</code>方法都返回字符串中的字符数，二者没有区别，前者是为提供STL兼容性添加的，后者是较早版本的<code>string</code>类使用的方法名。</p>
+<p>可以以多种不同的方式在字符串中搜索给定的子字符串或字符。下表描述是了<code>find()</code>方法的4个版本。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法原型</th>
+<th>描述　</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>size_type find(const string &amp;st ,size_type pos=0)  const</td>
+<td>从字符串的<code>pos</code>位置开始，查找子字符串<code>str</code>。如果找到，则返回该字符串首次出现时其首字符的索引；否则，返回<code>string::npos</code></td>
+</tr>
+<tr>
+<td>size_type find(const char* s, size_type pos=0) const</td>
+<td>从字符串的<code>pos</code>位置开始，查找子字符串<code>s</code>。如果找到，则返回该字符串首次出现时其首字符的索引；否则，返回<code>string::npos</code></td>
+</tr>
+<tr>
+<td>size_type find(const char *s, size_type pos=0,size_type n)</td>
+<td>从字符串的<code>pos</code>位置开始，查找<code>s</code>的前n个字符组成的子字符串。如果找到，则返回该子字符串首次出现时其首字符的索引；否则，返回<code>string::npos</code></td>
+</tr>
+<tr>
+<td>size_type find(char ch, size_type pos = 0) const</td>
+<td>从字符串的<code>pos</code>位置开始，查找字符<code>ch</code>。如果找到，则返回该字符首次出现的位置；否则，返回<code>string::npos</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>除此之外，<code>string</code>库还提供了其他相关的方法：<code>rfind()</code> ,<code>find_first_of()</code>, <code>find_last_of()</code>, <code>find_first_not_of()</code>, <code>find_last_not_of()</code>等等。</p>
+<h3 id="16-1-4-stirng类还提供了哪些功能"><a href="#16-1-4-stirng类还提供了哪些功能" class="headerlink" title="16.1.4 stirng类还提供了哪些功能"></a>16.1.4 stirng类还提供了哪些功能</h3><p>还有很多功能，具体可看p665或者附录F。</p>
+<h3 id="16-1-5-字符串种类"><a href="#16-1-5-字符串种类" class="headerlink" title="16.1.5 字符串种类"></a>16.1.5 字符串种类</h3><p>表面上看起来<code>string</code>类是基于<code>char</code>类型的，但是，实际上，<code>string</code>库是基于一个模板类的：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">CharT</span>,</span></span><br><span class="line"><span class="class">    <span class="title">class</span> <span class="title">Traits</span> = <span class="title">std</span>:</span>:char_traits&lt;CharT&gt;,</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Allocator</span> = <span class="title">std</span>:</span>:allocator&lt;CharT&gt;</span><br><span class="line">&gt; <span class="class"><span class="keyword">class</span> <span class="title">basic_string</span>;</span></span><br></pre></td></tr></table></figure></p>
+<p>模板<code>basic_string</code>有多个具体化，每个具体化都有一个<code>typedef</code>名称，如<code>string</code>、<code>wstring</code>、<code>u16string</code>等等。</p>
+<h2 id="16-2-智能指针模板类"><a href="#16-2-智能指针模板类" class="headerlink" title="16.2 智能指针模板类"></a>16.2 智能指针模板类</h2><p>智能指针是行为类似于指针的 <strong>类对象</strong> 。共有三种可以帮助管理动态内存分配的智能指针模板：</p>
+<ul>
+<li>auto_ptr</li>
+<li>unique_ptr</li>
+<li>shared_ptr</li>
+</ul>
+<p>模板<code>auto_ptr</code>是C++98提供的解决方案，C++11已将其摒弃，并提供了后两种解决方案。</p>
+<h3 id="16-2-1-使用智能指针"><a href="#16-2-1-使用智能指针" class="headerlink" title="16.2.1 使用智能指针"></a>16.2.1 使用智能指针</h3><p>以上三个智能指针模板（auto_prt,unique_ptr,shared_ptr)都定义了类似指针的对象，可以将<code>new</code>获得的地址赋给这种对象。</p>
+<p>当智能指针过期时，其析构函数将使用delete来释放内存，因此，如果将<code>new</code>返回的地址赋给这种对象，将无需记住稍后释放这些内存。（要创建智能指针，需包含头文件<code>memory</code>）</p>
+<h3 id="16-2-2-有关智能指针的注意事项"><a href="#16-2-2-有关智能指针的注意事项" class="headerlink" title="16.2.2 有关智能指针的注意事项"></a>16.2.2 有关智能指针的注意事项</h3><p>当多个指针对象指向同一个对象时，三种智能指针的区别：</p>
+<ul>
+<li>auto_ptr：调用多次析构函数，执行多次delete，报错</li>
+<li>unique_ptr：建立所有权（ownership）概念，对于特定的对象，只能有一个智能指针可拥有它，在删除后，会将所有权转让</li>
+<li>shared_ptr：利用引用计数（reference counting），仅当最后一个指针过期时，才调用<code>delete</code>。</li>
+</ul>
+<h3 id="16-2-3-unique-ptr为何优于auto-prt"><a href="#16-2-3-unique-ptr为何优于auto-prt" class="headerlink" title="16.2.3 unique_ptr为何优于auto_prt"></a>16.2.3 unique_ptr为何优于auto_prt</h3><p><code>unique_ptr</code>更安全： 它使用了C++11新增的移动构造函数和右值引用<br><code>unique_ptr</code>可以用于数组的变体：<code>auto_ptr</code>智能使用<code>new</code>和<code>delete</code>，而<code>unique_ptr</code>可以还可以使用<code>new []</code>和<code>delete []</code>。</p>
+<p>警告：</p>
+<ul>
+<li>使用<code>new</code>分配内存时，才能使用<code>auto_ptr</code>和<code>shared_ptr</code>，使用<code>new[]</code>分配内存时，不能使用它们</li>
+<li>不使用<code>new</code>分配内存时，不能使用<code>auto_ptr</code>和<code>shared_ptr</code></li>
+<li>不使用<code>new</code>和<code>new[]</code>分配内存时，不能使用<code>unique_ptr</code></li>
+</ul>
+<h3 id="16-2-4-选择智能指针"><a href="#16-2-4-选择智能指针" class="headerlink" title="16.2.4 选择智能指针"></a>16.2.4 选择智能指针</h3><p>如果程序要使用多个指向同一个对象的指针，应选择<code>shared_ptr</code>。</p>
+<h2 id="16-3-标准模板库"><a href="#16-3-标准模板库" class="headerlink" title="16.3 标准模板库"></a>16.3 标准模板库</h2><p>STL提供了一组表示容器、迭代器、函数对象和算法的模板。</p>
+<ul>
+<li>容器：是一个与数组类似的单元，可以存储若干个值。STL容器是同质的，即存储的值的类型相同</li>
+<li>迭代器：能够用来遍历容器的对象，与能够遍历数组的指针类似，是广义指针</li>
+<li>函数对象：类似于函数的对象，可以是类对象或函数指针</li>
+<li>算法：完成特定任务（如find，verse等）。</li>
+</ul>
+<p><strong>STL不是面对对象的变成，而是一种不同的编程模式——泛型编程（generic programming）</strong></p>
+<p>关于更多个STL方法和函数可以看附录G</p>
+<h3 id="16-3-1-模板类vector"><a href="#16-3-1-模板类vector" class="headerlink" title="16.3.1 模板类vector"></a>16.3.1 模板类vector</h3><p>分配器：与<code>string</code>类相似，各种STL容器模板都接受一个可选的模板参数，该参数指定使用哪个分配器对象来管理内存。如果省略了该模板参数的值，则容器类模板将默认使用<code>allocator&lt;T&gt;</code>类，这个类使用<code>new</code>和<code>delete</code>。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>, <span class="title">class</span> <span class="title">Allocator</span> = <span class="title">allocator</span>&lt;T&gt; &gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">vector</span> &#123;</span>...&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="16-3-2-可对矢量执行的操作"><a href="#16-3-2-可对矢量执行的操作" class="headerlink" title="16.3.2 可对矢量执行的操作"></a>16.3.2 可对矢量执行的操作</h3><p>每个容器类都定义了一个合适的迭代器，该迭代器的类型是一个名为<code>iterator</code>的<code>typedef</code>，其作用域为整个类。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;::iterator pd; <span class="comment">// pd an iterator</span></span><br></pre></td></tr></table></figure>
+<p>超尾(past-the-end) ：一种迭代器，指向容器的最后一个元素的后面，就像是C-风格字符串最后一个字符后面的空字符一样，由<code>end()</code>成员函数标识。</p>
+<h3 id="16-3-3-对矢量可执行的其他操作"><a href="#16-3-3-对矢量可执行的其他操作" class="headerlink" title="16.3.3 对矢量可执行的其他操作"></a>16.3.3 对矢量可执行的其他操作</h3><p>对于搜索、排序、随机排序等等很常见的操作，矢量模板类并没有包含！！ <strong>但是</strong> ，STL从更广泛的角度定义了非成员（non-member）函数来执行这些操作，即不是为每个容器类定义<code>find()</code>函数，而是定义了一个适用于所有容器类的非成员函数<code>find()</code>。这种设计理念省去了大量重复的工作。</p>
+<p>另一方面，STL有时也会定义一个功能相同的成员函数。这是因为对有些操作来说，类特定算法的效率比同于算法高，比如，vector的成员函数<code>swap()</code>的效率比非成员函数<code>swap()</code>高，但非成员函数可以交换冷儿类型不同的容器的内容。</p>
+<h3 id="16-3-4-基于范围的for循环（C-11）"><a href="#16-3-4-基于范围的for循环（C-11）" class="headerlink" title="16.3.4 基于范围的for循环（C++11）"></a>16.3.4 基于范围的for循环（C++11）</h3><p>第五章的示例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> prices[<span class="number">5</span>] = &#123;<span class="number">4.99</span>, <span class="number">10.99</span>, <span class="number">6.87</span>, <span class="number">7.99</span>, <span class="number">8.48</span>&#125;;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">double</span> x : prices)</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; x &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+<p>在这种for循环中，先声明一个类型与容器内容类型相同的变量，然后写明容器名称，接下来就可以访问，如下面的代码可以写的更加精简：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">for_each(books.begin(), books.end(), ShowReview); <span class="comment">//for_each形式</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>( <span class="keyword">auto</span> x:books) ShowReview(x)); <span class="comment">//</span></span><br></pre></td></tr></table></figure>
+<p>注意，<code>for_each</code>不能修改容器的容器，而基于范围的for循环可以通过指定一个引用参数来修改内容。例如，假设有如下函数：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InflateReview</span><span class="params">(Review &amp;r)</span> </span>&#123;r.rating++;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可使用如下循环的books的每个元素执行该函数<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> &amp;x:books) InflateReview(x);</span><br></pre></td></tr></table></figure></p>
+<h2 id="16-4-泛型编程"><a href="#16-4-泛型编程" class="headerlink" title="16.4 泛型编程"></a>16.4 泛型编程</h2><p>面向对象编程关注的是编程的数据方面，而泛型编程关注的是算法。它们之间的共同点是抽象和创建可重用代码，但它们的理念决然不同。泛型编程旨在编写独立于数据类型的代码。</p>
+<h3 id="16-4-1-为何使用迭代器"><a href="#16-4-1-为何使用迭代器" class="headerlink" title="16.4.1 为何使用迭代器"></a>16.4.1 为何使用迭代器</h3><p>模板使得算法独立于存储的数据类型，而迭代器使算法独立于使用的容器类型。</p>
+<p>例如，在使用<code>find</code>函数时，可以用迭代器来实现不依赖于具体类型的查找。</p>
+<p>实际上，作为一种编程风格，最好避免直接使用迭代器，而应尽可能使用STL函数(如<code>for_each()</code>）来处理细节。也可以使用C++11新增的基于范围的for循环。</p>
+<h3 id="16-4-2-迭代器类型"><a href="#16-4-2-迭代器类型" class="headerlink" title="16.4.2 迭代器类型"></a>16.4.2 迭代器类型</h3><p>不同的算头对迭代器要求不同，有的只要求可读，有的要求可随机访问等等。STL定义了5种不迭代器，并根据所需的迭代器类型对算法进行了描述：</p>
+<ul>
+<li>输入迭代器</li>
+<li>输出迭代器</li>
+<li>正向迭代器</li>
+<li>双向迭代器</li>
+<li>随机访问迭代器</li>
+</ul>
+<p>对于不同的算法，需要的迭代器不同，如下面两种算法分别需要输入迭代器和随机访问迭代器</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> InputIterator, <span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">InputIterator <span class="title">find</span><span class="params">(InputIterator first, InputIterator last, <span class="keyword">const</span> T &amp;value)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> RandomAccessIterator&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sort</span><span class="params">(RandomAccessIterator first, RandomAccessIterator last)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>对于这5种迭代器，都可以执行解除引用操作（即*运算符），也可进行比较，看其是相等还是不相等（==，！=运算符）。如果两个迭代器相同，则对它们执行解除引用操作得到的值将相同。</p>
+<ol>
+<li>输入迭代器</li>
+</ol>
+<p>&emsp;&emsp;术语“输入”是从程序的角度出发的，即来自容器的信息被视为输入（从迭代器传到程序中），因此，输入迭代器可被程序用来读取容器中的信息。需要输入迭代器的算法将不会修改容器中的值</p>
+<p>&emsp;&emsp;输入迭代器必须能做访问容器中所有的值，这是通过支持<code>++</code>运算符（前缀格式<code>operator++</code>和后缀格式<code>operator++(int)</code>）来实现的。</p>
+<p>&emsp;&emsp; <strong>注意：</strong> 并不能保证输入迭代器第二次遍历容器时，顺序不变。另外，输入迭代器被递增后，也不能保证其先前的值仍然可以被解除引用。基于输入迭代器的任何算法都应当是单通行（single-pass）的，不依赖于前一次便利时的迭代器值，也不依赖于本次遍历中前面的迭代器值。—— <strong>输入迭代器是单向迭代器，可以递增，但不能倒退</strong></p>
+<ol>
+<li>输出迭代器</li>
+</ol>
+<p>&emsp;&emsp;同理，“输出”指用于将信息从程序传输给容器的迭代器（从程序输出到迭代器中），输出迭代器智能解除引用让程序修改容器值，而不能读取容器内的值。输出迭代器也是单通行的，只能写不能读。</p>
+<ol>
+<li>正向迭代器</li>
+</ol>
+<p>&emsp;&emsp; 只是用<code>++</code>运算符遍历容器，每次沿容器向前移动一个元素。<strong>与输入和输出迭代器不同的是，它总是按相同的顺序遍历一系列值，另外，将正向迭代器递增后，仍然可以对前面的迭代器值解除引用，并得到对应的值</strong> 。这些特征使得正向迭代器是多通行的（可以多次通行容器）。</p>
+<ol>
+<li>双向迭代器</li>
+</ol>
+<p>&emsp;&emsp;双向迭代器具有正向迭代器的所有特性，且同时支持两种（前缀和后缀）递减运算符。</p>
+<ol>
+<li>随机访问迭代器</li>
+</ol>
+<p>&emsp;&emsp;有些算法（如排序和二分检索）要求能够直接跳到容器中的任何一个元素（将想数组下标访问一样），因此就有了随机访问迭代器。该迭代器具有双向迭代器的所有特性，同时添加了支持随机访问的操作和用于对元素进行排序的关系运算符。</p>
+<h3 id="16-4-3-迭代器层次结构"><a href="#16-4-3-迭代器层次结构" class="headerlink" title="16.4.3 迭代器层次结构"></a>16.4.3 迭代器层次结构</h3><p>可以看出，迭代器类型形成了一个层次结构。后面的迭代器不仅拥有之前迭代器的所有功能，同时还有自己的功能。</p>
+<p>每个容器类都定义了一个类级typedef名称——iterator。（实际上这使用指针实现的，并不是一种新的类型）。</p>
+<h3 id="16-4-4-概念、改进和模型"><a href="#16-4-4-概念、改进和模型" class="headerlink" title="16.4.4 概念、改进和模型"></a>16.4.4 概念、改进和模型</h3><p>STL有若干个用C++语言无法表达的特性，如迭代器种类。正向迭代器是一系列要求，而不是类型。（迭代器通常可以用常规指针实现，所以迭代器本身并不是一种类型）。</p>
+<p>STL使用术语“概念（concept）”来描述一系列的要求。</p>
+<p>概念可以具有类似继承的关系，就像双向迭代器继承了正向迭代器的功能。然而，不能将C++继承机制用于迭代器，但从概念上看，它确实能够继承，有些STL文献使用属于改进（refinement）来表示这种概念上的继承，因此，双向迭代器是对正向迭代器概念的一种改进。</p>
+<p>概念的具体实现被称为模型（model）。因此，指向int的常规指针是一个随机访问迭代器模型，同时也是一个正向迭代器模型。</p>
+<ol>
+<li>将指针用作迭代器</li>
+</ol>
+<p>&emsp;&emsp;迭代器是广义上的指针，其本身就是一种指针，因此，STL算法可以使用指针来对基于指针的非STL容器进行操作。例如，可将STL算法用于数组。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> SIZE = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">double</span> Receipts[SIZE];</span><br><span class="line">sort(Receipts,Receipts+SIZE); <span class="comment">//用STL的sort算法对数组进行排序</span></span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;STL提供了一些预定义迭代器，如ostream_iterator和istream_iterator模板等，都定义在iterator头文件中。</p>
+<ol>
+<li>其他有用的迭代器</li>
+</ol>
+<p>&emsp;&emsp;头文件iterator还提供了其他一些专用的预定义迭代器类型，它们是reverse_iterator, back_insert_iterator, front_insert_iterator和insert_iterator等。</p>
+<h3 id="16-4-5-容器种类"><a href="#16-4-5-容器种类" class="headerlink" title="16.4.5 容器种类"></a>16.4.5 容器种类</h3><ul>
+<li>容器概念：概念是具有名称（如容器、序列容器、关联容器等）的通用类别</li>
+<li>容器类型：是可用于创建具体容器对象的模板。以前的11个容器类型为：deque, list, queue, priority_queue, stack, vector, map, multimap, set, multiset和bitset。 C++11新增了：forward_list, unordered_map, unordered_multimap, unordered_set和unordered_multiset，且不再将bitset视为容器，而将其视为一种独立的类别。</li>
+</ul>
+<ol>
+<li>容器概念</li>
+</ol>
+<p>&emsp;&emsp;没有与基本容器概念对应的类型，但概念描述了所有容器类都通用的元素。存储在容器中的类型必须是可复制构造和可赋值的。STL特定操作的时间复杂度有三种，分别是：编译时间、固定时间和线性时间。</p>
+<ol>
+<li>C++11新增的容器要求</li>
+</ol>
+<p>&emsp;&emsp;下表列出了C++11新增的通用容器要求，其中，复制赋值和移动赋值之间的差别在于，复制操作保留源对象，而移动操作可修改源对象，还可能转让所有权，而不做任何复制。如果源对象是临时的，移动操作的效率将高于常规复制。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>返回类型</th>
+<th>说明</th>
+<th>复杂度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>X u(rv);</code></td>
+<td></td>
+<td>调用移动构造函数后，u和值和rv的原始值相同</td>
+<td>线性</td>
+</tr>
+<tr>
+<td><code>X u = rv;</code></td>
+<td></td>
+<td>作用同上</td>
+<td></td>
+</tr>
+<tr>
+<td><code>a = rv;</code></td>
+<td>X&amp;</td>
+<td>调用移动赋值运算符后，u的值和rv的原始值相同</td>
+<td>线性</td>
+</tr>
+<tr>
+<td><code>a.cbegin()</code></td>
+<td>const_iterator</td>
+<td>返回指向容器第一个元素的const迭代器</td>
+<td>固定</td>
+</tr>
+<tr>
+<td><code>a.cend()</code></td>
+<td>const_iterator</td>
+<td>返回超尾值的const迭代器</td>
+<td>固定</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ol>
+<li>序列</li>
+</ol>
+<h3 id="16-4-6-关联容器"><a href="#16-4-6-关联容器" class="headerlink" title="16.4.6 关联容器"></a>16.4.6 关联容器</h3><h3 id="16-4-7-无序关联容器"><a href="#16-4-7-无序关联容器" class="headerlink" title="16.4.7 无序关联容器"></a>16.4.7 无序关联容器</h3><h2 id="16-5-函数对象"><a href="#16-5-函数对象" class="headerlink" title="16.5 函数对象"></a>16.5 函数对象</h2><p>函数对象也叫做仿函数 (funtor). 仿函数是可以以函数方式与<code>()</code>运算符结合使用的任意对象. 重载后的<code>()</code>运算符将使得能够响函数那样使用类对象.</p>
+<h3 id="16-5-1-仿函数概念"><a href="#16-5-1-仿函数概念" class="headerlink" title="16.5.1 仿函数概念"></a>16.5.1 仿函数概念</h3><h3 id="16-5-2-预定义的仿函数"><a href="#16-5-2-预定义的仿函数" class="headerlink" title="16.5.2 预定义的仿函数"></a>16.5.2 预定义的仿函数</h3><h3 id="16-5-3-自适应仿函数"><a href="#16-5-3-自适应仿函数" class="headerlink" title="16.5.3 自适应仿函数"></a>16.5.3 自适应仿函数</h3><h3 id="16-7-3-使用initializer-list"><a href="#16-7-3-使用initializer-list" class="headerlink" title="16.7.3 使用initializer_list"></a>16.7.3 使用initializer_list</h3>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/读书笔记/" rel="tag"><i class="fa fa-tag"></i> 读书笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/CUDA-CUDA示例学习-一维数组的矢量求和/" rel="prev" title="用CUDA进行一维数组的矢量求和">
+                <i class="fa fa-chevron-left"></i> 用CUDA进行一维数组的矢量求和
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/Cpp-初始化列表/" rel="next" title="C++11新特性-初始化列表">
+                C++11新特性-初始化列表 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">131</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第十六章-string类和标准模板库"><span class="nav-text">第十六章 string类和标准模板库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#16-1-string-类"><span class="nav-text">16.1 string 类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#16-1-1-构造字符串"><span class="nav-text">16.1.1 构造字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-1-2-string类输入"><span class="nav-text">16.1.2 string类输入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-1-3-使用字符串"><span class="nav-text">16.1.3 使用字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-1-4-stirng类还提供了哪些功能"><span class="nav-text">16.1.4 stirng类还提供了哪些功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-1-5-字符串种类"><span class="nav-text">16.1.5 字符串种类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-2-智能指针模板类"><span class="nav-text">16.2 智能指针模板类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#16-2-1-使用智能指针"><span class="nav-text">16.2.1 使用智能指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-2-2-有关智能指针的注意事项"><span class="nav-text">16.2.2 有关智能指针的注意事项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-2-3-unique-ptr为何优于auto-prt"><span class="nav-text">16.2.3 unique_ptr为何优于auto_prt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-2-4-选择智能指针"><span class="nav-text">16.2.4 选择智能指针</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-3-标准模板库"><span class="nav-text">16.3 标准模板库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#16-3-1-模板类vector"><span class="nav-text">16.3.1 模板类vector</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-3-2-可对矢量执行的操作"><span class="nav-text">16.3.2 可对矢量执行的操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-3-3-对矢量可执行的其他操作"><span class="nav-text">16.3.3 对矢量可执行的其他操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-3-4-基于范围的for循环（C-11）"><span class="nav-text">16.3.4 基于范围的for循环（C++11）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-4-泛型编程"><span class="nav-text">16.4 泛型编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#16-4-1-为何使用迭代器"><span class="nav-text">16.4.1 为何使用迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-4-2-迭代器类型"><span class="nav-text">16.4.2 迭代器类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-4-3-迭代器层次结构"><span class="nav-text">16.4.3 迭代器层次结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-4-4-概念、改进和模型"><span class="nav-text">16.4.4 概念、改进和模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-4-5-容器种类"><span class="nav-text">16.4.5 容器种类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-4-6-关联容器"><span class="nav-text">16.4.6 关联容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-4-7-无序关联容器"><span class="nav-text">16.4.7 无序关联容器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-5-函数对象"><span class="nav-text">16.5 函数对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#16-5-1-仿函数概念"><span class="nav-text">16.5.1 仿函数概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-5-2-预定义的仿函数"><span class="nav-text">16.5.2 预定义的仿函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-5-3-自适应仿函数"><span class="nav-text">16.5.3 自适应仿函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-7-3-使用initializer-list"><span class="nav-text">16.7.3 使用initializer_list</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">471k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">7:08</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

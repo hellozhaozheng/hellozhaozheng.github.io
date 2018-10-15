@@ -1,0 +1,1773 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="为什么需要激活函数标准说法这是由激活函数的性质所决定来, 一般来说, 激活函数都具有以下性质:  非线性: 首先,线性函数可以高效可靠对数据进行拟合, 但是现实生活中往往存在一些非线性的问题(如XOR), 这个时候, 我们就需要借助激活函数的非线性来对数据的分布进行重新映射, 从而获得更强大的拟合能力. (这个是最主要的原因, 其他还有下面这些性质也使得我们选择激活函数作为网络常用层) 可微性:">
+<meta name="keywords" content="知识点梳理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="各种激活函数整理总结">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/深度学习-知识点梳理-各种激活函数深入解析/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="为什么需要激活函数标准说法这是由激活函数的性质所决定来, 一般来说, 激活函数都具有以下性质:  非线性: 首先,线性函数可以高效可靠对数据进行拟合, 但是现实生活中往往存在一些非线性的问题(如XOR), 这个时候, 我们就需要借助激活函数的非线性来对数据的分布进行重新映射, 从而获得更强大的拟合能力. (这个是最主要的原因, 其他还有下面这些性质也使得我们选择激活函数作为网络常用层) 可微性:">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fvp2xuesrjj208706v0st.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvogxnqyyaj20pk0fdt9w.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvogum5rp4j20r20e8dh3.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvogxnqp8rj20q50fmdh1.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fvogum6rpej20qq0gt3zu.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fvogum6ou5j20qp0htwfv.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvogum8mbfj20qw0gagn1.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvogum93q2j20pt0hfmyl.jpg">
+<meta property="og:updated_time" content="2018-10-09T05:30:12.387Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="各种激活函数整理总结">
+<meta name="twitter:description" content="为什么需要激活函数标准说法这是由激活函数的性质所决定来, 一般来说, 激活函数都具有以下性质:  非线性: 首先,线性函数可以高效可靠对数据进行拟合, 但是现实生活中往往存在一些非线性的问题(如XOR), 这个时候, 我们就需要借助激活函数的非线性来对数据的分布进行重新映射, 从而获得更强大的拟合能力. (这个是最主要的原因, 其他还有下面这些性质也使得我们选择激活函数作为网络常用层) 可微性:">
+<meta name="twitter:image" content="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fvp2xuesrjj208706v0st.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/深度学习-知识点梳理-各种激活函数深入解析/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>各种激活函数整理总结 | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">131</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-linux">
+    <a href="/categories/Linux/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-面试">
+    <a href="/categories/面试/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其它">
+    <a href="/categories/其它/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其它</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">25</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-life">
+    <a href="/life/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-child"></i> <br />生活杂记</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/深度学习-知识点梳理-各种激活函数深入解析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">各种激活函数整理总结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-27 14:04:54" itemprop="dateCreated datePublished" datetime="2018-09-27T14:04:54+08:00">2018-09-27</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">5.9k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">5 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="为什么需要激活函数"><a href="#为什么需要激活函数" class="headerlink" title="为什么需要激活函数"></a>为什么需要激活函数</h1><h2 id="标准说法"><a href="#标准说法" class="headerlink" title="标准说法"></a>标准说法</h2><p>这是由激活函数的性质所决定来, 一般来说, 激活函数都具有以下性质:</p>
+<ul>
+<li><strong>非线性:</strong> 首先,线性函数可以高效可靠对数据进行拟合, 但是现实生活中往往存在一些非线性的问题(如XOR), 这个时候, 我们就需要借助激活函数的非线性来对数据的分布进行重新映射, 从而获得更强大的拟合能力. (这个是最主要的原因, 其他还有下面这些性质也使得我们选择激活函数作为网络常用层)</li>
+<li><strong>可微性:</strong> 这一点有助于我们使用梯度下降发来对网络进行优化</li>
+<li><strong>单调性:</strong> 激活函数的单调性在可以使单层网络保证网络是凸优化的</li>
+<li><strong>$f(x) \approx x:$</strong> 当激活满足这个性质的时候, 如果参数初值是很小的值, 那么神经网络的训练将会很高效(参考ResNet训练残差模块的恒等映射); 如果不满足这个性质, 那么就需要用心的设值初始值( <strong>这一条有待商榷</strong> )</li>
+</ul>
+<p>如果不使用激活函数, 多层线性网络的叠加就会退化成单层网络,因为经过多层神经网络的加权计算，都可以展开成一次的加权计算</p>
+<h2 id="更形象的解释"><a href="#更形象的解释" class="headerlink" title="更形象的解释"></a>更形象的解释</h2><p>对于一些线性不可分的情况, 比如XOR, 没有办法直接画出一条直线来将数据区分开, 这个时候, 一般有两个选择.</p>
+<p>如果已知数据分布规律, 那么可以对数据做线性变换, 将其投影到合适的坐标轴上, 然后在新的坐标轴上进行线性分类</p>
+<p>而另一种更常用的办法, 就是使用激活函数, 以XOR问题为例, XOR问题本身不是线性可分的,</p>
+<p><a href="https://www.zhihu.com/question/22334626" target="_blank" rel="noopener">https://www.zhihu.com/question/22334626</a></p>
+<h2 id="用ReLU解决XOR问题"><a href="#用ReLU解决XOR问题" class="headerlink" title="用ReLU解决XOR问题."></a>用ReLU解决XOR问题.</h2><p>首先, XOR问题如下所示:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>$x_1$</th>
+<th>$x_2$</th>
+<th>y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>首先构造一个简单的神经网络来尝试解决XOR问题, 网络结构如下图所示:</p>
+<p><img src="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fvp2xuesrjj208706v0st.jpg" alt=""></p>
+<p>先来看看不使用激活函数时的情况, 当不使用激活函数时, 整个网络的函数表达式如下所示:</p>
+<script type="math/tex; mode=display">y = f(x_1, x_2; W, c, w ,b) = [w_1, w_2] \bigg( \bigg[\begin{matrix} W_{11} & W_{12} \\ W_{21} & W_{22} \end{matrix} \bigg] \Big[\begin{matrix} x_1 \\ x_2 \end{matrix} \Big]+ \Big[\begin{matrix} c_1 \\ c_2 \end{matrix} \Big] \bigg) + b = (w^TW^T)x + (w^Tc+b) = w'^Tx+b'</script><p>可以看到, 多层无激活函数的网络叠加, 首先是会退化成单层网络, 而对于单层网络, 求解出来的参数 $w’$ 和 $b’$ 无法对非线性的数据进行分类.</p>
+<p>再来看看进入ReLU以后, 是如何解决XOR问题的, 首先, 引入后的公式如下所示:</p>
+<script type="math/tex; mode=display">y = f(x_1, x_2; W, c, w ,b) = [w_1, w_2] max \bigg(0 , \bigg[\begin{matrix} W_{11} & W_{12} \\ W_{21} & W_{22} \end{matrix} \bigg] \Big[\begin{matrix} x_1 \\ x_2 \end{matrix} \Big]+ \Big[\begin{matrix} c_1 \\ c_2 \end{matrix} \Big] \bigg) + b</script><p>可以看到, 此时函数是无法化简, 因为此时引入了非线性的ReLU函数, 于是 ,就可以求得一个参数组合${w,W,c,b}$ 使得对于特定的输入$x_1, x_2$ ,能够得到正确的分类结果 $y$. 至于这个参数组合具体是什么, 这是需要通过梯度下降来不断学习的, 假如我们现在找到了一组参数如下(当然不一定是最优的), 来看看这组参数具体是如何解决XOR问题的:</p>
+<script type="math/tex; mode=display">W=\bigg[ \begin{matrix} 1 & 1 \\ 1 & 1 \end{matrix} \bigg]</script><script type="math/tex; mode=display">c =\Big[ \begin{matrix} 0 \\ -1 \end{matrix}  \Big]</script><script type="math/tex; mode=display">w =\Big[ \begin{matrix} 1 \\ -1 \end{matrix} \Big]</script><script type="math/tex; mode=display">b = 0</script><p>然后, 分别将4种 $x_1, x_2$的值代入上式, 可以得到, y的值如下:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>$x_1$</th>
+<th>$x_2$</th>
+<th>计算过程</th>
+<th>y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>$[1, -2] max \bigg(0 , \bigg[\begin{matrix} 1 &amp; 1 \ 1 &amp; 1 \end{matrix} \bigg] \Big[\begin{matrix} 1 \ 0 \end{matrix} \Big]+ \Big[\begin{matrix} 0 \ -1 \end{matrix} \Big] \bigg) + 0$</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>$[1, -2] max \bigg(0 , \bigg[\begin{matrix} 1 &amp; 1 \ 1 &amp; 1 \end{matrix} \bigg] \Big[\begin{matrix} 0 \ 1 \end{matrix} \Big]+ \Big[\begin{matrix} 0 \ -1 \end{matrix} \Big] \bigg) + 0$</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>$[1, -2] max \bigg(0 , \bigg[\begin{matrix} 1 &amp; 1 \ 1 &amp; 1 \end{matrix} \bigg] \Big[\begin{matrix} 1 \ 1 \end{matrix} \Big]+ \Big[\begin{matrix} 0 \ -1 \end{matrix} \Big] \bigg) + 0$</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>$[1, -2] max \bigg(0 , \bigg[\begin{matrix} 1 &amp; 1 \ 1 &amp; 1 \end{matrix} \bigg] \Big[\begin{matrix} 0 \ 0 \end{matrix} \Big]+ \Big[\begin{matrix} 0 \ -1 \end{matrix} \Big] \bigg) + 0$</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="常用激活函数及其导数"><a href="#常用激活函数及其导数" class="headerlink" title="常用激活函数及其导数"></a>常用激活函数及其导数</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>激活函数</th>
+<th>形式</th>
+<th>导数形式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sigmoid</td>
+<td>$f(x) =\frac{1}{1+e^{-x}}$</td>
+<td>$f’(x)(1-f(x))$</td>
+</tr>
+<tr>
+<td>Tanh</td>
+<td>$f(x) = tanh(x)= \frac{e^x-e^{-x}}{e^x+e^{-x}}$</td>
+<td>$f’(x) = 1-(f(z))^2$</td>
+</tr>
+<tr>
+<td>ReLU</td>
+<td>$f(x)=max(0,x)=\begin{cases} 0 &amp; x \leq 0 \ x &amp; x&gt;0 \end{cases}$</td>
+<td>$f’(x)=\begin{cases} 0 &amp; x\leq 0 \ 1 &amp; x&gt;0 \end{cases}$</td>
+</tr>
+<tr>
+<td>Leaky ReLU</td>
+<td>$f(x)=max(0.001 x,x)=\begin{cases} 0.001x &amp; x \leq 0 \ x &amp; x&gt;0 \end{cases}a$</td>
+<td>$f(x)=max(0.001 x,x)=\begin{cases} 0.001  &amp; x \leq 0 \ 1 &amp; x&gt;0 \end{cases}$</td>
+</tr>
+<tr>
+<td>PReLU</td>
+<td>$f(x)=max(\alpha x,x)=\begin{cases} \alpha x &amp; x \leq 0 \ x &amp; x&gt;0 \end{cases}$</td>
+<td>$f(x)=max(\alpha x,x)=\begin{cases} \alpha  &amp; x \leq 0 \ 1 &amp; x&gt;0 \end{cases}$</td>
+</tr>
+<tr>
+<td>RReLU</td>
+<td>PReLU中的 $\alpha$ 随机取值</td>
+<td></td>
+</tr>
+<tr>
+<td>ELU</td>
+<td>$f(x) = \begin{cases} x &amp; x \geq 0 \ \alpha(e^x - 1) &amp; x&lt;0 \end{cases}$</td>
+<td>$f(x) = \begin{cases} 1 &amp; x \geq 0 \ \alpha e^x &amp; x&lt;0 \end{cases}$</td>
+</tr>
+<tr>
+<td>Maxout</td>
+<td>$f(x) = max(w_1^T x + b_1, w_2^T x + b_2)$</td>
+<td>$f(x) = max(w_1, w_2)$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="常用激活函数及其导数的图像"><a href="#常用激活函数及其导数的图像" class="headerlink" title="常用激活函数及其导数的图像"></a>常用激活函数及其导数的图像</h1><p>Sigmoid</p>
+<p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvogxnqyyaj20pk0fdt9w.jpg" alt=""></p>
+<p>Tanh</p>
+<p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvogum5rp4j20r20e8dh3.jpg" alt=""></p>
+<p>ReLU</p>
+<p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvogxnqp8rj20q50fmdh1.jpg" alt=""></p>
+<p>LeakyReLU</p>
+<p><img src="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fvogum6rpej20qq0gt3zu.jpg" alt=""></p>
+<p>PReLU</p>
+<p><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fvogum6ou5j20qp0htwfv.jpg" alt=""></p>
+<p>RReLU</p>
+<p><img src="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvogum8mbfj20qw0gagn1.jpg" alt=""></p>
+<p>ELU</p>
+<p><img src="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvogum93q2j20pt0hfmyl.jpg" alt=""></p>
+<h1 id="关于各个激活函数的比较和适用场景"><a href="#关于各个激活函数的比较和适用场景" class="headerlink" title="关于各个激活函数的比较和适用场景"></a>关于各个激活函数的比较和适用场景</h1><p><strong>神经元饱和问题:</strong> 当输入值很大或者很小时, 其梯度值接近于0, 此时, 不管从深层网络中传来何种梯度值, 它向浅层网络中传过去的, 都是趋近于0的数, 进而引发梯度消失问题</p>
+<p><strong>zero-centered:</strong> 如果数据分布不是zero-centered的话就会导致后一层的神经元接受的输入永远为正或者永远为负, 因为 $\frac{\partial f}{\partial w} = x$ , 所以如果x的符号固定,那么 $\frac{\partial f}{\partial w}$ 的符号也就固定了, 这样在训练时, weight的更新只会沿着一个方向更新, 但是我们希望的是类似于zig-zag形式的更新路径 (关于非0均值问题, 由于通常训练时是按batch训练的, 所以每个batch会得到不同的信号, 这在一定程度上可以缓解非0均值问题带来的影响, 这也是ReLU虽然不是非0 均值, 但是却称为主流激活函数的原因之一)</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>激活函数</th>
+<th>优势</th>
+<th>劣势</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sigmoid</td>
+<td>可以将数据值压缩到[0,1]区间内</td>
+<td>1. 神经元饱和问题  <br> 2.sigmoid的输出值域不是zero-centered的  <br> 3. 指数计算在计算机中相对来说比较复杂</td>
+<td>在logistic回归中有重要地位</td>
+</tr>
+<tr>
+<td>Tanh</td>
+<td>1. zero-centered: 可以将 $(-\infty, +\infty)$ 的数据压缩到 $[-1,1]$ 区间内 <br> 2.完全可微分的，反对称，对称中心在原点</td>
+<td>1. 神经元饱和问题 <br> 2. 计算复杂</td>
+<td>在分类任务中，双曲正切函数（Tanh）逐渐取代 Sigmoid 函数作为标准的激活函数</td>
+</tr>
+<tr>
+<td>ReLU</td>
+<td>1. 在 $(0,+\infty)$ ,梯度始终为1, 没有神经元饱和问题 <br> 2. 不论是函数形式本身,还是其导数, 计算起来都十分高效 3. 可以让训练过程更快收敛(实验结果表明比sigmoid收敛速度快6倍) <br> 4. 从生物神经理论角度来看, 比sigmoid更加合理</td>
+<td>1. 非zero-centered   <br> 2. 如果输入值为负值, ReLU由于导数为0, 权重无法更新, 其学习速度可能会变的很慢,很容易就会”死”掉(为了克服这个问题, 在实际中, 人们常常在初始化ReLU神经元时, 会倾向于给它附加一个正数偏好,如0.01)</td>
+<td>在卷积神经网络中比较主流</td>
+</tr>
+<tr>
+<td>LeakyReLU</td>
+<td>1. 没有神经元饱和问题 <br> 2. 计算高效 <br> 3. 收敛迅速(继承了ReLU的优点) <br> 4. 神经元不会”死”掉(因为在负值时, 输出不为0, 而是x的系数0.001)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>PReLU</td>
+<td>1. 没有神经元饱和问题 <br> 2. 计算高效 <br> 3. 收敛迅速(继承了ReLU的优点) <br> 4. 神经元不会”死”掉(因为在负值时, 输出不为0, 而是x的系数 $\alpha$ ) <br> 5. 相对于Leaky ReLU需要通过先验知识人工赋值, PReLU通过迭代优化来自动找到一个较好的值, 更加科学合理, 同时省去人工调参的麻烦</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>ELU</td>
+<td>1. 拥有ReLU所有的优点 <br> 2. 形式上更接近于zero-centered <br> 3. 在面对负值输入时,更加健壮</td>
+<td>1. 引入了指数计算, 使计算变的复杂</td>
+<td></td>
+</tr>
+<tr>
+<td>Maxout</td>
+<td>1. 跳出了点乘的基本形式 <br> 2. 可以看作是ReLU和Leaky ReLU 的一般化形式 3. linear Regime(啥意思?)! <br> 4. 在所有输入范围上都没有神经元饱和问题 <br> 5. 神经元永远不会”死”掉 <br> 6. 拟合能力非常强，它可以拟合任意的的凸函数。作者从数学的角度上也证明了这个结论，即只需2个maxout节点就可以拟合任意的凸函数了(相减)，前提是”隐含层”节点的个数可以任意多</td>
+<td>1. 使得神经元个数和参数个数加倍, 导致优化困难</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="其他要点"><a href="#其他要点" class="headerlink" title="其他要点"></a>其他要点</h1><h2 id="sigmoid-和softmax区别"><a href="#sigmoid-和softmax区别" class="headerlink" title="sigmoid 和softmax区别"></a>sigmoid 和softmax区别</h2><p>sigoid是将一个正负无穷区间的值映射到(0,1)区间, 通常用作二分类问题,而softmax把一个k维的实值向量映射成一个$(b_1,b_2,…,b_k)$ ,其中$b_i$为一个0~1的常数, 且它们的和为1, 可以看作是属于每一类的概览,通常用作多分类问题. 在二分类问题中, sigmoid和softmax是差不多的, 都是求交叉熵损失函数, softmax可以看作是sigmoid的扩展, 当类别k为2时, 根据softmax回归参冗余的特点, 可以将softmax函数推导成sigmoid函数</p>
+<p><a href="https://www.jianshu.com/p/22d9720dbf1a" target="_blank" rel="noopener">https://www.jianshu.com/p/22d9720dbf1a</a></p>
+<h2 id="其他更多激活函数"><a href="#其他更多激活函数" class="headerlink" title="其他更多激活函数"></a>其他更多激活函数</h2><p><a href="https://www.jiqizhixin.com/articles/2017-10-10-3" target="_blank" rel="noopener">https://www.jiqizhixin.com/articles/2017-10-10-3</a></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
+<li>优先使用ReLU, 同时要谨慎设置初值和学习率 ( 实际操作中，如果你的learning rate 很大，那么很有可能你网络中的40%的神经元都”dead”了。 当然，如果你设置了一个合适的较小的learning rate，这个问题发生的情况其实也不会太频繁 )</li>
+<li>尝试使用LeakyReLU/PReLU/Maxout/ELU等激活函数</li>
+<li>可以试下tanh, 但是一般不会有太好的结果</li>
+<li><strong>不要使用sigmoid</strong></li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/知识点梳理/" rel="tag"><i class="fa fa-tag"></i> 知识点梳理</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/深度学习-知识点梳理-梯度消失和梯度爆炸问题深入解析/" rel="prev" title="梯度消失和梯度爆炸问题详解">
+                <i class="fa fa-chevron-left"></i> 梯度消失和梯度爆炸问题详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/深度学习-知识点梳理-Batch-Normalization深入解析/" rel="next" title="Batch-Normalization深入解析">
+                Batch-Normalization深入解析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">131</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么需要激活函数"><span class="nav-text">为什么需要激活函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标准说法"><span class="nav-text">标准说法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更形象的解释"><span class="nav-text">更形象的解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用ReLU解决XOR问题"><span class="nav-text">用ReLU解决XOR问题.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用激活函数及其导数"><span class="nav-text">常用激活函数及其导数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用激活函数及其导数的图像"><span class="nav-text">常用激活函数及其导数的图像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于各个激活函数的比较和适用场景"><span class="nav-text">关于各个激活函数的比较和适用场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他要点"><span class="nav-text">其他要点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sigmoid-和softmax区别"><span class="nav-text">sigmoid 和softmax区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他更多激活函数"><span class="nav-text">其他更多激活函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">471k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">7:08</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

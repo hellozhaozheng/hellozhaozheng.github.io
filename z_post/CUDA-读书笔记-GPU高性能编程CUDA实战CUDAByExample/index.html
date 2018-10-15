@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="第一章 为什么需要CUDA1.1 本章目标了解历史和发展历程 1.2 并行处理的历史中央处理器性能的提升逐渐变得困难 1.3 GPU计算的崛起1.4 CUDA1.4.1 CUDA架构是什么cuda架构包含了一个统一的着色器流水线，使得执行通用计算的程序能够对芯片上的每个数学逻辑单元（Arithmetic Logic Unit，ALU）进行排列。另外，NVIDIA在实现ALU时都确保它们满足IEEE">
+<meta name="keywords" content="读书笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《GPU高性能编程CUDA实战 CUDA By Example》">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/CUDA-读书笔记-GPU高性能编程CUDA实战CUDAByExample/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="第一章 为什么需要CUDA1.1 本章目标了解历史和发展历程 1.2 并行处理的历史中央处理器性能的提升逐渐变得困难 1.3 GPU计算的崛起1.4 CUDA1.4.1 CUDA架构是什么cuda架构包含了一个统一的着色器流水线，使得执行通用计算的程序能够对芯片上的每个数学逻辑单元（Arithmetic Logic Unit，ALU）进行排列。另外，NVIDIA在实现ALU时都确保它们满足IEEE">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fvjoriuw74j20lw0lxdia.jpg">
+<meta property="og:updated_time" content="2018-10-05T10:56:30.984Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《GPU高性能编程CUDA实战 CUDA By Example》">
+<meta name="twitter:description" content="第一章 为什么需要CUDA1.1 本章目标了解历史和发展历程 1.2 并行处理的历史中央处理器性能的提升逐渐变得困难 1.3 GPU计算的崛起1.4 CUDA1.4.1 CUDA架构是什么cuda架构包含了一个统一的着色器流水线，使得执行通用计算的程序能够对芯片上的每个数学逻辑单元（Arithmetic Logic Unit，ALU）进行排列。另外，NVIDIA在实现ALU时都确保它们满足IEEE">
+<meta name="twitter:image" content="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fvjoriuw74j20lw0lxdia.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/CUDA-读书笔记-GPU高性能编程CUDA实战CUDAByExample/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>《GPU高性能编程CUDA实战 CUDA By Example》 | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">131</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-linux">
+    <a href="/categories/Linux/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-面试">
+    <a href="/categories/面试/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其它">
+    <a href="/categories/其它/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其它</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">25</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-life">
+    <a href="/life/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-child"></i> <br />生活杂记</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/CUDA-读书笔记-GPU高性能编程CUDA实战CUDAByExample/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">《GPU高性能编程CUDA实战 CUDA By Example》
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-08-18 20:50:07" itemprop="dateCreated datePublished" datetime="2018-08-18T20:50:07+08:00">2018-08-18</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/CUDA/" itemprop="url" rel="index"><span itemprop="name">CUDA</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">13k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">12 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="第一章-为什么需要CUDA"><a href="#第一章-为什么需要CUDA" class="headerlink" title="第一章 为什么需要CUDA"></a>第一章 为什么需要CUDA</h1><h2 id="1-1-本章目标"><a href="#1-1-本章目标" class="headerlink" title="1.1 本章目标"></a>1.1 本章目标</h2><p>了解历史和发展历程</p>
+<h2 id="1-2-并行处理的历史"><a href="#1-2-并行处理的历史" class="headerlink" title="1.2 并行处理的历史"></a>1.2 并行处理的历史</h2><p>中央处理器性能的提升逐渐变得困难</p>
+<h2 id="1-3-GPU计算的崛起"><a href="#1-3-GPU计算的崛起" class="headerlink" title="1.3 GPU计算的崛起"></a>1.3 GPU计算的崛起</h2><h2 id="1-4-CUDA"><a href="#1-4-CUDA" class="headerlink" title="1.4 CUDA"></a>1.4 CUDA</h2><h3 id="1-4-1-CUDA架构是什么"><a href="#1-4-1-CUDA架构是什么" class="headerlink" title="1.4.1 CUDA架构是什么"></a>1.4.1 CUDA架构是什么</h3><p>cuda架构包含了一个统一的着色器流水线，使得执行通用计算的程序能够对芯片上的每个数学逻辑单元（Arithmetic Logic Unit，ALU）进行排列。另外，NVIDIA在实现ALU时都确保它们满足IEEE单精度浮点数学运算的需求，并且可以使用一个裁剪后的指令集来执行通用计算，而不是仅限于执行图形计算。此外，GPU上的执行单元不仅能任意地读写内存，同时还能访问由软件管理的缓存，也称为共享内存。</p>
+<p>CUDA架构的所有这些功能都是为了使GPU不仅能执行传统的图形计算，还能高效的执行通用计算。</p>
+<h3 id="1-4-2-CUDA架构的使用"><a href="#1-4-2-CUDA架构的使用" class="headerlink" title="1.4.2 CUDA架构的使用"></a>1.4.2 CUDA架构的使用</h3><p>NVIDIA专门开发了一款编译器来编译CUDA C语言。现在，用户不再需要了解OpenGL或者DirectX图形编程结构，也不需要将通用计算问题伪装为图形计算问题。</p>
+<h2 id="1-5-CUDA的应用"><a href="#1-5-CUDA的应用" class="headerlink" title="1.5 CUDA的应用"></a>1.5 CUDA的应用</h2><p>医学影像、流体力学等等</p>
+<h1 id="第二张-入门"><a href="#第二张-入门" class="headerlink" title="第二张 入门"></a>第二张 入门</h1><h2 id="2-1-本章目标"><a href="#2-1-本章目标" class="headerlink" title="2.1 本章目标"></a>2.1 本章目标</h2><p>配置环境</p>
+<h2 id="2-2-开发环境"><a href="#2-2-开发环境" class="headerlink" title="2.2 开发环境"></a>2.2 开发环境</h2><ul>
+<li>支持CUDA的图形处理器</li>
+<li>NVIDIA设备驱动程序</li>
+<li>CUDA开发工具箱</li>
+<li>标准C编译器</li>
+</ul>
+<p>由于CUDA C应用程序将在两个不同的处理器上执行计算，因此需要两个编译器。其中一个编译器为GPU编译代码，另一个为CPU编译代码。</p>
+<h1 id="第三章-CUDA简介"><a href="#第三章-CUDA简介" class="headerlink" title="第三章 CUDA简介"></a>第三章 CUDA简介</h1><h2 id="3-1-本章目标"><a href="#3-1-本章目标" class="headerlink" title="3.1 本章目标"></a>3.1 本章目标</h2><p>第一段cuda c代码、了解host和device之间的区别、了解其他信息</p>
+<h2 id="3-2-第一个程序"><a href="#3-2-第一个程序" class="headerlink" title="3.2 第一个程序"></a>3.2 第一个程序</h2><h3 id="3-2-1-Hello，World！"><a href="#3-2-1-Hello，World！" class="headerlink" title="3.2.1 Hello，World！"></a>3.2.1 Hello，World！</h3><p>将CPU以及系统的内存成为主机（host）。而将GPU及其内存成为设备（device）。</p>
+<p>在GPU设备上执行的函数通常称为核函数（kernel）。</p>
+<p>没有核函数，只考虑在主机运行的CUDA代码和标准的C在很大程度上是没有区别的。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"Hello, World!\n"</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-2-2-核函数调用"><a href="#3-2-2-核函数调用" class="headerlink" title="3.2.2 核函数调用"></a>3.2.2 核函数调用</h3><p>在上面的示例中添加核函数</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line">__<span class="function">global__ <span class="keyword">void</span> <span class="title">kernel</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">  kernel&lt;&lt;&lt;<span class="number">1</span>,<span class="number">1</span>&gt;&gt;&gt;();</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"Hello,World!\n"</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码有两处新增：</p>
+<ul>
+<li>一个空的核函数<code>kernel()</code>，并且带有修饰符<code>__global__</code></li>
+<li>对这个空的核函数的调用语句，并且带有修饰字符&lt;&lt;<1,1>&gt;&gt;</1,1></li>
+</ul>
+<p>cuda的host代码默认是由系统的标准C编译器来编译的（如Linux的GNU gcc和Windodws的VS），NVIDIA工具只是将代码交给host编译器，它表现出的行为就好像CUDA不存在一样。</p>
+<p>而当遇到具有<code>__global__</code>修饰符的函数时，编译器就会将该函数编译为在device上运行。在此例子中，函数<code>kernel()</code>将被交给编译device代码的编译器，而<code>main()</code>函数将被交给host编译器。</p>
+<p>而对<code>kernel()</code>函数的调用语句则使用了一种尖括号和两个数值的方式。这将在后面相似介绍。</p>
+<h3 id="3-2-3-传递参数"><a href="#3-2-3-传递参数" class="headerlink" title="3.2.3 传递参数"></a>3.2.3 传递参数</h3><p>以下代码展示了如何像核函数传递参数并取得返回结果</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span></span></span><br><span class="line"></span><br><span class="line">__<span class="function">global__ <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> *c)</span></span>&#123;</span><br><span class="line">  *c = a+b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> c;</span><br><span class="line">  <span class="keyword">int</span> *dev_c;</span><br><span class="line">  HANDLE_ERROR(cudaMalloc((<span class="keyword">void</span>**)&amp;dev_c, size(<span class="keyword">int</span>)));</span><br><span class="line"></span><br><span class="line">  add&lt;&lt;&lt;<span class="number">1</span>,<span class="number">1</span>&gt;&gt;&gt;(<span class="number">2</span>,<span class="number">7</span>,dev_c);</span><br><span class="line"></span><br><span class="line">  HANDLE_ERROR(cudaMemcpy(&amp;c,</span><br><span class="line">    dev_c,</span><br><span class="line">    <span class="keyword">sizeof</span>(<span class="keyword">int</span>),</span><br><span class="line">    cudaMemcpyDeviceToHost));</span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">"2+7 = %d\n"</span>,c);</span><br><span class="line">   cudaFree(dev_c);</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上多行代码包含两个概念：</p>
+<ul>
+<li>可以像调用C函数那样将参数传递给核函数</li>
+<li>当设备执行任何有用的操作时，都需要分配内存，例如将计算值返回给主机</li>
+</ul>
+<p><strong>cudaMalloc()函数：</strong>（注意，分配内存的指针不是该函数的返回值，这点与<code>malloc()</code>不同）</p>
+<ul>
+<li>参数一： 一个指针，指向用于保存新分配内存地址的变量。注意，由于C语言中，指针传递是本身也是值传递的，所以为了使指针本身的值（不是指针地址指向的值）可以改变，因此在传递时要使用双重指针void**，这样做的主要原因还是因为分配内存的指针最终不是通过函数返回，而是直接改变参数值导致的（如果传的是一重指针，则改变的是pd指向的内存空间的数据，而不是pd本身，所以pd也就不能指向GPU的内存了）。</li>
+<li>参数二：分配内存的大小</li>
+</ul>
+<p>CUDA C的简单行及其强大功能在很大成都上都是来源于它淡化了主机代码和设备代码之间的差异。然而，程序员一定不能在主机代码中对<code>cudaMalloc()</code>返回的指针进行解引用（Dereference）。主机代码可以将这个指针作为参数传递，对其执行算术运算，甚至可以将其转换为另一种不同的类型。但是，绝对不饿昆虫使用这个指针来读取或写入内存。</p>
+<p>CUDA中对设备指针的使用限制总结如下：</p>
+<ul>
+<li>可以将<code>cudaMalloc()</code>分配的指针传递给在设备上执行的函数</li>
+<li>可以在设备代码中使用<code>cudaMalloc()</code>分配的指针进行内存读写操作</li>
+<li>可以将<code>cudaMalloc()</code>分配的指针传递给在主机上执行的函数</li>
+<li>不能在主机代码中使用<code>cudaMalloc()</code>分配的指针进行内存读写操作</li>
+</ul>
+<p>在主机代码中，可以通过调用<code>cudaMemcpy()</code>来访问设备上的内存。这个函数调用的行为类型与标准C中的<code>memcpy()</code>，只不过多了一个参数来指定设备内存指针究竟是源指针还是目标指针。如，当最后一个参数为<code>cudaMemcpyDeviceToHost</code>时，代表运行时源指针是一个设备指针，而目标指针是以个主机指针。此外还有参数<code>cudaMemcpyHostToDevice</code>和<code>cudaMemcpyDeviceToDevice</code>等，如果源指针和目标指针都是位于主机上，那么可以直接调用标准C的<code>memcpy()</code>函数。</p>
+<h2 id="3-3查询设备"><a href="#3-3查询设备" class="headerlink" title="3.3查询设备"></a>3.3查询设备</h2><p>对于拥有多个支持CUDA的设备，需要通过某种方式来确定使用的是哪一个设备。</p>
+<p>首先，我们希望知道在系统中有多少个设备是支持CUDA架构的，并且这些设备能够运行基于CUDA C编写的核函数。要获得CUDA设备的数量，可以调用<code>cudaGetDeviceCount()</code>。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> count;</span><br><span class="line">HANDLE_ERROR(cudaGetDeviceCount(&amp;count));</span><br></pre></td></tr></table></figure></p>
+<p>在调用<code>cudaGetDeviceCount()</code>后，可以对每个设备进行迭代，并查询各个设备的相关信息。CUDA runtime将返回一个<code>cudaDeviceProp</code>类型的结构，其中包含了设备的相关属性。相关属性的含义可见书p20。可以利用<code>cudaGetDeviceProperties()</code>来获得i号设备的属性:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    cudaDeviceProp prop;</span><br><span class="line">    <span class="keyword">int</span> count;</span><br><span class="line">    cudaGetDeviceCount(&amp;count);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i =<span class="number">0</span> ; i&lt; count; i++)&#123;</span><br><span class="line">	cudaGetDeviceProperties(&amp;prop, i);</span><br><span class="line">  <span class="comment">//对设备的属性执行某些操作</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;count&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在知道了每个可用的属性以后，接下来就可以进行一些具体的操作，如：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;prop.major&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure></p>
+<h2 id="3-4-设备属性的使用"><a href="#3-4-设备属性的使用" class="headerlink" title="3.4 设备属性的使用"></a>3.4 设备属性的使用</h2><p>根据在<code>cudaGetDeviceCount()</code>和<code>cudaGetDeviceProperties()</code>中返回的结果，我们可以对每个设备进行迭代，来找到我们期望的某些达到要求的设备。但是这种迭代操作执行起来有些繁琐，因此CUDA runtime提供了一种自动方式来执行这个迭代操作。首先，找出希望设备拥有的属性并将这些属性填充到一个<code>cudaDeviceProp</code>结构。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cudaDeviceProp prop;</span><br><span class="line"><span class="built_in">memset</span>(&amp;prop, <span class="number">0</span> , <span class="keyword">sizeof</span>(cudaDeviceProp));</span><br><span class="line">prop.major = <span class="number">1</span>;</span><br><span class="line">prop.minor = <span class="number">3</span>;</span><br></pre></td></tr></table></figure></p>
+<p>之后，将该结构传递给<code>cudaChooseDevice()</code>，这样CUDA runtime运行时将查找是否存在某个设备满足这些条件，并返回一个设备ID，我们可以将这个设备ID传递给<code>cudaSetDevice()</code>。随后，所有的设备操作都将在这个设备上执行。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  cudaDeviceProp prop;</span><br><span class="line">  <span class="built_in">memset</span>(&amp;prop, <span class="number">0</span> , <span class="keyword">sizeof</span>(cudaDeviceProp));</span><br><span class="line">  prop.major = <span class="number">1</span>;</span><br><span class="line">  prop.minor = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> dev;</span><br><span class="line">  cudaGetDevice(&amp;dev);</span><br><span class="line"></span><br><span class="line">  cudaChooseDevice(&amp;dev, &amp;prop);</span><br><span class="line">  <span class="built_in">cout</span>&lt;&lt;<span class="string">"ID:"</span>&lt;&lt;dev&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="第四章-CUDA-C并行编程"><a href="#第四章-CUDA-C并行编程" class="headerlink" title="第四章 CUDA C并行编程"></a>第四章 CUDA C并行编程</h1><h2 id="4-1-本章目标"><a href="#4-1-本章目标" class="headerlink" title="4.1 本章目标"></a>4.1 本章目标</h2><ul>
+<li>了解CUDA在实现并行性时采用的一种重要方式。</li>
+<li>用CUDAC编写第一段并行代码</li>
+</ul>
+<h2 id="4-2-CUDA并行编程"><a href="#4-2-CUDA并行编程" class="headerlink" title="4.2 CUDA并行编程"></a>4.2 CUDA并行编程</h2><h3 id="4-2-1-矢量求和运算"><a href="#4-2-1-矢量求和运算" class="headerlink" title="4.2.1 矢量求和运算"></a>4.2.1 矢量求和运算</h3><p>假设有两组数据，将这两组数据中对应的元素两两想加，并将结果保存在第三个数组中。</p>
+<ol>
+<li>基于CPU的矢量求和</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 10</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> *a, <span class="keyword">int</span> *b, <span class="keyword">int</span> *c)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> tid = <span class="number">0</span>; <span class="comment">//这是第0个CPU，因此索引从0开始</span></span><br><span class="line">  <span class="keyword">while</span>(tid&lt;N)&#123;</span><br><span class="line">    c[tid] = a[tid] + b[tid];</span><br><span class="line">    tid += <span class="number">1</span>; <span class="comment">// 由于只有一个CPU，因此每次递增1</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;上面将代码特意写成方便修改为并行代码的形式，如，在双核处理器上，<code>tid</code>的设置可以分别为0和1，tid递增的大小可以改为2等。这就相当于在两个CPU上，一个执行奇数位想加，一个执行偶数位想加。</p>
+<ol>
+<li>基于GPU的矢量求和</li>
+</ol>
+<p>首先给出<code>mian()</code>函数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 10</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> a[N],b[N],c[N];</span><br><span class="line">  <span class="keyword">int</span> *dev_a, *dev_b, *dev_c;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//在GPU上分配内存，注意这里要知道为什么使用void**</span></span><br><span class="line">  cudaMalloc( (<span class="keyword">void</span>**)&amp;dev_a, N*<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">  cudaMalloc( (<span class="keyword">void</span>**)&amp;dev_a, N*<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">  cudaMalloc( (<span class="keyword">void</span>**)&amp;dev_a, N*<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line"></span><br><span class="line">  ...<span class="comment">//创建a，b数组并赋值</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">//将数组a，b复制到GPU</span></span><br><span class="line">  cudaMemcpy(dev_a, a, N*<span class="keyword">sizeof</span>(<span class="keyword">int</span>),cudaMemcpyHostToDevice);</span><br><span class="line">  cudaMemcpy(dev_b, b, N*<span class="keyword">sizeof</span>(<span class="keyword">int</span>), cudaMemcpyHostToDevice);</span><br><span class="line"></span><br><span class="line">  add&lt;&lt;&lt;N,<span class="number">1</span>&gt;&gt;&gt;(dev_a, dev_b, dev_c);</span><br><span class="line"></span><br><span class="line">  <span class="comment">//将数组c从GPU复制到CPU</span></span><br><span class="line">  cudaMemcpy(c, dev_c, N*<span class="keyword">sizeof</span>(<span class="keyword">int</span>), cudaMemcpyDeviceToHost);</span><br><span class="line"></span><br><span class="line">  ...<span class="comment">//显式结果</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">//释放GPU上分配的内存</span></span><br><span class="line">  cudaFree(dev_a);</span><br><span class="line">  cudaFree(dev_b);</span><br><span class="line">  cudaFree(dev_c);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看一下核函数的调用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">add&lt;&lt;&lt;N,1&gt;&gt;&gt;(dev_a, dev_b, dev_c);</span><br></pre></td></tr></table></figure></p>
+<p>尖括号中的两个数值将传递给runtime，作用是告诉runtime如何启动核函数：</p>
+<ul>
+<li>第一个参数：表示设备在执行款核函数时使用的并行线程块的数量。</li>
+<li>参数二：需要多少个线程格（Grid）（一格表示N个线程块的集合）</li>
+</ul>
+<p>我们将每个并行执行环境都称为一个线程块（Block），对于此例，将有N个线程块在GPU上运行（N个运行核函数的副本）。</p>
+<p>问题：如何在代码中知道当前正在运行的是哪一个线程块？</p>
+<p>回答：利用变量<code>blockIdx.x</code> 。 这是一个内置变量，在CUDA runtime中已经预先定义了这个变量，无需在代码中声明，该变量中包含的值就是当前执行设备代码的线程块的索引。</p>
+<p>接下来是GPU版本的<code>add()</code>函数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">__<span class="function">global__ <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> *a, <span class="keyword">int</span> *b, <span class="keyword">int</span> *c)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> tid = blockIdx.x;  <span class="comment">//计算机该索引处的数据</span></span><br><span class="line">  <span class="keyword">if</span>(tid &lt; N)</span><br><span class="line">  c[tid] = a[tid] + b[tid];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当启动核函数时，我们将并行线程块的数量指定为N。这个并行线程块集合就称为一个“线程格（Grid）”。因此，此例表示我们想要一个一维的线程格，其中每个线程格包含N个线程块，每个线程块的<code>blockInx.x</code>的值都是不同的，cuda会为每个设备代码副本提供不同的<code>blockInx.x</code>。</p>
+<p>需要注意的一点是：在启动线程块数组时，数组每一维（N）的最大数量不能超过65535。这是一种硬件限制，如过启动的线程块数量超过了这个限制，那么程序将运行失败。</p>
+<h3 id="4-2-2-一个有趣的示例"><a href="#4-2-2-一个有趣的示例" class="headerlink" title="4.2.2 一个有趣的示例"></a>4.2.2 一个有趣的示例</h3><p>绘制Julia集的曲线</p>
+<p>Julia集算法：通过下面的迭代等式对复平面中的点求值。如果在计算某个点时，迭代等式的计算结果是发散的，那么这个点就不属于Julia集合。</p>
+<script type="math/tex; mode=display">Z_{n+1} = Z_n^2 + C</script><ol>
+<li>基于CPU的Julia集</li>
+</ol>
+<p>先看main函数，它通过工具库创建了一个大小合适的位图图像，接着，将一个指向位图数据的指针传递给了核函数</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//julia.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/core/core.hpp"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/highgui/highgui.hpp"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">kernel</span><span class="params">(Mat&amp; M)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">julia</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>;</span><br><span class="line"><span class="comment">//定义一个通用结构来保存复数值,r为实部，i为虚部</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">cuComplex</span>&#123;</span></span><br><span class="line">    <span class="keyword">float</span> r;</span><br><span class="line">    <span class="keyword">float</span> i;</span><br><span class="line">    cuComplex(<span class="keyword">float</span> a , <span class="keyword">float</span> b ):r(a),i(b)&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">float</span> <span class="title">magnitude2</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> r*r+i*i;&#125;</span><br><span class="line"></span><br><span class="line">    cuComplex <span class="keyword">operator</span>*(<span class="keyword">const</span> cuComplex&amp; a)&#123;</span><br><span class="line">	<span class="keyword">return</span> cuComplex(r*a.r-i*a.i, i*a.r + r*a.i);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    cuComplex <span class="keyword">operator</span>+(<span class="keyword">const</span> cuComplex&amp; a)&#123;</span><br><span class="line">	<span class="keyword">return</span> cuComplex(a.r+r, a.i+i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> DIM = <span class="number">800</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  cv::<span class="function">Mat <span class="title">M</span><span class="params">(DIM,DIM,CV_8UC1)</span></span>;</span><br><span class="line">  kernel(M);</span><br><span class="line">	imshow(<span class="string">"Test"</span>,M);   <span class="comment">//窗口中显示图像</span></span><br><span class="line">	imwrite(<span class="string">"E:/灰度图.jpg"</span>,M);    <span class="comment">//保存生成的图片</span></span><br><span class="line">	waitKey(<span class="number">0</span>); <span class="comment">//等待按任意键后窗口自动关闭</span></span><br><span class="line">	getchar();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">kernel</span><span class="params">(Mat&amp; M)</span></span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> y=<span class="number">0</span>;y&lt;M.rows;y++)<span class="comment">//遍历每一行每一列并设置其像素值</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> x=<span class="number">0</span>;x&lt;M.cols;x++)</span><br><span class="line">		&#123;</span><br><span class="line">		    <span class="keyword">int</span> juliaValue = julia(x,y);</span><br><span class="line">		    M.at&lt;uchar&gt;(x,y)=<span class="number">155</span>*juliaValue+<span class="number">100</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//判断函数，如果该点属于集合返回1，否则返回0</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">julia</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">float</span> scale = <span class="number">1.5</span>;</span><br><span class="line">    <span class="keyword">float</span> jx = scale*(<span class="keyword">float</span>)(DIM/<span class="number">2</span> - x)/(DIM / <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">float</span> jy = scale*(<span class="keyword">float</span>)(DIM/<span class="number">2</span> - y)/(DIM / <span class="number">2</span>);</span><br><span class="line">    <span class="function">cuComplex <span class="title">c</span><span class="params">(<span class="number">-0.8</span>, <span class="number">0.154</span>)</span></span>;</span><br><span class="line">    <span class="function">cuComplex <span class="title">a</span><span class="params">(jx,jy)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i&lt;<span class="number">200</span>; i++)&#123;</span><br><span class="line">      a = a*a+c;</span><br><span class="line">      <span class="keyword">if</span>(a.magnitude2() &gt; <span class="number">1000</span>)</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面是<code>kernel</code>核函数对将要绘制的所有点进行迭代，并在每次迭代时调用<code>julia</code>来判断该点是否属于Julia集（“是”则涂红色，“否”则涂黑色）。</p>
+<p><code>该</code>函数首先将像素坐标转换为复数空间的坐标，为了将复平面的原点定位到图像中心，代码将像素位置移动了<code>MID/2</code>，然后，为了确保图像的范围为-1.0到1.0，我们将图像的坐标缩放了<code>DIM/2</code>倍。在计算处复空间中的点之后，需要判断这个点是否属于Julia集。通过迭代判断（本示例迭代200次，在每次迭代完成后，都会判断结果是否超过某个阈值），如果属于集合，就返回1，否则，返回0。最后运行指令<code>g++ julia.cpp</code>pkg-config —cflags —libs opencv<code>-o julia</code>生成的效果图如下：</p>
+<p><img src="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fvjoriuw74j20lw0lxdia.jpg" alt=""></p>
+<ol>
+<li>基于GPU的Julia集</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include &quot;opencv2/core/core.hpp&quot;</span><br><span class="line">#include &quot;opencv2/highgui/highgui.hpp&quot;</span><br><span class="line"></span><br><span class="line">using namespace cv;</span><br><span class="line">__global__ void  kernel(unsigned char* ptr);</span><br><span class="line">__device__ int julia(int x, int y);</span><br><span class="line">const int DIM = 800;</span><br><span class="line">struct cuComplex&#123;</span><br><span class="line">    float r;</span><br><span class="line">    float i;</span><br><span class="line">    __device__ cuComplex(float a , float b ):r(a),i(b)&#123;&#125;</span><br><span class="line">    __device__ float magnitude2()&#123;return r*r+i*i;&#125;</span><br><span class="line"></span><br><span class="line">    __device__ cuComplex operator*(const cuComplex&amp; a)&#123;</span><br><span class="line">	return cuComplex(r*a.r-i*a.i, i*a.r + r*a.i);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    __device__ cuComplex operator+(const cuComplex&amp; a)&#123;</span><br><span class="line">	return cuComplex(a.r+r, a.i+i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">int main()&#123;</span><br><span class="line"></span><br><span class="line">    cv::Mat M(DIM,DIM,CV_8UC1);</span><br><span class="line"></span><br><span class="line">    unsigned char bitmap[DIM][DIM];    </span><br><span class="line">    unsigned char *dev_bitmap; //定义一定char二维数组，用来存储GPU传过来的结果</span><br><span class="line">    cudaMalloc(&amp;dev_bitmap, DIM*DIM);</span><br><span class="line"></span><br><span class="line">    dim3 grid(DIM,DIM);</span><br><span class="line">    kernel&lt;&lt;&lt;grid,1&gt;&gt;&gt;(dev_bitmap);</span><br><span class="line"></span><br><span class="line">    cudaMemcpy(bitmap,dev_bitmap, DIM*DIM , cudaMemcpyDeviceToHost);</span><br><span class="line">   	for (int y=0;y&lt;M.rows;y++)        //遍历每一行每一列并设置其像素值</span><br><span class="line">	&#123;</span><br><span class="line">		for (int x=0;x&lt;M.cols;x++)</span><br><span class="line">		&#123;</span><br><span class="line">		    M.at&lt;uchar&gt;(x,y)=bitmap[y][x];</span><br><span class="line">		    //M.at&lt;uchar&gt;(x,y)=juliaValue+100;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">    imshow(&quot;Test&quot;,M);   //窗口中显示图像</span><br><span class="line">    waitKey(0);</span><br><span class="line">    getchar();</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">__global__ void  kernel(unsigned char* ptr)&#123;</span><br><span class="line">    int x = blockIdx.x;</span><br><span class="line">    int y = blockIdx.y;</span><br><span class="line">    int offset = x+ y*gridDim.x;</span><br><span class="line">    int juliaValue = julia(x,y);</span><br><span class="line">    ptr[offset] = 255*juliaValue;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">__device__ int julia(int x, int y)&#123;</span><br><span class="line">    const float scale = 1.5;</span><br><span class="line">    float jx = scale*(float)(DIM/2 - x)/(DIM/2);</span><br><span class="line">    float jy = scale*(float)(DIM/2 - y)/(DIM/2);</span><br><span class="line">    cuComplex c(-0.8, 0.156);</span><br><span class="line">    cuComplex a(jx,jy);</span><br><span class="line">    int i = 0 ;</span><br><span class="line">    for(i = 0; i&lt;200; i++)&#123;</span><br><span class="line">	a = a*a +c;</span><br><span class="line">	if(a.magnitude2() &gt; 1000)</span><br><span class="line">	    return 0;</span><br><span class="line">    &#125;</span><br><span class="line">    return 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里需要注意的是，在程序中指定了多个并行线程块来执行函数kernel。并且，使用了一种新的类型来声明了一个二维的线程格：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">dim3 <span class="title">grid</span><span class="params">(DIM, DIM)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>类型dim3并不是标准C定义的类型，它可以表是一个三维数组，至于为什么不直接用二维数组，CUDA开发人员主要是为了日后的扩展，所以用三维数组来表示二维数组，数组的第三维默认为1。下面的代码将线程块grid传递给CUDA运行时：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kernel&lt;&lt;&lt;grid,<span class="number">1</span>&gt;&gt;&gt;(dev_bitmap);</span><br></pre></td></tr></table></figure></p>
+<p>代码中还使用了修饰符<code>__device__</code>，这代表代码将在GPU而不是主机上运行，由于这些函数已声明为<code>__device__</code>，因此只能从其他<code>__device__</code>函数或者<code>__global__</code>函数中调用它们。</p>
+<p>通常，我们将在GPU上启动的线程块集合称为一个线程格。从名字的含义可以看出，线程格既可以是一维的线程块集合，也可以是二维的线程块集合。核函数的每个副本都可以通过内置变量<code>blockIdx</code>来判断哪个线程块正在执行它。塌秧，还可以通过内置变量<code>gridDim</code>来获得线程格的大小。</p>
+<h1 id="第五章-线程协作"><a href="#第五章-线程协作" class="headerlink" title="第五章 线程协作"></a>第五章 线程协作</h1><h2 id="5-1-本章目标"><a href="#5-1-本章目标" class="headerlink" title="5.1 本章目标"></a>5.1 本章目标</h2><ul>
+<li>了解CUDA C中的线程</li>
+<li>了解不同线程之间的通信机制</li>
+<li>了解并行执行线程的同步机制</li>
+</ul>
+<h2 id="5-2-并行线程块的分解"><a href="#5-2-并行线程块的分解" class="headerlink" title="5.2 并行线程块的分解"></a>5.2 并行线程块的分解</h2><p>当启动核函数时，我们会指定第一个参数的值，也就是指定多个并行副本，我们将这些兵行副本称为线程块（Block）。尖括号中的第二个参数表示CUDA运行时在每个线程块中创建的线程数量，因此，总共启动的线程数量可按下面的公式计算：</p>
+<script type="math/tex; mode=display">N个线程块 \times M个线程每线程块 = N个并行线程</script><h3 id="5-2-1-矢量求和：重新回顾"><a href="#5-2-1-矢量求和：重新回顾" class="headerlink" title="5.2.1 矢量求和：重新回顾"></a>5.2.1 矢量求和：重新回顾</h3><p>使用线程块中的并行线程，能够完成一些并行线程块无法完成的工作。</p>
+<h4 id="1-使用线程实现GPU上的矢量求和（即在一个线程块内设置多条线程）"><a href="#1-使用线程实现GPU上的矢量求和（即在一个线程块内设置多条线程）" class="headerlink" title="1.使用线程实现GPU上的矢量求和（即在一个线程块内设置多条线程）"></a>1.使用线程实现GPU上的矢量求和（即在一个线程块内设置多条线程）</h4><p>相较于之前的矢量求和，需要修改两个地方，第一是将下面的代码#1式改成代码#2式：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">add&lt;&lt;&lt;N,<span class="number">1</span>&gt;&gt;&gt;(dev_a, dev_b, dev_C);</span><br><span class="line"></span><br><span class="line">add&lt;&lt;&lt;<span class="number">1</span>,N&gt;&gt;&gt;(dev_a, dev_b, dev_c);</span><br></pre></td></tr></table></figure></p>
+<p>第二是修改索引方式，有限现在只有一个线程块，所以不能再用<code>blockIdx</code>来获取索引了，而应使用线程索引，如下所示：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> tid = threadIdx.x;</span><br></pre></td></tr></table></figure></p>
+<p>完整的代码如下所是：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">10</span>;</span><br><span class="line"><span class="comment">/*#define N 20*/</span></span><br><span class="line">__<span class="function">global__ <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> * dev_a, <span class="keyword">int</span>* dev_b, <span class="keyword">int</span>* dev_c)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> tid = threadIdx.x; <span class="comment">//注意此处使用的是线程索引</span></span><br><span class="line">    <span class="keyword">if</span>(tid&lt;N)</span><br><span class="line">    dev_c[tid] = dev_a[tid] + dev_b[tid];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a[N];</span><br><span class="line">    <span class="keyword">int</span> b[N];</span><br><span class="line">    <span class="keyword">int</span> c[N];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;N;i++)</span><br><span class="line">	a[i]=i;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;N;i++)</span><br><span class="line">	b[i]=i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span>* dev_a;</span><br><span class="line">    <span class="keyword">int</span>* dev_b;</span><br><span class="line">    <span class="keyword">int</span>* dev_c;</span><br><span class="line"></span><br><span class="line">    cudaMalloc(&amp;dev_a, <span class="keyword">sizeof</span>(<span class="keyword">int</span>)*N);</span><br><span class="line">    cudaMalloc(&amp;dev_b, <span class="keyword">sizeof</span>(<span class="keyword">int</span>)*N);</span><br><span class="line">    cudaMalloc(&amp;dev_c, <span class="keyword">sizeof</span>(<span class="keyword">int</span>)*N);</span><br><span class="line"></span><br><span class="line">    cudaMemcpy(dev_a,a,<span class="keyword">sizeof</span>(<span class="keyword">int</span>)*N, cudaMemcpyHostToDevice); <span class="comment">//第一个参数为目的地址，第二个为原地址，第三个为空间大小</span></span><br><span class="line">    cudaMemcpy(dev_b,b,<span class="keyword">sizeof</span>(<span class="keyword">int</span>)*N, cudaMemcpyHostToDevice);</span><br><span class="line"></span><br><span class="line">    add&lt;&lt;&lt;<span class="number">1</span>,N&gt;&gt;&gt;(dev_a,dev_b,dev_c); <span class="comment">//线程块数为1，每块内的线程数为N</span></span><br><span class="line"></span><br><span class="line">    cudaMemcpy(c, dev_c, <span class="keyword">sizeof</span>(<span class="keyword">int</span>)*N, cudaMemcpyDeviceToHost);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> x:c) <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;x&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-在GPU上对更长的矢量求和"><a href="#2-在GPU上对更长的矢量求和" class="headerlink" title="2.在GPU上对更长的矢量求和"></a>2.在GPU上对更长的矢量求和</h4><p>之前在第四章我们提到，由于硬件原因，线程块的数量不能超过65535。 同样，对于启动核函数时每个线程块中的线程数量，也有一定的限制。具体来说，最大的线程数量不能超过设备属性结构中maxThreadsPerBlock域的值。对于很多图形处理器而言，这个限制值是每个线程块512个线程（目前GTX 980Ti为1024个）。通过下面的代码可以获得当前机器上的最大线程数：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    cudaDeviceProp prop;</span><br><span class="line">    <span class="keyword">int</span> count;</span><br><span class="line">    cudaGetDeviceCount(&amp;count);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i =<span class="number">0</span> ; i&lt; count; i++)&#123;</span><br><span class="line">	cudaGetDeviceProperties(&amp;prop, i);</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;count&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;prop.maxThreadsPerBlock&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//output：1024</span></span><br></pre></td></tr></table></figure></p>
+<p>为了通过并行对长度大于1024的矢量进行相加，必须将线程和线程块结合起来才能实现，因此仍然需要改动两个地方：核函数中的索引计算方法和核函数的调用方式：（使用多个线程块，并且每个线程块包含多个线程）</p>
+<p>首先是修改索引计算方法：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">int</span> tid = threadIdx.x + blockIdx.x * blockDim.x;</span><br></pre></td></tr></table></figure></p>
+<p>在上面的赋值语句中使用了一个新的内置变量，<code>blockDim</code>。对于所有线程块来说，这个变量是一个常数，保存的是线程块中每一维的线程数量。（回顾第四章，在gridDim中保存了一个类似的值，即在线程格中每一维的线程块数量。但要知道，gridDim是二维的，blockDim是三维的，只是很少用的高维索引值）</p>
+<p>另一处修改是核函数调用本身，为了保证最终启动的线程数量不少于预期量，可以通过一种常见的技术来对需要启动的线程块数量进行向上取整，如下所示：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">add&lt;&lt;&lt; (N+<span class="number">127</span>)/<span class="number">128</span>, <span class="number">128</span> &gt;&gt;&gt; (dev_a, dev_b, dev_c);</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码当N不是128的整数倍时，会启动过多的线程，这时候，判断语句<code>if (tid&lt;N)</code>就表现处作用了，它可以确保进行计算的线程的不会对越过数组边界的内存进行读取或写入：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (tid &lt; N)</span><br><span class="line">  c[tid] = a[tid] + b[tid];</span><br></pre></td></tr></table></figure></p>
+<h4 id="3-在GPU上对任意长度的矢量求和"><a href="#3-在GPU上对任意长度的矢量求和" class="headerlink" title="3.在GPU上对任意长度的矢量求和"></a>3.在GPU上对任意长度的矢量求和</h4>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/读书笔记/" rel="tag"><i class="fa fa-tag"></i> 读书笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/计算机视觉-论文解读-FCN/" rel="prev" title="Fully Convolutional Networks for Semantic Segmentation---ICCV">
+                <i class="fa fa-chevron-left"></i> Fully Convolutional Networks for Semantic Segmentation---ICCV
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/计算机视觉-论文解读-DenseNet/" rel="next" title="DenseNet-xxx">
+                DenseNet-xxx <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">131</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章-为什么需要CUDA"><span class="nav-text">第一章 为什么需要CUDA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-本章目标"><span class="nav-text">1.1 本章目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-并行处理的历史"><span class="nav-text">1.2 并行处理的历史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-GPU计算的崛起"><span class="nav-text">1.3 GPU计算的崛起</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-CUDA"><span class="nav-text">1.4 CUDA</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-1-CUDA架构是什么"><span class="nav-text">1.4.1 CUDA架构是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-2-CUDA架构的使用"><span class="nav-text">1.4.2 CUDA架构的使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-CUDA的应用"><span class="nav-text">1.5 CUDA的应用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二张-入门"><span class="nav-text">第二张 入门</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-本章目标"><span class="nav-text">2.1 本章目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-开发环境"><span class="nav-text">2.2 开发环境</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三章-CUDA简介"><span class="nav-text">第三章 CUDA简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-本章目标"><span class="nav-text">3.1 本章目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-第一个程序"><span class="nav-text">3.2 第一个程序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-1-Hello，World！"><span class="nav-text">3.2.1 Hello，World！</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-2-核函数调用"><span class="nav-text">3.2.2 核函数调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-3-传递参数"><span class="nav-text">3.2.3 传递参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3查询设备"><span class="nav-text">3.3查询设备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-设备属性的使用"><span class="nav-text">3.4 设备属性的使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四章-CUDA-C并行编程"><span class="nav-text">第四章 CUDA C并行编程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-本章目标"><span class="nav-text">4.1 本章目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-CUDA并行编程"><span class="nav-text">4.2 CUDA并行编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-1-矢量求和运算"><span class="nav-text">4.2.1 矢量求和运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-2-一个有趣的示例"><span class="nav-text">4.2.2 一个有趣的示例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第五章-线程协作"><span class="nav-text">第五章 线程协作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-本章目标"><span class="nav-text">5.1 本章目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-并行线程块的分解"><span class="nav-text">5.2 并行线程块的分解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-1-矢量求和：重新回顾"><span class="nav-text">5.2.1 矢量求和：重新回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-使用线程实现GPU上的矢量求和（即在一个线程块内设置多条线程）"><span class="nav-text">1.使用线程实现GPU上的矢量求和（即在一个线程块内设置多条线程）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-在GPU上对更长的矢量求和"><span class="nav-text">2.在GPU上对更长的矢量求和</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-在GPU上对任意长度的矢量求和"><span class="nav-text">3.在GPU上对任意长度的矢量求和</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">471k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">7:08</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

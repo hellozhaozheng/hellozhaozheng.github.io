@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="004. Median of Two Sorted ArraysDescriptionThere are two sorted arrays nums1 and nums2 of size m and n respectively. Find the median of the two sorted arrays. The overall run time complexity should be">
+<meta name="keywords" content="算法刷题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode算法题(Hard)">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/面试-算法刷题-LeetCode-3/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="004. Median of Two Sorted ArraysDescriptionThere are two sorted arrays nums1 and nums2 of size m and n respectively. Find the median of the two sorted arrays. The overall run time complexity should be">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-15T02:44:43.364Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LeetCode算法题(Hard)">
+<meta name="twitter:description" content="004. Median of Two Sorted ArraysDescriptionThere are two sorted arrays nums1 and nums2 of size m and n respectively. Find the median of the two sorted arrays. The overall run time complexity should be">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/面试-算法刷题-LeetCode-3/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>LeetCode算法题(Hard) | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">131</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-linux">
+    <a href="/categories/Linux/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-面试">
+    <a href="/categories/面试/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其它">
+    <a href="/categories/其它/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其它</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">25</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-life">
+    <a href="/life/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-child"></i> <br />生活杂记</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/面试-算法刷题-LeetCode-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">LeetCode算法题(Hard)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-03 08:54:54" itemprop="dateCreated datePublished" datetime="2018-10-03T08:54:54+08:00">2018-10-03</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/面试/" itemprop="url" rel="index"><span itemprop="name">面试</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">11k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">10 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="004-Median-of-Two-Sorted-Arrays"><a href="#004-Median-of-Two-Sorted-Arrays" class="headerlink" title="004. Median of Two Sorted Arrays"></a>004. Median of Two Sorted Arrays</h1><h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>There are two sorted arrays nums1 and nums2 of size m and n respectively.</p>
+<p>Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).</p>
+<p>You may assume nums1 and nums2 cannot be both empty.</p>
+<p>Example 1:</p>
+<p>nums1 = [1, 3]<br>nums2 = [2]</p>
+<p>The median is 2.0<br>Example 2:</p>
+<p>nums1 = [1, 2]<br>nums2 = [3, 4]</p>
+<p>The median is (2 + 3)/2 = 2.5</p>
+<h2 id="解法一-根据中位数的特性"><a href="#解法一-根据中位数的特性" class="headerlink" title="解法一: 根据中位数的特性"></a>解法一: 根据中位数的特性</h2><p>题目要求需要时间复杂度为 $O(log (m+n))$.</p>
+<p>首先我们思考中位数的作用: 中位数可以将一个数组分成两个长度相同的部分, 并且一部分中的数字总比另一部分中的小</p>
+<p>那么对于两个数组的情况, 我们需要做的就是找到一个数字, 可以使这两个数组分别分成两部分, 并且两部分长度相同, 前一部分比后一部分的数字小</p>
+<p>首先,我们将数组A分成两部分, 由于A有m个数字,  所以它可以有m中不同的分法, 我们以 i 为界限, 将A分成两部分, 前一部分的长度为i (从0到 i-1 ), 后一部分的长度为 m-i (从 i 到 m-1):</p>
+<p>A[1,2,…,i-1] | A[i, i+1, …, m-1]</p>
+<p>同理,数组 B 也可以做如下分割:</p>
+<p>B[1,2,…,j-1] | B[j, j+1, …, n-1]</p>
+<p>因此, 两个数组A和B都被分到了两部分, 将它们合起来, 第一部分的数字为 A[1,2,…,i-1] 和 B[1,2,…,j-1], 第二部分的数字为 A[i, i+1, …, m-1] 和 B[j, j+1, …, n-1], 我们并不关系两部分内部的顺序, 我们只关心一件事, 那就是: <strong>第一部分和第二部分的长度相等, 并且第一部分的数字都比第二部分小</strong> , 于是, i 和 j和取值就必须满足下列关系:</p>
+<p>i+j = m-i + n-j 或 m-i + n-j + 1   (加1的原因是因为有可能数组总长为奇数, 我们令前一部分比后一部分多1个元素)</p>
+<p>A[i-1] &lt;= B[j] 或 i==0 (说明A全部在后半段, 因此无需判断A的元素是否小于后半段的第一个B元素)</p>
+<p>B[j-1] &lt;= A[i] 或 i==m (说明A全部在前半段, 因此无需判断A的元素是否大于前半段的最后一个B元素)</p>
+<p>由于上式 i+j = m-i + n-j 或 m-i + n-j + 1 , 因此有 j = (m+n+1)/2 - i ;  (向下取整).  故而可以只对 i 进行判断i是否越界, 只要i满足条件,  j就不会等于0或n(即不会越界)</p>
+<p>根据上面的分析, 解题过程如:</p>
+<ul>
+<li>根据两数组的长度, 将短的一方设为A数组 (j要对应较长的那个数组, 否则的话j有可能小于0 ), 令start=0, end=A.size</li>
+<li>令 i=(start+end+1)/2 (加1 的原因是因为i代表的含义是前一部分有i个元素)</li>
+<li>计算j = (m+n+1)/2 - i</li>
+<li>判断当前 i和j是否满足条件,有三种情况(对这三种情况不断重复, 直到i,j位置刚刚好):<ul>
+<li>A[i-1] &gt; B[j] 或 i 越界 , 说明 i 的位置过大, 令 end = i-1</li>
+<li>B[j-1] &gt; A[i] 或 i 越界 , 说明 i 的位置过小, 令 start = i+1;</li>
+<li>其他情况(A[i-1] &lt;= B[j] 或 i==0 并且 B[j-1] &lt;= A[i] 或 i==m), 说明 i 和 j的位置刚刚好</li>
+</ul>
+</li>
+<li>当i,j位置刚好时, 根据数组整体长度的奇偶, 返回正确的中位数:<ul>
+<li>奇数: 返回前半段的最大元素</li>
+<li>偶数: 返回前半段最大元素和后半段最小元素的平均值<br>-<h3 id="非递归写法"><a href="#非递归写法" class="headerlink" title="非递归写法"></a>非递归写法</h3></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">findMedianSortedArrays</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums1.size() &gt; nums2.size())&#123;</span><br><span class="line">            nums1.swap(nums2);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> m = nums1.size();</span><br><span class="line">        <span class="keyword">int</span> n = nums2.size();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> start = <span class="number">0</span>, end=m;</span><br><span class="line">        <span class="keyword">while</span>(start&lt;=end)&#123;</span><br><span class="line">            <span class="keyword">int</span> i = (start+end+<span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">int</span> j = (n+m+<span class="number">1</span>)/<span class="number">2</span> - i;</span><br><span class="line">            <span class="keyword">if</span>(i&gt;start &amp;&amp; nums1[i<span class="number">-1</span>] &gt; nums2[j])  <span class="comment">//注意 , 只要i&gt;start, j就一定不会超出数组限制</span></span><br><span class="line">                end = i<span class="number">-1</span>; <span class="comment">//i太大</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(i&lt;end &amp;&amp; nums2[j<span class="number">-1</span>] &gt; nums1[i])</span><br><span class="line">                start = i+<span class="number">1</span>; <span class="comment">// i太小</span></span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">int</span> leftmax;<span class="comment">// 取左边最大的</span></span><br><span class="line">                <span class="keyword">if</span>(i==<span class="number">0</span>) leftmax=nums2[j<span class="number">-1</span>];  </span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(j==<span class="number">0</span>) leftmax=nums1[i<span class="number">-1</span>];</span><br><span class="line">                <span class="keyword">else</span> leftmax = max(nums1[i<span class="number">-1</span>], nums2[j<span class="number">-1</span>]) ;</span><br><span class="line">                <span class="keyword">if</span>( (n+m)%<span class="number">2</span> == <span class="number">1</span>) <span class="keyword">return</span> leftmax;  </span><br><span class="line"></span><br><span class="line">                <span class="keyword">int</span> rightmin; <span class="comment">// 取右边最小的</span></span><br><span class="line">                <span class="keyword">if</span>(i==m) rightmin = nums2[j];</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(j==n) rightmin = nums1[i];</span><br><span class="line">                <span class="keyword">else</span> rightmin = min(nums1[i] ,nums2[j]);</span><br><span class="line">                <span class="keyword">return</span> (leftmax+rightmin) / <span class="number">2.0</span>;</span><br><span class="line">            &#125;        </span><br><span class="line">        &#125;        </span><br><span class="line">       <span class="comment">// return 0.0;  //因为, 两数组不会同时为空, 所以这句话主要用于调试</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="递归写法"><a href="#递归写法" class="headerlink" title="递归写法"></a>递归写法</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">findMedianSortedArrays</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums1.size() &lt;= nums2.size())</span><br><span class="line">            <span class="keyword">return</span> helper(nums1, <span class="number">0</span> , nums1.size(),nums2);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> helper(nums2, <span class="number">0</span> , nums2.size(),nums1);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;    </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">helper</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="keyword">int</span> start1, <span class="keyword">int</span> end1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums2)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = (start1+end1+<span class="number">1</span>)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">int</span> j = (nums1.size()+nums2.size()+<span class="number">1</span>)/<span class="number">2</span> - i;</span><br><span class="line">        <span class="keyword">if</span>(start1 &gt; end1) <span class="keyword">return</span> <span class="number">0.0</span>;</span><br><span class="line">        <span class="keyword">if</span>( (i==<span class="number">0</span> || nums1[i<span class="number">-1</span>]&lt;=nums2[j]) &amp;&amp; (i==nums1.size() || nums2[j<span class="number">-1</span>]&lt;=nums1[i]))&#123; <span class="comment">// 如果找到i</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">int</span> res11, res12;  </span><br><span class="line">            <span class="keyword">int</span> res21, res22;</span><br><span class="line">            <span class="comment">// 首先将左边部分的两个数组分别赋值, 如果i或j为0, 说明对应数组在左边</span></span><br><span class="line">            <span class="comment">//只有0个元素 , 将其赋值为INT_MIN(因为要取max(res11, res21))</span></span><br><span class="line">            <span class="keyword">if</span>(i==<span class="number">0</span>) res11= INT_MIN;          </span><br><span class="line">            <span class="keyword">else</span> res11=nums1[i<span class="number">-1</span>];</span><br><span class="line">            <span class="keyword">if</span>(j==<span class="number">0</span>) res21= INT_MIN;</span><br><span class="line">            <span class="keyword">else</span> res21=nums2[j<span class="number">-1</span>];            </span><br><span class="line">            <span class="comment">//同理, 对右边进行处理, 取min(res12, res22)</span></span><br><span class="line">            <span class="keyword">if</span>(i==nums1.size()) res12= INT_MAX;</span><br><span class="line">            <span class="keyword">else</span> res12=nums1[i];</span><br><span class="line">            <span class="keyword">if</span>(j==nums2.size()) res22= INT_MAX;</span><br><span class="line">            <span class="keyword">else</span> res22=nums2[j];</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 根据数组奇偶个数返回结果</span></span><br><span class="line">            <span class="keyword">if</span>((nums1.size() + nums2.size())%<span class="number">2</span> == <span class="number">1</span> )&#123;</span><br><span class="line">                <span class="keyword">return</span> max(res11, res21);</span><br><span class="line">            &#125;                </span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> ( max(res11,res21)+min(res12,res22) ) / <span class="number">2.0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(nums1[i<span class="number">-1</span>] &gt; nums2[j])&#123;</span><br><span class="line">            <span class="keyword">return</span> helper(nums1, start1, i<span class="number">-1</span>, nums2);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> helper(nums1, i+<span class="number">1</span>, end1, nums2);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="010"><a href="#010" class="headerlink" title="010."></a>010.</h1><h2 id="Description-1"><a href="#Description-1" class="headerlink" title="Description"></a>Description</h2><h2 id="解法一-递归实现-速度很慢-只超过0-97-的提交"><a href="#解法一-递归实现-速度很慢-只超过0-97-的提交" class="headerlink" title="解法一: 递归实现( 速度很慢, 只超过0.97%的提交)"></a>解法一: 递归实现( 速度很慢, 只超过0.97%的提交)</h2><p>采用递归法, 首先判断当前字母后面是否是’ * ‘, ,如果是, 则需要分别进行下面两种情况的判断:</p>
+<ul>
+<li>当前字母出现0次</li>
+<li>当前字母出现1次或以上(前提是当前字母可以匹配)</li>
+</ul>
+<p>其次, 就是终止条件的判断, 总共有三种情况:</p>
+<ul>
+<li>都走到了尽头, 返回ture</li>
+<li>只有p走到了尽头, 返回false</li>
+<li>只有s走到了尽头, 需要查看p后续的值</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isMatch</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> p)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> helper(s, <span class="number">0</span>, p, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">helper</span><span class="params">( <span class="built_in">string</span>&amp; s, <span class="keyword">int</span> s_i, <span class="built_in">string</span>&amp; p, <span class="keyword">int</span> p_i)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(s_i == s.size() &amp;&amp; p_i == p.size()) <span class="keyword">return</span> <span class="literal">true</span>; <span class="comment">// 若都走到了最后, 则返回ture</span></span><br><span class="line">        <span class="keyword">if</span>(p_i == p.size() ) <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">// 若只有p走到了最后, 返回false</span></span><br><span class="line">        <span class="keyword">if</span>(s_i == s.size() &amp;&amp; p_i+<span class="number">1</span>&lt;p.size() &amp;&amp; p[p_i+<span class="number">1</span>] == <span class="string">'*'</span>) <span class="comment">//若只有s走到了最后, 则需要看p后面是否有*, 如果有*, 则仍有可能匹配</span></span><br><span class="line">            <span class="keyword">return</span> helper(s, s_i, p, p_i+<span class="number">2</span>); <span class="comment">// 若没有*,返回false</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(s_i == s.size()) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">if</span>(p_i + <span class="number">1</span> &lt; p.size() &amp;&amp; p[p_i+<span class="number">1</span>] == <span class="string">'*'</span>)&#123; <span class="comment">//如果后面有星号, 则需要进行两种判断</span></span><br><span class="line">            <span class="keyword">bool</span> b1 = helper(s, s_i, p, p_i+<span class="number">2</span>); <span class="comment">// 星号前的字母出现0次</span></span><br><span class="line">            <span class="keyword">bool</span> b2 = <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">if</span>(s[s_i] == p[p_i] || p[p_i] == <span class="string">'.'</span>)</span><br><span class="line">                b2 = helper(s, s_i+<span class="number">1</span>, p , p_i) || helper(s, s_i+<span class="number">1</span>, p, p_i+<span class="number">2</span>);<span class="comment">// 出现一次或一次以上</span></span><br><span class="line">            <span class="keyword">return</span> b1 || b2;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(s[s_i] == p[p_i] || p[p_i] == <span class="string">'.'</span> )&#123;</span><br><span class="line">            <span class="keyword">return</span> helper(s, s_i+<span class="number">1</span>, p, p_i+<span class="number">1</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="解法二-动态规划"><a href="#解法二-动态规划" class="headerlink" title="解法二: 动态规划"></a>解法二: 动态规划</h2><p>This problem has a typical solution using Dynamic Programming. We define the state P[i][j] to be true if s[0..i) matches p[0..j) and false otherwise. Then the state equations are:</p>
+<ul>
+<li>P[i][j] = P[i - 1][j - 1], if p[j - 1] != ‘*’ &amp;&amp; (s[i - 1] == p[j - 1] || p[j - 1] == ‘.’);</li>
+<li>P[i][j] = P[i][j - 2], if p[j - 1] == ‘*’ and the pattern repeats for 0 times;</li>
+<li>P[i][j] = P[i - 1][j] &amp;&amp; (s[i - 1] == p[j - 2] || p[j - 2] == ‘.’), if p[j - 1] == ‘*’ and the pattern repeats for at least 1 times.</li>
+</ul>
+<p>Putting these together, we will have the following code.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isMatch</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> p)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">bool</span> dp[s.size()+<span class="number">1</span>][p.size()+<span class="number">1</span>]&#123;<span class="number">0</span>&#125;;</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>]=<span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i =<span class="number">0</span>; i&lt;s.size()+<span class="number">1</span>; i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>;j&lt;p.size()+<span class="number">1</span>;j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(p[j<span class="number">-1</span>] == <span class="string">'*'</span>) <span class="comment">//  注意这里是j-1</span></span><br><span class="line">                    dp[i][j] =  ( j &gt; <span class="number">1</span> &amp;&amp; dp[i][j<span class="number">-2</span>] )|| ( i&gt;<span class="number">0</span> &amp;&amp; (s[i<span class="number">-1</span>] == p[j<span class="number">-2</span>] || p[j<span class="number">-2</span>] == <span class="string">'.'</span>) &amp;&amp; dp[i<span class="number">-1</span>][j]);  <span class="comment">// 注意这里是j-2, i-1, 一定要知道这些是为什</span></span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    dp[i][j] = i&gt;<span class="number">0</span> &amp;&amp; dp[i<span class="number">-1</span>][j<span class="number">-1</span>] &amp;&amp; (s[i<span class="number">-1</span>] == p[j<span class="number">-1</span>] || p[j<span class="number">-1</span>] == <span class="string">'.'</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[s.size()][p.size()];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="23"><a href="#23" class="headerlink" title="23."></a>23.</h1><h2 id="Description-2"><a href="#Description-2" class="headerlink" title="Description"></a>Description</h2><h2 id="解法一-基于比较的合并"><a href="#解法一-基于比较的合并" class="headerlink" title="解法一: 基于比较的合并"></a>解法一: 基于比较的合并</h2><p>时间复杂度: $O(k * max(len))$  k为需要合并和链表个数, 在比较时需要遍历k个链表的头结点, 以便找出最小的<br>空间复杂度: $O(1)$</p>
+<p>将该问题看做是两个有序链表的合并问题, 只不过每次选择最小的节点时, 需要从vector.size()个节点中选择, 同时还要注意及时移除vector中已经走到头的空链表, 并判断size当前的大小, 当vector中的size大小为1时, 说明其余链表都已经合并完成, 此时退出循环, 直接将该链表接入即可.</p>
+<p>另外要注意vector为空, 以及vector中全是nullptr链表的特殊情况.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode *next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">mergeKLists</span><span class="params">(<span class="built_in">vector</span>&lt;ListNode*&gt;&amp; lists)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(lists.size() == <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">nullptr</span>; <span class="comment">//处理[]的情况</span></span><br><span class="line">        ListNode* dummy = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</span><br><span class="line">        ListNode* cur_node = dummy;</span><br><span class="line">        <span class="keyword">while</span>(lists.size() &gt; <span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">int</span> min_node_index = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;lists.size() ;i++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(lists[i] == <span class="literal">nullptr</span>) &#123;</span><br><span class="line">                    lists.erase(lists.begin()+i);</span><br><span class="line">                    i--; <span class="comment">//移除第i个元素后, 下一个元素会自动成为第i个元素,因此, 将当前i--</span></span><br><span class="line">                    <span class="keyword">continue</span>; <span class="comment">// continue后, i会++, 最终i指向了下一个元素</span></span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(lists[min_node_index]-&gt;val &gt; lists[i]-&gt;val)&#123;</span><br><span class="line">                    min_node_index = i;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(lists.size() == <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">            <span class="comment">//主要是应对 [[], []] 的情况, 本身vector的size大于0, 但是经过erase以后size就变成0了, 此时应返回nullptr</span></span><br><span class="line">            cur_node-&gt;next = lists[min_node_index];</span><br><span class="line">            cur_node = cur_node-&gt;next;</span><br><span class="line">            lists[min_node_index] = lists[min_node_index]-&gt;next;</span><br><span class="line">            <span class="keyword">if</span>(lists[min_node_index] == <span class="literal">nullptr</span>) lists.erase(lists.begin()+min_node_index);</span><br><span class="line">        &#125;</span><br><span class="line">        cur_node-&gt;next = lists[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">return</span> dummy-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="解法二-用小顶堆对解法一的比较操作进行优化"><a href="#解法二-用小顶堆对解法一的比较操作进行优化" class="headerlink" title="解法二: 用小顶堆对解法一的比较操作进行优化"></a>解法二: 用小顶堆对解法一的比较操作进行优化</h2><p>时间复杂度: $O(logk * max(len))$<br>空间复杂度: $O(k)$  由于要构造堆, 所以需要额外空间</p>
+<p>由于我们只需要找到k个节点里面数值最小的那一个, 因此可以利用Priority Queue (实际上就是大顶堆和小顶堆)对上面的比较操作进行优化, 使得比较操作的复杂度从 $k$ 降到 $logk$.  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode *next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">cmp</span>&#123;</span></span><br><span class="line">        <span class="comment">// 仿函数</span></span><br><span class="line">        <span class="function"><span class="keyword">bool</span> <span class="title">operator</span><span class="params">()</span><span class="params">(ListNode* &amp; node1, ListNode* &amp;node2)</span></span>&#123;</span><br><span class="line">            <span class="keyword">return</span> node1-&gt;val &gt; node2-&gt;val;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">mergeKLists</span><span class="params">(<span class="built_in">vector</span>&lt;ListNode * &gt;&amp; lists)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        priority_queue&lt;ListNode * , <span class="built_in">vector</span>&lt;ListNode * &gt;, cmp&gt; min_q;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> head_node : lists)</span><br><span class="line">            <span class="keyword">if</span>(head_node != <span class="literal">nullptr</span>) min_q.push(head_node); <span class="comment">// 入队列之前检查是否为空</span></span><br><span class="line">        <span class="keyword">if</span>(min_q.empty()) <span class="keyword">return</span> <span class="literal">nullptr</span>; <span class="comment">// 如果队列为空, 说明没有非空元素入队列, 所有链表为空, merge后也为空</span></span><br><span class="line">        ListNode* res = min_q.top(); min_q.pop();</span><br><span class="line">        <span class="keyword">if</span>(res-&gt;next!=<span class="literal">nullptr</span>) min_q.push(res-&gt;next);</span><br><span class="line">        ListNode* cur_node = res;</span><br><span class="line">        <span class="keyword">while</span>(!min_q.empty())&#123;</span><br><span class="line">            cur_node-&gt;next = min_q.top(); min_q.pop();</span><br><span class="line">            cur_node = cur_node-&gt;next; <span class="comment">// 将cur_node指向top元素, 以便查看top的next是否为空</span></span><br><span class="line">            <span class="keyword">if</span>(cur_node-&gt;next!=<span class="literal">nullptr</span>) min_q.push(cur_node-&gt;next);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="解法三-转化成双列表合并问题"><a href="#解法三-转化成双列表合并问题" class="headerlink" title="解法三: 转化成双列表合并问题"></a>解法三: 转化成双列表合并问题</h2><p>时间复杂度: $O(k * max(len))$<br>空间复杂度: $O(1)$</p>
+<p>双列表合并问题的时间复杂度为 $O(max(m,n))$ , 可以将多链表合并问题看做是k次双列表合并.</p>
+<h2 id="解法四-对解法三进行优化"><a href="#解法四-对解法三进行优化" class="headerlink" title="解法四: 对解法三进行优化"></a>解法四: 对解法三进行优化</h2><p>时间复杂度: $O(logk * max(len))$<br>空间复杂度: $O(1)$</p>
+<p>对列表合并时, 每次都是两两合并(不是解法三中的逐一合并), 这样, 只需要经过 $logk$ 次两两合并就可完成所有合并过程.</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法刷题/" rel="tag"><i class="fa fa-tag"></i> 算法刷题</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/项目-竞赛-Apollo/" rel="prev" title="项目-竞赛-Apollo">
+                <i class="fa fa-chevron-left"></i> 项目-竞赛-Apollo
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/面试-智力题/" rel="next" title="智力题汇总">
+                智力题汇总 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">131</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#004-Median-of-Two-Sorted-Arrays"><span class="nav-text">004. Median of Two Sorted Arrays</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Description"><span class="nav-text">Description</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法一-根据中位数的特性"><span class="nav-text">解法一: 根据中位数的特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#非递归写法"><span class="nav-text">非递归写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#递归写法"><span class="nav-text">递归写法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#010"><span class="nav-text">010.</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Description-1"><span class="nav-text">Description</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法一-递归实现-速度很慢-只超过0-97-的提交"><span class="nav-text">解法一: 递归实现( 速度很慢, 只超过0.97%的提交)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法二-动态规划"><span class="nav-text">解法二: 动态规划</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#23"><span class="nav-text">23.</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Description-2"><span class="nav-text">Description</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法一-基于比较的合并"><span class="nav-text">解法一: 基于比较的合并</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法二-用小顶堆对解法一的比较操作进行优化"><span class="nav-text">解法二: 用小顶堆对解法一的比较操作进行优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法三-转化成双列表合并问题"><span class="nav-text">解法三: 转化成双列表合并问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法四-对解法三进行优化"><span class="nav-text">解法四: 对解法三进行优化</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">471k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">7:08</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

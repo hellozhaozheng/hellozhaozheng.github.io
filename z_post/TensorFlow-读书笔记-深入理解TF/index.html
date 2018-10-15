@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="第一章 TensorFlow系统概述人工智能和深度学习的热潮将Tensoflow推向了很高的地位，本章主要是作为引子，来对TF进行一个概述 1.1 简介1.1.1 产生背景近年来深度学习在图像、视觉和语音领域的突破，促使了各种深度学习框架的诞生 1.1.2 独特价值TF能在众多开源框架中杀出重围，除了Google的背书以外，还少不了以下独特价值：  运算性能强劲：TF1.0利用线性代数编译器XLA">
+<meta name="keywords" content="读书笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《深入理解TensorFlow架构设计与实现原理》">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/TensorFlow-读书笔记-深入理解TF/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="第一章 TensorFlow系统概述人工智能和深度学习的热潮将Tensoflow推向了很高的地位，本章主要是作为引子，来对TF进行一个概述 1.1 简介1.1.1 产生背景近年来深度学习在图像、视觉和语音领域的突破，促使了各种深度学习框架的诞生 1.1.2 独特价值TF能在众多开源框架中杀出重围，除了Google的背书以外，还少不了以下独特价值：  运算性能强劲：TF1.0利用线性代数编译器XLA">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-05T10:56:30.996Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《深入理解TensorFlow架构设计与实现原理》">
+<meta name="twitter:description" content="第一章 TensorFlow系统概述人工智能和深度学习的热潮将Tensoflow推向了很高的地位，本章主要是作为引子，来对TF进行一个概述 1.1 简介1.1.1 产生背景近年来深度学习在图像、视觉和语音领域的突破，促使了各种深度学习框架的诞生 1.1.2 独特价值TF能在众多开源框架中杀出重围，除了Google的背书以外，还少不了以下独特价值：  运算性能强劲：TF1.0利用线性代数编译器XLA">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/TensorFlow-读书笔记-深入理解TF/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>《深入理解TensorFlow架构设计与实现原理》 | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">131</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-linux">
+    <a href="/categories/Linux/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-面试">
+    <a href="/categories/面试/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其它">
+    <a href="/categories/其它/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其它</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">25</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-life">
+    <a href="/life/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-child"></i> <br />生活杂记</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/TensorFlow-读书笔记-深入理解TF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">《深入理解TensorFlow架构设计与实现原理》
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-06-24 12:55:33" itemprop="dateCreated datePublished" datetime="2018-06-24T12:55:33+08:00">2018-06-24</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/TensorFlow/" itemprop="url" rel="index"><span itemprop="name">TensorFlow</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">7.1k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">6 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="第一章-TensorFlow系统概述"><a href="#第一章-TensorFlow系统概述" class="headerlink" title="第一章 TensorFlow系统概述"></a>第一章 TensorFlow系统概述</h1><p>人工智能和深度学习的热潮将Tensoflow推向了很高的地位，本章主要是作为引子，来对TF进行一个概述</p>
+<h2 id="1-1-简介"><a href="#1-1-简介" class="headerlink" title="1.1 简介"></a>1.1 简介</h2><h3 id="1-1-1-产生背景"><a href="#1-1-1-产生背景" class="headerlink" title="1.1.1 产生背景"></a>1.1.1 产生背景</h3><p>近年来深度学习在图像、视觉和语音领域的突破，促使了各种深度学习框架的诞生</p>
+<h3 id="1-1-2-独特价值"><a href="#1-1-2-独特价值" class="headerlink" title="1.1.2 独特价值"></a>1.1.2 独特价值</h3><p>TF能在众多开源框架中杀出重围，除了Google的背书以外，还少不了以下独特价值：</p>
+<ul>
+<li>运算性能强劲：TF1.0利用线性代数编译器XLA全方位的提升了计算性能，XLA帮助TF在CPU、GPU、TPU、嵌入式设备等平台上更快速的运行机器学习模型的训练与推理任务。同时，还提供了大量针对不同软硬件环境的优化配置参数</li>
+<li>框架设计通用：TF既提供高层封装API（如Slim、Keras、TF Layers等），又提供底层原生API</li>
+<li>支持生产环境部署</li>
+<li>语言借口丰富：支持python、C、C++、java、Go等</li>
+<li>端云协同计算：支持同时在云侧和端侧运行（移动设备等终端）</li>
+</ul>
+<h3 id="1-1-3-版本变迁"><a href="#1-1-3-版本变迁" class="headerlink" title="1.1.3 版本变迁"></a>1.1.3 版本变迁</h3><p>迭代更新非常快，慢慢走向成熟</p>
+<h3 id="1-1-4-与其他主流深度学习框架对比"><a href="#1-1-4-与其他主流深度学习框架对比" class="headerlink" title="1.1.4 与其他主流深度学习框架对比"></a>1.1.4 与其他主流深度学习框架对比</h3><p>起初，TF的内存消耗和计算速度一直是短板。但是，随着XLA和RDMA等特性的发布，TF的性能在绝大多数情况下都不输于其他深度学习框架。</p>
+<p>TF的灵活性导致了学习成本也相应较高，API过于丰富。（不过，可以使用Keras、TF Layers来解决此问题）</p>
+<h2 id="1-2-设计目标"><a href="#1-2-设计目标" class="headerlink" title="1.2 设计目标"></a>1.2 设计目标</h2><p>TF的设计目标并非局限一套深度学习库，Google希望其成为一套面向多种应用场景和编程范式、支持异构计算平台、具备优异性能与可伸缩性的通用人工智能引擎。</p>
+<h3 id="1-2-1-灵活通用的深度学习库"><a href="#1-2-1-灵活通用的深度学习库" class="headerlink" title="1.2.1 灵活通用的深度学习库"></a>1.2.1 灵活通用的深度学习库</h3><p>TF的灵活性主要体现在以下几个方面：</p>
+<ul>
+<li>算子定义：粒度更细，数量更多</li>
+<li>编程范式：支持声明式编程，将模型的定义和执行解耦</li>
+<li>runtime框架</li>
+<li>多语言支持</li>
+</ul>
+<h3 id="1-2-2-端云结合的人工智能引擎"><a href="#1-2-2-端云结合的人工智能引擎" class="headerlink" title="1.2.2 端云结合的人工智能引擎"></a>1.2.2 端云结合的人工智能引擎</h3><p>TF对云计算场景的支持是其竞争力的基础，主要体现在以下方面：</p>
+<ul>
+<li>提供多种标准化的安装包、构建脚本和容器化封装，支持在不同Linux发行版以及Windows Server等服务器上部署</li>
+<li>支持对接多种常见的公有云和私有云服务</li>
+<li>兼容若干种常见的高性能计算与通信硬件</li>
+<li>灵活的runtime框架设计，既提供标准且易用的PS-worker分布式模式，也允许用户自由开发针对特定环境需求的分布式框架</li>
+</ul>
+<p>TF在端侧方面也毫不逊色，主要体现在以下几个方面</p>
+<ul>
+<li>推理（预测）态代码能够运行于多种主流的终端平台</li>
+<li>通过XLA AOT（ahead of time）编译技术及其他软硬件解耦设计，简化对接</li>
+<li>提供量化参数和低精度代数等算法层机制</li>
+<li>提供模型与框架一体化的精简版runtime平台</li>
+</ul>
+<h3 id="1-2-3-高性能的基础平台软件"><a href="#1-2-3-高性能的基础平台软件" class="headerlink" title="1.2.3 高性能的基础平台软件"></a>1.2.3 高性能的基础平台软件</h3><p>TF的高性能设计体现在它对高端和专用硬件的深入支持。</p>
+<h2 id="1-3-基本架构"><a href="#1-3-基本架构" class="headerlink" title="1.3 基本架构"></a>1.3 基本架构</h2><h3 id="1-3-1-工作形态"><a href="#1-3-1-工作形态" class="headerlink" title="1.3.1 工作形态"></a>1.3.1 工作形态</h3><p>TF采用了库模式，其工作形态是有用户编写主程序代码，调用Python或其他语言函数库提供的借口以实现计算逻辑。</p>
+<h3 id="1-3-2-组件结构"><a href="#1-3-2-组件结构" class="headerlink" title="1.3.2 组件结构"></a>1.3.2 组件结构</h3><p>结构示意图可查看书上p13</p>
+<p>构成TF的主体使其运行时核心库。 对于普通的python应用层开发者而言，这个核心库就是值通过pip命令等方式安装TF之后，部署到<code>site-packages</code>或类似目录中的动态链接库文件。</p>
+<p>生成这个库的C++源代码大致分为3个层次：分布式运行时、公共运行时和算子核函数。其中，公共运行时实现了数据流图计算的基本逻辑，分布式运行时在此基础上实现了数据流图的跨进程协同计算逻辑，算子核函数则包含图上具体操作节点的算法实现代码。</p>
+<h1 id="第二章-TensorFlow环境准备"><a href="#第二章-TensorFlow环境准备" class="headerlink" title="第二章 TensorFlow环境准备"></a>第二章 TensorFlow环境准备</h1><h1 id="2-1-安装"><a href="#2-1-安装" class="headerlink" title="2.1 安装"></a>2.1 安装</h1><p>可查看官方文档</p>
+<p>有一点需要注意：为了保证软件对操作系统和硬件平台的通用性，Google官方发布的TensorFlow whl包没有使用过多的编译优化选项，如 XLA、AVX、SSE等，如果想要打开这些编译优化选项来提升TF的计算性能，那么必须使用源代码编译安装的方式。</p>
+<h1 id="2-2-依赖项"><a href="#2-2-依赖项" class="headerlink" title="2.2 依赖项"></a>2.2 依赖项</h1><h1 id="2-2-1-Bazel软件构建工具"><a href="#2-2-1-Bazel软件构建工具" class="headerlink" title="2.2.1 Bazel软件构建工具"></a>2.2.1 Bazel软件构建工具</h1><p>Bazel是Google开源的一套软件构建工具，功能定位与CMake、GNU Autotools和Apache Ant等类型，但具有一些独特的优势，如下所示：</p>
+<ul>
+<li>多语言支持：C++、Java、Python等</li>
+<li>高级构建语言</li>
+<li>多平台支持</li>
+<li>可重现性</li>
+<li>可伸缩性</li>
+</ul>
+<p>Bazel使用工作空间、包和目标三层抽象组织待构建的对象</p>
+<ul>
+<li>工作空间（workspce）：</li>
+<li>包（package）：</li>
+<li>目标（target）：</li>
+</ul>
+<h1 id="2-2-2-Protocal-Buffers-数据结构序列化工具"><a href="#2-2-2-Protocal-Buffers-数据结构序列化工具" class="headerlink" title="2.2.2 Protocal Buffers 数据结构序列化工具"></a>2.2.2 Protocal Buffers 数据结构序列化工具</h1><h1 id="2-2-3-Eigen线性代数计算库"><a href="#2-2-3-Eigen线性代数计算库" class="headerlink" title="2.2.3 Eigen线性代数计算库"></a>2.2.3 Eigen线性代数计算库</h1><h1 id="2-2-4-CUDA统一计算设备架构"><a href="#2-2-4-CUDA统一计算设备架构" class="headerlink" title="2.2.4 CUDA统一计算设备架构"></a>2.2.4 CUDA统一计算设备架构</h1><p>CUDA是NVIDIA公司退出的一种用于并行计算的软硬件架构，发布于2007年。该架构以通用计算图形处理器（GPGPU）作为主要的硬件平台，提供一组用于编写和执行通用计算任务的开发库与运行时环境。</p>
+<p>CUDA作为软件依赖项提及时，往往指的是CUDA架构中的软件组件，即NVIDIA驱动程序和CUDA Toolkit。除了基本的CUDA开发库和编译器外，CUDA工具包还包括cuBLAS、cuFFT、cuSOLVER、cuDNN等高级算法库，以及IDE、调试器、可视化分析器等开发工具，其中部分组件需要独立安装。</p>
+<p>在CUDA架构中，不同层次的软件组件均为开发者提供编程接口，以适应不同类型软件的开发需求：</p>
+<ul>
+<li>NVIDIA驱动层的开发接口（即cu开头的函数，也称为CUDA Driver API）较为底层，暴露了GPU的若干内部实现抽象。这种接口能够对GPU的运行时行为进行细粒度控制，有助于提升程序的运行时效率，但缺点在于开发过程烦琐。一般的GPU应用程序不会直接使用这一层接口，然而TF内部的GPU计算引擎——StreamExecutor为了追求性能，选择使用这一层接口实现GPU任务调度和内存管理等功能</li>
+<li>CUDA开发库的API（即以cuda开头的函数，也称为CUDA Runtime API）是CUDA架构中使用最为广泛的接口，功能涵盖GPU设备管理，内存管理，时间管理以及图形处理相关的逻辑。</li>
+<li>cuBLAS、cuDNN等高级算法库：提供了面向通用计算（如线性代数）或领域专用计算（如神经网络）需求的高层次接口。在这个层次，GPU设备的很多技术细节已被屏蔽，开发者可以专注于算法逻辑的设计与实现。TF面向NVIDIA GPU的计算类操作大多基于cuBLAS和cuDNN接口实现。</li>
+</ul>
+<p>对于TF而言，CUDA工具包是不受Bazel管理的外部依赖项，因此，用户如果想要使用NVIDIA GPU加速深度学习时，需要事先安装带有NVIDIA驱动程序的CUDA工具包即cuDNN库</p>
+<h2 id="2-3-源代码结构"><a href="#2-3-源代码结构" class="headerlink" title="2.3 源代码结构"></a>2.3 源代码结构</h2><h3 id="2-3-1-根目录"><a href="#2-3-1-根目录" class="headerlink" title="2.3.1 根目录"></a>2.3.1 根目录</h3><p>TF源码的组织复合Bazel构建工具要求的规范。其根目录是一个Bazel项目的工作空间。</p>
+<h3 id="2-3-2-tensorflow目录"><a href="#2-3-2-tensorflow目录" class="headerlink" title="2.3.2 tensorflow目录"></a>2.3.2 tensorflow目录</h3><p>TF项目的源码主体位于tensorflow目录，该目录下的源文件几乎实现了TF的全部功能，同时体现了TF的整体模块布局。</p>
+<h3 id="2-3-3-tensorflow-core-目录"><a href="#2-3-3-tensorflow-core-目录" class="headerlink" title="2.3.3 tensorflow/core 目录"></a>2.3.3 tensorflow/core 目录</h3><p>TF核心运行时库的源代码位于tensorflow/core目录</p>
+<h3 id="2-3-4-tensorflow-python-目录"><a href="#2-3-4-tensorflow-python-目录" class="headerlink" title="2.3.4 tensorflow/python 目录"></a>2.3.4 tensorflow/python 目录</h3><p>TF Python API的源码位于tensorflow/python目录</p>
+<h3 id="2-3-5-安装目录"><a href="#2-3-5-安装目录" class="headerlink" title="2.3.5 安装目录"></a>2.3.5 安装目录</h3><p>pip命令会将TF运行时所需的Python文件、动态链接库以及必要的依赖项复制到当前Python环境的<code>site-packages</code>或<code>dist-packages</code>目录中，其中TF软件本身的的运行时代码会被部署到tensorflow子目录，这一目录具有与源码tensorflow目录相似的组织结构。二者的不同点在于以下几点：</p>
+<ul>
+<li>安装目录中只包含每个模块的Python语言接口文件，不再包含C++源码。所有使用到的C++源码已被编译到了python子目录下的动态链接库文件中（在Linux下为<code>_pywrap_tensorflow_internal.so</code>）。如果某个模块未提供Python API，那么相应的子目录不会在安装目录中出现</li>
+<li>安装目录中的<code>python/ops</code>子目录比同名的源代码子目录增加了一系列名称有<code>gen_</code>开头的<code>Python</code>接口文件。这些文件是TensorFLow编译脚本自动创建的，旨在为C++核心库的一部分数据流图操作提供Python编程接口</li>
+<li>安装目录比源代码目录多出一个include子目录。这个目录包含了TensorFLow本身以及Protocol Buffers、Eigen等依赖库的C++头文件，允许用户通过编程方式使用核心库的功能。</li>
+</ul>
+<h1 id="第三章-TensorFlow基础概念"><a href="#第三章-TensorFlow基础概念" class="headerlink" title="第三章 TensorFlow基础概念"></a>第三章 TensorFlow基础概念</h1><h2 id="3-1-编程范式：数据流图"><a href="#3-1-编程范式：数据流图" class="headerlink" title="3.1 编程范式：数据流图"></a>3.1 编程范式：数据流图</h2><p>TF采用了更适合描述深度神经网络模型的声明式编程范式，并以数据流图作为核心抽象。</p>
+<p>优势（相比更广泛的命令式编程范式）：</p>
+<ul>
+<li>代码可读性强</li>
+<li>支持引用透明</li>
+<li>提供预编译优化能力</li>
+</ul>
+<h3 id="3-1-1-声明式编程与命令式编程"><a href="#3-1-1-声明式编程与命令式编程" class="headerlink" title="3.1.1 声明式编程与命令式编程"></a>3.1.1 声明式编程与命令式编程</h3><p>二者的最大区别在于：前者强调“做什么”， 后者强调“怎么做”。</p>
+<p>声明式编程：结构化、抽象化，用户不必纠结每个步骤的具体实现，而是通过下定义的方式描述期望达到的状态。声明式编程比较接近人的思考模式；程序中的变量代表数学符号或抽象函数，而不是一块内存地址，程序的最终输出仅依赖于用户的输入数据，计算过程不受内部和外部状态影响。</p>
+<p>命令式编程：过程化、具体化、用户告诉机器怎么做，机器按照用户的指示一步步执行命令，并转换到最终的停止状态。命令式编程起源于对汇编语言和机器指令的进一步抽象，本身带有明显的硬件结构特征。它通过修改存储器的值、产生副作用的方式实现计算。这里的副作用是值对外部环境产生的附加影响。</p>
+<p>编程是一种输入到输出的转换机制，这两种范式提供了截然不同的解决方案：</p>
+<ul>
+<li>声明式编程：程序是一个数学模型，输入是自变量，输出是因变量，用户设计和组合一系列函数，通过表达式变换实现计算。</li>
+<li>命令式编程：程序是一个有穷自动机，输入是起始状态，输出是结束状态，用户设计一系列指令，通过指令的执行完成状态转换。</li>
+</ul>
+<p>适用范围：</p>
+<ul>
+<li>声明式编程：DL、AI</li>
+<li>命令式编程：交互式UI、OS</li>
+</ul>
+<h3 id="3-1-2-声明式编程在DL应用上的优势"><a href="#3-1-2-声明式编程在DL应用上的优势" class="headerlink" title="3.1.2 声明式编程在DL应用上的优势"></a>3.1.2 声明式编程在DL应用上的优势</h3><ol>
+<li>代码可读性强</li>
+</ol>
+<p>&emsp;&emsp;以目标为导向，更接近于数学公式或人类的思维方式</p>
+<ol>
+<li>支持引用透明</li>
+</ol>
+<p>&emsp;&emsp;引用透明是指：如果一个函数的语义同他出现在程序中的上下文无关，则称它是引用透明的。关于引用透明的一个推论是：函数的调用语句可以被它的返回值取代，而不影响程序语义。因此，用户可以选择执行任意的模块组合（子图），以得到不同模型结构的输出结果。</p>
+<ol>
+<li>提供预编译优化能力</li>
+</ol>
+<p>&emsp;&emsp;TF需要实现编译得到完整的数据流图，然后根据用户选择的子图、输入数据进行计算。因此，声明式编程能够实现多种预编译优化，包括无依赖逻辑并行化、无效逻辑移除、公共逻辑提取、细粒度操作融合等。</p>
+<h3 id="3-1-3-TensorFlow数据流图的基本概念"><a href="#3-1-3-TensorFlow数据流图的基本概念" class="headerlink" title="3.1.3 TensorFlow数据流图的基本概念"></a>3.1.3 TensorFlow数据流图的基本概念</h3><p>TF的数据流图是一个 <strong>有向无环图</strong> 。 图中的节点代表各类操作（opertion），具体包括数学运算、数据填充、结果输出和变量读写等操作，每个节点上的操作都需要分配到具体的物理设备（CPU、GPU）上执行。 图中的有向边描述了节点间的输入、输出关系（也就是各个操作的输入和输出），边上流动（flow）着代表高位数据的张量。</p>
+<h4 id="1-节点"><a href="#1-节点" class="headerlink" title="1.节点"></a>1.节点</h4><p>前向图中的节点统一称为操作，它们根据功能可以分为以下3类：</p>
+<ul>
+<li>数学函数或表达式</li>
+<li>存储模型参数的变量（variable）</li>
+<li>占位符（placeholder）</li>
+</ul>
+<p>后向图中的节点同样分为三类：</p>
+<ul>
+<li>梯度值</li>
+<li>更新模型参数的操作</li>
+<li>更新后的模型参数</li>
+</ul>
+<h4 id="2-有向边"><a href="#2-有向边" class="headerlink" title="2.有向边"></a>2.有向边</h4><p>数据流图中的有向边用于定义操作之间的关系，它们分为两类：一类用来传输数据，绝大部分流动着的张量的变都是此类，简称数据边；另一类用来定义控制依赖，通过设定节点的前置依赖决定相关节点的执行顺序，简称控制边。</p>
+<h4 id="3-执行原理"><a href="#3-执行原理" class="headerlink" title="3.执行原理"></a>3.执行原理</h4><p>声明式编程的特点决定了在深度神经网络模型的数据流图上，各个节点的执行顺序并不完全依赖于代码中定义的顺序，而是与节点之间的逻辑关系以及运行时库的实现机制相关。</p>
+<p>抛开运行时库内部的复杂实现，数据流图上节点的执行顺序参考了拓扑排序的设计思想，其过程可以简述为以下4个步骤：</p>
+<ol>
+<li>以节点名称作为关键字、入度作为值，创建一张散列表，并将次数据流图上的所有节点放入散列表中。</li>
+<li>为此数据流图创建一个可执行节点队列，将散列表中入度为0的节点加入到该队列，并从散列表中删除这些节点</li>
+<li>依次执行该队列中的每一个节点，执行成功后将此节点输出指向的节点的入度值减1，更新散列表中对应节点的入度值</li>
+<li>重复步骤2和步骤3，直到可执行节点队列变为空</li>
+</ol>
+<h2 id="3-2-数据载体：张量"><a href="#3-2-数据载体：张量" class="headerlink" title="3.2 数据载体：张量"></a>3.2 数据载体：张量</h2><p>TF提供Tensor和SparseTensor两种张量抽象，分别表示稠密数据和系数数据。后者旨在减少高维稀疏数据的内存占用。</p>
+<h3 id="3-2-1-张量：Tensor"><a href="#3-2-1-张量：Tensor" class="headerlink" title="3.2.1 张量：Tensor"></a>3.2.1 张量：Tensor</h3><p>与数学和物理学中的张量不同，在NumPy或TF中，通常使用多维数组的形式描述一个张量，数组的维数表示对应张量的阶数。张量的阶数决定了其描述的数据所在高维空间的维数，在此基础上，定义每一阶的长度可以唯一确定一个张量的形状。</p>
+<p>TF中的张量形状用python中的列表表示，列表中的每个值依次表示张量各阶的长度（如图片的张量：[128,128,3]）。</p>
+<p>TF的张量在逻辑定义上是数据载体，但在物理实现时是一个句柄，它存储张量的元信息以及指向张量数据的内存缓冲区指针。这样设计是为了实现 <strong>内存复用</strong>。在某些前置操作（生产者）的输出值被输入到多个后置操作（消费者）的情况下，无须重复存储输出值。</p>
+<h4 id="1-创建"><a href="#1-创建" class="headerlink" title="1.创建"></a>1.创建</h4><p>一般情况下，用户不需要使用Tensor类的构造方法直接创建张量，而是通过操作间接创建张量，如constant和add操作等：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line">a = tf.constant(<span class="number">1.0</span>)</span><br><span class="line">b = tf.constant(<span class="number">1.0</span>)</span><br><span class="line">c = tf.add(a,b)</span><br><span class="line">print([a,b,c])</span><br><span class="line"></span><br><span class="line">//output: [&lt;tf.Tensor....&gt;,&lt;...&gt;,&lt;...&gt;] 没有执行会话，所以不会输出值，而是输出abc的类型</span><br></pre></td></tr></table></figure>
+<h4 id="2-求解"><a href="#2-求解" class="headerlink" title="2.求解"></a>2.求解</h4><h4 id="3-成员方法"><a href="#3-成员方法" class="headerlink" title="3.成员方法"></a>3.成员方法</h4><p>Tensor具有eval，get_shape等成员方法</p>
+<h4 id="4-操作"><a href="#4-操作" class="headerlink" title="4.操作"></a>4.操作</h4><p>TF为Tensor提供了abs,add,reduce_mean等大量操作</p>
+<h4 id="5-典型用例"><a href="#5-典型用例" class="headerlink" title="5.典型用例"></a>5.典型用例</h4><p>见书p44</p>
+<h3 id="3-2-2-稀疏张量：SparseTensor"><a href="#3-2-2-稀疏张量：SparseTensor" class="headerlink" title="3.2.2 稀疏张量：SparseTensor"></a>3.2.2 稀疏张量：SparseTensor</h3><p>TF提供了专门用于处理高维稀疏数据的SparseTensor类。该类以键值对的形式表示高维稀疏数据，包含indices、values和dense_shape三个属性。</p>
+<h4 id="1-创建-1"><a href="#1-创建-1" class="headerlink" title="1.创建"></a>1.创建</h4><p>在TF中创建稀疏张量时，一般可以直接用SparseTensor类的构造方法，如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line">sp = tf.SparseTensor(indices=[[<span class="number">0</span>,<span class="number">2</span>],[<span class="number">1</span>,<span class="number">3</span>]], values=[<span class="number">1</span>,<span class="number">2</span>],dense_shape=[<span class="number">3</span>,<span class="number">4</span>])</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-操作"><a href="#2-操作" class="headerlink" title="2.操作"></a>2.操作</h4><p>TF为稀疏张量提供了一些专门的操作，方便用户处理。</p>
+<h4 id="3-典型用例"><a href="#3-典型用例" class="headerlink" title="3.典型用例"></a>3.典型用例</h4><p>见书p46</p>
+<h2 id="模型载体：操作"><a href="#模型载体：操作" class="headerlink" title="模型载体：操作"></a>模型载体：操作</h2><p>TF中每个节点均对应一个具体的操作。因此，操作是模型功能的实际载体，数据流图主要有以下三种节点：</p>
+<ul>
+<li>计算节点：对应的是无状态的计算或控制操作，主要负责算法逻辑表达式或流程控制</li>
+<li>存储节点：对应的是有状态的变量操作，通常用来存储模型参数</li>
+<li>数据节点：对应的是特殊的占位符操作，用于描述待输入数据的属性</li>
+</ul>
+<h3 id="3-3-1-计算节点：Operation"><a href="#3-3-1-计算节点：Operation" class="headerlink" title="3.3.1 计算节点：Operation"></a>3.3.1 计算节点：Operation</h3><p>Operation类定义在<code>tensorflow/python/framework/ops.py</code>文件中，提供了获取操作的名称、类型、输入张量、输出张量等基本属性的方法。</p>
+<p>对于无状态节点，其输出有输入张量和节点操作共同决定</p>
+<h3 id="3-3-2-存储节点：Variable"><a href="#3-3-2-存储节点：Variable" class="headerlink" title="3.3.2 存储节点：Variable"></a>3.3.2 存储节点：Variable</h3><p>存储节点作为数据流图中的有状态节点，其主要作用是在多次执行相同数据流图时存储特定的参数，如深度学习或机器学习的模型参数。</p>
+<p>对于有状态的节点，其输出除了跟输入张量和节点操作有关之外，还会受到节点内部保存的状态值的影响。</p>
+<h4 id="1-变量"><a href="#1-变量" class="headerlink" title="1.变量"></a>1.变量</h4><p>TF中的存储节点抽象是Variable类</p>
+<h4 id="2-变量操作"><a href="#2-变量操作" class="headerlink" title="2.变量操作"></a>2.变量操作</h4><p>每个变量对应的变量操作对象在变量初始化时构造，变量支持两种初始化方式：</p>
+<ul>
+<li>初始值。根据用户输入或采用缺省值初始化</li>
+<li>VariableDef。使用Protocol Buffers定义的变量完成初始化</li>
+</ul>
+<h4 id="3-read节点"><a href="#3-read节点" class="headerlink" title="3.read节点"></a>3.read节点</h4><p>通过解释read节点的实现原理，加深对于变量、变量操作和变量值的理解。</p>
+<h3 id="3-3-3-数据节点：Placeholder"><a href="#3-3-3-数据节点：Placeholder" class="headerlink" title="3.3.3 数据节点：Placeholder"></a>3.3.3 数据节点：Placeholder</h3><p>数据流图本身是一个具有计算拓扑和内部结构的“壳”。在用户向数据流图填充数据前，图中并没有真正执行任何计算。当数据流图执行时，TF会向数据节点填充（feed）用户提供的、复合定义的数据。</p>
+<p>TF的数据节点有占位符操作（placeholder Operation）实现，其对应的操作函数是<code>tf.placeholder</code>。针对稀疏数据，TensorFlow也提供了稀疏占位符操作（sparse placeholder operatin），其操作函数是<code>tf.sparse_placeholde</code>。</p>
+<h2 id="3-4-运行环境：会话"><a href="#3-4-运行环境：会话" class="headerlink" title="3.4 运行环境：会话"></a>3.4 运行环境：会话</h2>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/读书笔记/" rel="tag"><i class="fa fa-tag"></i> 读书笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/Cpp-知识点梳理-Cpp中的多态、重载、重写基本概念解析/" rel="prev" title="C++中的封装、继承、多态、重载、重写基本概念解析">
+                <i class="fa fa-chevron-left"></i> C++中的封装、继承、多态、重载、重写基本概念解析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/TensorFlow-踩坑记录-no_attribute_FIFOQueue/" rel="next" title="报错module 'tensorflow' has no attribute 'FIFOQueue'">
+                报错module 'tensorflow' has no attribute 'FIFOQueue' <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">131</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章-TensorFlow系统概述"><span class="nav-text">第一章 TensorFlow系统概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-简介"><span class="nav-text">1.1 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-产生背景"><span class="nav-text">1.1.1 产生背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-独特价值"><span class="nav-text">1.1.2 独特价值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-3-版本变迁"><span class="nav-text">1.1.3 版本变迁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-4-与其他主流深度学习框架对比"><span class="nav-text">1.1.4 与其他主流深度学习框架对比</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-设计目标"><span class="nav-text">1.2 设计目标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-灵活通用的深度学习库"><span class="nav-text">1.2.1 灵活通用的深度学习库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-端云结合的人工智能引擎"><span class="nav-text">1.2.2 端云结合的人工智能引擎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-3-高性能的基础平台软件"><span class="nav-text">1.2.3 高性能的基础平台软件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-基本架构"><span class="nav-text">1.3 基本架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-1-工作形态"><span class="nav-text">1.3.1 工作形态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-2-组件结构"><span class="nav-text">1.3.2 组件结构</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二章-TensorFlow环境准备"><span class="nav-text">第二章 TensorFlow环境准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-1-安装"><span class="nav-text">2.1 安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-2-依赖项"><span class="nav-text">2.2 依赖项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-2-1-Bazel软件构建工具"><span class="nav-text">2.2.1 Bazel软件构建工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-2-2-Protocal-Buffers-数据结构序列化工具"><span class="nav-text">2.2.2 Protocal Buffers 数据结构序列化工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-2-3-Eigen线性代数计算库"><span class="nav-text">2.2.3 Eigen线性代数计算库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-2-4-CUDA统一计算设备架构"><span class="nav-text">2.2.4 CUDA统一计算设备架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-源代码结构"><span class="nav-text">2.3 源代码结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-1-根目录"><span class="nav-text">2.3.1 根目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-2-tensorflow目录"><span class="nav-text">2.3.2 tensorflow目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-tensorflow-core-目录"><span class="nav-text">2.3.3 tensorflow/core 目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-4-tensorflow-python-目录"><span class="nav-text">2.3.4 tensorflow/python 目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-5-安装目录"><span class="nav-text">2.3.5 安装目录</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三章-TensorFlow基础概念"><span class="nav-text">第三章 TensorFlow基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-编程范式：数据流图"><span class="nav-text">3.1 编程范式：数据流图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-1-声明式编程与命令式编程"><span class="nav-text">3.1.1 声明式编程与命令式编程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-2-声明式编程在DL应用上的优势"><span class="nav-text">3.1.2 声明式编程在DL应用上的优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-3-TensorFlow数据流图的基本概念"><span class="nav-text">3.1.3 TensorFlow数据流图的基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-节点"><span class="nav-text">1.节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-有向边"><span class="nav-text">2.有向边</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-执行原理"><span class="nav-text">3.执行原理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-数据载体：张量"><span class="nav-text">3.2 数据载体：张量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-1-张量：Tensor"><span class="nav-text">3.2.1 张量：Tensor</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-创建"><span class="nav-text">1.创建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-求解"><span class="nav-text">2.求解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-成员方法"><span class="nav-text">3.成员方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-操作"><span class="nav-text">4.操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-典型用例"><span class="nav-text">5.典型用例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-2-稀疏张量：SparseTensor"><span class="nav-text">3.2.2 稀疏张量：SparseTensor</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-创建-1"><span class="nav-text">1.创建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-操作"><span class="nav-text">2.操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-典型用例"><span class="nav-text">3.典型用例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型载体：操作"><span class="nav-text">模型载体：操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-1-计算节点：Operation"><span class="nav-text">3.3.1 计算节点：Operation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-2-存储节点：Variable"><span class="nav-text">3.3.2 存储节点：Variable</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-变量"><span class="nav-text">1.变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-变量操作"><span class="nav-text">2.变量操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-read节点"><span class="nav-text">3.read节点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-3-数据节点：Placeholder"><span class="nav-text">3.3.3 数据节点：Placeholder</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-运行环境：会话"><span class="nav-text">3.4 运行环境：会话</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">471k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">7:08</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="第十四章 C++中的代码重用除了公有继承之外，还有其他促进代码重用的方法：  包含/组合/层次话：在类中使用另一个类的对象做成员 私有或保护继承：用于实现has-a关系，即新的类将包含另一个类的对象  14.1 包含对象成员的类string类 valarray类：这是一个模板类 14.2 私有继承另一种实现has-a关系的途径——私有继承。 使用私有继承，基类的公有成员和保护成员都将成为派生类的私">
+<meta name="keywords" content="读书笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《C++ PrimerPlus》 第十四章">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Cpp-Book-CppPrimerPlusChapter14/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="第十四章 C++中的代码重用除了公有继承之外，还有其他促进代码重用的方法：  包含/组合/层次话：在类中使用另一个类的对象做成员 私有或保护继承：用于实现has-a关系，即新的类将包含另一个类的对象  14.1 包含对象成员的类string类 valarray类：这是一个模板类 14.2 私有继承另一种实现has-a关系的途径——私有继承。 使用私有继承，基类的公有成员和保护成员都将成为派生类的私">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-05T10:56:30.991Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《C++ PrimerPlus》 第十四章">
+<meta name="twitter:description" content="第十四章 C++中的代码重用除了公有继承之外，还有其他促进代码重用的方法：  包含/组合/层次话：在类中使用另一个类的对象做成员 私有或保护继承：用于实现has-a关系，即新的类将包含另一个类的对象  14.1 包含对象成员的类string类 valarray类：这是一个模板类 14.2 私有继承另一种实现has-a关系的途径——私有继承。 使用私有继承，基类的公有成员和保护成员都将成为派生类的私">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/Cpp-Book-CppPrimerPlusChapter14/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>《C++ PrimerPlus》 第十四章 | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">131</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-linux">
+    <a href="/categories/Linux/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-面试">
+    <a href="/categories/面试/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其它">
+    <a href="/categories/其它/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其它</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">25</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-life">
+    <a href="/life/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-child"></i> <br />生活杂记</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/Cpp-Book-CppPrimerPlusChapter14/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">《C++ PrimerPlus》 第十四章
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-05 15:21:15" itemprop="dateCreated datePublished" datetime="2018-09-05T15:21:15+08:00">2018-09-05</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Cpp/" itemprop="url" rel="index"><span itemprop="name">Cpp</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">7.7k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">7 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="第十四章-C-中的代码重用"><a href="#第十四章-C-中的代码重用" class="headerlink" title="第十四章 C++中的代码重用"></a>第十四章 C++中的代码重用</h1><p>除了公有继承之外，还有其他促进代码重用的方法：</p>
+<ul>
+<li>包含/组合/层次话：在类中使用另一个类的对象做成员</li>
+<li>私有或保护继承：用于实现has-a关系，即新的类将包含另一个类的对象</li>
+</ul>
+<h2 id="14-1-包含对象成员的类"><a href="#14-1-包含对象成员的类" class="headerlink" title="14.1 包含对象成员的类"></a>14.1 包含对象成员的类</h2><p>string类</p>
+<p>valarray类：这是一个模板类</p>
+<h2 id="14-2-私有继承"><a href="#14-2-私有继承" class="headerlink" title="14.2 私有继承"></a>14.2 私有继承</h2><p>另一种实现has-a关系的途径——私有继承。</p>
+<p>使用私有继承，基类的公有成员和保护成员都将成为派生类的私有成员。这意味着基类方法将不会成为派生对象公有接口的一部分，但可以在派生类的成员函数中使用它们。</p>
+<p>“包含”是将对象作为一个命名的成员添加到类中，而“私有继承”将对象作为一个未被命名的继承对象添加到类中。</p>
+<ol>
+<li>初始化基类组件，对于继承类，需要使用成员初始化列表语法，使用类名而不是成员名称来标识构造函数。</li>
+<li>访问基类的方法：可以通过将私有的成员函数包含在一个公有函数中来访问该私有方法。</li>
+<li>访问基类对象：通过this指针和强制类型转换来创建对应的对象或引用</li>
+<li>访问基类的友元函数：用类名显式的限定函数名不适合友元函数，这是因为友元不属于类。然而，可以通过显式的转换为基类来调用正确的函数。</li>
+</ol>
+<h3 id="14-2-2-使用包含还是私有继承。"><a href="#14-2-2-使用包含还是私有继承。" class="headerlink" title="14.2.2 使用包含还是私有继承。"></a>14.2.2 使用包含还是私有继承。</h3><p>通常，应使用包含来建立has-a关系。如果新类需要访问原有类的保护成员，或需要重新定义虚函数，则应使用私有继承。</p>
+<h3 id="14-2-3-保护继承"><a href="#14-2-3-保护继承" class="headerlink" title="14.2.3 保护继承"></a>14.2.3 保护继承</h3><p>保护继承是私有继承的变体。使用保护继承时，基类的公有成员和保护成员都将成为派生类的保护成员。</p>
+<p>当从派生类派生出另一个类时，私有继承和保护继承之间的区别在于：</p>
+<p>使用私有继承时，第三代类将不能使用基类的接口，这是因为继承的公有方法在派生类中将变成私有方法。使用保护继承时，基类的公有方法在第二代中将变成受保护的，因此第三代派生类可以使用它们。</p>
+<p><strong>各种继承方式</strong>:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>特征</th>
+<th>公有继承</th>
+<th>保护继承</th>
+<th>私有继承</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>公有成员变成</td>
+<td>派生类的公有成员</td>
+<td>派生类的保护成员</td>
+<td>派生类的私有成员</td>
+</tr>
+<tr>
+<td>保护成员变成</td>
+<td>派生类的保护成员</td>
+<td>派生类的保护成员</td>
+<td>派生类的私有成员</td>
+</tr>
+<tr>
+<td>私有成员变成</td>
+<td>只能通过基类接口访问</td>
+<td>只能通过基类接口访问</td>
+<td>只能通过基类接口访问</td>
+</tr>
+<tr>
+<td>能否隐式向上转换</td>
+<td>能</td>
+<td>能（但只能在派生类中）</td>
+<td>否</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>隐式向上转换（implicit upcasting）：意味着无需进行显式类型转换，就可以将基类指针或引用指向派生类对象。</p>
+<h3 id="14-2-4-使用using重新定义访问权限"><a href="#14-2-4-使用using重新定义访问权限" class="headerlink" title="14.2.4 使用using重新定义访问权限"></a>14.2.4 使用using重新定义访问权限</h3><p>使用保护派生或私有派生时，基类的公有成员将成为保护成员或私有成员。假设要设即为的方法在派生类外面可用，方法之一是定义一个使用该基类方法的派生类方法。</p>
+<p>另一种方法是，将函数调用包装在另一个函数调用中，即使用一个using声明来指出派生类可以使用特定的基类成员，即使采用的是私有派生。例如，假设希望通过Student类能够使用valarray的方法min()和max()，可以如下书写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Student: private std::string, private std::valarray&lt;double&gt;&#123;</span><br><span class="line">  public:</span><br><span class="line">  using std::valarray&lt;double&gt;::min;</span><br><span class="line">  using std::valarray&lt;double&gt;::max;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意：using声明只使用成员名——没有圆括号、函数特征表和返回类型。</p>
+<p>有一种老式的不带using声明的方法，它看起来就像是不包含关键字using的using声明，但是这种方法已被摒弃，即将体制使用。</p>
+<h2 id="14-3-多重继承"><a href="#14-3-多重继承" class="headerlink" title="14.3 多重继承"></a>14.3 多重继承</h2><p>MI描述的是有多个直接基类的类，与单继承一样，公有MI表示的也是is-a关系。例如，可以从Waiter类和Singer类派生出SingingWaiter类。</p>
+<p>私有MI和保护MI可以表示has-a关系。</p>
+<p>MI可能会带来很多新问题，其中最重要的问题是：</p>
+<ul>
+<li>从两个不同的基类继承同名方法;</li>
+<li>从两个或更多相关基类那里继承同一个类的多个实例。</li>
+</ul>
+<h3 id="14-3-1-有多少个Work"><a href="#14-3-1-有多少个Work" class="headerlink" title="14.3.1 有多少个Work"></a>14.3.1 有多少个Work</h3><p>如果多个类来自于同一个基类，而当前类又继承这多个类，那么，就会有多个最原始的基类副本，者造成了二义性。</p>
+<p>为了解决以上问题，C++引入了一种新技术——虚基类（virtual base calss），使MI成为可能。</p>
+<ol>
+<li>虚基类：虚基类使得从多个类（它们的基类相同）派生出的对象之只继承一个基类对象。</li>
+<li>新的构造函数规则：使用虚基类时，需要对类构造函数采用一种新的方法。对于非虚基类，唯一可以出现在初始化列表中的构造函数是即时基类构造函数。但这些构造函数可能需要将信息传递给其基类。（详细请看p558）</li>
+</ol>
+<h3 id="14-3-2-哪个方法"><a href="#14-3-2-哪个方法" class="headerlink" title="14.3.2 哪个方法"></a>14.3.2 哪个方法</h3><p>因为多重继承，有时会继承多个同名方法，因此，需要指出使用哪一个方法。</p>
+<p>可以使用作用域解析运算符来指定使用的方法：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">SingingWaiter <span class="title">newhire</span><span class="params">(<span class="string">"Elise"</span>, <span class="number">2005</span>, <span class="number">6</span>, soprano)</span></span>;</span><br><span class="line">newhire.Singer::Show();</span><br></pre></td></tr></table></figure></p>
+<p>然而，更好的方法是在SingingWaiter中重新定义<code>Show()</code>，并指出要使用哪个<code>Show()</code>。如下所示：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> SingingWaiter::Show()&#123;</span><br><span class="line">  Singer::Show;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于多继承，使用模块化的方式而不是递增方式来在派生类的同名函数中使用基类函数，即提供一个只显示Work组件的方法和一个只显示Waiter组件 <strong>或</strong> Singer组件的方法。然后，在<code>SingingWaiter::Show()</code>方法中将组件组合起来。详细见p559。</p>
+<p><strong>总结：</strong> 在祖先相同时，使用MI必须引入虚基类，并修改构造函数初始化列表的规则。</p>
+<p>下面介绍一些有关MI的问题。</p>
+<ol>
+<li>混合使用虚基类和非虚基类</li>
+</ol>
+<p>当类通过多条虚途径和非虚途径继承某个特定的基类时，该类将包含一个表示所有的虚途径的基类子对象和分别表示各条非虚途径的多个基类子对象。</p>
+<ol>
+<li>虚基类和支配</li>
+</ol>
+<p>派生类中的名称优先于直接或间接祖先类中的相同名称。</p>
+<p>如果无法用优先规则判断出使用哪个名称，则会导致二义性。</p>
+<h2 id="14-4-类模板"><a href="#14-4-类模板" class="headerlink" title="14.4 类模板"></a>14.4 类模板</h2><p>C++的类模板为生成通用的类声明提供了一种更好的方法（C++最初不支持模板，单模板被引入后，就一直在演化，因此有的编译器可能不支持这里的所有特性）。模板提供参数化（parameterized）类型，即能够将类型名作为参数传递给接收方来建立类或函数。</p>
+<p>C++库提供了多个模板类，如vector、array、valarray等等。</p>
+<h3 id="14-4-1-定义类模板"><a href="#14-4-1-定义类模板" class="headerlink" title="14.4.1 定义类模板"></a>14.4.1 定义类模板</h3><p>模板类以下面这样的代码开头：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">Stack</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  ...</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>这里使用<code>class</code>并不意味着Type必须是一个类，而只是表明Type是一个通用的类型说明符，在使用模板时，将使用时间的类型替换它。较新的C++实现推荐使用关键字<code>typename</code>来代替<code>class</code>。</p>
+<p>当模板被调用时，<code>Type</code>将被具体的类型值（如<code>int</code>或<code>string</code>）取代。</p>
+<p>同样，可以使用模板成员函数替换原有类的类方法，每个函数头都将以相同的模板声明打头（如果在类声明中定义了方法，即内联定义，则可以省略模板前缀和类限定符：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">bool Stack&lt;T&gt;::push(const T&amp; item)&#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>注意：</strong> 模板声明本身并不是类和成员函数，它们属于C++编译器指令，说明了如何生成对应的类和成员函数定义。而模板的具体实现则被称为实例化（instantiation）或具体化（specialization）。</p>
+<p>不能将模板成员函数放在独立的实现文件中（以前，C++标准确实提供了关键字export，让您能够将模板成员函数放在独立的实现文件中，但支持该关键字的编译器不多，C++11不再这样使用export，而是将其保留用于其他用途）。 由于模板不是函数，它们不能单独编译，模板必须与特定的模板实例化请求一起使用。为此，最简单的方法是就所有模板信息放在一个头文件中，并在要使用这些模板的文件中包含该头文件。</p>
+<h3 id="14-4-2-使用模板类"><a href="#14-4-2-使用模板类" class="headerlink" title="14.4.2 使用模板类"></a>14.4.2 使用模板类</h3><p>可以用所需的具体类型替换泛型名，就可以声明一个类型为模板类的对象：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Stack&lt;<span class="keyword">int</span>&gt; kernels;</span><br><span class="line">Stack&lt;<span class="built_in">string</span>&gt; colonels;</span><br></pre></td></tr></table></figure>
+<p>注意，必须显式的提供所需的类型，这与常规的函数模板是不同的，因为编译器可以根据函数的参数类型来确定要生成哪种函数。</p>
+<h3 id="14-4-3-深入探讨模板类"><a href="#14-4-3-深入探讨模板类" class="headerlink" title="14.4.3 深入探讨模板类"></a>14.4.3 深入探讨模板类</h3><p>关于使用指针在作为Stack<t>的类型，比如用字符指针替换string来作为T类型。这样会带来一些问题。</t></p>
+<ul>
+<li><code>char* s</code>：单纯的<code>char* s</code>并没有给<code>s</code>分配合适的空间，这会使<code>s</code>的值存在某些不合适的内存单元中</li>
+<li><code>char s[40]</code>：这虽然分配了空间，但是s的大小固定，且s本身是数组名，虽然代表地址，但是无法进行运算，有些操作会引起冲突。</li>
+<li><code>char* po = new char[40]</code>：这次分配了空间，<code>po</code>也成为了变量，但仍有问题，具体看p573。</li>
+</ul>
+<p>但是并不是说不能使用指针作为T，只是在使用时，需要多家注意，考虑谨慎。</p>
+<h3 id="14-4-4-数组模板示例和非类型参数"><a href="#14-4-4-数组模板示例和非类型参数" class="headerlink" title="14.4.4 数组模板示例和非类型参数"></a>14.4.4 数组模板示例和非类型参数</h3><p>使用非类型参数来说模板达到某些目的</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">int</span> n&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ArrayTP</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  ...</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  ...</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ArrayTP&lt;<span class="keyword">double</span>,<span class="number">12</span>&gt; one;</span><br><span class="line">ArrayTP&lt;<span class="keyword">double</span>,<span class="number">13</span>&gt; two;</span><br></pre></td></tr></table></figure>
+<p>表达式参数方法的主要缺点是，每组数组的大小都将生成自己的模板，而利用构造函数的方法只会生成一个类声明，并将数组大小信息传递给类的构造函数，详细见p578。</p>
+<h3 id="14-4-5-模板多功能性"><a href="#14-4-5-模板多功能性" class="headerlink" title="14.4.5 模板多功能性"></a>14.4.5 模板多功能性</h3><p>可以将常规类的技术用于模板类，模板类可以用作基类，也可用作组件类，还可用作其他模板的类型参数。</p>
+<ol>
+<li>递归使用模板</li>
+</ol>
+<ol>
+<li>使用多个类型参数</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T1, <span class="keyword">typename</span> T2&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pair</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  T1 a;</span><br><span class="line">  T2 b;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function">T1&amp; <span class="title">first</span><span class="params">()</span></span>;</span><br><span class="line">  <span class="function">T2&amp; <span class="title">second</span><span class="params">()</span></span>;</span><br><span class="line">  ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>默认模板参数</li>
+</ol>
+<p>可以为类型参数提供默认值：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T1</span>, <span class="title">class</span> <span class="title">T2</span> = <span class="title">int</span>&gt; <span class="title">class</span> <span class="title">Topo</span>&#123;</span>...&#125;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="14-4-6-模板的具体化"><a href="#14-4-6-模板的具体化" class="headerlink" title="14.4.6 模板的具体化"></a>14.4.6 模板的具体化</h3><p>模板以泛型的方式描述类，而具体化是使用具体的类型生成类声明。</p>
+<ol>
+<li>隐式实例化（implicit instantiation）</li>
+</ol>
+<p>&emsp;&emsp;声明一个或多个对象，指出所需的类型，编译器使用通用模板提供的处方生成具体的类定义：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ArrayTP&lt;<span class="keyword">int</span>, <span class="number">100</span>&gt; stuff;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;编译器在需要对象之前，不会生成类的隐式实例化，如下面的代码，第二条语句才会使编译器生成类定义，并根据定义创建一个对象<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ArrayTP&lt;<span class="keyword">double</span>, <span class="number">30</span>&gt; *pt;</span><br><span class="line">pt = <span class="keyword">new</span> ArrayTP&lt;<span class="keyword">double</span>, <span class="number">30</span>&gt;;</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>显式实例化（explicit instantiation）</li>
+</ol>
+<p>&emsp;&emsp;当使用关键字<code>template</code>并指出所需类型来声明类时，编译器将生成类声明的显式实例化。在这种情况下，孙然没有创建或提及类对象，编译器也将生成类声明（包括方法定义）。和隐式实例化一样，也将根据通用模板来生成具体化。（<strong>这里没搞懂</strong>）<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayTP</span>&lt;string, 100&gt;;</span></span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>显式具体化（explicit specialization）</li>
+</ol>
+<p>&emsp;&emsp;显式具体化是特定类型（用于替换模板中的泛型）的定义。有时候，可能需要在为特殊类型实例化时，对模板进行修改，使其行为不同。在这种情况下，可以创建显式具体化。（<strong>这块也没看懂</strong>）</p>
+<p>&emsp;&emsp;另外，假设模板是用<code>&gt;</code>运算符来对值进行比较，对于数字，管用。如果T表示一个type，则只要定义了<code>T::operator&gt;()</code>方法，这也管用。但如果T是由<code>const char*</code>表示的字符串，这将不管用。实际上，模板倒是可以正常工作，但字符串将按地址（按照字母顺序）排序。这要求类定义使用<code>strcmp()</code>，而不是<code>&gt;</code>来对值进行比较。</p>
+<ol>
+<li>部分具体化（partial specialization）</li>
+</ol>
+<p>&emsp;&emsp;C++允许部分具体化，即部分限制模板的通用性。例如，可以给类型参数之一指定具体类型，下面的代码将T2具体化为int，但T1保持不变：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//general template</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T1</span>, <span class="title">class</span> <span class="title">T2</span>&gt; <span class="title">class</span> <span class="title">Pair</span> &#123;</span>...&#125;;</span><br><span class="line"><span class="comment">//specialization with T2 set to int</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T1</span>&gt; <span class="title">class</span> <span class="title">Pair</span>&lt;T1, int&gt; &#123;</span>...&#125;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="14-4-7-成员模板"><a href="#14-4-7-成员模板" class="headerlink" title="14.4.7 成员模板"></a>14.4.7 成员模板</h3><p>模板可用作结构、类或模板类的成员。要完全实现STL的设计，必须使用这项特性。</p>
+<h3 id="14-4-8-将模板作为参数"><a href="#14-4-8-将模板作为参数" class="headerlink" title="14.4.8 将模板作为参数"></a>14.4.8 将模板作为参数</h3><p>模板除了可以包含类型参数（<code>typename T</code>）和非类型参数（<code>int n</code>）之外，还可以包含本身就是模板的参数，如下所示：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="class"><span class="keyword">class</span> <span class="title">Thing</span>&gt; <span class="title">class</span> <span class="title">Crab</span></span></span><br><span class="line"><span class="class">//其中，<span class="title">template</span>&lt;typename T&gt;<span class="title">class</span>是类型，<span class="title">Thin</span>是参数</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="14-4-9-模板类和友元"><a href="#14-4-9-模板类和友元" class="headerlink" title="14.4.9 模板类和友元"></a>14.4.9 模板类和友元</h3><p>模板类声明也可以有友元。模板的友元分三类：</p>
+<ol>
+<li>非模板友元</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">HasFriend</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">friend</span> <span class="keyword">void</span> <span class="title">counts</span><span class="params">()</span></span>; <span class="comment">//(1)</span></span><br><span class="line">  <span class="function"><span class="keyword">friend</span> <span class="keyword">void</span> <span class="title">report</span><span class="params">(HasFriend &amp;)</span></span>; <span class="comment">//(2) 错误</span></span><br><span class="line">  <span class="function"><span class="keyword">friend</span> <span class="keyword">void</span> <span class="title">report</span><span class="params">(HasFriend&lt;T&gt; &amp;)</span></span>; <span class="comment">//(3) 正确</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;上述代码中的（1）式在模板中将一个常规函数声明为友元，该声明使<code>counts()</code>函数成为模板所有实例化的友元，<code>counts()</code>函数不是通过对象调用的（它是友元，不是成员函数），也没有对象参数。它通过以下几种方式访问<code>HasFriend</code>对象：访问全局对象;使用全局指针访问非全局对象;创建自己的对象;访问独立于对象的模板类的静态数据成员。如果要为友元函数提供模板类参数，则不能通过（2）式来达到目的，原因是不存在<code>HasFriend</code>这样的对象，而只有特定的具体化，如<code>HasFriend&lt;short&gt;</code>，这里<code>short</code>可以用<code>T</code>表示，因为参数传递时就会指明<code>T</code>的类型，因此，要提供模板类参数，必须指明具体化。</p>
+<ol>
+<li>约束（bound）模板友元，即友元的类型取决于类被实例化时的类型<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//（1）</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="function"><span class="keyword">void</span> <span class="title">counts</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="function"><span class="keyword">void</span> <span class="title">reprot</span><span class="params">(T&amp;)</span></span>;</span><br><span class="line"><span class="comment">//（2）</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HasFriendT</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="keyword">friend</span> <span class="keyword">void</span> counts&lt;TT&gt;();</span><br><span class="line">  <span class="keyword">friend</span> <span class="keyword">void</span> report&lt;&gt;(HasFriendT&lt;TT&gt; &amp;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>&emsp;&emsp;使友元本身成为模板，使累得每一个具体化都获得与友元匹配的具体化，包含三步：首先，在类定义之前声明每个模板函数，如（1）所示，然后，在函数中再次将模板声明为友元，声明中的<code>&lt;&gt;</code>指出这是模板具体化，对于<code>report()</code>，<code>&lt;&gt;</code>可以为空，因为可以从函数参数推断出如下模板类型参数：<code>HasFriendT&lt;TT&gt;</code>，也可以写完整：<code>report&lt;HasFriendT&lt;TT&gt; &gt; (HasFriendT&lt;TT&gt; &amp;)</code>。但<code>counts</code>函数没有参数，因此必须使用模板参数语法<code>&lt;TT&gt;</code>来指明具体化。最后一步是友元提供模板定义。</p>
+<ol>
+<li>非约束（unbound）模板友元，即友元的所有具体化都是类的每一个具体化的方式</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ManyFriend</span>&#123;</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> C, <span class="keyword">typename</span> D&gt; <span class="function"><span class="keyword">friend</span> <span class="keyword">void</span> <span class="title">show2</span><span class="params">(C&amp;, D&amp;)</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;对于非约束友元，友元模板类型参数与模板类类型参数是不同的，如上代码所示。</p>
+<h3 id="14-4-10-模板别名（C-11）"><a href="#14-4-10-模板别名（C-11）" class="headerlink" title="14.4.10 模板别名（C++11）"></a>14.4.10 模板别名（C++11）</h3><p>可以使用<code>typedef</code>为模板具体化指定别名：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//define three typedef aliases</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">std</span>::<span class="built_in">array</span>&lt;<span class="keyword">double</span>,12&gt; arrd;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">std</span>::<span class="built_in">array</span>&lt;<span class="keyword">int</span>, 12&gt; arri;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">std</span>:<span class="built_in">array</span>&lt;<span class="built_in">std</span>::<span class="built_in">string</span>,12&gt; arrst;</span><br><span class="line">arrd gollons;</span><br><span class="line">arri days;</span><br><span class="line">arrst months;</span><br></pre></td></tr></table></figure></p>
+<p>C++11提供了一种新的可以简化上述任务的方法——使用模板提供一系列别名，如下所示：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; <span class="keyword">using</span> arrtype = <span class="built_in">std</span>::<span class="built_in">array</span>&lt;T,<span class="number">12</span>&gt;;</span><br><span class="line"><span class="comment">//这将arrtype定义为一个模板别名，可以使用它来指定类型，如下所示</span></span><br><span class="line">arrtype&lt;<span class="keyword">double</span>&gt; gallons;</span><br><span class="line">arrtype&lt;<span class="keyword">int</span>&gt; days;</span><br><span class="line">arrtype&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt; months;</span><br><span class="line"><span class="comment">//总之， arrtype&lt;T&gt; 就表示类型 std::array&lt;T,12&gt;</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/读书笔记/" rel="tag"><i class="fa fa-tag"></i> 读书笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/计算机视觉-论文解读-Video_based_Sign_Language_Recognition/" rel="prev" title="Video-based Sign Language Recognition without Temporal Segmentation">
+                <i class="fa fa-chevron-left"></i> Video-based Sign Language Recognition without Temporal Segmentation
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/Cpp-Book-深入应用Cpp11/" rel="next" title="《深入应用C++11——代码优化与工程级应用》">
+                《深入应用C++11——代码优化与工程级应用》 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">131</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第十四章-C-中的代码重用"><span class="nav-text">第十四章 C++中的代码重用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#14-1-包含对象成员的类"><span class="nav-text">14.1 包含对象成员的类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-2-私有继承"><span class="nav-text">14.2 私有继承</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#14-2-2-使用包含还是私有继承。"><span class="nav-text">14.2.2 使用包含还是私有继承。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-2-3-保护继承"><span class="nav-text">14.2.3 保护继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-2-4-使用using重新定义访问权限"><span class="nav-text">14.2.4 使用using重新定义访问权限</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-3-多重继承"><span class="nav-text">14.3 多重继承</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#14-3-1-有多少个Work"><span class="nav-text">14.3.1 有多少个Work</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-3-2-哪个方法"><span class="nav-text">14.3.2 哪个方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-4-类模板"><span class="nav-text">14.4 类模板</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#14-4-1-定义类模板"><span class="nav-text">14.4.1 定义类模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-4-2-使用模板类"><span class="nav-text">14.4.2 使用模板类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-4-3-深入探讨模板类"><span class="nav-text">14.4.3 深入探讨模板类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-4-4-数组模板示例和非类型参数"><span class="nav-text">14.4.4 数组模板示例和非类型参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-4-5-模板多功能性"><span class="nav-text">14.4.5 模板多功能性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-4-6-模板的具体化"><span class="nav-text">14.4.6 模板的具体化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-4-7-成员模板"><span class="nav-text">14.4.7 成员模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-4-8-将模板作为参数"><span class="nav-text">14.4.8 将模板作为参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-4-9-模板类和友元"><span class="nav-text">14.4.9 模板类和友元</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-4-10-模板别名（C-11）"><span class="nav-text">14.4.10 模板别名（C++11）</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">471k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">7:08</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

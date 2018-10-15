@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="第一章 介绍GPU在进行浮点数运算时超高的精确度和速度，其原因在于GPU很擅长解决计算密集型和高并行计算。 多核CPU和GPU的一个挑战在于怎么编写并行的程序来利用这些多核。 CUDA并行变成模式就是希望用一个较低的学习曲线来解决这个问题。 三个关键的抽象：线程组等级、共享内存、障碍同步 第二章  编程模型2.1 Kernelskernel程序用__global__定义。并且用一种新的执行配置语法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《CUDA C Programming Guide》">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/CUDA-读书笔记-CUDACProgrammingGuide-md/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="第一章 介绍GPU在进行浮点数运算时超高的精确度和速度，其原因在于GPU很擅长解决计算密集型和高并行计算。 多核CPU和GPU的一个挑战在于怎么编写并行的程序来利用这些多核。 CUDA并行变成模式就是希望用一个较低的学习曲线来解决这个问题。 三个关键的抽象：线程组等级、共享内存、障碍同步 第二章  编程模型2.1 Kernelskernel程序用__global__定义。并且用一种新的执行配置语法">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-05T10:56:30.984Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《CUDA C Programming Guide》">
+<meta name="twitter:description" content="第一章 介绍GPU在进行浮点数运算时超高的精确度和速度，其原因在于GPU很擅长解决计算密集型和高并行计算。 多核CPU和GPU的一个挑战在于怎么编写并行的程序来利用这些多核。 CUDA并行变成模式就是希望用一个较低的学习曲线来解决这个问题。 三个关键的抽象：线程组等级、共享内存、障碍同步 第二章  编程模型2.1 Kernelskernel程序用__global__定义。并且用一种新的执行配置语法">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/CUDA-读书笔记-CUDACProgrammingGuide-md/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>《CUDA C Programming Guide》 | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">131</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-linux">
+    <a href="/categories/Linux/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-面试">
+    <a href="/categories/面试/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其它">
+    <a href="/categories/其它/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其它</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">25</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-life">
+    <a href="/life/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-child"></i> <br />生活杂记</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/CUDA-读书笔记-CUDACProgrammingGuide-md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">《CUDA C Programming Guide》
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-08 22:11:04" itemprop="dateCreated datePublished" datetime="2018-09-08T22:11:04+08:00">2018-09-08</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/CUDA/" itemprop="url" rel="index"><span itemprop="name">CUDA</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">12k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">11 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="第一章-介绍"><a href="#第一章-介绍" class="headerlink" title="第一章 介绍"></a>第一章 介绍</h1><p>GPU在进行浮点数运算时超高的精确度和速度，其原因在于GPU很擅长解决计算密集型和高并行计算。</p>
+<p>多核CPU和GPU的一个挑战在于怎么编写并行的程序来利用这些多核。</p>
+<p>CUDA并行变成模式就是希望用一个较低的学习曲线来解决这个问题。</p>
+<p>三个关键的抽象：线程组等级、共享内存、障碍同步</p>
+<h1 id="第二章-编程模型"><a href="#第二章-编程模型" class="headerlink" title="第二章  编程模型"></a>第二章  编程模型</h1><h2 id="2-1-Kernels"><a href="#2-1-Kernels" class="headerlink" title="2.1 Kernels"></a>2.1 Kernels</h2><p>kernel程序用<code>__global__</code>定义。并且用一种新的执行配置语法<code>&lt;&lt;&lt;...&gt;&gt;&gt;</code>来决定CUDA的线程数量。每一个线程都会在给定的“线程ID”下执行kernel，线程ID可以通过kernel内部的<code>threadIdx</code>变量来获取。</p>
+<p>下面的代码显示了向量加法。 总共启动了N个线程，每个都执行一个对应位相加运算。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//Kernel definition</span></span><br><span class="line">__<span class="function">global__ <span class="keyword">void</span> <span class="title">VecAdd</span><span class="params">(<span class="keyword">float</span>* A, <span class="keyword">float</span>* B, <span class="keyword">float</span>* C)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i = threadIdx.x;</span><br><span class="line">  C[i] = A[i] + B[i];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="comment">// Kernel invocation with N threads</span></span><br><span class="line">  VecAdd&lt;&lt;&lt;<span class="number">1</span>,N&gt;&gt;&gt;(A,B,C);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-2-线程结构（Thread-Hierarchy）"><a href="#2-2-线程结构（Thread-Hierarchy）" class="headerlink" title="2.2 线程结构（Thread Hierarchy）"></a>2.2 线程结构（Thread Hierarchy）</h2><p>为了方便，<code>threadIdx</code>包含三个组成向量，因此，线程可以使用一维，二维或者三维的<code>thread index</code>，由此，可以表示一维，二维或者三维的线程块（“thread block”）。</p>
+<p>线程的索引和它的线程ID是直接关联的。对于一维线程块来说，它们是一样的。对于二维线程块来说，索引为 $(x，y)$ 的线程，其线程ID为：$(x+yD_x)$ 。对于三维线程块来说，索引为 $(x,y,z)$ 的线程，其线程ID为： $(x+ yD_x +zD_xD_y)$ 。</p>
+<p>下面的代码显示了矩阵加法。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//Kernel definition</span></span><br><span class="line">__<span class="function">global__ <span class="keyword">void</span> <span class="title">MatAdd</span><span class="params">(<span class="keyword">float</span> A[N][N], <span class="keyword">float</span> B[N][N], <span class="keyword">float</span> C[C][C])</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i = threadIdx.x;</span><br><span class="line">  <span class="keyword">int</span> j =threadIndx.y;</span><br><span class="line">  C[i][j] = A[i][j] + B[i][j];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="comment">//Kernel invocation with one block of N*N*1 threads</span></span><br><span class="line">  <span class="keyword">int</span> numBlocks = <span class="number">1</span>;</span><br><span class="line">  <span class="function">dim3 <span class="title">threadsPerBlock</span><span class="params">(N,N)</span></span>;  <span class="comment">//&lt;&lt;&lt;&gt;&gt;&gt;语法可以接受int类型或者dim3类型的数据</span></span><br><span class="line">  MatAdd&lt;&lt;&lt;numBlocks, threadsPerBlock&gt;&gt;&gt;(A,B,C);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>thread block的索引可以通过<code>blockIdx</code>变量获得，thread block的维度的size可以通过<code>blockDim</code>变量获得。</p>
+<p>扩展上面的<code>MatAdd()</code>代码，使其可以处理多blocks，代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//Kernel definition</span></span><br><span class="line">__<span class="function">global__ <span class="keyword">void</span> <span class="title">MatAdd</span><span class="params">(<span class="keyword">float</span> A[N][N], <span class="keyword">float</span> B[N][N], <span class="keyword">float</span> C[N][N])</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i = blockIdx.x * blockDim.x + threadIdx.x;</span><br><span class="line">  <span class="keyword">int</span> j = blockIdx.y * blockDim.y + threadInx.y;</span><br><span class="line">  <span class="keyword">if</span>(i&lt;N &amp;&amp; j&lt;N)&#123;</span><br><span class="line">    C[i][j] = A[i][j] + B[i][j];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="comment">//Kernel invocation</span></span><br><span class="line">  <span class="function">dim3 <span class="title">threadsPerBlock</span><span class="params">(<span class="number">16</span>, <span class="number">16</span>)</span></span>;</span><br><span class="line">  <span class="function">dim3 <span class="title">numBlocks</span><span class="params">(N / threadsPerBlock.x, N / threadsPerBlock.y)</span></span>;</span><br><span class="line">  MatAdd&lt;&lt;&lt;numBlocks, threadsPerBlock&gt;&gt;&gt;(A, B, C);</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>线程块必须独立执行，因此它们必须能够在任意的顺序下并行执行。</p>
+<p>CUDA使用<code>__syncthreads()</code>来协调共享内存和各个线程之间的执行。</p>
+<h2 id="2-3-内存结构（Memory-Hierarchy）"><a href="#2-3-内存结构（Memory-Hierarchy）" class="headerlink" title="2.3 内存结构（Memory Hierarchy）"></a>2.3 内存结构（Memory Hierarchy）</h2><p>由两种额外的只读内存空间可以被所有线程访问到：常量内存空间（constant memory spaces）和纹理内存空间（texture memory spaces）。</p>
+<h2 id="2-4-异构编程"><a href="#2-4-异构编程" class="headerlink" title="2.4 异构编程"></a>2.4 异构编程</h2><p>CUDA编程模型假设所有线程都是在物理上单个的设备上运行的，每个设备都当做是主机的从处理程序。比如，kernel在GPU上执行，而剩下的C程序在CPU上执行。</p>
+<p>CUDA编程模型还假设主机和设备都DRAM中各自维护自己的内存，对应这“主机内存（host memory）”和“设备内存（divice memory）”。因此，程序通过调用CUDA运行时来管理主机和设备的内存。</p>
+<h2 id="2-5-计算能力（Compute-Capability）"><a href="#2-5-计算能力（Compute-Capability）" class="headerlink" title="2.5 计算能力（Compute Capability）"></a>2.5 计算能力（Compute Capability）</h2><p>计算能力用设备的版本号标识，有时也称为“SM version”。有major revision number“X”和minor revision number“Y”组成，记为X.Y。</p>
+<h1 id="第三章-编程接口（Programming-Interface）"><a href="#第三章-编程接口（Programming-Interface）" class="headerlink" title="第三章 编程接口（Programming Interface）"></a>第三章 编程接口（Programming Interface）</h1><p>CUDA提供了诸多扩展语法来并行变成（如kernel），任何包含这些扩展语法的源文件都需要需要nvcc编译器来编译。</p>
+<h2 id="3-1-Compilation-with-NVCC"><a href="#3-1-Compilation-with-NVCC" class="headerlink" title="3.1 Compilation with NVCC"></a>3.1 Compilation with NVCC</h2><p>Kernels can be written using the CUDA instruction set architecture, called PTX, which<br>is described in the PTX reference manual.</p>
+<h3 id="3-1-1-编译工作流"><a href="#3-1-1-编译工作流" class="headerlink" title="3.1.1 编译工作流"></a>3.1.1 编译工作流</h3><h4 id="3-1-1-1-离线编译-Offline-Compilation"><a href="#3-1-1-1-离线编译-Offline-Compilation" class="headerlink" title="3.1.1.1 离线编译 Offline Compilation"></a>3.1.1.1 离线编译 Offline Compilation</h4><p>nvcc编译器可以编译包含host code和device code的混合代码。nvcc首先会将device code从host code中分离出来，然后，会进行以下两步：</p>
+<ul>
+<li>编译device code到assembly form（PTX code）或者binary form（cubin objec）</li>
+<li>修改host code，将<code>&lt;&lt;&lt;...&gt;&gt;&gt;</code>语法替换成必要的CUDA C运行时函数。</li>
+</ul>
+<p>被修改的host code要么输出成C code，要么把直接输出成object code。</p>
+<h4 id="3-1-1-2-即时编译-Just-in-Time-Compilation"><a href="#3-1-1-2-即时编译-Just-in-Time-Compilation" class="headerlink" title="3.1.1.2 即时编译 Just-in-Time Compilation"></a>3.1.1.2 即时编译 Just-in-Time Compilation</h4><h3 id="二进制兼容性-Binary-Compatibility"><a href="#二进制兼容性-Binary-Compatibility" class="headerlink" title="二进制兼容性 Binary Compatibility"></a>二进制兼容性 Binary Compatibility</h3><p>Binary code is architecture-specific。通过<code>-code=sm_35</code>的形式来指定特定的architecture。注意，编译好的二进制代码是向上兼容的，也就是如果二进制代码设定的计算能力版本号为 $X.y$ ，那么该代码就只能运行在 $X.z$上，其中 $z\ge y$ 。</p>
+<h3 id="3-1-3-PTX-兼容性"><a href="#3-1-3-PTX-兼容性" class="headerlink" title="3.1.3 PTX 兼容性"></a>3.1.3 PTX 兼容性</h3><p>一些PTX指令仅仅支持在高计算机能力版本的GPU中使用。</p>
+<p>指针某些计算能力版本的PTX code总是可以转换成binary code，进而都更高计算能力的版本中使用。</p>
+<p>其他有些版本，则不能直接使用。</p>
+<h3 id="3-1-4-应用兼容性"><a href="#3-1-4-应用兼容性" class="headerlink" title="3.1.4 应用兼容性"></a>3.1.4 应用兼容性</h3><p>为了满足bianry兼容性和PTX兼容性，推荐使用即时编译。</p>
+<p>通过<code>-gencode</code>、<code>-arch</code>和<code>-code</code>编译选项来指定计算能力版本号及其兼容性。</p>
+<h3 id="3-1-5-C-C-兼容性"><a href="#3-1-5-C-C-兼容性" class="headerlink" title="3.1.5 C/C++ 兼容性"></a>3.1.5 C/C++ 兼容性</h3><p>CUDA源文件的前端遵循C++语法规则。host code可以完美支持C++语言发。但是，device code支持C++语法中的一个子集，详细可以参见C/C++ Language Support。</p>
+<h3 id="3-1-6-64-Bit-Compatibility"><a href="#3-1-6-64-Bit-Compatibility" class="headerlink" title="3.1.6 64-Bit Compatibility"></a>3.1.6 64-Bit Compatibility</h3><p>64位的nvcc会将device code编译成64位模式（即，指针占64位）。此时host code必须在32位模式下执行。</p>
+<p>32位device、host同理</p>
+<p><code>-m64</code> 选项可以切换nvcc的位数。</p>
+<h2 id="3-2-CUDA-C-Runtime"><a href="#3-2-CUDA-C-Runtime" class="headerlink" title="3.2 CUDA C Runtime"></a>3.2 CUDA C Runtime</h2><p>运行时使用<code>cudart</code>库实现。 或者使用<code>cudart.lib</code>、<code>libcudart.a</code>进行静态链接，或者使用<code>cudart.dll</code>、<code>cudart.so</code>进行动态链接。</p>
+<p>正如前面异构编程提到的。CUDA编程模型将系统看走是由device和host组成的一个整体，二者管理各自的内存。</p>
+<h3 id="3-2-1-初始化"><a href="#3-2-1-初始化" class="headerlink" title="3.2.1 初始化"></a>3.2.1 初始化</h3><p>没有专门的初始化函数<br>在初始化阶段，runtime为系统中的每一个device创建上下文。</p>
+<h3 id="3-2-2-设备内存-Device-Memory"><a href="#3-2-2-设备内存-Device-Memory" class="headerlink" title="3.2.2 设备内存 Device Memory"></a>3.2.2 设备内存 Device Memory</h3><p>Kernels操控device memory之外的代码。所以runtime会提供allocate，deallocate和copy等函数来复制device memory，同时在host和device内存之间传输数据。</p>
+<p>Divice memory可以申请linear memory或者CUDA arrays。</p>
+<p>CUDA arrays是不透明的内存形式，专门用于优化texture fetching。</p>
+<p>Linear memory存在于40位的地址空间中，可以使用<code>cudaMalloc()</code>函数申请，用<code>cudaFree()</code>函数释放，同时，可以用<code>cudaMemcpy()</code>函数来将数据在host和device之间交换。</p>
+<p><code>cudaMallocPitch()</code>和<code>cudaMalloc3D()</code>推荐用来申请2D和3D数组。<code>cudaMemcpy2D</code>。</p>
+<p><code>cudaGetSymbolAddress()</code>用来检索指向内存的地址。</p>
+<p><code>cudaGetSymbolSize()</code>可以得到申请内存的大小。</p>
+<h3 id="3-2-3-共享内存-Shared-Memory"><a href="#3-2-3-共享内存-Shared-Memory" class="headerlink" title="3.2.3 共享内存 Shared Memory"></a>3.2.3 共享内存 Shared Memory</h3><p>Shared Memory在Thread Hierarchy上要比global memory更快。</p>
+<p><strong>矩阵乘法</strong><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Matrices are stored in row-major order:</span></span><br><span class="line"><span class="comment">// M(row, col) = *(M.elements + row * M.width + col)</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line"><span class="keyword">int</span> width;</span><br><span class="line"><span class="keyword">int</span> height;</span><br><span class="line"><span class="keyword">float</span>* elements;</span><br><span class="line">&#125; Matrix;</span><br><span class="line"><span class="comment">// Thread block size</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BLOCK_SIZE 16</span></span><br><span class="line"><span class="comment">// Forward declaration of the matrix multiplication kernel</span></span><br><span class="line">__<span class="function">global__ <span class="keyword">void</span> <span class="title">MatMulKernel</span><span class="params">(<span class="keyword">const</span> Matrix, <span class="keyword">const</span> Matrix, Matrix)</span></span>;</span><br><span class="line"><span class="comment">// Matrix multiplication - Host code</span></span><br><span class="line"><span class="comment">// Matrix dimensions are assumed to be multiples of BLOCK_SIZE</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MatMul</span><span class="params">(<span class="keyword">const</span> Matrix A, <span class="keyword">const</span> Matrix B, Matrix C)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="comment">// Load A and B to device memory</span></span><br><span class="line">Matrix d_A;</span><br><span class="line">d_A.width = A.width; d_A.height = A.height;</span><br><span class="line"><span class="keyword">size_t</span> size = A.width * A.height * <span class="keyword">sizeof</span>(<span class="keyword">float</span>);</span><br><span class="line">cudaMalloc(&amp;d_A.elements, size);</span><br><span class="line">cudaMemcpy(d_A.elements, A.elements, size,</span><br><span class="line">cudaMemcpyHostToDevice);</span><br><span class="line">Matrix d_B;</span><br><span class="line">d_B.width = B.width; d_B.height = B.height;</span><br><span class="line">size = B.width * B.height * <span class="keyword">sizeof</span>(<span class="keyword">float</span>);</span><br><span class="line">cudaMalloc(&amp;d_B.elements, size);</span><br><span class="line">cudaMemcpy(d_B.elements, B.elements, size,</span><br><span class="line">cudaMemcpyHostToDevice);</span><br><span class="line"><span class="comment">// Allocate C in device memory</span></span><br><span class="line">Matrix d_C;</span><br><span class="line">d_C.width = C.width; d_C.height = C.height;</span><br><span class="line">size = C.width * C.height * <span class="keyword">sizeof</span>(<span class="keyword">float</span>);</span><br><span class="line">cudaMalloc(&amp;d_C.elements, size);</span><br><span class="line"><span class="comment">// Invoke kernel</span></span><br><span class="line"><span class="function">dim3 <span class="title">dimBlock</span><span class="params">(BLOCK_SIZE, BLOCK_SIZE)</span></span>;</span><br><span class="line"><span class="function">dim3 <span class="title">dimGrid</span><span class="params">(B.width / dimBlock.x, A.height / dimBlock.y)</span></span>;</span><br><span class="line">MatMulKernel&lt;&lt;&lt;dimGrid, dimBlock&gt;&gt;&gt;(d_A, d_B, d_C);</span><br><span class="line"><span class="comment">// Read C from device memory</span></span><br><span class="line">cudaMemcpy(C.elements, Cd.elements, size,</span><br><span class="line">cudaMemcpyDeviceToHost);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Free device memory</span></span><br><span class="line">cudaFree(d_A.elements);</span><br><span class="line">cudaFree(d_B.elements);</span><br><span class="line">cudaFree(d_C.elements);</span><br><span class="line"><span class="comment">// Matrix multiplication kernel called by MatMul()</span></span><br><span class="line">__<span class="function">global__ <span class="keyword">void</span> <span class="title">MatMulKernel</span><span class="params">(Matrix A, Matrix B, Matrix C)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="comment">// Each thread computes one element of C</span></span><br><span class="line"><span class="comment">// by accumulating results into Cvalue</span></span><br><span class="line"><span class="keyword">float</span> Cvalue = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> row = blockIdx.y * blockDim.y + threadIdx.y;</span><br><span class="line"><span class="keyword">int</span> col = blockIdx.x * blockDim.x + threadIdx.x;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> e = <span class="number">0</span>; e &lt; A.width; ++e)</span><br><span class="line">Cvalue += A.elements[row * A.width + e]</span><br><span class="line">* B.elements[e * B.width + col];</span><br><span class="line">C.elements[row * C.width + col] = Cvalue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-2-4-Page-Locked-Host-Memory"><a href="#3-2-4-Page-Locked-Host-Memory" class="headerlink" title="3.2.4 Page-Locked Host Memory"></a>3.2.4 Page-Locked Host Memory</h3><p>plhm有诸多好处，如：</p>
+<ul>
+<li>可以使copy更快</li>
+<li>可以直接映射到地址空间，消除copy到device memory的需求</li>
+<li>在fron-side bus上， plhm的bandwidth更高。</li>
+</ul>
+<p>但是，plhm是稀缺资源，因此，在申请时一定要注意不能过度使用。</p>
+<h4 id="3-2-4-1-移动内存-Portable-Memory"><a href="#3-2-4-1-移动内存-Portable-Memory" class="headerlink" title="3.2.4.1 移动内存 Portable Memory"></a>3.2.4.1 移动内存 Portable Memory</h4><p>一块page-locked内存可以备用在与任意一个设备的连接上。但是默认情况下，使用page-locked内存的好处仅仅会在当前block所申请的设备（或者那些共享了内存的设备）上显现。</p>
+<p>为了使这些好处对于所有设备来说都是可行的，block需要将flag cudaHostAllocPortable传递到cudaHostAlloc中去，或者将flag cudaHostRegisterPortable传递到cudaHostRegister中去。</p>
+<h4 id="3-2-4-2-Write-Combining-Memory"><a href="#3-2-4-2-Write-Combining-Memory" class="headerlink" title="3.2.4.2 Write-Combining Memory"></a>3.2.4.2 Write-Combining Memory</h4><p>该内存通过释放L1和L2的缓存资源，使得更多缓存资源可以给后面的应用使用。</p>
+<p>从host中读取write-combining 内存比较慢，所以常常只用于写。</p>
+<h4 id="3-2-4-3-Mapped-Memory"><a href="#3-2-4-3-Mapped-Memory" class="headerlink" title="3.2.4.3 Mapped Memory"></a>3.2.4.3 Mapped Memory</h4><p>使用cduaHostAllocMapped或者cudaHostRegisterMapped可以使一块page-locked host内存映射到设备的地址空间中。</p>
+<p>因此，这样的内存块往往有两个地址，分别是host地址和device地址。</p>
+<p>直接kernel中访问host内存有以下几点优势：</p>
+<ul>
+<li>无需在device中申请内存块，也无需在device和host中来还传输数据</li>
+<li>在执行kernel时，无需使用“流”来overlap数据的传输</li>
+</ul>
+<h4 id="3-2-5-异步并发执行-Asynchronous-Concurrent-Execution"><a href="#3-2-5-异步并发执行-Asynchronous-Concurrent-Execution" class="headerlink" title="3.2.5 异步并发执行 Asynchronous Concurrent Execution"></a>3.2.5 异步并发执行 Asynchronous Concurrent Execution</h4><p>CUDA将下列操作当作一个独立的任务，它们可以互相并发执行：</p>
+<ul>
+<li>在host上计算</li>
+<li>在device上计算</li>
+<li>将host上的内存传输到device上</li>
+<li>将device上的内存传输到host上</li>
+</ul>
+<h4 id="3-2-5-1-在Host和Device之间并发执行"><a href="#3-2-5-1-在Host和Device之间并发执行" class="headerlink" title="3.2.5.1 在Host和Device之间并发执行"></a>3.2.5.1 在Host和Device之间并发执行</h4><p>通过异步调用，许多device操作都可以排成队列，进而利用CUDA driver来执行。这减轻了host线程管理device的负担，使得它可以执行其他任务。下列device操作相对于host来说是异步的。</p>
+<ul>
+<li>启动Kernel</li>
+<li>将内存拷贝到一个单一的deivce内存中</li>
+<li>将内存从host拷贝到device中小于64将内存从host拷贝到device中小于64KB的内存块中</li>
+<li>用带有Async后缀的函数来进行内存拷贝</li>
+<li>内存设定函数的调用（Memory set function calls）</li>
+</ul>
+<h4 id="3-2-5-2-Concurrent-Kernel-Execution"><a href="#3-2-5-2-Concurrent-Kernel-Execution" class="headerlink" title="3.2.5.2 Concurrent Kernel Execution"></a>3.2.5.2 Concurrent Kernel Execution</h4><p>计算能力告诉2.x的版本可以并发启动多个kernels。</p>
+<p>可以通过concurrentKernel设备属性来查看是否支持并发启动。</p>
+<h4 id="3-2-5-3-Overlap-of-Data-Tranfer-and-Kernel-Execution"><a href="#3-2-5-3-Overlap-of-Data-Tranfer-and-Kernel-Execution" class="headerlink" title="3.2.5.3 Overlap of Data Tranfer and Kernel Execution"></a>3.2.5.3 Overlap of Data Tranfer and Kernel Execution</h4><p>有一些设备可以从GPU利用kernel执行来进行异步的内存拷贝，应用需要想设备询问是否具有这种功能，可以通过检查asyncEngineCoune设备属性来查看，如果大于0就是支持的。</p>
+<h4 id="3-2-5-4-并发数据传输-Concurrent-Data-Transfers"><a href="#3-2-5-4-并发数据传输-Concurrent-Data-Transfers" class="headerlink" title="3.2.5.4 并发数据传输 Concurrent Data Transfers"></a>3.2.5.4 并发数据传输 Concurrent Data Transfers</h4><p>一些计算能力在2.x以上的设备可以在进行数据传输是进行overlap，应用可以通过asyncEngineCount来检查设备是否支持该功能</p>
+<h4 id="3-2-5-5-流-Streams"><a href="#3-2-5-5-流-Streams" class="headerlink" title="3.2.5.5 流 Streams"></a>3.2.5.5 流 Streams</h4><p>应用通过“流”来管理并发的操作。一个“流”代表这一串由“命令”组成的序列</p>
+<h4 id="3-2-5-5-1-创建和销毁：Creation-and-Destruction"><a href="#3-2-5-5-1-创建和销毁：Creation-and-Destruction" class="headerlink" title="3.2.5.5.1 创建和销毁：Creation and Destruction"></a>3.2.5.5.1 创建和销毁：Creation and Destruction</h4><p>下面的代码创建了两个流，同时在page-locked内存中申请了flaot类型的hosrtPtr</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">cudaStream_t stream[<span class="number">2</span>];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; ++i)</span><br><span class="line">cudaStreamCreate(&amp;stream[i]);</span><br><span class="line"><span class="keyword">float</span>* hostPtr;</span><br><span class="line">cudaMallocHost(&amp;hostPtr, <span class="number">2</span> * size);</span><br></pre></td></tr></table></figure>
+<p>这两条流都经过下面的代码定义，执行一个从host到device的内存拷贝操作，一个kernel启动操作，以及一个从device到host的的内存拷贝操作。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; ++i) &#123;</span><br><span class="line">cudaMemcpyAsync(inputDevPtr + i * size, hostPtr + i * size,</span><br><span class="line">size, cudaMemcpyHostToDevice, stream[i]);</span><br><span class="line">MyKernel &lt;&lt;&lt;<span class="number">100</span>, <span class="number">512</span>, <span class="number">0</span>, stream[i]&gt;&gt;&gt;</span><br><span class="line">(outputDevPtr + i * size, inputDevPtr + i * size, size);</span><br><span class="line">cudaMemcpyAsync(hostPtr + i * size, outputDevPtr + i * size,</span><br><span class="line">size, cudaMemcpyDeviceToHost, stream[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过cudaStreamDestroy()可以释放流：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i =<span class="number">0</span>;i&lt;<span class="number">2</span>;i++)&#123;</span><br><span class="line">  cudaStreamDestroy(stream[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="3-2-5-5-2-默认流-Default-Stream"><a href="#3-2-5-5-2-默认流-Default-Stream" class="headerlink" title="3.2.5.5.2 默认流 Default Stream"></a>3.2.5.5.2 默认流 Default Stream</h5><p>对于使用<code>--default-stream per-thread</code>编译选项的代码来说，默认流是一条常规的流，并且每个主线程都有它自己的默认流</p>
+<p>对于使用<code>--default-stream legacy</code>编译选项的代码来说，默认流是一条特殊的流，被称为<code>NULL stream</code> ，并且每一个设备都具有一条单一的NULL stream供所有的host线程使用。它的特殊性源自于它会隐式的进行同步操作。</p>
+<h5 id="3-2-5-5-3-显式同步"><a href="#3-2-5-5-3-显式同步" class="headerlink" title="3.2.5.5.3 显式同步"></a>3.2.5.5.3 显式同步</h5><p>以下几种方式可以对流进行显式同步操作：</p>
+<ul>
+<li>cudaDeviceSynchronize()</li>
+<li>cudaStreamSynchronize()</li>
+<li>cudaStreamWaitEvent()</li>
+<li>cudaStreamQuery()</li>
+</ul>
+<p>为了避免不必要的速率降低，以上所有的同步函数通常用于timing purpoese或者用于孤立一个拷贝或启动的失败。</p>
+<h5 id="3-2-5-5-4-隐式同步"><a href="#3-2-5-5-4-隐式同步" class="headerlink" title="3.2.5.5.4 隐式同步"></a>3.2.5.5.4 隐式同步</h5><p>从两个不同流传过来的指令中的其中一条出现了问题，那么就无法并发运行。</p>
+<p>同步操作越晚执行越好。</p>
+<h5 id="3-2-5-5-5-Overlapping-行为"><a href="#3-2-5-5-5-Overlapping-行为" class="headerlink" title="3.2.5.5.5 Overlapping 行为"></a>3.2.5.5.5 Overlapping 行为</h5><p>对于两个流里面的操作，如一个是从host拷贝内存到device，另一个是从device拷贝内存到host，则这两条指令直接存在Overlap。</p>
+<h5 id="3-2-5-5-6-回调函数Callbacks"><a href="#3-2-5-5-6-回调函数Callbacks" class="headerlink" title="3.2.5.5.6 回调函数Callbacks"></a>3.2.5.5.6 回调函数Callbacks</h5><p>运行时提供了可以在流中的任何位置插入回调函数的指令：<code>cudaStreamAddCallback()</code>。</p>
+<h5 id="3-2-5-5-7-流优先级-Stream-Priorities"><a href="#3-2-5-5-7-流优先级-Stream-Priorities" class="headerlink" title="3.2.5.5.7 流优先级 Stream Priorities"></a>3.2.5.5.7 流优先级 Stream Priorities</h5><p>相对优先级使用<code>cudaStreamCreateWithPriority()</code></p>
+<p>获取优先级范围[highest priority,lowest priority]使用<code>cudaDeviceGetStramPriorityRange</code>。</p>
+<p>下面的代码包含了获取当前设备的优先级范围：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// get the range of stream priorities for this device</span></span><br><span class="line"><span class="keyword">int</span> priority_high, priority_low;</span><br><span class="line">cudaDeviceGetStreamPriorityRange(&amp;priority_low, &amp;priority_high);</span><br><span class="line"><span class="comment">// create streams with highest and lowest available priorities</span></span><br><span class="line">cudaStream_t st_high, st_low;</span><br><span class="line">cudaStreamCreateWithPriority(&amp;st_high, cudaStreamNonBlocking, priority_high);</span><br><span class="line">cudaStreamCreateWithPriority(&amp;st_low, cudaStreamNonBlocking, priority_low);</span><br></pre></td></tr></table></figure>
+<h4 id="3-2-5-6-事件-Events"><a href="#3-2-5-6-事件-Events" class="headerlink" title="3.2.5.6 事件  Events"></a>3.2.5.6 事件  Events</h4><p>runtime 同时还提供了密切监视device进程的方法，主要是通过appliocation来异步记录事件完成时的事件点。</p>
+<h5 id="3-2-5-6-1-创建和销毁"><a href="#3-2-5-6-1-创建和销毁" class="headerlink" title="3.2.5.6.1 创建和销毁"></a>3.2.5.6.1 创建和销毁</h5><p>下面的代码创建了2个事件：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cudaEvent_t event1, event2;</span><br><span class="line">cudaEventCreate(&amp;event1);</span><br><span class="line">cudaEventCreate(&amp;event2);</span><br></pre></td></tr></table></figure></p>
+<p>下面的代码销毁了2个事件：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cudaEventDestroy(event1);</span><br><span class="line">cudaEventDestroy(event2);</span><br></pre></td></tr></table></figure></p>
+<h5 id="3-2-5-6-2-运行时间"><a href="#3-2-5-6-2-运行时间" class="headerlink" title="3.2.5.6.2 运行时间"></a>3.2.5.6.2 运行时间</h5><p>下面的代码可以用来监视事件的运行时间（从start到end）<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">cudaEventRecord(start, <span class="number">0</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; ++i) &#123;</span><br><span class="line">cudaMemcpyAsync(inputDev + i * size, inputHost + i * size,</span><br><span class="line">size, cudaMemcpyHostToDevice, stream[i]);</span><br><span class="line">MyKernel&lt;&lt;&lt;<span class="number">100</span>, <span class="number">512</span>, <span class="number">0</span>, stream[i]&gt;&gt;&gt;</span><br><span class="line">(outputDev + i * size, inputDev + i * size, size);</span><br><span class="line">cudaMemcpyAsync(outputHost + i * size, outputDev + i * size,</span><br><span class="line">size, cudaMemcpyDeviceToHost, stream[i]);</span><br><span class="line">&#125;</span><br><span class="line">cudaEventRecord(stop, <span class="number">0</span>);</span><br><span class="line">cudaEventSynchronize(stop);</span><br><span class="line"><span class="keyword">float</span> elapsedTime;</span><br><span class="line">cudaEventElapsedTime(&amp;elapsedTime, start, stop);</span><br></pre></td></tr></table></figure></p>
+<h4 id="3-2-5-7-同步调用"><a href="#3-2-5-7-同步调用" class="headerlink" title="3.2.5.7 同步调用"></a>3.2.5.7 同步调用</h4><p>可以使用<code>cudaSetDeviceFlags()</code>配合一些特定的flags？？</p>
+<h3 id="3-2-6-Multi-Device-System"><a href="#3-2-6-Multi-Device-System" class="headerlink" title="3.2.6 Multi-Device System"></a>3.2.6 Multi-Device System</h3><h4 id="3-2-6-1-Device-Enumeration"><a href="#3-2-6-1-Device-Enumeration" class="headerlink" title="3.2.6.1 Device Enumeration"></a>3.2.6.1 Device Enumeration</h4><p>一个host系统可以有多个devices，下面的代码展示了如何枚举这些设备，并查询它们的属性，决定可启用CUDA的设备数量。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> deviceCount;</span><br><span class="line">cudaGetDeviceCount(&amp; deviceCount);</span><br><span class="line"><span class="keyword">int</span> device;</span><br><span class="line"><span class="keyword">for</span>( device = <span class="number">0</span>; device&lt;deviceCount; device++)&#123;</span><br><span class="line">  cudaDeviceProp deviceProp;</span><br><span class="line">  cudaGetDeviceProperties(&amp;deviceProp, device);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"Device %d has compute capability %d.%d. \n"</span>),</span><br><span class="line">  device, deviceProp.major, deviceProp.minor);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-2-6-2-Device-Selection"><a href="#3-2-6-2-Device-Selection" class="headerlink" title="3.2.6.2 Device Selection"></a>3.2.6.2 Device Selection</h4><p>host线程可以在任何时候使用<code>cudaSetDevice()</code>来设置device。device的内存申请和kernel启动都会在当前设置的device上进行，如果没有调用该函数，则当前的设备默认为0.</p>
+<p>下面的代码展示了如何设置当前的device，以及申请内存和执行kernel</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">size_t</span> size = <span class="number">1024</span> * <span class="keyword">sizeof</span>(<span class="keyword">float</span>);</span><br><span class="line">cudaSetDevice(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">float</span>* p0;</span><br><span class="line">cudaMalloc(&amp;p0, size);<span class="comment">// Allocate memory on device 0</span></span><br><span class="line">MyKernel&lt;&lt;&lt;<span class="number">1000</span>, <span class="number">128</span>&gt;&gt;&gt;(p0);<span class="comment">// Launch kernel on device 0</span></span><br><span class="line">cudaSetDevice(<span class="number">1</span>);<span class="comment">// Set device 1 as current</span></span><br><span class="line"><span class="keyword">float</span>* p1;</span><br><span class="line">cudaMalloc(&amp;p1,size);<span class="comment">// Allocate memory on device 1</span></span><br><span class="line">MyKernel&lt;&lt;&lt;<span class="number">1000</span>,<span class="number">128</span>&gt;&gt;&gt;(p1);<span class="comment">// Launch kernel on device 1</span></span><br></pre></td></tr></table></figure>
+<h4 id="3-2-6-3-Stream-and-Event-Behavior"><a href="#3-2-6-3-Stream-and-Event-Behavior" class="headerlink" title="3.2.6.3 Stream and Event Behavior"></a>3.2.6.3 Stream and Event Behavior</h4><p>如果stream没有绑定到当前的device，那么kernel launch就会失败</p>
+<p>即使stream没有绑定到当前的device，memory copy也会成功</p>
+<p>如果input event和input stream 绑定到了不同的diveces上面，那么<code>cudaEventRecord()</code> will fail</p>
+<p>如果两个input events绑定到了不同的devices上面，那么<code>cudaEventElapsedTime()</code> will fail</p>
+<p>即使input event绑定到了不同于当前device的device上面，<code>cudaEventSynchronize()</code>和<code>cudaEventQuery()</code>仍然will succeed</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/Cpp-知识点梳理-常用助记/" rel="prev" title="C++常用助记">
+                <i class="fa fa-chevron-left"></i> C++常用助记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/Cpp-知识点梳理-Cpp中关于指针，指针引用的解析-md/" rel="next" title="C++中关于*、&、*&以及&*的解析.md">
+                C++中关于*、&、*&以及&*的解析.md <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">131</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章-介绍"><span class="nav-text">第一章 介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二章-编程模型"><span class="nav-text">第二章  编程模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-Kernels"><span class="nav-text">2.1 Kernels</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-线程结构（Thread-Hierarchy）"><span class="nav-text">2.2 线程结构（Thread Hierarchy）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-内存结构（Memory-Hierarchy）"><span class="nav-text">2.3 内存结构（Memory Hierarchy）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-异构编程"><span class="nav-text">2.4 异构编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-计算能力（Compute-Capability）"><span class="nav-text">2.5 计算能力（Compute Capability）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三章-编程接口（Programming-Interface）"><span class="nav-text">第三章 编程接口（Programming Interface）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-Compilation-with-NVCC"><span class="nav-text">3.1 Compilation with NVCC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-1-编译工作流"><span class="nav-text">3.1.1 编译工作流</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-1-离线编译-Offline-Compilation"><span class="nav-text">3.1.1.1 离线编译 Offline Compilation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-2-即时编译-Just-in-Time-Compilation"><span class="nav-text">3.1.1.2 即时编译 Just-in-Time Compilation</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二进制兼容性-Binary-Compatibility"><span class="nav-text">二进制兼容性 Binary Compatibility</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-3-PTX-兼容性"><span class="nav-text">3.1.3 PTX 兼容性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-4-应用兼容性"><span class="nav-text">3.1.4 应用兼容性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-5-C-C-兼容性"><span class="nav-text">3.1.5 C/C++ 兼容性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-6-64-Bit-Compatibility"><span class="nav-text">3.1.6 64-Bit Compatibility</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-CUDA-C-Runtime"><span class="nav-text">3.2 CUDA C Runtime</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-1-初始化"><span class="nav-text">3.2.1 初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-2-设备内存-Device-Memory"><span class="nav-text">3.2.2 设备内存 Device Memory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-3-共享内存-Shared-Memory"><span class="nav-text">3.2.3 共享内存 Shared Memory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-4-Page-Locked-Host-Memory"><span class="nav-text">3.2.4 Page-Locked Host Memory</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-4-1-移动内存-Portable-Memory"><span class="nav-text">3.2.4.1 移动内存 Portable Memory</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-4-2-Write-Combining-Memory"><span class="nav-text">3.2.4.2 Write-Combining Memory</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-4-3-Mapped-Memory"><span class="nav-text">3.2.4.3 Mapped Memory</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-5-异步并发执行-Asynchronous-Concurrent-Execution"><span class="nav-text">3.2.5 异步并发执行 Asynchronous Concurrent Execution</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-5-1-在Host和Device之间并发执行"><span class="nav-text">3.2.5.1 在Host和Device之间并发执行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-5-2-Concurrent-Kernel-Execution"><span class="nav-text">3.2.5.2 Concurrent Kernel Execution</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-5-3-Overlap-of-Data-Tranfer-and-Kernel-Execution"><span class="nav-text">3.2.5.3 Overlap of Data Tranfer and Kernel Execution</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-5-4-并发数据传输-Concurrent-Data-Transfers"><span class="nav-text">3.2.5.4 并发数据传输 Concurrent Data Transfers</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-5-5-流-Streams"><span class="nav-text">3.2.5.5 流 Streams</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-5-5-1-创建和销毁：Creation-and-Destruction"><span class="nav-text">3.2.5.5.1 创建和销毁：Creation and Destruction</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-5-5-2-默认流-Default-Stream"><span class="nav-text">3.2.5.5.2 默认流 Default Stream</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-5-5-3-显式同步"><span class="nav-text">3.2.5.5.3 显式同步</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-5-5-4-隐式同步"><span class="nav-text">3.2.5.5.4 隐式同步</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-5-5-5-Overlapping-行为"><span class="nav-text">3.2.5.5.5 Overlapping 行为</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-5-5-6-回调函数Callbacks"><span class="nav-text">3.2.5.5.6 回调函数Callbacks</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-5-5-7-流优先级-Stream-Priorities"><span class="nav-text">3.2.5.5.7 流优先级 Stream Priorities</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-5-6-事件-Events"><span class="nav-text">3.2.5.6 事件  Events</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-5-6-1-创建和销毁"><span class="nav-text">3.2.5.6.1 创建和销毁</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-5-6-2-运行时间"><span class="nav-text">3.2.5.6.2 运行时间</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-5-7-同步调用"><span class="nav-text">3.2.5.7 同步调用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-6-Multi-Device-System"><span class="nav-text">3.2.6 Multi-Device System</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-6-1-Device-Enumeration"><span class="nav-text">3.2.6.1 Device Enumeration</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-6-2-Device-Selection"><span class="nav-text">3.2.6.2 Device Selection</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-6-3-Stream-and-Event-Behavior"><span class="nav-text">3.2.6.3 Stream and Event Behavior</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">471k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">7:08</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>
