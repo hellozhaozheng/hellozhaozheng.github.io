@@ -110,14 +110,14 @@
 
   <meta name="description" content="opencv 基础知识opencv与numpyopencv的基础类型为numpy.ndarray, 因此可以直接使用 ndarray 的一些属性的方法 1234import cv2image = cv2.imread(&apos;./test.jpg&apos;)print(type(image) #&amp;lt;class &apos;numpy.ndarray&apos;&amp;gt;print(image.shape) #(500, 1069">
 <meta property="og:type" content="article">
-<meta property="og:title" content="opencv-计算机视觉算法库">
+<meta property="og:title" content="opencv模块-计算机视觉算法库">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Python-opencv/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="opencv 基础知识opencv与numpyopencv的基础类型为numpy.ndarray, 因此可以直接使用 ndarray 的一些属性的方法 1234import cv2image = cv2.imread(&apos;./test.jpg&apos;)print(type(image) #&amp;lt;class &apos;numpy.ndarray&apos;&amp;gt;print(image.shape) #(500, 1069">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-13T14:38:20.937Z">
+<meta property="og:updated_time" content="2018-10-31T12:53:01.502Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="opencv-计算机视觉算法库">
+<meta name="twitter:title" content="opencv模块-计算机视觉算法库">
 <meta name="twitter:description" content="opencv 基础知识opencv与numpyopencv的基础类型为numpy.ndarray, 因此可以直接使用 ndarray 的一些属性的方法 1234import cv2image = cv2.imread(&apos;./test.jpg&apos;)print(type(image) #&amp;lt;class &apos;numpy.ndarray&apos;&amp;gt;print(image.shape) #(500, 1069">
 
 
@@ -135,7 +135,7 @@
   };
 </script>
 
-  <title>opencv-计算机视觉算法库 | 从零开始的BLOG</title>
+  <title>opencv模块-计算机视觉算法库 | 从零开始的BLOG</title>
   
 
 
@@ -243,7 +243,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">131</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">180</span></a>
   </li>
         
         
@@ -260,6 +260,22 @@
           <li class="menu-item menu-item-深度学习">
     <a href="/categories/深度学习/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
   </li>
         
         
@@ -284,14 +300,6 @@
           <li class="menu-item menu-item-linux">
     <a href="/categories/Linux/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-caffe2">
-    <a href="/categories/Caffe2/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
   </li>
         
         
@@ -331,15 +339,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">25</span></a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-life">
-    <a href="/life/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-child"></i> <br />生活杂记</a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">28</span></a>
   </li>
         
         
@@ -457,7 +457,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">opencv-计算机视觉算法库
+          <h1 class="post-title" itemprop="name headline">opencv模块-计算机视觉算法库
               
             
           </h1>
@@ -577,6 +577,7 @@
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 图片的分辨率为300*200(宽*高)，这里b, g, r设为随机值，注意dtype属性</span></span><br><span class="line">b = np.random.randint(<span class="number">0</span>, <span class="number">255</span>, (<span class="number">200</span>, <span class="number">300</span>), dtype=np.uint8)</span><br><span class="line">g = np.random.randint(<span class="number">0</span>, <span class="number">255</span>, (<span class="number">200</span>, <span class="number">300</span>), dtype=np.uint8)</span><br><span class="line">r = np.random.randint(<span class="number">0</span>, <span class="number">255</span>, (<span class="number">200</span>, <span class="number">300</span>), dtype=np.uint8)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并通道，形成图片</span></span><br><span class="line">img = cv2.merge([b, g, r])  <span class="comment"># opencv的通道是b在最前,r在最后</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示图片</span></span><br><span class="line">cv2.imshow(<span class="string">'test'</span>, img)</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br><span class="line">cv2.destroyWindow(<span class="string">'test'</span>)</span><br></pre></td></tr></table></figure>
 <h1 id="opencv-基本图像操作"><a href="#opencv-基本图像操作" class="headerlink" title="opencv 基本图像操作"></a>opencv 基本图像操作</h1><h2 id="通道的拆分与合并"><a href="#通道的拆分与合并" class="headerlink" title="通道的拆分与合并"></a>通道的拆分与合并</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 图片的分辨率为800*200(宽*高)，这里b, g, r设为随机值，注意dtype属性</span></span><br><span class="line">b = np.random.randint(<span class="number">0</span>, <span class="number">255</span>, (<span class="number">200</span>, <span class="number">800</span>), dtype=np.uint8)</span><br><span class="line">g = np.random.randint(<span class="number">0</span>, <span class="number">255</span>, (<span class="number">200</span>, <span class="number">800</span>), dtype=np.uint8)</span><br><span class="line">r = np.random.randint(<span class="number">0</span>, <span class="number">255</span>, (<span class="number">200</span>, <span class="number">800</span>), dtype=np.uint8)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并通道，形成图片</span></span><br><span class="line">img = cv2.merge([b, g, r])  <span class="comment"># opencv的通道是b在最前,r在最后</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示图片</span></span><br><span class="line">cv2.imshow(<span class="string">'test'</span>, img)</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br><span class="line">cv2.destroyWindow(<span class="string">'test'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 拆分通道, 每个通道都变成了单通道数组</span></span><br><span class="line">[blue, green, red] = cv2.split(img)</span><br></pre></td></tr></table></figure>
 <h2 id="用matplotlib显示图像"><a href="#用matplotlib显示图像" class="headerlink" title="用matplotlib显示图像"></a>用matplotlib显示图像</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">b,g,r=cv2.split(img)</span><br><span class="line">img2=cv2.merge([r,g,b])</span><br><span class="line">plt.imshow(img2)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><strong> 更方便的转换通道的方式:</strong><br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)</span><br></pre></td></tr></table></figure></p>
 <h1 id="opencv-核心图像算法"><a href="#opencv-核心图像算法" class="headerlink" title="opencv 核心图像算法"></a>opencv 核心图像算法</h1><h1 id="cv2"><a href="#cv2" class="headerlink" title="cv2"></a>cv2</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line">image_path = <span class="string">'./test.jpg'</span></span><br><span class="line"></span><br><span class="line">src_image = cv2.imread(image_path) <span class="comment"># 读取图片</span></span><br><span class="line"></span><br><span class="line">size = src_image.shape  <span class="comment"># 获取图片的尺寸, 返回一个元组: (height, width, depth)</span></span><br><span class="line"></span><br><span class="line">copy_image = src_image.copy() <span class="comment"># 复制图片</span></span><br><span class="line"></span><br><span class="line">cv2.imwrite(<span class="string">'./dst_test.jpg'</span>, copy_image) <span class="comment"># 保存图片</span></span><br><span class="line"></span><br><span class="line">cv2.imshow(<span class="string">'image'</span>, src_image) <span class="comment"># 显示图片</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 利用下标访问指定像素</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> range(src_image.shape[<span class="number">0</span>]): <span class="comment"># 以行为主, 行数=图片height</span></span><br><span class="line">  <span class="keyword">for</span> y <span class="keyword">in</span> range(src_image.shape[<span class="number">1</span>]):  <span class="comment"># 列数 = 图片width</span></span><br><span class="line">    src_image[x,y] = (<span class="number">255</span>,<span class="number">0</span>,<span class="number">255</span>)   <span class="comment"># (blue, green, red)  值越高表示对应颜色越显著, 全0为黑, 全255为白</span></span><br></pre></td></tr></table></figure>
 
       
@@ -605,8 +606,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/Python-skimage/" rel="prev" title="skimage-图像处理">
-                <i class="fa fa-chevron-left"></i> skimage-图像处理
+              <a href="/z_post/Python-skimage/" rel="prev" title="skimage模块-图像处理">
+                <i class="fa fa-chevron-left"></i> skimage模块-图像处理
               </a>
             
           </div>
@@ -615,8 +616,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/Python-numpy/" rel="next" title="numpy-线性代数计算库">
-                numpy-线性代数计算库 <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/Python-numpy/" rel="next" title="numpy模块-线性代数计算库">
+                numpy模块-线性代数计算库 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -695,7 +696,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">131</span>
+                    <span class="site-state-item-count">180</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -730,7 +731,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -793,7 +798,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">25</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -894,7 +905,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">471k</span>
+    <span title="站点总字数">735k</span>
   
 
   
@@ -903,7 +914,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">7:08</span>
+    <span title="站点阅读时长">11:08</span>
   
 </div>
 

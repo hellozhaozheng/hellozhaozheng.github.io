@@ -108,17 +108,17 @@
 
 
 
-  <meta name="description" content="并不是什么厉害的地方只是一个安静的学习角落">
+  <meta name="description" content="比opencv的速度要慢很多, 但是使用起来更加简单, 真的对速度要求很高的话, 一般都会C++和opecv使用. 所以一般情况下, 首先看skimage能否实现, 不行的话再转用opencv 123import skimagefrom skimage import io #  IO is a submodule. Submodules need to be imported from the p">
 <meta property="og:type" content="article">
-<meta property="og:title" content="skimage-图像处理">
+<meta property="og:title" content="skimage模块-图像处理">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Python-skimage/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="并不是什么厉害的地方只是一个安静的学习角落">
+<meta property="og:description" content="比opencv的速度要慢很多, 但是使用起来更加简单, 真的对速度要求很高的话, 一般都会C++和opecv使用. 所以一般情况下, 首先看skimage能否实现, 不行的话再转用opencv 123import skimagefrom skimage import io #  IO is a submodule. Submodules need to be imported from the p">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-13T14:37:14.890Z">
+<meta property="og:updated_time" content="2018-10-31T12:53:26.910Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="skimage-图像处理">
-<meta name="twitter:description" content="并不是什么厉害的地方只是一个安静的学习角落">
+<meta name="twitter:title" content="skimage模块-图像处理">
+<meta name="twitter:description" content="比opencv的速度要慢很多, 但是使用起来更加简单, 真的对速度要求很高的话, 一般都会C++和opecv使用. 所以一般情况下, 首先看skimage能否实现, 不行的话再转用opencv 123import skimagefrom skimage import io #  IO is a submodule. Submodules need to be imported from the p">
 
 
 
@@ -135,7 +135,7 @@
   };
 </script>
 
-  <title>skimage-图像处理 | 从零开始的BLOG</title>
+  <title>skimage模块-图像处理 | 从零开始的BLOG</title>
   
 
 
@@ -243,7 +243,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">131</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">180</span></a>
   </li>
         
         
@@ -260,6 +260,22 @@
           <li class="menu-item menu-item-深度学习">
     <a href="/categories/深度学习/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
   </li>
         
         
@@ -284,14 +300,6 @@
           <li class="menu-item menu-item-linux">
     <a href="/categories/Linux/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-caffe2">
-    <a href="/categories/Caffe2/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
   </li>
         
         
@@ -331,15 +339,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">25</span></a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-life">
-    <a href="/life/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-child"></i> <br />生活杂记</a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">28</span></a>
   </li>
         
         
@@ -457,7 +457,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">skimage-图像处理
+          <h1 class="post-title" itemprop="name headline">skimage模块-图像处理
               
             
           </h1>
@@ -537,7 +537,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">0</span>
+                <span title="本文字数">249</span>
               
 
               
@@ -571,7 +571,9 @@
       
 
       
-        
+        <p>比opencv的速度要慢很多, 但是使用起来更加简单, 真的对速度要求很高的话, 一般都会C++和opecv使用. 所以一般情况下, 首先看skimage能否实现, 不行的话再转用opencv</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> skimage</span><br><span class="line"><span class="keyword">from</span> skimage <span class="keyword">import</span> io <span class="comment">#  IO is a submodule. Submodules need to be imported from the parent module explicitly.</span></span><br><span class="line">img = io.imread(<span class="string">"1.jpg"</span>)</span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -598,8 +600,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/Python-matplotlib/" rel="prev" title="matplotlib-数据绘图">
-                <i class="fa fa-chevron-left"></i> matplotlib-数据绘图
+              <a href="/z_post/Python-matplotlib/" rel="prev" title="matplotlib模块-数据绘图">
+                <i class="fa fa-chevron-left"></i> matplotlib模块-数据绘图
               </a>
             
           </div>
@@ -608,8 +610,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/Python-opencv/" rel="next" title="opencv-计算机视觉算法库">
-                opencv-计算机视觉算法库 <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/Python-opencv/" rel="next" title="opencv模块-计算机视觉算法库">
+                opencv模块-计算机视觉算法库 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -679,7 +681,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">131</span>
+                    <span class="site-state-item-count">180</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -714,7 +716,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -777,7 +783,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">25</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -862,7 +874,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">471k</span>
+    <span title="站点总字数">735k</span>
   
 
   
@@ -871,7 +883,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">7:08</span>
+    <span title="站点阅读时长">11:08</span>
   
 </div>
 

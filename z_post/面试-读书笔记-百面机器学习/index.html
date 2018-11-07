@@ -124,7 +124,7 @@
 <meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fw2rlw987gj206j085dia.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fw2rlw9q2gj208u07wn0b.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fw2rlw8oihj205n06p767.jpg">
-<meta property="og:updated_time" content="2018-10-11T13:43:23.676Z">
+<meta property="og:updated_time" content="2018-10-16T06:07:48.449Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《百面机器学习》">
 <meta name="twitter:description" content="第一章 特征工程1. 特征归一化7. 图像数据不足时的处理方法在图像分类任务中，训练数据不足会带来什么问题？如何缓解数据量不足带来的问题？一个模型的信息来源主要有两个方面：  训练数据中蕴含的信息 模型形成过程中（包括构造、学习、推理等），人们提供的先验信息  当训练数据不足时，说明模型从原始数据中获取的信息比较少，这种情况下要想保证模型的效果，就需要更多的先验信息  先验信息可以作用在模型上，例">
@@ -253,7 +253,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">131</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">180</span></a>
   </li>
         
         
@@ -270,6 +270,22 @@
           <li class="menu-item menu-item-深度学习">
     <a href="/categories/深度学习/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
   </li>
         
         
@@ -294,14 +310,6 @@
           <li class="menu-item menu-item-linux">
     <a href="/categories/Linux/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-caffe2">
-    <a href="/categories/Caffe2/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
   </li>
         
         
@@ -341,15 +349,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">25</span></a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-life">
-    <a href="/life/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-child"></i> <br />生活杂记</a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">28</span></a>
   </li>
         
         
@@ -625,7 +625,7 @@
 <p>// TODO公式推导</p>
 <p>根据以上推导过程, 可以找到一个SVM的解, 同时一定使模型分类误差为0</p>
 <h3 id="问题4-加入松弛变量的SVM的训练误差可以为0吗"><a href="#问题4-加入松弛变量的SVM的训练误差可以为0吗" class="headerlink" title="问题4: 加入松弛变量的SVM的训练误差可以为0吗"></a>问题4: 加入松弛变量的SVM的训练误差可以为0吗</h3><p><strong>结论: 不一定能得到训练误差为0的模型(但不是一定不能, 具体看问题)</strong></p>
-<p>这是由于加入松弛变量后, 优化目标变成了 $\min<em>{\vec w, b, \xi^{(i)}} \frac{1}{2} |\vec w|^2 + C \sum</em>{i=1}^{m} \xi^{(i)}$  ,并不再是仅仅使训练误差最小, 同时还会考虑后面的惩罚项, 而当C的取值较小时, 一个带有训练误差, 但参数项较小的点将会称为更优的结果.</p>
+<p>这是由于加入松弛变量后, 优化目标变成了 $\min_{\vec w, b, x_i^{(i)}} \frac{1}{2} |\vec w |^2_2 + C \sum_{i=1}^{m} x_i^{(i)}$  ,并不再是仅仅使训练误差最小, 同时还会考虑后面的惩罚项, 而当C的取值较小时, 一个带有训练误差, 但参数项较小的点将会称为更优的结果.</p>
 <h1 id="第七章-优化算法"><a href="#第七章-优化算法" class="headerlink" title="第七章 优化算法"></a>第七章 优化算法</h1><h2 id="1-有监督学习的损失函数"><a href="#1-有监督学习的损失函数" class="headerlink" title="1. 有监督学习的损失函数"></a>1. 有监督学习的损失函数</h2><p>损失函数定义了模型的评估指标. 不同的损失函数优化难度不同, 最终得到的模型参数也不同, 针对具体的问题需要选取合适的损失函数.</p>
 <h3 id="问题-有监督学习涉及的损失函数有哪些-请列举并简述它们的特点"><a href="#问题-有监督学习涉及的损失函数有哪些-请列举并简述它们的特点" class="headerlink" title="问题: 有监督学习涉及的损失函数有哪些? 请列举并简述它们的特点"></a>问题: 有监督学习涉及的损失函数有哪些? 请列举并简述它们的特点</h3><p><strong>Hinge损失:</strong></p>
 <script type="math/tex; mode=display">L_{hinge}(f,y) = max{0, 1-fy}</script><p>在 $fy=1$ 处不可导, 因此不能用梯度下降法优化</p>
@@ -663,7 +663,7 @@
 <p>而在鞍点处, 三维性状看起来想一个马鞍, 一个方向上两头翘起, 另一个方向上两头垂下, 而中心区域是一片近乎水平的平地, 此处梯度为0, 随机梯度下降法无法准确察觉出梯度的微小变化, 结果就会导致更新停滞</p>
 <h3 id="问题2-为了改进随机梯度下降法-研究者都提出了哪些变种方法"><a href="#问题2-为了改进随机梯度下降法-研究者都提出了哪些变种方法" class="headerlink" title="问题2: 为了改进随机梯度下降法, 研究者都提出了哪些变种方法?"></a>问题2: 为了改进随机梯度下降法, 研究者都提出了哪些变种方法?</h3><p>// TODO 补充完善</p>
 <p><strong>动量方法:</strong></p>
-<p>前进步长 $\nu<em>t$ 有两部分组成, 一是学习速率 $\eta$ 乘以当前估计的梯度 $g_t$ ; 二是带衰减的前一次步伐 $\nu</em>{t-1}$. 这里, 惯性就体现在对前一次步伐信息的重利用上, 前一次步伐就好比前一时刻的速度, 当前步伐就好比当前时刻的速度.</p>
+<p>前进步长 $\nu_t$ 有两部分组成, 一是学习速率 $\eta$ 乘以当前估计的梯度 $g_t$ ; 二是带衰减的前一次步伐 $\nu_{t-1}$. 这里, 惯性就体现在对前一次步伐信息的重利用上, 前一次步伐就好比前一时刻的速度, 当前步伐就好比当前时刻的速度.</p>
 <p><strong>AdaGrad方法:</strong></p>
 <p>AdaGrad是的梯度下降法就有了对周围环境感知的优点(没有动量项): 即根据之前的更新结果, 来动态决定当前每个的步长</p>
 <p>对于深度学习任务, 数据的稀疏性会导致相应参数梯度的稀疏性, 不频繁出现的物体对应的特征参数的梯度在大多数情况下为0, 从而这些参数被更新的频率很低. 在实际中, 我们希望更新频率低的参数可以拥有较大的更新步长, 而更新频率高的参数拥有较小的更新步长.</p>
@@ -753,13 +753,13 @@ Adam方法将惯性保持和环境感知这两个优点集于一身.
 </tr>
 <tr>
 <td>ReLU</td>
-<td>$f(x)=max(0,x)=\begin{cases} 0 &amp; x \leq 0 \ x &amp; x&gt;0 \end{cases}$</td>
-<td>$f’(x)=\begin{cases} 0 &amp; x\leq 0 \ 1 &amp; x&gt;0 \end{cases}$</td>
+<td>$f(x)=max(0,x)=\begin{cases} 0 &amp; x \leq 0 \\ x &amp; x&gt;0 \end{cases}$</td>
+<td>$f’(x)=\begin{cases} 0 &amp; x\leq 0 \\ 1 &amp; x&gt;0 \end{cases}$</td>
 </tr>
 <tr>
 <td>Leaky ReLU</td>
-<td>$f(x)=max(\alpha x,x)=\begin{cases} \alpha x &amp; x \leq 0 \ x &amp; x&gt;0 \end{cases} \alpha 通常为0.1$</td>
-<td>$f(x)=max(\alpha x,x)=\begin{cases} \alpha  &amp; x \leq 0 \ 1 &amp; x&gt;0 \end{cases}$</td>
+<td>$f(x)=max(\alpha x,x)=\begin{cases} \alpha x &amp; x \leq 0 \\ x &amp; x&gt;0 \end{cases} \alpha 通常为0.1$</td>
+<td>$f(x)=max(\alpha x,x)=\begin{cases} \alpha  &amp; x \leq 0 \\ 1 &amp; x&gt;0 \end{cases}$</td>
 </tr>
 <tr>
 <td>Maxout</td>
@@ -768,8 +768,8 @@ Adam方法将惯性保持和环境感知这两个优点集于一身.
 </tr>
 <tr>
 <td>ELU</td>
-<td>$f(x) = \begin{cases} x &amp; x \geq 0 \ \alpha(e^x - 1) &amp; x&lt;0 \end{cases}$</td>
-<td>$f(x) = \begin{cases} 1 &amp; x \geq 0 \ \alpha e^x &amp; x&lt;0 \end{cases}$</td>
+<td>$f(x) = \begin{cases} x &amp; x \geq 0 \\ \alpha(e^x - 1) &amp; x&lt;0 \end{cases}$</td>
+<td>$f(x) = \begin{cases} 1 &amp; x \geq 0 \\ \alpha e^x &amp; x&lt;0 \end{cases}$</td>
 </tr>
 </tbody>
 </table>
@@ -998,7 +998,7 @@ Adam方法将惯性保持和环境感知这两个优点集于一身.
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">131</span>
+                    <span class="site-state-item-count">180</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1033,7 +1033,11 @@ Adam方法将惯性保持和环境感知这两个优点集于一身.
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1096,7 +1100,13 @@ Adam方法将惯性保持和环境感知这两个优点集于一身.
                     
                       
                     
-                    <span class="site-state-item-count">25</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1197,7 +1207,7 @@ Adam方法将惯性保持和环境感知这两个优点集于一身.
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">471k</span>
+    <span title="站点总字数">735k</span>
   
 
   
@@ -1206,7 +1216,7 @@ Adam方法将惯性保持和环境感知这两个优点集于一身.
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">7:08</span>
+    <span title="站点阅读时长">11:08</span>
   
 </div>
 

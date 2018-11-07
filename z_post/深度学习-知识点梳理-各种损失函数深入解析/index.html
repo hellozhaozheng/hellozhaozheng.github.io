@@ -118,7 +118,7 @@
 <meta property="og:image" content="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fvp6z84393j20bp06kaaa.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvp6z83ngnj20gw0bxgll.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvp6z83ygvj20gv0bj74d.jpg">
-<meta property="og:updated_time" content="2018-10-09T05:04:29.675Z">
+<meta property="og:updated_time" content="2018-10-17T11:20:15.900Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="各种损失函数深入解析">
 <meta name="twitter:description" content="常用损失函数及其形式    损失函数 形式     评分损失     各个损失函数详细解析绝对值损失别名 $L_1$ 损失 平方损失:平方损失的别名是 $L_2$ 损失 平方损失函数是由线性模型引出的. 对于最简单的线性模型, 可以用房屋面积和房屋价格来举例子, 假设我们已经知道了一些面积和价格的数据:  将其描绘出来如下图所示:  那么, 如果新来了一个面积, 我们能否根据已有的数据来预测它的价">
@@ -247,7 +247,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">131</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">180</span></a>
   </li>
         
         
@@ -264,6 +264,22 @@
           <li class="menu-item menu-item-深度学习">
     <a href="/categories/深度学习/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
   </li>
         
         
@@ -288,14 +304,6 @@
           <li class="menu-item menu-item-linux">
     <a href="/categories/Linux/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-caffe2">
-    <a href="/categories/Caffe2/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
   </li>
         
         
@@ -335,15 +343,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">25</span></a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-life">
-    <a href="/life/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-child"></i> <br />生活杂记</a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">28</span></a>
   </li>
         
         
@@ -505,7 +505,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/其它/" itemprop="url" rel="index"><span itemprop="name">其它</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a></span>
 
                 
                 
@@ -541,7 +541,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">2.7k</span>
+                <span title="本文字数">2.9k</span>
               
 
               
@@ -555,7 +555,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">2 分钟</span>
+                <span title="阅读时长">3 分钟</span>
               
             </div>
           
@@ -611,6 +611,7 @@
 <script type="math/tex; mode=display">L(\theta) = \prod_{i=1}^{m}{p(y^{(i)} | x{(i)} ; \theta)} = \prod_{i=1}^{m}{\frac{1}{\sqrt{2\pi} \sigma} exp\Big( -\frac{ (y^{(i)} - \theta ^T x^{(i)})^2}{2\sigma ^2} \Big)}</script><p>为方便计算, 对上式取对数, 可得:</p>
 <script type="math/tex; mode=display">l(\theta) = log L(\theta) = log\prod_{i=1}^{m}{\frac{1}{\sqrt{2\pi} \sigma} exp\Big( -\frac{ (y^{(i)} - \theta ^T x^{(i)})^2}{2\sigma ^2} \Big)} = \sum_{i=1}^{m} log \frac{1}{sqrt{2\pi} \sigma} exp\Big( -\frac{(y^{(i)} - \theta ^T x^{(i)})^2}{2\sigma ^2} \Big) = mlog\frac{1}{\sqrt{2\pi} \sigma} - \frac{1}{\sigma ^2}\times \frac{1}{2}\sum_{i=1}^{m}(y^{(i)} - \theta ^T x^{(i)})^2</script><p>为了让上面的式子取值最大, 那我们就只需要令下面的式子取值最小即可:</p>
 <script type="math/tex; mode=display">\frac{1}{2} \sum_{i=1}^{m} ( y^{(i)} - \theta ^T x^{(i)}) ^2</script><p>上面的形式恰好就是我们的平方误差损失函数(通常还需要对上面的损失函数做归一化, 也就是乘上 $\frac{1}{m}$ ), 这也是平方误差损失函数的来源. (但实际上, 要知道, 基于概率假设来说, 不一定非要是平方项, 另外, 无需在意 $\sigma$ 的具体值是什么)</p>
+<h2 id="softmax-交叉熵损失"><a href="#softmax-交叉熵损失" class="headerlink" title="softmax 交叉熵损失"></a>softmax 交叉熵损失</h2><script type="math/tex; mode=display">y_i = softmax(z_j) = \frac{e^{z_j}}{\sum_j e^{z_j}}</script><script type="math/tex; mode=display">E(t,y) = -\sum_j t_j log y_j</script><p>上式中, $t$ 和 $y$ 分别表示神经网络的真实标签和预测输出, 第一个公式代表 softmax 激活函数.</p>
 <h2 id="交叉熵损失"><a href="#交叉熵损失" class="headerlink" title="交叉熵损失"></a>交叉熵损失</h2><p>首先定义符号说明:</p>
 <ul>
 <li>$p^{(i)}$: 第i个样本类别为1的真实概率(如第i个样本真实类别为1, 则概率为1, 否则为0)</li>
@@ -658,8 +659,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/计算机视觉-知识点梳理-ResNet/" rel="next" title="ResNet及其多种变体深入解析">
-                ResNet及其多种变体深入解析 <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/计算机视觉-ResNet-CVPR2016/" rel="next" title="ResNet-CVPR2016">
+                ResNet-CVPR2016 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -738,7 +739,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">131</span>
+                    <span class="site-state-item-count">180</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -773,7 +774,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -836,7 +841,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">25</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -900,7 +911,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#常用损失函数及其形式"><span class="nav-text">常用损失函数及其形式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#各个损失函数详细解析"><span class="nav-text">各个损失函数详细解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#绝对值损失"><span class="nav-text">绝对值损失</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平方损失"><span class="nav-text">平方损失:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交叉熵损失"><span class="nav-text">交叉熵损失</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#损失函数之间的区别和联系"><span class="nav-text">损失函数之间的区别和联系</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么分类问题要使用交叉熵损失而不用平方损失"><span class="nav-text">为什么分类问题要使用交叉熵损失而不用平方损失?</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#常用损失函数及其形式"><span class="nav-text">常用损失函数及其形式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#各个损失函数详细解析"><span class="nav-text">各个损失函数详细解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#绝对值损失"><span class="nav-text">绝对值损失</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平方损失"><span class="nav-text">平方损失:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#softmax-交叉熵损失"><span class="nav-text">softmax 交叉熵损失</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交叉熵损失"><span class="nav-text">交叉熵损失</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#损失函数之间的区别和联系"><span class="nav-text">损失函数之间的区别和联系</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么分类问题要使用交叉熵损失而不用平方损失"><span class="nav-text">为什么分类问题要使用交叉熵损失而不用平方损失?</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -937,7 +948,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">471k</span>
+    <span title="站点总字数">735k</span>
   
 
   
@@ -946,7 +957,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">7:08</span>
+    <span title="站点阅读时长">11:08</span>
   
 </div>
 

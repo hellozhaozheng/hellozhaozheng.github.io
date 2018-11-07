@@ -244,7 +244,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">131</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">180</span></a>
   </li>
         
         
@@ -261,6 +261,22 @@
           <li class="menu-item menu-item-深度学习">
     <a href="/categories/深度学习/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
   </li>
         
         
@@ -285,14 +301,6 @@
           <li class="menu-item menu-item-linux">
     <a href="/categories/Linux/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-caffe2">
-    <a href="/categories/Caffe2/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
   </li>
         
         
@@ -332,15 +340,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">25</span></a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-life">
-    <a href="/life/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-child"></i> <br />生活杂记</a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">28</span></a>
   </li>
         
         
@@ -599,7 +599,7 @@
 </ul>
 <h2 id="正文之前——Preliminaries"><a href="#正文之前——Preliminaries" class="headerlink" title="正文之前——Preliminaries"></a>正文之前——Preliminaries</h2><p>&emsp;&emsp;作者在这里简单介绍了GAN和Conditional GAN的核心原理。</p>
 <ul>
-<li>GAN：由两个“子模型”组成，这两个“子模型”不断交替训练，它们的训练目标恰好相反，仿佛实在彼此对抗一般。生成模型G的目标是习得能够代表真实数据分布 $p<em>{data}$ 的生成概率分布 $p_g$ ，而分辨模型D的目标则是要习得能够准确分辨出 $p</em>{data}$ 和 $p_g$ 的二分类器。它们之间的关系就像是一场“two-player min-max game”一样，其目标方程可以如下表示：</li>
+<li>GAN：由两个“子模型”组成，这两个“子模型”不断交替训练，它们的训练目标恰好相反，仿佛实在彼此对抗一般。生成模型G的目标是习得能够代表真实数据分布 $p_{data}$ 的生成概率分布 $p_g$ ，而分辨模型D的目标则是要习得能够准确分辨出 $p_{data}$ 和 $p_g$ 的二分类器。它们之间的关系就像是一场“two-player min-max game”一样，其目标方程可以如下表示：</li>
 </ul>
 <script type="math/tex; mode=display">\min_G \max_D V(D,G) =  E_{x\sim p_{data}}[logD(x)] + E_{z\sim p_z}[log(1-D(G(z)))]</script><ul>
 <li>Conditional GAN：是GAN的一种扩展，它令生成器和分辨器均接受一个条件向量 $c$ ，分别写成 $G(z,c)$ 和 $D(x,c)$ ，如此一来，生成器就可以根据不同的条件 $c$ 来限定生成的图片。（ $c$ 通常为图片标签或者图片描述）</li>
@@ -614,7 +614,7 @@
 </ul>
 <p>上面公式中：</p>
 <ul>
-<li>$I<em>0$ ：来自真实分布 $p</em>{data}$ 的图片</li>
+<li>$I_0$ ：来自真实分布 $p_{data}$ 的图片</li>
 <li>$t$ ：来自真实分布 $p_{data}$ 的图片描述</li>
 <li>$\phi_t$ ：t经过预训练好的编码器编码后得到的text embedding</li>
 <li>$z$ ：噪声，从 $p_z$ 分布中随机采样而来（本文用的是高斯分布）</li>
@@ -623,7 +623,7 @@
 </ul>
 <p><strong>模型架构</strong> ：</p>
 <p>&emsp;&emsp;对于生成器 $G_0$ 来说，要想得到文本条件变量 $\hat c_0$ ，首先要将text embedding $\phi_t$ 送到一个全连接层中以此来生成 $\mu_0$ 和 $\sigma_0$ （ $\sigma_0$ 是 $\Sigma_0$ 对角线上的值），得到高斯分布 $N(\mu(\phi_t),\Sigma(\phi_t))$ 。然后从高斯分布中采样得到文本条件变量 $\hat c_0 = \mu_0 + \sigma_0 \cdot \epsilon$ ， $\hat c_0$ 的维度为 $N_g$ 。 这里，“ $\cdot$ ”代表点乘，$\epsilon \sim N(0,I)$ 。之后，将 $\hat c_0$ 和噪声向量 $z$ 连接起来，它们经过一些列“升维块”（upsampling block）之后，会生成大小为 $W_0 \times H_0$ 的图片。</p>
-<p>&emsp;&emsp;对与分辨器 $D<em>0$ 来说，首先利用全连接层将 $\phi_t$ 压缩到 $N_d$ 维，然后，将其在空间上进行复制，形成一个 $M_d \times M_d \times N_d$ 的张量。  同时，将图片送到一系列“降维块”（downsampling block）中，使其具有 $M_d \times M_d \times N</em>{filter}$ 的空间结构，然后将图片的tensor和文本的tensor<br>沿着channel的维度连接的一起，然后将其送到 $1 \times 1$ 的卷积层当中，联合学习图片和文本之间的关系特征。最后，将特征传送到输出为一个节点的全连接层，得到当前图片与文本属于真实数据的概率。</p>
+<p>&emsp;&emsp;对与分辨器 $D_0$ 来说，首先利用全连接层将 $\phi_t$ 压缩到 $N_d$ 维，然后，将其在空间上进行复制，形成一个 $M_d \times M_d \times N_d$ 的张量。  同时，将图片送到一系列“降维块”（downsampling block）中，使其具有 $M_d \times M_d \times N_{filter}$ 的空间结构，然后将图片的tensor和文本的tensor<br>沿着channel的维度连接的一起，然后将其送到 $1 \times 1$ 的卷积层当中，联合学习图片和文本之间的关系特征。最后，将特征传送到输出为一个节点的全连接层，得到当前图片与文本属于真实数据的概率。</p>
 <h2 id="Stage-2-GAN"><a href="#Stage-2-GAN" class="headerlink" title="Stage-2 GAN"></a>Stage-2 GAN</h2><p>&emsp;&emsp;从Stage-1 GAN中得到的低分辨率图像通常会缺少一些局部细节，有时候还会造成主要目标物不同程度的形变。另一方面，有些存在于文本中的重要信息，也可能被忽视。  因此，本文的Stage-2 GAN在Stage-1的基础上进行构建。它将Stage-1返回的低分辨率图片和图片描述的text embedding作为GAN的条件，使之返回的结果不仅能修正Stage-1中的错误信息，同时还可以补充在Stage-1中没有捕捉到的信息。</p>
 <p>&emsp;&emsp;当选取Stage-1低分辨率结果 $s_0 = G_0(z,\hat c_0)$ 和 高斯变量 $\hat c$ 作为GAN的条件时，生成器和分辨器的目标函数如下所示：</p>
 <ul>
@@ -779,7 +779,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">131</span>
+                    <span class="site-state-item-count">180</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -814,7 +814,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -877,7 +881,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">25</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -978,7 +988,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">471k</span>
+    <span title="站点总字数">735k</span>
   
 
   
@@ -987,7 +997,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">7:08</span>
+    <span title="站点阅读时长">11:08</span>
   
 </div>
 

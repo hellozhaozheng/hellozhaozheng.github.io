@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="作者: Yuxin Wu and Kaiming He发表: ECCV 2018, Best Paper Honorable Mention 核心亮点针对BN对batch size的依赖问题, 提出了一种新的通用型归一化方法提出了一个用于替代BN的简单算法, 称之为GN(Group Normalization). GN将输入图谱的通道分成不同的组, 并且计算每一组的mean和variance, 然">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Group Normalization">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-ECCV2018-GroupNormalization/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="作者: Yuxin Wu and Kaiming He发表: ECCV 2018, Best Paper Honorable Mention 核心亮点针对BN对batch size的依赖问题, 提出了一种新的通用型归一化方法提出了一个用于替代BN的简单算法, 称之为GN(Group Normalization). GN将输入图谱的通道分成不同的组, 并且计算每一组的mean和variance, 然">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fww0h6ugadj20s80kjacr.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fww4hqied3j21kw0esjwt.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fwwerxxn0kj20s70haad2.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fwwes3nh5zj21kw0j5dyd.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fwwes7p05wj21kw0huwuz.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fwwesbnq0mj20s809qmyz.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fwwesfiq43j20sd0cajtw.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fwwesjygdnj21kw0gpat8.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fwwesnf0lvj20t20j6tcb.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fwwesrox6zj20sl0jwtdr.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fwwesvxyoej20sv0jkwyp.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fwwet23060j21kw0nwag1.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fwwet5sufej20sa0f5aoe.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fwwet9mkjbj20s209s762.jpg">
+<meta property="og:updated_time" content="2018-11-05T07:41:06.142Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Group Normalization">
+<meta name="twitter:description" content="作者: Yuxin Wu and Kaiming He发表: ECCV 2018, Best Paper Honorable Mention 核心亮点针对BN对batch size的依赖问题, 提出了一种新的通用型归一化方法提出了一个用于替代BN的简单算法, 称之为GN(Group Normalization). GN将输入图谱的通道分成不同的组, 并且计算每一组的mean和variance, 然">
+<meta name="twitter:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fww0h6ugadj20s80kjacr.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/计算机视觉-ECCV2018-GroupNormalization/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Group Normalization | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">180</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-linux">
+    <a href="/categories/Linux/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-面试">
+    <a href="/categories/面试/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其它">
+    <a href="/categories/其它/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其它</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">28</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/计算机视觉-ECCV2018-GroupNormalization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Group Normalization
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-24 15:59:22" itemprop="dateCreated datePublished" datetime="2018-10-24T15:59:22+08:00">2018-10-24</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/计算机视觉/" itemprop="url" rel="index"><span itemprop="name">计算机视觉</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">3.6k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">3 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>作者:</strong> Yuxin Wu and Kaiming He<br><strong>发表:</strong> ECCV 2018, Best Paper Honorable Mention</p>
+<h1 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h1><p><strong>针对BN对batch size的依赖问题, 提出了一种新的通用型归一化方法</strong><br>提出了一个用于替代BN的简单算法, 称之为GN(Group Normalization). GN将输入图谱的通道分成不同的组, 并且计算每一组的mean和variance, 然后将其进行归一化. GN的计算复杂度与batch size 的大小是相互独立的, 并且它的准确度在不同范围内的batch size下仍然是稳定的. 并且在整体表现和不同任务上的效果均强于其他类型的归一化方法(LN,IN等)</p>
+<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fww0h6ugadj20s80kjacr.jpg" alt=""></p>
+<h1 id="论文细节"><a href="#论文细节" class="headerlink" title="论文细节"></a>论文细节</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>BN是深度学习中的一项里程碑式的技术, 它可以让不同网络进行训练. 但是按照batch进行归一化的过程会引入一些问题: 当batch的size比较小时, 由于batch的统计期望十分不精确, 会使得BN的误差大幅度增加. 这一点限制了BN在训练大型模型时的使用(如目标检测, 分割等等, 由于GPU内存的限制往往batch的值很小). 因此, 本文提出了一个用于替代BN的简单算法, 称之为GN(Group Normalization). GN将输入图谱的通道分成不同的组, 并且计算每一组的mean和variance, 然后将其进行归一化. GN的计算复杂度与batch size 的大小是相互独立的, 并且它的准确度在不同范围内的batch size下仍然是稳定的. 在ResNet50中, 当batch size为2时,  GN的错误率比BN要低10.6%, 当batch size为经典值时(32,64等), GN的表现也可以媲美BN, 同时, 也超越了其他归一化方法(Layer, Instance, Weight Normalization等). 不仅如此, GN还可以很自然的从预训练的模型中进行fine-tuning. GN在多个任务上都表现出了很好的效果, 可以用其替换掉BN. (只需数行代码即可实现GN).</p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>BN在多项任务中都起到了很好的实验效果, 但是BN的有效性必须建立在足够大的batch size之上(如32/GPU). 当batch size 比较小时, BN往往无法取得好的效果, 并且还会提升模型的误差, 如图1所示.</p>
+<p>由于硬件GPU显存大小的设置, 在使用较大的模型训练分辨率较高的图片时, 往往不能设置很高的batch size. 因此, 本文提出了GN算法来作为BN的代替.</p>
+<h2 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h2><p><strong>Normalization</strong>: BN在很多任务上都取得了很好的效果(BN通常会在每一层都执行), 但是, BN依赖于batch的平均值和方差, 这使得batch size的大小对BN的效果有较大的影响, 同时, 在测试阶段, 单个的图片是没有均值和方差的, 所以只能用整个数据集的均值和方差来代替, 通常会使用滑动平均来维护这两个变量, 也就是说, 在使用BN时, 如果数据集改变了, 则均值和方差就会有较大改变, 这就造成了训练阶段和测试阶段的不一致性, 由此也会带来一些问题.<br>另一些Normalization方法, 尝试避开batch size, 如Layer Normalization(LN)和Instance Normalization等, 但他们通常是针对RNN/LSTM模型的, 并且在大多数的视觉任务上表现不如BN好, 还有Weight Normalization, 它不是对网络层的输入进行归一化, 而是对网络层的参数进行归一化, 同样, 在大多数的视觉任务上, 表现都不如BN.</p>
+<p><strong>Addressing small batches:</strong> Ioffe在NIPS2017上提出Batch Renormalization(BR)尝试解决BN的小batch size问题. 它引入了两个额外的参数来限制BN的估计期望和方差, 减少它们在小batch size时的不稳定问题. 但是BR本质上还是依赖于batch的, 当batch较小时, 其性能也会相应下降(不过下降较少).<br>也有的工作尝试避免使用小batch size. CVPR2018的一篇文章通过同步BN的方法, 使得模型可以在多GPU上计算平均值和方差, 但是, 这个方法并没有才本质上解决BN的问题, 相反的, 它的方法更像是一种工程和硬件上的解决方案, 希望以此来达到BN的要求. 不仅如此, 这种同步BN方案也使得模型在工业中的大规模分布式训练下无法利用异步的优化方法, 如ASGD.</p>
+<p><strong>Group-wise computation:</strong> Group convolution计算在多个模型中都有提及. 但是本文的GP并不需要组卷积计算, 它是一个一般化的网络层(generic layer).</p>
+<h2 id="Group-Normalization"><a href="#Group-Normalization" class="headerlink" title="Group Normalization"></a>Group Normalization</h2><p>特征图谱中的各个channels之前也并不是完全互相独立的.</p>
+<h3 id="公式"><a href="#公式" class="headerlink" title="公式"></a>公式</h3><p>典型的归一化公式形式(BN,LN,IN,GN)为:</p>
+<script type="math/tex; mode=display">\hat x_i = \frac{x_i - \mu_i}{\sigma_i}</script><p>上式中, $x$ 代表某一层的特征, $i$ 代表下标, 在2D图像中, $i=(i_N, i_C, i_H, i_W)$ , 是一个4D的向量. $\mu$ 和 $\sigma$ 分别为期望和标准差, 通过下式计算得到:</p>
+<script type="math/tex; mode=display">\mu_i = \frac{\sum_{k\in S_i} x_k}{m}, \sigma_i = \sqrt{\frac{sum_{k\in S_i} (x_k-\mu_i)^2}{m} + \epsilon}</script><p>大多数的Normalization方法的不同之处就在于集合 $S_i$ 的不同(如图2所示):</p>
+<ul>
+<li>BN: $S_i = \{k | k_C = i_C \}$, 代表BN是在求每一个channel的均值和方差. 也即 $C$ 不变, 求固定 $C$ 时 $(N,H,W)$ 的均值和方差</li>
+<li>LN: $S_i = \{k | k_N = i_N \}$, 代表 $N$ 不变, 求固定 $N$ 以后 $(C,H,W)$ 的均值和方差(可以看出, 此时的均值和方差已经不受batch size的影响)</li>
+<li>IN: $S_i = \{k | k_N = i_N, k_C = i_C\}$, 代表 $N$ 和 $C$ 都固定时 , $(H,W)$ 的均值和方差. 也就是说是对单个特征中, 单个通道上的均值和方差.</li>
+</ul>
+<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fww4hqied3j21kw0esjwt.jpg" alt=""></p>
+<p>上面所有的Normalization方法(BN,LN,IN)都使用了线性偏移来补偿可能引起的数据分布表征丢失问题:</p>
+<script type="math/tex; mode=display">y_i = \gamma x_i + \beta</script><p><strong>Group Norm:</strong> 在Group Norm中, $\mu$, $\sigma$ 以及集合 $S_i$ 的定义如下:</p>
+<script type="math/tex; mode=display">S_i = \{ k | k_N = i_N, \lfloor \frac{k_C}{C/G} \rfloor = \lfloor \frac{i_C}{C/G} \rfloor \}</script><p>上式中, $G$ 是group的数量, 是一个超参数(默认为32), $C/G$ 是每一个group中的channels的数量, $\lfloor \frac{k_C}{C/G} \rfloor = \lfloor \frac{i_C}{C/G} \rfloor \}$ 意味着下标 $i$ 和 $k$ 在同一个group内. GN计算的 $\mu$ 和 $\sigma$ 是处于同一个group的所有通道上的 $(H,W)$ 的均值和方差, 具体的计算方式如图2最右侧所示, 在该图实例中, G=2, 并且每一个group具有3个channels. GN同样会在每一个channel中使用参数 $\gamma$ 和 $\beta$ 对数据执行线性偏移.(注意是每一个通道, 而不是group, 也就是同一个group中的不同通道下的 $\gamma$ 和 $\beta$ 参数是不一样的!)</p>
+<p><strong>Relation to Prior Work:</strong>  很明显, LN和IN实际上可以看做是GN的一种特例情况(如图2). 当 $G=1$ 时, GN就变成LN, 当 $G=C$ 时, GP就变成了IN.</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>就和GN的思想一样, GN实现起来也十分简单, 下图是GN基于python和tensorflow的实现代码, 从代码中可以看到, $\gamma$ 和 $\beta$ 的shape为 [1,C,1,1], 也就是说, $\gamma$ 和 $\beta$ 在同一个group中的不同channel来说, 值是不一样的.</p>
+<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fwwerxxn0kj20s70haad2.jpg" alt=""></p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fwwes3nh5zj21kw0j5dyd.jpg" alt=""></p>
+<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwwes7p05wj21kw0huwuz.jpg" alt=""></p>
+<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fwwesbnq0mj20s809qmyz.jpg" alt=""></p>
+<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwwesfiq43j20sd0cajtw.jpg" alt=""></p>
+<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fwwesjygdnj21kw0gpat8.jpg" alt=""></p>
+<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwwesnf0lvj20t20j6tcb.jpg" alt=""></p>
+<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwwesrox6zj20sl0jwtdr.jpg" alt=""></p>
+<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fwwesvxyoej20sv0jkwyp.jpg" alt=""></p>
+<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fwwet23060j21kw0nwag1.jpg" alt=""></p>
+<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwwet5sufej20sa0f5aoe.jpg" alt=""></p>
+<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fwwet9mkjbj20s209s762.jpg" alt=""></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/Caffe2-Detectron-训练状态跟踪/" rel="prev" title="Detectron源码解读-训练状态跟踪">
+                <i class="fa fa-chevron-left"></i> Detectron源码解读-训练状态跟踪
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/计算机视觉-NIPS2016-R-FCN/" rel="next" title="R-FCN-NIPS2016">
+                R-FCN-NIPS2016 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">180</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#核心亮点"><span class="nav-text">核心亮点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#论文细节"><span class="nav-text">论文细节</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关工作"><span class="nav-text">相关工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Group-Normalization"><span class="nav-text">Group Normalization</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#公式"><span class="nav-text">公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-text">实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验"><span class="nav-text">实验</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">735k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">11:08</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

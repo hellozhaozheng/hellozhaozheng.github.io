@@ -108,18 +108,22 @@
 
 
 
-  <meta name="description" content="文章: SSD: Single Shot MultiBox Detector">
+  <meta name="description" content="文章: SSD: Single Shot MultiBox Detector作者: Wei Liu, Dragomir Anguelov, Dumitru Erhan 核心亮点(1) 在不同层的feature map上使用网格法获取候选区域: 某种程度上SSD可以看做是YOLOv1和FasterRCNN的结合, 在不同layer的输出的不同尺度的feature map上划格子, 在格子上利用anc">
 <meta name="keywords" content="目标检测">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SSD-ECCV2016">
+<meta property="og:title" content="SSD-Single Shot MultiBox Detector">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-SSD-ECCV2016/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="文章: SSD: Single Shot MultiBox Detector">
+<meta property="og:description" content="文章: SSD: Single Shot MultiBox Detector作者: Wei Liu, Dragomir Anguelov, Dumitru Erhan 核心亮点(1) 在不同层的feature map上使用网格法获取候选区域: 某种程度上SSD可以看做是YOLOv1和FasterRCNN的结合, 在不同layer的输出的不同尺度的feature map上划格子, 在格子上利用anc">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-14T07:40:32.784Z">
+<meta property="og:image" content="https://wx1.sinaimg.cn/mw1024/d7b90c85ly1fwb7fnbsu4j20oj09bgq8.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/mw1024/d7b90c85ly1fwbhhr03m4j216z0rtdmo.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/mw1024/d7b90c85ly1fwbl46szs0j213m0ewag3.jpg">
+<meta property="og:updated_time" content="2018-11-01T06:06:25.494Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SSD-ECCV2016">
-<meta name="twitter:description" content="文章: SSD: Single Shot MultiBox Detector">
+<meta name="twitter:title" content="SSD-Single Shot MultiBox Detector">
+<meta name="twitter:description" content="文章: SSD: Single Shot MultiBox Detector作者: Wei Liu, Dragomir Anguelov, Dumitru Erhan 核心亮点(1) 在不同层的feature map上使用网格法获取候选区域: 某种程度上SSD可以看做是YOLOv1和FasterRCNN的结合, 在不同layer的输出的不同尺度的feature map上划格子, 在格子上利用anc">
+<meta name="twitter:image" content="https://wx1.sinaimg.cn/mw1024/d7b90c85ly1fwb7fnbsu4j20oj09bgq8.jpg">
 
 
 
@@ -136,7 +140,7 @@
   };
 </script>
 
-  <title>SSD-ECCV2016 | 从零开始的BLOG</title>
+  <title>SSD-Single Shot MultiBox Detector | 从零开始的BLOG</title>
   
 
 
@@ -244,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">131</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">180</span></a>
   </li>
         
         
@@ -261,6 +265,22 @@
           <li class="menu-item menu-item-深度学习">
     <a href="/categories/深度学习/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
   </li>
         
         
@@ -285,14 +305,6 @@
           <li class="menu-item menu-item-linux">
     <a href="/categories/Linux/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-caffe2">
-    <a href="/categories/Caffe2/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
   </li>
         
         
@@ -332,15 +344,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">25</span></a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-life">
-    <a href="/life/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-child"></i> <br />生活杂记</a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">28</span></a>
   </li>
         
         
@@ -458,7 +462,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">SSD-ECCV2016
+          <h1 class="post-title" itemprop="name headline">SSD-Single Shot MultiBox Detector
               
             
           </h1>
@@ -484,7 +488,7 @@
                 
               
 
-              <time title="创建时间：2018-10-14 15:39:04" itemprop="dateCreated datePublished" datetime="2018-10-14T15:39:04+08:00">2018-10-14</time>
+              <time title="创建时间：2018-10-17 15:39:04" itemprop="dateCreated datePublished" datetime="2018-10-17T15:39:04+08:00">2018-10-17</time>
             
 
             
@@ -538,7 +542,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">39</span>
+                <span title="本文字数">4.9k</span>
               
 
               
@@ -552,7 +556,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">4 分钟</span>
               
             </div>
           
@@ -572,7 +576,75 @@
       
 
       
-        <p><strong>文章:</strong> SSD: Single Shot MultiBox Detector</p>
+        <p><strong>文章:</strong> SSD: Single Shot MultiBox Detector<br><strong>作者:</strong> Wei Liu, Dragomir Anguelov, Dumitru Erhan</p>
+<h1 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h1><p><strong>(1) 在不同层的feature map上使用网格法获取候选区域:</strong></p>
+<p>某种程度上SSD可以看做是YOLOv1和FasterRCNN的结合, 在不同layer的输出的不同尺度的feature map上划格子, 在格子上利用<code>anchor</code>思想. 因此, . (YOLOv2也使用了Anchor的思想)</p>
+<p><strong>(2) 使用了数据增广, 难样例挖掘, atrous算法等trick大幅度提升精度和速度</strong><br>这个其实算不上亮点, 只不过作者确实使用这些技术提升性能不少</p>
+<p><strong>(3) 相对于那些需要object proposals的两阶段模型, SSD方法全完取消了 proposals generation, pixel resampling 或者 feature resampling 这些阶段</strong></p>
+<h1 id="论文细节"><a href="#论文细节" class="headerlink" title="论文细节"></a>论文细节</h1><h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>目前, 虽然Faster RCNN取得了很好的检测精度, 但是对于普通设备来说, Faster RCNN过于庞大, 计算时间太久, 不足以达到实时监测. YOLO虽然速度很快, 但是精度太低了, 达不到基本要求.</p>
+<p>SSD的出现正是为了解决这些问题, 确定在不丢失过度精度的前提下, 提升检测的速度.</p>
+<h2 id="Single-Shot-Detector-SSD"><a href="#Single-Shot-Detector-SSD" class="headerlink" title="Single Shot Detector(SSD)"></a>Single Shot Detector(SSD)</h2><p><img src="https://wx1.sinaimg.cn/mw1024/d7b90c85ly1fwb7fnbsu4j20oj09bgq8.jpg" alt=""></p>
+<p>根据上图, 简单说一下SSD的关键要素</p>
+<ul>
+<li>输入: 图像以及每个物体对应的ground truth boxes</li>
+<li>多特征图谱的anchor思想: 在不同尺度的特征图谱上(如上图的4×4和8×8), 对每个位置上设置多个具有不同大小和长宽比的boxes, 称之为 <strong>default boxes</strong>.</li>
+<li>输出: 对于每一个default box, 都会输出4个相对位移用于边框回归, 同时会输出所有类别的预测概率</li>
+<li>匹配: 在预测阶段, 需要将这些 <strong>defaults boxes</strong> 与 <strong>gt boxes</strong> 匹配. 在上图中, 最终有两个框(蓝色)与猫所在框匹配, 有一个框(红色)与狗所在框匹配. 这三个框被标记为正样本, 其余剩下的框都被标记为负样本. (可见负样本数量远远大于正样本数量)</li>
+<li>损失函数: 边框回归损失(Smooth L1) 和 类别置信度损失(softmax 交叉熵损失) 的权重和.</li>
+</ul>
+<h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><p>SSD 会产生固定数量的bounding box, 以及每个bounding box的各个类别的预测概率, 最后会使用NMS算法生成罪最终的检测结果.</p>
+<p><strong>多尺度feature map:</strong> 在卷积网络的不同卷积层后面添加convolutional feature layers, 并且在每一层中都会进行检测任务.</p>
+<p><strong>Convolutional predictors for detection:</strong> 每一个添加的特征层(或者在基础网络里的特征层), 都可以使用一系列的卷积核产生固定大小的predictions, 如图2所示. 对于一个大小为 $m\times n$, 具有 $p$ 通道的特征层, 使用的卷积核就是 $3\times 3\times p$ , 之后会产生相对于 default box 的预测坐标, 已经每一类的预测置信度. 对于特征图上 $m\times n$个位置, 在对每个位置使用卷积核之后, 都会产生一个输出值. (YOLO架构则是用一个全连接层来代替这里的卷积层)</p>
+<p><strong>Default boxes and aspect ratios:</strong> 每一个feature map的cell都会与一系列 default bounding box 相关联. 对于每一个cell来说, 模型会预测与之关联的 default bounding box 相对于该cell的偏移量, 同时会预测这些boxes对应的每一类的出现概率. 具体来说, 对于一个位置上的 $k$ 个boxes中的每一个box, 都会计算出这个box的4个相对位移值 $c$ 个类别的score. 因此, 对于一个feature map来说, 总共需要 $(c+4)\times k$ 个卷积核, 最终该对于大小为 $m\times n$ 的 feature map来说, 其输出结果数量为: $(c+4)\times k\times m\times n$.</p>
+<p><img src="https://wx2.sinaimg.cn/mw1024/d7b90c85ly1fwbhhr03m4j216z0rtdmo.jpg" alt=""></p>
+<h2 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h2><p>SSD与二阶段检测方法在训练时的区别: SSD训练图像中的GT信息需要赋予到那些固定输出的boxes上面(也就是说不仅要使用bounding box的坐标, 还有把类别标签也与每一个box绑定, 这种方法在YOLO, FasterRCNN(只分前后景), MultiBOx中都有用到).</p>
+<p><strong>Matching strategy:</strong></p>
+<p>只要预测框与gt box之间的 jaccard overlap(就是交并比) 大于一个阈值(0.5), 就认为是配对成功, 反之, 认为是背景.</p>
+<p><strong>Training objective:</strong></p>
+<p>SSD的损失函数源自于MultiBox的损失函数, 但是SSD对其进行拓展, 使其可以处理多个目标类别.  用 $x_{ij}^p={1,0}$ 表示第 $i$ 个default box 与类别 $p$ 的第 $j$ 个gt box匹配, 否则若不匹配的话, 则 $x_{ij}^p = 0$.</p>
+<p>根据上面的策略, 一定会有 $\sum_i x_{ij}^p &gt;1 $ 的情况出现, 意味着对于第 $j$ 个gt box, 很有可能有多个default box与之匹配.</p>
+<p>总的目标函数是由Localization loss(loc) 和 confidence loss(conf) 的加权求和得到的:</p>
+<script type="math/tex; mode=display">L(x,c,l,g) = \frac{1}{N} (L_{conf}(x,c) + \alpha L_{loc}(x,l,g))</script><p>式中:</p>
+<ul>
+<li>$N$是与ground truth box 相匹配的 default boxes个数(如果N为0, 则将该项loss设为0)</li>
+<li>localization loss(loc) 是 Fast RCNN 中的Smooth L1 loss, 用于对bounding box进行回归, 与Faster RCNN一样, 我们会将真实的gt box坐标值转换成相对于default box( $d$ )中心 $(cx,cy)$ 的偏移量和缩放度, 预测的时候也是对偏移量和缩放度进行预测:</li>
+</ul>
+<script type="math/tex; mode=display">L_{loc}(x,l,g) = \sum_{i\in Pos}^N \sum_{m\in\{cx,cy,w,h\}} x_{ij}^k smooth_{L_1}(l_i^m - \hat g_j^m)</script><ul>
+<li>confidence loss(conf) 是 Softmax 交叉熵loss</li>
+</ul>
+<script type="math/tex; mode=display">L_{conf}(x,c) = -\sum_{i\in Pos}^N x_{ij}^p log(\hat c_i^p) - \sum_{i\in Neg} log(\hat c_i^0), 其中, \hat c_i^p = \frac{exp(c_i^p)}{\sum_p exp(c_i^p)}</script><ul>
+<li>权重项 \alpha, 默认设置为1.</li>
+</ul>
+<p><strong>Choosing scales and aspect ratios for default boxes:</strong></p>
+<p>大部分CNN网络在越深的层, feature map的尺寸会越来越小, 这样做不仅仅是为了减少计算与内存的需求, 还有个好吃就是, feature map往往具有一定程度的平移和尺度不变性.</p>
+<p>为了处理不同尺度的物体, OverFeat和SPPNet都是通过在feature map上进行不同尺度的pooling, 然后再将这些pooling综合进行获取固定长度的特征向量输出.</p>
+<p>SSD采用的策略是使用同一个网络中不同层的feature map, 这些feature map也是不同尺度的, 同时也具有共享参数的好处. 本文使用了 8×8 和 4×4 大小的feature map 来进行目标检测.</p>
+<p>假如feature maps数量为 $m$, 那么每一个feature map中的default box的尺寸大小计算如下:</p>
+<script type="math/tex; mode=display">s_k = s_{min} + \frac{s_{max} - s_{min}}{m-1}(k-1), k\in [1,m]</script><p>上式中, $s_{min} = 0.2 , s_{max} = 0.95$, 然后, 截个不同的aspect ratio, 用 $a_r$ 表示: $a_r = {1,2,3,1/2,1/3}$, 则每一个default boxes 的width 和height就可以得到:</p>
+<script type="math/tex; mode=display">w_k^a = s_k \sqrt{a_r}</script><script type="math/tex; mode=display">h_k^a = \frac{s_k}{\sqrt {a_r}}</script><p>每一个default box的中心, 设置为: $(\frac{i+0.5}{|f_k|}, \frac{j+0.5}{f_k})$, 其中, $|f_k|$ 是第k个feature map的大小.</p>
+<p>这种多尺度的feature maps策略, 可以适应不同大小的物体的检测, 如下图, 对于体积较小的猫来说, 它会与 8×8 feature map 的default box匹配, 而对于体积较大的狗来说, 它会与 4×4 feature map 的default box 匹配, 而其余的都会被看做是负样本.</p>
+<p><strong>Hard negative mining:</strong></p>
+<p>在一系列的matching之后, 大多数default boxes都会被认为是负样本. 这会导致正负样本不均衡问题. 对于, SSD会将所有的负样本按照scores loss的高低进行排序(损失高的优先级在前), 然后每次只选择顶端的负样本进行训练, 负样本与正样本之间的比例为 3:1.</p>
+<p><strong>Data augmentation:</strong></p>
+<p>为了增强对物体多尺度和形状的鲁棒性, 对于每一张训练数据, 会随机使用下列数据增广技术:</p>
+<ul>
+<li>使用整张图片</li>
+<li>采样一个patch (这里的patch我认为就是裁剪子区域的感觉), 使其与物体之间的最小交并比为0.1, 0.3, 0.5, 0.7, 0.9</li>
+<li>随机采样一个patch</li>
+</ul>
+<p>采样的patch与原始图像大小的比例为[0.1, 1], aspect ratio在 0.5 到 2 之间. 当gt box的中心出现在采样的patch中时, 我们保留重叠部分. 在这些采样步骤之后, 每一个采样的patch被resize到固定的大小, 并且以0.5的概率被水平翻转.</p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><ul>
+<li>hole filling algorithm??//TODO</li>
+<li>SSD模型对于bounding box的size非常敏感, 也就是说, SSD对于小物体目标较为敏感, 在检测小物体目标上表明交差, 主要也是因为对于小目标而言, 经过多层卷积之后, 剩余信息过少导致的.</li>
+<li>数据增广对于结果的提升非常明显</li>
+<li>多feature map对结果的提升是有很大帮助的</li>
+<li>使用较多的default boxes, 效果较好(但也不能太多)</li>
+<li>atrous: atrous是精度有一定提高, 同时对速度有很大提高(约20%)</li>
+</ul>
+<p><strong>Inference time:</strong></p>
+<p>SSD会山城大量的bounding boxes, 使用NMS算法只留下top200 (这一步SSD300在VOC20类的每张图像上, 需耗时2.2msec)</p>
+<p><img src="https://wx1.sinaimg.cn/mw1024/d7b90c85ly1fwbl46szs0j213m0ewag3.jpg" alt=""></p>
+<p>上图看起来SSD300比YOLO还要快, 但实际上YOLO的网络层数是24层, 而SSD的层数是12层, 这样比起来有点不太公平( 但是层数多居然精度没SSD高, 这也值得吐槽, 但但是个人觉得这是因为YOLOv1的设计比较粗糙, 很多trick没有使用导致的, 所以看看YOLOv2, 和YOLOv3的版本, 结果还是挺不错的)</p>
 
       
     </div>
@@ -606,8 +678,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/计算机视觉-MultiBox-CVPR2014/" rel="prev" title="MultiBox-CVPR2014">
-                <i class="fa fa-chevron-left"></i> MultiBox-CVPR2014
+              <a href="/z_post/面试-面经汇总/" rel="prev" title="面试-面经汇总">
+                <i class="fa fa-chevron-left"></i> 面试-面经汇总
               </a>
             
           </div>
@@ -616,8 +688,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/Cpp-协变与逆变/" rel="next" title="Cpp-协变与逆变">
-                Cpp-协变与逆变 <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/计算机视觉-模型结构汇总/" rel="next" title="计算机视觉-模型结构汇总">
+                计算机视觉-模型结构汇总 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -667,8 +739,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -687,7 +768,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">131</span>
+                    <span class="site-state-item-count">180</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -722,7 +803,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -785,7 +870,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">25</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -840,6 +931,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#核心亮点"><span class="nav-text">核心亮点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#论文细节"><span class="nav-text">论文细节</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景介绍"><span class="nav-text">背景介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Single-Shot-Detector-SSD"><span class="nav-text">Single Shot Detector(SSD)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Model"><span class="nav-text">Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Training"><span class="nav-text">Training</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验"><span class="nav-text">实验</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
         <div class="back-to-top">
@@ -870,7 +977,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">471k</span>
+    <span title="站点总字数">735k</span>
   
 
   
@@ -879,7 +986,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">7:08</span>
+    <span title="站点阅读时长">11:08</span>
   
 </div>
 

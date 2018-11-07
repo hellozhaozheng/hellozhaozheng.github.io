@@ -1,0 +1,1617 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="文章: Focal Loss for Dense Object Detection作者: Tsung-Yi Lin, Priya Goyal, Ross Girshick, Kaiming He, Piotr Dollár 核心亮点(1) 分析并指出了One Stage方法精度不高的原因:  极度不平衡的正负样本比例: anchor是一种类似sliding windows的选框方式, 这会使得正负">
+<meta name="keywords" content="目标检测,论文解读">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FocalLoss-ICCV2017">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-ICCV2017-FocalLoss/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="文章: Focal Loss for Dense Object Detection作者: Tsung-Yi Lin, Priya Goyal, Ross Girshick, Kaiming He, Piotr Dollár 核心亮点(1) 分析并指出了One Stage方法精度不高的原因:  极度不平衡的正负样本比例: anchor是一种类似sliding windows的选框方式, 这会使得正负">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fw1pzf56s3j20jf0i177e.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fw1pzf7w44j213m0cr0wb.jpg">
+<meta property="og:updated_time" content="2018-10-25T11:54:52.980Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="FocalLoss-ICCV2017">
+<meta name="twitter:description" content="文章: Focal Loss for Dense Object Detection作者: Tsung-Yi Lin, Priya Goyal, Ross Girshick, Kaiming He, Piotr Dollár 核心亮点(1) 分析并指出了One Stage方法精度不高的原因:  极度不平衡的正负样本比例: anchor是一种类似sliding windows的选框方式, 这会使得正负">
+<meta name="twitter:image" content="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fw1pzf56s3j20jf0i177e.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/计算机视觉-ICCV2017-FocalLoss/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>FocalLoss-ICCV2017 | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">180</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-linux">
+    <a href="/categories/Linux/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-面试">
+    <a href="/categories/面试/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其它">
+    <a href="/categories/其它/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其它</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">28</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/计算机视觉-ICCV2017-FocalLoss/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">FocalLoss-ICCV2017
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-14 18:51:36" itemprop="dateCreated datePublished" datetime="2018-09-14T18:51:36+08:00">2018-09-14</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/计算机视觉/" itemprop="url" rel="index"><span itemprop="name">计算机视觉</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">5.5k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">5 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>文章:</strong> Focal Loss for Dense Object Detection<br><strong>作者:</strong> Tsung-Yi Lin, Priya Goyal, Ross Girshick, Kaiming He, Piotr Dollár</p>
+<h1 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h1><p><strong>(1) 分析并指出了One Stage方法精度不高的原因:</strong></p>
+<ul>
+<li><strong>极度不平衡的正负样本比例:</strong> anchor是一种类似sliding windows的选框方式, 这会使得正负样本的比例接近1000:1, 而且绝大部分负样本都是easy example.</li>
+<li><strong>梯度优化过程被easy example过度影响:</strong> 这些easy example的loss虽然不高, 但由于数量众多, 最终合起来会对loss有很大的贡献, 从而导致优化的时候过度关注这些easy example, 这样会收敛到一个不够好的结果.</li>
+</ul>
+<p><strong>(2) 提出了解决正负样本比例和easy example 问题的Focal loss:</strong></p>
+<script type="math/tex; mode=display">FL(p_t) = -(1-p_t)^{\gamma} log(p_t)</script><p>核心思想很简单, 就是在优化过程中逐渐减低那些easy example的权重, 这样会使得训练优化过程对更有意义的样本有更高的偏置.</p>
+<p><strong>PS:</strong><br>注一: 为什么Focal Loss没有用在Two Stage方法上面? 这是因为以RCNN为代表的一系列Two Stage会在区域候选推荐阶段采用两个问题来降低正负样本比例和easy example问题带来的影响:</p>
+<ul>
+<li>采用NMS算法将物体位置候选框降低到一到两千个，更重要的是，这一到两千个可能位置并不是随机选取的，它们移除了大量的易分类负样本（背景框）</li>
+<li>采用了biased-minibatch的采样策略, 比如，保证正样本和负样本的比例为1：3进行训练（这其实相当于起到了 $\alpha$ 因子的作用</li>
+</ul>
+<p><strong>Focal Loss 的两个重要性质:</strong></p>
+<ol>
+<li>当一个样本被分错的时候, $p_t$ 是很小的, 比如当 $y=1$ 时, $p_t$ 要小于0.5才算是错分类, 此时 $p_t$ 就比较小, 反之亦然, 因此调制系数就会趋近于1, 也就是说相比原来的loss没有太大的改变, 而当 $pt$ 趋近于1的时候, 说明此时分类正确而且是易分类样本, 调制系数就会趋近于0, 也就是该样本对总的loss的贡献度很小.</li>
+<li>当 $gamma=0$ 的时候, focal loss就是传统的交叉熵损失, 随着 $gamma$ 的增加, 调制系数的影响力也会增加</li>
+</ol>
+<h1 id="论文细节"><a href="#论文细节" class="headerlink" title="论文细节"></a>论文细节</h1><h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>首先，Lin等人回顾了一下目前目标检测的发展概况，先进的目标检测算法目前大概分成两种，一种是one-stage的，一种是two-stage的。one-stage的代表作YOLO以一种简单统一的网络成功实现了实时检测的目的，但是它的准确率并不是best。相反的，two-stage的代表作RCNN系列则是在准确率方面完胜其他模型，但是它的检测速度真的是慢的有的可怜（相比于YOLO）。 于是，Lin他们就开始研究造成这种现象的原因，接着他们就发现原来是在训练的时候，后景数据相比于前景数据较少的缘故。为了解决这个问题，Lin等人对标准的交叉熵损失函数进行修改，降低那些已经分类很好的样例对loss的影响比重，称之为Focal Loss，也就是会特别关注某一些loss的意思。 最后，Lin等人实现了一个使用Focal Loss的简单的检测系统，最终在速度上几乎赶上了YOLO，并且在准确性了超过了现有的所有检测算法。源码可以在facebook的Detectron上取得：<br><a href="https://github.com/facebookresearch/Detectron" target="_blank" rel="noopener">https://github.com/facebookresearch/Detectron</a> .</p>
+<p>作者介绍了一下two-stage方法的简单流程以及相关的论文，然后又介绍了以下YOLO和SSD等one-stage方法的概况，然后，<strong>作者指出这one-stage方法精确度低的主要原因是源于训练集数据分布的不平衡导致的。</strong> 由此，作者就引出了自己的Focal Loss损失函数，指出Focal Loss函数在面对具有较高confidence的样例时，其影响因子会接近于0,直观上来说，就说Focal Loss更关注那些hard examples。另外，作者还提出，Focal Loss的形式不是唯一的，很多其他的实现方法也能达到相似的结果。（其实我觉得这说明损失函数这一块还有很多工作可以往下研究）</p>
+<p>为了证明Focal Loss的有效性，作者实现了一个one-stage检测模型，命名为RetinaNet（Retina是视网膜的意思），基于ResNet-101-FPN实现，还用到了feature pramid和anchor boxes等思想。</p>
+<h2 id="传统检测系统"><a href="#传统检测系统" class="headerlink" title="传统检测系统"></a>传统检测系统</h2><p>主要是基于sliding-window paradigm的一类方法：HOG， DPMs等等。虽然滑动窗口类的方法在目标检测领域处于一线地位，但是随着deep learning的出现和研究，滑动窗口方法渐渐失去光芒。</p>
+<h2 id="Two-stage-Detectors"><a href="#Two-stage-Detectors" class="headerlink" title="Two-stage Detectors"></a>Two-stage Detectors</h2><p>two-stage方法的先驱是Selective Search work，它会首先提取出一个稀疏的候选框集合（稀疏是指只有很少一部分包含物体），然后对这些候选框进行分类，看是否包含物体，或包含哪种物体。</p>
+<p>之后，RCNN的诞生标志着深度学习技术成功引入目标检测领域，利用cnn网络对特征的高度抽象和提取，rcnn在物体检测的准确率上大幅度提高，后期的RCNN系列又不断的提出新的方法来提升准确率和速度，到Faster RCNN时，提出了RPN网络，将候选框选取阶段和分类阶段都放在了统一个网络，使之可以进行端到端训练。后续还有更多的关于这一系列的工作继续被人们研究着。</p>
+<h2 id="One-stage-Detectors"><a href="#One-stage-Detectors" class="headerlink" title="One-stage Detectors"></a>One-stage Detectors</h2><p>OverFeat算是首个现代的基于深度学习的one-stage检测方法，而最近的SSD和YOLO更是激起了人名对one-stage方法的研究热情，但是one-stage方法最令人诟病的地方就在于它们较低的准确率。</p>
+<p>为此，本文的工作就是想要知道是否one-stage检测算法可以在精确度上匹敌two-stage检测算法，同时还要保持一定的检测速度。</p>
+<p>于是，作者提出了Focal Loss，一种新的损失函数，利用这个损失函数，可以在保持现在模型大框架不变的基础上，达到最好的检测水平！</p>
+<h2 id="样本类别不均衡-Class-Imbalance"><a href="#样本类别不均衡-Class-Imbalance" class="headerlink" title="样本类别不均衡 Class Imbalance"></a>样本类别不均衡 Class Imbalance</h2><p>不管是传统的one-stage检测方法如boosted detectors， DMPs，还是最近的方法SSD，都会在训练阶段面临 $10^4\sim 10^5$ 个候选区域，这其中会包含大量的背景区域，也就是负样本，这种不平衡会造成两个问题：</p>
+<ul>
+<li>在训练时，在大多数位置都是负样本，这样只会贡献更多无用的信号</li>
+<li>大量的负样本会导致模型在一定程度上的退化</li>
+</ul>
+<p>对于此问题，常用的解决方案是在训练阶段设计更复杂的样本抽取策略，但是这样速度就会受影响。而本文提出的Focal Loss，不仅解决了样本不均的问题，而且不需要增加额外的抽取策略，可以更快训练</p>
+<h2 id="Robust-Estimation"><a href="#Robust-Estimation" class="headerlink" title="Robust Estimation"></a>Robust Estimation</h2><p>有很多工作乐于设计健壮的损失函数，具体可以看看原文的参考文献，这里就不说了（主要因为没有什么好讨论的地方，作者也只是提了一下）</p>
+<h2 id="Focal-Loss"><a href="#Focal-Loss" class="headerlink" title="Focal Loss"></a>Focal Loss</h2><p>为了便于理解，从交叉熵（CE）的二分类问题出发：</p>
+<script type="math/tex; mode=display">CE(p,y) = \begin{cases} -log(p)& \text {if y=1} \\ -log(1-p) & \text{otherwise}\end{cases}</script><p>当二分类问题中的样本分布不均时，数量多的样本的损失值对最终函数的影响会淹没数量少的样本产生的影响。多分类问题也是如此。</p>
+<p>为了便于表示，对上面的公式进行改写： $CE(p,y) = CE(p_t) = -log(p_t)$，于是有：</p>
+<script type="math/tex; mode=display">p_t = \begin{cases} p & \text{if y = 1} \\ 1-p & \text{otherwise} \end{cases}</script><h2 id="Balanced-Cross-Entropy"><a href="#Balanced-Cross-Entropy" class="headerlink" title="Balanced Cross Entropy"></a>Balanced Cross Entropy</h2><p>一个常用的解决办法就是引入一个权重因子 $\alpha \in [0,1]$，然后分别令 $\alpha$ 和 $1 - \alpha$作为两个类别的权重，$\alpha$ 的取值可以是根据类别出现的频率决定，也可以作为超参数，利用交叉验证来选取较好的值。我们使用这种方法作为baseline来与Focal loss进行比较：</p>
+<script type="math/tex; mode=display">CE(p_t) = -\alpha log(p_t)</script><h2 id="Focal-Loss-Definition"><a href="#Focal-Loss-Definition" class="headerlink" title="Focal Loss Definition"></a>Focal Loss Definition</h2><p>本文的实验结果表明，类别分布不均会对交叉熵损失函数带来很大的影响。那些很容易被分类的负样本（背景等）贡献了损失函数及其梯度中的大部分影响力。尽管baseline方法的 $\alpha$ 因子可以平衡正负样本之间的比例，但它仍然不能把握好简单样本和困难样本的比例（应该困难样本多一些，简单样本少一些，这样有利于模型的健壮性）。于是，作者就提出了Focal Loss，主要引入了一个“调制因子” $(1-p_t)^\gamma$ ，其中 $\gamma \ge 0$ ，具体的形式化表示如下：</p>
+<script type="math/tex; mode=display">FL(p_t) = -(1-p_t)^\gamma log(p_t)</script><p>直观上来讲，这个“调制因子”可以降低easy example对loss的contribution。同时，还应注意到，Focal Loss的形式不是唯一固定的，作者还在使用了其他不同形式的因子，比如结合了 $\alpha$ 因子：</p>
+<script type="math/tex; mode=display">FL(p_t) = -\alpha_t(1-p_t)^\gamma log(p_t)</script><p>后文的大部分实验都使用的是上面这个形式的Focal Loss。</p>
+<p><img src="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fw1pzf56s3j20jf0i177e.jpg" alt=""></p>
+<h2 id="Class-Imbalance-and-Model-Initialization"><a href="#Class-Imbalance-and-Model-Initialization" class="headerlink" title="Class Imbalance and Model Initialization"></a>Class Imbalance and Model Initialization</h2><p>二值分类模型在初始的时候，对两个类别的预测概率是均等的，在这种初始化条件下，如果某一个类别出现的次数过多，就会对损失函数产生较大的影响。为了解决这个问题，作者特意提出了“先入为主”的概念，也就是使得模型在开始的时候，对稀有类别（如前景类别）的预测概率的初始值设置的低一些，如0.01 。 经过实验表明，这样的方法可以提升模型训练的稳定性。</p>
+<h2 id="Class-Imbalance-and-Two-stage-Detectors"><a href="#Class-Imbalance-and-Two-stage-Detectors" class="headerlink" title="Class Imbalance and Two-stage Detectors"></a>Class Imbalance and Two-stage Detectors</h2><p>Two-stage Detector 并没有使用类似 $\alpha$ 因此的方法来解决样本不均的问题。相反的，它们通过两个机制来降低这个问题带来的影响：（1）two-stage模式和（2）biased minibatch取样。首先，two-stage模式会在第一阶段就将近乎无限物体位置可能性降低到一到两千个，更重要的是，这一到两千个可能位置并不是随机选取的，它们移除了大量的易分类负样本（背景框）。第二，这些方法还设计了biased minibatch的取样策略，比如，保证正样本和负样本的比例为1：3进行训练（这其实相当于起到了 $\alpha$ 因子的作用。</p>
+<h2 id="RetinaNet-Detector"><a href="#RetinaNet-Detector" class="headerlink" title="RetinaNet Detector"></a>RetinaNet Detector</h2><p>RetinaNet是一个单一的、统一的网络，它由一个backbone网络和两个task-specific子网络组成。backbone网络是现成的，主要负责计算卷积特征图谱。第一个子网络负责物体分类任务，第二个子网络负责bounding box回归任务，它们都是在backbone网络输出的卷积图谱上进行计算的。</p>
+<p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fw1pzf7w44j213m0cr0wb.jpg" alt=""></p>
+<p><strong>Feature Pyramid Network Backbone：</strong></p>
+<p>采用了FPN作为backbone网络。</p>
+<p><strong>Anchors:</strong></p>
+<p>和FPN一样，对P3到P7使用了不同大小的anchors</p>
+<p><strong>Classification Subnet：</strong></p>
+<p>该子网络是一个较小的FCN，连接在FPN的每一层。</p>
+<p>值得注意的一点是，该子网络并不与Box Regression Subnet共享参数，二者是互相独立的。</p>
+<p><strong>Box Regresion Subnet：</strong></p>
+<p>与分类子网络并行，该子网络也是一个FCN网络，连接在FPN的每一层上。目标是让anchor通过位移回归到gt box附近。</p>
+<h2 id="Inference-and-Training"><a href="#Inference-and-Training" class="headerlink" title="Inference and Training"></a>Inference and Training</h2><p><strong>Inference：</strong> RetinaNet是有基于FPN和backbone和两个基于FCN的子网络组成的一个统一的单一网络，因此，在inference阶段，只需要简单的通过前向传播经过整个网络即可。为了提高速度，本文在每个FPN层级上，只会处理最多1000个box prediction。</p>
+<p><strong>Focal Loss：</strong> 使用了上文提到的Focal Loss。取 $\gamma=2$ 。在训练阶段，本文强调将focal loss应用到所有100k个anchors上，主要目的是为了与RPN和SSD等模型作对比。</p>
+<p>从实验结果上看，当 $\gamma$ 的值取得较大时，$\alpha$ 的值就应该取消一些（for$\gamma=2$ , $\alpha = 0.25$ works best)。</p>
+<p><strong>Initialization：</strong> 本文分别实现了ResNet-50-FPN和ResNet-101-FPN。 对其中初始值可参见原文。</p>
+<p><strong>Optimization：</strong></p>
+<p>使用了SGD优化方法，在8个GPU上训练，每个minibatch有16张图片（一个GPU包含2张图片）。</p>
+<p>损失函数为focal loss和标准smooth L1损失函数之和。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/目标检测/" rel="tag"><i class="fa fa-tag"></i> 目标检测</a>
+          
+            <a href="/tags/论文解读/" rel="tag"><i class="fa fa-tag"></i> 论文解读</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/项目-ZeroTensor-框架设计/" rel="prev" title="轻量级深度学习框架ZeroTensor：（一）框架设计">
+                <i class="fa fa-chevron-left"></i> 轻量级深度学习框架ZeroTensor：（一）框架设计
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/计算机视觉-YOLOv3-Arxiv2018/" rel="next" title="YOLOv3">
+                YOLOv3 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">180</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#核心亮点"><span class="nav-text">核心亮点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#论文细节"><span class="nav-text">论文细节</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景介绍"><span class="nav-text">背景介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传统检测系统"><span class="nav-text">传统检测系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Two-stage-Detectors"><span class="nav-text">Two-stage Detectors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#One-stage-Detectors"><span class="nav-text">One-stage Detectors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#样本类别不均衡-Class-Imbalance"><span class="nav-text">样本类别不均衡 Class Imbalance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Robust-Estimation"><span class="nav-text">Robust Estimation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Focal-Loss"><span class="nav-text">Focal Loss</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Balanced-Cross-Entropy"><span class="nav-text">Balanced Cross Entropy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Focal-Loss-Definition"><span class="nav-text">Focal Loss Definition</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class-Imbalance-and-Model-Initialization"><span class="nav-text">Class Imbalance and Model Initialization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class-Imbalance-and-Two-stage-Detectors"><span class="nav-text">Class Imbalance and Two-stage Detectors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RetinaNet-Detector"><span class="nav-text">RetinaNet Detector</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inference-and-Training"><span class="nav-text">Inference and Training</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">735k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">11:08</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

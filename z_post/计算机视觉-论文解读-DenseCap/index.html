@@ -109,7 +109,7 @@
 
 
   <meta name="description" content="本篇论文解读的排版主要参见原文的格式，针对原文中的每一个小节进行展开，有的是对原文的一个提炼和简单概括，有的是对原文中涉及但是又没有详细介绍的技术的补充和说明。原文连接：https://cs.stanford.edu/people/karpathy/densecap/作者个人主页：https://cs.stanford.edu/people/jcjohns/PS：本篇博文不是对原文的简单翻译，论文">
-<meta name="keywords" content="图片描述 image captioning,论文解读">
+<meta name="keywords" content="论文解读,图片描述 image captioning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DenseCap---CVPR2016">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-论文解读-DenseCap/index.html">
@@ -259,7 +259,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">131</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">180</span></a>
   </li>
         
         
@@ -276,6 +276,22 @@
           <li class="menu-item menu-item-深度学习">
     <a href="/categories/深度学习/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
   </li>
         
         
@@ -300,14 +316,6 @@
           <li class="menu-item menu-item-linux">
     <a href="/categories/Linux/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-caffe2">
-    <a href="/categories/Caffe2/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
   </li>
         
         
@@ -347,15 +355,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">25</span></a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-life">
-    <a href="/life/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-child"></i> <br />生活杂记</a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">28</span></a>
   </li>
         
         
@@ -553,7 +553,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">7.8k</span>
+                <span title="本文字数">7.9k</span>
               
 
               
@@ -636,20 +636,20 @@ color: #999;
 <p><img src="https://img-blog.csdn.net/20180331113328854?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2tzd3MwMjkyNzU2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 <p>&emsp;&emsp;RoI pooling layer需要两个输入：卷积特征图谱和候选区域坐标。但是在应用梯度下降时，该方法只能对特征图谱采用反向传播（BP）算法，而不能对候选区域坐标使用BP算法，为了克服这个缺点，在本文中，作者采用了双线性插值。<br>&emsp;&emsp;具体来说，就是对于任意的特征图谱$U（C×W’×H’）$和候选区域，我们要将其放缩成大小为$（C×X×Y）$的特征图谱$V$，放缩过程按照如下步骤进行：</p>
 <ol>
-<li>计算$V$到 $U$的反向投影坐标值，例如对于特征图谱$V$中的任意一点坐标$(x<em>{i,j}^V,y</em>{i,j}^V)$，投影到$U$中的坐标值为<script type="math/tex">x_{i,j}=x_{i,j}^V*\frac{W'}{X}，y_{i,j}=y_{i,j}^V*\frac{H'}{Y}</script>很容易看出，这里$x<em>{i,j}和y</em>{i,j}$的值均为浮点数，然而图像的像素坐标在计算机中必须为整数，所以这里坐标$(x<em>{i,j},y</em>{i,j})$对应的像素点是虚拟像素点，并不是$U$中实际存在的点。</li>
-<li>按照双线性插值法，得到$U$中$(x<em>{i,j}^U,y</em>{i,j}^U)$坐标点的像素值，该像素值就是$V$中对应点的像素值$V<em>{c,i,j}$，计算公式如下$$V</em>{c,i,j}=\sum<em>{i’=1}^{W’}\sum</em>{j’=1}^{H’}U<em>{c,j’,j’}k(i’-x</em>{i,j})k(j’-y_{i,j})，其中 ，k(d)=max(0,1-|d|)$$</li>
+<li>计算$V$到 $U$的反向投影坐标值，例如对于特征图谱$V$中的任意一点坐标$(x_{i,j}^V,y_{i,j}^V)$，投影到$U$中的坐标值为<script type="math/tex">x_{i,j}=x_{i,j}^V*\frac{W'}{X}，y_{i,j}=y_{i,j}^V*\frac{H'}{Y}</script>很容易看出，这里$x_{i,j}和y_{i,j}$的值均为浮点数，然而图像的像素坐标在计算机中必须为整数，所以这里坐标$(x_{i,j},y_{i,j})$对应的像素点是虚拟像素点，并不是$U$中实际存在的点。</li>
+<li>按照双线性插值法，得到$U$中$(x_{i,j}^U,y_{i,j}^U)$坐标点的像素值，该像素值就是$V$中对应点的像素值$V_{c,i,j}$，计算公式如下<script type="math/tex">V_{c,i,j}=\sum_{i'=1}^{W’}\sum_{j'=1}^{H'}U_{c,j',j'}k(i'-x_{i,j})k(j'-y_{i,j})，其中 ，k(d)=max(0,1-|d|)</script></li>
 <li>利用上面的方法，计算$V$中所有像素点的坐标值，得到$C×X×Y$的特征图谱</li>
 </ol>
 <p>&emsp;&emsp;对于上面的步骤可能理解起来不太直观，下面我们利用一个例子来帮助理解，我们假定源图谱U的大小为4×4，目的图谱V的大小为3×3，如下图所示</p>
 <p><img src="https://img-blog.csdn.net/20180407104939387?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2tzd3MwMjkyNzU2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
-<p>如果我们想要知道V中某点的坐标值，以V的中心点为例，我们先计算出V反向投影到U的坐标值$(x<em>{i,j},y</em>{i,j})$</p>
+<p>如果我们想要知道V中某点的坐标值，以V的中心点为例，我们先计算出V反向投影到U的坐标值$(x_{i,j},y_{i,j})$</p>
 <p><img src="https://img-blog.csdn.net/20180407105124903?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2tzd3MwMjkyNzU2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 <script type="math/tex; mode=display">x_{i,j}=1*\frac{4}{3}=1.333，y_{i,j}=1*\frac{4}{3}=1.333</script><p>然后，利用上面的公式计算$V_{c,i,j}$的值</p>
 <script type="math/tex; mode=display">V_{c,i,j}=95*0.667*0.667+32*0.667*0.333+156*0.333*0.667+84*0.333*0.333=93.336\approx 93</script><p><img src="https://img-blog.csdn.net/20180407110041733?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2tzd3MwMjkyNzU2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 <p>最终，对于$B$个候选区域，我们会得到形式为$B×C×X×Y$的一个张量，这就是localization layer的最终输出。</p>
 <h3 id="识别网络（Recognition-Network）"><a href="#识别网络（Recognition-Network）" class="headerlink" title="识别网络（Recognition Network）"></a>识别网络（Recognition Network）</h3><p>&emsp;&emsp;识别网络以一个全连接的神经网络，它接受的是来自定位层的候选区域的特征矩阵（定长）。将每个候选区域的特征拉伸成一个一维列向量，令其经过两层全连接层，每次都使用ReLU激活函数和Dropout优化原则。最终，对于每一个候选区域，都会生成一个长度为$D=4096$的一维向量。<br>&emsp;&emsp;将所有的正样本的存储起来，形成一个$B×D$形状的矩阵，将该矩阵传送到RNN语言模型中。<br>另外，我们允许识别网络对候选区域的置信分数和位置信息进行二次精修，从而生成每个候选区域最终的置信分数和位置信息，这一次的精修与之前的box regression基本是一样的，只不过是针对这个长度$D$的向量又进行了一次box regression而已（在R-CNN论文中已经指出，理论上是可以通过迭代使用box regression来不断让候选区域无限逼近真实区域的，不过实现表明，对最终的结果提升并不大）。</p>
-<h3 id="RNN语言模型（RNN-Language-Model）"><a href="#RNN语言模型（RNN-Language-Model）" class="headerlink" title="RNN语言模型（RNN Language Model）"></a>RNN语言模型（RNN Language Model）</h3><p>&emsp;&emsp;将图片的特征图谱输入到RNN语言模型当中，从而获得基于图片内容的自然语言序列。基本方法是将识别网络的输出结果进行编码（每一个候选区域到对应一个编码），记为$x<em>{-1}=CNN（I）$，然后将该区域对应的真实描述$s_1,…,s_T$也进行编码，记为$x_1,…x_T$，这里，$x_i$就是对应的$s_i$的向量编码。于是，我们就得到了长度为T+2的单词向量序列$x</em>{-1},x<em>0,x_1,…,x_T$，其中$x</em>{-1}$代表这候选区域的图像信息，$x<em>0$是特殊的开始标志，$x_1,…x_T$代表每一个单词的向量编码，将这T+2长度的向量序列feed到RNN中，训练出一个预测模型。<br>接着，在预测阶段，训练好的RNN语言模型的 **输入是$x</em>{-1}$和$x<em>0$** （START token），然后根据公式$h_t,y_t=f(h</em>{t-1},x_t)$分别计算出隐藏状态$h_0$和单词向量$y_0$。这里，$y_t$是一个长度为$|V|+1$的向量，$V$代表词库的size，多出来的1是一个特殊的END标志，根据$y_0$预测出第一个word，然后将该word再作为下一层LSTM网络（RNN中的语言模型网络）的输入，预测出第二个word，一直 <strong>递归</strong> 的重复这个过程，直到输出的word是END标志为止。该预测过程可以用下面的公式和两张示意图表示。</p>
-<script type="math/tex; mode=display">x_{-1}=CNN(I)$$$$x_t=W_eS_t，t\in \{ 0...N-1 \} $$$$p_{t+1}=LSTM(x_t)，t\in \{ 0...N-1\}</script><p>&emsp;&emsp;上式中，$x<em>{-1}$代表$CNN$生成的$D$维图像特征向量，并且它将作为整个$RNN$语言模型的初始输入，$S_t$代表RNN模型生成的一个个单词（word），其中$S_0$是一个特殊的开始标志，$p</em>{t+1}$代表第$t+1$个单词在整个单词表中的分布率，它是$p(S_{t+1}|I,S_0,…,S_t)$的简写形式，之后，选取$p_t$概率最大的元素作为句子中第$t$个单词的输出，如果概率最大的元素对应的是$END$标识符，则句子生成结束，迭代终止。</p>
+<h3 id="RNN语言模型（RNN-Language-Model）"><a href="#RNN语言模型（RNN-Language-Model）" class="headerlink" title="RNN语言模型（RNN Language Model）"></a>RNN语言模型（RNN Language Model）</h3><p>&emsp;&emsp;将图片的特征图谱输入到RNN语言模型当中，从而获得基于图片内容的自然语言序列。基本方法是将识别网络的输出结果进行编码（每一个候选区域到对应一个编码），记为$x_{-1}=CNN（I）$，然后将该区域对应的真实描述$s_1,…,s_T$也进行编码，记为$x_1,…x_T$，这里，$x_i$就是对应的$s_i$的向量编码。于是，我们就得到了长度为T+2的单词向量序列$x_{-1},x_0,x_1,…,x_T$，其中$x_{-1}$代表这候选区域的图像信息，$x_0$是特殊的开始标志，$x_1,…x_T$代表每一个单词的向量编码，将这T+2长度的向量序列feed到RNN中，训练出一个预测模型。<br>接着，在预测阶段，训练好的RNN语言模型的 <strong>输入是$x_{-1}$和$x_0$</strong> （START token），然后根据公式$h_t,y_t=f(h_{t-1},x_t)$分别计算出隐藏状态$h_0$和单词向量$y_0$。这里，$y_t$是一个长度为$|V|+1$的向量，$V$代表词库的size，多出来的1是一个特殊的END标志，根据$y_0$预测出第一个word，然后将该word再作为下一层LSTM网络（RNN中的语言模型网络）的输入，预测出第二个word，一直 <strong>递归</strong> 的重复这个过程，直到输出的word是END标志为止。该预测过程可以用下面的公式和两张示意图表示。</p>
+<script type="math/tex; mode=display">x_{-1}=CNN(I)$$$$x_t=W_eS_t，t\in \{ 0...N-1 \} $$$$p_{t+1}=LSTM(x_t)，t\in \{ 0...N-1\}</script><p>&emsp;&emsp;上式中，$x_{-1}$代表$CNN$生成的$D$维图像特征向量，并且它将作为整个$RNN$语言模型的初始输入，$S_t$代表RNN模型生成的一个个单词（word），其中$S_0$是一个特殊的开始标志，$p_{t+1}$代表第$t+1$个单词在整个单词表中的分布率，它是$p(S_{t+1}|I,S_0,…,S_t)$的简写形式，之后，选取$p_t$概率最大的元素作为句子中第$t$个单词的输出，如果概率最大的元素对应的是$END$标识符，则句子生成结束，迭代终止。</p>
 <p><img src="https://img-blog.csdn.net/20180331141915321?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2tzd3MwMjkyNzU2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 <p><img src="https://img-blog.csdn.net/20180331141925286?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2tzd3MwMjkyNzU2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
 <p>有关RNN模型生成图片描述的详细介绍可以参考下面两篇论文：<br><strong>Show and Tell: A Neural Image Caption Generator</strong><br><a href="https://arxiv.org/abs/1411.4555" target="_blank" rel="noopener">https://arxiv.org/abs/1411.4555</a><br><strong>Deep Visual-Semantic Alignments for Generating Image Descriptions</strong><br><a href="https://arxiv.org/abs/1412.2306" target="_blank" rel="noopener">https://arxiv.org/abs/1412.2306</a></p>
@@ -687,9 +687,9 @@ color: #999;
       
         <div class="post-tags">
           
-            <a href="/tags/图片描述-image-captioning/" rel="tag"><i class="fa fa-tag"></i> 图片描述 image captioning</a>
-          
             <a href="/tags/论文解读/" rel="tag"><i class="fa fa-tag"></i> 论文解读</a>
+          
+            <a href="/tags/图片描述-image-captioning/" rel="tag"><i class="fa fa-tag"></i> 图片描述 image captioning</a>
           
         </div>
       
@@ -792,7 +792,7 @@ color: #999;
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">131</span>
+                    <span class="site-state-item-count">180</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -827,7 +827,11 @@ color: #999;
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -890,7 +894,13 @@ color: #999;
                     
                       
                     
-                    <span class="site-state-item-count">25</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -991,7 +1001,7 @@ color: #999;
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">471k</span>
+    <span title="站点总字数">735k</span>
   
 
   
@@ -1000,7 +1010,7 @@ color: #999;
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">7:08</span>
+    <span title="站点阅读时长">11:08</span>
   
 </div>
 

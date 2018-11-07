@@ -108,25 +108,26 @@
 
 
 
-  <meta name="description" content="1. 快排快排的两种写法，Partition内部使用&amp;lt;和&amp;lt;=的区别 (首推&amp;lt;=) 123456789101112131415161718void quickSort(vector&amp;lt;int&amp;gt;&amp;amp; input, int low, int high)&amp;#123;    int mid = Partition(input, low, high);    if(mid&amp;l">
+  <meta name="description" content="排序算法 时间复杂度 最坏/好时间复杂度 空间复杂度 是否稳定     冒泡排序 $O(n^2)$ $O(n^2)$ / $O(n)$ $O(1)$ 稳定   选择排序 $O(n^2)$ $O(n^2)$ / $O(n^2)$ $O(1)$ 不稳定   插入排序 $O(n^2)$ $O(n^2)$ / $O(n)$ $O(1)$ 稳定   快速排序 $O(nlogn)$ $O(n^2)$">
 <meta name="keywords" content="知识点梳理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="排序算法总结">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/面试-知识点梳理-排序/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="1. 快排快排的两种写法，Partition内部使用&amp;lt;和&amp;lt;=的区别 (首推&amp;lt;=) 123456789101112131415161718void quickSort(vector&amp;lt;int&amp;gt;&amp;amp; input, int low, int high)&amp;#123;    int mid = Partition(input, low, high);    if(mid&amp;l">
+<meta property="og:description" content="排序算法 时间复杂度 最坏/好时间复杂度 空间复杂度 是否稳定     冒泡排序 $O(n^2)$ $O(n^2)$ / $O(n)$ $O(1)$ 稳定   选择排序 $O(n^2)$ $O(n^2)$ / $O(n^2)$ $O(1)$ 不稳定   插入排序 $O(n^2)$ $O(n^2)$ / $O(n)$ $O(1)$ 稳定   快速排序 $O(nlogn)$ $O(n^2)$">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://wx2.sinaimg.cn/mw1024/d7b90c85ly1fwgtrqaqkxj20gw0grq7t.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvnw4zoqx8j20fm05ejrl.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fvnw6humlgj20ad034aa5.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvnw6huqmhj20aa034t8s.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvnw58ecrjj20fo0bft95.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvnw58irzvj20h20ipaf1.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvnw6hzbkjj20gs0pq7cb.jpg">
-<meta property="og:updated_time" content="2018-10-11T13:43:23.669Z">
+<meta property="og:updated_time" content="2018-10-26T00:54:36.538Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="排序算法总结">
-<meta name="twitter:description" content="1. 快排快排的两种写法，Partition内部使用&amp;lt;和&amp;lt;=的区别 (首推&amp;lt;=) 123456789101112131415161718void quickSort(vector&amp;lt;int&amp;gt;&amp;amp; input, int low, int high)&amp;#123;    int mid = Partition(input, low, high);    if(mid&amp;l">
-<meta name="twitter:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvnw4zoqx8j20fm05ejrl.jpg">
+<meta name="twitter:description" content="排序算法 时间复杂度 最坏/好时间复杂度 空间复杂度 是否稳定     冒泡排序 $O(n^2)$ $O(n^2)$ / $O(n)$ $O(1)$ 稳定   选择排序 $O(n^2)$ $O(n^2)$ / $O(n^2)$ $O(1)$ 不稳定   插入排序 $O(n^2)$ $O(n^2)$ / $O(n)$ $O(1)$ 稳定   快速排序 $O(nlogn)$ $O(n^2)$">
+<meta name="twitter:image" content="https://wx2.sinaimg.cn/mw1024/d7b90c85ly1fwgtrqaqkxj20gw0grq7t.jpg">
 
 
 
@@ -251,7 +252,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">131</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">180</span></a>
   </li>
         
         
@@ -268,6 +269,22 @@
           <li class="menu-item menu-item-深度学习">
     <a href="/categories/深度学习/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
   </li>
         
         
@@ -292,14 +309,6 @@
           <li class="menu-item menu-item-linux">
     <a href="/categories/Linux/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-caffe2">
-    <a href="/categories/Caffe2/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
   </li>
         
         
@@ -339,15 +348,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">25</span></a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-life">
-    <a href="/life/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-child"></i> <br />生活杂记</a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">28</span></a>
   </li>
         
         
@@ -545,7 +546,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">5.7k</span>
+                <span title="本文字数">9.9k</span>
               
 
               
@@ -559,7 +560,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">5 分钟</span>
+                <span title="阅读时长">9 分钟</span>
               
             </div>
           
@@ -579,15 +580,130 @@
       
 
       
-        <h1 id="1-快排"><a href="#1-快排" class="headerlink" title="1. 快排"></a>1. 快排</h1><p>快排的两种写法，Partition内部使用&lt;和&lt;=的区别 (首推&lt;=)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">void quickSort(vector&lt;int&gt;&amp; input, int low, int high)&#123;</span><br><span class="line">    int mid = Partition(input, low, high);</span><br><span class="line">    if(mid&lt;high)    quickSort(input, mid+1, high);</span><br><span class="line">    if(mid&gt;low)    quickSort(input, low, mid-1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int Partition(vector&lt;int&gt;&amp; input, int low, int high)&#123;</span><br><span class="line">    int p = input[low];</span><br><span class="line">    while(low&lt;high)&#123;</span><br><span class="line">      // 一定要high在前, 否则会造成数组元素覆盖, 会议头条面试惨痛经历!</span><br><span class="line">        while(low&lt;high &amp;&amp; p&lt;=input[high]) high--;</span><br><span class="line">        input[low] = input[high];</span><br><span class="line">        while(low&lt;high &amp;&amp; p&gt;=input[low]) low++;</span><br><span class="line">        input[high] = input[low];</span><br><span class="line">    &#125;</span><br><span class="line">    input[low] = p;</span><br><span class="line">    return low;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里Partition用的是&lt;=，那么在high位元素和p相等时，并不会执行交换，而是会high—。</p>
-<p>下面的Partition用的是&lt;,那么在high位元素和p相等时，二者会进行交换，又因为二者是相等的，所以后面必须再加上low++，目的是为了不让二者再次比较。 而上面的Partition因为没有low++，因此会多一些比较，可以加上去减少比较次数，也不可以不加，代码显得更简洁。</p>
-<p>总结：前者比较次数多了一些，后者交换次数多了一些。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">void quick_sort1(int s[], int l, int r)</span><br><span class="line">&#123;</span><br><span class="line">	if (l &lt; r)</span><br><span class="line">    &#123;</span><br><span class="line">		int i = AdjustArray(s, l, r);//先成挖坑填数法调整s[]</span><br><span class="line">		quick_sort1(s, l, i - 1); // 递归调用</span><br><span class="line">		quick_sort1(s, i + 1, r);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int AdjustArray(int s[], int l, int r) //返回调整后基准数的位置</span><br><span class="line">&#123;</span><br><span class="line">	int i = l, j = r;</span><br><span class="line">	int x = s[l]; //s[l]即s[i]就是第一个坑</span><br><span class="line">	while (i &lt; j)</span><br><span class="line">	&#123;</span><br><span class="line">		// 从右向左找小于x的数来填s[i]</span><br><span class="line">		while(i &lt; j &amp;&amp; s[j] &gt;= x)</span><br><span class="line">			j--;  </span><br><span class="line">		if(i &lt; j)</span><br><span class="line">		&#123;</span><br><span class="line">			s[i] = s[j]; //将s[j]填到s[i]中，s[j]就形成了一个新的坑</span><br><span class="line">			i++;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		// 从左向右找大于或等于x的数来填s[j]</span><br><span class="line">		while(i &lt; j &amp;&amp; s[i] &lt; x)</span><br><span class="line">			i++;  </span><br><span class="line">		if(i &lt; j)</span><br><span class="line">		&#123;</span><br><span class="line">			s[j] = s[i]; //将s[i]填到s[j]中，s[i]就形成了一个新的坑</span><br><span class="line">			j--;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	//退出时，i等于j。将x填到这个坑中。</span><br><span class="line">	s[i] = x;</span><br><span class="line"></span><br><span class="line">	return i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h1 id="2-归并排序"><a href="#2-归并排序" class="headerlink" title="2. 归并排序"></a>2. 归并排序</h1><p>核心思想是将两个有序数列进行合并，使其成为一个新的有序数列（时间复杂度为 $O(n)$ ）。通过递归的方式实现。</p>
-<p>在合并时，由两种选择，一种是不使用额外空间的插入合并，这样会增加时间开销。另一种是使用额外空间的合并，这样不增加时间开销，但是需要额外空间。（当然，如果使用的是链表，则没有这种情况，可以既不增加时间，也不增加空间开销）</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergesort</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; a,<span class="keyword">int</span> first, <span class="keyword">int</span> last)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(first&lt;last)&#123;</span><br><span class="line">    mid = (last-first)/<span class="number">2</span>;</span><br><span class="line">    mergesort(a, first, mid);</span><br><span class="line">    mergesort(a, mid+<span class="number">1</span>, last);</span><br><span class="line">    mergeArray(a, first,mid,mid+<span class="number">1</span>,last);</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; a, <span class="keyword">int</span> first1,<span class="keyword">int</span> last1,<span class="keyword">int</span> first2,<span class="keyword">int</span> last2)</span></span>&#123;</span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; temp;</span><br><span class="line">  <span class="keyword">int</span> i = first1;</span><br><span class="line">  <span class="keyword">int</span> j = first2;</span><br><span class="line">  <span class="keyword">while</span>(i&lt;=last1 &amp;&amp; j&lt;=last2)&#123;</span><br><span class="line">    <span class="keyword">if</span>(a.at(i) &lt; a.at(j))&#123;</span><br><span class="line">      temp.push_back(a.at(i));</span><br><span class="line">      i++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">      temp.push_back(a.at(j));</span><br><span class="line">      j++;</span><br><span class="line">    &#125;      </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">while</span>(i&lt;=last1)&#123;</span><br><span class="line">    temp.push_back(a.at(i));</span><br><span class="line">    i++;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">while</span>(j&lt;=last2)&#123;</span><br><span class="line">    temp.push_back(a.at(j));</span><br><span class="line">    j++;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;temp.size(); i++)</span><br><span class="line">    a.at(first1+i) = temp.at(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="3-堆排序"><a href="#3-堆排序" class="headerlink" title="3. 堆排序"></a>3. 堆排序</h1><h2 id="堆简介"><a href="#堆简介" class="headerlink" title="堆简介"></a>堆简介</h2><p>堆排序与快速排序，归并排序一样都是时间复杂度为 $O(NlogN)$ 的几种常见排序方法</p>
+        <div class="table-container">
+<table>
+<thead>
+<tr>
+<th>排序算法</th>
+<th>时间复杂度</th>
+<th>最坏/好时间复杂度</th>
+<th>空间复杂度</th>
+<th>是否稳定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>冒泡排序</td>
+<td>$O(n^2)$</td>
+<td>$O(n^2)$ / $O(n)$</td>
+<td>$O(1)$</td>
+<td>稳定</td>
+</tr>
+<tr>
+<td>选择排序</td>
+<td>$O(n^2)$</td>
+<td>$O(n^2)$ / $O(n^2)$</td>
+<td>$O(1)$</td>
+<td>不稳定</td>
+</tr>
+<tr>
+<td>插入排序</td>
+<td>$O(n^2)$</td>
+<td>$O(n^2)$ / $O(n)$</td>
+<td>$O(1)$</td>
+<td>稳定</td>
+</tr>
+<tr>
+<td>快速排序</td>
+<td>$O(nlogn)$</td>
+<td>$O(n^2)$ / $O(nlogn)$</td>
+<td>$O(logn)$</td>
+<td>不稳定</td>
+</tr>
+<tr>
+<td>归并排序</td>
+<td>$O(nlogn)$</td>
+<td>$O(nlogn)$ / $O(nlogn)$</td>
+<td>$O(n)$ 或 $O(1)$</td>
+<td>稳定</td>
+</tr>
+<tr>
+<td>堆排序</td>
+<td>$O(nlogn)$</td>
+<td>$O(nlogn)$ / $O(nlogn)$</td>
+<td>$O(1)$</td>
+<td>不稳定</td>
+</tr>
+<tr>
+<td>希尔排序</td>
+<td>$O(nlogn)$</td>
+<td>与步长 $d$ 有关 / $O(nlogn)$</td>
+<td>$O(1)$</td>
+<td></td>
+</tr>
+<tr>
+<td>基数排序</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="1-冒泡"><a href="#1-冒泡" class="headerlink" title="1. 冒泡"></a>1. 冒泡</h1><p>从后往前, 相邻的数据两两比较, 一趟完成后, 第一个元素为最大/小值</p>
+<p><strong>时间复杂度:</strong> $O(n^2)$</p>
+<p><strong>空间复杂度:</strong> $O(1)$</p>
+<p><strong>稳定性:</strong> 是稳定的, 主要就是遇到相等的元素时不要进行交换操作即可</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bubble_sort</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;input)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;input.size(); i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> bubble = input.size()<span class="number">-1</span>; bubble&gt;i; bubble--)&#123;</span><br><span class="line">            <span class="keyword">if</span>(input[bubble<span class="number">-1</span>] &lt; input[bubble] )&#123; <span class="comment">//为了保证排序的稳定性, 这里不要用 &lt;=</span></span><br><span class="line">                <span class="keyword">int</span> temp = input[bubble];</span><br><span class="line">                input[bubble] = input[bubble<span class="number">-1</span>];</span><br><span class="line">                input[bubble<span class="number">-1</span>] = temp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="2-选择-交换-排序"><a href="#2-选择-交换-排序" class="headerlink" title="2. 选择(交换)排序"></a>2. 选择(交换)排序</h1><p><strong>时间复杂度:</strong> $O(n^2)$</p>
+<p><strong>空间复杂度:</strong> $O(1)$</p>
+<p><strong>稳定性:</strong> 因为选择排序在交换两个元素时, 是不考虑其他元素的相对位置的, 所以, 不管怎么样, 只要发生交换, 就一定会造成不稳定. <strong>但是!!!</strong> 如果使用链表或者新开辟一个数组的话, 选择排序也是稳定的, 但实际上这种方法就没有交换的过程, 对于链表来说, 是把节点从链表中拿出来, 组成新的链表, 而不会对原来链表中的元素进行交换. 对于新开辟数组来说, 相当于是用空间换取稳定性, 同样也没有交换过程.</p>
+<h1 id="3-插入排序"><a href="#3-插入排序" class="headerlink" title="3. 插入排序"></a>3. 插入排序</h1><p>将数据分为两个部分, 有序部分和无序部分, 一开始有序部分包含只包含第一个元素, 依次将无序部分的元素插入到有序部分 ( 插入的时间复杂度为 $O(n)$ ), 直到所有元素插入完毕.</p>
+<p><strong>插入分为数组插入和链表插入(其实堆排序也算是一种插入排序)</strong></p>
+<p>下面的时间和空间复杂度均指 <strong>数组直接插入</strong>, 对于链表, 时间和空间都是 $O(n)$</p>
+<p><strong>时间复杂度:</strong> $O(n^2)$</p>
+<p><strong>空间复杂度:</strong> $O(1)$</p>
+<p><strong>稳定性:</strong> 只要在插入遇到相等元素时, 将新插入的放在最后, 那么就是稳定的.</p>
+<h1 id="4-快排"><a href="#4-快排" class="headerlink" title="4. 快排"></a>4. 快排</h1><p><strong>时间复杂度:</strong> $nlogn$</p>
+<p>快排的期望时间复杂度为 $O(nlogn)$ , 最坏时间复杂度为 $O(n^2)$, 为了避免出现最坏的情况, 可进行如下改进:</p>
+<ol>
+<li>哨兵元素的选择: 为了使每次划分的数不至于使两边相差过大, 我们可以选择三者取中法选择哨兵, 一般根据首尾元素和中间元素进行选择.</li>
+<li>小数据量的改进: 递归的快排大概在n&lt;13的时候比插入要慢, 所以我们在n&lt;13的时候可以采用插入排序</li>
+<li>相同数字的改进, 在存在大量相同数字的时候, 可以用两个指针保存相同数字的信息, 在划分时不用把它们算进去(这啥意思?//TODO)</li>
+<li>递归的优化. 快排有两次递归调用, 我们可以用循环代替后面的一次递归.</li>
+</ol>
+<p><strong>空间复杂度:</strong> $logn$</p>
+<p>对于就地快排来说, 它本身使用的空间是 $O(1)$ 的, 但是快排在 <strong>递归调用过程中, 就需要消耗一定的空间来保存哨兵及两端元素的下标</strong>, 而对于快排的非递归实现中, 需要借助两个栈来模拟系统对于数组<code>low</code>和<code>high</code>的存储情况(递归中的哨兵下标实际上会作为下一次递归的<code>low</code>或者<code>high</code>), :</p>
+<ul>
+<li>最优的情况下空间复杂度为: $O(logn)$, 每一次都平分数组</li>
+<li>最差的情况下空间复杂度为: $O(n)$, 每一次两边都极度失衡 (主要与进行迭代的次数有关, 迭代次数多了, 占用的内存就多了)</li>
+</ul>
+<p><strong>稳定性:</strong></p>
+<p>因为快排在划分两边的元素时, 会直接交换某两个元素的位置, 并且这种交换与其他元素的值没有关系, 因此, 如果刚好有相同元素, 很容易就会破坏稳定性.</p>
+<p><strong>注意: 最好写出对输入的low和high进行越界检查的部分!! 这个有时候需要特别跟面试官提一声</strong></p>
+<p><strong>递归实现:</strong><br>要知道Partition内部使用&lt;=的原因所在, 写成&lt;, 会造成死循环(当遇到相等元素时, 会无限交换)</p>
+<p>另外, 如果令 <code>P=input[low]</code> , 那么一定要 <code>high--</code>在前, 否则会造成元素覆盖<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">void quickSort(vector&lt;int&gt;&amp; input, int low, int high)&#123;</span><br><span class="line">    if(input.size()==0 || low&lt;0 || low&gt;=input.size() || high&lt;0 || high&gt;=input.size())&#123;</span><br><span class="line">        cout&lt;&lt;&quot;error&quot;;</span><br><span class="line">        exit(0);</span><br><span class="line">    &#125;</span><br><span class="line">    int mid = Partition(input, low, high);</span><br><span class="line">    if(mid&lt;high)    quickSort(input, mid+1, high);</span><br><span class="line">    if(mid&gt;low)    quickSort(input, low, mid-1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int Partition(vector&lt;int&gt;&amp; input, int low, int high)&#123;</span><br><span class="line">    int p = input[low];</span><br><span class="line">    while(low&lt;high)&#123;</span><br><span class="line">      // 一定要high在前, 否则会造成数组元素覆盖, 回忆头条面试惨痛经历!</span><br><span class="line">        while(low&lt;high &amp;&amp; p&lt;=input[high]) high--; //这里注意, 如果忘了写=号, 就会陷入死循环</span><br><span class="line">        input[low] = input[high];</span><br><span class="line">        while(low&lt;high &amp;&amp; p&gt;=input[low]) low++;</span><br><span class="line">        input[high] = input[low];</span><br><span class="line">    &#125;</span><br><span class="line">    input[low] = p;</span><br><span class="line">    return low;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里Partition用的是&lt;=，那么在high位元素和p相等时，并不会执行交换，而是会high—, 如果忘了写等号, 就会陷入死循环。</p>
+<p><strong>非递归实现:</strong><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">partition</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;input, <span class="keyword">int</span> low, <span class="keyword">int</span> high)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> P = input[low];</span><br><span class="line">    <span class="keyword">while</span>(low&lt;high)&#123;</span><br><span class="line">        <span class="keyword">while</span>(low&lt;high &amp;&amp; P &lt;= input[high]) high--;</span><br><span class="line">        input[low] = input[high];</span><br><span class="line">        <span class="keyword">while</span>(low&lt;high &amp;&amp; P &gt;= input[low]) low++;</span><br><span class="line">        input[high] = input[low];</span><br><span class="line">    &#125;</span><br><span class="line">    input[low] = P;</span><br><span class="line">    <span class="keyword">return</span> low;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">quick_sort</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;input, <span class="keyword">int</span> low, <span class="keyword">int</span> high)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(input.size()==<span class="number">0</span> || low&lt;<span class="number">0</span> || low&gt;=input.size() || high&lt;<span class="number">0</span> || high&gt;=input.size())&#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"error"</span>;</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; qs_stack;</span><br><span class="line">    qs_stack.push(high); <span class="comment">//入栈顺序一定要注意, 要与后面的操作对应好</span></span><br><span class="line">    qs_stack.push(low);</span><br><span class="line">    <span class="keyword">while</span>(!qs_stack.empty())&#123;</span><br><span class="line">        low = qs_stack.top(); qs_stack.pop(); <span class="comment">// low后入栈, 所以就应该先出栈</span></span><br><span class="line">        high = qs_stack.top(); qs_stack.pop();</span><br><span class="line">        <span class="keyword">if</span>(low &gt;= high) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">int</span> mid = partition(input, low, high);</span><br><span class="line">        <span class="keyword">if</span>(low&lt;mid)&#123;</span><br><span class="line">            qs_stack.push(mid<span class="number">-1</span>);<span class="comment">//入栈顺序一定要注意,</span></span><br><span class="line">            qs_stack.push(low);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(mid&lt;high)&#123;</span><br><span class="line">            qs_stack.push(high);<span class="comment">//入栈顺序一定要注意,</span></span><br><span class="line">            qs_stack.push(mid+<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="5-归并排序"><a href="#5-归并排序" class="headerlink" title="5. 归并排序"></a>5. 归并排序</h1><p>核心思想是将两个有序数列进行合并，使其成为一个新的有序数列（时间复杂度为 $O(n)$ ）:</p>
+<ul>
+<li>将序列没相邻的两个数组进行归并(merge)操作, 形成<code>floor(n/2)</code>个序列, 排序后每个序列包含两个元素</li>
+<li>将上述序列在此归并, 形成<code>floor(n/2)</code>个序列, 每个序列包含四个元素</li>
+<li>重复上述归并操作, 直到所有元素归并完毕</li>
+</ul>
+<p><strong>时间复杂度: $O(nlogn)$</strong> 归并排序即使在最坏情况下, 时间复杂度也是 $O(nlogn)$, 这是它的一大优点.</p>
+<p><strong>空间复杂度: $O(n)$ 或 $O(1)$</strong> 常见的归并排序实现算法都是 $O(n)$ 的空间复杂度, 因为它会额外申请一个与待排序数组相同大小的空间用来进行合并操作. 但是, 合并操作可以被优化成原地合并 (耗时会增加, 但是时间复杂度不变), 此时的空间复杂度就变成了 $O(1)$.</p>
+<p><strong>稳定性:</strong> 在归并排序过程中, 相同元素有可能出现在同一组内或者不同组内, 如果在同一组内, 则默认就是稳定的, 如果在不同组内, 则根据组的前后位置来判断相同元素的顺序. 因此它是稳定的.</p>
+<p><strong>关于归并排序的复杂度:</strong></p>
+<ul>
+<li>归并排序的时间复杂度不论是最优还是平均还是最差, 都是 $O(nlogn)$<br>在合并时，由两种选择，一种是不使用额外空间的插入合并，这样会增加时间开销。另一种是使用额外空间的合并，这样不增加时间开销，但是需要额外空间。（当然，如果使用的是链表，则没有这种情况，可以既不增加时间，也不增加空间开销）</li>
+</ul>
+<p><strong>常规归并排序:</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergesort</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; a,<span class="keyword">int</span> first, <span class="keyword">int</span> last)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(first&lt;last)&#123;</span><br><span class="line">    mid = (last+first)/<span class="number">2</span>;</span><br><span class="line">    mergesort(a, first, mid);</span><br><span class="line">    mergesort(a, mid+<span class="number">1</span>, last);</span><br><span class="line">    mergeArray(a, first,mid,mid+<span class="number">1</span>,last);</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; a, <span class="keyword">int</span> first1,<span class="keyword">int</span> last1,<span class="keyword">int</span> first2,<span class="keyword">int</span> last2)</span></span>&#123;</span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; temp;</span><br><span class="line">  <span class="keyword">int</span> i = first1;</span><br><span class="line">  <span class="keyword">int</span> j = first2;</span><br><span class="line">  <span class="keyword">while</span>(i&lt;=last1 &amp;&amp; j&lt;=last2)&#123;</span><br><span class="line">    <span class="keyword">if</span>(a.at(i) &lt; a.at(j))&#123;</span><br><span class="line">      temp.push_back(a.at(i));</span><br><span class="line">      i++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">      temp.push_back(a.at(j));</span><br><span class="line">      j++;</span><br><span class="line">    &#125;      </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">while</span>(i&lt;=last1)&#123;</span><br><span class="line">    temp.push_back(a.at(i));</span><br><span class="line">    i++;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">while</span>(j&lt;=last2)&#123;</span><br><span class="line">    temp.push_back(a.at(j));</span><br><span class="line">    j++;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;temp.size(); i++)</span><br><span class="line">    a.at(first1+i) = temp.at(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>原地归并排序, 空间复杂度$O(1)$:</strong></p>
+<p><img src="https://wx2.sinaimg.cn/mw1024/d7b90c85ly1fwgtrqaqkxj20gw0grq7t.jpg" alt=""></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap_memory</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;data, <span class="keyword">int</span> start1, <span class="keyword">int</span> end1, <span class="keyword">int</span> start2, <span class="keyword">int</span> end2)</span></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::reverse(data.begin()+start1, data.begin()+end1);</span><br><span class="line">    <span class="built_in">std</span>::reverse(data.begin()+start2, data.begin()+end2);</span><br><span class="line">    <span class="built_in">std</span>::reverse(data.begin()+start1, data.begin()+end2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge_sort</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;data, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> mid = (start+end)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span>(start &lt; end)&#123;</span><br><span class="line">        merge_sort(data, start, mid);</span><br><span class="line">        merge_sort(data, mid+<span class="number">1</span>, end);</span><br><span class="line">        merge_inplace(data, start, mid, mid+<span class="number">1</span>, end);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge_inplace</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;data, <span class="keyword">int</span> start1, <span class="keyword">int</span> end1, <span class="keyword">int</span> start2, <span class="keyword">int</span> end2)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = start1;</span><br><span class="line">    <span class="keyword">int</span> j = start2;</span><br><span class="line">    <span class="keyword">while</span>(i&lt;j &amp;&amp; j&lt;=end2)&#123;</span><br><span class="line">        <span class="keyword">while</span>(i&lt;j &amp;&amp; data[i] &lt;= data[j]) i++;</span><br><span class="line">        <span class="keyword">int</span> index = j;</span><br><span class="line">        <span class="keyword">while</span>(i&lt;j &amp;&amp; data[j] &lt;= data[i]) j++;</span><br><span class="line">        swap_memory(data, i, index<span class="number">-1</span>, index, j<span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="6-堆排序"><a href="#6-堆排序" class="headerlink" title="6. 堆排序"></a>6. 堆排序</h1><h2 id="堆简介"><a href="#堆简介" class="headerlink" title="堆简介"></a>堆简介</h2><p>堆排序与快速排序，归并排序一样都是时间复杂度为 $O(NlogN)$ 的几种常见排序方法</p>
 <p>堆（二叉堆）可以视为一棵完全的二叉树，完全二叉树的一个“优秀”的性质是，除了最底层之外，每一层都是满的，这使得堆可以利用数组来表示（普通的一般的二叉树通常用链表作为基本容器表示），每一个结点对应数组中的一个元素。</p>
 <p>如下图,是一个堆和数组的相互关系:</p>
 <p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvnw4zoqx8j20fm05ejrl.jpg" alt=""></p>
@@ -616,15 +732,15 @@
 <p>最大堆调整（MAX‐HEAPIFY）的作用是保持最大堆的性质，是创建最大堆的核心子程序，作用过程如图所示：</p>
 <p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvnw58ecrjj20fo0bft95.jpg" alt=""></p>
 <p>代码实现:</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 递归实现</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">max_heapify</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;vec, <span class="keyword">int</span> index, <span class="keyword">int</span> heap_size)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> imax = index <span class="comment">//mark max index</span></span><br><span class="line">  <span class="keyword">int</span> ileft = index*<span class="number">2</span>+<span class="number">1</span>; <span class="comment">// left child</span></span><br><span class="line">  <span class="keyword">int</span> iright = index*<span class="number">2</span>+<span class="number">2</span>; <span class="comment">// right child</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (ileft &lt; heap_size &amp;&amp; vec[imax] &lt; vec[ileft])&#123;</span><br><span class="line">    imax = ileft;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(iright &lt; heap_size &amp;&amp; vec[imax] &lt; vec[iright])&#123;</span><br><span class="line">    imax = iright;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>( imax != index)&#123;</span><br><span class="line">    <span class="built_in">std</span>::swap(vec[imax], vec[index]);</span><br><span class="line">    max_heapify(vec, imax); <span class="comment">//由于变换了当前节点,因此子树的堆结构可能被破坏,递归调整, 这里imax的坐标是左右子节点的下标之一(因为进行了交换)</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 堆是自下而上进行调整的,所以在调整当前节点符合堆要求之前,子树已经符合堆要求, 除非进行了节点交换,否则子树的堆结构不会被破坏, 无需进行额外处理</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//非递归实现</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">max_heapify</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;vec, <span class="keyword">int</span> index, <span class="keyword">int</span> heap_size)</span></span>&#123;</span><br><span class="line">  <span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">    <span class="keyword">int</span> imax = index;</span><br><span class="line">    <span class="keyword">int</span> ileft = <span class="number">2</span>*index+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> iright = <span class="number">2</span>*index+<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span>(ileft &lt; heap_size &amp;&amp; vec[imax] &lt; vec[ileft])&#123;</span><br><span class="line">      imax = ileft;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(iright &lt; heap_size &amp;&amp; vec[imax] &lt; vec[iright])&#123;</span><br><span class="line">      imax = iright;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>( imax != index )&#123;</span><br><span class="line">      <span class="built_in">std</span>::(vec[imax], vec[index]);</span><br><span class="line">      index = imax; <span class="comment">//产生了交换, 可能破坏了左右子树的堆结构, 令index为左右子树之一的下标, 继续调整</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      <span class="keyword">break</span>; <span class="comment">//如果没有交换，说明当前结构的堆结构已经完成，直接跳出</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 递归实现</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">max_heapify</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;vec, <span class="keyword">int</span> index, <span class="keyword">int</span> heap_size)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> imax = index <span class="comment">//mark max index</span></span><br><span class="line">  <span class="keyword">int</span> ileft = index*<span class="number">2</span>+<span class="number">1</span>; <span class="comment">// left child</span></span><br><span class="line">  <span class="keyword">int</span> iright = index*<span class="number">2</span>+<span class="number">2</span>; <span class="comment">// right child</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (ileft &lt; heap_size &amp;&amp; vec[imax] &lt; vec[ileft])&#123;</span><br><span class="line">    imax = ileft;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(iright &lt; heap_size &amp;&amp; vec[imax] &lt; vec[iright])&#123;</span><br><span class="line">    imax = iright;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>( imax != index)&#123;</span><br><span class="line">    <span class="built_in">std</span>::swap(vec[imax], vec[index]);</span><br><span class="line">    max_heapify(vec, imax, heap_size); <span class="comment">//由于变换了当前节点,因此子树的堆结构可能被破坏,</span></span><br><span class="line">    <span class="comment">//递归调整, 这里imax的坐标是左右子节点的下标之一(因为进行了交换)</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 堆是自下而上进行调整的,所以在调整当前节点符合堆要求之前,子树已经符合堆要求,</span></span><br><span class="line">  <span class="comment">//除非进行了节点交换,否则子树的堆结构不会被破坏, 无需进行额外处理</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//非递归实现</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">max_heapify</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;vec, <span class="keyword">int</span> index, <span class="keyword">int</span> heap_size)</span></span>&#123;</span><br><span class="line">  <span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">    <span class="keyword">int</span> imax = index;</span><br><span class="line">    <span class="keyword">int</span> ileft = <span class="number">2</span>*index+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> iright = <span class="number">2</span>*index+<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span>(ileft &lt; heap_size &amp;&amp; vec[imax] &lt; vec[ileft])&#123;</span><br><span class="line">      imax = ileft;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(iright &lt; heap_size &amp;&amp; vec[imax] &lt; vec[iright])&#123;</span><br><span class="line">      imax = iright;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>( imax != index )&#123;</span><br><span class="line">      <span class="built_in">std</span>::(vec[imax], vec[index]);</span><br><span class="line">      index = imax; <span class="comment">//产生了交换, 可能破坏了左右子树的堆结构, 令index为左右子树之一的下标, 继续调整</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      <span class="keyword">break</span>; <span class="comment">//如果没有交换，说明当前结构的堆结构已经完成，直接跳出</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>创建最大堆（Build-Max-Heap）的作用是将一个数组改造成一个最大堆，接受数组和堆大小两个参数，Build-Max-Heap 将自下而上的调用 Max-Heapify 来改造数组，建立最大堆。因为 Max-Heapify 能够保证下标 i 的结点之后结点都满足最大堆的性质，所以自下而上的调用 Max-Heapify 能够在改造过程中保持这一性质。如果最大堆的数量元素是 n，那么 Build-Max-Heap 从 Parent(n) 开始，往上依次调用 Max-Heapify。</p>
 <p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvnw58irzvj20h20ipaf1.jpg" alt=""></p>
 <p>代码实现:</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建堆</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">build_maxheap</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;vec)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> lasti_parent = <span class="built_in">std</span>::<span class="built_in">floor</span>((vec.size()<span class="number">-1</span>)/<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span>( <span class="keyword">int</span> i = lasti_parent ; i&gt;=<span class="number">0</span> ; i--)&#123;</span><br><span class="line">    max_heapify(vec, i , vec.size()) <span class="comment">//从下到上对每个节点进行堆调整，无需从叶子节点开始</span></span><br><span class="line">    <span class="comment">//堆的size需要传整个size过去,因为下标从针对整个堆而言的</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>创建好堆以后,就可以通过移除堆顶来进行排序,每次将堆顶元素和数组末尾元素进行交换(这样可以不借助额外空间完成排序)，然后对数组的前n-1个元素重新进行堆调整构成新的大顶堆, 重复此过程知道堆中只剩下一个元素, 如下图所示:</p>
 <p><img src="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvnw6hzbkjj20gs0pq7cb.jpg" alt=""></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//代码实现</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">heap_sort</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;vec)</span></span>&#123;</span><br><span class="line">  build_maxheap(vec);</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = vec.size()<span class="number">-1</span> ; i &gt; <span class="number">0</span>)&#123; <span class="comment">//重复n-1次</span></span><br><span class="line">    <span class="built_in">std</span>::swap(vec[<span class="number">0</span>] , vec[i]) <span class="comment">//</span></span><br><span class="line">    Heapify(vec, <span class="number">0</span>, i); <span class="comment">//堆的大小变为i, 所以必须要设置一个变量来标识堆的size,而不是用vec.size()</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="堆排序复杂度分析"><a href="#堆排序复杂度分析" class="headerlink" title="堆排序复杂度分析"></a>堆排序复杂度分析</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//代码实现</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">heap_sort</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;vec)</span></span>&#123;</span><br><span class="line">  build_maxheap(vec);</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = vec.size()<span class="number">-1</span> ; i &gt; <span class="number">0</span>; i--)&#123; <span class="comment">//重复n-1次</span></span><br><span class="line">    <span class="built_in">std</span>::swap(vec[<span class="number">0</span>] , vec[i]) <span class="comment">//</span></span><br><span class="line">    Heapify(vec, <span class="number">0</span>, i); <span class="comment">//堆的大小变为i, 所以必须要设置一个变量来标识堆的size,而不是用vec.size()</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -657,8 +773,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/计算机视觉-YOLOv1-CVPR2016/" rel="prev" title="YOLO">
-                <i class="fa fa-chevron-left"></i> YOLO
+              <a href="/z_post/计算机视觉-YOLOv1-CVPR2016/" rel="prev" title="YOLO v1">
+                <i class="fa fa-chevron-left"></i> YOLO v1
               </a>
             
           </div>
@@ -747,7 +863,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">131</span>
+                    <span class="site-state-item-count">180</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -782,7 +898,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -845,7 +965,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">25</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -909,7 +1035,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-快排"><span class="nav-text">1. 快排</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-归并排序"><span class="nav-text">2. 归并排序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-堆排序"><span class="nav-text">3. 堆排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#堆简介"><span class="nav-text">堆简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆排序原理"><span class="nav-text">堆排序原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆排序复杂度分析"><span class="nav-text">堆排序复杂度分析</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-冒泡"><span class="nav-text">1. 冒泡</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-选择-交换-排序"><span class="nav-text">2. 选择(交换)排序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-插入排序"><span class="nav-text">3. 插入排序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-快排"><span class="nav-text">4. 快排</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-归并排序"><span class="nav-text">5. 归并排序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-堆排序"><span class="nav-text">6. 堆排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#堆简介"><span class="nav-text">堆简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆排序原理"><span class="nav-text">堆排序原理</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -946,7 +1072,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">471k</span>
+    <span title="站点总字数">735k</span>
   
 
   
@@ -955,7 +1081,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">7:08</span>
+    <span title="站点阅读时长">11:08</span>
   
 </div>
 

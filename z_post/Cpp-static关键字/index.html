@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="static关键字常用方法    用法 示例 说明     在局部变量前使用static int main(){ static int a;} 该变量具有静态持续性, 但是无链接性     首先：在类中声明的静态变量，一定要进行初始化，并且，如果不const static类型的静态变量，则需要在类外初始化，同时初始化的时候一定要带上类名和作用域解析符。 1234567891011121314151">
+<meta name="keywords" content="知识点梳理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++中的static关键字">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Cpp-static关键字/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="static关键字常用方法    用法 示例 说明     在局部变量前使用static int main(){ static int a;} 该变量具有静态持续性, 但是无链接性     首先：在类中声明的静态变量，一定要进行初始化，并且，如果不const static类型的静态变量，则需要在类外初始化，同时初始化的时候一定要带上类名和作用域解析符。 1234567891011121314151">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-20T06:45:21.559Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++中的static关键字">
+<meta name="twitter:description" content="static关键字常用方法    用法 示例 说明     在局部变量前使用static int main(){ static int a;} 该变量具有静态持续性, 但是无链接性     首先：在类中声明的静态变量，一定要进行初始化，并且，如果不const static类型的静态变量，则需要在类外初始化，同时初始化的时候一定要带上类名和作用域解析符。 1234567891011121314151">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/Cpp-static关键字/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>C++中的static关键字 | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">180</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-linux">
+    <a href="/categories/Linux/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-面试">
+    <a href="/categories/面试/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其它">
+    <a href="/categories/其它/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其它</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">28</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/Cpp-static关键字/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C++中的static关键字
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-19 13:22:33" itemprop="dateCreated datePublished" datetime="2018-09-19T13:22:33+08:00">2018-09-19</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Cpp/" itemprop="url" rel="index"><span itemprop="name">Cpp</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">6.1k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">6 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="static关键字常用方法"><a href="#static关键字常用方法" class="headerlink" title="static关键字常用方法"></a>static关键字常用方法</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>用法</th>
+<th>示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>在局部变量前使用static</td>
+<td><code>int main(){ static int a;}</code></td>
+<td>该变量具有静态持续性, 但是无链接性</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>首先：在类中声明的静态变量，一定要进行初始化，并且，如果不const static类型的静态变量，则需要在类外初始化，同时初始化的时候一定要带上类名和作用域解析符。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">sum</span>&#123;</span></span><br><span class="line">        <span class="keyword">public</span>:</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">int</span> i ;</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">int</span> s;</span><br><span class="line">        sum()&#123;i++; s+=i;&#125;;</span><br><span class="line">        ~sum()&#123;&#125;;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">()</span></span>&#123; <span class="comment">//静态函数只能使用静态变量</span></span><br><span class="line">            i = <span class="number">0</span>;</span><br><span class="line">            s = <span class="number">0</span>;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line"><span class="keyword">int</span> sum::i =<span class="number">0</span>; <span class="comment">//  非const static类型，要在类外初始化</span></span><br><span class="line"><span class="keyword">int</span> sum::s = <span class="number">0</span>; <span class="comment">// 且必须带上类名sum和作用域解析符</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">Sum_Solution</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        sum::<span class="built_in">set</span>();  <span class="comment">// 直接用类名调用函数，则该函数必须是静态的</span></span><br><span class="line">        sum a[n];</span><br><span class="line">        <span class="keyword">return</span> sum::s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="存储持续性"><a href="#存储持续性" class="headerlink" title="存储持续性"></a>存储持续性</h2><p>C++使用三种（在C++11中是四种）不同的方案来存储数据，这些方案的区别就在于 <strong>数据保留在内存中的时间</strong> ：(Primer p304)</p>
+<ul>
+<li>自动存储持续性: 在程序开始执行其所在的函数或者代码块时被创建, 在执行完函数或代码块时, 其内存会被自动释放.</li>
+<li>静态存储持续性: 在整个程序运行过程当中都存在</li>
+<li>线程存储持续性（C++11）</li>
+<li>动态存储持续性: 用new运算符分配的内存将一直存在(堆中), 直到使用delete运算符将其释放或者 <strong>程序结束</strong> 为止.</li>
+</ul>
+<h2 id="作用域和链接性"><a href="#作用域和链接性" class="headerlink" title="作用域和链接性"></a>作用域和链接性</h2><ul>
+<li>和C语言一样，C++也为 <strong>静态</strong> 存储持续性变量提供了3种链接性(其他类型的持续性变量均是无链接性的)，这三种链接性都在整个程序执行期间存在，与自动变量相比，它们的寿命更长。(Primer p309)<ul>
+<li>外部链接性（可在其他文件中访问）</li>
+<li>内部链接性（只能在当前文件中访问）</li>
+<li>无链接性（只能在当前函数或代码块中访问，与自动变量不同的是，就算不在函数中，变量也存在，只是不能访问）</li>
+</ul>
+</li>
+<li>由于静态变量的数目在程序运行期间是不变的，因此程序不需要使用特殊的装置（如栈）来管理它们, 而是将它们放在全局数据区。编译器将分配固定的内存块来存储所有的静态变量，这些变量在整个程序执行期间一直存在。另外，如果没有显式地初始化静态变量，编译器将把它设置为0。在默认情况下，<strong>静态</strong> 数组和结构将每个元素或成员的所有位都设置为0。p309</li>
+<li><p>创建三种链接性的静态持续变量：p309</p>
+<ul>
+<li>外部链接性：必须在代码块的外面声明</li>
+<li>内部链接性：必须在代码块的外面声明，并使用static限定符</li>
+<li>无链接性：必须在代码块内部声明，并使用static限定符<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">int global = 1000; //静态持续变量，外部链接性，作用域为整个文件</span><br><span class="line">static int one_file = 50; //静态持续变量，内部链接性，作用域为整个文件</span><br><span class="line">int main()&#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line">void funct1(int n)&#123;</span><br><span class="line">  static int count = 0; //静态持续变量，无链接性，作用域为局部</span><br><span class="line">  int llama = 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>五种变量存储方式：p310</p>
+<ul>
+<li>自动</li>
+<li>寄存器</li>
+<li>静态，无链接</li>
+<li>静态，外部链接</li>
+<li>静态，内部链接</li>
+</ul>
+</li>
+<li><strong>关键字重载：</strong> 关键字的含义取决于上下文，static用于局部声明，以指出变量是无链接性的静态变量时，表示的是存储持续性。而用于代码块外的声明时，static表示内部链接性，因为位于代码块外的变量已经是静态持续性了。p310</li>
+<li><strong>静态变量的初始化：</strong> 静态变量有三种初始化方式：零初始化（变量设为零）、常量表达式初始化和动态初始化。 零初始化和常量表达式初始化被统称为静态初始化，这意味着在编译器处理文件时初始化变量，动态初始化意味着变量将在编译后初始化。p310</li>
+<li><strong>静态变量的初始化过程：</strong> 首先，所有静态变量都被零初始化，而不管程序员是否显式地初始化了它。接下来，如果使用常量表达式初始化了变量，且编译器仅根据文件内容（包括被包含的头文件）就可计算表达式，编译器将执行常量表达式初始化。必要时，编译器将执行简单计算。最后，剩下的变量将被动态初始化。 常量表达式并非只能是使用字面常量的算术表达式。（sizeof运算符也可以）p310</li>
+<li>链接性为外部的变量通常简称为外部变量，也称全局变量，它们的存储持续性为静态，作用域为整个文件。p310</li>
+</ul>
+<h2 id="静态持续性、外部链接性"><a href="#静态持续性、外部链接性" class="headerlink" title="静态持续性、外部链接性"></a>静态持续性、外部链接性</h2><ul>
+<li><p><strong>单定义规则（One Definition Rule，ODR）：</strong> 变量只能定义一次。为满足这种需求，C++提供了两种变量声明：p311</p>
+<ul>
+<li>定义声明（简称定义）：为变量分配存储空间。</li>
+<li>引用声明（简称声明）：不给变量分配存储空间，引用已有的变量。使用关键字extern<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">double up; //定义声明</span><br><span class="line">exterm int blem; //blem在别处定义</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>如果要在多个文件中使用外部变量，只需在一个文件中包含该变量的定义（单定义规则），但在使用该变量的其他所有文件中，都必须使用关键字extern声明它。p311</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//file01.cpp</span><br><span class="line">extern int cats = 20; // 由于初始化，所以这里是定义而非声明</span><br><span class="line">int dogs = 22;  //定义</span><br><span class="line">//即使去掉file01.cpp文件中的extern也无妨，效果相同。</span><br><span class="line">//file02.cpp</span><br><span class="line">extern int cats;  //使用extern且无初始化，说明使用的是其他文件的cats</span><br><span class="line">extern int dogs;  //同上</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="静态持续性、内部链接性"><a href="#静态持续性、内部链接性" class="headerlink" title="静态持续性、内部链接性"></a>静态持续性、内部链接性</h2><ul>
+<li>将作用域为整个文件的变量声明为静态外部变量（内部链接性），就不必担心其名称与其他文件中的外部变量发生冲突.</li>
+</ul>
+<p>通常, 当在函数体内定义一个变量时, 该变量是一个自动存储变量, 每当运行到该语句时都会给该局部变量分配 <strong>栈内存</strong>, 而随着程序退出函数体, 系统就会自动收回这一部分内存. 但有时候我们需要在两次调用之间对变量的值进行保存. 通常的想法是定义一个全局变量来实现, 但是这样一来, 变量就不再属于该函数本身了. 因此, 可以使用静态局部变量来解决, 静态局部变量保存在全局数据区, 而不是保存在栈中, 每次的值保持到下一次调用, 知道下次赋新值.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//file1</span><br><span class="line">int errors = 20;</span><br><span class="line"></span><br><span class="line">//file2</span><br><span class="line">int errors = 5;</span><br><span class="line">int main()&#123;</span><br><span class="line">  cout&lt;&lt;errors; //报错，errors与file1中的外部变量重定义</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//解决方法：file2</span><br><span class="line">static int errors = 5;</span><br><span class="line">int main()&#123;</span><br><span class="line">  cout&lt;&lt;errors; // 输出5</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="静态存储持续性、无链接性"><a href="#静态存储持续性、无链接性" class="headerlink" title="静态存储持续性、无链接性"></a>静态存储持续性、无链接性</h2><ul>
+<li>局部静态变量：虽然该变量只在该代码块中可用，但它在该代码块不处于活动状态时仍然存在。因此在两次函数调用之间，静态局部变量的值将 <strong>保持不变</strong> 。</li>
+</ul>
+<p>另外，如果初始化了静态局部变量，则程序 <strong>只在启动时进行一次初始化</strong> 。以后再调用函数时，将不会被再次初始化。p315</p>
+<h2 id="说明符和限定符"><a href="#说明符和限定符" class="headerlink" title="说明符和限定符"></a>说明符和限定符</h2><ul>
+<li>存储说明符（storage class specifier）：p317<ul>
+<li>auto（在C++11中不再是说明符）</li>
+<li>register</li>
+<li>static</li>
+<li>extern</li>
+<li>thread_local（C++11新增的）</li>
+<li>mutable：即使结构（或类）变量为const，其某个成员也可以被修改</li>
+</ul>
+</li>
+<li>cv-限定符（cv-qualifer）：p317<ul>
+<li>const：内存被初始化后，程序便不能再对它进行修改</li>
+<li>volatile：即使程序代码没有对内存单元进行修改，其值也可能发生变化</li>
+</ul>
+</li>
+<li>在默认情况下 <strong>全局变量的链接性为外部</strong>，但 <strong>const全局常量的链接性为内部 (因为是全局的, 所以默认已经具有静态持续性)</strong> 。因此，将一组常量放在头文件中，其他引用该头文件的文件都相当于自己定义了私有的常量，这就是能够将常量定义放在头文件中而不会重定义的原因。p318</li>
+<li>如果处于某种原因，程序员希望某个常量的链接性为外部的，则可以使用extern关键字来覆盖默认的内部链接性，<code>extern const int states = 50;</code>，在这种情况下，必须在所有使用该常量的文件中使用extern关键字来声明它。同时这种情况下就不能将该常量放在头文件中了, 因为链接性已经变成外部, 这样会引起重复定义. p318</li>
+</ul>
+<h2 id="函数的链接性和static关键字"><a href="#函数的链接性和static关键字" class="headerlink" title="函数的链接性和static关键字"></a>函数的链接性和static关键字</h2><p><strong>当static关键字作用于函数时, 它改变的只是函数的链接性, 函数的持续性永远为静态</strong></p>
+<ul>
+<li>C++不允许在一个函数中定义另一个函数，因此 <strong>所有函数的存储持续性都自动为静态，即在整个程序执行期间都一直存在</strong> 。p318</li>
+<li><strong>在默认情况下，函数的链接性为外部</strong>。即可以在文件间共享，使用extern来指出函数实在另一个文件中定义的（可选）。p318</li>
+<li><strong>可以使用关键字static将函数的链接性设置为内部</strong> ，使之只能在一个文件中使用，必须同时在原型和函数定义中使用该关键字。p318</li>
+<li><strong>内联函数不受单定义规则的约束，这允许程序员能够将内联函数的定义放在头文件中。但是C++要求同一个函数的所有内联定义都必须相同。</strong> p319</li>
+<li>C++查找函数顺序：静态（在本文件中找）——外部（在所有的程序文件中找）——在库函数中找。因此如果定义了一个与库函数同名的函数，编译器优先使用程序员定义的版本（C++不推荐这样做）。p319</li>
+</ul>
+<h2 id="语言链接性"><a href="#语言链接性" class="headerlink" title="语言链接性"></a>语言链接性</h2><ul>
+<li>不同的语言采用了不同的链接性，为了解决这种问题，需要特别指定函数采用的链接性（默认为C++链接性）。p319</li>
+</ul>
+<h1 id="面向对象的static关键字-类中的static关键字"><a href="#面向对象的static关键字-类中的static关键字" class="headerlink" title="面向对象的static关键字(类中的static关键字)"></a>面向对象的static关键字(类中的static关键字)</h1><h2 id="静态成员数据"><a href="#静态成员数据" class="headerlink" title="静态成员数据"></a>静态成员数据</h2><p>在类内的数据成员的声明前加上关键字static, 该数据成员就是类内的静态数据成员, 具有以下特点:</p>
+<ul>
+<li>静态数据成员被当作是 <strong>类的成员 (注意与具体对象无关)</strong>, 无论这个类的对象被定义了多少个, 静态数据成员在程序中也只有一份拷贝(只分配一次内存), 由该类型的所有对象共同持有.</li>
+<li><p>静态数据成员存储在全局数据区. 由于静态数据成员在定义时必须分配空间, 所以只能在类中对静态数据成员声明, 而不能在类中对静态数据成员进行定义, 需要放到类外定义, 且定义时不要加<code>static</code>关键字, 但是必须指明命名空间. 如下所示:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Myclass</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> get</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">float</span> Sum; <span class="comment">// 不能再类内部声明时定义或初始化静态变量, 因为声明只是描述了如何分配内存, 但实际上并不真正分配内存</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">float</span> Myclass::Sum = <span class="number">0</span>; <span class="comment">// 只能在类外部定义并初始化静态成员变量</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>静态数据成员和普通数据成员一样要遵从public, protected, private等访问规则.</p>
+</li>
+<li>因为静态数据成员是独立于具体对象的, 因此, 即使没有产生任何类的实例, 我们仍然可以对其进行访问.</li>
+<li>如果静态数据成员的访问权限允许的话(public), 可以通过下面两种方式来直接访问:<ul>
+<li>&lt;类对象名&gt;.&lt;静态数据成员名&gt;</li>
+<li>&lt;类名&gt;::&lt;静态数据成员名&gt;</li>
+</ul>
+</li>
+<li>同全局变量相比(静态持续性, 外部链接性), 使用静态数据成员有两个优势:<ul>
+<li>静态数据成员没有进入程序的全局命名空间, 因此不存在与程序中其他全局变量名冲突的可能性</li>
+<li>可以实现信息隐藏, 静态数据成员可以是private成员, 而全局变量不能.</li>
+</ul>
+</li>
+</ul>
+<h2 id="静态成员函数"><a href="#静态成员函数" class="headerlink" title="静态成员函数"></a>静态成员函数</h2><p>与静态数据成员一样, 也可以创建一个静态成员函数, 它为类的全部对象服务, 而不是为某一个具体的对象服务 ,具有以下特点:</p>
+<ul>
+<li>在定义(实现)静态成员函数时, 同样不能带有关键字<code>static</code></li>
+<li>静态成员之间可以互相访问, 包括静态成员函数访问静态数据成员和静态成员函数</li>
+<li>非静态成员函数可以任意的访问静态成员和非静态成员.</li>
+<li>静态成员函数不能访问任何非静态成员</li>
+<li>由于没有<code>this</code>指针上的开销, 因此静态成员函数在速度上会小优于类的全局函数</li>
+<li>类对象或对象指针可以像调用普通函数一样使用<code>.</code>或<code>-&gt;</code>来调用静态成员函数, 也可以使用<code>&lt;类名&gt;::&lt;静态成员函数名&gt;()</code>的方式来调用</li>
+</ul>
+<h3 id="静态成员函数与this指针"><a href="#静态成员函数与this指针" class="headerlink" title="静态成员函数与this指针"></a>静态成员函数与<code>this</code>指针</h3><p>普通的成员函数一般都隐含了一个<code>this</code>指针, <code>this</code>指针指向类的对象本身, 因为普通成员函数总是属于类的某个具体对象, 通常情况下, <code>this</code>指针是缺省的, 如函数 <code>func()</code> 实际上是<code>this-&gt;func()</code>, 但是与普通函数相比, 静态成员函数由于不与任何对象相联系, 因此它不具有<code>this</code>指针, 从这个意义上讲, 它就 <strong>无法访问属于类对象的非静态数据成员, 也无法访问非静态成员函数</strong>, 只能访问或调用静态的数据或函数.</p>
+<h2 id="const与static"><a href="#const与static" class="headerlink" title="const与static"></a>const与static</h2><p><code>const</code> 只是对于单个类对象来说是常量, 而对于整个类来说实际上是变量, 如果要维护一个对于整个类来说的常量, 应该使用<code>const static</code>或者<code>static cosnt</code>(二者等价)来声明, 与普通<code>static</code>成员数据不太一样的是, <strong><code>const static</code>成员数据需要在类中声明的同时就进行初始化(因为const数据在定义是必须初始化, 而static又是的该变量独立于具体对象, 所以必须在声明时初始化或者在类外部初始化, 也不能在构造函数初始化列表中初始化)</strong> :<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Myclass</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">static</span> <span class="keyword">int</span> a = <span class="number">3</span>; <span class="comment">// 声明并初始化</span></span><br><span class="line">    cosnt <span class="keyword">int</span> b = <span class="number">4</span>; <span class="comment">//这样是可以的, 但是这样所有变量的b都为4,且不能改变, 还不如声明为const static</span></span><br><span class="line">    <span class="comment">//所以最好还是在构造函数的初始化列表中对非静态const进行初始化</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> c;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> Myclass::c = <span class="number">5</span>; <span class="comment">//在类外部初始化. 不要带static关键字</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/知识点梳理/" rel="tag"><i class="fa fa-tag"></i> 知识点梳理</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/Cpp-知识点梳理-Cpp中的virutal关键字/" rel="prev" title="C++中的virtual关键字">
+                <i class="fa fa-chevron-left"></i> C++中的virtual关键字
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/项目-双流手语识别系统—-框架设计/" rel="next" title="双流手语识别系统：（一）框架设计">
+                双流手语识别系统：（一）框架设计 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">180</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#static关键字常用方法"><span class="nav-text">static关键字常用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#存储持续性"><span class="nav-text">存储持续性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#作用域和链接性"><span class="nav-text">作用域和链接性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态持续性、外部链接性"><span class="nav-text">静态持续性、外部链接性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态持续性、内部链接性"><span class="nav-text">静态持续性、内部链接性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态存储持续性、无链接性"><span class="nav-text">静态存储持续性、无链接性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#说明符和限定符"><span class="nav-text">说明符和限定符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的链接性和static关键字"><span class="nav-text">函数的链接性和static关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#语言链接性"><span class="nav-text">语言链接性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#面向对象的static关键字-类中的static关键字"><span class="nav-text">面向对象的static关键字(类中的static关键字)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#静态成员数据"><span class="nav-text">静态成员数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态成员函数"><span class="nav-text">静态成员函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#静态成员函数与this指针"><span class="nav-text">静态成员函数与this指针</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#const与static"><span class="nav-text">const与static</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">735k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">11:08</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

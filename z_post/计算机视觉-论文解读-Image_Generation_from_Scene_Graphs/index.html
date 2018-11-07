@@ -253,7 +253,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">131</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">180</span></a>
   </li>
         
         
@@ -270,6 +270,22 @@
           <li class="menu-item menu-item-深度学习">
     <a href="/categories/深度学习/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
   </li>
         
         
@@ -294,14 +310,6 @@
           <li class="menu-item menu-item-linux">
     <a href="/categories/Linux/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-caffe2">
-    <a href="/categories/Caffe2/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
   </li>
         
         
@@ -341,15 +349,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">25</span></a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-life">
-    <a href="/life/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-child"></i> <br />生活杂记</a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">28</span></a>
   </li>
         
         
@@ -619,9 +619,9 @@ color: #999;
 
 <p><img src="https://s1.ax1x.com/2018/07/15/PMT4fA.jpg" alt="图片显示失败，请联系博主进行维护" title="图3"></p>
 <p>&emsp;&emsp;本文利用从图卷积网络中得到的object embedding vectors来预测每个物体的bounding boxes和segmentation masks。将它们结合起来形成一个“场景图 scene layout”，如图2中心所示，场景布局相当于是场景图和图片中间媒介。</p>
-<p>&emsp;&emsp;最终将布局送入到CRN中，生成图片，如图2右边所示，CRN中会不断将布局的尺寸放大，指定生成新的图片为止。本文训练的生成器是CRN网络 $f$ 和两个分辨器 $D<em>{img}$ 和 $D</em>{obj}$ ，它们可以确保图片的真实感以及图片中物体的可识别力。关于这部分的详细介绍可以查看后文以及附加材料中的内容。</p>
+<p>&emsp;&emsp;最终将布局送入到CRN中，生成图片，如图2右边所示，CRN中会不断将布局的尺寸放大，指定生成新的图片为止。本文训练的生成器是CRN网络 $f$ 和两个分辨器 $D_{img}$ 和 $D_{obj}$ ，它们可以确保图片的真实感以及图片中物体的可识别力。关于这部分的详细介绍可以查看后文以及附加材料中的内容。</p>
 <p>&emsp;&emsp;<strong>场景图 Scene Graphs</strong> 给定一个物体类别集合 $C$ 和一个关系集合 $R$ 。一个场景图可以用一个元组 $(O,E)$ 表示，其中 $O \subseteq C$ ， $E \subseteq O \times R \times O$ 。在处理的第一阶段，使用学习好的embedding layer将场景图中的结点和边转换成一个dense vector，就像语言模型中的那样。</p>
-<p>&emsp;&emsp;<strong>图卷积网络 Graph Convolution Network</strong> 为了实现端到端的处理，本文需要一个可以对场景图进行处理的神经网络模型，为此，采用了由若干图卷积层构成的图卷积网络。 本文的图卷积网络与传统的卷积网络的工作方式类似：给定一个input graph，它每个结点和边的vecotrs维度为 $D<em>{in}$ ，然后经过一层图卷积层以后，就会生成一个新的vector，其维度为 $D</em>{out}$ 。（输出结点的值是关输入结点周围像素的函数）。 具体来说，对于所有的 $o<em>i \in O , (o_i,r,o_j) \in E$ ，给定输入向量 $v_i,v_r \in R^{D</em>{in}}$ 都会计算出输出向量 $v<em>i^{‘} , v_r^{‘} \in R^{D</em>{out}}$ 。 对于所有的结点和边，都会使用3个函数： $g_s , g_p , g_o$ ，其接受的输入为一个向量的三元组 $(v_i, v_r, v_j)$。&emsp;计算边的输出向量时，直接使用 $v_r^{‘} = g_p(v_i, v_r, v_j)$ 。而更新结点的值时较为复杂，因为结点往往连接了很多条边。对于每条始于 $o_i$ 的结点，都利用 $g_s$ 去计算候选向量（candidate vector），收集到所有的候选向量以后，将其放置于集合 $V_i^s$ 中。用 $g_o$ 以同样的方式处理止于 $o_i$ 的边。公式表示如下：</p>
+<p>&emsp;&emsp;<strong>图卷积网络 Graph Convolution Network</strong> 为了实现端到端的处理，本文需要一个可以对场景图进行处理的神经网络模型，为此，采用了由若干图卷积层构成的图卷积网络。 本文的图卷积网络与传统的卷积网络的工作方式类似：给定一个input graph，它每个结点和边的vecotrs维度为 $D_{in}$ ，然后经过一层图卷积层以后，就会生成一个新的vector，其维度为 $D_{out}$ 。（输出结点的值是关输入结点周围像素的函数）。 具体来说，对于所有的 $o_i \in O , (o_i,r,o_j) \in E$ ，给定输入向量 $v_i,v_r \in R^{D_{in}}$ 都会计算出输出向量 $v_i^{‘} , v_r^{‘} \in R^{D_{out}}$ 。 对于所有的结点和边，都会使用3个函数： $g_s , g_p , g_o$ ，其接受的输入为一个向量的三元组 $(v_i, v_r, v_j)$。&emsp;计算边的输出向量时，直接使用 $v_r^{‘} = g_p(v_i, v_r, v_j)$ 。而更新结点的值时较为复杂，因为结点往往连接了很多条边。对于每条始于 $o_i$ 的结点，都利用 $g_s$ 去计算候选向量（candidate vector），收集到所有的候选向量以后，将其放置于集合 $V_i^s$ 中。用 $g_o$ 以同样的方式处理止于 $o_i$ 的边。公式表示如下：</p>
 <script type="math/tex; mode=display">V_i^s = {g_s(v_i, v_r, v_j) : (o_i, r, o_j) \in E}</script><script type="math/tex; mode=display">V_i^o = {g_o(v_j, v_r, v_i) : (o_j, r, o_i) \in E}</script><p>然后再利用公式 $v_i^{‘} = h(V_i^s \cup V_i^o)$ 计算得到物体 $o_i$ 的输出向量 $v_i^{‘}$ （ $h$ 为池化操作）。有关计算的例子可以看图3。在本文中，函数 $g_s , g_p , g_o$ 的实现采用了一个单一网络，该网络会将输入向量连接起来，然后送到一个多层感知机（MLP）当中。pooling 函数 $h$ 会将输入结果进行平均值池化，然后送到MLP当中。</p>
 <center><div style="color:orange;
 border-bottom: 1px solid #d9d9d9;
@@ -633,21 +633,21 @@ color: #999;
 <p><img src="https://s1.ax1x.com/2018/07/15/PMTT6P.md.jpg" alt="图片显示失败，请联系博主进行维护" title="图4"></p>
 <p>&emsp;&emsp;<strong>场景布局 Scene Layout</strong> 为了生成图片，本文利用object embedding vectors去计算场景布局，该布局给出了要生成的图片的2D结构。本文利用图4中的object layout network来预测每个物体的bounding boxes和 segmentation masks，进而生成场景布局。  object layout networks接受形状为 $D$ 的embedding vector $v_i$ ，并把它送入到一个 mask regression network中去预测形状为 $M \times M$ 的soft binary mask $\hat m_i$ ，同时也送到一个 box regression network中去预测bounding box $\hat b_i = (x_0, y_0, x_1, y_1)$ 。 我们将 embedding vectors $v_i$ 和 mask $\hat m_i$ 逐个元素相乘，得到一个masked embedding ， 其shape为 $D \times M \times M$ ，然后，再利用双线性插值法结合物体的bounding box得到一个object layout。将所有的object layout相加，最终得到scene layout。在训练阶段，我们使用ground-truth bounding boxes来计算scene layout，在测试阶段我们使用预先预测好的bounding boxes进行计算。</p>
 <p>&emsp;&emsp;<strong>级联精细化网络 Cascaded Refinement Network</strong> 在给定场景布局以后，本文使用CRN来根据场景布局生成图片。一个CRN网络包含了一系列的convolutional refinement modules，modules之间的spatial resolutoin会不断变大（double），最终达到预定义的图片大小。 每个module都以scene layout（downsampling到当前module接受的大小）和前一层module的输出结果。 这两部分输入沿着channel连接在一起,送到2层3×3的卷积层里，然后利用最近邻插值对结果进行upsampling，之后继续传送到下一个module中。第一个module以scene layout和高斯噪声 $z \sim p_z$ 作为输入。把从最后一个module得到的结果再送到两个final convolution layers中去，生成最终的图片。</p>
-<p>&emsp;&emsp;<strong>分辨器 Discriminators</strong> 本文训练了两个分辨器 $D<em>{img}$ 和 $D</em>{obj}$</p>
+<p>&emsp;&emsp;<strong>分辨器 Discriminators</strong> 本文训练了两个分辨器 $D_{img}$ 和 $D_{obj}$</p>
 <ul>
 <li>patch-based image discriminators $D_{img}$ ：确保生成图片的overall appearance是realistic的。利用全卷积网络实现。</li>
 <li>object discriminator $D_{obj}$ ：确保图片中的每个物体都是recognizable并且realistic的。分别利用辅助分类器 auxiliary classifier和全卷积网络实现。</li>
 </ul>
-<p>&emsp;&emsp;<strong>训练 Training</strong> 本文将generation network $f$ 和 $D<em>{img} , D</em>{obj}$ 联合训练。generation network的训练目标是minimize下面的6个损失函数的权重和：</p>
+<p>&emsp;&emsp;<strong>训练 Training</strong> 本文将generation network $f$ 和 $D_{img} , D_{obj}$ 联合训练。generation network的训练目标是minimize下面的6个损失函数的权重和：</p>
 <ul>
-<li>$Box \ loss\ \ L<em>{box} = \sum</em>{i=1}^n ||b_i - \hat b_i||_1$ ：计算真实box和预测box之间的L1范式</li>
+<li>$Box \ loss\ \ L_{box} = \sum_{i=1}^n ||b_i - \hat b_i||_1$ ：计算真实box和预测box之间的L1范式</li>
 <li>$Mask\ loss\ \ L_{mask}$ ：计算真实mask和预测mask之间基于像素的交叉熵</li>
 <li>$Pixel\ loss\ \ L_{pix} = ||I - \hat I||_1$ ：真实图片和生成图片之间的L范式</li>
-<li>$Image\ adversarial\ loss\ \ L<em>{GAN}^{img}$ ：针对 $D</em>{img}$ 的损失函数</li>
-<li>$Object\ adversarial\ loss\ \ L<em>{GAN}^{obj}$ ：针对 $D</em>{obj}$ 的损失函数，确保物体的realistic</li>
-<li>$Auxiliarly\ classifier\ loss\ \ L<em>{AC}^{obj}$ ：针对 $D</em>{obj}$的损失函数，确保物体的recognizable</li>
+<li>$Image\ adversarial\ loss\ \ L_{GAN}^{img}$ ：针对 $D_{img}$ 的损失函数</li>
+<li>$Object\ adversarial\ loss\ \ L_{GAN}^{obj}$ ：针对 $D_{obj}$ 的损失函数，确保物体的realistic</li>
+<li>$Auxiliarly\ classifier\ loss\ \ L_{AC}^{obj}$ ：针对 $D_{obj}$的损失函数，确保物体的recognizable</li>
 </ul>
-<p>&emsp;&emsp;<strong>实现细节 Implementation Details</strong> 本文对所有的scene graphs都进行了数据增强，并且添加了特殊的图片间的relationships，可以把每个真实物体与图片物体进行连接，确保所有的scene graphs都是连通的。我们使用Adam训练所有的模型，学习率设置为 $10^{-4}$ ， batch size 设置为32, 迭代次数为一百万次，使用单个Tesla P100训练了3天。 对于每一次minibatch，我们首先更新 $f$ ，而后更新 $D<em>{img}$ 和 $D</em>{obj}$ 。对于所有的graph convolution 本文使用ReLU作为激活函数，对于CRN和discriminators 使用Leaky ReLU作为激活函数，同时使用了batch normalization技术。</p>
+<p>&emsp;&emsp;<strong>实现细节 Implementation Details</strong> 本文对所有的scene graphs都进行了数据增强，并且添加了特殊的图片间的relationships，可以把每个真实物体与图片物体进行连接，确保所有的scene graphs都是连通的。我们使用Adam训练所有的模型，学习率设置为 $10^{-4}$ ， batch size 设置为32, 迭代次数为一百万次，使用单个Tesla P100训练了3天。 对于每一次minibatch，我们首先更新 $f$ ，而后更新 $D_{img}$ 和 $D_{obj}$ 。对于所有的graph convolution 本文使用ReLU作为激活函数，对于CRN和discriminators 使用Leaky ReLU作为激活函数，同时使用了batch normalization技术。</p>
 <h1 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h1><p>&emsp;&emsp;在实验中，我们将证明本文提出的方法可以生成复杂的图片，并且正确反应场景图中的物体和物体之间的关系。</p>
 <h2 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h2><p>&emsp;&emsp;<strong>COCO</strong> 使用2017 COCO-Stuff 数据集，该数据集共有80个物体类别，40K的训练集和5K的验证集，所有的图片标注都具有bounding boxes和segmentation masks 。利用这些标注，本文建立了2D平面上的场景图，总共包含6中人工设定的关系：左边，右边，上边，下边，里面，外面。我们忽略了图片中占图片比例小于2%的物体，使用的图片包含3～8个物体。将COCO val分为val和test两部分。最终，我们得到了24972张训练图片，1024张val图片，2048张test图片。</p>
 <p>&emsp;&emsp;<strong>Visual Genome</strong> 本文使用VG 1.4数据集，它包含108077张图片，并且具有标注好的场景图。将其中的80%用作训练集，10%分别用作val和test，本文仅仅使用在训练集中出现次数大于2000次的物体和大于500次的关系，最终，我们得到的训练集具有178种物体和45种关系类型。我们忽略图片中的小物体，并且使用图片中具有3～30个物体和至少一种关系类型的图片，最终我们得到了62565张图片作训练集，5506张val和5088张test，平均每张图片包含10个物体和5种关系类型。由于VG数据集没有提供segmentation masks标注，所以在使用VG数据集时，我们忽略mask loss 。</p>
@@ -686,9 +686,9 @@ color: #999;
 <p>我们测试了以下几种不同的消融模型：</p>
 <p>&emsp;&emsp;<strong>无图卷积 no gconv</strong> ：去掉图卷积层，因此boxes和masks会直接从原始的object embedding vectors预测而来。</p>
 <p>&emsp;&emsp;<strong>无关系 no relationships</strong> ：使用图卷积层，但是忽视场景图中的所有“边”，即关系信息。</p>
-<p>&emsp;&emsp;<strong>无分辨器 no discriminators</strong> ：去掉分辨器 $D<em>{img}$ 和 $D</em>{pix}$ ，依靠像素回归损失函数 $L_{pix}$ 来引导图片的生成。</p>
+<p>&emsp;&emsp;<strong>无分辨器 no discriminators</strong> ：去掉分辨器 $D_{img}$ 和 $D_{pix}$ ，依靠像素回归损失函数 $L_{pix}$ 来引导图片的生成。</p>
 <p>&emsp;&emsp;<strong>去掉一个分辨器 omit one of the Discriminators</strong> ：仅去掉其中一个分辨器</p>
-<p>&emsp;&emsp;<strong>GT Layout</strong> ：除了消融实验外，本文还使用了GT layout来代替 $L<em>{box} 和 $L</em>{mask}$ 损失函数。</p>
+<p>&emsp;&emsp;<strong>GT Layout</strong> ：除了消融实验外，本文还使用了GT layout来代替 $L_{box} 和 $L_{mask}$ 损失函数。</p>
 <h2 id="物体定位-Object-Localization"><a href="#物体定位-Object-Localization" class="headerlink" title="物体定位 Object Localization"></a>物体定位 Object Localization</h2><p>&emsp;&emsp;除了关注生成图片的质量外，我们还对本文模型预测到的bounding boxes进行了分析。在表2中，我们展示了object的召回率和2种交并比的分值。另一个评价标准就是多样性。</p>
 <center><div style="color:orange;
 border-bottom: 1px solid #d9d9d9;
@@ -750,7 +750,7 @@ color: #999;
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/面试-知识点梳理-卷积神经网络的复杂度分析/" rel="next" title="卷积神经网络的复杂度分析">
+              <a href="/z_post/深度学习-卷积神经网络复杂度分析/" rel="next" title="卷积神经网络的复杂度分析">
                 卷积神经网络的复杂度分析 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -830,7 +830,7 @@ color: #999;
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">131</span>
+                    <span class="site-state-item-count">180</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -865,7 +865,11 @@ color: #999;
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -928,7 +932,13 @@ color: #999;
                     
                       
                     
-                    <span class="site-state-item-count">25</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1029,7 +1039,7 @@ color: #999;
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">471k</span>
+    <span title="站点总字数">735k</span>
   
 
   
@@ -1038,7 +1048,7 @@ color: #999;
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">7:08</span>
+    <span title="站点阅读时长">11:08</span>
   
 </div>
 

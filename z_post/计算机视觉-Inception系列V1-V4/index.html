@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Inception V1论文概览Going Deeper with Convolutions 摘要文章提出了一个深度卷积神经网络结构，并取名为Inception。该模型最主要的特点在于提高了网络内部计算资源的利用率。在保证计算负载不变的前提下，通过人工设计提升了网络的深度和宽度。该模型基于Hebbian原理和多尺度处理的intuition来提高性能。关于该模型的一个实例正是提交在ILSVRC14上">
+<meta name="keywords" content="知识点梳理,网络模型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Inception系列V1-V4">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-Inception系列V1-V4/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="Inception V1论文概览Going Deeper with Convolutions 摘要文章提出了一个深度卷积神经网络结构，并取名为Inception。该模型最主要的特点在于提高了网络内部计算资源的利用率。在保证计算负载不变的前提下，通过人工设计提升了网络的深度和宽度。该模型基于Hebbian原理和多尺度处理的intuition来提高性能。关于该模型的一个实例正是提交在ILSVRC14上">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn6do3nmnj20un08y75k.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn6q3t8hfj20j01x2qcf.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn98ano6mj20ps0f5778.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn6do3nmnj20un08y75k.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fvna17nohlj209z09ydhb.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fvna17muznj207c0a70th.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvna17piozj20bu1a040a.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fvna17my4gj20ep09haah.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvna17n33wj20fh08u759.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvna17sdq6j20fh0f1djt.jpg">
+<meta property="og:updated_time" content="2018-10-05T10:56:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Inception系列V1-V4">
+<meta name="twitter:description" content="Inception V1论文概览Going Deeper with Convolutions 摘要文章提出了一个深度卷积神经网络结构，并取名为Inception。该模型最主要的特点在于提高了网络内部计算资源的利用率。在保证计算负载不变的前提下，通过人工设计提升了网络的深度和宽度。该模型基于Hebbian原理和多尺度处理的intuition来提高性能。关于该模型的一个实例正是提交在ILSVRC14上">
+<meta name="twitter:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn6do3nmnj20un08y75k.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/计算机视觉-Inception系列V1-V4/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Inception系列V1-V4 | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">180</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-linux">
+    <a href="/categories/Linux/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-面试">
+    <a href="/categories/面试/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其它">
+    <a href="/categories/其它/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其它</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">28</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/计算机视觉-Inception系列V1-V4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Inception系列V1-V4
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-08-02 21:16:20" itemprop="dateCreated datePublished" datetime="2018-08-02T21:16:20+08:00">2018-08-02</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/计算机视觉/" itemprop="url" rel="index"><span itemprop="name">计算机视觉</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">5.4k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">5 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Inception-V1"><a href="#Inception-V1" class="headerlink" title="Inception V1"></a>Inception V1</h1><h2 id="论文概览"><a href="#论文概览" class="headerlink" title="论文概览"></a>论文概览</h2><p>Going Deeper with Convolutions</p>
+<h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>文章提出了一个深度卷积神经网络结构，并取名为Inception。该模型最主要的特点在于提高了网络内部计算资源的利用率。在保证计算负载不变的前提下，通过人工设计提升了网络的深度和宽度。该模型基于Hebbian原理和多尺度处理的intuition来提高性能。关于该模型的一个实例正是提交在ILSVRC14上的GoogLeNet，一个22层深的深度网络，主要针对分类和检测任务。</p>
+<h3 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1.介绍"></a>1.介绍</h3><p>简要介绍了深度学习和神经网络技术近年来在图像分类和目标检测任务的发展。文章主要关注针对计算机视觉的高效深度神经网络，取名为Inception，名字来自于NIN。在文章中，“deep”具有两层含义：第一，指代文章新提出的Inception module，第二是指网络的深度。通常情况下，可以将Inception model视作NIN的“逻辑顶点”。</p>
+<h3 id="2-相关工作"><a href="#2-相关工作" class="headerlink" title="2.相关工作"></a>2.相关工作</h3><p>略</p>
+<h3 id="3-动机和High-Level的考虑"><a href="#3-动机和High-Level的考虑" class="headerlink" title="3.动机和High Level的考虑"></a>3.动机和High Level的考虑</h3><p>提高深度卷积网络最直接的方式就是增加它们的size，包括网络的深度（层数）和宽度（每层的神经元个数），这对于高质量的网络结构来说是ok的，尤其是在拥有大量优质数据的情况下。但是，这种方法存在这两个主要的缺点：</p>
+<ul>
+<li>更大的size通常意味着更多的参数，这会使得网络更容易过拟合，尤其是在数据标签有限的情况下。由于获得大量优质数据具有一定难度，因此这往往会称为一个主要的瓶颈。</li>
+<li>第二个缺点就是更大的size往往需要消耗更多的计算资源</li>
+</ul>
+<p>文章认为解决以上问题的一个经济可行的办法是将全连接层置换成稀疏连接结构，甚至是在卷积内。</p>
+<p>目前的硬件结构在面对非均匀分布的稀疏数据结构时，计算效率很低。</p>
+<p>为此，文章希望找到一个新的结构，可以更高效的处理稀疏矩阵的运算。</p>
+<p>文章通过多个实验验证了Inception模型在面对图像分类和检测问题时，可以取得十分好的效果。但是，对于Inception model是否能够成为其他领域任务的指导原则，还尚未有定论，需要更多的验证和实验才能说明。</p>
+<h3 id="4-框架细节"><a href="#4-框架细节" class="headerlink" title="4.框架细节"></a>4.框架细节</h3><p>Inception模型的一个核心思想在于找到 <strong>卷积网络中的最优局部稀疏结构可以在多大程度上被稠密组件近似和覆盖</strong> 。需要注意，由于假设了平移不变性，因此本文的模型将从卷积模块中开始建立，本文所需要做的就是找到一个局部最优结构，然后将这些结构在空间上组合起来。</p>
+<p>为了避免path-alignment问题，现在滤波器大小设值为1×1,3×3,和5×5。</p>
+<p>由于pooling层的重要性，本文才采用了pooling层。</p>
+<p>将上面的Inception模块叠加起来，形成一个整体的模型。</p>
+<p>但是直接叠加会使得向量维度剧增，因此，通过1×1卷积来控制维度。</p>
+<p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn6do3nmnj20un08y75k.jpg" alt=""></p>
+<p>当max pooling层的stride为1时，并不会缩小输出的feature map的size，只会影响depth的值。</p>
+<p>关于此结构的一个好处在于它可以提高神经元的个数，同时避免网络不受控制的提升计算机复杂度。</p>
+<h3 id="5-GooLeNet"><a href="#5-GooLeNet" class="headerlink" title="5. GooLeNet"></a>5. GooLeNet</h3><p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn6q3t8hfj20j01x2qcf.jpg" alt=""></p>
+<p>GoogLeNet的网络结构图细节如下：</p>
+<p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn98ano6mj20ps0f5778.jpg" alt=""></p>
+<p>GoogLeNet网络结构明细表解析如下：</p>
+<p>0、输入</p>
+<p>原始输入图像为224x224x3，且都进行了零均值化的预处理操作（图像每个像素减去均值）。</p>
+<p>1、第一层（卷积层）</p>
+<p>使用7x7的卷积核（滑动步长2，padding为3），64通道，输出为112x112x64，卷积后进行ReLU操作<br>经过3x3的max pooling（步长为2），输出为((112 - 3+1)/2)+1=56，即56x56x64，再进行ReLU操作</p>
+<p>2、第二层（卷积层）</p>
+<p>使用3x3的卷积核（滑动步长为1，padding为1），192通道，输出为56x56x192，卷积后进行ReLU操作</p>
+<p>经过3x3的max pooling（步长为2），输出为((56 - 3+1)/2)+1=28，即28x28x192，再进行ReLU操作</p>
+<p>3a、第三层（Inception 3a层）</p>
+<p>分为四个分支，采用不同尺度的卷积核来进行处理</p>
+<p>（1）64个1x1的卷积核，然后RuLU，输出28x28x64</p>
+<p>（2）96个1x1的卷积核，作为3x3卷积核之前的降维，变成28x28x96，然后进行ReLU计算，再进行128个3x3的卷积（padding为1），输出28x28x128</p>
+<p>（3）16个1x1的卷积核，作为5x5卷积核之前的降维，变成28x28x16，进行ReLU计算后，再进行32个5x5的卷积（padding为2），输出28x28x32</p>
+<p>（4）pool层，使用3x3的核（padding为1），输出28x28x192，然后进行32个1x1的卷积，输出28x28x32。<br>将四个结果进行连接，对这四部分输出结果的第三维并联，即64+128+32+32=256，最终输出28x28x256</p>
+<p>3b、第三层（Inception 3b层）</p>
+<p>（1）128个1x1的卷积核，然后RuLU，输出28x28x128</p>
+<p>（2）128个1x1的卷积核，作为3x3卷积核之前的降维，变成28x28x128，进行ReLU，再进行192个3x3的卷积（padding为1），输出28x28x192</p>
+<p>（3）32个1x1的卷积核，作为5x5卷积核之前的降维，变成28x28x32，进行ReLU计算后，再进行96个5x5的卷积（padding为2），输出28x28x96</p>
+<p>（4）pool层，使用3x3的核（padding为1），输出28x28x256，然后进行64个1x1的卷积，输出28x28x64。</p>
+<p>将四个结果进行连接，对这四部分输出结果的第三维并联，即128+192+96+64=480，最终输出输出为28x28x480</p>
+<p>第四层（4a,4b,4c,4d,4e）、第五层（5a,5b）……，与3a、3b类似，在此就不再重复。</p>
+<h2 id="要点整理"><a href="#要点整理" class="headerlink" title="要点整理"></a>要点整理</h2><h3 id="说明一下GoogLeNet采用多个卷积核的动机"><a href="#说明一下GoogLeNet采用多个卷积核的动机" class="headerlink" title="说明一下GoogLeNet采用多个卷积核的动机"></a>说明一下GoogLeNet采用多个卷积核的动机</h3><p>NIN网络和Inception Module这类结构非常看中模型在局部区域的拟合能力。它们认为：一张图像通常具有总体特征和细节特征这两类特征，一般小卷积核能够更好的捕捉一些细节特征，随着深层网络的小卷积不断计算下去，总体特征也会慢慢的被提炼出来，但是这样存在一个问题，那就是在如果只采用小卷积，那么网络结构的前段一般只有细节特征，后段才慢慢有一些总体特征，而我们希望这两方面的特征总是能够一起发挥作用，因此，上面的两种模型考虑采用更多不同尺寸的卷积核来提取特征，并把这些特征连接起来，一起送到后面的网络中去计算，使得网络可以获取到更多的特征信息。</p>
+<p>Inception模块还采用了一个stride为1的max pooling层，它的主要功能是减少空间大小，降低过拟合风险（只选最大值，所以值的范围变少了）。</p>
+<h3 id="Inception中为什么使用1×1卷积？1×1卷积的作用是什么？"><a href="#Inception中为什么使用1×1卷积？1×1卷积的作用是什么？" class="headerlink" title="Inception中为什么使用1×1卷积？1×1卷积的作用是什么？"></a>Inception中为什么使用1×1卷积？1×1卷积的作用是什么？</h3><p>关于Inception Module，有一种很直接的做法就是将1×1,3×3,5×5卷积和3×3 max pooling直接连接起来，如下面的左图所示，但是这样的话就有个问题，那就是计算量增长太快了。</p>
+<p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn6do3nmnj20un08y75k.jpg" alt=""></p>
+<p>为了解决这个问题，文章在3×3和5×5的卷积之前，3×3max pooling之后使用了1×1卷积，使其输出的feature map的depth降低了，从而达到了降维的效果，抑制的过快增长的计算量。</p>
+<h4 id="1×1卷积核的作用："><a href="#1×1卷积核的作用：" class="headerlink" title="1×1卷积核的作用："></a>1×1卷积核的作用：</h4><p>1x1卷积的主要目的是为了减少维度，还用于修正线性激活（ReLU）。比如，上一层的输出为 100x100x128，经过具有256个通道的5x5卷积层之后(stride=1，pad=2)，输出数据为100x100x256，其中，卷积层的参数为128x5x5x256= 819200。而假如上一层输出先经过具有32个通道的1x1卷积层，再经过具有256个输出的5x5卷积层，那么输出数据仍为为100x100x256，但卷积参数量已经减少为128x1x1x32 + 32x5x5x256= 204800，大约减少了4倍</p>
+<h4 id="1×1的卷积核，在一定程度上可以实现全连接层："><a href="#1×1的卷积核，在一定程度上可以实现全连接层：" class="headerlink" title="1×1的卷积核，在一定程度上可以实现全连接层："></a><strong>1×1的卷积核，在一定程度上可以实现全连接层：</strong></h4><p>具体的操作是，输入是224x224x3 的图像，假设经过变换之后最后一层是[7x7x512]的，那么传统的方法应该将其展平成为一个7x7x512长度的一层，然后做全连接层，假设全连接层为4096×1000层的（假设有1000个分类结果）。</p>
+<p>那么用1×1卷积核怎么做呢，因为1×1卷积核相当于在不同channel之间做线性变换，所以：</p>
+<ul>
+<li>先选择7×7的卷积核，输出层特征层数为4096层，这样得到一个[1×1×4096]层的</li>
+<li>然后再选择用1×1卷积核，输出层数为1000层，这样得到一个[1×1×1000]层的</li>
+</ul>
+<h4 id="用卷积层代替全连接层的好处："><a href="#用卷积层代替全连接层的好处：" class="headerlink" title="用卷积层代替全连接层的好处："></a><strong>用卷积层代替全连接层的好处：</strong></h4><p>这样做其实有非常多的好处，比如上面的例子中输入是224x224x3 的图像，如果此时图像变得更大了，变成384x384大小的了，那么一开始按照32作为步长来进行卷积操作，最后还按照这个网络结构能得到一个[6×6×1000]层的，那么前面那个[6×6]有什么用呢，这个代表每一个位置上，其属于1000个分类结果中的打分，所以这在图像分割等领域等领域有着非常重要的作用【之前一篇论文就是用的这种方法Fully Convolutional Networks for Semantic Segmentation】。</p>
+<h3 id="Auxiliary-Classifier"><a href="#Auxiliary-Classifier" class="headerlink" title="Auxiliary Classifier"></a>Auxiliary Classifier</h3><p>当时Inception网络还是太深了，不好训练，因此网络中还加了两个侧枝，通过中间层的feature map，来得到预测结果（有了ResNet的shortcut以后，这种侧枝用的比较少了）。</p>
+<h4 id="为什么使用侧枝？"><a href="#为什么使用侧枝？" class="headerlink" title="为什么使用侧枝？"></a>为什么使用侧枝？</h4><p>为了避免梯度消失，网络额外增加了2个辅助的softmax用于向前传导梯度（辅助分类器）。辅助分类器是将中间某一层的输出用作分类，并按一个较小的权重（0.3）加到最终分类结果中，这样相当于做了模型融合，同时给网络增加了反向传播的梯度信号，也提供了额外的正则化，对于整个网络的训练很有裨益。而在实际测试的时候，这两个额外的softmax会被去掉。也就是说在测试的时候，只会用最后的softmax结果作为分类依据。</p>
+<h3 id="Inception-Model有没有使用全连接层？"><a href="#Inception-Model有没有使用全连接层？" class="headerlink" title="Inception Model有没有使用全连接层？"></a>Inception Model有没有使用全连接层？</h3><p>在两个侧枝使用了卷积+FC+FC+SoftmaxActivation的结构，在最后一层使用了全局平均池化+FC+SoftmaxActivation的结构。</p>
+<h3 id="LRN：LocalRespNorm"><a href="#LRN：LocalRespNorm" class="headerlink" title="LRN：LocalRespNorm"></a>LRN：LocalRespNorm</h3><h1 id="Inception-V2"><a href="#Inception-V2" class="headerlink" title="Inception V2"></a>Inception V2</h1><h2 id="论文概览-1"><a href="#论文概览-1" class="headerlink" title="论文概览"></a>论文概览</h2><p>Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift</p>
+<h2 id="要点整理-1"><a href="#要点整理-1" class="headerlink" title="要点整理"></a>要点整理</h2><p>GoogLeNet设计的初衷就是要又准又快，而如果只是单纯的堆叠网络虽然可以提高准确率，但是会导致计算效率有明显的下降，所以如何在不增加过多计算量的同时提高网络的表达能力就成为了一个问题。</p>
+<p>Inception V2版本的解决方案就是　<strong>修改Inception的内部计算逻辑，提出了比较特殊的“卷积”计算结构</strong>。</p>
+<h3 id="卷积分解（Factorizing-Convolutions）"><a href="#卷积分解（Factorizing-Convolutions）" class="headerlink" title="卷积分解（Factorizing Convolutions）"></a>卷积分解（Factorizing Convolutions）</h3><p>主要受到VGG的启发</p>
+<p>大尺寸的卷积核可以带来更大的感受野，但也意味着会产生更多的参数，比如5×5卷积核的参数就有25个（不算depth和filters的数量）。因此，GoogLeNet团队提出可以用2个连续的3×3卷积层组成的小网络来代替单个的5×5卷积层，即在 <strong>保持感受野范围的同时又减少了参数量</strong>，如下图：</p>
+<p><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fvna17nohlj209z09ydhb.jpg" alt=""></p>
+<p>大量实验表明，这种分解并不会造成表达缺失，那么是否可以进一步分解，GoogLeNet团队尝试了n×1的卷积核，如下图所示，用3个3×1取代3×3卷积：</p>
+<p><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fvna17muznj207c0a70th.jpg" alt=""></p>
+<p>因此，任意nxn的卷积都可以通过1xn卷积后接nx1卷积来替代。GoogLeNet团队发现在网络的前期使用这种分解效果并不好，在中度大小的特征图（feature map）上使用效果才会更好（特征图大小建议在12到20之间）。</p>
+<p><img src="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvna17piozj20bu1a040a.jpg" alt=""></p>
+<h3 id="降低特征图大小"><a href="#降低特征图大小" class="headerlink" title="降低特征图大小"></a>降低特征图大小</h3><p>一般情况下，如果想让图像缩小，可以有如下两种方式：</p>
+<p><img src="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fvna17my4gj20ep09haah.jpg" alt=""></p>
+<p>前者先做pooling会导致在做卷积的时候缺少特征，后者是在卷积计算后，提取完特征以后进行的正常的图像缩小，但是计算量很大（卷积计算比pooling计算复杂）。为了同时保持特征表示且降低计算量，将网络结构改为下图，使用两个并行化的模块来降低计算量（卷积、池化并行执行，最后再进行合并）。</p>
+<p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvna17n33wj20fh08u759.jpg" alt=""></p>
+<h3 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a>网络结构</h3><p>使用Inception V2作改进版的GoogLeNet，网络结构图如下：</p>
+<p><img src="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvna17sdq6j20fh0f1djt.jpg" alt=""></p>
+<p>注：上表中的Figure 5指没有进化的Inception，Figure 6是指小卷积版的Inception（用3x3卷积核代替5x5卷积核），Figure 7是指不对称版的Inception（用1xn、nx1卷积核代替nxn卷积核）。</p>
+<h3 id="Batch-Normalizatin"><a href="#Batch-Normalizatin" class="headerlink" title="Batch Normalizatin"></a>Batch Normalizatin</h3><p>Batch Normalization, 批标准化, 和普通的数据标准化类似, 是将分散的数据统一的一种做法, 也是优化神经网络的一种方法.</p>
+<p>详见:<img src="" alt="Batch-Normalization深入解析"></p>
+<h1 id="Inception-V3"><a href="#Inception-V3" class="headerlink" title="Inception V3"></a>Inception V3</h1><h2 id="论文概览-2"><a href="#论文概览-2" class="headerlink" title="论文概览"></a>论文概览</h2><h2 id="要点整理-2"><a href="#要点整理-2" class="headerlink" title="要点整理"></a>要点整理</h2>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/知识点梳理/" rel="tag"><i class="fa fa-tag"></i> 知识点梳理</a>
+          
+            <a href="/tags/网络模型/" rel="tag"><i class="fa fa-tag"></i> 网络模型</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/计算机视觉-目标检测概览/" rel="prev" title="【置顶】基于深度学习的目标检测">
+                <i class="fa fa-chevron-left"></i> 【置顶】基于深度学习的目标检测
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/Cpp-知识点梳理-Cpp创建对象时new与不new/" rel="next" title="C++创建对象时new与不new的区别">
+                C++创建对象时new与不new的区别 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">180</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Inception-V1"><span class="nav-text">Inception V1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#论文概览"><span class="nav-text">论文概览</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-介绍"><span class="nav-text">1.介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-相关工作"><span class="nav-text">2.相关工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-动机和High-Level的考虑"><span class="nav-text">3.动机和High Level的考虑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-框架细节"><span class="nav-text">4.框架细节</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-GooLeNet"><span class="nav-text">5. GooLeNet</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要点整理"><span class="nav-text">要点整理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#说明一下GoogLeNet采用多个卷积核的动机"><span class="nav-text">说明一下GoogLeNet采用多个卷积核的动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Inception中为什么使用1×1卷积？1×1卷积的作用是什么？"><span class="nav-text">Inception中为什么使用1×1卷积？1×1卷积的作用是什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1×1卷积核的作用："><span class="nav-text">1×1卷积核的作用：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1×1的卷积核，在一定程度上可以实现全连接层："><span class="nav-text">1×1的卷积核，在一定程度上可以实现全连接层：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用卷积层代替全连接层的好处："><span class="nav-text">用卷积层代替全连接层的好处：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Auxiliary-Classifier"><span class="nav-text">Auxiliary Classifier</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么使用侧枝？"><span class="nav-text">为什么使用侧枝？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Inception-Model有没有使用全连接层？"><span class="nav-text">Inception Model有没有使用全连接层？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LRN：LocalRespNorm"><span class="nav-text">LRN：LocalRespNorm</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inception-V2"><span class="nav-text">Inception V2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#论文概览-1"><span class="nav-text">论文概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要点整理-1"><span class="nav-text">要点整理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#卷积分解（Factorizing-Convolutions）"><span class="nav-text">卷积分解（Factorizing Convolutions）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#降低特征图大小"><span class="nav-text">降低特征图大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络结构"><span class="nav-text">网络结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Batch-Normalizatin"><span class="nav-text">Batch Normalizatin</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inception-V3"><span class="nav-text">Inception V3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#论文概览-2"><span class="nav-text">论文概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要点整理-2"><span class="nav-text">要点整理</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">735k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">11:08</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

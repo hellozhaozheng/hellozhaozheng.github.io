@@ -108,27 +108,27 @@
 
 
 
-  <meta name="description" content="为什么需要激活函数标准说法这是由激活函数的性质所决定来, 一般来说, 激活函数都具有以下性质:  非线性: 首先,线性函数可以高效可靠对数据进行拟合, 但是现实生活中往往存在一些非线性的问题(如XOR), 这个时候, 我们就需要借助激活函数的非线性来对数据的分布进行重新映射, 从而获得更强大的拟合能力. (这个是最主要的原因, 其他还有下面这些性质也使得我们选择激活函数作为网络常用层) 可微性:">
+  <meta name="description" content="常用激活函数及其导数    激活函数 形式 导数形式     Sigmoid $f(x) =\frac{1}{1+e^{-x}}$ $f’(x)(1-f(x))$   Tanh $f(x) = tanh(x)= \frac{e^x-e^{-x}}{e^x+e^{-x}}$ $f’(x) = 1-(f(z))^2$   ReLU $f(x)=max(0,x)=\begin{cases} 0 &amp;amp">
 <meta name="keywords" content="知识点梳理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="各种激活函数整理总结">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/深度学习-知识点梳理-各种激活函数深入解析/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="为什么需要激活函数标准说法这是由激活函数的性质所决定来, 一般来说, 激活函数都具有以下性质:  非线性: 首先,线性函数可以高效可靠对数据进行拟合, 但是现实生活中往往存在一些非线性的问题(如XOR), 这个时候, 我们就需要借助激活函数的非线性来对数据的分布进行重新映射, 从而获得更强大的拟合能力. (这个是最主要的原因, 其他还有下面这些性质也使得我们选择激活函数作为网络常用层) 可微性:">
+<meta property="og:description" content="常用激活函数及其导数    激活函数 形式 导数形式     Sigmoid $f(x) =\frac{1}{1+e^{-x}}$ $f’(x)(1-f(x))$   Tanh $f(x) = tanh(x)= \frac{e^x-e^{-x}}{e^x+e^{-x}}$ $f’(x) = 1-(f(z))^2$   ReLU $f(x)=max(0,x)=\begin{cases} 0 &amp;amp">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fvp2xuesrjj208706v0st.jpg">
-<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvogxnqyyaj20pk0fdt9w.jpg">
-<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvogum5rp4j20r20e8dh3.jpg">
-<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvogxnqp8rj20q50fmdh1.jpg">
-<meta property="og:image" content="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fvogum6rpej20qq0gt3zu.jpg">
-<meta property="og:image" content="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fvogum6ou5j20qp0htwfv.jpg">
-<meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvogum8mbfj20qw0gagn1.jpg">
-<meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvogum93q2j20pt0hfmyl.jpg">
-<meta property="og:updated_time" content="2018-10-09T05:30:12.387Z">
+<meta property="og:image" content="https://wx1.sinaimg.cn/mw1024/d7b90c85ly1fvogxnqyyaj20pk0fdt9w.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/mw1024/d7b90c85ly1fvogum5rp4j20r20e8dh3.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/mw1024/d7b90c85ly1fvogxnqp8rj20q50fmdh1.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/mw1024/d7b90c85ly1fvogum6rpej20qq0gt3zu.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/mw1024/d7b90c85ly1fvogum6ou5j20qp0htwfv.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/mw1024/d7b90c85ly1fvogum8mbfj20qw0gagn1.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/mw1024/d7b90c85ly1fvogum93q2j20pt0hfmyl.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/mw1024/d7b90c85ly1fvp2xuesrjj208706v0st.jpg">
+<meta property="og:updated_time" content="2018-10-17T06:55:02.038Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="各种激活函数整理总结">
-<meta name="twitter:description" content="为什么需要激活函数标准说法这是由激活函数的性质所决定来, 一般来说, 激活函数都具有以下性质:  非线性: 首先,线性函数可以高效可靠对数据进行拟合, 但是现实生活中往往存在一些非线性的问题(如XOR), 这个时候, 我们就需要借助激活函数的非线性来对数据的分布进行重新映射, 从而获得更强大的拟合能力. (这个是最主要的原因, 其他还有下面这些性质也使得我们选择激活函数作为网络常用层) 可微性:">
-<meta name="twitter:image" content="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fvp2xuesrjj208706v0st.jpg">
+<meta name="twitter:description" content="常用激活函数及其导数    激活函数 形式 导数形式     Sigmoid $f(x) =\frac{1}{1+e^{-x}}$ $f’(x)(1-f(x))$   Tanh $f(x) = tanh(x)= \frac{e^x-e^{-x}}{e^x+e^{-x}}$ $f’(x) = 1-(f(z))^2$   ReLU $f(x)=max(0,x)=\begin{cases} 0 &amp;amp">
+<meta name="twitter:image" content="https://wx1.sinaimg.cn/mw1024/d7b90c85ly1fvogxnqyyaj20pk0fdt9w.jpg">
 
 
 
@@ -253,7 +253,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">131</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">180</span></a>
   </li>
         
         
@@ -270,6 +270,22 @@
           <li class="menu-item menu-item-深度学习">
     <a href="/categories/深度学习/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
   </li>
         
         
@@ -294,14 +310,6 @@
           <li class="menu-item menu-item-linux">
     <a href="/categories/Linux/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-caffe2">
-    <a href="/categories/Caffe2/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
   </li>
         
         
@@ -341,15 +349,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">25</span></a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-life">
-    <a href="/life/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-child"></i> <br />生活杂记</a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">28</span></a>
   </li>
         
         
@@ -581,7 +581,74 @@
       
 
       
-        <h1 id="为什么需要激活函数"><a href="#为什么需要激活函数" class="headerlink" title="为什么需要激活函数"></a>为什么需要激活函数</h1><h2 id="标准说法"><a href="#标准说法" class="headerlink" title="标准说法"></a>标准说法</h2><p>这是由激活函数的性质所决定来, 一般来说, 激活函数都具有以下性质:</p>
+        <h1 id="常用激活函数及其导数"><a href="#常用激活函数及其导数" class="headerlink" title="常用激活函数及其导数"></a>常用激活函数及其导数</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>激活函数</th>
+<th>形式</th>
+<th>导数形式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sigmoid</td>
+<td>$f(x) =\frac{1}{1+e^{-x}}$</td>
+<td>$f’(x)(1-f(x))$</td>
+</tr>
+<tr>
+<td>Tanh</td>
+<td>$f(x) = tanh(x)= \frac{e^x-e^{-x}}{e^x+e^{-x}}$</td>
+<td>$f’(x) = 1-(f(z))^2$</td>
+</tr>
+<tr>
+<td>ReLU</td>
+<td>$f(x)=max(0,x)=\begin{cases} 0 &amp; x \leq 0 \\ x &amp; x&gt;0 \end{cases}$</td>
+<td>$f’(x)=\begin{cases} 0 &amp; x\leq 0 \\ 1 &amp; x&gt;0 \end{cases}$</td>
+</tr>
+<tr>
+<td>Leaky ReLU</td>
+<td>$f(x)=max(0.001 x,x)=\begin{cases} 0.001x &amp; x \leq 0 \\ x &amp; x&gt;0 \end{cases}a$</td>
+<td>$f(x)=max(0.001 x,x)=\begin{cases} 0.001  &amp; x \leq 0 \\ 1 &amp; x&gt;0 \end{cases}$</td>
+</tr>
+<tr>
+<td>PReLU</td>
+<td>$f(x)=max(\alpha x,x)=\begin{cases} \alpha x &amp; x \leq 0 \\ x &amp; x&gt;0 \end{cases}$</td>
+<td>$f(x)=max(\alpha x,x)=\begin{cases} \alpha  &amp; x \leq 0 \\ 1 &amp; x&gt;0 \end{cases}$</td>
+</tr>
+<tr>
+<td>RReLU</td>
+<td>PReLU中的 $\alpha$ 随机取值</td>
+<td></td>
+</tr>
+<tr>
+<td>ELU</td>
+<td>$f(x) = \begin{cases} x &amp; x \geq 0 \\ \alpha(e^x - 1) &amp; x&lt;0 \end{cases}$</td>
+<td>$f(x) = \begin{cases} 1 &amp; x \geq 0 \\ \alpha e^x &amp; x&lt;0 \end{cases}$</td>
+</tr>
+<tr>
+<td>Maxout</td>
+<td>$f(x) = max(w_1^T x + b_1, w_2^T x + b_2)$</td>
+<td>$f(x) = max(w_1, w_2)$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="常用激活函数及其导数的图像"><a href="#常用激活函数及其导数的图像" class="headerlink" title="常用激活函数及其导数的图像"></a>常用激活函数及其导数的图像</h1><p>Sigmoid</p>
+<p><img src="https://wx1.sinaimg.cn/mw1024/d7b90c85ly1fvogxnqyyaj20pk0fdt9w.jpg" alt=""></p>
+<p>Tanh</p>
+<p><img src="https://wx1.sinaimg.cn/mw1024/d7b90c85ly1fvogum5rp4j20r20e8dh3.jpg" alt=""></p>
+<p>ReLU</p>
+<p><img src="https://wx1.sinaimg.cn/mw1024/d7b90c85ly1fvogxnqp8rj20q50fmdh1.jpg" alt=""></p>
+<p>LeakyReLU</p>
+<p><img src="https://wx4.sinaimg.cn/mw1024/d7b90c85ly1fvogum6rpej20qq0gt3zu.jpg" alt=""></p>
+<p>PReLU</p>
+<p><img src="https://wx2.sinaimg.cn/mw1024/d7b90c85ly1fvogum6ou5j20qp0htwfv.jpg" alt=""></p>
+<p>RReLU</p>
+<p><img src="https://wx3.sinaimg.cn/mw1024/d7b90c85ly1fvogum8mbfj20qw0gagn1.jpg" alt=""></p>
+<p>ELU</p>
+<p><img src="https://wx3.sinaimg.cn/mw1024/d7b90c85ly1fvogum93q2j20pt0hfmyl.jpg" alt=""></p>
+<h1 id="为什么需要激活函数"><a href="#为什么需要激活函数" class="headerlink" title="为什么需要激活函数"></a>为什么需要激活函数</h1><h2 id="标准说法"><a href="#标准说法" class="headerlink" title="标准说法"></a>标准说法</h2><p>这是由激活函数的性质所决定来, 一般来说, 激活函数都具有以下性质:</p>
 <ul>
 <li><strong>非线性:</strong> 首先,线性函数可以高效可靠对数据进行拟合, 但是现实生活中往往存在一些非线性的问题(如XOR), 这个时候, 我们就需要借助激活函数的非线性来对数据的分布进行重新映射, 从而获得更强大的拟合能力. (这个是最主要的原因, 其他还有下面这些性质也使得我们选择激活函数作为网络常用层)</li>
 <li><strong>可微性:</strong> 这一点有助于我们使用梯度下降发来对网络进行优化</li>
@@ -628,7 +695,7 @@
 </table>
 </div>
 <p>首先构造一个简单的神经网络来尝试解决XOR问题, 网络结构如下图所示:</p>
-<p><img src="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fvp2xuesrjj208706v0st.jpg" alt=""></p>
+<p><img src="https://wx4.sinaimg.cn/mw1024/d7b90c85ly1fvp2xuesrjj208706v0st.jpg" alt=""></p>
 <p>先来看看不使用激活函数时的情况, 当不使用激活函数时, 整个网络的函数表达式如下所示:</p>
 <script type="math/tex; mode=display">y = f(x_1, x_2; W, c, w ,b) = [w_1, w_2] \bigg( \bigg[\begin{matrix} W_{11} & W_{12} \\ W_{21} & W_{22} \end{matrix} \bigg] \Big[\begin{matrix} x_1 \\ x_2 \end{matrix} \Big]+ \Big[\begin{matrix} c_1 \\ c_2 \end{matrix} \Big] \bigg) + b = (w^TW^T)x + (w^Tc+b) = w'^Tx+b'</script><p>可以看到, 多层无激活函数的网络叠加, 首先是会退化成单层网络, 而对于单层网络, 求解出来的参数 $w’$ 和 $b’$ 无法对非线性的数据进行分类.</p>
 <p>再来看看进入ReLU以后, 是如何解决XOR问题的, 首先, 引入后的公式如下所示:</p>
@@ -648,97 +715,30 @@
 <tr>
 <td>1</td>
 <td>0</td>
-<td>$[1, -2] max \bigg(0 , \bigg[\begin{matrix} 1 &amp; 1 \ 1 &amp; 1 \end{matrix} \bigg] \Big[\begin{matrix} 1 \ 0 \end{matrix} \Big]+ \Big[\begin{matrix} 0 \ -1 \end{matrix} \Big] \bigg) + 0$</td>
+<td>$[1, -2] max \bigg(0 , \bigg[\begin{matrix} 1 &amp; 1 \\ 1 &amp; 1 \end{matrix} \bigg] \Big[\begin{matrix} 1 \\ 0 \end{matrix} \Big]+ \Big[\begin{matrix} 0 \\ -1 \end{matrix} \Big] \bigg) + 0$</td>
 <td>1</td>
 </tr>
 <tr>
 <td>0</td>
 <td>1</td>
-<td>$[1, -2] max \bigg(0 , \bigg[\begin{matrix} 1 &amp; 1 \ 1 &amp; 1 \end{matrix} \bigg] \Big[\begin{matrix} 0 \ 1 \end{matrix} \Big]+ \Big[\begin{matrix} 0 \ -1 \end{matrix} \Big] \bigg) + 0$</td>
+<td>$[1, -2] max \bigg(0 , \bigg[\begin{matrix} 1 &amp; 1 \\ 1 &amp; 1 \end{matrix} \bigg] \Big[\begin{matrix} 0 \\ 1 \end{matrix} \Big]+ \Big[\begin{matrix} 0 \\ -1 \end{matrix} \Big] \bigg) + 0$</td>
 <td>1</td>
 </tr>
 <tr>
 <td>1</td>
 <td>1</td>
-<td>$[1, -2] max \bigg(0 , \bigg[\begin{matrix} 1 &amp; 1 \ 1 &amp; 1 \end{matrix} \bigg] \Big[\begin{matrix} 1 \ 1 \end{matrix} \Big]+ \Big[\begin{matrix} 0 \ -1 \end{matrix} \Big] \bigg) + 0$</td>
+<td>$[1, -2] max \bigg(0 , \bigg[\begin{matrix} 1 &amp; 1 \\ 1 &amp; 1 \end{matrix} \bigg] \Big[\begin{matrix} 1 \\ 1 \end{matrix} \Big]+ \Big[\begin{matrix} 0 \\ -1 \end{matrix} \Big] \bigg) + 0$</td>
 <td>0</td>
 </tr>
 <tr>
 <td>0</td>
 <td>0</td>
-<td>$[1, -2] max \bigg(0 , \bigg[\begin{matrix} 1 &amp; 1 \ 1 &amp; 1 \end{matrix} \bigg] \Big[\begin{matrix} 0 \ 0 \end{matrix} \Big]+ \Big[\begin{matrix} 0 \ -1 \end{matrix} \Big] \bigg) + 0$</td>
+<td>$[1, -2] max \bigg(0 , \bigg[\begin{matrix} 1 &amp; 1 \\ 1 &amp; 1 \end{matrix} \bigg] \Big[\begin{matrix} 0 \\ 0 \end{matrix} \Big]+ \Big[\begin{matrix} 0 \\ -1 \end{matrix} \Big] \bigg) + 0$</td>
 <td>0</td>
 </tr>
 </tbody>
 </table>
 </div>
-<h1 id="常用激活函数及其导数"><a href="#常用激活函数及其导数" class="headerlink" title="常用激活函数及其导数"></a>常用激活函数及其导数</h1><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>激活函数</th>
-<th>形式</th>
-<th>导数形式</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Sigmoid</td>
-<td>$f(x) =\frac{1}{1+e^{-x}}$</td>
-<td>$f’(x)(1-f(x))$</td>
-</tr>
-<tr>
-<td>Tanh</td>
-<td>$f(x) = tanh(x)= \frac{e^x-e^{-x}}{e^x+e^{-x}}$</td>
-<td>$f’(x) = 1-(f(z))^2$</td>
-</tr>
-<tr>
-<td>ReLU</td>
-<td>$f(x)=max(0,x)=\begin{cases} 0 &amp; x \leq 0 \ x &amp; x&gt;0 \end{cases}$</td>
-<td>$f’(x)=\begin{cases} 0 &amp; x\leq 0 \ 1 &amp; x&gt;0 \end{cases}$</td>
-</tr>
-<tr>
-<td>Leaky ReLU</td>
-<td>$f(x)=max(0.001 x,x)=\begin{cases} 0.001x &amp; x \leq 0 \ x &amp; x&gt;0 \end{cases}a$</td>
-<td>$f(x)=max(0.001 x,x)=\begin{cases} 0.001  &amp; x \leq 0 \ 1 &amp; x&gt;0 \end{cases}$</td>
-</tr>
-<tr>
-<td>PReLU</td>
-<td>$f(x)=max(\alpha x,x)=\begin{cases} \alpha x &amp; x \leq 0 \ x &amp; x&gt;0 \end{cases}$</td>
-<td>$f(x)=max(\alpha x,x)=\begin{cases} \alpha  &amp; x \leq 0 \ 1 &amp; x&gt;0 \end{cases}$</td>
-</tr>
-<tr>
-<td>RReLU</td>
-<td>PReLU中的 $\alpha$ 随机取值</td>
-<td></td>
-</tr>
-<tr>
-<td>ELU</td>
-<td>$f(x) = \begin{cases} x &amp; x \geq 0 \ \alpha(e^x - 1) &amp; x&lt;0 \end{cases}$</td>
-<td>$f(x) = \begin{cases} 1 &amp; x \geq 0 \ \alpha e^x &amp; x&lt;0 \end{cases}$</td>
-</tr>
-<tr>
-<td>Maxout</td>
-<td>$f(x) = max(w_1^T x + b_1, w_2^T x + b_2)$</td>
-<td>$f(x) = max(w_1, w_2)$</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h1 id="常用激活函数及其导数的图像"><a href="#常用激活函数及其导数的图像" class="headerlink" title="常用激活函数及其导数的图像"></a>常用激活函数及其导数的图像</h1><p>Sigmoid</p>
-<p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvogxnqyyaj20pk0fdt9w.jpg" alt=""></p>
-<p>Tanh</p>
-<p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvogum5rp4j20r20e8dh3.jpg" alt=""></p>
-<p>ReLU</p>
-<p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvogxnqp8rj20q50fmdh1.jpg" alt=""></p>
-<p>LeakyReLU</p>
-<p><img src="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fvogum6rpej20qq0gt3zu.jpg" alt=""></p>
-<p>PReLU</p>
-<p><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fvogum6ou5j20qp0htwfv.jpg" alt=""></p>
-<p>RReLU</p>
-<p><img src="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvogum8mbfj20qw0gagn1.jpg" alt=""></p>
-<p>ELU</p>
-<p><img src="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvogum93q2j20pt0hfmyl.jpg" alt=""></p>
 <h1 id="关于各个激活函数的比较和适用场景"><a href="#关于各个激活函数的比较和适用场景" class="headerlink" title="关于各个激活函数的比较和适用场景"></a>关于各个激活函数的比较和适用场景</h1><p><strong>神经元饱和问题:</strong> 当输入值很大或者很小时, 其梯度值接近于0, 此时, 不管从深层网络中传来何种梯度值, 它向浅层网络中传过去的, 都是趋近于0的数, 进而引发梯度消失问题</p>
 <p><strong>zero-centered:</strong> 如果数据分布不是zero-centered的话就会导致后一层的神经元接受的输入永远为正或者永远为负, 因为 $\frac{\partial f}{\partial w} = x$ , 所以如果x的符号固定,那么 $\frac{\partial f}{\partial w}$ 的符号也就固定了, 这样在训练时, weight的更新只会沿着一个方向更新, 但是我们希望的是类似于zig-zag形式的更新路径 (关于非0均值问题, 由于通常训练时是按batch训练的, 所以每个batch会得到不同的信号, 这在一定程度上可以缓解非0均值问题带来的影响, 这也是ReLU虽然不是非0 均值, 但是却称为主流激活函数的原因之一)</p>
 <div class="table-container">
@@ -928,7 +928,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">131</span>
+                    <span class="site-state-item-count">180</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -963,7 +963,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1026,7 +1030,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">25</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1090,7 +1100,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么需要激活函数"><span class="nav-text">为什么需要激活函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标准说法"><span class="nav-text">标准说法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更形象的解释"><span class="nav-text">更形象的解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用ReLU解决XOR问题"><span class="nav-text">用ReLU解决XOR问题.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用激活函数及其导数"><span class="nav-text">常用激活函数及其导数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用激活函数及其导数的图像"><span class="nav-text">常用激活函数及其导数的图像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于各个激活函数的比较和适用场景"><span class="nav-text">关于各个激活函数的比较和适用场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他要点"><span class="nav-text">其他要点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sigmoid-和softmax区别"><span class="nav-text">sigmoid 和softmax区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他更多激活函数"><span class="nav-text">其他更多激活函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#常用激活函数及其导数"><span class="nav-text">常用激活函数及其导数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用激活函数及其导数的图像"><span class="nav-text">常用激活函数及其导数的图像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么需要激活函数"><span class="nav-text">为什么需要激活函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标准说法"><span class="nav-text">标准说法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更形象的解释"><span class="nav-text">更形象的解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用ReLU解决XOR问题"><span class="nav-text">用ReLU解决XOR问题.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于各个激活函数的比较和适用场景"><span class="nav-text">关于各个激活函数的比较和适用场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他要点"><span class="nav-text">其他要点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sigmoid-和softmax区别"><span class="nav-text">sigmoid 和softmax区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他更多激活函数"><span class="nav-text">其他更多激活函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
@@ -1127,7 +1137,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">471k</span>
+    <span title="站点总字数">735k</span>
   
 
   
@@ -1136,7 +1146,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">7:08</span>
+    <span title="站点阅读时长">11:08</span>
   
 </div>
 

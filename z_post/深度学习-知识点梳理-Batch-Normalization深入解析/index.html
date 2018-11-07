@@ -119,7 +119,7 @@
 <meta property="og:image" content="https://morvanzhou.github.io/static/results/ML-intro/NB2.png">
 <meta property="og:image" content="https://morvanzhou.github.io/static/results/ML-intro/NB5.png">
 <meta property="og:image" content="https://morvanzhou.github.io/static/results/ML-intro/NB6.png">
-<meta property="og:updated_time" content="2018-10-05T10:56:30.997Z">
+<meta property="og:updated_time" content="2018-10-16T06:51:11.129Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Batch-Normalization深入解析">
 <meta name="twitter:description" content="BN:总的来说，BN通过将每一层网络的输入进行normalization，保证输入分布的均值与方差固定在一定范围内，减少了网络中的Internal Covariate Shift问题，并在一定程度上缓解了梯度消失，加速了模型收敛；并且BN使得网络对参数、激活函数更加具有鲁棒性，降低了神经网络模型训练和调参的复杂度；最后BN训练过程中由于使用mini-batch的mean/variance每次都不同">
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">131</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">180</span></a>
   </li>
         
         
@@ -265,6 +265,22 @@
           <li class="menu-item menu-item-深度学习">
     <a href="/categories/深度学习/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
   </li>
         
         
@@ -289,14 +305,6 @@
           <li class="menu-item menu-item-linux">
     <a href="/categories/Linux/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-caffe2">
-    <a href="/categories/Caffe2/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
   </li>
         
         
@@ -336,15 +344,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">25</span></a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-life">
-    <a href="/life/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-child"></i> <br />生活杂记</a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">28</span></a>
   </li>
         
         
@@ -542,7 +542,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">3.5k</span>
+                <span title="本文字数">3.8k</span>
               
 
               
@@ -599,7 +599,8 @@
 <p>(1)白化(PCA白化和ZCA白化):</p>
 <ul>
 <li>使得输入特征分布具有相同的均值与方差</li>
-<li>取出特征之间的相关性<br>-<br>通过白化操作，我们可以减缓ICS的问题，进而固定了每一层网络输入分布，加速网络训练过程的收敛</li>
+<li>取出特征之间的相关性</li>
+<li>通过白化操作，我们可以减缓ICS的问题，进而固定了每一层网络输入分布，加速网络训练过程的收敛</li>
 </ul>
 <p>白化缺点:</p>
 <ul>
@@ -607,7 +608,7 @@
 <li><strong>白化过程由于改变了网络每一层的分布</strong>，因而改变了网络层中本身数据的表达能力。底层网络学习到的参数信息会被白化操作丢失掉。</li>
 </ul>
 <p>于是就提出了BN</p>
-<h1 id="什么是Batch-Normalization"><a href="#什么是Batch-Normalization" class="headerlink" title="什么是Batch Normalization"></a>什么是Batch Normalization</h1><p>传统的Normalization使用的均值和方差是整个训练集的均值和方差, 而Batch Normalization按字面意思就是对每一批数据进行归一化, 所以, 首先要将传统的标准化中的n改为m, m表示一个batch的大小,如下所示:</p>
+<h1 id="什么是Batch-Normalization"><a href="#什么是Batch-Normalization" class="headerlink" title="什么是Batch Normalization"></a>什么是Batch Normalization</h1><p>传统的Normalization使用的均值和方差是整个训练集的均值和方差, 并且只对输入层的数据做归一化, 而Batch Normalization按字面意思就是对每一批数据进行归一化, 同时会对每一层输入做归一化, 所以, 首先要将传统的标准化中的n改为m, m表示一个batch的大小,如下所示:</p>
 <script type="math/tex; mode=display">\mu = \frac{1}{m}\sum_{i=1}^{m}{x_i}</script><script type="math/tex; mode=display">\sigma^2 = \frac{1}{m} \sum_{i=1}^{m}{(x_i - \mu)}</script><script type="math/tex; mode=display">\hat x_i = \frac{x_i - \mu}{\sqrt{\sigma^2}+\varepsilon}</script><p>传统的Normalization直接使用了减均值除方差的方式来进行标准化, 但是, 这样一概而全的方法未必对所有数据来说就是最优的, 比如数据本身就不对称, 或者激活函数未必对方差为1的数据有最好的效果, 所以, BN的想法是在传统标准化之后再加上一个线性变换,如下所示:</p>
 <script type="math/tex; mode=display">\hat y_i = \gamma \hat x_i + \beta</script><p>其中,$\gamma$ 和 $\beta$ 是两个需要学习的参数, <strong> 可以看出, BN的本质就是利用参数优化来改变一下数据分布的方差大小和均值的位置. </strong></p>
 <h1 id="BN的优点"><a href="#BN的优点" class="headerlink" title="BN的优点"></a>BN的优点</h1><p>（1）BN使得网络中每层输入数据的分布相对稳定，加速模型学习速度</p>
@@ -624,14 +625,18 @@
 <p><strong>（4）BN具有一定的正则化效果</strong></p>
 <p>在Batch Normalization中，由于我们使用mini-batch的均值与方差作为对整体训练样本均值与方差的估计，尽管每一个batch中的数据都是从总体样本中抽样得到，但不同mini-batch的均值与方差会有所不同，这就为网络的学习过程中增加了随机噪音，与Dropout通过关闭神经元给网络训练带来噪音类似，在一定程度上对模型起到了正则化的效果。</p>
 <p><strong>另外，原作者也证明了网络加入BN后，可以丢弃Dropout，模型也同样具有很好的泛化效果。</strong></p>
+<h1 id="BN的具体实现及其反向传播"><a href="#BN的具体实现及其反向传播" class="headerlink" title="BN的具体实现及其反向传播"></a>BN的具体实现及其反向传播</h1><p><a href="https://www.jianshu.com/p/4270f5acc066" target="_blank" rel="noopener">https://www.jianshu.com/p/4270f5acc066</a><br><a href="https://zhuanlan.zhihu.com/p/27938792" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/27938792</a></p>
+<p>在Caffe2实现中, BN层需要和Scale层配合使用, 其中, BN专门用于做归一化操作, 而后续的线性变换层, 会交给Scale层去做.</p>
+<p>训练阶段:<br>在训练时利用当前batch的mean和variance来进行BN处理, 同时使用滑动平均的方式不断的更新global 的mean和variance, 并将其存储起来.</p>
+<p>测试阶段:<br>在预测阶段, 直接使用模型存储好的均值和方差进行计算</p>
 <h1 id="使用BN时应注意的问题"><a href="#使用BN时应注意的问题" class="headerlink" title="使用BN时应注意的问题"></a>使用BN时应注意的问题</h1><ol>
-<li>测试阶段的使用</li>
+<li>训练/测试阶段的使用</li>
 </ol>
-<p>在实际应用中, 这两个参数是通过在每个batch的数据上得到的, 注意, BN在训练过程中会记录整个数据的均值和方差,训练结束后将其作为预测阶段使用的均值和方差, 或者对train阶段的每个batch的均值和方差进行加权平均来得到最终的均值和方差</p>
+<p>在实际应用中, 均值和方差是通过滑动平均方法在训练数据集上得到的, 如果换了其他的任务或数据集, 建议先finetune之后再使用BN层存储的均值和方差.  同时, 注意训练时的均值和方差是来自于当前batch的.</p>
 <ol>
 <li>隐藏层中BN的数据大小</li>
 </ol>
-<p>在卷积网络隐藏层中, BN的大小不单单是batch, 而是batch和特征相应图大小的乘积. 也就是说, 在隐藏层, 层的输入是上一层的输出, 也就是上一层的神经元个数, 而对于上一层来说, 如果输出的特征相应图大小为 $w\times h$ , 那么上一层的神经元个数就应该是 $b\times w \times h$, 其中,b是指batch的大小</p>
+<p><del>在卷积网络隐藏层中, BN的大小不单单是batch, 而是batch和特征相应图大小的乘积. 也就是说, 在隐藏层, 层的输入是上一层的输出, 也就是上一层的神经元个数, 而对于上一层来说, 如果输出的特征相应图大小为 $w\times h$ , 那么上一层的神经元个数就应该是 $b\times w \times h$, 其中,b是指batch的大小</del></p>
 
       
     </div>
@@ -755,7 +760,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">131</span>
+                    <span class="site-state-item-count">180</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -790,7 +795,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -853,7 +862,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">25</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -917,7 +932,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Normalization"><span class="nav-text">Normalization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要进行Normalization"><span class="nav-text">为什么要进行Normalization?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN的提出背景"><span class="nav-text">BN的提出背景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Internal-Covariate-Shift"><span class="nav-text">Internal Covariate Shift</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是Batch-Normalization"><span class="nav-text">什么是Batch Normalization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN的优点"><span class="nav-text">BN的优点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用BN时应注意的问题"><span class="nav-text">使用BN时应注意的问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Normalization"><span class="nav-text">Normalization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要进行Normalization"><span class="nav-text">为什么要进行Normalization?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN的提出背景"><span class="nav-text">BN的提出背景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Internal-Covariate-Shift"><span class="nav-text">Internal Covariate Shift</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是Batch-Normalization"><span class="nav-text">什么是Batch Normalization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN的优点"><span class="nav-text">BN的优点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN的具体实现及其反向传播"><span class="nav-text">BN的具体实现及其反向传播</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用BN时应注意的问题"><span class="nav-text">使用BN时应注意的问题</span></a></li></ol></div>
             
 
           </div>
@@ -954,7 +969,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">471k</span>
+    <span title="站点总字数">735k</span>
   
 
   
@@ -963,7 +978,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">7:08</span>
+    <span title="站点阅读时长">11:08</span>
   
 </div>
 

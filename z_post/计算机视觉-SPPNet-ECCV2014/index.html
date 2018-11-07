@@ -108,20 +108,20 @@
 
 
 
-  <meta name="description" content="文章: Spatial Pyramid Pooling in Deep Convolutional Networks for Visual Recognition 作者: Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun 背景介绍指明固定图片输入尺寸的缺点: 需要剪裁或wrap图片, 无法包含整个图片信息, 导致信息丢失或引起形变 破除尺寸">
+  <meta name="description" content="文章: Spatial Pyramid Pooling in Deep Convolutional Networks for Visual Recognition 作者: Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun 核心亮点(1) 提出了一种新的池化方法—-空间金字塔池化SPP:  可以接受任意尺寸的输入图片,并生成固定长度的表征向量">
 <meta name="keywords" content="目标检测">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SPPNet-ECCV2014">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-SPPNet-ECCV2014/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="文章: Spatial Pyramid Pooling in Deep Convolutional Networks for Visual Recognition 作者: Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun 背景介绍指明固定图片输入尺寸的缺点: 需要剪裁或wrap图片, 无法包含整个图片信息, 导致信息丢失或引起形变 破除尺寸">
+<meta property="og:description" content="文章: Spatial Pyramid Pooling in Deep Convolutional Networks for Visual Recognition 作者: Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun 核心亮点(1) 提出了一种新的池化方法—-空间金字塔池化SPP:  可以接受任意尺寸的输入图片,并生成固定长度的表征向量">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fw6muop69aj20mn0j7mzu.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fw6pd0czr9j20n10ltn0b.jpg">
-<meta property="og:updated_time" content="2018-10-14T08:44:19.173Z">
+<meta property="og:updated_time" content="2018-10-22T09:56:26.954Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SPPNet-ECCV2014">
-<meta name="twitter:description" content="文章: Spatial Pyramid Pooling in Deep Convolutional Networks for Visual Recognition 作者: Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun 背景介绍指明固定图片输入尺寸的缺点: 需要剪裁或wrap图片, 无法包含整个图片信息, 导致信息丢失或引起形变 破除尺寸">
+<meta name="twitter:description" content="文章: Spatial Pyramid Pooling in Deep Convolutional Networks for Visual Recognition 作者: Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun 核心亮点(1) 提出了一种新的池化方法—-空间金字塔池化SPP:  可以接受任意尺寸的输入图片,并生成固定长度的表征向量">
 <meta name="twitter:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fw6muop69aj20mn0j7mzu.jpg">
 
 
@@ -247,7 +247,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">131</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">180</span></a>
   </li>
         
         
@@ -264,6 +264,22 @@
           <li class="menu-item menu-item-深度学习">
     <a href="/categories/深度学习/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
   </li>
         
         
@@ -288,14 +304,6 @@
           <li class="menu-item menu-item-linux">
     <a href="/categories/Linux/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-caffe2">
-    <a href="/categories/Caffe2/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
   </li>
         
         
@@ -335,15 +343,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">25</span></a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-life">
-    <a href="/life/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-child"></i> <br />生活杂记</a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">28</span></a>
   </li>
         
         
@@ -577,8 +577,6 @@
       
         <p><strong>文章:</strong> Spatial Pyramid Pooling in Deep Convolutional Networks for Visual Recognition</p>
 <p><strong>作者:</strong> Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun</p>
-<h1 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h1><p>指明固定图片输入尺寸的缺点: 需要剪裁或wrap图片, 无法包含整个图片信息, 导致信息丢失或引起形变</p>
-<p>破除尺寸限制的做法: 在最后一个卷积层之后, 添加SPP层,  <strong>SPP层可以将不同尺寸的feature map池化成固定长度的特征向量.</strong>, 之后, 仍然与普通网络一样, 后街全连接层或者其他分类器</p>
 <h1 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h1><p><strong>(1) 提出了一种新的池化方法—-空间金字塔池化SPP</strong>:</p>
 <ul>
 <li>可以接受任意尺寸的输入图片,并生成固定长度的表征向量</li>
@@ -590,12 +588,14 @@
 <li>大大提升了模型训练和预测的速度(在预测阶段, 比RCNN快24~102倍, 同时取得了更好的精度).</li>
 </ul>
 <p><strong>注1: 在特征图谱上使用检测方法不是首次提出</strong>, 而SPP的贡献可以结合了deep CNN结构强大的特征提取能力和SPP的灵活性, 使得精度和速度同时提高<br>注2: 相比于RCNN, SPPNet使用了EdgeBoxes( $0.2s/img$ )的方法来进行候选区域推荐, 而不是Selective Search( $1\sim 2s/img$ )<br>注3: SPPNet在ILSVRC2014的目标检测任务上取得第二名, 在图片分类任务上取得第三名</p>
-<h1 id="关键技术"><a href="#关键技术" class="headerlink" title="关键技术"></a>关键技术</h1><p>本文的核心就在于SPPNet, 其主要用法是在卷积神经网络的最后一层卷积特征图谱上, 通过多尺度的网格划分, 接受任意尺寸的特征图谱输入, 同时输出固定长度的特征向量, 以此来实现网络模型接受任意尺寸图片输入的目的.</p>
+<h1 id="论文细节"><a href="#论文细节" class="headerlink" title="论文细节"></a>论文细节</h1><h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>指明固定图片输入尺寸的缺点: 需要剪裁或wrap图片, 无法包含整个图片信息, 导致信息丢失或引起形变</p>
+<p>破除尺寸限制的做法: 在最后一个卷积层之后, 添加SPP层,  <strong>SPP层可以将不同尺寸的feature map池化成固定长度的特征向量.</strong>, 之后, 仍然与普通网络一样, 后街全连接层或者其他分类器</p>
+<h2 id="SPP"><a href="#SPP" class="headerlink" title="SPP"></a>SPP</h2><p>本文的核心就在于SPPNet, 其主要用法是在卷积神经网络的最后一层卷积特征图谱上, 通过多尺度的网格划分, 接受任意尺寸的特征图谱输入, 同时输出固定长度的特征向量, 以此来实现网络模型接受任意尺寸图片输入的目的.</p>
 <p>SPPNet实现原理如下图所示:</p>
 <p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fw6muop69aj20mn0j7mzu.jpg" alt=""></p>
 <p>首先, 设定好固定的网格划分方法, 以便得到spatial bins, 如上图, 有三种不同spatial bins, 网格划分力度分别为 4×4, 2×2 和 1×1, 因此, spatial bins的数量为:$4\times 4+2\times 2+ 1\times 1 = 21 = M$, 图中的256代表最后一层卷积层的filter的数量, 也就是特征图谱的depth = $k$. 因此, SPP层的输出为 $kM$ 维的一维向量.</p>
 <p>注意: 这里最粗粒度的spatial bins 是对整张特征图谱上进行pooling, 这实际上是为了获得一些全局信息.(之前也很很多work集成了这种全局pooling方法, 貌似有助于提升精度, 同时由于是全局信息, 所以相当general, 可以一定程度上起到降低过拟合的作用)</p>
-<h1 id="论文细节"><a href="#论文细节" class="headerlink" title="论文细节"></a>论文细节</h1><p>SPP可以看做是Bag-of-Words(BoW)模型的一种扩展</p>
+<p>SPP可以看做是Bag-of-Words(BoW)模型的一种扩展</p>
 <p>SPP用于deep CNNs时, 具有一些瞩目的性质:</p>
 <ol>
 <li>相比于sliding window pooling的方式, SPP可以生成固定尺寸的特征向量</li>
@@ -669,7 +669,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/Caffe2-Detectron源码解读-数据载入/" rel="prev" title="Caffe2-Detectron源码解读-数据载入">
+              <a href="/z_post/Caffe2-Detectron-数据载入/" rel="prev" title="Caffe2-Detectron源码解读-数据载入">
                 <i class="fa fa-chevron-left"></i> Caffe2-Detectron源码解读-数据载入
               </a>
             
@@ -759,7 +759,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">131</span>
+                    <span class="site-state-item-count">180</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -794,7 +794,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -857,7 +861,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">25</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -921,7 +931,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景介绍"><span class="nav-text">背景介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#核心亮点"><span class="nav-text">核心亮点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关键技术"><span class="nav-text">关键技术</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#论文细节"><span class="nav-text">论文细节</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Deep-Networks-With-Spatial-Pyramid-Pooling"><span class="nav-text">Deep Networks With Spatial Pyramid Pooling</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#卷积层和特征图谱"><span class="nav-text">卷积层和特征图谱</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Training-the-Network"><span class="nav-text">Training the Network</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Single-size-training"><span class="nav-text">Single-size training</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Multi-size-training"><span class="nav-text">Multi-size training</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SPP-Net-For-Image-Classification"><span class="nav-text">SPP-Net For Image Classification</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Experiments-on-ImageNet-2012-Classifization"><span class="nav-text">Experiments on ImageNet 2012 Classifization</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Baseling-Network-Architectures"><span class="nav-text">Baseling Network Architectures</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Multi-level-Pooling-Improves-Accuracy"><span class="nav-text">Multi-level Pooling Improves Accuracy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Multi-size-Training-Improves-Accuracy"><span class="nav-text">Multi-size Training Improves Accuracy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Full-image-Representations-Improve-Accuracy"><span class="nav-text">Full-image Representations Improve Accuracy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Multi-view-Testing-on-Feature-Maps"><span class="nav-text">Multi-view Testing on Feature Maps</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Experiments-on-VOC-2007-Classification"><span class="nav-text">Experiments on VOC 2007 Classification</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Experiments-on-Caltech101"><span class="nav-text">Experiments on Caltech101</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SPP-Net-For-Object-Detection"><span class="nav-text">SPP-Net For Object Detection</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Detection-Algorithm"><span class="nav-text">Detection Algorithm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Detection-Results"><span class="nav-text">Detection Results</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Complexity-and-Running-Time"><span class="nav-text">Complexity and Running Time</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Model-Combination-for-Detection"><span class="nav-text">Model Combination for Detection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ILSVRC-2014-Detection"><span class="nav-text">ILSVRC 2014 Detection</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Appendix-A"><span class="nav-text">Appendix A</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mean-Subtraction"><span class="nav-text">Mean Subtraction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Implementatioin-of-Pooling-Bins"><span class="nav-text">Implementatioin of Pooling Bins</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mapping-a-Window-to-Featrue-Maps"><span class="nav-text">Mapping a Window to Featrue Maps</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#核心亮点"><span class="nav-text">核心亮点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#论文细节"><span class="nav-text">论文细节</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景介绍"><span class="nav-text">背景介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SPP"><span class="nav-text">SPP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deep-Networks-With-Spatial-Pyramid-Pooling"><span class="nav-text">Deep Networks With Spatial Pyramid Pooling</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#卷积层和特征图谱"><span class="nav-text">卷积层和特征图谱</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Training-the-Network"><span class="nav-text">Training the Network</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Single-size-training"><span class="nav-text">Single-size training</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Multi-size-training"><span class="nav-text">Multi-size training</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SPP-Net-For-Image-Classification"><span class="nav-text">SPP-Net For Image Classification</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Experiments-on-ImageNet-2012-Classifization"><span class="nav-text">Experiments on ImageNet 2012 Classifization</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Baseling-Network-Architectures"><span class="nav-text">Baseling Network Architectures</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Multi-level-Pooling-Improves-Accuracy"><span class="nav-text">Multi-level Pooling Improves Accuracy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Multi-size-Training-Improves-Accuracy"><span class="nav-text">Multi-size Training Improves Accuracy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Full-image-Representations-Improve-Accuracy"><span class="nav-text">Full-image Representations Improve Accuracy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Multi-view-Testing-on-Feature-Maps"><span class="nav-text">Multi-view Testing on Feature Maps</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Experiments-on-VOC-2007-Classification"><span class="nav-text">Experiments on VOC 2007 Classification</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Experiments-on-Caltech101"><span class="nav-text">Experiments on Caltech101</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SPP-Net-For-Object-Detection"><span class="nav-text">SPP-Net For Object Detection</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Detection-Algorithm"><span class="nav-text">Detection Algorithm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Detection-Results"><span class="nav-text">Detection Results</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Complexity-and-Running-Time"><span class="nav-text">Complexity and Running Time</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Model-Combination-for-Detection"><span class="nav-text">Model Combination for Detection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ILSVRC-2014-Detection"><span class="nav-text">ILSVRC 2014 Detection</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Appendix-A"><span class="nav-text">Appendix A</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mean-Subtraction"><span class="nav-text">Mean Subtraction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Implementatioin-of-Pooling-Bins"><span class="nav-text">Implementatioin of Pooling Bins</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mapping-a-Window-to-Featrue-Maps"><span class="nav-text">Mapping a Window to Featrue Maps</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -958,7 +968,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">471k</span>
+    <span title="站点总字数">735k</span>
   
 
   
@@ -967,7 +977,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">7:08</span>
+    <span title="站点阅读时长">11:08</span>
   
 </div>
 

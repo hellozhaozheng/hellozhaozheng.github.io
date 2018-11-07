@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="roidb数据结构roidb的类型是list, 其中的每个元素的数据类型都是dict, roidb列表的长度为数据集的数量(即图片的数量), roidb中每个元素的详细情况如下表所示:     for entry in roidb 数据类型 详细说明     entry[&amp;#39;id&amp;#39;] int 代表了当前image的img_id   entry[&amp;#39;file_name&amp;#39;]">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Detectron源码解读-roidb数据结构">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Caffe2-Detectron-roidb数据结构/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="roidb数据结构roidb的类型是list, 其中的每个元素的数据类型都是dict, roidb列表的长度为数据集的数量(即图片的数量), roidb中每个元素的详细情况如下表所示:     for entry in roidb 数据类型 详细说明     entry[&amp;#39;id&amp;#39;] int 代表了当前image的img_id   entry[&amp;#39;file_name&amp;#39;]">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-23T11:35:58.804Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Detectron源码解读-roidb数据结构">
+<meta name="twitter:description" content="roidb数据结构roidb的类型是list, 其中的每个元素的数据类型都是dict, roidb列表的长度为数据集的数量(即图片的数量), roidb中每个元素的详细情况如下表所示:     for entry in roidb 数据类型 详细说明     entry[&amp;#39;id&amp;#39;] int 代表了当前image的img_id   entry[&amp;#39;file_name&amp;#39;]">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/Caffe2-Detectron-roidb数据结构/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Detectron源码解读-roidb数据结构 | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">180</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-linux">
+    <a href="/categories/Linux/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-面试">
+    <a href="/categories/面试/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其它">
+    <a href="/categories/其它/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其它</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">28</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/Caffe2-Detectron-roidb数据结构/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Detectron源码解读-roidb数据结构
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-14 21:27:47" itemprop="dateCreated datePublished" datetime="2018-10-14T21:27:47+08:00">2018-10-14</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Caffe2/" itemprop="url" rel="index"><span itemprop="name">Caffe2</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">17k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">15 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="roidb数据结构"><a href="#roidb数据结构" class="headerlink" title="roidb数据结构"></a>roidb数据结构</h1><p>roidb的类型是<code>list</code>, 其中的每个元素的数据类型都是<code>dict</code>, roidb列表的长度为数据集的数量(即图片的数量), roidb中每个元素的详细情况如下表所示:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><code>for entry in roidb</code></th>
+<th>数据类型</th>
+<th>详细说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>entry[&#39;id&#39;]</code></td>
+<td>int</td>
+<td>代表了当前image的img_id</td>
+</tr>
+<tr>
+<td><code>entry[&#39;file_name&#39;]</code></td>
+<td>string</td>
+<td>表示当前图片的文件名(带有.jpg后缀)</td>
+</tr>
+<tr>
+<td><code>entry[&#39;dataset&#39;]</code></td>
+<td>string</td>
+<td>指明所属的数据集?</td>
+</tr>
+<tr>
+<td><code>entry[&#39;image&#39;]</code></td>
+<td>string</td>
+<td>当前image的文件路径</td>
+</tr>
+<tr>
+<td><code>entry[&#39;flipped&#39;]</code></td>
+<td>bool</td>
+<td>当前图片是否进行翻转</td>
+</tr>
+<tr>
+<td><code>entry[&#39;height&#39;]</code></td>
+<td>int</td>
+<td>当前图片的高度</td>
+</tr>
+<tr>
+<td><code>entry[&#39;width&#39;]</code></td>
+<td>int</td>
+<td>当前图片的宽度</td>
+</tr>
+<tr>
+<td><code>entry[&#39;has_visible_keypoints&#39;]</code></td>
+<td>bool</td>
+<td>是否含有关键点</td>
+</tr>
+<tr>
+<td><code>entry[&#39;boxes&#39;]</code></td>
+<td>float32, numpy数组(num_objs, 4)</td>
+<td>num_objs为当前图片中的目标物体个数, 4代表bbox的坐标</td>
+</tr>
+<tr>
+<td><code>entry[&#39;segms&#39;]</code></td>
+<td>二维列表[[],[],…]</td>
+<td>列表中每个元素都还是一个列表, 其中存储着每个物体的ploygon实例标签</td>
+</tr>
+<tr>
+<td><code>entry[&#39;gt_classes&#39;]</code></td>
+<td>int32, numpy数组(num_objs)</td>
+<td>指明当前图片中每一个obj的真实类别</td>
+</tr>
+<tr>
+<td><code>entry[&#39;seg_areas&#39;]</code></td>
+<td>float32, numpy数组(num_objs)</td>
+<td>代表当前图片中每一个obj的掩膜面积</td>
+</tr>
+<tr>
+<td><code>entry[&#39;gt_overlaps&#39;]</code></td>
+<td>float32, scipy.sparse.csr_matrix数据(num_objs, 81)</td>
+<td>代表每一个obj与81个不同类别的overlap</td>
+</tr>
+<tr>
+<td><code>entry[&#39;is_crowd&#39;]</code></td>
+<td>bool, numpy数组(num_objs)</td>
+<td>代表当前掩膜是否为群落</td>
+</tr>
+<tr>
+<td>entry[‘box_to_gt_ind_map’]</td>
+<td>int32, numpy数组(num_objs)</td>
+<td>该列表存储着box的顺序下标值, 同样是一维数组, 直接拼接,将每一个roi映射到一个index上, index是在entry[‘gt_classes’]&gt;0的rois列表的下标</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="combined-roidb-for-training-方法"><a href="#combined-roidb-for-training-方法" class="headerlink" title="combined_roidb_for_training() 方法"></a><code>combined_roidb_for_training()</code> 方法</h1><p>在目标检测类任务中, 有一个很重要的数据结构roidb, 它将作为基本的数据结构在数据队列中存在, Detectron 的数据载入类 <code>RoIDdataLoader</code> 也是将该数据结构作为成员变量使用的, 因此, 有必要对这个数据结构展开分析.</p>
+<p>首先, 在运行训练脚本时, 就会调用到 <code>detectron/utils/train.py</code> 中的 <code>train()</code>函数, 而<code>train()</code>函数内部又会调用当前文件的<code>add_model_training_inputs()</code> 函数, 在这个函数内部, 就会调用到 <code>detectron/datasets/roidb</code> 文件中的 <code>combined_roidb_for_training()</code> 函数, 该函数的返回值正是<code>roidb</code>, 这是贯穿整个训练过程的训练数据, 故我们对此函数进行分析. 该函数代码解析如下:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># detectron/datasets/roidb.py</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载并连接一个或多个数据集的roidbs, along with optional object proposals</span></span><br><span class="line"><span class="comment"># 每个roidb entry都带有特定的元数据类型, 对其进行准备工作后进行训练</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">combined_roidb_for_training</span><span class="params">(dataset_names, proposal_files)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_roidb</span><span class="params">(dataset_name, proposal_file)</span>:</span></span><br><span class="line">        <span class="comment"># 注意 dataset_name 没有 's'</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># from detectron.datasets.json_dataset import JsonDataset</span></span><br><span class="line">        <span class="comment"># 可以看到, roidb 是利用JsonDataset类对象的get_roidb()方法获取的</span></span><br><span class="line">        <span class="comment"># 因此, 我们先在下面看一下这个类的实现细节</span></span><br><span class="line">        ds = JsonDataset(dataset_name)</span><br><span class="line">        roidb = ds.get_roidb(</span><br><span class="line">            gt=<span class="keyword">True</span>,</span><br><span class="line">            proposal_file=proposal_file,</span><br><span class="line">            crowd_filter_thresh=cfg.TRAIN.CROWD_FILTER_THRESH</span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">if</span> cfg.TRAIN.USE_FLIPPED:</span><br><span class="line">            logger.info(<span class="string">"Appending horizontally-flipped training examples..."</span>)</span><br><span class="line">            extend_with_flipped_entries(roidb, ds)</span><br><span class="line">        logger.info(<span class="string">"Loaded dataset: &#123;:s&#125;"</span>.format(ds.name))</span><br><span class="line">        <span class="keyword">return</span> roidb</span><br><span class="line">    <span class="keyword">if</span> isinstance(dataset_names, basestring):</span><br><span class="line">        <span class="comment">#...</span></span><br><span class="line">    <span class="comment">#...</span></span><br></pre></td></tr></table></figure>
+<h1 id="get-roidb-方法"><a href="#get-roidb-方法" class="headerlink" title="get_roidb() 方法"></a><code>get_roidb()</code> 方法</h1><p>在上面的函数中我们可以发现, <code>combined_roidb_for_training</code>函数内部又定义了另一个函数<code>get_roidb()</code>, 而该函数主要是基于<code>detectron/datasets/json_dataset.py</code>中的<code>JsonDataset</code>类及该类的成员方法<code>get_roidb</code>实现的, 因此, 我们先跳到<code>json_dataset.py</code>文件中去看看这个类的内部实现是怎样的:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># detectron/datasets/json_dataset.py</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">JsonDataset</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="comment"># 这个类的设计主要是基于COCO的json格式数据集</span></span><br><span class="line">    <span class="comment"># 当我们需要训练自己的数据集时, 最好的方式就是将自己的数据集的格式改为</span></span><br><span class="line">    <span class="comment"># COCO数据集的json格式, 这样一来, 我们就无需重写数据载入代码了.</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        <span class="keyword">assert</span> dataset_catalog.contains(name), \</span><br><span class="line">            <span class="string">"Unknown dataset name: &#123;&#125;"</span>.format(name)</span><br><span class="line">        <span class="keyword">assert</span>...</span><br><span class="line">        <span class="comment">#...</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 准备数据集的类别信息</span></span><br><span class="line">        category_ids = self.COCO.getCatIds() <span class="comment"># 1~80, 对应80个类</span></span><br><span class="line">        <span class="comment"># coco的loadCats函数, 必须指定需要加载的cat的id, 否则返回空列表</span></span><br><span class="line">        <span class="comment"># 若指定后, 则返回id对应的类别信息, 每个类别信息是一个字典, 包括'name','id','supercategory'三个字段</span></span><br><span class="line">        <span class="comment"># 获取每个类的名字, person, bicycle,bus等等, 返回的名字在列表中的位置与id在cat_ids列表中的位置一致</span></span><br><span class="line">        categories = [c[<span class="string">'name'</span>] <span class="keyword">for</span> c <span class="keyword">in</span> sefl.COCO.loadCats(category_ids)]</span><br><span class="line">        <span class="comment"># 建立类别的name 与 id之间的对应关系, 其中cat_name为key,cat_id为值</span></span><br><span class="line">        self.category_to_id_map = dict(zip(categories, category_ids)) <span class="comment"># 注意, 没有'__background__'</span></span><br><span class="line">        self.classes = [<span class="string">'__background__'</span>] + categories <span class="comment"># 将'__background__'添加到categories类别名字列表中</span></span><br><span class="line">        self.num_classes = len(self.classes)</span><br><span class="line">        <span class="comment"># coco下标最大值为90,但实际上只有80个类, 有的地方跳过了, 因此id不是连续的,</span></span><br><span class="line">        self.json_category_id_to_contiguous_id = &#123;</span><br><span class="line">            v: i + <span class="number">1</span> <span class="comment"># key为coco的非连续id, value为1~80的连续id, 均为整数</span></span><br><span class="line">            <span class="keyword">for</span> i, v <span class="keyword">in</span> enumerate(self.COCO.getCatIds())</span><br><span class="line">        &#125;</span><br><span class="line">        self.contiguous_category_id_to_json_id = &#123;</span><br><span class="line">            v: k <span class="comment"># key为1~80的连续id, value为coco的非连续id, 均为整数</span></span><br><span class="line">            <span class="keyword">for</span> k, v <span class="keyword">in</span> self.json_category_id_to_contiguous_id.items()</span><br><span class="line">        &#125;</span><br><span class="line">        self._init_keypoints() <span class="comment"># 调用类内的keypoints初始化方法.</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_roidb</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        self,</span></span></span><br><span class="line"><span class="function"><span class="params">        gt=False,</span></span></span><br><span class="line"><span class="function"><span class="params">        proposal_file=None,</span></span></span><br><span class="line"><span class="function"><span class="params">        min_proposal_size=<span class="number">2</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        proposal_limit=<span class="number">-1</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        crowd_filter_thresh=<span class="number">0</span></span></span></span><br><span class="line"><span class="function"><span class="params">    )</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        返回json dataset对应的roidb数据, 提供以下四种选项:</span></span><br><span class="line"><span class="string">        - 在roidb中包含gt boxes</span></span><br><span class="line"><span class="string">        - 添加位于proposal file里面的特定proposals</span></span><br><span class="line"><span class="string">        - 基于最短边长的proposals过滤器</span></span><br><span class="line"><span class="string">        - 基于群落区域交集的proposals过滤器</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">assert</span> gt <span class="keyword">is</span> <span class="keyword">True</span> <span class="keyword">or</span> crowd_filter_thresh == <span class="number">0</span>, \</span><br><span class="line">            <span class="string">"Crowd filter threshold must be 0 if gt "</span> \</span><br><span class="line">            <span class="string">"annotations are not included."</span></span><br><span class="line">        <span class="comment"># 这里调用了COCO的官方API, 关于COCO数据集的结构和标注格式解析, 可以查看我的另一篇文章</span></span><br><span class="line">        <span class="comment"># 没有指定筛选条件, 获取数据集标签中所有的图片id</span></span><br><span class="line">        image_ids = self.COCO.getImgIds()</span><br><span class="line">        image_ids.sort() <span class="comment"># 将id按照从小到大的顺序排列</span></span><br><span class="line">        <span class="comment"># roidb为列表结构, 列表中的每一项是一个字典, 代表着对应imageid的标签内容.</span></span><br><span class="line">        <span class="comment"># 键值包括:coco_url, license, width, filename, height, flickr_url, id, date_captured</span></span><br><span class="line">        roidb = copy.deepcopy(self.COCO.loadImgs(image_ids))</span><br><span class="line">        <span class="keyword">for</span> entry <span class="keyword">in</span> roidb:</span><br><span class="line">            <span class="comment"># 调用了本类的私有函数 _prep_roidb_entry(), entry为字典.</span></span><br><span class="line">            <span class="comment"># 主要是为entry赋初值, 占位符等等, 包含box, segms,等各种字段, 详细信息可以看下面的函数解析</span></span><br><span class="line">            <span class="comment"># 注意, 这里的字段值都是预测值相关的值, 因此也会局域gt_overlap等字段</span></span><br><span class="line">            self._prep_roidb_entry(entry)</span><br><span class="line">        <span class="keyword">if</span> gt:</span><br><span class="line">            <span class="comment"># 如果参数声明是gt信息, 则会调用_add_gt_annotations</span></span><br><span class="line">            <span class="comment"># 访问标注文件, 以便添加相关字段信息, 具体看下面的相关函数解析</span></span><br><span class="line">            self.debug_timer.tic()</span><br><span class="line">            <span class="keyword">for</span> entry <span class="keyword">in</span> roidb:</span><br><span class="line">                <span class="comment"># 注意, 是单独对每个entry调用该函数, 因此每次会载入指定imgid的相关标签</span></span><br><span class="line">                <span class="comment"># 关于_add_gt_annotations函数具体解析可以看后面的部分</span></span><br><span class="line">                self._add_gt_annotations(entry)</span><br><span class="line">            logger.debug(</span><br><span class="line">                <span class="string">'_add_gt_annotations took &#123;:.3f&#125;s'</span>.</span><br><span class="line">                format(self.debug_timer.toc(average=<span class="keyword">False</span>))</span><br><span class="line">            )</span><br><span class="line">        <span class="keyword">if</span> proposal_file <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">            self.debug_timer.tic()</span><br><span class="line">            <span class="comment"># 加载proposals文件到roidb中, 关于此函数的详细解析可以看后文</span></span><br><span class="line">            self._add_proposals_from_file(</span><br><span class="line">                roidb, proposal_file, min_proposal_size, proposal_limit,</span><br><span class="line">                crowd_filter_thresh</span><br><span class="line">            )</span><br><span class="line">            logger.debug(</span><br><span class="line">                <span class="string">'_add_proposals_from_file took &#123;:.3f&#125;s'</span>.</span><br><span class="line">                format(self.debug_timer.toc(average=<span class="keyword">False</span>))</span><br><span class="line">            )</span><br><span class="line">        <span class="comment"># 类外部的函数, 用于计算与每个roidb相关的box的类别</span></span><br><span class="line">        _add_class_assignments(roidb)</span><br><span class="line">        <span class="keyword">return</span> roidb</span><br></pre></td></tr></table></figure>
+<h1 id="prep-roidb-entry-方法"><a href="#prep-roidb-entry-方法" class="headerlink" title="_prep_roidb_entry() 方法"></a><code>_prep_roidb_entry()</code> 方法</h1><p>数据准备函数 <code>_prep_roidb_entry()</code> 的实现解析<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># detectron/datasets/json_dataset.py</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">JsonDataset</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(...)</span>:</span></span><br><span class="line">        <span class="comment">#...</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_roidb</span><span class="params">(...)</span>:</span></span><br><span class="line">        <span class="comment">#...</span></span><br><span class="line">    <span class="comment"># 该函数主要将空的元数据添加到roidb entry中</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_prep_roidb_entry</span><span class="params">(self, entry)</span>:</span></span><br><span class="line">        <span class="comment"># entry的'dataset'关键字, 值为self.</span></span><br><span class="line">        entry[<span class="string">'dataset'</span>] = self</span><br><span class="line">        im_path = os.path.join(self.image_directory, self.image_prefix+entry[<span class="string">'file_name'</span>])</span><br><span class="line">        <span class="keyword">assert</span> os.path.exists(im_path), <span class="string">"Image \"&#123;&#125; \" not found"</span>.format(im_path)</span><br><span class="line">        <span class="comment"># entry的'image'关键字, 值为当前imageid对应的image路径</span></span><br><span class="line">        entry[<span class="string">'image'</span>] = im_path</span><br><span class="line">        entry[<span class="string">'flipped'</span>] = <span class="keyword">False</span> <span class="comment"># 禁止反转</span></span><br><span class="line">        entry[<span class="string">'has_visible_keypoints'</span>] = <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 下面entry键的对应值均为空, 暂为占位键</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># entry的'boxes'关键字,值为n×4的numpy数组, n代表box的数量,这里暂时为0</span></span><br><span class="line">        entry[<span class="string">'boxes'</span>] = np.empty((<span class="number">0</span>,<span class="number">4</span>), dtype=np.float32)</span><br><span class="line">        entry[<span class="string">'segms'</span>] = [] <span class="comment"># entry的'segms'关键字, 值为一个列表,暂时为空</span></span><br><span class="line">        <span class="comment"># entry的'gt_classes'关键字, 是个一维数组, 维度与box的数量n对应,暂时为0</span></span><br><span class="line">        entry[<span class="string">'gt_classes'</span>] = np.empty((<span class="number">0</span>), dtype=np.int32)</span><br><span class="line">        <span class="comment"># 代表掩膜的面积, 供n项, 与boxes数目相对</span></span><br><span class="line">        entry[<span class="string">'seg_areas'</span>] = np.empty((<span class="number">0</span>), dtype=np.float32)</span><br><span class="line">        <span class="comment"># TODO, 这里是一个矩阵压缩, 矩阵大小为n×c, c为类别数量, 没太搞懂要压缩成什么?</span></span><br><span class="line">        entry[<span class="string">'gt_overlaps'</span>] = scipy.sparse.csr_matrix(</span><br><span class="line">            np.empty((<span class="number">0</span>, self.num_classes), dtype=np.float32)</span><br><span class="line">        )</span><br><span class="line">        <span class="comment"># 同样是n行1列, n与boxes数目对应, 表示是否为`一群物体`</span></span><br><span class="line">        entry[<span class="string">'is_crowd'</span>] = np.empty((<span class="number">0</span>), dtype=np.bool)</span><br><span class="line">        <span class="comment"># shape大小与roi相关, 将每一个roi映射到一个index上</span></span><br><span class="line">        <span class="comment"># index是在entry['gt_classes']&gt;0的rois列表的下标 TODO还是不太清楚映射关系</span></span><br><span class="line">        entry[<span class="string">'box_to_gt_ind_map'</span>] = np.empty((<span class="number">0</span>), dtype=np.int32)</span><br><span class="line">        <span class="comment"># 关键点信息, 默认情况下不设置</span></span><br><span class="line">        <span class="keyword">if</span> self.keypoints <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">            entry[<span class="string">'gt_keypoints'</span>] = np.empty(</span><br><span class="line">                (<span class="number">0</span>, <span class="number">3</span>, self.num_keypoints), dtype=np.int32</span><br><span class="line">            )</span><br><span class="line">        <span class="comment"># 删除那些从json file中获取到的不需要的字段</span></span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> [<span class="string">'date_captured'</span>, <span class="string">'url'</span>, <span class="string">'license'</span>, <span class="string">'file_name'</span>]:</span><br><span class="line">            <span class="keyword">if</span> k <span class="keyword">in</span> entry:</span><br><span class="line">                <span class="keyword">del</span> entry[k]</span><br></pre></td></tr></table></figure></p>
+<h1 id="add-gt-annotations-方法"><a href="#add-gt-annotations-方法" class="headerlink" title="_add_gt_annotations() 方法"></a><code>_add_gt_annotations()</code> 方法</h1><p>加载标注文件的函数 <code>_add_gt_annotations()</code>的实现解析<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># detectron/datasets/json_dataset.py</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">JsonDataset</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(...)</span>:</span></span><br><span class="line">        <span class="comment">#...</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_roidb</span><span class="params">(...)</span>:</span></span><br><span class="line">        <span class="comment">#...</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_prep_roidb_entry</span><span class="params">(self, entry)</span>:</span></span><br><span class="line">        <span class="comment">#...</span></span><br><span class="line">    <span class="comment"># 该函数将标注文件的元数据添加到roidb entry中</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_add_gt_annotations</span><span class="params">(self, entry)</span>:</span></span><br><span class="line">        <span class="comment"># 获取指定imgid的annid列表 (对应多个box)</span></span><br><span class="line">        ann_ids = self.COCO.getAnnIds(imgIds=entry[<span class="string">'id'</span>], iscrowd=<span class="keyword">None</span>)</span><br><span class="line">        <span class="comment"># 根据annids的id列表, 获取这些id对应的标注信息, objs是一个列表</span></span><br><span class="line">        <span class="comment"># 列表中的每一个元素都是一个字典,字典的内容是标注文件中的内容,包含bbox,segmentation等字段</span></span><br><span class="line">        objs = self.COCO.loadAnns(ann_ids)</span><br><span class="line">        <span class="comment"># 下面的代码会对bboxes进行清洗, 因为有些是无效的数据</span></span><br><span class="line">        valid_objs=[] <span class="comment"># 存储有效的objs</span></span><br><span class="line">        valid_segms=[] <span class="comment"># 存储有效的segms</span></span><br><span class="line">        width = entry[<span class="string">'width'</span>] <span class="comment"># 获取entry中的width字段, 代表图片的宽度</span></span><br><span class="line">        height = entry[<span class="string">'height'</span>] <span class="comment"># 获取entry中的height字段, 代表图片的高度</span></span><br><span class="line">        <span class="keyword">for</span> obj <span class="keyword">in</span> objs:</span><br><span class="line">            <span class="comment"># crowd区域采用RLE编码</span></span><br><span class="line">            <span class="comment"># import detectron.utils.segms as segm_utils</span></span><br><span class="line">            <span class="comment"># 用于判断当前的segmentation是polygon编码还是rle编码, 前者是列表类型, 后者是字典类型</span></span><br><span class="line">            <span class="comment"># 返回True为polygon编码, 返回Fasle为rle编码</span></span><br><span class="line">            <span class="keyword">if</span> segm_utils.is_poly(obj[<span class="string">'segmentation'</span>]):</span><br><span class="line">                <span class="comment"># poly编码必须含有&gt;=3个点才能组成一个多边形, 因此需要&gt;=6个坐标点</span></span><br><span class="line">                <span class="comment"># 类似于这样的检查操作只在PLOYGON中存在, 在面对RLE时无需检查, 可以直接接受后面的检查</span></span><br><span class="line">                obj[<span class="string">'segmentation'</span>] = [</span><br><span class="line">                    p <span class="keyword">for</span> p <span class="keyword">in</span> obj[<span class="string">'segmentation'</span>] <span class="keyword">if</span> len(p) &gt;=<span class="number">6</span></span><br><span class="line">                ]</span><br><span class="line">            <span class="keyword">if</span> obj[<span class="string">'area'</span>] &lt; cfg.TRAIN.GT_MIN_AREA:</span><br><span class="line">                <span class="keyword">continue</span> <span class="comment"># 如果面积不达标, 则认为该标注无效, 不将其加入valid列表</span></span><br><span class="line">            <span class="keyword">if</span> <span class="string">'ignore'</span> <span class="keyword">in</span> obj <span class="keyword">and</span> obj[<span class="string">'ignore'</span>] == <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="comment"># import detectron.utils.boxes as box_utils</span></span><br><span class="line">            <span class="comment"># 将[x1,y1,w,h]的边框格式转换成[x1,y1,x2,y2]的格式</span></span><br><span class="line">            x1, y1, x2, y2 = box_utils.xywh_to_xyxy(obj[<span class="string">'bbox'</span>])</span><br><span class="line">            <span class="comment"># 将[x1,y1,x2,y2]的边框坐标限制在图片的[width,height]范围内, 防止越界</span></span><br><span class="line">            x1, y1, x2, y2 = box_utils.clip_xyxy_to_image(</span><br><span class="line">                x1, y1, x2, y2, height, width</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> obj[<span class="string">'area'</span>] &gt; <span class="number">0</span> <span class="keyword">and</span> x2 &gt; x1 <span class="keyword">and</span> y2 &gt; y1: <span class="comment"># 若数据有效, 则加入到列表当中</span></span><br><span class="line">                obj[<span class="string">'clean_bbox'</span>] = [x1, y1, x2, y2]</span><br><span class="line">                valid_objs.append(obj)</span><br><span class="line">                valid_segms.append(obj[<span class="string">'segmentation'</span>]) <span class="comment"># 将数据的segms存在列表中(RLE/PLOYGON)</span></span><br><span class="line">        num_valid_objs = len(valid_objs) <span class="comment"># num_valid_objs持有objs的有效个数</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 注意, 下面的数据内容都被初始化为0</span></span><br><span class="line">        <span class="comment"># boxes为 有效objs数×4 的numpy数组, 用来表示每个objs的边框坐标</span></span><br><span class="line">        boxes = np.zeros((num_valid_objs,<span class="number">4</span>), dtype=entry[<span class="string">'seg_areas'</span>].dtype)</span><br><span class="line">        <span class="comment"># 每个objs的真实类别</span></span><br><span class="line">        gt_classes = np.zeros((num_valid_objs), dtype=entry[<span class="string">'gt_classes'</span>].dtype)</span><br><span class="line">        gt_overlaps = np.zeros( <span class="comment"># 形状为 有效objs数×num_class数 的numpy数组, 表示与每个类的IoU大小</span></span><br><span class="line">            (num_valid_objs, self.num_classes),</span><br><span class="line">            dtype=entry[<span class="string">'gt_overlaps'</span>].dtype</span><br><span class="line">        )</span><br><span class="line">        <span class="comment"># 掩膜面积</span></span><br><span class="line">        seg_areas = np.zeros((num_valid_objs), dtype=entry[<span class="string">'seg_areas'</span>].dtype)</span><br><span class="line">        <span class="comment"># 是否crowd</span></span><br><span class="line">        is_crowd = np.zeros((num_valid_objs), dtype=entry[<span class="string">'is_crowd'</span>].dtype)</span><br><span class="line">        <span class="comment"># 这个是???</span></span><br><span class="line">        box_to_gt_ind_map = np.zeros(</span><br><span class="line">            (num_valid_objs), dtype=entry[<span class="string">'box_to_gt_ind_map'</span>].dtype</span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">if</span> self.keypoints <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">            gt_keypoints = np.zeros(</span><br><span class="line">                (num_valid_objs, <span class="number">3</span>, self.num_keypoints),</span><br><span class="line">                dtype=entry[<span class="string">'gt_keypoints'</span>].dtype</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 图片是否有可视的关键点?</span></span><br><span class="line">        im_has_visible_keypoints = <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">for</span> ix, obj <span class="keyword">in</span> enumerate(valid_objs):<span class="comment"># ix为下标, obj为下标对应元素</span></span><br><span class="line">            <span class="comment"># category_id为coco类别id,json_category_id_to_contiguous_id 为字典类型</span></span><br><span class="line">            <span class="comment"># 其中, key为coco的非连续id, value为1~80的连续id, 均为整数, 所以这里是将coco的非连续id转换成对应的连续id</span></span><br><span class="line">            cls = self.json_category_id_to_contiguous_id[obj[<span class="string">'category_id'</span>]]</span><br><span class="line">            boxes[ix, :] = obj[<span class="string">'clean_box'</span>] <span class="comment"># 将当前obj的box填入boxes列表</span></span><br><span class="line">            gt_classes[ix] = cls <span class="comment"># 将连续id填入gt_classes列表</span></span><br><span class="line">            seg_areas[ix] = obj[<span class="string">'area'</span>] <span class="comment"># 将area填入seg_areas列表</span></span><br><span class="line">            is_crowd[ix] = obj[<span class="string">'iscrowd'</span>]</span><br><span class="line">            box_to_gt_ind_map[ix] = ix <span class="comment"># 该列表存储着box的顺序下标值</span></span><br><span class="line">            <span class="keyword">if</span> self.keypoints <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">                <span class="comment"># ...</span></span><br><span class="line">            <span class="keyword">if</span> obj[<span class="string">'iscrowd'</span>]:</span><br><span class="line">                <span class="comment"># 如果当前物体是crowd的话, 则将所有类别的overlap都设置为-1,</span></span><br><span class="line">                <span class="comment"># 这样一来在训练的时候, 这些物体都会被排除在外!!</span></span><br><span class="line">                gt_overlaps[ix, :] = <span class="number">-1.0</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                gt_overlaps[ix, cls] = <span class="number">1.0</span>  <span class="comment"># 仅仅将对应类的overlap设置为1, 其他为0</span></span><br><span class="line">        <span class="comment"># 将gt的boxes添加到entry中, 注意axis为0, 则会按照第0维拼接, 即最后是一个n×4的数组</span></span><br><span class="line">        <span class="comment"># 注意, entry['boxes']初始时候是空的, 因此这就相当于是只添加了真实的框</span></span><br><span class="line">        entry[<span class="string">'boxes'</span>] = np.append(entry[<span class="string">'boxes'</span>], boxes, axis=<span class="number">0</span>)</span><br><span class="line">        <span class="comment"># 由于segms是以列表形式存储, 所以利用列表的extend方法来将valid_segms添加到其中</span></span><br><span class="line">        entry[<span class="string">'segms'</span>].extend(valid_segms)  </span><br><span class="line">        <span class="comment"># gt_classes的类型内一维numpy数组(维度为有效obj的数量), 因此这里不用指定axis的值, 直接按照一维数组拼接即可</span></span><br><span class="line">        entry[<span class="string">'gt_classes'</span>] = np.append(entry[<span class="string">'gt_classes'</span>], gt_classes)</span><br><span class="line">        <span class="comment"># 同理, 一维numpy数组(维度为有效obj的数量), 无须指定axis的值</span></span><br><span class="line">        entry[<span class="string">'seg_areas'</span>] = np.append(entry[<span class="string">'seg_areas'</span>], seg_areas)</span><br><span class="line">        <span class="comment"># gt_overlaps为 num_objs × num_classes的numpy数组, 表示每个obj与任意一个类的重叠度</span></span><br><span class="line">        <span class="comment"># 因为entry['gt_overlaps']的类型为scipy.sparse.csr.csr_matrix, 因此这里需要调用toarray方法将其转换成numpy数组, 然后再与gt_overlaps拼接,</span></span><br><span class="line">        <span class="comment">#由于entry['gt_overlaps']的维度为 0 × 81 , 因此拼接后的维度为num_objs × num_classes的numpy数组</span></span><br><span class="line">        entry[<span class="string">'gt_overlaps'</span>] = np.append(</span><br><span class="line">            entry[<span class="string">'gt_overlaps'</span>].toarray(), gt_overlaps, axis=<span class="number">0</span></span><br><span class="line">        )</span><br><span class="line">        <span class="comment"># 再将其包装成scipy.sparse.csr.csr_matrix类型</span></span><br><span class="line">        entry[<span class="string">'gt_overlaps'</span>] = scipy.sparse.csr_matrix(entry[<span class="string">'gt_overlaps'</span>])</span><br><span class="line">        <span class="comment"># 一维numpy数组, 可直接拼接</span></span><br><span class="line">        entry[<span class="string">'is_crowd'</span>] = np.append(entry[<span class="string">'is_crowd'</span>], is_crowd)</span><br><span class="line">        <span class="comment"># 该列表存储着box的顺序下标值, 同样是一维数组, 直接拼接</span></span><br><span class="line">        entry[<span class="string">'box_to_gt_ind_map'</span>] = np.append(</span><br><span class="line">            entry[<span class="string">'box_to_gt_ind_map'</span>], box_to_gt_ind_map</span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">if</span> self.keypoints <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">            entry[<span class="string">'gt_keypoints'</span>] = np.append(</span><br><span class="line">                entry[<span class="string">'gt_keypoints'</span>], gt_keypoints, axis=<span class="number">0</span></span><br><span class="line">            )</span><br><span class="line">            entry[<span class="string">'has_visible_keypoints'</span>] = im_has_visible_keypoints</span><br></pre></td></tr></table></figure></p>
+<h1 id="add-proposals-from-file"><a href="#add-proposals-from-file" class="headerlink" title="_add_proposals_from_file()"></a><code>_add_proposals_from_file()</code></h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># detectron/datasets/json_dataset.py</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">JsonDataset</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(...)</span>:</span></span><br><span class="line">        <span class="comment">#...</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_roidb</span><span class="params">(...)</span>:</span></span><br><span class="line">        <span class="comment">#...</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_prep_roidb_entry</span><span class="params">(self, entry)</span>:</span></span><br><span class="line">        <span class="comment">#...</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_add_gt_annotations</span><span class="params">(self, entry)</span>:</span></span><br><span class="line">        <span class="comment">#...</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_add_proposals_from_file</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        self, roidb, proposal_file, min_proposal_size, top_k, crowd_thresh</span></span></span><br><span class="line"><span class="function"><span class="params">    )</span>:</span></span><br></pre></td></tr></table></figure>
+<h1 id="续解combined-roidb-for-training-方法"><a href="#续解combined-roidb-for-training-方法" class="headerlink" title="续解combined_roidb_for_training() 方法"></a>续解<code>combined_roidb_for_training()</code> 方法</h1><p>接下来, 重新回到刚才<code>detectron/datasets/roidb.py</code> 文件 的 <code>combined_roidb_for_training</code> 函数中, 继续往下看:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># detectron/datasets/roidb.py</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载并连接一个或多个数据集的roidbs, along with optional object proposals</span></span><br><span class="line"><span class="comment"># 每个roidb entry都带有特定的元数据类型, 对其进行准备工作后进行训练</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">combined_roidb_for_training</span><span class="params">(dataset_names, proposal_files)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_roidb</span><span class="params">(dataset_name, proposal_file)</span>:</span> <span class="comment"># 注意没有 's'</span></span><br><span class="line">        <span class="comment"># from detectron.datasets.json_dataset import JsonDataset</span></span><br><span class="line">        <span class="comment"># 可以看到, roidb 是利用JsonDataset类对象的get_roidb()方法获取的</span></span><br><span class="line">        <span class="comment"># 注意gt参数是True, 所以表明加载的是训练集的真实数据及其标签</span></span><br><span class="line">        ds = JsonDataset(dataset_name)</span><br><span class="line">        roidb = ds.get_roidb(</span><br><span class="line">            gt=<span class="keyword">True</span>,</span><br><span class="line">            proposal_file=proposal_file,</span><br><span class="line">            crowd_filter_thresh=cfg.TRAIN.CROWD_FILTER_THRESH</span><br><span class="line">        )</span><br><span class="line">        <span class="comment"># 如果图片翻转属性为真, 则对加载好以后的数据集进行翻转操作</span></span><br><span class="line">        <span class="keyword">if</span> cfg.TRAIN.USE_FLIPPED:</span><br><span class="line">            logger.info(<span class="string">"Appending horizontally-flipped training examples..."</span>)</span><br><span class="line">            extend_with_flipped_entries(roidb, ds)</span><br><span class="line">        logger.info(<span class="string">"Loaded dataset: &#123;:s&#125;"</span>.format(ds.name))</span><br><span class="line">        <span class="comment"># 以上, 数据集加载操作完成, 将roidb数据结构返回</span></span><br><span class="line">        <span class="keyword">return</span> roidb</span><br><span class="line">    <span class="keyword">if</span> isinstance(dataset_names, basestring):</span><br><span class="line">        dataset_names=(dataset_names, )</span><br><span class="line">    <span class="keyword">if</span> isinstance(proposal_files, basestring):</span><br><span class="line">        proposal_files = (proposal_files, )</span><br><span class="line">    <span class="keyword">if</span> len(proposal_files) == <span class="number">0</span>:</span><br><span class="line">        proposal_files = (<span class="keyword">None</span>, ) * len(dataset_names)</span><br><span class="line">    <span class="keyword">assert</span> len(dataset_names) == len(proposal_files)</span><br><span class="line">    roidbs = [get_roidb(*args) <span class="keyword">for</span> args <span class="keyword">in</span> zip(dataset_names, proposal_files)]</span><br><span class="line">    roidb = roidbs[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">for</span> r <span class="keyword">in</span> roidbs[<span class="number">1</span>:]:</span><br><span class="line">        roidb.extend(r)</span><br><span class="line">    roidb = filter_for_training(roidb)</span><br><span class="line"></span><br><span class="line">    logger.info(<span class="string">"Computing bounding-box regression targets..."</span>)</span><br><span class="line">    <span class="comment"># 为训练bounding-box 回归其添加必要的information</span></span><br><span class="line">    add_bbox_regression_targets(roidb)</span><br><span class="line">    logger.info(<span class="string">"done"</span>)</span><br><span class="line">    _compute_and_log_stats(roidb)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> roidb</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/Cpp-Book-STL源码剖析/" rel="prev" title="Cpp-Book-STL源码剖析">
+                <i class="fa fa-chevron-left"></i> Cpp-Book-STL源码剖析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/Python-Queue/" rel="next" title="Queue模块-队列">
+                Queue模块-队列 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">180</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#roidb数据结构"><span class="nav-text">roidb数据结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#combined-roidb-for-training-方法"><span class="nav-text">combined_roidb_for_training() 方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#get-roidb-方法"><span class="nav-text">get_roidb() 方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#prep-roidb-entry-方法"><span class="nav-text">_prep_roidb_entry() 方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#add-gt-annotations-方法"><span class="nav-text">_add_gt_annotations() 方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#add-proposals-from-file"><span class="nav-text">_add_proposals_from_file()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#续解combined-roidb-for-training-方法"><span class="nav-text">续解combined_roidb_for_training() 方法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">735k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">11:08</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

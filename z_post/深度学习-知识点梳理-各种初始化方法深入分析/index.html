@@ -244,7 +244,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">131</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">180</span></a>
   </li>
         
         
@@ -261,6 +261,22 @@
           <li class="menu-item menu-item-深度学习">
     <a href="/categories/深度学习/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
   </li>
         
         
@@ -285,14 +301,6 @@
           <li class="menu-item menu-item-linux">
     <a href="/categories/Linux/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-caffe2">
-    <a href="/categories/Caffe2/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
   </li>
         
         
@@ -332,15 +340,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">25</span></a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-life">
-    <a href="/life/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-child"></i> <br />生活杂记</a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">28</span></a>
   </li>
         
         
@@ -618,7 +618,7 @@
 <p>根据状态梯度和参数的梯度公式($l$ 代表层数):</p>
 <script type="math/tex; mode=display">\frac{\partial Loss}{\partial z_k^i} = f'(z_k^i)(W_{.,k}^{i+1})^T \frac{\partial Loss}{\partial z^{i+1}}</script><script type="math/tex; mode=display">\frac{\partial Loss}{\partial w_{l,k}^i} = h_l^{i-1} \frac{\partial Loss}{\partial z_k^i}</script><p>// TODO 推导之后, 有:</p>
 <p>为了保证前向传播和反向传播时每一层的方差一致, 则有下面的公式成立:</p>
-<script type="math/tex; mode=display">\forall i, n_i Var[W^i] = 1</script><script type="math/tex; mode=display">\forall i, n_{i+1} Var[W^i] =1</script><p>式中, $n<em>i, n</em>{i+1}$ 分别为当前第i层和i+1层的输入节点个数, 但是, 在实际当中, 每一层的输入个数往往不相等, 于是为了均衡考量, 最终给出的权重方差为:</p>
+<script type="math/tex; mode=display">\forall i, n_i Var[W^i] = 1</script><script type="math/tex; mode=display">\forall i, n_{i+1} Var[W^i] =1</script><p>式中, $n_i, n_{i+1}$ 分别为当前第i层和i+1层的输入节点个数, 但是, 在实际当中, 每一层的输入个数往往不相等, 于是为了均衡考量, 最终给出的权重方差为:</p>
 <script type="math/tex; mode=display">\forall, Var[W^i] = \frac {2}{n_i + n_{i+1}}</script><p>再由概率统计中均匀分布方差的性质反推,可以得到Xavier最终的初始化分布如下:</p>
 <script type="math/tex; mode=display">W \sim U\Big[-\frac{\sqrt{6}}{\sqrt{n_j+n_{j+1}}},\frac{\sqrt{6}}{\sqrt{n_j+n_{j+1}}}  \Big]</script><p><strong>Xavier在Caffe中的具体实现:</strong></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Dtype&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">XavierFiller</span> :</span> <span class="keyword">public</span> Filler&lt;Dtype&gt; &#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">explicit</span> <span class="title">XavierFiller</span><span class="params">(<span class="keyword">const</span> FillerParameter&amp; param)</span></span></span><br><span class="line">      : Filler&lt;Dtype&gt;(param) &#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Fill</span><span class="params">(Blob&lt;Dtype&gt;* blob)</span> </span>&#123;</span><br><span class="line">    CHECK(blob-&gt;count());</span><br><span class="line">    <span class="keyword">int</span> fan_in = blob-&gt;count() / blob-&gt;num();</span><br><span class="line">    <span class="keyword">int</span> fan_out = blob-&gt;count() / blob-&gt;channels();</span><br><span class="line">    Dtype n = fan_in;  <span class="comment">// default to fan_in</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>-&gt;filler_param_.variance_norm() ==</span><br><span class="line">        FillerParameter_VarianceNorm_AVERAGE) &#123;</span><br><span class="line">      n = (fan_in + fan_out) / Dtype(<span class="number">2</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>-&gt;filler_param_.variance_norm() ==</span><br><span class="line">        FillerParameter_VarianceNorm_FAN_OUT) &#123;</span><br><span class="line">      n = fan_out;</span><br><span class="line">    &#125;</span><br><span class="line">    Dtype scale = <span class="built_in">sqrt</span>(Dtype(<span class="number">3</span>) / n);</span><br><span class="line">    caffe_rng_uniform&lt;Dtype&gt;(blob-&gt;count(), -scale, scale,</span><br><span class="line">        blob-&gt;mutable_cpu_data());</span><br><span class="line">    CHECK_EQ(<span class="keyword">this</span>-&gt;filler_param_.sparse(), <span class="number">-1</span>)</span><br><span class="line">         &lt;&lt; <span class="string">"Sparsity not supported by this Filler."</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -750,7 +750,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">131</span>
+                    <span class="site-state-item-count">180</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -785,7 +785,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -848,7 +852,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">25</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -949,7 +959,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">471k</span>
+    <span title="站点总字数">735k</span>
   
 
   
@@ -958,7 +968,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">7:08</span>
+    <span title="站点阅读时长">11:08</span>
   
 </div>
 

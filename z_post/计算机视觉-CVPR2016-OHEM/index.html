@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="文章: Training Region-based Object Detectors with Online Hard Example Mining作者: Abhinav Shrivastava, Abhinav Gupta, Ross Girshick 核心亮点提出了一种在线的难样例挖掘算法:作者根据每个RoIs的loss的大小来决定哪些是难样例, 哪些试试简单样例, 通过这种方法, 可以更高效">
+<meta name="keywords" content="目标检测">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OHEM-CVPR2016">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-CVPR2016-OHEM/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="文章: Training Region-based Object Detectors with Online Hard Example Mining作者: Abhinav Shrivastava, Abhinav Gupta, Ross Girshick 核心亮点提出了一种在线的难样例挖掘算法:作者根据每个RoIs的loss的大小来决定哪些是难样例, 哪些试试简单样例, 通过这种方法, 可以更高效">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://wx4.sinaimg.cn/large/d7b90c85ly1fwi9ig4pthj213t0ls7fq.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fwj7f29xztj20st0kyadj.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fwj89dxiz3j20s40m0jvi.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fwj89qxmy9j20s20c10un.jpg">
+<meta property="og:updated_time" content="2018-10-24T08:21:27.555Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OHEM-CVPR2016">
+<meta name="twitter:description" content="文章: Training Region-based Object Detectors with Online Hard Example Mining作者: Abhinav Shrivastava, Abhinav Gupta, Ross Girshick 核心亮点提出了一种在线的难样例挖掘算法:作者根据每个RoIs的loss的大小来决定哪些是难样例, 哪些试试简单样例, 通过这种方法, 可以更高效">
+<meta name="twitter:image" content="http://wx4.sinaimg.cn/large/d7b90c85ly1fwi9ig4pthj213t0ls7fq.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/计算机视觉-CVPR2016-OHEM/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>OHEM-CVPR2016 | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">180</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-linux">
+    <a href="/categories/Linux/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-面试">
+    <a href="/categories/面试/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其它">
+    <a href="/categories/其它/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其它</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">28</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/计算机视觉-CVPR2016-OHEM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">OHEM-CVPR2016
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-22 16:54:25" itemprop="dateCreated datePublished" datetime="2018-10-22T16:54:25+08:00">2018-10-22</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/计算机视觉/" itemprop="url" rel="index"><span itemprop="name">计算机视觉</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">5.9k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">5 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>文章:</strong> Training Region-based Object Detectors with Online Hard Example Mining<br><strong>作者:</strong> Abhinav Shrivastava, Abhinav Gupta, Ross Girshick</p>
+<h1 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h1><p><strong>提出了一种在线的难样例挖掘算法:</strong><br>作者根据每个RoIs的loss的大小来决定哪些是难样例, 哪些试试简单样例, 通过这种方法, 可以更高效的训练网络, 并且可以使得网络获得更小的训练loss. 同时, OHEM还具有以下两个优点:</p>
+<ul>
+<li><strong>消除FastRCNN系列模型中的一些不必要这参数</strong> , 这些参数大多都是为了解决难样例问题服务的, 在使用OHEM以后, 不仅无需在对这些超参数进行调优, 同时还能获得更好的性能表现.</li>
+<li><strong>OHEM算法可以与其他多种提升模型精度的trick相结合</strong>, 对于大多数模型(RCNN系列), 在使用了OHEM以后, 都能够获得精度上的提高, 可以看做是一种普适性的提升精度的方法.</li>
+</ul>
+<p>注: 在实现OHEM上, 作者为了提升速度和效率, 特意设计了两个RoI网络, 以减少无用的计算.</p>
+<h1 id="论文细节"><a href="#论文细节" class="headerlink" title="论文细节"></a>论文细节</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>目前, 基于区域选择的CNN目标检测方法已经取得了很大的成功, 但是他们的训练过程仍然包含着许多启发法[注]和超参数(调优过程成本很高). 本文提出了一种针对区域选择目标检测方法的一种十分简单但非常有效的 <strong>在线的难样例挖掘(OHEM)算法</strong>. 我们的动机来源于数据集中存在的海量的简单样本, 而只有一小部分困难样本. 如果能够自动的选择这些困难样本用于训练, 那么就会使得训练过程更加高效和有效. OHEM 是一种简单且直观的算法, 它可以消除多个启发过程和超参数. 更重要的是, 它可以稳定的提升检测模型的算法性能, 当数据集越来越大, 越来越复杂时, 它的提升效果就越大.</p>
+<p>[注] 启发法: 启发式方法(试探法)是一种帮你寻找答案的技术, 但它给出的答案是具有偶然性的(subject to chance), 因为启发式方法仅仅告诉你该如何去找, 而没有告诉你要找什么, 它并不会告诉你该如何直接从A点到B点, 他甚至可能连A点和B点在哪里都不知道. 启发式算法的难点是建立符合实际问题的一些列启发式规则, 启发式算法的有点在于它比盲目型的搜索法要高效, 一个经过仔细设计的启发函数, 往往在很快的时间内就可以得到一个搜索问题的最优解.</p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>基于区域的CNN目标检测法使用的数据集中带物体标签的区域和背景区域之前的样本比例存在着巨大失衡. 在DPM中, 这种比例达到了1:100000. 一些算法(如Selective Search)对此进行了处理但失衡比例仍然很大(1:70).</p>
+<p>bootstrapping(现在多称为 hard negative mining)问题至少已经存在了20年. 并且Bootstrapping技术已经在目标检测领域内流行了十几年(尤其是在训练针对目标检测的SVMs时). 很多现代的基于深度学习的目标检测方法都是用了基于难样例挖掘的SVMs来帮助训练检测模型(RCNN, SPPnet).</p>
+<p>但是奇怪的是后来的一些模型(FastRCNN, FasterRCNN等) 都没有使用bootstrapping技术. 一个潜在的原因可能是在深度神经网络中, 存在一些技术上的困难, 是的bootstrapping使用效果不佳. 传统的bootstrapping需要先用一个固定的模型来找到新的样本已准备训练数据, 然后再用一个固定的样本将检测模型激活并训练. 而在训练深度神经网络时, 其需要成千上万的大量样本用于训练, 因此, 我们需要一个 <strong>纯粹在线</strong> 的难样例选择算法.</p>
+<p>在本文中, 我们提出了一个新型的bootstrapping技术称为 <strong>online hard example mining(OHEM)</strong>, 并将其应用到基于深度学习的当前最先进的目标检测模型上. 该算法实际上是对SGD做了一些小改动, 使得训练样本可以从一个非均匀分布都采样得到, 该分布是一个基于当前样本loss的非静态分布. 该方法利用了目标检测问题特殊的结构优势, 那就是每一个SGD的mini-batch中仅仅包含一张或两张图片, 但是会有上千个候选样本. 这样候选样本会被继续按照特定的分布(倾向于那些不同的, 可以造成很高loss的样本)进行采样, 由于采样后的样本只是一小部分样本子集, 因此梯度下降优化算法仍然高效. 将OHEM算法用于标准的Fast RCNN算法以后,  显示除了三点好处:</p>
+<ul>
+<li>移除了一些在基于区域推荐的CNN目标检测算法中的启发方法和超参数</li>
+<li>稳定且大幅度的提升了mAP</li>
+<li>当training set变的更大更复杂时, OHEM的有效性会提升</li>
+</ul>
+<p>不仅如此, 从OHEM中获得的性能提升是对最近目标检测领域其他提升性能方法的一种补充, 如multiscale testing和迭代式bounding box回归. 在使用OHEM的同时结合这些tricks, 可以更进一步的提升mAP.</p>
+<h2 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h2><p>绝大多数目标检测模型都使用了结合bootstrapping算法的SVMs来作为检测的scoring function.<br>但是有一些特例, FastRCNN和FasterRCNN等没有使用结合bootstrapping的SVMs, 而是完全根据SGD进行训练, 这些模型通过引入一些在线的难样例挖掘算法来解决这个问题(送入minibatch的前后景比例1:3). 下面简单介绍一下 Hard example mining和CNN目标检测以及他们之间的关系</p>
+<p><strong>Hard example mining:</strong> 目前常用的有两大算法.<br>第一种是用于优化SVMs的: 训练算法会维护一个工作样本集, 并且该样本集会依据特定的规则不断在训练SVMshe更新样本集之间迭代. 这些规则会将简单样本(很容易分类正确)从样本集中移除, 同时会添加困难样本到样本集中.<br>第二种方法用于非SVMs模型, 如浅层神经网络和boosted决策树: 该算法会从正样例和一部分随机负样例组成的数据集开始训练, 在该数据集上训练至收敛以后, 会继续在一个更大的, 包含更多负样例的数据集上进行训练. 这个过程通常只会进行一次迭代, 并且没有任何的收敛性证明.</p>
+<p><strong>ConvNet-bases detection:</strong> 近年来CNN在目标检测领域迅速, 尤其是基于深度学习的目标检测方法(SPPNet, MRVNN Fast RCNN).</p>
+<p><strong>Hard example selection in deep learning:</strong> 目前已经有很多专门针对目标检测算法hard example mining方法. 这些算法的基本思路与我们相同, 但是我们的算法更关注基于区域推荐的目标检测算法的 <strong>在线难样例挖掘</strong>.</p>
+<h2 id="Overview-of-Fast-RCNN"><a href="#Overview-of-Fast-RCNN" class="headerlink" title="Overview of Fast RCNN"></a>Overview of Fast RCNN</h2><p>在Fast RCNN中, 每一个minibatch包含N=2张图片, 每一张图片会采样B/N=128/2=64个候选框. RoI sampling过程使用了多个启发式规则, 如下所示:</p>
+<ul>
+<li><strong>Foreground RoIs:</strong> 每一个RoI都会根据与真实框的IOU大小来分成前景框和后景框</li>
+<li><strong>Background RoIs:</strong> 在[<code>bg_lo</code>,0.5) 区间的被认为是后景, <code>bg_lo</code>(FastRCNN为0.1)用来充当难样例挖掘的角色, 但是这样会忽视一些不频繁但是很重要的后景区域, OHEM移除了<code>bg_lo</code>阈值.</li>
+<li><strong>Balancing <code>fg-bg</code> RoIs:</strong> 为了处理难样例问题, FastRCNN采取的策略是将minibatch中前后景的比例设置为 1:3 (25%为前景). 这是一个十分重要的启发式规则阈值, 在实验中, 将他移除或者改变都会引起mAP分数的大幅度下降(3 points). <strong>但是利用OHEM, 就可以在不损失mAP的情况下, 移除这个超参数.</strong></li>
+</ul>
+<h2 id="Our-approach"><a href="#Our-approach" class="headerlink" title="Our approach"></a>Our approach</h2><p>本文提出的OHEM算法可以简化复杂的FastRCNN系列模型的训练及调参过程, 同时可以获得更好的训练结果(lower training loss)和更高的测试性能(higher mAP)</p>
+<h3 id="Online-hard-example-mining"><a href="#Online-hard-example-mining" class="headerlink" title="Online hard example mining"></a>Online hard example mining</h3><p>在RCNN中使用SVMs,大致有两个阶段, 阶段 a) 首先会筛选并处理指定数目(10or100)个图片, 然后在在这些图片进进行训练直到收敛. 重复这两个阶段直到SVMs找到所有的支持向量为止. RCNN所采用的这个优化策略效率是很低的, 因为在对图片进行筛选和处理的时候, 没有任何模型会进行更新.</p>
+<p>OHEM算法流程如下: 对于处于第t次SGD迭代的输入图片来说, 首先计算器卷积特征图谱. 然后令RoI网络使用这个特征图谱和 <strong>所有</strong> 的RoIs (不是minibatch子集, 而是所有), 进行前向传播(仅包含RoI pooling层和几层fc层). 由此计算出的loss代表了当前网络在每一个RoI上的表现好坏. Hard examples的选择方法是将每个RoI的loss进行排序, 然后选择loss最大的 B/N 个样本作为hard examples. 直观上可以看出, 这些样本对于当前网络来说, 是最难正确分类的样本. 同时, <strong>由于RoI pooling层本身计算量不高, 且各个RoI之间的计算可以共享</strong>(//TODO,怎么共享??), 因此, 额外的计算成本相对来说并不高. 此外, 参与反向计算过程的样本集合很很小的一个集合, 因此, 相比以前的方法并不会带来更多的计算成本.<br>但是, 这里有一个小警告: 如果两个RoI之间的overlap较大, 那么很有可能这两个RoI的loss直接会有一定关联程度. 也就是说, 这些重叠度较高的RoIs可以映射到特征图谱上的同一块区域中, 又因为分辨率之间的差异性, 就可能导致loss的重复计算. 为了解决这种冗余计算和关联区域, 我们使用NMS算法来降低重复性. 具体来说, 给定RoIs列表和它们对应的losses, NMS迭代的选择那些具有最高loss的RoI, 然后移除所有与高RoI重叠度较高(IOU&gt;0.7)的其他RoI(这些RoI的loss更低).<br>可以看出, 上面的过程并不需要<code>fg-bg</code>比例这个超参数, 如果任何一类被忽视了, 那么这个类对应的loss就会一直升高, 知道这个类被采样的概率变大为止.  对于有些图片来说, 前景区域是简单样例, 此时网络就会只采用背景区域进行训练, 反之, 也有的图片会认为背景区域(草地, 天空)是简单样例.</p>
+<h3 id="Implementatin-details"><a href="#Implementatin-details" class="headerlink" title="Implementatin details"></a>Implementatin details</h3><p>实现OHEM算法的方法有很多, 它们之间有着不同的权衡和考量. 一个明显的方法是修改loss层, 使其完成难样例的选取工作. loss层可以计算所有RoIs的loss, 然后将它们进行排序,并且根据loss的值进行难样例的选择, 同时将所有非难样例的RoIs的loss设置为0 (表示梯度下降时不会考虑这些样例). 这种方式很直接, 但是却不够高效, 因为RoI网络仍然需要申请空间来存储这些RoIs, 并且还要对所有的RoIs进行反向传播计算(非难样例的loss虽然为0, 但也要参与计算流程).<br>为了克服上面的效率问题, 本文提出了一种结构如图2所示. 我们的实现包含两个RoI网络的副本, 其中一个是 <strong>只读</strong> 的. 这意味着我们的只读RoI网络只需要申请前向传播计算的内存, 而不用像经典RoI网络一样, 需要同时申请前向计算和反向传播时的内存. 对于一次SGD迭代来说, 给定卷积特征图谱, 只读RoI网络会对所有的RoIs执行前向计算并计算loss( $R$ , 图2中的绿色箭头所示). 然后难样例采样模块会按照之前说的采样策略来选择难样例, 然后会将这些难样例输入到一个常规的RoI网络中( $R_{hard-sel}$ 图2中的红色箭头所示). 于是, 这个网络仅仅只会对难样例同时进行前向计算和反向传播计算. 在实际中, 我们使用所有图片的所有RoI作为 $R$, 因此对于只读RoI网络最后的minibatch的size为 $|R|$. (//TODO 嘛意思?)<br>在实验中, N=2(意味着 $|R|\approx 4000$ ), B = 128.</p>
+<p><img src="http://wx4.sinaimg.cn/large/d7b90c85ly1fwi9ig4pthj213t0ls7fq.jpg" alt=""></p>
+<h2 id="实验与分析"><a href="#实验与分析" class="headerlink" title="实验与分析"></a>实验与分析</h2><h3 id="OHEM-vs-heuristic-sampling"><a href="#OHEM-vs-heuristic-sampling" class="headerlink" title="OHEM vs. heuristic sampling"></a>OHEM vs. heuristic sampling</h3><p>如下表所示, 没有使用 <code>bg_lo</code> 超参数的OHEM在FasrRCNN上的mAP提高了4.8个点</p>
+<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwj7f29xztj20st0kyadj.jpg" alt=""></p>
+<h3 id="Robust-gradient-estimates"><a href="#Robust-gradient-estimates" class="headerlink" title="Robust gradient estimates"></a>Robust gradient estimates</h3><p>因为N=2, 所以选出来的框之间很有很大的关联性, 这会不会使得梯度不稳定从而难以收敛. 实验结果表明, OHEM同样对这种情况具有鲁棒性, 即使将N设置为1, mAP也不会降低多少(仅降低了0.2%). (当然, 在硬件条件允许的情况下, 选取越大的N, 效果一般越好)</p>
+<h3 id="Why-just-hard-examples-when-u-can-use-call"><a href="#Why-just-hard-examples-when-u-can-use-call" class="headerlink" title="Why just hard examples, when u can use call?"></a>Why just hard examples, when u can use call?</h3><p>如果使用所有的RoI loss参与权重更新(而不仅仅是hard examples)会怎么样呢? 在这种情况下, 那些简单样本将会拥有较小的loss, 从而不会对梯度的更新贡献太大, 整个训练过程会自动的专注于难样例的训练.(这种全训练的结果会使得相对于标准FastRCNN的mAP提升一点, 因为标准的FastRCNN并没有针对难样例, 而是随机选的minibatch), 但是这种全训练很是的训练时间大幅提高.</p>
+<h3 id="Better-optimization"><a href="#Better-optimization" class="headerlink" title="Better optimization"></a>Better optimization</h3><p>利用OHEM可以获得更低的 mean loss per RoI  (取自各种方法的第20K次迭代)</p>
+<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fwj89dxiz3j20s40m0jvi.jpg" alt=""></p>
+<h3 id="Computational-cost"><a href="#Computational-cost" class="headerlink" title="Computational cost"></a>Computational cost</h3><p>不论是耗时上还是内存占用上, 都变多了, 但总体来说, 是可以接受的</p>
+<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fwj89qxmy9j20s20c10un.jpg" alt=""></p>
+<h1 id="PASXAL-VOC-and-MS-COCO-results"><a href="#PASXAL-VOC-and-MS-COCO-results" class="headerlink" title="PASXAL VOC and MS COCO results"></a>PASXAL VOC and MS COCO results</h1><p><strong>在训练阶段和测试阶段使用multi-scale和multi-stage bbox regression</strong> 可以大幅度提高mAP</p>
+<p>multi-scale: $s\in \{ 480, 576, 688, 864, 900 \}$ for training, $s\in \{480, 576,688,864,1000\}$ for testing. 这些scales和caps的选择主要受制于GPU的显存大小.</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/目标检测/" rel="tag"><i class="fa fa-tag"></i> 目标检测</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/Caffe2-Detectron-模型创建/" rel="prev" title="Detectron源码解读-模型创建">
+                <i class="fa fa-chevron-left"></i> Detectron源码解读-模型创建
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/其他-Latex语法/" rel="next" title="其他-Latex语法">
+                其他-Latex语法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">180</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#核心亮点"><span class="nav-text">核心亮点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#论文细节"><span class="nav-text">论文细节</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关工作"><span class="nav-text">相关工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Overview-of-Fast-RCNN"><span class="nav-text">Overview of Fast RCNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Our-approach"><span class="nav-text">Our approach</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Online-hard-example-mining"><span class="nav-text">Online hard example mining</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Implementatin-details"><span class="nav-text">Implementatin details</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验与分析"><span class="nav-text">实验与分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OHEM-vs-heuristic-sampling"><span class="nav-text">OHEM vs. heuristic sampling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Robust-gradient-estimates"><span class="nav-text">Robust gradient estimates</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Why-just-hard-examples-when-u-can-use-call"><span class="nav-text">Why just hard examples, when u can use call?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Better-optimization"><span class="nav-text">Better optimization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Computational-cost"><span class="nav-text">Computational cost</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PASXAL-VOC-and-MS-COCO-results"><span class="nav-text">PASXAL VOC and MS COCO results</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">735k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">11:08</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

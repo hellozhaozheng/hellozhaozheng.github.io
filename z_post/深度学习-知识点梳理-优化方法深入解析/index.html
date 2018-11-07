@@ -108,19 +108,19 @@
 
 
 
-  <meta name="description" content="概览    名称 公式 优化方法简述     SGD $gt = \nabla{\theta{t-1}} f(\theta{t-1})$  $\delta \theta_t = - \eta * g_t$ 每一次都计算mini-batch的梯度, 然后对参数进行更新   Momentum $mt = \mu * m{t-1} + g_t$  $\delta \theta_t = -\eta * m">
+  <meta name="description" content="概览    名称 公式 优化方法简述     SGD $g_t = \nabla_{\theta_{t-1}} f(\theta_{t-1})$  $\delta \theta_t = - \eta * g_t$ 每一次都计算mini-batch的梯度, 然后对参数进行更新   Momentum $m_t = \mu  m_{t-1} + g_t$  $\delta \theta_t = -\et">
 <meta property="og:type" content="article">
 <meta property="og:title" content="优化方法整理总结">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/深度学习-知识点梳理-优化方法深入解析/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="概览    名称 公式 优化方法简述     SGD $gt = \nabla{\theta{t-1}} f(\theta{t-1})$  $\delta \theta_t = - \eta * g_t$ 每一次都计算mini-batch的梯度, 然后对参数进行更新   Momentum $mt = \mu * m{t-1} + g_t$  $\delta \theta_t = -\eta * m">
+<meta property="og:description" content="概览    名称 公式 优化方法简述     SGD $g_t = \nabla_{\theta_{t-1}} f(\theta_{t-1})$  $\delta \theta_t = - \eta * g_t$ 每一次都计算mini-batch的梯度, 然后对参数进行更新   Momentum $m_t = \mu  m_{t-1} + g_t$  $\delta \theta_t = -\et">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw1zh9xp8fj20hq0dtjuw.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fw1zh9w3n9j20j90femz6.jpg">
-<meta property="og:updated_time" content="2018-10-09T11:27:17.909Z">
+<meta property="og:updated_time" content="2018-10-16T08:09:58.003Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="优化方法整理总结">
-<meta name="twitter:description" content="概览    名称 公式 优化方法简述     SGD $gt = \nabla{\theta{t-1}} f(\theta{t-1})$  $\delta \theta_t = - \eta * g_t$ 每一次都计算mini-batch的梯度, 然后对参数进行更新   Momentum $mt = \mu * m{t-1} + g_t$  $\delta \theta_t = -\eta * m">
+<meta name="twitter:description" content="概览    名称 公式 优化方法简述     SGD $g_t = \nabla_{\theta_{t-1}} f(\theta_{t-1})$  $\delta \theta_t = - \eta * g_t$ 每一次都计算mini-batch的梯度, 然后对参数进行更新   Momentum $m_t = \mu  m_{t-1} + g_t$  $\delta \theta_t = -\et">
 <meta name="twitter:image" content="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw1zh9xp8fj20hq0dtjuw.jpg">
 
 
@@ -246,7 +246,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">131</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">180</span></a>
   </li>
         
         
@@ -263,6 +263,22 @@
           <li class="menu-item menu-item-深度学习">
     <a href="/categories/深度学习/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
   </li>
         
         
@@ -287,14 +303,6 @@
           <li class="menu-item menu-item-linux">
     <a href="/categories/Linux/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-caffe2">
-    <a href="/categories/Caffe2/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
   </li>
         
         
@@ -334,15 +342,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">25</span></a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-life">
-    <a href="/life/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-child"></i> <br />生活杂记</a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">28</span></a>
   </li>
         
         
@@ -540,7 +540,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.6k</span>
+                <span title="本文字数">1.8k</span>
               
 
               
@@ -554,7 +554,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">2 分钟</span>
               
             </div>
           
@@ -586,22 +586,22 @@
 <tbody>
 <tr>
 <td>SGD</td>
-<td>$g<em>t = \nabla</em>{\theta<em>{t-1}} f(\theta</em>{t-1})$ <br> $\delta \theta_t = - \eta * g_t$</td>
+<td>$g_t = \nabla_{\theta_{t-1}} f(\theta_{t-1})$ <br> $\delta \theta_t = - \eta * g_t$</td>
 <td>每一次都计算mini-batch的梯度, 然后对参数进行更新</td>
 </tr>
 <tr>
 <td>Momentum</td>
-<td>$m<em>t = \mu * m</em>{t-1} + g_t$ <br> $\delta \theta_t = -\eta * m_t$</td>
+<td>$m_t = \mu <em> m_{t-1} + g_t$ <br> $\delta \theta_t = -\eta </em> m_t$</td>
 <td>公式中的 $\mu$ 为动量因子,  借助于物理学里面动量的概念, 通过动量的积累来在相关方向上加速SGD优化速度, 同时有助于跳出局部最优, 进而加快收敛</td>
 </tr>
 <tr>
 <td>Nesterov</td>
-<td>$\delta<em>t = -\eta <em> \mu </em> m</em>{t-1} - \eta * g_t$</td>
+<td>$\delta_t = -\eta <em> \mu </em> m_{t-1} - \eta * g_t$</td>
 <td>Nesterov在梯度更新时做一个矫正, 避免前进太快, 同时提高灵敏度, 从公式可以看出, 动量项 $m_{t-1}$ 没有改变当前的梯度 $g_t$, 而是利用之前的动量来影响当前的动量</td>
 </tr>
 <tr>
 <td>Adagrad</td>
-<td>$n<em>t = n</em>{t-1} + g^2_t$ <br> $\delta \theta_t = -\frac{\eta}{\sqrt{n_t + \epsilon}} * g_t$</td>
+<td>$n_t = n_{t-1} + g^2_t$ <br> $\delta \theta_t = -\frac{\eta}{\sqrt{n_t + \epsilon}} * g_t$</td>
 <td>Adagrad相当于在学习率前面乘了一个约束项 $\frac{\eta}{n_t + \epsilon}, 使得 $g_t$ 较小的时候, 能够放大梯度, 反之, 在 $g_t$ 较大的时候, 能够约束梯度</td>
 </tr>
 <tr>
@@ -616,7 +616,7 @@
 </tr>
 <tr>
 <td>Adam</td>
-<td>$m<em>t = \mu * m</em>{t-1} + (1-\mu) <em> g_t$ <br> $n_t = \nu</em>n_{t-1} + (1 - \nu) <em> g^2_t$ <br> $\hat m_t = \frac{m_t}{1-\mu_t}$ <br> $\hat n_t = \frac{n_t}{1- \nu_t}$ <br> $\delta \theta_t = -\frac{\hat m_t}{\sqrt{\hat n_t} + \epsilon} </em> \eta$</td>
+<td>$m_t = \mu <em> m_{t-1} + (1-\mu) </em> g_t$ <br> $n_t = \nu<em>n_{t-1} + (1 - \nu) </em> g^2_t$ <br> $\hat m_t = \frac{m_t}{1-\mu_t}$ <br> $\hat n_t = \frac{n_t}{1- \nu_t}$ <br> $\delta \theta_t = -\frac{\hat m_t}{\sqrt{\hat n_t} + \epsilon} * \eta$</td>
 <td>Adam本质上是带有动量项的RMSprop, 它利用梯度的一阶矩估计和二阶矩估计动态调整每个参数的学习率. 公式中, $m_t, n_t$ 分别是对梯度的一阶矩估计和二阶矩估计, 可以看作对期望 $E</td>
 <td>g_t</td>
 <td>, E</td>
@@ -652,7 +652,14 @@
 </ul>
 <h1 id="深入解析各个损失函数的优缺点"><a href="#深入解析各个损失函数的优缺点" class="headerlink" title="深入解析各个损失函数的优缺点"></a>深入解析各个损失函数的优缺点</h1><h2 id="SGD"><a href="#SGD" class="headerlink" title="SGD"></a>SGD</h2><h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>因为要兼顾整个神经网络的训练效果, 因此通常学习率的选择比较困难. 并且训练过程中, 无法调节学习率.</p>
 <p>某些情况下容易被困在鞍点, 需要使用合适的初始化和步长, 才能跳出鞍点</p>
-<h3 id="Momentum"><a href="#Momentum" class="headerlink" title="Momentum"></a>Momentum</h3><h1 id="区别于联系"><a href="#区别于联系" class="headerlink" title="区别于联系"></a>区别于联系</h1>
+<h3 id="Momentum"><a href="#Momentum" class="headerlink" title="Momentum"></a>Momentum</h3><h1 id="区别于联系"><a href="#区别于联系" class="headerlink" title="区别于联系"></a>区别于联系</h1><h1 id="超参数"><a href="#超参数" class="headerlink" title="超参数"></a>超参数</h1><p><strong>learning rate:</strong></p>
+<p>学习率决定了权值更新的速度, 设置的太大会使结果超过最优值, 太小会使下降速度过慢, 仅靠认为干预调整参数需要不断修改学习率, 十分不合理.</p>
+<p><strong>weight decay:</strong></p>
+<p>就是正则项, L1或L2正则项</p>
+<p><strong>momentum:</strong></p>
+<p><strong>learning rate decay:</strong></p>
+<p>每经过一段迭代次数以后, 就会减小learning rate的大小.</p>
+
       
     </div>
 
@@ -679,8 +686,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/面试-智力题/" rel="prev" title="智力题汇总">
-                <i class="fa fa-chevron-left"></i> 智力题汇总
+              <a href="/z_post/面试-智力题/" rel="prev" title="智力题">
+                <i class="fa fa-chevron-left"></i> 智力题
               </a>
             
           </div>
@@ -769,7 +776,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">131</span>
+                    <span class="site-state-item-count">180</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -804,7 +811,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -867,7 +878,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">25</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -931,7 +948,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概览"><span class="nav-text">概览</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#损失函数选择经验"><span class="nav-text">损失函数选择经验</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#深入解析各个损失函数的优缺点"><span class="nav-text">深入解析各个损失函数的优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SGD"><span class="nav-text">SGD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点"><span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Momentum"><span class="nav-text">Momentum</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#区别于联系"><span class="nav-text">区别于联系</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概览"><span class="nav-text">概览</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#损失函数选择经验"><span class="nav-text">损失函数选择经验</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#深入解析各个损失函数的优缺点"><span class="nav-text">深入解析各个损失函数的优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SGD"><span class="nav-text">SGD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点"><span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Momentum"><span class="nav-text">Momentum</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#区别于联系"><span class="nav-text">区别于联系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#超参数"><span class="nav-text">超参数</span></a></li></ol></div>
             
 
           </div>
@@ -968,7 +985,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">471k</span>
+    <span title="站点总字数">735k</span>
   
 
   
@@ -977,7 +994,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">7:08</span>
+    <span title="站点阅读时长">11:08</span>
   
 </div>
 
