@@ -108,17 +108,18 @@
 
 
 
-  <meta name="description" content="这个文件经常会被使用到, 它主要的作用提供一些可以使 Caffe2 networks 更方便使用的辅助函数, 该文件解读如下(该文件中包含多个辅助函数, 按照函数在文件中的顺序从上到下逐个解读)">
+  <meta name="description" content="utils/net.py这个文件经常会被使用到, 它主要的作用提供一些可以使 Caffe2 networks 更方便使用的辅助函数, 该文件解读如下(该文件中包含多个辅助函数, 按照函数在文件中的顺序从上到下逐个解读)">
+<meta name="keywords" content="Caffe2,Detectron,源码解析">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Detectron源码解读-utils&#x2F;net.py 辅助函数">
+<meta property="og:title" content="Detectron 源码解析-辅助函数">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Caffe2-Detectron-net辅助函数/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="这个文件经常会被使用到, 它主要的作用提供一些可以使 Caffe2 networks 更方便使用的辅助函数, 该文件解读如下(该文件中包含多个辅助函数, 按照函数在文件中的顺序从上到下逐个解读)">
+<meta property="og:description" content="utils/net.py这个文件经常会被使用到, 它主要的作用提供一些可以使 Caffe2 networks 更方便使用的辅助函数, 该文件解读如下(该文件中包含多个辅助函数, 按照函数在文件中的顺序从上到下逐个解读)">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-24T14:33:52.972Z">
+<meta property="og:updated_time" content="2018-11-12T13:44:23.452Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Detectron源码解读-utils&#x2F;net.py 辅助函数">
-<meta name="twitter:description" content="这个文件经常会被使用到, 它主要的作用提供一些可以使 Caffe2 networks 更方便使用的辅助函数, 该文件解读如下(该文件中包含多个辅助函数, 按照函数在文件中的顺序从上到下逐个解读)">
+<meta name="twitter:title" content="Detectron 源码解析-辅助函数">
+<meta name="twitter:description" content="utils/net.py这个文件经常会被使用到, 它主要的作用提供一些可以使 Caffe2 networks 更方便使用的辅助函数, 该文件解读如下(该文件中包含多个辅助函数, 按照函数在文件中的顺序从上到下逐个解读)">
 
 
 
@@ -135,7 +136,7 @@
   };
 </script>
 
-  <title>Detectron源码解读-utils/net.py 辅助函数 | 从零开始的BLOG</title>
+  <title>Detectron 源码解析-辅助函数 | 从零开始的BLOG</title>
   
 
 
@@ -243,7 +244,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">180</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">188</span></a>
   </li>
         
         
@@ -339,7 +340,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">28</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">32</span></a>
   </li>
         
         
@@ -457,7 +458,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Detectron源码解读-utils/net.py 辅助函数
+          <h1 class="post-title" itemprop="name headline">Detectron 源码解析-辅助函数
               
             
           </h1>
@@ -501,7 +502,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/其它/" itemprop="url" rel="index"><span itemprop="name">其它</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Caffe2/" itemprop="url" rel="index"><span itemprop="name">Caffe2</span></a></span>
 
                 
                 
@@ -537,7 +538,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">98</span>
+                <span title="本文字数">110</span>
               
 
               
@@ -571,7 +572,7 @@
       
 
       
-        <p>这个文件经常会被使用到, 它主要的作用提供一些可以使 Caffe2 networks 更方便使用的辅助函数, 该文件解读如下(该文件中包含多个辅助函数, 按照函数在文件中的顺序从上到下逐个解读)</p>
+        <p><code>utils/net.py</code><br>这个文件经常会被使用到, 它主要的作用提供一些可以使 Caffe2 networks 更方便使用的辅助函数, 该文件解读如下(该文件中包含多个辅助函数, 按照函数在文件中的顺序从上到下逐个解读)</p>
 
       
     </div>
@@ -590,6 +591,16 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Caffe2/" rel="tag"><i class="fa fa-tag"></i> Caffe2</a>
+          
+            <a href="/tags/Detectron/" rel="tag"><i class="fa fa-tag"></i> Detectron</a>
+          
+            <a href="/tags/源码解析/" rel="tag"><i class="fa fa-tag"></i> 源码解析</a>
+          
+        </div>
+      
 
       
       
@@ -599,8 +610,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/Cpp-STL之unordered-map/" rel="prev" title="Cpp-STL之unordered_map">
-                <i class="fa fa-chevron-left"></i> Cpp-STL之unordered_map
+              <a href="/z_post/Cpp-STL之unordered-map/" rel="prev" title="STL之unordered_map">
+                <i class="fa fa-chevron-left"></i> STL之unordered_map
               </a>
             
           </div>
@@ -680,7 +691,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">180</span>
+                    <span class="site-state-item-count">188</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -788,7 +799,15 @@
                     
                       
                     
-                    <span class="site-state-item-count">28</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -873,7 +892,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">735k</span>
+    <span title="站点总字数">852k</span>
   
 
   
@@ -882,7 +901,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">11:08</span>
+    <span title="站点阅读时长">12:54</span>
   
 </div>
 

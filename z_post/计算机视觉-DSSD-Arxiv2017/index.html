@@ -108,25 +108,38 @@
 
 
 
-  <meta name="description" content="文章: 作者: 核心亮点论文细节背景介绍RoI AlignRoI Pooling存在两次量化过程:  将候选框边界量化为整数坐标值 将量化后的边界区域分割成 $k\times k$ 个bins, 并对每一个单元的边界量化  可以看出, 上面的量化操作是一种很粗糙的Pooling方式, 由于feature map可以看做是对原图特征的高度概括信息, 所以feature map上的细微差别映射回原图时">
-<meta name="keywords" content="目标检测,论文解读">
+  <meta name="description" content="核心亮点(1) 利用反卷积模块向特征图谱中添加更多的上下文信息主要是对SSD的一点改进, SSD使用了不同阶段的卷积特征图谱进行目标检测, 而DSSD受到人体姿态识别任务的启发, 将这些不同阶段的卷积特征图谱通过反卷积模块连接起来, 然后再进行目标检测的预测任务. (2), 预测模块采用Residual模块这个不算是亮点, 不过也是改动之一, 基本来说就说原始的SSD是直接在特征图谱预测结果并计算">
+<meta name="keywords" content="目标检测">
 <meta property="og:type" content="article">
-<meta property="og:title" content="从RCNN到FasterRCNN">
-<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-ICCV2017-MaskRCNN/index.html">
+<meta property="og:title" content="DSSD-Deconvolutional Single Shot Detector">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-DSSD-Arxiv2017/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="文章: 作者: 核心亮点论文细节背景介绍RoI AlignRoI Pooling存在两次量化过程:  将候选框边界量化为整数坐标值 将量化后的边界区域分割成 $k\times k$ 个bins, 并对每一个单元的边界量化  可以看出, 上面的量化操作是一种很粗糙的Pooling方式, 由于feature map可以看做是对原图特征的高度概括信息, 所以feature map上的细微差别映射回原图时">
+<meta property="og:description" content="核心亮点(1) 利用反卷积模块向特征图谱中添加更多的上下文信息主要是对SSD的一点改进, SSD使用了不同阶段的卷积特征图谱进行目标检测, 而DSSD受到人体姿态识别任务的启发, 将这些不同阶段的卷积特征图谱通过反卷积模块连接起来, 然后再进行目标检测的预测任务. (2), 预测模块采用Residual模块这个不算是亮点, 不过也是改动之一, 基本来说就说原始的SSD是直接在特征图谱预测结果并计算">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-22T09:54:28.196Z">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fwtpkdiie6j21480trdn7.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fwtrhla3r4j20mm0jxgnc.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fwtqpmp2rvj21cf0kejv9.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fwtpkdiie6j21480trdn7.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fwtqpmp2rvj21cf0kejv9.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fwtrhla3r4j20mm0jxgnc.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fwtsusimmaj20o70b1dhb.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fwtsvfcjkfj21kw0n911g.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fwtsvsst7yj20s60ildjb.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fwtsw8f5f3j21kw0gxn37.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fwtswrk1sjj21kw0ji7an.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fwtsx845hej21kw0q9aix.jpg">
+<meta property="og:updated_time" content="2018-11-02T09:20:36.032Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="从RCNN到FasterRCNN">
-<meta name="twitter:description" content="文章: 作者: 核心亮点论文细节背景介绍RoI AlignRoI Pooling存在两次量化过程:  将候选框边界量化为整数坐标值 将量化后的边界区域分割成 $k\times k$ 个bins, 并对每一个单元的边界量化  可以看出, 上面的量化操作是一种很粗糙的Pooling方式, 由于feature map可以看做是对原图特征的高度概括信息, 所以feature map上的细微差别映射回原图时">
+<meta name="twitter:title" content="DSSD-Deconvolutional Single Shot Detector">
+<meta name="twitter:description" content="核心亮点(1) 利用反卷积模块向特征图谱中添加更多的上下文信息主要是对SSD的一点改进, SSD使用了不同阶段的卷积特征图谱进行目标检测, 而DSSD受到人体姿态识别任务的启发, 将这些不同阶段的卷积特征图谱通过反卷积模块连接起来, 然后再进行目标检测的预测任务. (2), 预测模块采用Residual模块这个不算是亮点, 不过也是改动之一, 基本来说就说原始的SSD是直接在特征图谱预测结果并计算">
+<meta name="twitter:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fwtpkdiie6j21480trdn7.jpg">
 
 
 
 
 
 
-  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/计算机视觉-ICCV2017-MaskRCNN/"/>
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/计算机视觉-DSSD-Arxiv2017/"/>
 
 
 
@@ -136,7 +149,7 @@
   };
 </script>
 
-  <title>从RCNN到FasterRCNN | 从零开始的BLOG</title>
+  <title>DSSD-Deconvolutional Single Shot Detector | 从零开始的BLOG</title>
   
 
 
@@ -244,7 +257,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">180</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">188</span></a>
   </li>
         
         
@@ -340,7 +353,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">28</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">32</span></a>
   </li>
         
         
@@ -441,7 +454,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/计算机视觉-ICCV2017-MaskRCNN/">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/计算机视觉-DSSD-Arxiv2017/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZeroZone">
@@ -458,7 +471,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">从RCNN到FasterRCNN
+          <h1 class="post-title" itemprop="name headline">DSSD-Deconvolutional Single Shot Detector
               
             
           </h1>
@@ -484,7 +497,7 @@
                 
               
 
-              <time title="创建时间：2018-04-09 19:27:03" itemprop="dateCreated datePublished" datetime="2018-04-09T19:27:03+08:00">2018-04-09</time>
+              <time title="创建时间：2018-10-28 15:50:15" itemprop="dateCreated datePublished" datetime="2018-10-28T15:50:15+08:00">2018-10-28</time>
             
 
             
@@ -538,7 +551,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">439</span>
+                <span title="本文字数">1.9k</span>
               
 
               
@@ -552,7 +565,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">2 分钟</span>
               
             </div>
           
@@ -572,20 +585,26 @@
       
 
       
-        <p><strong>文章:</strong></p>
-<p><strong>作者:</strong></p>
-<h1 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h1><h1 id="论文细节"><a href="#论文细节" class="headerlink" title="论文细节"></a>论文细节</h1><h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><h2 id="RoI-Align"><a href="#RoI-Align" class="headerlink" title="RoI Align"></a>RoI Align</h2><p>RoI Pooling存在两次量化过程:</p>
-<ul>
-<li>将候选框边界量化为整数坐标值</li>
-<li>将量化后的边界区域分割成 $k\times k$ 个bins, 并对每一个单元的边界量化</li>
-</ul>
-<p>可以看出, 上面的量化操作是一种很粗糙的Pooling方式, 由于feature map可以看做是对原图特征的高度概括信息, 所以feature map上的细微差别映射回原图时, 往往会导致产生很大的像素位移差. 故此, 提出了RoI Align的解决思路: 取消量化操作, 使用双线性内插的方法获得坐标为浮点数的像素点上的图像数值, 从而将整个特征聚集过程转换为一个连续的操作. 其具体流程如下:</p>
-<ul>
-<li>遍历每一个候选区域, 保持浮点数边界不做量化</li>
-<li>将候选区域分割成 $k\times k$ 个bins, 每个bins的边界也不做量化</li>
-<li>在每个bins中计算固定四个坐标的位置, 使用双线性内插的方法计算出这四个位置的值, 然后进行最大化操作哦.</li>
-</ul>
-<h1 id="论文细节-1"><a href="#论文细节-1" class="headerlink" title="论文细节"></a>论文细节</h1>
+        <h1 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h1><p><strong>(1) 利用反卷积模块向特征图谱中添加更多的上下文信息</strong><br>主要是对SSD的一点改进, SSD使用了不同阶段的卷积特征图谱进行目标检测, 而DSSD受到人体姿态识别任务的启发, 将这些不同阶段的卷积特征图谱通过反卷积模块连接起来, 然后再进行目标检测的预测任务.<br><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fwtpkdiie6j21480trdn7.jpg" alt=""></p>
+<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fwtrhla3r4j20mm0jxgnc.jpg" alt=""><br><strong>(2), 预测模块采用Residual模块</strong><br>这个不算是亮点, 不过也是改动之一, 基本来说就说原始的SSD是直接在特征图谱预测结果并计算损失的, 而DSSD在预测之前会先经过一个Residual模块做进一步的特征提取, 然后在进行预测.<br><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwtqpmp2rvj21cf0kejv9.jpg" alt=""></p>
+<h1 id="论文细节"><a href="#论文细节" class="headerlink" title="论文细节"></a>论文细节</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>这篇文章最主要的贡献在于提出了一个可以将额外的上下文信息引入到现有大多数目标检测模型的方法. 为了达到这个目标, 本文首先将Resnet101 分类网络和SSD模型结合起来, 然后对SSD+Resnet101的模型进行了扩展, 添加了反卷积层, 以此引入了针对更大范围尺度的目标物上下文特征信息, 进而提高了准确率(特别是在小物体上面). <strong>这种方法在进行高度阐述时, 很容易就能讲明白, 但是在真正实现时, 却很难成功.</strong> 因此本文精心的添加了一些具有已经学习好的特征信息的阶段, 特别是在反卷积时的前向计算的连接上, 最终使得上面的方法得以起效.</p>
+<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fwtpkdiie6j21480trdn7.jpg" alt=""></p>
+<h2 id="DSSD-模型"><a href="#DSSD-模型" class="headerlink" title="DSSD 模型"></a>DSSD 模型</h2><h3 id="base-network"><a href="#base-network" class="headerlink" title="base network"></a>base network</h3><p>如图1上半部分所示, SSD模型是用一个经典网络做为基础网络, 然后后接几层额外的特征层构建的. 原始的SSD采用的是VGGnet, 但是大量的工作都是用ResNet获得了更好的效果, 因此, 本文也选用ResNet-101网络作为backbone. 并且将额外的卷积层(也换成Residual模块)接在 conv5_x block后面, 同时会分别从 conv3_x, conv5_x两个卷积段预测score和offsets. <strong>个人觉得奇怪的一点是, 为什么单单把VGG换成ResNet并没有提高mAP?(VOC数据集, 前者77.5, 后者76.4) 而是在使用了其他辅助模块后才提高的</strong></p>
+<h3 id="prediction-module"><a href="#prediction-module" class="headerlink" title="prediction module"></a>prediction module</h3><p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwtqpmp2rvj21cf0kejv9.jpg" alt=""></p>
+<p>MS-CNN指出, 提升每个任务的子网络有助于提高准确率, 根据这个原则, 我们在每一个预测层都添加了一个residual block, 如图2(c)所示. 同时也对其他形式的predictin module进行了尝试(图2,a,b,c).</p>
+<h3 id="Deconvolutional-SSD"><a href="#Deconvolutional-SSD" class="headerlink" title="Deconvolutional SSD"></a>Deconvolutional SSD</h3><p>为了增加更多高级别的上下文信息, 文章将prediction module 移动到了一系列的反卷积层之后, 并与原始SSD的额外卷积层形成了一种非对称的沙漏结构(hourglass network, 灵感来自于一篇人体姿态检测论文), 如图1所示. 每一个卷积层的特征图谱会和之前的层一起经过一个反卷积模块(该模块细节在后面介绍), 这就相当于在特征图谱中加入了更多的上下文信息. 这里的反卷积只有很浅的几层, 作者这样设计的原因一是不想增加过多的计算时间, 二是由于迁移学习方法可以帮助更好更快的模型收敛, 同时可以获得更高的精度, 因此无需设计过深的网络. <strong>反卷积层很重要的一个点在于计算成本的增加, 除了反卷积操作本身的计算, 还体现在从之前层中添加信息时</strong></p>
+<h3 id="Deconvolution-Module"><a href="#Deconvolution-Module" class="headerlink" title="Deconvolution Module"></a>Deconvolution Module</h3><p>为了帮助整合反卷积层和之前层的特征信息, 文章引入了一种反卷积模块, 如图3所示.</p>
+<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fwtrhla3r4j20mm0jxgnc.jpg" alt=""></p>
+<p>图3中左下角是从原始SSD中得到的特征图谱, 左上角是论文<code>Learning to refine object segment</code>中提出的反卷积层. 在当前模块中的每一个卷积层, 都使用了BN层, 在放大特征图谱时, 我们使用了学习到的反卷积层, 而不是双线性插值法. 在测试了多种conbination方法后(element-wise sum, element-wise product), 根据实验结果决定采用对应为相乘的结合方式(VOC数据集, 前者78.4, 后者78.6, 提升了0.2的mAP).</p>
+<h3 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h3><p>除了一些参数设置的不同外, 训练策略基本遵循SSD.</p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fwtsusimmaj20o70b1dhb.jpg" alt=""></p>
+<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwtsvfcjkfj21kw0n911g.jpg" alt=""></p>
+<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fwtsvsst7yj20s60ildjb.jpg" alt=""></p>
+<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwtsw8f5f3j21kw0gxn37.jpg" alt=""></p>
+<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fwtswrk1sjj21kw0ji7an.jpg" alt=""></p>
+<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fwtsx845hej21kw0q9aix.jpg" alt=""></p>
+<p>从COCO数据集的结果来看, DSSD在小物体方面并没有提升, 而在大物体方面获得了很大的提升, 推测原因主要是因为ResNet-101在大物体的特征提取能力上, 要远强于VGGNet.<br>另外, 可以看出, 由于采用了更深的ResNet网络, 同时增加了反卷积过程, 使得FPS降低不少.(即使在测试阶段利用计算公式移除了BN层, 这个trick可以提升1.2~1.5倍的检测速度).</p>
+
       
     </div>
 
@@ -607,8 +626,6 @@
           
             <a href="/tags/目标检测/" rel="tag"><i class="fa fa-tag"></i> 目标检测</a>
           
-            <a href="/tags/论文解读/" rel="tag"><i class="fa fa-tag"></i> 论文解读</a>
-          
         </div>
       
 
@@ -620,8 +637,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/TensorFlow-读书笔记-TF实战/" rel="prev" title="《TensorFlow实战》">
-                <i class="fa fa-chevron-left"></i> 《TensorFlow实战》
+              <a href="/z_post/PyTorch-SSD/" rel="prev" title="SSD 源码实现 (PyTorch)">
+                <i class="fa fa-chevron-left"></i> SSD 源码实现 (PyTorch)
               </a>
             
           </div>
@@ -630,8 +647,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/计算机视觉-CVPR2014-RCNN/" rel="next" title="Rich Feature Hierarchies for Accurate Object Detection and Semantic Segmentation">
-                Rich Feature Hierarchies for Accurate Object Detection and Semantic Segmentation <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/面试-Cpp11新特性/" rel="next" title="C++11 新特性">
+                C++11 新特性 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -710,7 +727,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">180</span>
+                    <span class="site-state-item-count">188</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -818,7 +835,15 @@
                     
                       
                     
-                    <span class="site-state-item-count">28</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -882,7 +907,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#核心亮点"><span class="nav-text">核心亮点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#论文细节"><span class="nav-text">论文细节</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景介绍"><span class="nav-text">背景介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RoI-Align"><span class="nav-text">RoI Align</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#论文细节-1"><span class="nav-text">论文细节</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#核心亮点"><span class="nav-text">核心亮点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#论文细节"><span class="nav-text">论文细节</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DSSD-模型"><span class="nav-text">DSSD 模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#base-network"><span class="nav-text">base network</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#prediction-module"><span class="nav-text">prediction module</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deconvolutional-SSD"><span class="nav-text">Deconvolutional SSD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deconvolution-Module"><span class="nav-text">Deconvolution Module</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Training"><span class="nav-text">Training</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验"><span class="nav-text">实验</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -919,7 +944,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">735k</span>
+    <span title="站点总字数">852k</span>
   
 
   
@@ -928,7 +953,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">11:08</span>
+    <span title="站点阅读时长">12:54</span>
   
 </div>
 

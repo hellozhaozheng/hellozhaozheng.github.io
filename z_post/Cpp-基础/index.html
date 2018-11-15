@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="闲杂123Array &amp;lt; Stack&amp;lt;int&amp;gt; &amp;gt; array_stack;//在C++98中，要求至少用一个空白符将两个&amp;gt;符号分开，以免与运算符&amp;gt;&amp;gt;混淆，C++11不要求这样做 花括号与分号在结构体与类定义大括号后面需要分号；其余可要可不要if else、try catch等组合语句如果在中间加了分号会将一个语句块分成两个 cmath123456789#">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-27T07:14:26.168Z">
+<meta property="og:updated_time" content="2018-11-15T01:40:01.122Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++ 基础">
 <meta name="twitter:description" content="闲杂123Array &amp;lt; Stack&amp;lt;int&amp;gt; &amp;gt; array_stack;//在C++98中，要求至少用一个空白符将两个&amp;gt;符号分开，以免与运算符&amp;gt;&amp;gt;混淆，C++11不要求这样做 花括号与分号在结构体与类定义大括号后面需要分号；其余可要可不要if else、try catch等组合语句如果在中间加了分号会将一个语句块分成两个 cmath123456789#">
@@ -244,7 +244,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">180</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">188</span></a>
   </li>
         
         
@@ -340,7 +340,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">28</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">32</span></a>
   </li>
         
         
@@ -538,7 +538,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">4.7k</span>
+                <span title="本文字数">5.1k</span>
               
 
               
@@ -552,7 +552,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">4 分钟</span>
+                <span title="阅读时长">5 分钟</span>
               
             </div>
           
@@ -575,9 +575,11 @@
         <h1 id="闲杂"><a href="#闲杂" class="headerlink" title="闲杂"></a>闲杂</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Array &lt; Stack&lt;<span class="keyword">int</span>&gt; &gt; array_stack;</span><br><span class="line"><span class="comment">//在C++98中，要求至少用一个空白符将两个&gt;符号分开，以免与运算符&gt;&gt;混淆，C++11不要求这样做</span></span><br></pre></td></tr></table></figure>
 <h1 id="花括号与分号"><a href="#花括号与分号" class="headerlink" title="花括号与分号"></a>花括号与分号</h1><p>在结构体与类定义大括号后面需要分号；<br>其余可要可不要<br>if else、try catch等组合语句如果在中间加了分号会将一个语句块分成两个</p>
 <h1 id="cmath"><a href="#cmath" class="headerlink" title="cmath"></a>cmath</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;cmath&gt;</span><br><span class="line">or</span><br><span class="line">#include &lt;math.h&gt;</span><br><span class="line"></span><br><span class="line">ceil(),floor() 向上、向下取整，不在命名std里面。</span><br><span class="line"></span><br><span class="line">ceil(5/2); // 2</span><br><span class="line">ceil(5.0/2); // 3</span><br><span class="line">floor(5.0/2); // 2:</span><br></pre></td></tr></table></figure>
-<h1 id="std-find"><a href="#std-find" class="headerlink" title="std::find"></a>std::find</h1><p>返回范围 [first, last) 中满足特定判别标准的首个元素迭代器，查找失败则返回end迭代器</p>
-<h1 id="std-sort"><a href="#std-sort" class="headerlink" title="std::sort"></a>std::sort</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自定义函数必须写在最外吗，否则无法通过</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">mysort</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>&#123; <span class="keyword">return</span> a&gt;b; &#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v = &#123;<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">787</span>,<span class="number">8</span>,<span class="number">5</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">std</span>::sort(v.begin(), v.end(), mysort);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> iter = v.begin(); iter!= v.end(); iter++)&#123;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;* iter&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//lamda 表达式</span></span><br><span class="line"><span class="built_in">std</span>::sort(s.begin(), s.end(), [](<span class="keyword">int</span> a, <span class="keyword">int</span> b) &#123;</span><br><span class="line">       <span class="keyword">return</span> b &lt; a;   </span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure>
+<h1 id="std-find"><a href="#std-find" class="headerlink" title="std::find()"></a>std::find()</h1><p>返回范围 [first, last) 中满足特定判别标准的首个元素迭代器，查找失败则返回end迭代器</p>
+<h1 id="std-sort"><a href="#std-sort" class="headerlink" title="std::sort()"></a>std::sort()</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自定义函数必须写在最外吗，否则无法通过</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">mysort</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>&#123; <span class="keyword">return</span> a&gt;b; &#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v = &#123;<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">787</span>,<span class="number">8</span>,<span class="number">5</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">std</span>::sort(v.begin(), v.end(), mysort);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> iter = v.begin(); iter!= v.end(); iter++)&#123;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;* iter&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>lamda 表达式:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::sort(s.begin(), s.end(), [](<span class="keyword">int</span> a, <span class="keyword">int</span> b) &#123;</span><br><span class="line">       <span class="keyword">return</span> b &lt; a;   </span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>重载<code>operator()</code>运算符<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function">    </span>&#123;   </span><br><span class="line">        <span class="keyword">return</span> a &lt; b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; customLess;</span><br><span class="line"><span class="built_in">std</span>::sort(s.begin(), s.end(), customLess); <span class="comment">//升序</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="std-reverse"><a href="#std-reverse" class="headerlink" title="std::reverse()"></a>std::reverse()</h1><p>反转[first, last)范围中的元素顺序. (借助 <code>std::swap()</code>实现)<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</span><br><span class="line"><span class="built_in">std</span>::reverse(<span class="built_in">std</span>::begin(v), <span class="built_in">std</span>::end(v));</span><br><span class="line"><span class="built_in">std</span>::reverse(v.begin(), v.end());</span><br></pre></td></tr></table></figure></p>
 <h1 id="vector"><a href="#vector" class="headerlink" title="vector"></a>vector</h1><h2 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h2><p>截取vector中的一部分作为一个新的vector<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
 <p>清空：clear()</p>
 <p>在最后添加元素：push_back()</p>
@@ -739,7 +741,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">180</span>
+                    <span class="site-state-item-count">188</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -847,7 +849,15 @@
                     
                       
                     
-                    <span class="site-state-item-count">28</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -911,7 +921,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#闲杂"><span class="nav-text">闲杂</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#花括号与分号"><span class="nav-text">花括号与分号</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cmath"><span class="nav-text">cmath</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#std-find"><span class="nav-text">std::find</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#std-sort"><span class="nav-text">std::sort</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vector"><span class="nav-text">vector</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用操作"><span class="nav-text">常用操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#string类"><span class="nav-text">string类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用操作-1"><span class="nav-text">常用操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#截取子串"><span class="nav-text">截取子串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#替换子串"><span class="nav-text">替换子串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查找子串"><span class="nav-text">查找子串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#判断字符串string里面是否含有某个字符串"><span class="nav-text">判断字符串string里面是否含有某个字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c-字符串比较大小的两种方法"><span class="nav-text">c++字符串比较大小的两种方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#统计字符串中某个字符出现了多少次"><span class="nav-text">统计字符串中某个字符出现了多少次</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元素访问"><span class="nav-text">元素访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交换string的值"><span class="nav-text">交换string的值</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#unordered-map"><span class="nav-text">unordered_map</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#闲杂"><span class="nav-text">闲杂</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#花括号与分号"><span class="nav-text">花括号与分号</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cmath"><span class="nav-text">cmath</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#std-find"><span class="nav-text">std::find()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#std-sort"><span class="nav-text">std::sort()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#std-reverse"><span class="nav-text">std::reverse()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vector"><span class="nav-text">vector</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用操作"><span class="nav-text">常用操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#string类"><span class="nav-text">string类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用操作-1"><span class="nav-text">常用操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#截取子串"><span class="nav-text">截取子串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#替换子串"><span class="nav-text">替换子串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查找子串"><span class="nav-text">查找子串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#判断字符串string里面是否含有某个字符串"><span class="nav-text">判断字符串string里面是否含有某个字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c-字符串比较大小的两种方法"><span class="nav-text">c++字符串比较大小的两种方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#统计字符串中某个字符出现了多少次"><span class="nav-text">统计字符串中某个字符出现了多少次</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元素访问"><span class="nav-text">元素访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交换string的值"><span class="nav-text">交换string的值</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#unordered-map"><span class="nav-text">unordered_map</span></a></li></ol></div>
             
 
           </div>
@@ -948,7 +958,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">735k</span>
+    <span title="站点总字数">852k</span>
   
 
   
@@ -957,7 +967,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">11:08</span>
+    <span title="站点阅读时长">12:54</span>
   
 </div>
 

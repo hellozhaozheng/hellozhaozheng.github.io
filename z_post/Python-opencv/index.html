@@ -108,17 +108,17 @@
 
 
 
-  <meta name="description" content="opencv 基础知识opencv与numpyopencv的基础类型为numpy.ndarray, 因此可以直接使用 ndarray 的一些属性的方法 1234import cv2image = cv2.imread(&apos;./test.jpg&apos;)print(type(image) #&amp;lt;class &apos;numpy.ndarray&apos;&amp;gt;print(image.shape) #(500, 1069">
+  <meta name="description" content="opencv 基础知识读取图片保存图片cv2.putText()(startX, startY) 为左下角坐标1cv2.putText(img, &quot;text test&quot;, (startX, startY), cv2.FONT_HERSHEY_SIMPLEX, font_size, (B,G,R), thickness) cv2.rectangle()(x,y) 为左上角坐标(x+h,y+w) 为右">
 <meta property="og:type" content="article">
 <meta property="og:title" content="opencv模块-计算机视觉算法库">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Python-opencv/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="opencv 基础知识opencv与numpyopencv的基础类型为numpy.ndarray, 因此可以直接使用 ndarray 的一些属性的方法 1234import cv2image = cv2.imread(&apos;./test.jpg&apos;)print(type(image) #&amp;lt;class &apos;numpy.ndarray&apos;&amp;gt;print(image.shape) #(500, 1069">
+<meta property="og:description" content="opencv 基础知识读取图片保存图片cv2.putText()(startX, startY) 为左下角坐标1cv2.putText(img, &quot;text test&quot;, (startX, startY), cv2.FONT_HERSHEY_SIMPLEX, font_size, (B,G,R), thickness) cv2.rectangle()(x,y) 为左上角坐标(x+h,y+w) 为右">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-31T12:53:01.502Z">
+<meta property="og:updated_time" content="2018-11-07T08:23:16.686Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="opencv模块-计算机视觉算法库">
-<meta name="twitter:description" content="opencv 基础知识opencv与numpyopencv的基础类型为numpy.ndarray, 因此可以直接使用 ndarray 的一些属性的方法 1234import cv2image = cv2.imread(&apos;./test.jpg&apos;)print(type(image) #&amp;lt;class &apos;numpy.ndarray&apos;&amp;gt;print(image.shape) #(500, 1069">
+<meta name="twitter:description" content="opencv 基础知识读取图片保存图片cv2.putText()(startX, startY) 为左下角坐标1cv2.putText(img, &quot;text test&quot;, (startX, startY), cv2.FONT_HERSHEY_SIMPLEX, font_size, (B,G,R), thickness) cv2.rectangle()(x,y) 为左上角坐标(x+h,y+w) 为右">
 
 
 
@@ -243,7 +243,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">180</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">188</span></a>
   </li>
         
         
@@ -339,7 +339,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">28</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">32</span></a>
   </li>
         
         
@@ -537,7 +537,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.7k</span>
+                <span title="本文字数">2.2k</span>
               
 
               
@@ -571,7 +571,10 @@
       
 
       
-        <h1 id="opencv-基础知识"><a href="#opencv-基础知识" class="headerlink" title="opencv 基础知识"></a>opencv 基础知识</h1><h2 id="opencv与numpy"><a href="#opencv与numpy" class="headerlink" title="opencv与numpy"></a>opencv与numpy</h2><p>opencv的基础类型为<code>numpy.ndarray</code>, 因此可以直接使用 <code>ndarray</code> 的一些属性的方法</p>
+        <h1 id="opencv-基础知识"><a href="#opencv-基础知识" class="headerlink" title="opencv 基础知识"></a>opencv 基础知识</h1><h2 id="读取图片"><a href="#读取图片" class="headerlink" title="读取图片"></a>读取图片</h2><h2 id="保存图片"><a href="#保存图片" class="headerlink" title="保存图片"></a>保存图片</h2><h2 id="cv2-putText"><a href="#cv2-putText" class="headerlink" title="cv2.putText()"></a>cv2.putText()</h2><p>(startX, startY) 为左下角坐标<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2.putText(img, <span class="string">"text test"</span>, (startX, startY), cv2.FONT_HERSHEY_SIMPLEX, font_size, (B,G,R), thickness)</span><br></pre></td></tr></table></figure></p>
+<h2 id="cv2-rectangle"><a href="#cv2-rectangle" class="headerlink" title="cv2.rectangle()"></a>cv2.rectangle()</h2><p>(x,y) 为左上角坐标<br>(x+h,y+w) 为右下角坐标<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2.rectangle(img,(x,y), (x+h,y+w), (<span class="number">0</span>,<span class="number">255</span>,<span class="number">0</span>), thickness)</span><br></pre></td></tr></table></figure></p>
+<h2 id="cv2-waitKey"><a href="#cv2-waitKey" class="headerlink" title="cv2.waitKey()"></a>cv2.waitKey()</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">keypress = cv2.waitKey(<span class="number">200</span>) <span class="comment"># 200为当前图片的显示持续时间</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> keypress == ord(<span class="string">'c'</span>) <span class="comment"># keypress为按键的整数形式, 所以需要用ord将字符类型转换</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> cv2.waitKey(<span class="number">200</span>) == <span class="number">27</span>: <span class="comment"># Decimal 27 = Esc</span></span><br></pre></td></tr></table></figure>
+<h2 id="opencv与numpy"><a href="#opencv与numpy" class="headerlink" title="opencv与numpy"></a>opencv与numpy</h2><p>opencv的基础类型为<code>numpy.ndarray</code>, 因此可以直接使用 <code>ndarray</code> 的一些属性的方法</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line">image = cv2.imread(<span class="string">'./test.jpg'</span>)</span><br><span class="line">print(type(image) <span class="comment">#&lt;class 'numpy.ndarray'&gt;</span></span><br><span class="line">print(image.shape) <span class="comment">#(500, 1069, 3)  (高, 宽, 通道),</span></span><br></pre></td></tr></table></figure>
 <p>利用 <code>cv2.merge</code> 方法将 <code>numpy.ndarray</code> 数据转换成opencv的图片数据:</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 图片的分辨率为300*200(宽*高)，这里b, g, r设为随机值，注意dtype属性</span></span><br><span class="line">b = np.random.randint(<span class="number">0</span>, <span class="number">255</span>, (<span class="number">200</span>, <span class="number">300</span>), dtype=np.uint8)</span><br><span class="line">g = np.random.randint(<span class="number">0</span>, <span class="number">255</span>, (<span class="number">200</span>, <span class="number">300</span>), dtype=np.uint8)</span><br><span class="line">r = np.random.randint(<span class="number">0</span>, <span class="number">255</span>, (<span class="number">200</span>, <span class="number">300</span>), dtype=np.uint8)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并通道，形成图片</span></span><br><span class="line">img = cv2.merge([b, g, r])  <span class="comment"># opencv的通道是b在最前,r在最后</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示图片</span></span><br><span class="line">cv2.imshow(<span class="string">'test'</span>, img)</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br><span class="line">cv2.destroyWindow(<span class="string">'test'</span>)</span><br></pre></td></tr></table></figure>
@@ -696,7 +699,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">180</span>
+                    <span class="site-state-item-count">188</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -804,7 +807,15 @@
                     
                       
                     
-                    <span class="site-state-item-count">28</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -868,7 +879,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#opencv-基础知识"><span class="nav-text">opencv 基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#opencv与numpy"><span class="nav-text">opencv与numpy</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#opencv-基本图像操作"><span class="nav-text">opencv 基本图像操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通道的拆分与合并"><span class="nav-text">通道的拆分与合并</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用matplotlib显示图像"><span class="nav-text">用matplotlib显示图像</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#opencv-核心图像算法"><span class="nav-text">opencv 核心图像算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cv2"><span class="nav-text">cv2</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#opencv-基础知识"><span class="nav-text">opencv 基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#读取图片"><span class="nav-text">读取图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#保存图片"><span class="nav-text">保存图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cv2-putText"><span class="nav-text">cv2.putText()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cv2-rectangle"><span class="nav-text">cv2.rectangle()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cv2-waitKey"><span class="nav-text">cv2.waitKey()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#opencv与numpy"><span class="nav-text">opencv与numpy</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#opencv-基本图像操作"><span class="nav-text">opencv 基本图像操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通道的拆分与合并"><span class="nav-text">通道的拆分与合并</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用matplotlib显示图像"><span class="nav-text">用matplotlib显示图像</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#opencv-核心图像算法"><span class="nav-text">opencv 核心图像算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cv2"><span class="nav-text">cv2</span></a></li></ol></div>
             
 
           </div>
@@ -905,7 +916,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">735k</span>
+    <span title="站点总字数">852k</span>
   
 
   
@@ -914,7 +925,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">11:08</span>
+    <span title="站点阅读时长">12:54</span>
   
 </div>
 

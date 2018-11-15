@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="成员函数元素访问at() 返回char类型的字符 [] 返回char类型的字符 操作push_back: 将字符添加到字符串结尾 pop_back: 移除末尾字符 类型转换string 转 intstd::string str;int i = std::stoi(str);12同样, 可以使用 stol(long), stof(float), stod(double) 等 最简单的将int转换成s">
+  <meta name="description" content="成员函数元素访问at() 返回char类型的字符 [] 返回char类型的字符 操作push_back: 将字符添加到字符串结尾 pop_back: 移除末尾字符 类型转换char 转 intint num = std::atoi(str[i]); string 转 intstd::string str;int i = std::stoi(str);12同样, 可以使用 stol(long), s">
 <meta name="keywords" content="STL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="string用法笔记">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Cpp-string用法笔记/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="成员函数元素访问at() 返回char类型的字符 [] 返回char类型的字符 操作push_back: 将字符添加到字符串结尾 pop_back: 移除末尾字符 类型转换string 转 intstd::string str;int i = std::stoi(str);12同样, 可以使用 stol(long), stof(float), stod(double) 等 最简单的将int转换成s">
+<meta property="og:description" content="成员函数元素访问at() 返回char类型的字符 [] 返回char类型的字符 操作push_back: 将字符添加到字符串结尾 pop_back: 移除末尾字符 类型转换char 转 intint num = std::atoi(str[i]); string 转 intstd::string str;int i = std::stoi(str);12同样, 可以使用 stol(long), s">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-13T00:31:56.704Z">
+<meta property="og:updated_time" content="2018-11-08T03:22:35.681Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="string用法笔记">
-<meta name="twitter:description" content="成员函数元素访问at() 返回char类型的字符 [] 返回char类型的字符 操作push_back: 将字符添加到字符串结尾 pop_back: 移除末尾字符 类型转换string 转 intstd::string str;int i = std::stoi(str);12同样, 可以使用 stol(long), stof(float), stod(double) 等 最简单的将int转换成s">
+<meta name="twitter:description" content="成员函数元素访问at() 返回char类型的字符 [] 返回char类型的字符 操作push_back: 将字符添加到字符串结尾 pop_back: 移除末尾字符 类型转换char 转 intint num = std::atoi(str[i]); string 转 intstd::string str;int i = std::stoi(str);12同样, 可以使用 stol(long), s">
 
 
 
@@ -244,7 +244,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">180</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">188</span></a>
   </li>
         
         
@@ -340,7 +340,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">28</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">32</span></a>
   </li>
         
         
@@ -538,7 +538,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">474</span>
+                <span title="本文字数">513</span>
               
 
               
@@ -576,7 +576,8 @@
 <p>[] 返回char类型的字符</p>
 <h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><p>push_back: 将字符添加到字符串结尾</p>
 <p>pop_back: 移除末尾字符</p>
-<h1 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h1><h2 id="string-转-int"><a href="#string-转-int" class="headerlink" title="string 转 int"></a>string 转 int</h2><p>std::string str;<br>int i = std::stoi(str);<br>1<br>2<br>同样, 可以使用 stol(long), stof(float), stod(double) 等</p>
+<h1 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h1><h2 id="char-转-int"><a href="#char-转-int" class="headerlink" title="char 转 int"></a>char 转 int</h2><p>int num = std::atoi(str[i]);</p>
+<h2 id="string-转-int"><a href="#string-转-int" class="headerlink" title="string 转 int"></a>string 转 int</h2><p>std::string str;<br>int i = std::stoi(str);<br>1<br>2<br>同样, 可以使用 stol(long), stof(float), stod(double) 等</p>
 <h2 id="最简单的将int转换成string的方法"><a href="#最简单的将int转换成string的方法" class="headerlink" title="最简单的将int转换成string的方法"></a>最简单的将int转换成string的方法</h2><p>方法一：C风格的itoa<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">char</span>* intStr = itoa(a);</span><br><span class="line"><span class="built_in">string</span> str = <span class="built_in">string</span>(intStr);</span><br></pre></td></tr></table></figure></p>
 <p>方法二：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="built_in">stringstream</span> ss;</span><br><span class="line">ss &lt;&lt; a;</span><br><span class="line"><span class="built_in">string</span> str = ss.str();</span><br></pre></td></tr></table></figure></p>
 <p>方法三：C++风格的std::to_string<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">string</span> s = <span class="built_in">std</span>::to_string(<span class="number">42</span>);</span><br><span class="line"><span class="keyword">auto</span> s = <span class="built_in">std</span>::to_string(<span class="number">42</span>);</span><br></pre></td></tr></table></figure></p>
@@ -703,7 +704,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">180</span>
+                    <span class="site-state-item-count">188</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -811,7 +812,15 @@
                     
                       
                     
-                    <span class="site-state-item-count">28</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -875,7 +884,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#成员函数"><span class="nav-text">成员函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#元素访问"><span class="nav-text">元素访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作"><span class="nav-text">操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类型转换"><span class="nav-text">类型转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#string-转-int"><span class="nav-text">string 转 int</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最简单的将int转换成string的方法"><span class="nav-text">最简单的将int转换成string的方法</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#成员函数"><span class="nav-text">成员函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#元素访问"><span class="nav-text">元素访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作"><span class="nav-text">操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类型转换"><span class="nav-text">类型转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#char-转-int"><span class="nav-text">char 转 int</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#string-转-int"><span class="nav-text">string 转 int</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最简单的将int转换成string的方法"><span class="nav-text">最简单的将int转换成string的方法</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -912,7 +921,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">735k</span>
+    <span title="站点总字数">852k</span>
   
 
   
@@ -921,7 +930,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">11:08</span>
+    <span title="站点阅读时长">12:54</span>
   
 </div>
 
