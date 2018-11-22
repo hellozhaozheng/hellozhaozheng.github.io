@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="vector连续存储结果, 每个元素在内存上是连续的, 支持 高效的随机访问和尾端插入/删除操作, 但其他位置的插入/删除操作效率低下, 可以看做是一个数组, 但是与数组的区别为: 内存空间的扩展. vector 支持动态大小的数据存储, 而数组则必须指定大小, 但需要扩展空间时, 需要手动实现. vector的内存分配原理及实现:在STL内部实现时, 首先分配一个较大的内存空间预备存储, 即ca">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-13T06:02:43.514Z">
+<meta property="og:updated_time" content="2018-11-21T04:58:34.871Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++ 标准模板库STL完整笔记">
 <meta name="twitter:description" content="vector连续存储结果, 每个元素在内存上是连续的, 支持 高效的随机访问和尾端插入/删除操作, 但其他位置的插入/删除操作效率低下, 可以看做是一个数组, 但是与数组的区别为: 内存空间的扩展. vector 支持动态大小的数据存储, 而数组则必须指定大小, 但需要扩展空间时, 需要手动实现. vector的内存分配原理及实现:在STL内部实现时, 首先分配一个较大的内存空间预备存储, 即ca">
@@ -243,7 +243,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">188</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">192</span></a>
   </li>
         
         
@@ -339,7 +339,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">32</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">33</span></a>
   </li>
         
         
@@ -537,7 +537,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.9k</span>
+                <span title="本文字数">3.3k</span>
               
 
               
@@ -551,7 +551,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">2 分钟</span>
+                <span title="阅读时长">3 分钟</span>
               
             </div>
           
@@ -615,7 +615,17 @@
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;  //注意，STL头文件没有扩展名.h</span></span></span><br></pre></td></tr></table></figure>
 <h2 id="4-map的构造函数"><a href="#4-map的构造函数" class="headerlink" title="4. map的构造函数"></a>4. map的构造函数</h2><p>map共提供了6个构造函数，这块涉及到内存分配器这些东西，略过不表，在下面我们将接触到一些map的构造方法，这里要说下的就是，我们通常用如下方法构造一个map：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="built_in">string</span>&gt; mapStudent;</span><br></pre></td></tr></table></figure></p>
-<h2 id="5-数据的插入"><a href="#5-数据的插入" class="headerlink" title="5. 数据的插入"></a>5. 数据的插入</h2>
+<h2 id="5-数据的插入"><a href="#5-数据的插入" class="headerlink" title="5. 数据的插入"></a>5. 数据的插入</h2><h1 id="unordered-map"><a href="#unordered-map" class="headerlink" title="unordered_map"></a>unordered_map</h1><h2 id="与map的区别"><a href="#与map的区别" class="headerlink" title="与map的区别"></a>与<code>map</code>的区别</h2><p>在STL中, <code>map</code>对应的数据结构是红黑树, 红黑树是一种近似于平衡的二叉查找树, 里面的数据是有序的, 在红黑树上做查找的时间为 $O(lonN)$. 而<code>unordered_map</code>对应哈希表, 哈希表的特点就是查找效率高, 时间复杂度基本为 $O(1)$, 而额外空间复杂度较高.</p>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unordered_map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="built_in">std</span>::<span class="built_in">string</span>&gt; hmap;</span><br><span class="line">    hmap.insert(<span class="built_in">std</span>::make_pair(<span class="number">1</span>, <span class="string">"Scala"</span>));</span><br><span class="line">    hmap.insert(&#123;<span class="number">3</span>, <span class="string">"three"</span>&#125;);</span><br><span class="line">    hmap.insert(&#123; &#123;<span class="number">4</span>, <span class="string">"Four"</span>&#125;, &#123;<span class="number">5</span>, <span class="string">"Five"</span>&#125;&#125;);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;hmap[<span class="number">1</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="set"><a href="#set" class="headerlink" title="set"></a>set</h1><p>基于红黑树实现</p>
+<h1 id="unordered-set"><a href="#unordered-set" class="headerlink" title="unordered_set"></a>unordered_set</h1><p>基于哈希表实现, 会将传入的值处理成相应的键值, 该键值对应着一个特定的位置, 因此, <code>unordered_set</code> 的各项操作的复杂度平均为常数级(最差为线性), 同时, <code>unordered_set</code> 也是一种 <code>set</code>, 因此, 其关键字不能有重复(重复的会自动合并).</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unordered_set</span>&lt;<span class="built_in">string</span>&gt; stringSet;</span><br><span class="line">stringSet.insert(<span class="string">"code"</span>);</span><br><span class="line">stringSet.insert(<span class="string">"fast"</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> key1 = <span class="string">"fast"</span>;</span><br><span class="line">stringSet.find(key1); <span class="comment">// return iter, 指向 fast</span></span><br><span class="line"><span class="built_in">string</span> key2 = <span class="string">"slow"</span></span><br><span class="line">stringSet.find(key2); <span class="comment">// return stringSet.end()</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; nums &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>&#125;;</span><br><span class="line"><span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt; sets(nums.begin(), nums.end())</span><br><span class="line"><span class="keyword">int</span> key;</span><br><span class="line">sets.count(key); <span class="comment">// 返回拥有关键key的元素个数, 即只会返回1或0.</span></span><br></pre></td></tr></table></figure>
+<h1 id="priority-queue"><a href="#priority-queue" class="headerlink" title="priority_queue"></a>priority_queue</h1><h2 id="大顶堆"><a href="#大顶堆" class="headerlink" title="大顶堆"></a>大顶堆</h2><p>默认比较函数为less, 对应为大顶堆<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">priority_queue&lt;int&gt; q;</span><br></pre></td></tr></table></figure></p>
+<h2 id="小顶堆"><a href="#小顶堆" class="headerlink" title="小顶堆"></a>小顶堆</h2><p>使用比较函数greater, 对应为小顶堆</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">priority_queue&lt;<span class="keyword">int</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;, greater&lt;<span class="keyword">int</span>&gt;&gt; q;</span><br></pre></td></tr></table></figure>
+<h2 id="自定义排序方法"><a href="#自定义排序方法" class="headerlink" title="自定义排序方法"></a>自定义排序方法</h2><p>优先出列时会对 <code>!cmp</code> 判定, 所以如果希望小的在前, 那么就应该返回 <code>元素1 &gt; 元素2</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">cmp</span>&#123;</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">int</span> &amp;a, <span class="keyword">int</span> &amp;b)</span> <span class="keyword">const</span></span>&#123; <span class="comment">// 仿函数</span></span><br><span class="line">        <span class="keyword">return</span> a &gt; b ; <span class="comment">// 排序后, 小的在前</span></span><br><span class="line">        .</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -652,8 +662,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/Cpp-STL之vector/" rel="next" title="Cpp-STL之vector">
-                Cpp-STL之vector <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/PyTorch-FasterRCNN源码实现/" rel="next" title="Faster-RCNN 源码实现 (PyTorch)">
+                Faster-RCNN 源码实现 (PyTorch) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -732,7 +742,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">188</span>
+                    <span class="site-state-item-count">192</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -848,7 +858,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -912,7 +924,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vector"><span class="nav-text">vector</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#deque"><span class="nav-text">deque</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#list"><span class="nav-text">list</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#list与vector的区别"><span class="nav-text">list与vector的区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#queue"><span class="nav-text">queue</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#deque-1"><span class="nav-text">deque</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#map"><span class="nav-text">map</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、map简介"><span class="nav-text">1、map简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、map的功能"><span class="nav-text">2、map的功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-使用map"><span class="nav-text">3. 使用map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-map的构造函数"><span class="nav-text">4. map的构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-数据的插入"><span class="nav-text">5. 数据的插入</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vector"><span class="nav-text">vector</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#deque"><span class="nav-text">deque</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#list"><span class="nav-text">list</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#list与vector的区别"><span class="nav-text">list与vector的区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#queue"><span class="nav-text">queue</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#deque-1"><span class="nav-text">deque</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#map"><span class="nav-text">map</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、map简介"><span class="nav-text">1、map简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、map的功能"><span class="nav-text">2、map的功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-使用map"><span class="nav-text">3. 使用map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-map的构造函数"><span class="nav-text">4. map的构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-数据的插入"><span class="nav-text">5. 数据的插入</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#unordered-map"><span class="nav-text">unordered_map</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#与map的区别"><span class="nav-text">与map的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本使用"><span class="nav-text">基本使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#set"><span class="nav-text">set</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#unordered-set"><span class="nav-text">unordered_set</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#priority-queue"><span class="nav-text">priority_queue</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#大顶堆"><span class="nav-text">大顶堆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小顶堆"><span class="nav-text">小顶堆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义排序方法"><span class="nav-text">自定义排序方法</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -949,7 +961,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">852k</span>
+    <span title="站点总字数">935k</span>
   
 
   
@@ -958,7 +970,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">12:54</span>
+    <span title="站点阅读时长">14:10</span>
   
 </div>
 

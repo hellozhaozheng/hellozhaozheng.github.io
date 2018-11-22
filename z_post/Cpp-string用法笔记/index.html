@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="成员函数元素访问at() 返回char类型的字符 [] 返回char类型的字符 操作push_back: 将字符添加到字符串结尾 pop_back: 移除末尾字符 类型转换char 转 intint num = std::atoi(str[i]); string 转 intstd::string str;int i = std::stoi(str);12同样, 可以使用 stol(long), s">
-<meta name="keywords" content="STL">
+  <meta name="description" content="在 C++ 中, 用于处理字符串的类 string 虽然有用很多和 STL 相似的性质和用法, 但是一般来说, 我们不认为它是 STL 的一份子, 因为实际上,  string 并不是模板, 它其实是某个模板的实例, 即 basic_string&amp;lt;char&amp;gt;. 因此, 这里我们单独讨论关于 string 类的一系列方法和属性, 但是需要知道, string 类在很多地方都与模板的函数或">
+<meta name="keywords" content="C++">
 <meta property="og:type" content="article">
-<meta property="og:title" content="string用法笔记">
+<meta property="og:title" content="C++ string 完整笔记">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Cpp-string用法笔记/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="成员函数元素访问at() 返回char类型的字符 [] 返回char类型的字符 操作push_back: 将字符添加到字符串结尾 pop_back: 移除末尾字符 类型转换char 转 intint num = std::atoi(str[i]); string 转 intstd::string str;int i = std::stoi(str);12同样, 可以使用 stol(long), s">
+<meta property="og:description" content="在 C++ 中, 用于处理字符串的类 string 虽然有用很多和 STL 相似的性质和用法, 但是一般来说, 我们不认为它是 STL 的一份子, 因为实际上,  string 并不是模板, 它其实是某个模板的实例, 即 basic_string&amp;lt;char&amp;gt;. 因此, 这里我们单独讨论关于 string 类的一系列方法和属性, 但是需要知道, string 类在很多地方都与模板的函数或">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-08T03:22:35.681Z">
+<meta property="og:updated_time" content="2018-11-21T05:05:28.492Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="string用法笔记">
-<meta name="twitter:description" content="成员函数元素访问at() 返回char类型的字符 [] 返回char类型的字符 操作push_back: 将字符添加到字符串结尾 pop_back: 移除末尾字符 类型转换char 转 intint num = std::atoi(str[i]); string 转 intstd::string str;int i = std::stoi(str);12同样, 可以使用 stol(long), s">
+<meta name="twitter:title" content="C++ string 完整笔记">
+<meta name="twitter:description" content="在 C++ 中, 用于处理字符串的类 string 虽然有用很多和 STL 相似的性质和用法, 但是一般来说, 我们不认为它是 STL 的一份子, 因为实际上,  string 并不是模板, 它其实是某个模板的实例, 即 basic_string&amp;lt;char&amp;gt;. 因此, 这里我们单独讨论关于 string 类的一系列方法和属性, 但是需要知道, string 类在很多地方都与模板的函数或">
 
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>string用法笔记 | 从零开始的BLOG</title>
+  <title>C++ string 完整笔记 | 从零开始的BLOG</title>
   
 
 
@@ -244,7 +244,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">188</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">192</span></a>
   </li>
         
         
@@ -340,7 +340,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">32</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">33</span></a>
   </li>
         
         
@@ -458,7 +458,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">string用法笔记
+          <h1 class="post-title" itemprop="name headline">C++ string 完整笔记
               
             
           </h1>
@@ -538,7 +538,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">513</span>
+                <span title="本文字数">721</span>
               
 
               
@@ -572,7 +572,8 @@
       
 
       
-        <h1 id="成员函数"><a href="#成员函数" class="headerlink" title="成员函数"></a>成员函数</h1><h2 id="元素访问"><a href="#元素访问" class="headerlink" title="元素访问"></a>元素访问</h2><p>at() 返回char类型的字符</p>
+        <p>在 C++ 中, 用于处理字符串的类 <code>string</code> 虽然有用很多和 STL 相似的性质和用法, 但是一般来说, 我们不认为它是 STL 的一份子, 因为实际上,  <code>string</code> 并不是模板, 它其实是某个模板的实例, 即 <code>basic_string&lt;char&gt;</code>. 因此, 这里我们单独讨论关于 <code>string</code> 类的一系列方法和属性, 但是需要知道, <code>string</code> 类在很多地方都与模板的函数或者属性很相似.</p>
+<h1 id="成员函数"><a href="#成员函数" class="headerlink" title="成员函数"></a>成员函数</h1><h2 id="元素访问"><a href="#元素访问" class="headerlink" title="元素访问"></a>元素访问</h2><p>at() 返回char类型的字符</p>
 <p>[] 返回char类型的字符</p>
 <h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><p>push_back: 将字符添加到字符串结尾</p>
 <p>pop_back: 移除末尾字符</p>
@@ -601,7 +602,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/STL/" rel="tag"><i class="fa fa-tag"></i> STL</a>
+            <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C++</a>
           
         </div>
       
@@ -624,8 +625,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/Cpp-STL之map/" rel="next" title="STL之map">
-                STL之map <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/Caffe2-Detectron/" rel="next" title="【置顶】Detectron源码解析">
+                【置顶】Detectron源码解析 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -704,7 +705,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">188</span>
+                    <span class="site-state-item-count">192</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -820,7 +821,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -921,7 +924,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">852k</span>
+    <span title="站点总字数">935k</span>
   
 
   
@@ -930,7 +933,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">12:54</span>
+    <span title="站点阅读时长">14:10</span>
   
 </div>
 

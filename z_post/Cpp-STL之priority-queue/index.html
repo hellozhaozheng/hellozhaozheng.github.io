@@ -108,17 +108,17 @@
 
 
 
-  <meta name="description" content="大顶堆默认比较函数为less, 对应为大顶堆1priority_queue&amp;lt;int&amp;gt; q; 小顶堆使用比较函数greater, 对应为小顶堆 1priority_queue&amp;lt;int, vector&amp;lt;int&amp;gt;, greater&amp;lt;int&amp;gt;&amp;gt; q; 自定义排序方法优先出列时会对 !cmp 判定, 所以如果希望小的在前, 那么就应该返回 元素1 &amp;gt; 元">
+  <meta name="description" content="并不是什么厉害的地方只是一个安静的学习角落">
 <meta property="og:type" content="article">
 <meta property="og:title" content="STL之priority_queue">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Cpp-STL之priority-queue/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="大顶堆默认比较函数为less, 对应为大顶堆1priority_queue&amp;lt;int&amp;gt; q; 小顶堆使用比较函数greater, 对应为小顶堆 1priority_queue&amp;lt;int, vector&amp;lt;int&amp;gt;, greater&amp;lt;int&amp;gt;&amp;gt; q; 自定义排序方法优先出列时会对 !cmp 判定, 所以如果希望小的在前, 那么就应该返回 元素1 &amp;gt; 元">
+<meta property="og:description" content="并不是什么厉害的地方只是一个安静的学习角落">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-13T04:34:35.925Z">
+<meta property="og:updated_time" content="2018-11-21T10:50:05.617Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="STL之priority_queue">
-<meta name="twitter:description" content="大顶堆默认比较函数为less, 对应为大顶堆1priority_queue&amp;lt;int&amp;gt; q; 小顶堆使用比较函数greater, 对应为小顶堆 1priority_queue&amp;lt;int, vector&amp;lt;int&amp;gt;, greater&amp;lt;int&amp;gt;&amp;gt; q; 自定义排序方法优先出列时会对 !cmp 判定, 所以如果希望小的在前, 那么就应该返回 元素1 &amp;gt; 元">
+<meta name="twitter:description" content="并不是什么厉害的地方只是一个安静的学习角落">
 
 
 
@@ -243,7 +243,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">188</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">192</span></a>
   </li>
         
         
@@ -339,7 +339,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">32</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">33</span></a>
   </li>
         
         
@@ -537,7 +537,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">355</span>
+                <span title="本文字数">0</span>
               
 
               
@@ -571,12 +571,7 @@
       
 
       
-        <h1 id="大顶堆"><a href="#大顶堆" class="headerlink" title="大顶堆"></a>大顶堆</h1><p>默认比较函数为less, 对应为大顶堆<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">priority_queue&lt;int&gt; q;</span><br></pre></td></tr></table></figure></p>
-<h1 id="小顶堆"><a href="#小顶堆" class="headerlink" title="小顶堆"></a>小顶堆</h1><p>使用比较函数greater, 对应为小顶堆</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">priority_queue&lt;<span class="keyword">int</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;, greater&lt;<span class="keyword">int</span>&gt;&gt; q;</span><br></pre></td></tr></table></figure>
-<h1 id="自定义排序方法"><a href="#自定义排序方法" class="headerlink" title="自定义排序方法"></a>自定义排序方法</h1><p>优先出列时会对 <code>!cmp</code> 判定, 所以如果希望小的在前, 那么就应该返回 <code>元素1 &gt; 元素2</code></p>
-<h2 id="方法一"><a href="#方法一" class="headerlink" title="方法一:"></a>方法一:</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">cmp</span>&#123;</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">int</span> &amp;a, <span class="keyword">int</span> &amp;b)</span> <span class="keyword">const</span></span>&#123; <span class="comment">// 仿函数</span></span><br><span class="line">        <span class="keyword">return</span> a &gt; b ; <span class="comment">// 排序后, 小的在前</span></span><br><span class="line">        .</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+        
       
     </div>
 
@@ -664,17 +659,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -693,7 +679,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">188</span>
+                    <span class="site-state-item-count">192</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -809,7 +795,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -864,22 +852,6 @@
       </section>
 
       
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#大顶堆"><span class="nav-text">大顶堆</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小顶堆"><span class="nav-text">小顶堆</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义排序方法"><span class="nav-text">自定义排序方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#方法一"><span class="nav-text">方法一:</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
 
       
         <div class="back-to-top">
@@ -910,7 +882,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">852k</span>
+    <span title="站点总字数">935k</span>
   
 
   
@@ -919,7 +891,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">12:54</span>
+    <span title="站点阅读时长">14:10</span>
   
 </div>
 

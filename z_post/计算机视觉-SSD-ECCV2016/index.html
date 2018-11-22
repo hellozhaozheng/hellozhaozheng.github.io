@@ -119,7 +119,7 @@
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw1024/d7b90c85ly1fwb7fnbsu4j20oj09bgq8.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/mw1024/d7b90c85ly1fwbhhr03m4j216z0rtdmo.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw1024/d7b90c85ly1fwbl46szs0j213m0ewag3.jpg">
-<meta property="og:updated_time" content="2018-11-01T06:06:25.494Z">
+<meta property="og:updated_time" content="2018-11-21T10:47:01.704Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SSD-Single Shot MultiBox Detector">
 <meta name="twitter:description" content="文章: SSD: Single Shot MultiBox Detector作者: Wei Liu, Dragomir Anguelov, Dumitru Erhan 核心亮点(1) 在不同层的feature map上使用网格法获取候选区域: 某种程度上SSD可以看做是YOLOv1和FasterRCNN的结合, 在不同layer的输出的不同尺度的feature map上划格子, 在格子上利用anc">
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">188</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">192</span></a>
   </li>
         
         
@@ -344,7 +344,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">32</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">33</span></a>
   </li>
         
         
@@ -542,7 +542,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">4.9k</span>
+                <span title="本文字数">5.2k</span>
               
 
               
@@ -556,7 +556,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">4 分钟</span>
+                <span title="阅读时长">5 分钟</span>
               
             </div>
           
@@ -616,12 +616,11 @@
 <li>权重项 \alpha, 默认设置为1.</li>
 </ul>
 <p><strong>Choosing scales and aspect ratios for default boxes:</strong></p>
-<p>大部分CNN网络在越深的层, feature map的尺寸会越来越小, 这样做不仅仅是为了减少计算与内存的需求, 还有个好吃就是, feature map往往具有一定程度的平移和尺度不变性.</p>
-<p>为了处理不同尺度的物体, OverFeat和SPPNet都是通过在feature map上进行不同尺度的pooling, 然后再将这些pooling综合进行获取固定长度的特征向量输出.</p>
-<p>SSD采用的策略是使用同一个网络中不同层的feature map, 这些feature map也是不同尺度的, 同时也具有共享参数的好处. 本文使用了 8×8 和 4×4 大小的feature map 来进行目标检测.</p>
+<p>大部分CNN网络在越深的层, feature map的尺寸会越来越小, 这样做不仅仅是为了减少计算与内存的需求, 还有个好处就是, feature map往往具有一定程度的平移和尺度不变性.<br>为了处理不同尺度的物体, OverFeat和SPPNet都是通过在feature map上进行不同尺度的pooling, 然后再将这些pooling综合进行获取固定长度的特征向量输出.</p>
+<p>SSD采用的策略是使用同一个网络中不同层的feature map, 这些feature map也是不同尺度的, 同时也具有共享参数的好处. 本文使用了 8×8 和 4×4 大小的feature map.</p>
 <p>假如feature maps数量为 $m$, 那么每一个feature map中的default box的尺寸大小计算如下:</p>
-<script type="math/tex; mode=display">s_k = s_{min} + \frac{s_{max} - s_{min}}{m-1}(k-1), k\in [1,m]</script><p>上式中, $s_{min} = 0.2 , s_{max} = 0.95$, 然后, 截个不同的aspect ratio, 用 $a_r$ 表示: $a_r = {1,2,3,1/2,1/3}$, 则每一个default boxes 的width 和height就可以得到:</p>
-<script type="math/tex; mode=display">w_k^a = s_k \sqrt{a_r}</script><script type="math/tex; mode=display">h_k^a = \frac{s_k}{\sqrt {a_r}}</script><p>每一个default box的中心, 设置为: $(\frac{i+0.5}{|f_k|}, \frac{j+0.5}{f_k})$, 其中, $|f_k|$ 是第k个feature map的大小.</p>
+<script type="math/tex; mode=display">s_k = s_{min} + \frac{s_{max} - s_{min}}{m-1}(k-1), k\in [1,m]</script><p>上式中, $s_{min} = 0.2 , s_{max} = 0.9$. 对于原文中的设置 $m=6 (4, 6, 6, 6, 4, 4)$, 因此就有 $s = \{0.2, 0.34, 0.48, 0.62, 0.76, 0.9\}$<br>然后, 几个不同的aspect ratio, 用 $a_r$ 表示: $a_r = {1,2,3,1/2,1/3}$, 则每一个default boxes 的width 和height就可以得到( $w_k^a h_k^a=a_r$ ):</p>
+<script type="math/tex; mode=display">w_k^a = s_k \sqrt{a_r}</script><script type="math/tex; mode=display">h_k^a = \frac{s_k}{\sqrt {a_r}}</script><p>对于宽高比为1的 default box, 我们额外添加了一个 scale 为 $s_k’ = \sqrt{s_k s_{k+1}}$ 的 box, 因此 feature map 上的每一个像素点都对应着6个 default boxes (<strong>per feature map localtion</strong>).<br>每一个default box的中心, 设置为: $(\frac{i+0.5}{|f_k|}, \frac{j+0.5}{f_k})$, 其中, $|f_k|$ 是第 $k$ 个feature map的大小 $i,j$ 对应了 feature map 上所有可能的像素点.<br><strong>在实际使用中, 可以自己根据数据集的特点来安排不同的 default boxes 参数组合</strong></p>
 <p>这种多尺度的feature maps策略, 可以适应不同大小的物体的检测, 如下图, 对于体积较小的猫来说, 它会与 8×8 feature map 的default box匹配, 而对于体积较大的狗来说, 它会与 4×4 feature map 的default box 匹配, 而其余的都会被看做是负样本.</p>
 <p><strong>Hard negative mining:</strong></p>
 <p>在一系列的matching之后, 大多数default boxes都会被认为是负样本. 这会导致正负样本不均衡问题. 对于, SSD会将所有的负样本按照scores loss的高低进行排序(损失高的优先级在前), 然后每次只选择顶端的负样本进行训练, 负样本与正样本之间的比例为 3:1.</p>
@@ -642,9 +641,9 @@
 <li>atrous: atrous是精度有一定提高, 同时对速度有很大提高(约20%)</li>
 </ul>
 <p><strong>Inference time:</strong></p>
-<p>SSD会山城大量的bounding boxes, 使用NMS算法只留下top200 (这一步SSD300在VOC20类的每张图像上, 需耗时2.2msec)</p>
+<p>SSD会产生大量的bounding boxes, 使用NMS算法只留下top200 (这一步SSD300在VOC20类的每张图像上, 需耗时2.2msec)</p>
 <p><img src="https://wx1.sinaimg.cn/mw1024/d7b90c85ly1fwbl46szs0j213m0ewag3.jpg" alt=""></p>
-<p>上图看起来SSD300比YOLO还要快, 但实际上YOLO的网络层数是24层, 而SSD的层数是12层, 这样比起来有点不太公平( 但是层数多居然精度没SSD高, 这也值得吐槽, 但但是个人觉得这是因为YOLOv1的设计比较粗糙, 很多trick没有使用导致的, 所以看看YOLOv2, 和YOLOv3的版本, 结果还是挺不错的)</p>
+<p>上图看起来SSD300比YOLO还要快, 但实际上YOLO的网络层数是24层, 而SSD的层数是12层, 这样比起来有点不太公平( 但是层数多居然精度没SSD高, 这也值得吐槽, 但是个人觉得这是因为YOLOv1的设计比较粗糙, 很多trick没有使用导致的, 所以看看YOLOv2, 和YOLOv3的版本, 结果还是挺不错的)</p>
 
       
     </div>
@@ -768,7 +767,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">188</span>
+                    <span class="site-state-item-count">192</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -884,7 +883,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -985,7 +986,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">852k</span>
+    <span title="站点总字数">935k</span>
   
 
   
@@ -994,7 +995,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">12:54</span>
+    <span title="站点阅读时长">14:10</span>
   
 </div>
 
