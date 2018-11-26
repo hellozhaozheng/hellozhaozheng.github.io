@@ -118,7 +118,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fw9s61fiidj20nc0e579t.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/mw1024/d7b90c85ly1fw9tvpr5doj20xz0lk1kx.jpg">
-<meta property="og:updated_time" content="2018-10-24T08:19:54.731Z">
+<meta property="og:updated_time" content="2018-11-22T08:30:55.626Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FasterRCNN-NIPS2015">
 <meta name="twitter:description" content="文章:作者: 背景介绍核心亮点论文细节Region Proposals Networks 原文中, 作者用ZF model为例对RPN网络进行讲解, ZF model的最后一层卷积层Conv5具有256个卷积核, 也就是说它生成的特征图谱的shape为 $W\times H\times 256$, RPN网络的第一层可以认为是一个卷积层, 卷积核的尺寸为 $n\times n$ (文中使用的是 3">
@@ -247,7 +247,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">192</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">194</span></a>
   </li>
         
         
@@ -343,7 +343,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">33</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
   </li>
         
         
@@ -576,11 +576,11 @@
 
       
         <p><strong>文章:</strong><br><strong>作者:</strong></p>
-<h1 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h1><h1 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h1><h1 id="论文细节"><a href="#论文细节" class="headerlink" title="论文细节"></a>论文细节</h1><h2 id="Region-Proposals-Networks"><a href="#Region-Proposals-Networks" class="headerlink" title="Region Proposals Networks"></a>Region Proposals Networks</h2><p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fw9s61fiidj20nc0e579t.jpg" alt=""></p>
+<h1 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h1><h1 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h1><h1 id="论文细节"><a href="#论文细节" class="headerlink" title="论文细节"></a>论文细节</h1><h2 id="Region-Proposals-Networks"><a href="#Region-Proposals-Networks" class="headerlink" title="Region Proposals Networks"></a>Region Proposals Networks</h2><p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fw9s61fiidj20nc0e579t.jpg" alt=""></div></p>
 <p>原文中, 作者用ZF model为例对RPN网络进行讲解, ZF model的最后一层卷积层Conv5具有256个卷积核, 也就是说它生成的特征图谱的shape为 $W\times H\times 256$, RPN网络的第一层可以认为是一个卷积层, 卷积核的尺寸为 $n\times n$ (文中使用的是 3×3), 卷积核的个数为 256 (维持通道数不变). 利用该层的卷积层对Conv5的特征图谱操作, 最终生成的特征图谱大小仍然为 $W\times H\times 256$ (只不过此时,图谱中的每个点都会原图谱中的 $n\timesn$ 个点相关联). 对于这个图谱中的每个点, 我们认为它是一个anchor, 可以将它看做是一个元素个数为256的1维向量 (因为通道数为256).</p>
 <p>然后, 对于每一个anchor, 都会分配 $k$ 个anchor boxes. 每个anchor box都要分前景后景, 也就是分是否包含物体, 同时, 每一个anchor box还要输出预测物体相对于anchor的偏移坐标量.</p>
 <p>训练的时候会选择128个postive anchor boxes 和128个negative anchor boxes.</p>
-<p><img src="https://wx2.sinaimg.cn/mw1024/d7b90c85ly1fw9tvpr5doj20xz0lk1kx.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/mw1024/d7b90c85ly1fw9tvpr5doj20xz0lk1kx.jpg" alt=""></div></p>
 <p>实际上, RPN网络由两部分构成: 一个卷积层, 一对全连接层分别输出分类结果(cls layer)以及坐标回归结果(reg layer).</p>
 <p>实现上: 利用了一个卷积核大小为 $n\times n$ 的卷积层, 后接两个 $1\times 1$ 的卷积层.(分别用于回归和分类)</p>
 <h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数:"></a>损失函数:</h2><script type="math/tex; mode=display">L(\{p_i\}, \{t_i\}) = \frac{1}{N_{cls}} \sum_i L_{cls}(p_i, p_i^* ) + \lambda \frac{1}{N_{reg}} \sum_i p_i^* L_{reg}(t_i, t_i^* )</script><h2 id="RPN和FastRCNN共享卷积参数"><a href="#RPN和FastRCNN共享卷积参数" class="headerlink" title="RPN和FastRCNN共享卷积参数"></a>RPN和FastRCNN共享卷积参数</h2><p>原文为了使RPN和FastRCNN共享卷积参数, 讨论了三种不同的训练策略:</p>
@@ -713,7 +713,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">192</span>
+                    <span class="site-state-item-count">194</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -831,7 +831,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">33</span>
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -932,7 +934,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">935k</span>
+    <span title="站点总字数">986k</span>
   
 
   
@@ -941,7 +943,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">14:10</span>
+    <span title="站点阅读时长">14:57</span>
   
 </div>
 

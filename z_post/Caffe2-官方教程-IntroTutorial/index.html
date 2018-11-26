@@ -108,36 +108,25 @@
 
 
 
-  <meta name="description" content="Inception V1论文概览Going Deeper with Convolutions 摘要文章提出了一个深度卷积神经网络结构，并取名为Inception。该模型最主要的特点在于提高了网络内部计算资源的利用率。在保证计算负载不变的前提下，通过人工设计提升了网络的深度和宽度。该模型基于Hebbian原理和多尺度处理的intuition来提高性能。关于该模型的一个实例正是提交在ILSVRC14上">
-<meta name="keywords" content="知识点梳理,网络模型">
+  <meta name="description" content="本篇教程主要介绍一些 Caffe2 里面基础概念, 以便帮助理解 Caffe2 模型的设计思路和基本原理. 在 Caffe2 中, 对于任意一个 operator, 我们不仅仅需要提供 input, 同时还需要提供 weights 和 bias.(这是与 Caffe 的不同点之一) Blobs and Workspace, Tensors在 Caffe2 中, 数组的组织形式是 blobs. 一个">
+<meta name="keywords" content="Caffe2">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Inception系列V1-V4">
-<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-Inception系列V1-V4/index.html">
+<meta property="og:title" content="Caffe2官方教程(一)-Intro Tutorial">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Caffe2-官方教程-IntroTutorial/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="Inception V1论文概览Going Deeper with Convolutions 摘要文章提出了一个深度卷积神经网络结构，并取名为Inception。该模型最主要的特点在于提高了网络内部计算资源的利用率。在保证计算负载不变的前提下，通过人工设计提升了网络的深度和宽度。该模型基于Hebbian原理和多尺度处理的intuition来提高性能。关于该模型的一个实例正是提交在ILSVRC14上">
+<meta property="og:description" content="本篇教程主要介绍一些 Caffe2 里面基础概念, 以便帮助理解 Caffe2 模型的设计思路和基本原理. 在 Caffe2 中, 对于任意一个 operator, 我们不仅仅需要提供 input, 同时还需要提供 weights 和 bias.(这是与 Caffe 的不同点之一) Blobs and Workspace, Tensors在 Caffe2 中, 数组的组织形式是 blobs. 一个">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn6do3nmnj20un08y75k.jpg">
-<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn6q3t8hfj20j01x2qcf.jpg">
-<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn98ano6mj20ps0f5778.jpg">
-<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn6do3nmnj20un08y75k.jpg">
-<meta property="og:image" content="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fvna17nohlj209z09ydhb.jpg">
-<meta property="og:image" content="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fvna17muznj207c0a70th.jpg">
-<meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvna17piozj20bu1a040a.jpg">
-<meta property="og:image" content="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fvna17my4gj20ep09haah.jpg">
-<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvna17n33wj20fh08u759.jpg">
-<meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvna17sdq6j20fh0f1djt.jpg">
-<meta property="og:updated_time" content="2018-10-05T10:56:31.000Z">
+<meta property="og:updated_time" content="2018-11-26T13:58:54.756Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Inception系列V1-V4">
-<meta name="twitter:description" content="Inception V1论文概览Going Deeper with Convolutions 摘要文章提出了一个深度卷积神经网络结构，并取名为Inception。该模型最主要的特点在于提高了网络内部计算资源的利用率。在保证计算负载不变的前提下，通过人工设计提升了网络的深度和宽度。该模型基于Hebbian原理和多尺度处理的intuition来提高性能。关于该模型的一个实例正是提交在ILSVRC14上">
-<meta name="twitter:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn6do3nmnj20un08y75k.jpg">
+<meta name="twitter:title" content="Caffe2官方教程(一)-Intro Tutorial">
+<meta name="twitter:description" content="本篇教程主要介绍一些 Caffe2 里面基础概念, 以便帮助理解 Caffe2 模型的设计思路和基本原理. 在 Caffe2 中, 对于任意一个 operator, 我们不仅仅需要提供 input, 同时还需要提供 weights 和 bias.(这是与 Caffe 的不同点之一) Blobs and Workspace, Tensors在 Caffe2 中, 数组的组织形式是 blobs. 一个">
 
 
 
 
 
 
-  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/计算机视觉-Inception系列V1-V4/"/>
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/Caffe2-官方教程-IntroTutorial/"/>
 
 
 
@@ -147,7 +136,7 @@
   };
 </script>
 
-  <title>Inception系列V1-V4 | 从零开始的BLOG</title>
+  <title>Caffe2官方教程(一)-Intro Tutorial | 从零开始的BLOG</title>
   
 
 
@@ -255,7 +244,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">188</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">194</span></a>
   </li>
         
         
@@ -351,7 +340,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">32</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
   </li>
         
         
@@ -452,7 +441,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/计算机视觉-Inception系列V1-V4/">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/Caffe2-官方教程-IntroTutorial/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZeroZone">
@@ -469,7 +458,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Inception系列V1-V4
+          <h1 class="post-title" itemprop="name headline">Caffe2官方教程(一)-Intro Tutorial
               
             
           </h1>
@@ -495,7 +484,7 @@
                 
               
 
-              <time title="创建时间：2018-08-02 21:16:20" itemprop="dateCreated datePublished" datetime="2018-08-02T21:16:20+08:00">2018-08-02</time>
+              <time title="创建时间：2018-11-26 19:55:04" itemprop="dateCreated datePublished" datetime="2018-11-26T19:55:04+08:00">2018-11-26</time>
             
 
             
@@ -513,7 +502,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/计算机视觉/" itemprop="url" rel="index"><span itemprop="name">计算机视觉</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Caffe2/" itemprop="url" rel="index"><span itemprop="name">Caffe2</span></a></span>
 
                 
                 
@@ -549,7 +538,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">5.4k</span>
+                <span title="本文字数">5.8k</span>
               
 
               
@@ -583,87 +572,49 @@
       
 
       
-        <h1 id="Inception-V1"><a href="#Inception-V1" class="headerlink" title="Inception V1"></a>Inception V1</h1><h2 id="论文概览"><a href="#论文概览" class="headerlink" title="论文概览"></a>论文概览</h2><p>Going Deeper with Convolutions</p>
-<h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>文章提出了一个深度卷积神经网络结构，并取名为Inception。该模型最主要的特点在于提高了网络内部计算资源的利用率。在保证计算负载不变的前提下，通过人工设计提升了网络的深度和宽度。该模型基于Hebbian原理和多尺度处理的intuition来提高性能。关于该模型的一个实例正是提交在ILSVRC14上的GoogLeNet，一个22层深的深度网络，主要针对分类和检测任务。</p>
-<h3 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1.介绍"></a>1.介绍</h3><p>简要介绍了深度学习和神经网络技术近年来在图像分类和目标检测任务的发展。文章主要关注针对计算机视觉的高效深度神经网络，取名为Inception，名字来自于NIN。在文章中，“deep”具有两层含义：第一，指代文章新提出的Inception module，第二是指网络的深度。通常情况下，可以将Inception model视作NIN的“逻辑顶点”。</p>
-<h3 id="2-相关工作"><a href="#2-相关工作" class="headerlink" title="2.相关工作"></a>2.相关工作</h3><p>略</p>
-<h3 id="3-动机和High-Level的考虑"><a href="#3-动机和High-Level的考虑" class="headerlink" title="3.动机和High Level的考虑"></a>3.动机和High Level的考虑</h3><p>提高深度卷积网络最直接的方式就是增加它们的size，包括网络的深度（层数）和宽度（每层的神经元个数），这对于高质量的网络结构来说是ok的，尤其是在拥有大量优质数据的情况下。但是，这种方法存在这两个主要的缺点：</p>
+        <p>本篇教程主要介绍一些 Caffe2 里面基础概念, 以便帮助理解 Caffe2 模型的设计思路和基本原理.</p>
+<p><strong>在 Caffe2 中, 对于任意一个 <code>operator</code>, 我们不仅仅需要提供 input, 同时还需要提供 weights 和 bias.(这是与 Caffe 的不同点之一)</strong></p>
+<h1 id="Blobs-and-Workspace-Tensors"><a href="#Blobs-and-Workspace-Tensors" class="headerlink" title="Blobs and Workspace, Tensors"></a>Blobs and Workspace, Tensors</h1><p>在 Caffe2 中, 数组的组织形式是 <code>blobs</code>. 一个 <code>blobs</code> 可以看做是内存当前一块带有名字的数据. 绝大多数 <code>blobs</code> 都包含一个 <code>tensor</code>, 在 Python 中, 会被转换成 numpy 数组来表示.</p>
+<p>而 <code>workspace</code> 会存储所有的 <code>blobs</code>, 下面的代码展示了如何将 <code>blobs</code> 添加到 <code>workspace</code> 中, 以及如何再次获取它们. <code>workspace</code> 会在你开始使用的时候对自身进行初始化.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> caffe2.python <span class="keyword">import</span> workspace, model_helper</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="comment"># Create random tensor of three dimensions</span></span><br><span class="line">x = np.random.rand(<span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>)</span><br><span class="line">print(x)</span><br><span class="line">print(x.shape)</span><br><span class="line"></span><br><span class="line">workspace.FeedBlob(<span class="string">"my_x"</span>, x)</span><br><span class="line"></span><br><span class="line">x2 = workspace.FetchBlob(<span class="string">"my_x"</span>)</span><br><span class="line">print(x2)</span><br></pre></td></tr></table></figure>
+<h1 id="Nets-and-Operators"><a href="#Nets-and-Operators" class="headerlink" title="Nets and Operators"></a>Nets and Operators</h1><p>在 Caffe2 中, 基本模型的抽象形式为 <code>net</code>. 一个 <code>net</code> 可以看成是一个图, 其中节点为各种 <code>operators</code>, 这些 <code>operators</code> 会接受一系列 <code>blobs</code> 作为输入, 然后会输出一个或多个 <code>blobs</code>.<br>在下面的代码块中, 我们将会创建一个简单的模型, 它包含以下三个部分:</p>
 <ul>
-<li>更大的size通常意味着更多的参数，这会使得网络更容易过拟合，尤其是在数据标签有限的情况下。由于获得大量优质数据具有一定难度，因此这往往会称为一个主要的瓶颈。</li>
-<li>第二个缺点就是更大的size往往需要消耗更多的计算资源</li>
+<li>一个全连接层(FC)</li>
+<li>一个使用了 Softmax 的 Sigmoid 激活函数</li>
+<li>交叉熵损失函数</li>
 </ul>
-<p>文章认为解决以上问题的一个经济可行的办法是将全连接层置换成稀疏连接结构，甚至是在卷积内。</p>
-<p>目前的硬件结构在面对非均匀分布的稀疏数据结构时，计算效率很低。</p>
-<p>为此，文章希望找到一个新的结构，可以更高效的处理稀疏矩阵的运算。</p>
-<p>文章通过多个实验验证了Inception模型在面对图像分类和检测问题时，可以取得十分好的效果。但是，对于Inception model是否能够成为其他领域任务的指导原则，还尚未有定论，需要更多的验证和实验才能说明。</p>
-<h3 id="4-框架细节"><a href="#4-框架细节" class="headerlink" title="4.框架细节"></a>4.框架细节</h3><p>Inception模型的一个核心思想在于找到 <strong>卷积网络中的最优局部稀疏结构可以在多大程度上被稠密组件近似和覆盖</strong> 。需要注意，由于假设了平移不变性，因此本文的模型将从卷积模块中开始建立，本文所需要做的就是找到一个局部最优结构，然后将这些结构在空间上组合起来。</p>
-<p>为了避免path-alignment问题，现在滤波器大小设值为1×1,3×3,和5×5。</p>
-<p>由于pooling层的重要性，本文才采用了pooling层。</p>
-<p>将上面的Inception模块叠加起来，形成一个整体的模型。</p>
-<p>但是直接叠加会使得向量维度剧增，因此，通过1×1卷积来控制维度。</p>
-<p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn6do3nmnj20un08y75k.jpg" alt=""></p>
-<p>当max pooling层的stride为1时，并不会缩小输出的feature map的size，只会影响depth的值。</p>
-<p>关于此结构的一个好处在于它可以提高神经元的个数，同时避免网络不受控制的提升计算机复杂度。</p>
-<h3 id="5-GooLeNet"><a href="#5-GooLeNet" class="headerlink" title="5. GooLeNet"></a>5. GooLeNet</h3><p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn6q3t8hfj20j01x2qcf.jpg" alt=""></p>
-<p>GoogLeNet的网络结构图细节如下：</p>
-<p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn98ano6mj20ps0f5778.jpg" alt=""></p>
-<p>GoogLeNet网络结构明细表解析如下：</p>
-<p>0、输入</p>
-<p>原始输入图像为224x224x3，且都进行了零均值化的预处理操作（图像每个像素减去均值）。</p>
-<p>1、第一层（卷积层）</p>
-<p>使用7x7的卷积核（滑动步长2，padding为3），64通道，输出为112x112x64，卷积后进行ReLU操作<br>经过3x3的max pooling（步长为2），输出为((112 - 3+1)/2)+1=56，即56x56x64，再进行ReLU操作</p>
-<p>2、第二层（卷积层）</p>
-<p>使用3x3的卷积核（滑动步长为1，padding为1），192通道，输出为56x56x192，卷积后进行ReLU操作</p>
-<p>经过3x3的max pooling（步长为2），输出为((56 - 3+1)/2)+1=28，即28x28x192，再进行ReLU操作</p>
-<p>3a、第三层（Inception 3a层）</p>
-<p>分为四个分支，采用不同尺度的卷积核来进行处理</p>
-<p>（1）64个1x1的卷积核，然后RuLU，输出28x28x64</p>
-<p>（2）96个1x1的卷积核，作为3x3卷积核之前的降维，变成28x28x96，然后进行ReLU计算，再进行128个3x3的卷积（padding为1），输出28x28x128</p>
-<p>（3）16个1x1的卷积核，作为5x5卷积核之前的降维，变成28x28x16，进行ReLU计算后，再进行32个5x5的卷积（padding为2），输出28x28x32</p>
-<p>（4）pool层，使用3x3的核（padding为1），输出28x28x192，然后进行32个1x1的卷积，输出28x28x32。<br>将四个结果进行连接，对这四部分输出结果的第三维并联，即64+128+32+32=256，最终输出28x28x256</p>
-<p>3b、第三层（Inception 3b层）</p>
-<p>（1）128个1x1的卷积核，然后RuLU，输出28x28x128</p>
-<p>（2）128个1x1的卷积核，作为3x3卷积核之前的降维，变成28x28x128，进行ReLU，再进行192个3x3的卷积（padding为1），输出28x28x192</p>
-<p>（3）32个1x1的卷积核，作为5x5卷积核之前的降维，变成28x28x32，进行ReLU计算后，再进行96个5x5的卷积（padding为2），输出28x28x96</p>
-<p>（4）pool层，使用3x3的核（padding为1），输出28x28x256，然后进行64个1x1的卷积，输出28x28x64。</p>
-<p>将四个结果进行连接，对这四部分输出结果的第三维并联，即128+192+96+64=480，最终输出输出为28x28x480</p>
-<p>第四层（4a,4b,4c,4d,4e）、第五层（5a,5b）……，与3a、3b类似，在此就不再重复。</p>
-<h2 id="要点整理"><a href="#要点整理" class="headerlink" title="要点整理"></a>要点整理</h2><h3 id="说明一下GoogLeNet采用多个卷积核的动机"><a href="#说明一下GoogLeNet采用多个卷积核的动机" class="headerlink" title="说明一下GoogLeNet采用多个卷积核的动机"></a>说明一下GoogLeNet采用多个卷积核的动机</h3><p>NIN网络和Inception Module这类结构非常看中模型在局部区域的拟合能力。它们认为：一张图像通常具有总体特征和细节特征这两类特征，一般小卷积核能够更好的捕捉一些细节特征，随着深层网络的小卷积不断计算下去，总体特征也会慢慢的被提炼出来，但是这样存在一个问题，那就是在如果只采用小卷积，那么网络结构的前段一般只有细节特征，后段才慢慢有一些总体特征，而我们希望这两方面的特征总是能够一起发挥作用，因此，上面的两种模型考虑采用更多不同尺寸的卷积核来提取特征，并把这些特征连接起来，一起送到后面的网络中去计算，使得网络可以获取到更多的特征信息。</p>
-<p>Inception模块还采用了一个stride为1的max pooling层，它的主要功能是减少空间大小，降低过拟合风险（只选最大值，所以值的范围变少了）。</p>
-<h3 id="Inception中为什么使用1×1卷积？1×1卷积的作用是什么？"><a href="#Inception中为什么使用1×1卷积？1×1卷积的作用是什么？" class="headerlink" title="Inception中为什么使用1×1卷积？1×1卷积的作用是什么？"></a>Inception中为什么使用1×1卷积？1×1卷积的作用是什么？</h3><p>关于Inception Module，有一种很直接的做法就是将1×1,3×3,5×5卷积和3×3 max pooling直接连接起来，如下面的左图所示，但是这样的话就有个问题，那就是计算量增长太快了。</p>
-<p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn6do3nmnj20un08y75k.jpg" alt=""></p>
-<p>为了解决这个问题，文章在3×3和5×5的卷积之前，3×3max pooling之后使用了1×1卷积，使其输出的feature map的depth降低了，从而达到了降维的效果，抑制的过快增长的计算量。</p>
-<h4 id="1×1卷积核的作用："><a href="#1×1卷积核的作用：" class="headerlink" title="1×1卷积核的作用："></a>1×1卷积核的作用：</h4><p>1x1卷积的主要目的是为了减少维度，还用于修正线性激活（ReLU）。比如，上一层的输出为 100x100x128，经过具有256个通道的5x5卷积层之后(stride=1，pad=2)，输出数据为100x100x256，其中，卷积层的参数为128x5x5x256= 819200。而假如上一层输出先经过具有32个通道的1x1卷积层，再经过具有256个输出的5x5卷积层，那么输出数据仍为为100x100x256，但卷积参数量已经减少为128x1x1x32 + 32x5x5x256= 204800，大约减少了4倍</p>
-<h4 id="1×1的卷积核，在一定程度上可以实现全连接层："><a href="#1×1的卷积核，在一定程度上可以实现全连接层：" class="headerlink" title="1×1的卷积核，在一定程度上可以实现全连接层："></a><strong>1×1的卷积核，在一定程度上可以实现全连接层：</strong></h4><p>具体的操作是，输入是224x224x3 的图像，假设经过变换之后最后一层是[7x7x512]的，那么传统的方法应该将其展平成为一个7x7x512长度的一层，然后做全连接层，假设全连接层为4096×1000层的（假设有1000个分类结果）。</p>
-<p>那么用1×1卷积核怎么做呢，因为1×1卷积核相当于在不同channel之间做线性变换，所以：</p>
+<p>我们利用 <code>ModelHelper</code> 来帮助创建模型, 它会创建以下两个互相联系的 <code>nets</code>:</p>
 <ul>
-<li>先选择7×7的卷积核，输出层特征层数为4096层，这样得到一个[1×1×4096]层的</li>
-<li>然后再选择用1×1卷积核，输出层数为1000层，这样得到一个[1×1×1000]层的</li>
+<li>一个执行参数初始化(<code>ref.init_net</code>)</li>
+<li>一个执行训练逻辑(<code>ref.exec_net</code>)</li>
 </ul>
-<h4 id="用卷积层代替全连接层的好处："><a href="#用卷积层代替全连接层的好处：" class="headerlink" title="用卷积层代替全连接层的好处："></a><strong>用卷积层代替全连接层的好处：</strong></h4><p>这样做其实有非常多的好处，比如上面的例子中输入是224x224x3 的图像，如果此时图像变得更大了，变成384x384大小的了，那么一开始按照32作为步长来进行卷积操作，最后还按照这个网络结构能得到一个[6×6×1000]层的，那么前面那个[6×6]有什么用呢，这个代表每一个位置上，其属于1000个分类结果中的打分，所以这在图像分割等领域等领域有着非常重要的作用【之前一篇论文就是用的这种方法Fully Convolutional Networks for Semantic Segmentation】。</p>
-<h3 id="Auxiliary-Classifier"><a href="#Auxiliary-Classifier" class="headerlink" title="Auxiliary Classifier"></a>Auxiliary Classifier</h3><p>当时Inception网络还是太深了，不好训练，因此网络中还加了两个侧枝，通过中间层的feature map，来得到预测结果（有了ResNet的shortcut以后，这种侧枝用的比较少了）。</p>
-<h4 id="为什么使用侧枝？"><a href="#为什么使用侧枝？" class="headerlink" title="为什么使用侧枝？"></a>为什么使用侧枝？</h4><p>为了避免梯度消失，网络额外增加了2个辅助的softmax用于向前传导梯度（辅助分类器）。辅助分类器是将中间某一层的输出用作分类，并按一个较小的权重（0.3）加到最终分类结果中，这样相当于做了模型融合，同时给网络增加了反向传播的梯度信号，也提供了额外的正则化，对于整个网络的训练很有裨益。而在实际测试的时候，这两个额外的softmax会被去掉。也就是说在测试的时候，只会用最后的softmax结果作为分类依据。</p>
-<h3 id="Inception-Model有没有使用全连接层？"><a href="#Inception-Model有没有使用全连接层？" class="headerlink" title="Inception Model有没有使用全连接层？"></a>Inception Model有没有使用全连接层？</h3><p>在两个侧枝使用了卷积+FC+FC+SoftmaxActivation的结构，在最后一层使用了全局平均池化+FC+SoftmaxActivation的结构。</p>
-<h3 id="LRN：LocalRespNorm"><a href="#LRN：LocalRespNorm" class="headerlink" title="LRN：LocalRespNorm"></a>LRN：LocalRespNorm</h3><h1 id="Inception-V2"><a href="#Inception-V2" class="headerlink" title="Inception V2"></a>Inception V2</h1><h2 id="论文概览-1"><a href="#论文概览-1" class="headerlink" title="论文概览"></a>论文概览</h2><p>Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift</p>
-<h2 id="要点整理-1"><a href="#要点整理-1" class="headerlink" title="要点整理"></a>要点整理</h2><p>GoogLeNet设计的初衷就是要又准又快，而如果只是单纯的堆叠网络虽然可以提高准确率，但是会导致计算效率有明显的下降，所以如何在不增加过多计算量的同时提高网络的表达能力就成为了一个问题。</p>
-<p>Inception V2版本的解决方案就是　<strong>修改Inception的内部计算逻辑，提出了比较特殊的“卷积”计算结构</strong>。</p>
-<h3 id="卷积分解（Factorizing-Convolutions）"><a href="#卷积分解（Factorizing-Convolutions）" class="headerlink" title="卷积分解（Factorizing Convolutions）"></a>卷积分解（Factorizing Convolutions）</h3><p>主要受到VGG的启发</p>
-<p>大尺寸的卷积核可以带来更大的感受野，但也意味着会产生更多的参数，比如5×5卷积核的参数就有25个（不算depth和filters的数量）。因此，GoogLeNet团队提出可以用2个连续的3×3卷积层组成的小网络来代替单个的5×5卷积层，即在 <strong>保持感受野范围的同时又减少了参数量</strong>，如下图：</p>
-<p><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fvna17nohlj209z09ydhb.jpg" alt=""></p>
-<p>大量实验表明，这种分解并不会造成表达缺失，那么是否可以进一步分解，GoogLeNet团队尝试了n×1的卷积核，如下图所示，用3个3×1取代3×3卷积：</p>
-<p><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fvna17muznj207c0a70th.jpg" alt=""></p>
-<p>因此，任意nxn的卷积都可以通过1xn卷积后接nx1卷积来替代。GoogLeNet团队发现在网络的前期使用这种分解效果并不好，在中度大小的特征图（feature map）上使用效果才会更好（特征图大小建议在12到20之间）。</p>
-<p><img src="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvna17piozj20bu1a040a.jpg" alt=""></p>
-<h3 id="降低特征图大小"><a href="#降低特征图大小" class="headerlink" title="降低特征图大小"></a>降低特征图大小</h3><p>一般情况下，如果想让图像缩小，可以有如下两种方式：</p>
-<p><img src="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fvna17my4gj20ep09haah.jpg" alt=""></p>
-<p>前者先做pooling会导致在做卷积的时候缺少特征，后者是在卷积计算后，提取完特征以后进行的正常的图像缩小，但是计算量很大（卷积计算比pooling计算复杂）。为了同时保持特征表示且降低计算量，将网络结构改为下图，使用两个并行化的模块来降低计算量（卷积、池化并行执行，最后再进行合并）。</p>
-<p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvna17n33wj20fh08u759.jpg" alt=""></p>
-<h3 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a>网络结构</h3><p>使用Inception V2作改进版的GoogLeNet，网络结构图如下：</p>
-<p><img src="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvna17sdq6j20fh0f1djt.jpg" alt=""></p>
-<p>注：上表中的Figure 5指没有进化的Inception，Figure 6是指小卷积版的Inception（用3x3卷积核代替5x5卷积核），Figure 7是指不对称版的Inception（用1xn、nx1卷积核代替nxn卷积核）。</p>
-<h3 id="Batch-Normalizatin"><a href="#Batch-Normalizatin" class="headerlink" title="Batch Normalizatin"></a>Batch Normalizatin</h3><p>Batch Normalization, 批标准化, 和普通的数据标准化类似, 是将分散的数据统一的一种做法, 也是优化神经网络的一种方法.</p>
-<p>详见:<img src="" alt="Batch-Normalization深入解析"></p>
-<h1 id="Inception-V3"><a href="#Inception-V3" class="headerlink" title="Inception V3"></a>Inception V3</h1><h2 id="论文概览-2"><a href="#论文概览-2" class="headerlink" title="论文概览"></a>论文概览</h2><h2 id="要点整理-2"><a href="#要点整理-2" class="headerlink" title="要点整理"></a>要点整理</h2>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create the input data</span></span><br><span class="line">data = np.random.rand(<span class="number">16</span>, <span class="number">100</span>).astype(np.float32)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create labels for the data as integers [0, 9].</span></span><br><span class="line">label = (np.random.rand(<span class="number">16</span>) * <span class="number">10</span>).astype(np.int32)</span><br><span class="line"></span><br><span class="line">workspace.FeedBlob(<span class="string">"data"</span>, data)</span><br><span class="line">workspace.FeedBlob(<span class="string">"label"</span>, label)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create model using a model helper</span></span><br><span class="line">m = model_helper.ModelHelper(name=<span class="string">"my first net"</span>)</span><br><span class="line"></span><br><span class="line">weight = m.param_init_net.XavierFill([], <span class="string">'fc_w'</span>, shape=[<span class="number">10</span>, <span class="number">100</span>])</span><br><span class="line">bias = m.param_init_net.ConstantFill([], <span class="string">'fc_b'</span>, shape=[<span class="number">10</span>, ])</span><br><span class="line">fc_1 = m.net.FC([<span class="string">"data"</span>, <span class="string">"fc_w"</span>, <span class="string">"fc_b"</span>], <span class="string">"fc1"</span>)</span><br><span class="line">pred = m.net.Sigmoid(fc_1, <span class="string">"pred"</span>)</span><br><span class="line">softmax, loss = m.net.SoftmaxWithLoss([pred, <span class="string">"label"</span>], [<span class="string">"softmax"</span>, <span class="string">"loss"</span>])</span><br></pre></td></tr></table></figure>
+<p>上面的代码首先在内存中创建了数据和标签的 <code>blobs</code>. 数据的第一维代表 batch size, 即16. 许多 Caffe2 的 <code>operators</code> 都可以利用 <code>ModelHelper</code> 直接获取, 因此我们用它创建了一系列 <code>operators</code>, 包括: <code>FC</code>, <code>Sigmoid</code> 和 <code>SoftmaxWithLoss</code>.<br><code>ModelHelper</code> 会创建两个 <code>nets</code>: <code>m.param_init_net</code> 用于初始化指定的参数, 只需要执行一次即可. <code>m.net</code> 用于执行训练逻辑, 该过程对用户透明, 且是自动运行的.<br>网络的定义存储在一个 protobuf 结构当中(Google’s Protocal Buffer), 可以通过下面的方式来进行检查网络</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(m.net.Proto())</span><br></pre></td></tr></table></figure>
+<p>输出如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">name: &quot;my first net&quot;</span><br><span class="line">op &#123;</span><br><span class="line">  input: &quot;data&quot;</span><br><span class="line">  input: &quot;fc_w&quot;</span><br><span class="line">  input: &quot;fc_b&quot;</span><br><span class="line">  output: &quot;fc1&quot;</span><br><span class="line">  name: &quot;&quot;</span><br><span class="line">  type: &quot;FC&quot;</span><br><span class="line">&#125;</span><br><span class="line">op &#123;</span><br><span class="line">  input: &quot;fc1&quot;</span><br><span class="line">  output: &quot;pred&quot;</span><br><span class="line">  name: &quot;&quot;</span><br><span class="line">  type: &quot;Sigmoid&quot;</span><br><span class="line">&#125;</span><br><span class="line">op &#123;</span><br><span class="line">  input: &quot;pred&quot;</span><br><span class="line">  input: &quot;label&quot;</span><br><span class="line">  output: &quot;softmax&quot;</span><br><span class="line">  output: &quot;loss&quot;</span><br><span class="line">  name: &quot;&quot;</span><br><span class="line">  type: &quot;SoftmaxWithLoss&quot;</span><br><span class="line">&#125;</span><br><span class="line">external_input: &quot;data&quot;</span><br><span class="line">external_input: &quot;fc_w&quot;</span><br><span class="line">external_input: &quot;fc_b&quot;</span><br><span class="line">external_input: &quot;label&quot;</span><br></pre></td></tr></table></figure>
+<p>通过下面的代码可以查看参数初始化网络</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(m.param_init_net.Proto())</span><br></pre></td></tr></table></figure>
+<p>输出如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">name: &quot;my first net_init&quot;</span><br><span class="line">op &#123;</span><br><span class="line">  output: &quot;fc_w&quot;</span><br><span class="line">  name: &quot;&quot;</span><br><span class="line">  type: &quot;XavierFill&quot;</span><br><span class="line">  arg &#123;</span><br><span class="line">    name: &quot;shape&quot;</span><br><span class="line">    ints: 10</span><br><span class="line">    ints: 100</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">op &#123;</span><br><span class="line">  output: &quot;fc_b&quot;</span><br><span class="line">  name: &quot;&quot;</span><br><span class="line">  type: &quot;ConstantFill&quot;</span><br><span class="line">  arg &#123;</span><br><span class="line">    name: &quot;shape&quot;</span><br><span class="line">    ints: 10</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到有两个 <code>operators</code>, 它们会分别对 FC 的权重和偏置参数进行初始化.</p>
+<h1 id="Executing"><a href="#Executing" class="headerlink" title="Executing"></a>Executing</h1><p>现在, 既然我们已经定义好了用于网络训练的 <code>operators</code>, 那么就可以利用下面的代码来训练我们的简单模型.<br>首先, 调用一次参数初始化网络:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">workspace.RunNetOnce(m.param_init_net)</span><br></pre></td></tr></table></figure>
+<p>注意, 通常情况下, 上面的代码会将 <code>param_init_net</code> 的 protobuffer 结构传送给 C++ 运行时以供执行.</p>
+<p>接下来, 创建真正用于训练的网络</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">workspace.CreateNet(m.net)</span><br></pre></td></tr></table></figure>
+<p>我们只需要创建该网络一次, 然后可以多次执行它</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">workspace.CreateNet(m.net, overwrite=<span class="keyword">True</span>) <span class="comment"># 这里需要将 overwrite 设置为 True, 官方教程没有设值, 运行时会出现RuntimeError</span></span><br><span class="line"><span class="comment"># Run 100 × 10 iterations</span></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">100</span>):</span><br><span class="line">    data = np.random.rand(<span class="number">16</span>, <span class="number">100</span>).astype(np.float32)</span><br><span class="line">    label = (np.random.rand(<span class="number">16</span>)*<span class="number">10</span>).astype(np.int32)</span><br><span class="line"></span><br><span class="line">    workspace.FeedBlob(<span class="string">"data"</span>, data)</span><br><span class="line">    workspace.FeedBlob(<span class="string">"label"</span>, label)</span><br><span class="line">    workspace.RunNet(m.name, num_iter=<span class="number">10</span>) <span class="comment">#Run net 10 times</span></span><br></pre></td></tr></table></figure>
+<p>注意, 因为我们已经在 <code>workspace</code> 中定义过 <code>net</code> 了, 因此, 我们只需要传送 <code>m.name</code> 给 <code>RunNet</code> 函数即可, 而无需再次定义网络.<br>在训练迭代完成后, 可以通过 <code>Fetch</code> 来查看计算的结果</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(workspace.Fetch(<span class="string">"softmax"</span>))</span><br><span class="line">print(workspace.Fetch(<span class="string">"loss"</span>))</span><br></pre></td></tr></table></figure>
+<h1 id="Backward-pass"><a href="#Backward-pass" class="headerlink" title="Backward pass"></a>Backward pass</h1><p>上面的网络仅仅包含 foward pass, 因此它不会学到任何东西, 我们可以通过在每一个 <code>operator</code> 中添加一个梯度计算操作来实现 backward pass. 我们需要在调用 <code>RunNetOnce()</code> 之前在网络中插入下面的 <code>operator</code>:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m.AddGradientOperators([loss])</span><br></pre></td></tr></table></figure>
+<p>接着可以看看新的网络的结构</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(m.net.Proto())</span><br></pre></td></tr></table></figure>
+<p>输出如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">name: &quot;my first net&quot;</span><br><span class="line">op &#123;</span><br><span class="line">  input: &quot;data&quot;</span><br><span class="line">  input: &quot;fc_w&quot;</span><br><span class="line">  input: &quot;fc_b&quot;</span><br><span class="line">  output: &quot;fc1&quot;</span><br><span class="line">  name: &quot;&quot;</span><br><span class="line">  type: &quot;FC&quot;</span><br><span class="line">&#125;</span><br><span class="line">op &#123;</span><br><span class="line">  input: &quot;fc1&quot;</span><br><span class="line">  output: &quot;pred&quot;</span><br><span class="line">  name: &quot;&quot;</span><br><span class="line">  type: &quot;Sigmoid&quot;</span><br><span class="line">&#125;</span><br><span class="line">op &#123;</span><br><span class="line">  input: &quot;pred&quot;</span><br><span class="line">  input: &quot;label&quot;</span><br><span class="line">  output: &quot;softmax&quot;</span><br><span class="line">  output: &quot;loss&quot;</span><br><span class="line">  name: &quot;&quot;</span><br><span class="line">  type: &quot;SoftmaxWithLoss&quot;</span><br><span class="line">&#125;</span><br><span class="line">op &#123;</span><br><span class="line">  input: &quot;loss&quot;</span><br><span class="line">  output: &quot;loss_autogen_grad&quot;</span><br><span class="line">  name: &quot;&quot;</span><br><span class="line">  type: &quot;ConstantFill&quot;</span><br><span class="line">  arg &#123;</span><br><span class="line">    name: &quot;value&quot;</span><br><span class="line">    f: 1.0</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">op &#123;</span><br><span class="line">  input: &quot;pred&quot;</span><br><span class="line">  input: &quot;label&quot;</span><br><span class="line">  input: &quot;softmax&quot;</span><br><span class="line">  input: &quot;loss_autogen_grad&quot;</span><br><span class="line">  output: &quot;pred_grad&quot;</span><br><span class="line">  name: &quot;&quot;</span><br><span class="line">  type: &quot;SoftmaxWithLossGradient&quot;</span><br><span class="line">  is_gradient_op: true</span><br><span class="line">&#125;</span><br><span class="line">op &#123;</span><br><span class="line">  input: &quot;pred&quot;</span><br><span class="line">  input: &quot;pred_grad&quot;</span><br><span class="line">  output: &quot;fc1_grad&quot;</span><br><span class="line">  name: &quot;&quot;</span><br><span class="line">  type: &quot;SigmoidGradient&quot;</span><br><span class="line">  is_gradient_op: true</span><br><span class="line">&#125;</span><br><span class="line">op &#123;</span><br><span class="line">  input: &quot;data&quot;</span><br><span class="line">  input: &quot;fc_w&quot;</span><br><span class="line">  input: &quot;fc1_grad&quot;</span><br><span class="line">  output: &quot;fc_w_grad&quot;</span><br><span class="line">  output: &quot;fc_b_grad&quot;</span><br><span class="line">  output: &quot;data_grad&quot;</span><br><span class="line">  name: &quot;&quot;</span><br><span class="line">  type: &quot;FCGradient&quot;</span><br><span class="line">  is_gradient_op: true</span><br><span class="line">&#125;</span><br><span class="line">external_input: &quot;data&quot;</span><br><span class="line">external_input: &quot;fc_w&quot;</span><br><span class="line">external_input: &quot;fc_b&quot;</span><br><span class="line">external_input: &quot;label&quot;</span><br></pre></td></tr></table></figure>
+<p>可以看到, 网络中增加了4个新的 <code>operators</code>, 其输入为 backward 的计算结果, 输入为相应参数的梯度.</p>
+
       
     </div>
 
@@ -683,9 +634,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/知识点梳理/" rel="tag"><i class="fa fa-tag"></i> 知识点梳理</a>
-          
-            <a href="/tags/网络模型/" rel="tag"><i class="fa fa-tag"></i> 网络模型</a>
+            <a href="/tags/Caffe2/" rel="tag"><i class="fa fa-tag"></i> Caffe2</a>
           
         </div>
       
@@ -698,18 +647,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/计算机视觉-目标检测概览/" rel="prev" title="【置顶】基于深度学习的目标检测">
-                <i class="fa fa-chevron-left"></i> 【置顶】基于深度学习的目标检测
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/Cpp-知识点梳理-Cpp创建对象时new与不new/" rel="next" title="C++创建对象时new与不new的区别">
-                C++创建对象时new与不new的区别 <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/计算机视觉-RethinkingPretraining/" rel="next" title="Rethinking Pretraining">
+                Rethinking Pretraining <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -788,7 +733,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">188</span>
+                    <span class="site-state-item-count">194</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -904,7 +849,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -968,7 +917,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Inception-V1"><span class="nav-text">Inception V1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#论文概览"><span class="nav-text">论文概览</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-介绍"><span class="nav-text">1.介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-相关工作"><span class="nav-text">2.相关工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-动机和High-Level的考虑"><span class="nav-text">3.动机和High Level的考虑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-框架细节"><span class="nav-text">4.框架细节</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-GooLeNet"><span class="nav-text">5. GooLeNet</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要点整理"><span class="nav-text">要点整理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#说明一下GoogLeNet采用多个卷积核的动机"><span class="nav-text">说明一下GoogLeNet采用多个卷积核的动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Inception中为什么使用1×1卷积？1×1卷积的作用是什么？"><span class="nav-text">Inception中为什么使用1×1卷积？1×1卷积的作用是什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1×1卷积核的作用："><span class="nav-text">1×1卷积核的作用：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1×1的卷积核，在一定程度上可以实现全连接层："><span class="nav-text">1×1的卷积核，在一定程度上可以实现全连接层：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用卷积层代替全连接层的好处："><span class="nav-text">用卷积层代替全连接层的好处：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Auxiliary-Classifier"><span class="nav-text">Auxiliary Classifier</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么使用侧枝？"><span class="nav-text">为什么使用侧枝？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Inception-Model有没有使用全连接层？"><span class="nav-text">Inception Model有没有使用全连接层？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LRN：LocalRespNorm"><span class="nav-text">LRN：LocalRespNorm</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inception-V2"><span class="nav-text">Inception V2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#论文概览-1"><span class="nav-text">论文概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要点整理-1"><span class="nav-text">要点整理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#卷积分解（Factorizing-Convolutions）"><span class="nav-text">卷积分解（Factorizing Convolutions）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#降低特征图大小"><span class="nav-text">降低特征图大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络结构"><span class="nav-text">网络结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Batch-Normalizatin"><span class="nav-text">Batch Normalizatin</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inception-V3"><span class="nav-text">Inception V3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#论文概览-2"><span class="nav-text">论文概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要点整理-2"><span class="nav-text">要点整理</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Blobs-and-Workspace-Tensors"><span class="nav-text">Blobs and Workspace, Tensors</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nets-and-Operators"><span class="nav-text">Nets and Operators</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Executing"><span class="nav-text">Executing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Backward-pass"><span class="nav-text">Backward pass</span></a></li></ol></div>
             
 
           </div>
@@ -1005,7 +954,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">852k</span>
+    <span title="站点总字数">986k</span>
   
 
   
@@ -1014,7 +963,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">12:54</span>
+    <span title="站点阅读时长">14:57</span>
   
 </div>
 

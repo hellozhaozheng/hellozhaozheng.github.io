@@ -122,7 +122,7 @@
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvna17n33wj20fh08u759.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvna17sdq6j20fh0f1djt.jpg">
 <meta property="og:image" content="https://hellozhaozheng.github.io/z_post/深度学习-Batch-Normalization深入解析">
-<meta property="og:updated_time" content="2018-11-20T07:50:20.693Z">
+<meta property="og:updated_time" content="2018-11-22T08:30:47.814Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Inception V2">
 <meta name="twitter:description" content="文章: Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift作者: Sergey Ioffe, Christian Szegedy备注: Google, Inception V2 Inception V2论文概览Batch Normalization: Acceler">
@@ -251,7 +251,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">192</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">194</span></a>
   </li>
         
         
@@ -347,7 +347,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">33</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
   </li>
         
         
@@ -585,17 +585,17 @@
 <p>Inception V2版本的解决方案就是　<strong>修改Inception的内部计算逻辑，提出了比较特殊的“卷积”计算结构</strong>。</p>
 <h3 id="卷积分解（Factorizing-Convolutions）"><a href="#卷积分解（Factorizing-Convolutions）" class="headerlink" title="卷积分解（Factorizing Convolutions）"></a>卷积分解（Factorizing Convolutions）</h3><p>主要受到VGG的启发</p>
 <p>大尺寸的卷积核可以带来更大的感受野，但也意味着会产生更多的参数，比如5×5卷积核的参数就有25个（不算depth和filters的数量）。因此，GoogLeNet团队提出可以用2个连续的3×3卷积层组成的小网络来代替单个的5×5卷积层，即在 <strong>保持感受野范围的同时又减少了参数量</strong>，如下图：</p>
-<p><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fvna17nohlj209z09ydhb.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fvna17nohlj209z09ydhb.jpg" alt=""></div></p>
 <p>大量实验表明，这种分解并不会造成表达缺失，那么是否可以进一步分解，GoogLeNet团队尝试了n×1的卷积核，如下图所示，用3个3×1取代3×3卷积：</p>
-<p><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fvna17muznj207c0a70th.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fvna17muznj207c0a70th.jpg" alt=""></div></p>
 <p>因此，任意nxn的卷积都可以通过1xn卷积后接nx1卷积来替代。GoogLeNet团队发现在网络的前期使用这种分解效果并不好，在中度大小的特征图（feature map）上使用效果才会更好（特征图大小建议在12到20之间）。</p>
-<p><img src="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvna17piozj20bu1a040a.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvna17piozj20bu1a040a.jpg" alt=""></div></p>
 <h3 id="降低特征图大小"><a href="#降低特征图大小" class="headerlink" title="降低特征图大小"></a>降低特征图大小</h3><p>一般情况下，如果想让图像缩小，可以有如下两种方式：</p>
-<p><img src="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fvna17my4gj20ep09haah.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fvna17my4gj20ep09haah.jpg" alt=""></div></p>
 <p>前者先做pooling会导致在做卷积的时候缺少特征，后者是在卷积计算后，提取完特征以后进行的正常的图像缩小，但是计算量很大（卷积计算比pooling计算复杂）。为了同时保持特征表示且降低计算量，将网络结构改为下图，使用两个并行化的模块来降低计算量（卷积、池化并行执行，最后再进行合并）。</p>
-<p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvna17n33wj20fh08u759.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvna17n33wj20fh08u759.jpg" alt=""></div></p>
 <h3 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a>网络结构</h3><p>使用Inception V2作改进版的GoogLeNet，网络结构图如下：</p>
-<p><img src="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvna17sdq6j20fh0f1djt.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvna17sdq6j20fh0f1djt.jpg" alt=""></div></p>
 <p>注：上表中的Figure 5指没有进化的Inception，Figure 6是指小卷积版的Inception（用3x3卷积核代替5x5卷积核），Figure 7是指不对称版的Inception（用1xn、nx1卷积核代替nxn卷积核）。</p>
 <h3 id="Batch-Normalizatin"><a href="#Batch-Normalizatin" class="headerlink" title="Batch Normalizatin"></a>Batch Normalizatin</h3><p>Batch Normalization, 批标准化, 和普通的数据标准化类似, 是将分散的数据统一的一种做法, 也是优化神经网络的一种方法.</p>
 <p>详见:<img src="../深度学习-Batch-Normalization深入解析" alt="Batch-Normalization深入解析"></p>
@@ -716,7 +716,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">192</span>
+                    <span class="site-state-item-count">194</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -834,7 +834,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">33</span>
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -935,7 +937,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">935k</span>
+    <span title="站点总字数">986k</span>
   
 
   
@@ -944,7 +946,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">14:10</span>
+    <span title="站点阅读时长">14:57</span>
   
 </div>
 

@@ -108,24 +108,25 @@
 
 
 
-  <meta name="description" content="并不是什么厉害的地方只是一个安静的学习角落">
+  <meta name="description" content="在本篇教程中, 我们将教授你如何 finetune 一个 torchvision models, 这些 models 都已经在 ImageNet 的 1000-class 数据集上进行过预训练. 由于每个模型的结构都不太相同, 因此没有通常的代码模板来适应所有的场景需要. 在这里, 我们将会演示两种类型的迁移学习: finetuning 和 feature extraction. 在 finetu">
+<meta name="keywords" content="PyTorch">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SSD 源码解析-模型结构">
-<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/PyTorch-SSD-模型结构/index.html">
+<meta property="og:title" content="PyTorch官方教程-FineTuning Torchvision Models">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/PyTorch-官方教程-FineTuningModels/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="并不是什么厉害的地方只是一个安静的学习角落">
+<meta property="og:description" content="在本篇教程中, 我们将教授你如何 finetune 一个 torchvision models, 这些 models 都已经在 ImageNet 的 1000-class 数据集上进行过预训练. 由于每个模型的结构都不太相同, 因此没有通常的代码模板来适应所有的场景需要. 在这里, 我们将会演示两种类型的迁移学习: finetuning 和 feature extraction. 在 finetu">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-12T13:19:24.038Z">
+<meta property="og:updated_time" content="2018-11-26T11:56:46.226Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SSD 源码解析-模型结构">
-<meta name="twitter:description" content="并不是什么厉害的地方只是一个安静的学习角落">
+<meta name="twitter:title" content="PyTorch官方教程-FineTuning Torchvision Models">
+<meta name="twitter:description" content="在本篇教程中, 我们将教授你如何 finetune 一个 torchvision models, 这些 models 都已经在 ImageNet 的 1000-class 数据集上进行过预训练. 由于每个模型的结构都不太相同, 因此没有通常的代码模板来适应所有的场景需要. 在这里, 我们将会演示两种类型的迁移学习: finetuning 和 feature extraction. 在 finetu">
 
 
 
 
 
 
-  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/PyTorch-SSD-模型结构/"/>
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/PyTorch-官方教程-FineTuningModels/"/>
 
 
 
@@ -135,7 +136,7 @@
   };
 </script>
 
-  <title>SSD 源码解析-模型结构 | 从零开始的BLOG</title>
+  <title>PyTorch官方教程-FineTuning Torchvision Models | 从零开始的BLOG</title>
   
 
 
@@ -243,7 +244,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">188</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">194</span></a>
   </li>
         
         
@@ -339,7 +340,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">32</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
   </li>
         
         
@@ -440,7 +441,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/PyTorch-SSD-模型结构/">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/PyTorch-官方教程-FineTuningModels/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZeroZone">
@@ -457,7 +458,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">SSD 源码解析-模型结构
+          <h1 class="post-title" itemprop="name headline">PyTorch官方教程-FineTuning Torchvision Models
               
             
           </h1>
@@ -483,7 +484,7 @@
                 
               
 
-              <time title="创建时间：2018-10-29 20:35:13" itemprop="dateCreated datePublished" datetime="2018-10-29T20:35:13+08:00">2018-10-29</time>
+              <time title="创建时间：2018-10-11 19:08:43" itemprop="dateCreated datePublished" datetime="2018-10-11T19:08:43+08:00">2018-10-11</time>
             
 
             
@@ -501,7 +502,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/其它/" itemprop="url" rel="index"><span itemprop="name">其它</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/PyTorch/" itemprop="url" rel="index"><span itemprop="name">PyTorch</span></a></span>
 
                 
                 
@@ -537,7 +538,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">0</span>
+                <span title="本文字数">430</span>
               
 
               
@@ -571,7 +572,14 @@
       
 
       
-        
+        <p>在本篇教程中, 我们将教授你如何 finetune 一个 torchvision models, 这些 models 都已经在 ImageNet 的 1000-class 数据集上进行过预训练. 由于每个模型的结构都不太相同, 因此没有通常的代码模板来适应所有的场景需要. 在这里, 我们将会演示两种类型的迁移学习: finetuning 和 feature extraction. 在 <strong>finetuning</strong> 中, 我们会从一个预训练好的模型开始, 将该模型的参数应用到新的任务上去, 然后重新训练整个模型. 在 <strong>feature extraction</strong> 中, 我们同样会从一个预训练好的模型开始, 但是仅仅更新最后的几层网络, 而将之前的网络层参数固定不变. 通常情况下, 这两种迁移学习都包含以下几步:</p>
+<ul>
+<li>用预训练模型初始化参数</li>
+<li>更改最后的一层或几层神经层, 使其输出适应我们的新数据集</li>
+<li>在 optimization 算法中定义我们希望更新的参数</li>
+<li>执行训练</li>
+</ul>
+
       
     </div>
 
@@ -589,6 +597,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/PyTorch/" rel="tag"><i class="fa fa-tag"></i> PyTorch</a>
+          
+        </div>
+      
 
       
       
@@ -598,8 +612,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/PyTorch-VGG/" rel="prev" title="用PyTorch实现经典VGG网络">
-                <i class="fa fa-chevron-left"></i> 用PyTorch实现经典VGG网络
+              <a href="/z_post/Python-shutil/" rel="prev" title="shutil模块-shell命令行指令">
+                <i class="fa fa-chevron-left"></i> shutil模块-shell命令行指令
               </a>
             
           </div>
@@ -608,8 +622,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/计算机视觉-RefineDet-CVPR2018/" rel="next" title="Single-Shot Refinement Neural Network for Object Detection">
-                Single-Shot Refinement Neural Network for Object Detection <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/计算机视觉-数据集-COCO/" rel="next" title="MicroSoft COCO数据集">
+                MicroSoft COCO数据集 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -679,7 +693,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">188</span>
+                    <span class="site-state-item-count">194</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -795,7 +809,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -880,7 +898,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">852k</span>
+    <span title="站点总字数">986k</span>
   
 
   
@@ -889,7 +907,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">12:54</span>
+    <span title="站点阅读时长">14:57</span>
   
 </div>
 

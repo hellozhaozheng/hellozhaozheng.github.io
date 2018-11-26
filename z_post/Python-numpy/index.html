@@ -109,17 +109,17 @@
 
 
   <meta name="description" content="numpy基础知识ndarray 对象ndarray对象的属性表示一个 n 维数组, 描述相同类型的元素集合, 基于0的索引访问 创建 ndarray 1numpy.array(object, dtype = None, copy = True, order = None, subok = False, ndmin = 0)  object: 可以返回一个数组或任何(嵌套)序列的对象。 dtype">
-<meta name="keywords" content="numpy">
+<meta name="keywords" content="Python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="numpy模块-线性代数计算库">
+<meta property="og:title" content="NumPy模块-线性代数计算库">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Python-numpy/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="numpy基础知识ndarray 对象ndarray对象的属性表示一个 n 维数组, 描述相同类型的元素集合, 基于0的索引访问 创建 ndarray 1numpy.array(object, dtype = None, copy = True, order = None, subok = False, ndmin = 0)  object: 可以返回一个数组或任何(嵌套)序列的对象。 dtype">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fw0xe4k4jij20kg0k8gpk.jpg">
-<meta property="og:updated_time" content="2018-11-11T14:31:36.541Z">
+<meta property="og:updated_time" content="2018-11-23T14:41:16.899Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="numpy模块-线性代数计算库">
+<meta name="twitter:title" content="NumPy模块-线性代数计算库">
 <meta name="twitter:description" content="numpy基础知识ndarray 对象ndarray对象的属性表示一个 n 维数组, 描述相同类型的元素集合, 基于0的索引访问 创建 ndarray 1numpy.array(object, dtype = None, copy = True, order = None, subok = False, ndmin = 0)  object: 可以返回一个数组或任何(嵌套)序列的对象。 dtype">
 <meta name="twitter:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fw0xe4k4jij20kg0k8gpk.jpg">
 
@@ -138,7 +138,7 @@
   };
 </script>
 
-  <title>numpy模块-线性代数计算库 | 从零开始的BLOG</title>
+  <title>NumPy模块-线性代数计算库 | 从零开始的BLOG</title>
   
 
 
@@ -246,7 +246,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">192</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">194</span></a>
   </li>
         
         
@@ -342,7 +342,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">33</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
   </li>
         
         
@@ -460,7 +460,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">numpy模块-线性代数计算库
+          <h1 class="post-title" itemprop="name headline">NumPy模块-线性代数计算库
               
             
           </h1>
@@ -540,7 +540,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">2.9k</span>
+                <span title="本文字数">3k</span>
               
 
               
@@ -593,7 +593,8 @@
 <h2 id="数据类型对象-dtype"><a href="#数据类型对象-dtype" class="headerlink" title="数据类型对象 dtype"></a>数据类型对象 dtype</h2><p>dtype是一个对象, 这个对象所属类的名字叫做 “数据类型”</p>
 <p>dtype 通常用于结构化数据类型:</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">dt = np.dtype([(<span class="string">'age'</span>,np.int8)])  </span><br><span class="line">print(dt) <span class="comment">#输出如下： [('age', 'i1')]</span></span><br></pre></td></tr></table></figure>
-<h1 id="numpy基本操作"><a href="#numpy基本操作" class="headerlink" title="numpy基本操作"></a>numpy基本操作</h1><h2 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">a = np.array([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], [<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>]], dtype= float ,ndmin =  <span class="number">2</span>)</span><br><span class="line"><span class="comment"># 可以对ndarray中的值依次进行比较运算符, 返回bool数组</span></span><br><span class="line">print(a == <span class="number">3</span>)</span><br><span class="line"><span class="comment">#out</span></span><br><span class="line">[[<span class="keyword">False</span> <span class="keyword">False</span>  <span class="keyword">True</span>]</span><br><span class="line"> [<span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span>]]</span><br><span class="line"><span class="comment">#out</span></span><br><span class="line"></span><br><span class="line"> print(a &lt; <span class="number">3</span>)</span><br><span class="line"> <span class="comment">#out</span></span><br><span class="line">[[ <span class="keyword">True</span>  <span class="keyword">True</span> <span class="keyword">False</span>]</span><br><span class="line"> [ <span class="keyword">True</span>  <span class="keyword">True</span> <span class="keyword">False</span>]]</span><br><span class="line"><span class="comment">#out</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以根据bool数组对ndarray中的值进行筛选, 返回1维数组</span></span><br><span class="line">print(a[ a&lt;<span class="number">3</span> ])</span><br><span class="line"><span class="comment">#out</span></span><br><span class="line">[<span class="number">1.</span> <span class="number">2.</span> <span class="number">1.</span> <span class="number">2.</span>]</span><br><span class="line"><span class="comment">#out</span></span><br></pre></td></tr></table></figure>
+<h1 id="numpy基本操作"><a href="#numpy基本操作" class="headerlink" title="numpy基本操作"></a>numpy基本操作</h1><h2 id="根据下标组成新的数组"><a href="#根据下标组成新的数组" class="headerlink" title="根据下标组成新的数组"></a>根据下标组成新的数组</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = np.asarray([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>])</span><br><span class="line">c = a[[<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]]</span><br><span class="line">print(c) <span class="comment"># [3,4,5]</span></span><br></pre></td></tr></table></figure>
+<h2 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">a = np.array([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], [<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>]], dtype= float ,ndmin =  <span class="number">2</span>)</span><br><span class="line"><span class="comment"># 可以对ndarray中的值依次进行比较运算符, 返回bool数组</span></span><br><span class="line">print(a == <span class="number">3</span>)</span><br><span class="line"><span class="comment">#out</span></span><br><span class="line">[[<span class="keyword">False</span> <span class="keyword">False</span>  <span class="keyword">True</span>]</span><br><span class="line"> [<span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span>]]</span><br><span class="line"><span class="comment">#out</span></span><br><span class="line"></span><br><span class="line"> print(a &lt; <span class="number">3</span>)</span><br><span class="line"> <span class="comment">#out</span></span><br><span class="line">[[ <span class="keyword">True</span>  <span class="keyword">True</span> <span class="keyword">False</span>]</span><br><span class="line"> [ <span class="keyword">True</span>  <span class="keyword">True</span> <span class="keyword">False</span>]]</span><br><span class="line"><span class="comment">#out</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以根据bool数组对ndarray中的值进行筛选, 返回1维数组</span></span><br><span class="line">print(a[ a&lt;<span class="number">3</span> ])</span><br><span class="line"><span class="comment">#out</span></span><br><span class="line">[<span class="number">1.</span> <span class="number">2.</span> <span class="number">1.</span> <span class="number">2.</span>]</span><br><span class="line"><span class="comment">#out</span></span><br></pre></td></tr></table></figure>
 <h2 id="向量运算"><a href="#向量运算" class="headerlink" title="向量运算"></a>向量运算</h2><h2 id="矩阵运算"><a href="#矩阵运算" class="headerlink" title="矩阵运算"></a>矩阵运算</h2><p><strong>矩阵运算主要注意的是<code>axis</code>参数的选择, axis参数的作用是, 沿着axis参数进行运算, 即运算后, 其他维度不变, axis指定的维度消失(所以维度会减1)</strong></p>
 <h1 id="numpy常用函数"><a href="#numpy常用函数" class="headerlink" title="numpy常用函数"></a>numpy常用函数</h1><h2 id="ndarray对象的创建"><a href="#ndarray对象的创建" class="headerlink" title="ndarray对象的创建"></a>ndarray对象的创建</h2><h3 id="np-array"><a href="#np-array" class="headerlink" title="np.array"></a>np.array</h3><p>该函数会返回一个ndarray对象(注意numpy中不存在<code>array</code>这种数据对象类型).</p>
 <h3 id="np-ndarray"><a href="#np-ndarray" class="headerlink" title="np.ndarray"></a>np.ndarray</h3><p>该函数也会返回一个ndarray对象, 但是不推荐使用(为啥?), np.ndarray是一个底层的方法, 会被其他多维数组创建方法所调用</p>
@@ -644,7 +645,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/numpy/" rel="tag"><i class="fa fa-tag"></i> numpy</a>
+            <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
           
         </div>
       
@@ -747,7 +748,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">192</span>
+                    <span class="site-state-item-count">194</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -865,7 +866,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">33</span>
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -929,7 +932,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#numpy基础知识"><span class="nav-text">numpy基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ndarray-对象"><span class="nav-text">ndarray 对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ndarray对象的属性"><span class="nav-text">ndarray对象的属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ndarray对象的方法"><span class="nav-text">ndarray对象的方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#numpy支持的数据类型"><span class="nav-text">numpy支持的数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据类型对象-dtype"><span class="nav-text">数据类型对象 dtype</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#numpy基本操作"><span class="nav-text">numpy基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#比较运算符"><span class="nav-text">比较运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#向量运算"><span class="nav-text">向量运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#矩阵运算"><span class="nav-text">矩阵运算</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#numpy常用函数"><span class="nav-text">numpy常用函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ndarray对象的创建"><span class="nav-text">ndarray对象的创建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#np-array"><span class="nav-text">np.array</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-ndarray"><span class="nav-text">np.ndarray</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-zeros"><span class="nav-text">np.zeros()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-ones"><span class="nav-text">np.ones()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-arange"><span class="nav-text">np.arange()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-random"><span class="nav-text">np.random</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ndarray-reshape"><span class="nav-text">ndarray.reshape()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组拼接"><span class="nav-text">数组拼接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#np-append"><span class="nav-text">np.append()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-concatenate"><span class="nav-text">np.concatenate()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#统计类数值"><span class="nav-text">统计类数值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#np-median"><span class="nav-text">np.median()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-mean"><span class="nav-text">np.mean()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#np-round"><span class="nav-text">np.round()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#np-newaxis"><span class="nav-text">np.newaxis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#np-hstack"><span class="nav-text">np.hstack()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#np-vstack"><span class="nav-text">np.vstack()</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#numpy基础知识"><span class="nav-text">numpy基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ndarray-对象"><span class="nav-text">ndarray 对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ndarray对象的属性"><span class="nav-text">ndarray对象的属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ndarray对象的方法"><span class="nav-text">ndarray对象的方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#numpy支持的数据类型"><span class="nav-text">numpy支持的数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据类型对象-dtype"><span class="nav-text">数据类型对象 dtype</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#numpy基本操作"><span class="nav-text">numpy基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#根据下标组成新的数组"><span class="nav-text">根据下标组成新的数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比较运算符"><span class="nav-text">比较运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#向量运算"><span class="nav-text">向量运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#矩阵运算"><span class="nav-text">矩阵运算</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#numpy常用函数"><span class="nav-text">numpy常用函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ndarray对象的创建"><span class="nav-text">ndarray对象的创建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#np-array"><span class="nav-text">np.array</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-ndarray"><span class="nav-text">np.ndarray</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-zeros"><span class="nav-text">np.zeros()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-ones"><span class="nav-text">np.ones()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-arange"><span class="nav-text">np.arange()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-random"><span class="nav-text">np.random</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ndarray-reshape"><span class="nav-text">ndarray.reshape()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组拼接"><span class="nav-text">数组拼接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#np-append"><span class="nav-text">np.append()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-concatenate"><span class="nav-text">np.concatenate()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#统计类数值"><span class="nav-text">统计类数值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#np-median"><span class="nav-text">np.median()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-mean"><span class="nav-text">np.mean()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#np-round"><span class="nav-text">np.round()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#np-newaxis"><span class="nav-text">np.newaxis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#np-hstack"><span class="nav-text">np.hstack()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#np-vstack"><span class="nav-text">np.vstack()</span></a></li></ol></div>
             
 
           </div>
@@ -966,7 +969,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">935k</span>
+    <span title="站点总字数">986k</span>
   
 
   
@@ -975,7 +978,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">14:10</span>
+    <span title="站点阅读时长">14:57</span>
   
 </div>
 

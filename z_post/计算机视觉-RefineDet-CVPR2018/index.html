@@ -118,7 +118,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fwp44jaiyij213h0o2n1j.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fwp6b5h1hxj20ia0iemym.jpg">
-<meta property="og:updated_time" content="2018-10-30T08:23:48.911Z">
+<meta property="og:updated_time" content="2018-11-22T08:30:57.443Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Single-Shot Refinement Neural Network for Object Detection">
 <meta name="twitter:description" content="作者: Shifeng Zhang, Longyin Wen, Xiao Bian, Zhen Lei, Stan Z.Li发表: CVPR2018 论文亮点:结合了one-stage方法和two-stage方法各自的优势, 提出了一个基于single-shot的检测模型:模型主要包含两大模块, 分别是anchor精化模块和物体检测模块. 网络采用了类似FPN的思想, 通过 Transfer Co">
@@ -247,7 +247,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">192</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">194</span></a>
   </li>
         
         
@@ -343,7 +343,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">33</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
   </li>
         
         
@@ -577,7 +577,7 @@
       
         <p><strong>作者:</strong> Shifeng Zhang, Longyin Wen, Xiao Bian, Zhen Lei, Stan Z.Li<br><strong>发表:</strong> CVPR2018</p>
 <h1 id="论文亮点"><a href="#论文亮点" class="headerlink" title="论文亮点:"></a>论文亮点:</h1><p><strong>结合了one-stage方法和two-stage方法各自的优势, 提出了一个基于single-shot的检测模型:</strong><br>模型主要包含两大模块, 分别是anchor精化模块和物体检测模块. 网络采用了类似FPN的思想, 通过 Transfer Connection Block 将特征图谱在两个模块之间传送, 不仅提升了的精度, 同时还在速度方面取得了与one-stage方案相媲美的表现</p>
-<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fwp44jaiyij213h0o2n1j.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fwp44jaiyij213h0o2n1j.jpg" alt=""></div></p>
 <h1 id="论文细节"><a href="#论文细节" class="headerlink" title="论文细节"></a>论文细节</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本文提出了一个基于single-shot的检测模型, 称为RefineDet, 它在精度上高于现有的two-stage方法, 同时, 可以和one-stage方法的速度相媲美. RefineDet包含两个内部连接的模块(如图1):</p>
 <ul>
 <li>anchor精化模块(anchor refinement module):<ol>
@@ -602,7 +602,7 @@
 <h2 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a>网络结构</h2><p>网络结构的整体视图如图1所示, 和SSD类似, RefineDet会基于前向传播网络预测出固定数量的bounding box和对应的类别score. 本文的网络主要包含ARM和ODM两大部分.</p>
 <p><strong>ARM:</strong> 对经典网络结构(VGG-16, ResNet-101)进行改造, 去掉分类层, 并加上一些附属结构<br><strong>ODM:</strong> ODM由TCBs (Transfer Connection Block)和预测层(3×3 卷积层)组成, 会输出物体的类别score和相对于refined anchor box的相对位置坐标.</p>
 <p><strong>Transfer Connection Block:</strong> 用于链接ARM和ODM, 引入TCBs的目的主要是为了将ARM中不同层的特征转换成ODM接受的形式, 这样一来,ODM和ARM就可以共享特征向量. 值得注意的是, 在ARM中, 本文仅仅对于anchor相关的特征图谱使用TCBs. 其实很像FPN的想法, 但是与它又不太一样. TCBs的结构如图2所示</p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwp6b5h1hxj20ia0iemym.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwp6b5h1hxj20ia0iemym.jpg" alt=""></div></p>
 <p><strong>Two-Step Cascaded Regression:</strong> 当前的two-stage方法仅仅依赖于一次边框回归过程, 其主要是基于在不同尺度的特征图谱上来预测不同size的物体的位置, 因此预测的精度较低, 尤其是在面对小物体时. 因此, 本文的模型采用了Two-Step Cascaded Regression. 首先, 利用ARM来调节anchor的位置和大小, 以便为后续的ODM的回归预测提供更好的anchor初始状态. 具体来说, 我们会将特征图谱进行网格划分, 然后对于每一个cell可以得到n个anchor boxes, 最开始的时候, 每一个anchor box的位置相对于它的cell来说都是固定的. 在每一个特征图谱的cell上面, 我们都会预测4个相对坐标(refined网格相对于origin网格的位移坐标). 因此, 我们可以在每一个cell上面, 产生n个refined anchors.</p>
 <p>在获得了refined anchor boxes以后, 我们将它们传送到对应的ODM中去(不同的feature map对应不同的ODM) 来预测物体类别,边框位置和大小等信息. 互相关联的ARM和ODM具有相同的维度, 对于每一个anchor box, ODM都会生成 $c+4$ 个输出( $c$ 为物体类别数 ).  这个预测过程与SSD很相似, 但是与之不同的是本文使用了Refined anchor boxes, 从而可以获得更精确的结果.</p>
 <p><strong>Negative Anchor Filtering:</strong> 同以往检测模型一样, 本文不希望训练过多的(容易分类的)简单样本, 同时需要减轻样本不均衡问题, 因此, 本文设计了一个 negative anchor过滤机制. 具体来说, 就是在训练阶段, 对于一个refined anchor box, 如果它的负样本概率大于一个阈值(如0.99), 那么我们就不去训练它. 这样一来, 网络只会训练 <strong>难负样本(refined hard negative anchor boxes)</strong> 以及 所有的 <strong>正样本(refined positive anchor boxes)</strong>.  同样, 在预测阶段, 对于大于阈值的负样本, 也会对其放弃检测.</p>
@@ -738,7 +738,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">192</span>
+                    <span class="site-state-item-count">194</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -856,7 +856,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">33</span>
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -957,7 +959,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">935k</span>
+    <span title="站点总字数">986k</span>
   
 
   
@@ -966,7 +968,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">14:10</span>
+    <span title="站点阅读时长">14:57</span>
   
 </div>
 

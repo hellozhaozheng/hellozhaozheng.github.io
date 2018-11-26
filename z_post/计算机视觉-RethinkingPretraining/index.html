@@ -108,25 +108,25 @@
 
 
 
-  <meta name="description" content="并不是什么厉害的地方只是一个安静的学习角落">
-<meta name="keywords" content="STL">
+  <meta name="description" content="核心亮点摘要本文利用随机初始化来训练目标检测和实例分割的网络模型, 并给出了不弱于使用预训练模型的实验结果. 结果显示, 即使在使用针对预训练模型优化的超参数时, 随机初始化的训练也能达到和预训练模型初始化差不多的精度水平, 只不过迭代次数相对更多. 本文的实验结果即使在下面三种情况中依然适用: 1), 使用训练数据的 $10%$; 2), 使用更深更宽的模型(deeper, wider); 3)">
+<meta name="keywords" content="计算机视觉">
 <meta property="og:type" content="article">
-<meta property="og:title" content="STL之map">
-<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Cpp-STL之map/index.html">
+<meta property="og:title" content="Rethinking Pretraining">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-RethinkingPretraining/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="并不是什么厉害的地方只是一个安静的学习角落">
+<meta property="og:description" content="核心亮点摘要本文利用随机初始化来训练目标检测和实例分割的网络模型, 并给出了不弱于使用预训练模型的实验结果. 结果显示, 即使在使用针对预训练模型优化的超参数时, 随机初始化的训练也能达到和预训练模型初始化差不多的精度水平, 只不过迭代次数相对更多. 本文的实验结果即使在下面三种情况中依然适用: 1), 使用训练数据的 $10%$; 2), 使用更深更宽的模型(deeper, wider); 3)">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-13T06:02:46.039Z">
+<meta property="og:updated_time" content="2018-11-26T14:06:42.894Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="STL之map">
-<meta name="twitter:description" content="并不是什么厉害的地方只是一个安静的学习角落">
+<meta name="twitter:title" content="Rethinking Pretraining">
+<meta name="twitter:description" content="核心亮点摘要本文利用随机初始化来训练目标检测和实例分割的网络模型, 并给出了不弱于使用预训练模型的实验结果. 结果显示, 即使在使用针对预训练模型优化的超参数时, 随机初始化的训练也能达到和预训练模型初始化差不多的精度水平, 只不过迭代次数相对更多. 本文的实验结果即使在下面三种情况中依然适用: 1), 使用训练数据的 $10%$; 2), 使用更深更宽的模型(deeper, wider); 3)">
 
 
 
 
 
 
-  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/Cpp-STL之map/"/>
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/计算机视觉-RethinkingPretraining/"/>
 
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>STL之map | 从零开始的BLOG</title>
+  <title>Rethinking Pretraining | 从零开始的BLOG</title>
   
 
 
@@ -244,7 +244,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">188</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">194</span></a>
   </li>
         
         
@@ -340,7 +340,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">32</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
   </li>
         
         
@@ -441,7 +441,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/Cpp-STL之map/">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/计算机视觉-RethinkingPretraining/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZeroZone">
@@ -458,7 +458,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">STL之map
+          <h1 class="post-title" itemprop="name headline">Rethinking Pretraining
               
             
           </h1>
@@ -484,7 +484,7 @@
                 
               
 
-              <time title="创建时间：2018-10-12 08:48:46" itemprop="dateCreated datePublished" datetime="2018-10-12T08:48:46+08:00">2018-10-12</time>
+              <time title="创建时间：2018-11-26 13:20:00" itemprop="dateCreated datePublished" datetime="2018-11-26T13:20:00+08:00">2018-11-26</time>
             
 
             
@@ -502,7 +502,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Cpp/" itemprop="url" rel="index"><span itemprop="name">Cpp</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/计算机视觉/" itemprop="url" rel="index"><span itemprop="name">计算机视觉</span></a></span>
 
                 
                 
@@ -538,7 +538,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">0</span>
+                <span title="本文字数">356</span>
               
 
               
@@ -572,7 +572,8 @@
       
 
       
-        
+        <h1 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h1><h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本文利用随机初始化来训练目标检测和实例分割的网络模型, 并给出了不弱于使用预训练模型的实验结果. 结果显示, 即使在使用针对预训练模型优化的超参数时, 随机初始化的训练也能达到和预训练模型初始化差不多的精度水平, 只不过迭代次数相对更多. 本文的实验结果即使在下面三种情况中依然适用: 1), 使用训练数据的 $10%$; 2), 使用更深更宽的模型(deeper, wider); 3), 使用不同的任务和评价标准. 实验结果表明, 预训练模型初始化在训练初期可以加速收敛, 但是训练模型并没有提供正则化能力, 也不能确保提升任务精度. 这样的观察结果对传统的依赖于预训练模型的任务来说是一个挑战, 同时我们也期望该结果可以对人们重新思考计算机视觉中的 fine-tuning 提供起到一些启发.</p>
+
       
     </div>
 
@@ -592,7 +593,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/STL/" rel="tag"><i class="fa fa-tag"></i> STL</a>
+            <a href="/tags/计算机视觉/" rel="tag"><i class="fa fa-tag"></i> 计算机视觉</a>
           
         </div>
       
@@ -605,8 +606,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/Cpp-string用法笔记/" rel="prev" title="string用法笔记">
-                <i class="fa fa-chevron-left"></i> string用法笔记
+              <a href="/z_post/Caffe2-官方教程-IntroTutorial/" rel="prev" title="Caffe2官方教程(一)-Intro Tutorial">
+                <i class="fa fa-chevron-left"></i> Caffe2官方教程(一)-Intro Tutorial
               </a>
             
           </div>
@@ -615,8 +616,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/Caffe2-Detectron/" rel="next" title="【置顶】Detectron源码解析">
-                【置顶】Detectron源码解析 <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/计算机视觉-Relation-Network-CVPR2018/" rel="next" title="Relation-Network (CVPR, 2018)">
+                Relation-Network (CVPR, 2018) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -666,8 +667,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -686,7 +696,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">188</span>
+                    <span class="site-state-item-count">194</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -802,7 +812,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -857,6 +871,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#核心亮点"><span class="nav-text">核心亮点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
         <div class="back-to-top">
@@ -887,7 +917,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">852k</span>
+    <span title="站点总字数">986k</span>
   
 
   
@@ -896,7 +926,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">12:54</span>
+    <span title="站点阅读时长">14:57</span>
   
 </div>
 

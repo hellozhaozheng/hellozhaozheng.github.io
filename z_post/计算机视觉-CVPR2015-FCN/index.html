@@ -117,7 +117,7 @@
 <meta property="og:description" content="文章: Fully Convolutional Networks for Semantic Segmentation作者: Jonathan Long, Evan Shelhamer, Trevor Darrell 核心亮点全卷积网络: 只有最后一层是全连接层, 并且在针对 object detection 任务进行 fine-tuning 时, 会将该全连接层移除. (但是分类任务仍然需要这一层">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fwjeuyyn17j20s20kgn41.jpg">
-<meta property="og:updated_time" content="2018-10-25T06:02:22.836Z">
+<meta property="og:updated_time" content="2018-11-22T08:30:25.069Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FCN-CVPR2015">
 <meta name="twitter:description" content="文章: Fully Convolutional Networks for Semantic Segmentation作者: Jonathan Long, Evan Shelhamer, Trevor Darrell 核心亮点全卷积网络: 只有最后一层是全连接层, 并且在针对 object detection 任务进行 fine-tuning 时, 会将该全连接层移除. (但是分类任务仍然需要这一层">
@@ -246,7 +246,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">192</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">194</span></a>
   </li>
         
         
@@ -342,7 +342,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">33</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
   </li>
         
         
@@ -597,7 +597,7 @@
 <p>全卷积网络由于没有了全连接层的限制, 因此可以接受任意尺寸的输入, 并且生成相应的维度形状.<br>dFCN的一个real-valued损失函数定义了一个任务：如果损失函数是最后一层中spatial dimensions的总和 $\ell(x;\theta) = \sum_{ij}\ell’(x_{ij};\theta)$ ，那么它的梯度就会是它所有spatial components的梯度的总和。因此对于在整张图片上 $\ell$ 的sgd就是等于将最后一层所有感受野作为一个minibatch的$\ell’$的sgd。</p>
 <p>当这些感受野重合度非常大时，layer-by-layer方式的前向计算和反向计算相比于path-by-patch的方式，就变得十分高效。</p>
 <h3 id="Adapting-classifiers-for-dense-prediction"><a href="#Adapting-classifiers-for-dense-prediction" class="headerlink" title="Adapting classifiers for dense prediction"></a>Adapting classifiers for dense prediction</h3><p>大多数经典网络结构中都具有全连接层, 该层接受固定尺寸的输入, 同时会输出nonspatial outputs. 这使得全连接层的维度固定, 同时放弃了空间坐标(因为全连接都是一维的). 但是, 这些全连接层同样可以被看做是通过卷积核在整个输入区域上进行卷积操作的网络层. 可以将它们全部强制转换成全连接网络, 以便可以接受任意尺寸的输入, 同时输出对应的分类图谱(classifization maps). 该转换过程如图2所示</p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwjeuyyn17j20s20kgn41.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwjeuyyn17j20s20kgn41.jpg" alt=""></div></p>
 <p>最主要的是, 尽管最终生成的图谱和原始网络中的差不多, 但是由于大量的重叠区域, 会使得计算成本分摊, 降低计算量. 比如,</p>
 
       
@@ -724,7 +724,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">192</span>
+                    <span class="site-state-item-count">194</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -842,7 +842,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">33</span>
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -943,7 +945,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">935k</span>
+    <span title="站点总字数">986k</span>
   
 
   
@@ -952,7 +954,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">14:10</span>
+    <span title="站点阅读时长">14:57</span>
   
 </div>
 

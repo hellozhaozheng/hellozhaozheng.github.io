@@ -117,7 +117,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wx2.sinaimg.cn/mw1024/d7b90c85ly1fwdnxf13omj20k50jxaem.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/mw1024/d7b90c85ly1fwcf7vmr0rj20j20cddh1.jpg">
-<meta property="og:updated_time" content="2018-10-23T06:03:01.808Z">
+<meta property="og:updated_time" content="2018-11-22T08:30:41.097Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FPN-CVPR2017">
 <meta name="twitter:description" content="文章: Feature Pyramid Networks for Object Detectin作者: Tsung-Yi Lin, Piotr Dollar, Ross Girshick, Kaiming He, Bharath Hariharan, and Serge Belongie 核心亮点提出了多尺度的特征金字塔结构将最后一层特征图谱进行不断尽快上采样, 并与每一个金字塔阶级的特征图谱进行">
@@ -246,7 +246,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">192</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">194</span></a>
   </li>
         
         
@@ -342,7 +342,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">33</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
   </li>
         
         
@@ -579,12 +579,12 @@
 <h1 id="论文细节"><a href="#论文细节" class="headerlink" title="论文细节"></a>论文细节</h1><h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>在面对不同尺度的物体检测问题时, 特征金字塔结构是一个非常基本的组成部分, 但是最近的检测模型都舍弃了这一结构(Fast RCNN, Faster RCNN, YOLOv2等), 其一部分原因是因为这个结构对计算和内存的要求较高. 本文在控制资源消耗的情况下, 建立了一个跨所有层的特征金字塔结构网络, 达到了当时的STOA性能.</p>
 <p>传统的特征金字塔结构对于计算资源和内存资源的依赖较为严重, 同时深度卷积网络在不同阶段的卷积层, 虽然较好的传递了特征, 但是因为每一层的输出通道数不同, 会导致层与层之间形成一种潜在的语义鸿沟. 较高的分辨率好好具有更多的低级信息(在深层会被过滤掉), 但是多于的信息也会对降低泛化能力, 较低的分辨率则具有权重更高的重要信息, 但是这样也会使得小目标物体难以检测.</p>
 <h2 id="SSD与FPN中多尺度特征图谱融合的区别"><a href="#SSD与FPN中多尺度特征图谱融合的区别" class="headerlink" title="SSD与FPN中多尺度特征图谱融合的区别"></a>SSD与FPN中多尺度特征图谱融合的区别</h2><p>SSD算是首批结合多尺度特征金字塔的检测系统, 但是SSD为了避免用到过多的低级特征(高层卷积图谱上的特征), 放弃使用以及计算好的特征特普, 而是从网络的最后一层卷积层开始, 添加新的卷积层, 并在这些新添加的卷积层上进行特征金字塔融合. 这样做一个很直观的结果就是, 它会错过很多高分辨率特征图谱上的特征信息, 而这些特征信息在面对小物体检测时是十分有用的.(这也是SSD对小物体检测较为敏感的原因之一).</p>
-<p><img src="https://wx2.sinaimg.cn/mw1024/d7b90c85ly1fwdnxf13omj20k50jxaem.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/mw1024/d7b90c85ly1fwdnxf13omj20k50jxaem.jpg" alt=""></div></p>
 <h2 id="Feature-Pyramid-Networks"><a href="#Feature-Pyramid-Networks" class="headerlink" title="Feature Pyramid Networks"></a>Feature Pyramid Networks</h2><p>输入: 任意尺寸的单张图片(不进行尺度缩放)<br>输出: 以全卷积的方式在不同层次上输出对应的映射尺寸的特征图谱</p>
 <p>构建FPN包含以下步骤:</p>
 <p><strong>自下而上的路径:</strong> 该方式是根据backbone 卷积网络的前馈计算过程进行的. 特征图通常经过卷积计算后是会越来越小的, 也有一些特征层的输出和原来大小一样, 成为处于同一个网络阶段(“same network stage”). 对于本文, 将每一个”network stage”看做是一个金字塔级别. 然后选择每个阶段的最后一层作为特征图的参考集合(因为最深层理应具有最强的特征表示). 具体来说, 对于ResNets, 使用了每一个阶段的最后一个残差结构的特征激活输出, 将这些残差模块conv2, conv3, conv4, conv5 的输出表示为 $\{C_2, C_3, C_4, C_5\}$, 并且注意到他们相对于输入图像具有 $\{4,8,16,32\}$ 像素的步长.</p>
 <p><strong>自上而下的路径以及横向连接:</strong><br>自上而下的路径是通过在更粗糙, 但是语义更强的高层特征图(深层)上进行上采样来得到更高分辨率的图谱, 然后将这些上采样之后的feature map 与 自下而上(自浅而深)的特征图谱通过横向连接的方式拼接在一起.(横向连接的feature map的size是一样大的). 那些bottom-up frature map 具有较为低级的语义信息(低级是指抽象程度低), 但是这些图谱的位置精度更高, 因为它们经过的下采样次数更少. 下面的图3显示了构建top-down feature map的模块. 对于一个粗糙精度的特征图谱, 首先将其上采样至2倍(为了简单, 直接使用最近邻), 然后将上采样后的特征图谱与对应的自下而上的图谱进行按元素相加合并(合并前自下而上的图谱会将经过1×1卷积降低通道数). 这个过程会一直迭代, 知道最浅的卷积图谱也被合并为止. 在最开始的时候, 最深层的合并是使用1×1卷积来生成待合并的top-bottom feature map的.  最后, 会用3×3的卷积在所有合并后的特征图谱上进行卷积操作, 以此来得到最终的特征图谱(以此来消除上采样的混叠效应) $\{P_2, P_3, P_4, P_5\}$, 他们具有与$\{C_2, C_3, C_4, C_5\}$ 相同的大小.</p>
-<p><img src="https://wx3.sinaimg.cn/mw1024/d7b90c85ly1fwcf7vmr0rj20j20cddh1.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx3.sinaimg.cn/mw1024/d7b90c85ly1fwcf7vmr0rj20j20cddh1.jpg" alt=""></div></p>
 <p>由于所有层的金字塔卷积都是使用的共享的分类器和回归器, 因此文章固定了特征图谱的通道数量(256). 文章使用的是最简单的网络结构, 同时也存在其他更好的连接设计, 但本文的主要目的是探讨FPN的有效性, 因此没要尝试过多的连接组合.</p>
 <h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><p>FPN是一种用于在卷积网络内部建立特征金字塔的一般化的解决方案, 下面利用Faster RCNN来证明FPN的有效性.</p>
 <h3 id="Feature-Pyramid-Networks-for-RPN"><a href="#Feature-Pyramid-Networks-for-RPN" class="headerlink" title="Feature Pyramid Networks for RPN"></a>Feature Pyramid Networks for RPN</h3><p>RPN会在最后一层的特征图谱上, 利用 3×3 的卷积核, 生成同样大小的特征图谱, 然后在这个新的图谱上画anchor boxes, 并利用两个1×1的卷积核进行二分类和回归任务. 本文用FPN替换了RPN的3×3的卷积核, 然后依然使用两个1×1的卷积核进行二分类和回归任务. 同时, 因为FPN会结合前面的backone网络的所有卷积段, 因此, 对于每一个金字塔层, 只使用一个固定尺寸的anchors. 本文中, 对于$\{P_2, P_3, P_4, P_5\}$,其anchors的大小分别为 ${32^2, 64^2, 128^2, 256^2, 512^2}$, 每一层anchors的宽高比例为{1:2, 1:1, 2:1}, 因此, 总共具有15个anchors(对于每一个location而言)</p>
@@ -723,7 +723,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">192</span>
+                    <span class="site-state-item-count">194</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -841,7 +841,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">33</span>
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -942,7 +944,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">935k</span>
+    <span title="站点总字数">986k</span>
   
 
   
@@ -951,7 +953,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">14:10</span>
+    <span title="站点阅读时长">14:57</span>
   
 </div>
 

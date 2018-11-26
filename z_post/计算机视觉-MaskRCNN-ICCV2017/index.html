@@ -128,7 +128,7 @@
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fx2yz18aouj21i30bbdzk.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fx2zdx07m9j20s80dq19y.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fx314i2opdj20s80dq19y.jpg">
-<meta property="og:updated_time" content="2018-11-15T09:23:36.957Z">
+<meta property="og:updated_time" content="2018-11-22T08:30:55.004Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mask R-CNN (ICCV, 2017)">
 <meta name="twitter:description" content="文章: MaskRCNN作者: Kaiming He, Georgia Gkioxari, Piotr Dollar, Ross Girshick备注: FAIR, ICCV best paper 核心亮点1) 提出了一个简单,灵活,通用的实例分割模型框架MaskRCNN 在 FasterRCNN 的基础上进行改进, 在模型的head部分引入了一个新的mask预测分支, 在训练阶段, 该分支会与其">
@@ -257,7 +257,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">192</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">194</span></a>
   </li>
         
         
@@ -353,7 +353,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">33</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
   </li>
         
         
@@ -588,7 +588,7 @@
         <p><strong>文章:</strong> MaskRCNN<br><strong>作者:</strong> Kaiming He, Georgia Gkioxari, Piotr Dollar, Ross Girshick<br><strong>备注:</strong> FAIR, ICCV best paper</p>
 <h1 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h1><p><strong>1) 提出了一个简单,灵活,通用的实例分割模型框架</strong><br>MaskRCNN 在 FasterRCNN 的基础上进行改进, 在模型的head部分引入了一个新的mask预测分支, 在训练阶段, 该分支会与其他分支并行执行, 在测试阶段, 虽然不是并行执行, 但是利用 NMS 减少了需要计算的候选框个数, 因此 MaskRCNN 模型整体增加的额外开销较小.</p>
 <p><strong>2) 提出了RoI Align来解决 RoI 与 pooling后的特征图谱之间的不对齐问题</strong><br>Fast/FasterRCNN 原始的 RoIPool 操作在进行池化时, 会进行两次粗糙的量化操作, 这使得池化后的特征图谱与 RoI 中的信息不能很好的对其, 对于像素级任务实例分割来说, 这种非对齐会使得模型性能大大降低, 因此 MaskRCNN 提出用基于双线性插值法的 RoI Align 代替 RoI Pool, 以此来解决非对齐问题.</p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fx1toyw0xkj20kc0a5wkw.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fx1toyw0xkj20kc0a5wkw.jpg" alt=""></div></p>
 <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本文提出了一个简单, 灵活, 通用的目标实例分割框架. 本文的方法可以有效的检测图片中的物体, 同时为每个实例生成一个高质量的掩膜, 我们将其称为 Mask RCNN, 它是从 Faster RCNN扩展而来的, 添加了一个新的分支来并行预测物体掩膜. MaskRCNN可以轻易的进行训练, 并且相对于FasterRCNN只增加了很少的开销, 可以在5fps下运行. 不仅如此, MaskRCNN可以轻易的泛化到其他任务中, 如人体姿态识别. 本文的模型在COCO的三个系列任务都, 都取得了最好的效果.</p>
 <h1 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h1><p>本文意在提出一种通用的实例分割模型框架-MarkRCNN, 该模型扩展自FasterRCNN, 在FasterRCNN模型中的每一个RoI上, 添加一个与检测分支平行运行的掩膜预测分支, 如图1所示. 掩膜分支(mask branch) 是一个小型的FCN网络, 它应用在每一个RoI上, 以pixel-to-pixel的方式来预测一个分割掩膜. Mask RCNN易于实现, 且增加的额外开销很小, 并且具有很大的灵活性, 是一个通用的实例分割模型框架. 在FasterRCNN中使用的RoI pooling是一种针对目标检测任务的粗糙的pooling方法, 会造成一定程度上的不对齐结果, 为了克服这一点, 本文提出了RoIAlign, 用于保留准确的空间位置, RoIAlign可以将掩膜的精确度才提高10%~50%. 另外, 本文发现, 将二值掩膜预测和类别预测任务分开独立进行是非常重要的一步, 因此, 我们为每一个类别都会单独进行mask预测, 避免了不同类别之间的冲突. 这一点与FCN不同, FCN会对一个像素点进行多类别的分类.<br>我们的模型在GPU上的运行速度大约为200ms/frame, 在8-GPU的单机上训练时, 需要1到2天的时间.</p>
 <h1 id="Faster-RCNN"><a href="#Faster-RCNN" class="headerlink" title="Faster RCNN"></a>Faster RCNN</h1><p>简单回顾一下Faster RCNN, 它包含两个阶段, 第一个阶段, 是RPN结构, 用于生成候选框集合. 第二个阶段, 本质上就是一个Fast RCNN, 利用RoI pooling从RoI中提出固定尺寸的特征, 然后进行分类任务和边框回归任务. 这两个阶段使用的特征图谱是共享的, 都来自backbone网络.</p>
@@ -606,27 +606,27 @@
 <li>将候选区域分割成 $k\times k$ 个bins, 每个bins的边界也不做量化</li>
 <li>在每个bins中计算固定四个坐标的位置, 使用双线性插值的方法计算出这四个位置的值, 然后进行最大化操作.</li>
 </ul>
-<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fx1w5spug0j20s10am4az.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fx1w5spug0j20s10am4az.jpg" alt=""></div></p>
 <h1 id="网络结构-Network-Architecture"><a href="#网络结构-Network-Architecture" class="headerlink" title="网络结构(Network Architecture)"></a>网络结构(Network Architecture)</h1><p>为了说明本文方法的通用性, 我们利用多个模型结构初始化Mask RCNN. For clarity, we differentiate between: 1) 用于提取整个图片特征的backbone卷积结构, 2) 用于执行bounding-box recognition(cls,reg)任务和 mask prediction 任务的 network head.<br>我们将backbone architecture 命名为术语: network-depth-features. 我们测试了 50和101层的 ResNet, ResNeXt 网络. 原始的 FasterRCNN 在使用ReNets时, 利用的是第4段卷积块的最后一层卷积层的输出, 我们称为 C4. 这个backbone, 即 ResNet-50-C4 是很多模型中的一个常用的选择.<br>我们同时还使用了另一个更有效backbone—-Feature Pyramid Network(FPN). FasterRCNN和FPN在提取RoI feature的level上有所区别, 但是其余部分基本和ResNet相同. 使用 ResNet-FPN backbone 用于特征提取可以获得极大的性能提升(both acc and speed).<br>对于 network head, 我们根据之前的工作添加了一个全卷积的mask prediction 分支. Specifically, 我们将基于ResNet和FPN的 FasterRCNN 的 box heads进行扩展, 具体细节如图4所示. ResNet-C4 的 head 包含 ResNet 的第5个卷积块(即 9层的res5, 计算密集型). 对于FPN来说, 它的backbone就已经包含了res5, 因此可以具有效率更高的head(filers更少).<br>我们注意到本文的mask分支具有一个很简单的结构. 其他更加复杂设计将会在以后的工作的进一步提高模型的性能.</p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fx1wztcgzhj20yf0tob29.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fx1wztcgzhj20yf0tob29.jpg" alt=""></div></p>
 <h1 id="实现细节-Implementation-Details"><a href="#实现细节-Implementation-Details" class="headerlink" title="实现细节(Implementation Details)"></a>实现细节(Implementation Details)</h1><p>我们使用Faster RCNN原文提供的超参数.(无需调参也说明了MaskRCNN的鲁棒性很高)</p>
 <p><strong>Training:</strong> 和FastRCNN一样, 如果RoI与真实框的IOU大于0.5, 就会被认为是正样本, 否则认为是负样本(这里与FasterRCNN不同). $L_{mask}$ 只会计算正样本上的掩膜损失. mask target 是 RoI 和 真实mask之间的交集(注意不是直接根据真实mask计算损失). 我们使用 image-cengric (FastRCNN), 图片会被resized成scale(shorter edge) 为800 像素. minibatch为 2 img/GPU, 每个img含有N个sampled RoIs. 正负样本比例为 1:3. 对于 C4 backbone来说, N为 64, 对于FPN来说, N为512.(因为FPN效率更高, 所以可以在一张图片上计算更多的RoIs). 在8PGUs上训练(即有效minibatch为16). lr为0.02, 每120k 迭代(iteration)会缩小10倍. weight decay为0.0001, momentum为0.9. 在使用ResNeXt时, one img/GPU, lr初始为0.02, 其他相同.<br>FPN的anchor具有 5 scales 和 3 aspect ratios. 为了方便进行消融实验, RPN是被单独训练的, 并且没有与Mask RCNN共享了卷积特征(可共享, 只是为了方便没有共享). 对于本文中的每一项, RPN和MaskRCNN都具有相同的backbones.</p>
 <p><strong>Inference:</strong> 在测试阶段, proposal的数量为300 for C4 backbone, 1000 for FPN. 使用NMS选择了最高score的100个boxes, 对其应用mask branch, 虽然这里没有采用训练时的并行侧率, 但是它可以加速预测速度, 同时能够提高精度(因为只对更少的100个box使用了mask branch, 而训练阶段虽然是并行的, 但是进行mask branch的box更多一些). mask branch 可以对每个RoI预测出 $K$ 个maks, 但是我们只会使用第 $k$ 个mask来计算损失. 我们会将 $m\times m$ 的浮点类型的mask放缩到RoI的尺寸大小, 然后依据一个阈值(0.5)对mask的像素值进行二值化操作. 由于我们只对100个top score box执行mask branch , 因此在模型预测时, MaskRCNN相比于FasterRCNN, 只增加了很小的开销.</p>
 <h1 id="实验-实例分割-Instance-Segmentation"><a href="#实验-实例分割-Instance-Segmentation" class="headerlink" title="实验: 实例分割(Instance Segmentation)"></a>实验: 实例分割(Instance Segmentation)</h1><p>使用了 COCO 数据集, 采用 AP(averaged over IoU thresholds) 评价标准, $\text{AP}_{50}$, $\text{AP}_{75}$, $\text{AP}_{S}$, $\text{AP}_{M}$, $\text{AP}_{L}$.</p>
 <p>如表1所示, MarkRCNN 的性能超过 COCO2015 和 COCO2016的实例分割冠军 MNC 和 FCIS.(并且 MaskRCNN 没有使用 multi-scale train/test, horizontal flip test, OHEM 等 trick, 言外之意 MaskRCNN 的性能可以进一步利用这些 trick 提高)</p>
-<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fx2wm74k7ij21kw0d3njk.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fx2wm74k7ij21kw0d3njk.jpg" alt=""></div></p>
 <p>Table2 显示了对 MaskRCNN 的消融实验分析结果.</p>
-<p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx2wsrjbd5j21kw0mwqv5.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx2wsrjbd5j21kw0mwqv5.jpg" alt=""></div></p>
 <p>Table3 显示了 MaskRCNN 与当前的 state of art 的目标检测方法在 COCO 数据集上的表现.</p>
-<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fx2y7x5rotj21kw0mwu0x.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fx2y7x5rotj21kw0mwu0x.jpg" alt=""></div></p>
 <p><strong>MaskRCNN for Human Pose Estimation:</strong></p>
-<p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx2yy9ki30j20sw0ht7pe.jpg" alt=""></p>
-<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fx2yydz8o1j20sb0dgqgp.jpg" alt=""></p>
-<p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx2yyhmr1nj20ru07g3zz.jpg" alt=""></p>
-<h1 id="附录A-Experiments-on-Cityscapes"><a href="#附录A-Experiments-on-Cityscapes" class="headerlink" title="附录A: Experiments on Cityscapes"></a>附录A: Experiments on Cityscapes</h1><p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx2yz18aouj21i30bbdzk.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx2yy9ki30j20sw0ht7pe.jpg" alt=""></div></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fx2yydz8o1j20sb0dgqgp.jpg" alt=""></div></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx2yyhmr1nj20ru07g3zz.jpg" alt=""></div></p>
+<h1 id="附录A-Experiments-on-Cityscapes"><a href="#附录A-Experiments-on-Cityscapes" class="headerlink" title="附录A: Experiments on Cityscapes"></a>附录A: Experiments on Cityscapes</h1><p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx2yz18aouj21i30bbdzk.jpg" alt=""></div></p>
 <h1 id="附录B-Enhanced-Results-on-COCO"><a href="#附录B-Enhanced-Results-on-COCO" class="headerlink" title="附录B: Enhanced Results on COCO"></a>附录B: Enhanced Results on COCO</h1><p>下表显示了 MarkRCNN 被各种 trick 增益后的性能表现</p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fx2zdx07m9j20s80dq19y.jpg" alt=""></p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fx314i2opdj20s80dq19y.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fx2zdx07m9j20s80dq19y.jpg" alt=""></div></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fx314i2opdj20s80dq19y.jpg" alt=""></div></p>
 
       
     </div>
@@ -662,8 +662,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/计算机视觉-ICCV2015-FastRCNN/" rel="prev" title="FastRCNN-ICCV2015">
-                <i class="fa fa-chevron-left"></i> FastRCNN-ICCV2015
+              <a href="/z_post/TensorFlow-读书笔记-TF实战/" rel="prev" title="《TensorFlow实战》">
+                <i class="fa fa-chevron-left"></i> 《TensorFlow实战》
               </a>
             
           </div>
@@ -752,7 +752,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">192</span>
+                    <span class="site-state-item-count">194</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -870,7 +870,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">33</span>
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -971,7 +973,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">935k</span>
+    <span title="站点总字数">986k</span>
   
 
   
@@ -980,7 +982,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">14:10</span>
+    <span title="站点阅读时长">14:57</span>
   
 </div>
 

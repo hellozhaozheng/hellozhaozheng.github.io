@@ -120,7 +120,7 @@
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn6q3t8hfj20j01x2qcf.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn98ano6mj20ps0f5778.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn6do3nmnj20un08y75k.jpg">
-<meta property="og:updated_time" content="2018-11-20T07:56:09.861Z">
+<meta property="og:updated_time" content="2018-11-22T08:30:47.134Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Inception V1 (GoogLeNet)">
 <meta name="twitter:description" content="文章: Going Deeper with Convolutions作者: Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, Andrew Rabinovich备注: Google, Inception">
@@ -249,7 +249,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">192</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">194</span></a>
   </li>
         
         
@@ -345,7 +345,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">33</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
   </li>
         
         
@@ -595,12 +595,12 @@
 <p>由于pooling层的重要性，本文才采用了pooling层。</p>
 <p>将上面的Inception模块叠加起来，形成一个整体的模型。</p>
 <p>但是直接叠加会使得向量维度剧增，因此，通过1×1卷积来控制维度。</p>
-<p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn6do3nmnj20un08y75k.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn6do3nmnj20un08y75k.jpg" alt=""></div></p>
 <p>当max pooling层的stride为1时，并不会缩小输出的feature map的size，只会影响depth的值。</p>
 <p>关于此结构的一个好处在于它可以提高神经元的个数，同时避免网络不受控制的提升计算机复杂度。</p>
-<h1 id="GooLeNet-Inception-V1"><a href="#GooLeNet-Inception-V1" class="headerlink" title="GooLeNet(Inception V1)"></a>GooLeNet(Inception V1)</h1><p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn6q3t8hfj20j01x2qcf.jpg" alt=""></p>
+<h1 id="GooLeNet-Inception-V1"><a href="#GooLeNet-Inception-V1" class="headerlink" title="GooLeNet(Inception V1)"></a>GooLeNet(Inception V1)</h1><p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn6q3t8hfj20j01x2qcf.jpg" alt=""></div></p>
 <p>GoogLeNet(也叫做Inception V1)的网络结构图细节如下：</p>
-<p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn98ano6mj20ps0f5778.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn98ano6mj20ps0f5778.jpg" alt=""></div></p>
 <p>GoogLeNet网络结构明细表解析如下：</p>
 <p>0、输入</p>
 <p>原始输入图像为224x224x3，且都进行了零均值化的预处理操作（图像每个像素减去均值）。</p>
@@ -625,7 +625,7 @@
 <h1 id="要点整理"><a href="#要点整理" class="headerlink" title="要点整理"></a>要点整理</h1><h1 id="说明一下GoogLeNet采用多个卷积核的动机"><a href="#说明一下GoogLeNet采用多个卷积核的动机" class="headerlink" title="说明一下GoogLeNet采用多个卷积核的动机"></a>说明一下GoogLeNet采用多个卷积核的动机</h1><p>NIN网络和Inception Module这类结构非常看中模型在局部区域的拟合能力。它们认为：一张图像通常具有总体特征和细节特征这两类特征，一般小卷积核能够更好的捕捉一些细节特征，随着深层网络的小卷积不断计算下去，总体特征也会慢慢的被提炼出来，但是这样存在一个问题，那就是在如果只采用小卷积，那么网络结构的前段一般只有细节特征，后段才慢慢有一些总体特征，而我们希望这两方面的特征总是能够一起发挥作用，因此，上面的两种模型考虑采用更多不同尺寸的卷积核来提取特征，并把这些特征连接起来，一起送到后面的网络中去计算，使得网络可以获取到更多的特征信息。</p>
 <p>Inception模块还采用了一个stride为1的max pooling层，它的主要功能是减少空间大小，降低过拟合风险（只选最大值，所以值的范围变少了）。</p>
 <h1 id="Inception中为什么使用1×1卷积？"><a href="#Inception中为什么使用1×1卷积？" class="headerlink" title="Inception中为什么使用1×1卷积？"></a>Inception中为什么使用1×1卷积？</h1><p>关于Inception Module，有一种很直接的做法就是将1×1,3×3,5×5卷积和3×3 max pooling直接连接起来，如下面的左图所示，但是这样的话就有个问题，那就是计算量增长太快了。</p>
-<p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn6do3nmnj20un08y75k.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvn6do3nmnj20un08y75k.jpg" alt=""></div></p>
 <p>为了解决这个问题，文章在3×3和5×5的卷积之前，3×3max pooling之后使用了1×1卷积，使其输出的feature map的depth降低了，从而达到了降维的效果，抑制的过快增长的计算量。</p>
 <h1 id="1×1卷积的作用是什么？"><a href="#1×1卷积的作用是什么？" class="headerlink" title="1×1卷积的作用是什么？"></a>1×1卷积的作用是什么？</h1><p>1x1卷积的主要目的是为了减少维度，还用于修正线性激活（ReLU）。比如，上一层的输出为 100x100x128，经过具有256个通道的5x5卷积层之后(stride=1，pad=2)，输出数据为100x100x256，其中，卷积层的参数为128x5x5x256= 819200。而假如上一层输出先经过具有32个通道的1x1卷积层，再经过具有256个输出的5x5卷积层，那么输出数据仍为为100x100x256，但卷积参数量已经减少为128x1x1x32 + 32x5x5x256= 204800，大约减少了4倍</p>
 <p><strong>1×1的卷积核，在一定程度上可以实现全连接层：</strong></p>
@@ -764,7 +764,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">192</span>
+                    <span class="site-state-item-count">194</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -882,7 +882,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">33</span>
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -983,7 +985,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">935k</span>
+    <span title="站点总字数">986k</span>
   
 
   
@@ -992,7 +994,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">14:10</span>
+    <span title="站点阅读时长">14:57</span>
   
 </div>
 

@@ -126,7 +126,7 @@
 <meta property="og:image" content="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw5i3k7yjzj20ws0rp43x.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fw5if40q6lj20vw1fu163.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw5ifyu74ij20x00ql47d.jpg">
-<meta property="og:updated_time" content="2018-10-22T09:56:11.091Z">
+<meta property="og:updated_time" content="2018-11-22T08:30:46.393Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OverFeat-ICLR2014">
 <meta name="twitter:description" content="文章: OverFeat: Integrated Recognition, Localization and Detectin using Convolutional Networks 作者: 核心亮点Multi-Scale Classification:在分类任务上, 虽然训练时采用和AlexNet相同的multi crop方法, 但是在预测阶段没有使用AlexNet的crop投票策略, 而是提">
@@ -255,7 +255,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">192</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">194</span></a>
   </li>
         
         
@@ -351,7 +351,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">33</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
   </li>
         
         
@@ -605,16 +605,16 @@
 <p>学习率: $5\times 10^{-2}$, 每经过(30,50,60,70,80)epochs时, 衰减1/2.</p>
 <p>Dropout: 0.5(用于6,7层的全连接)</p>
 <p>模型结果细节图:</p>
-<p><img src="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fw5dt28gbnj20wi0e3aet.jpg" alt=""></p>
-<p><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw5dx6jm9ej20vr0an408.jpg" alt=""></p>
-<p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fw5e0t8ilxj20r006w3z5.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fw5dt28gbnj20wi0e3aet.jpg" alt=""></div></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw5dx6jm9ej20vr0an408.jpg" alt=""></div></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fw5e0t8ilxj20r006w3z5.jpg" alt=""></div></p>
 <h3 id="3-2-Feature-Extractor"><a href="#3-2-Feature-Extractor" class="headerlink" title="3.2 Feature Extractor"></a>3.2 Feature Extractor</h3><p>根据本文的方法, 开源了一个名为”OverFeat”的Feature Extractor, 有两个版本, 分别是精度优先和速度优先. 模型结构以及他们之间的比较都在上面两张图中显示.</p>
 <h3 id="3-3-Multi-Scale-Classificaion"><a href="#3-3-Multi-Scale-Classificaion" class="headerlink" title="3.3 Multi-Scale Classificaion"></a>3.3 Multi-Scale Classificaion</h3><p><strong>在测试阶段</strong>, 之前的Alex-Net中, 使用了multi-view投票来提升性能(一张图片crop出10个子图, 分别为四角和中心,以及他们的反转图片). 但是这个方法有一些问题: 忽视了图片中的很多区域, 并且计算存在冗余重复, 同时, 生成子图的操作都是在同一尺度上进行的, 这有时候不是最佳的尺度选择策略.</p>
 <p>与此相反, <strong>本文提出对整个图片以不同的尺寸, 并且对每一个location进行模型预测</strong> , 虽然这种滑动窗口的方法在计算上是不可取的, 但是, 结合下面的3.5节中的策略, 可以缓解计算复杂问题.</p>
 <p><strong>上面方法的好处:</strong> 可以对同一张图片生成更多不同角度下的预测结果, 并将结果用于投票, 使得最终结果更鲁棒.</p>
 <p><strong>但是存在问题:</strong> 上面提到的subsampling方法的比例为 2×3×2×3, 也就是36. 这样一来, 模型在只能依赖36个像素点来生成分类向量. 这样粗粒度的分布使得模型的性能表现低于10-view方法.  主要原因是因为网络窗口没有和图片中的物体边界对齐. 于是本文提出了一种方法来克服这个问题, 对最后一个subsampling在不同的offset上进行pooling, 这样做可以缓解这一层的loss of resolution问题, 生成的总的subsampling比例为12, 而不是36. //TODO 这一段啥意思?, 36怎么来的, 12怎么来</p>
 <p>下来解释具体是如何进行resolution augmentation的, 本文对于同一张图片, 使用了6种不同的尺寸, 如下图所示(C为类别):</p>
-<p><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw5f5me3b3j20t608o0ub.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw5f5me3b3j20t608o0ub.jpg" alt=""></div></p>
 <p>具体过程如下:</p>
 <ol>
 <li>对于一个给定的scale的图片,  我们从第5层, 还未pooling的特征图谱开始</li>
@@ -624,25 +624,26 @@
 <li>根据不同的offset, 可以得到不同的结果</li>
 </ol>
 <p>下面的图以一维向量为例讲解了offset pooling的原理, 可以类推到3维结构中</p>
-<p><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw5g21ruxgj20vu0g0gox.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw5g21ruxgj20vu0g0gox.jpg" alt=""></div></p>
 <p>上面的操作可以看做是以一个像素为单位, 在特征图谱上进行了位移操作, 进而得到了不同角度下的图谱结果用于分类, 与之前的crop方法相比, 这个方法没有对图片进行裁剪, 但同时又达到了获取同一张图片不同视角结果的目的. 这样做最大的优点在于: <strong>对于一张图片, 可以宏观的将网络分成两个部分, 分别是特征提取层和分类层, 在特征提取部分, 同一张图片只会进行一次前向计算, 在这计算角度来说, 大大提高了计算效率, 减少了荣冗余计算.</strong></p>
 <p>这种极致的pooling策略(exhaustive pooling scheme) 确保了我们可以在分类器和特征图的对象之间获得准确的边界对齐.</p>
 <h3 id="3-4-结果"><a href="#3-4-结果" class="headerlink" title="3.4 结果"></a>3.4 结果</h3><p>实验结果如下表所示:</p>
-<p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fw5h2ottzhj20vz0d0whr.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fw5h2ottzhj20vz0d0whr.jpg" alt=""></div></p>
 <p>分类错误率在18个队伍中的排名为第5 (主要本篇文章的两点也不在分类, 还是在目标检测上)</p>
 <h3 id="3-5-convNets和滑动窗口效率"><a href="#3-5-convNets和滑动窗口效率" class="headerlink" title="3.5 convNets和滑动窗口效率"></a>3.5 convNets和滑动窗口效率</h3><p> 首先, 要知道全卷积与全连接层之间的关系, 利用全卷积层代替全连接层以后, 可以接受不同图片尺寸的输入, 同时, 在计算时, 由于卷积操作本身的计算共享特性, 可以使得计算过程更加高效, 以此来缓解滑动窗口方法带来的计算问题.</p>
-<p><img src="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fw5hncxz5yj20vz0lmtip.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fw5hncxz5yj20vz0lmtip.jpg" alt=""></div></p>
 <p>// TODO  这块还是不是很懂</p>
 <h2 id="4-定位-Localization"><a href="#4-定位-Localization" class="headerlink" title="4. 定位 Localization"></a>4. 定位 Localization</h2><p>用回归网络代替分类网络, 同时训练网络使其在每一个空间location和scale下预测目标物体的bounding boxes.  然后将回归预测结果与每个位置的分类结果结合在一起.</p>
 <h3 id="4-1-生成预测"><a href="#4-1-生成预测" class="headerlink" title="4.1 生成预测"></a>4.1 生成预测</h3><p>由于可以共享特征提取层的计算结果, 因此只需要重新计算最终的回归层即可. 因为每个位置的分类结果为所有的类别都赋予了一个置信度, 因此, 我们可以将这个置信度作为bounding box的置信度使用.</p>
 <h3 id="4-2-回归训练-Regressor-Training"><a href="#4-2-回归训练-Regressor-Training" class="headerlink" title="4.2 回归训练 Regressor Training"></a>4.2 回归训练 Regressor Training</h3><p>回归网络将第5层的池化后的特征图谱作为输入. 后面接入两个全连接层, 隐藏神经元个数分别为4096和1024. 最终的输出层具有4个神经元, 用于指定bounding box的坐标. 和分类网络一样, 也是用了基于offset的pooling策略.  该网络的结构如下图所示</p>
-<p><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw5i3k7yjzj20ws0rp43x.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw5i3k7yjzj20ws0rp43x.jpg" alt=""></div></p>
 <p>训练时, 固定前5层的特征提取层, 然后使用每个样本的真实边界与预测边界之间的L2损失(平方损失)来训练回归网络. 最后的这个回归层根据与特定类相关的, 每一个类都会有一个回归层(也就是说有1000个不同的回归层版本).</p>
 <p>当输入图片与目标物体的IOU小于50%时, 则不会进行训练</p>
 <p>同时使用了多尺度的输入进行训练(与第三节相同), 以便更好的进行不同尺度下的预测.</p>
 <h3 id="4-3-联合预测"><a href="#4-3-联合预测" class="headerlink" title="4.3 联合预测"></a>4.3 联合预测</h3><p>通过对回归得到的bounding boxes使用贪心融合策略, 来得到单个目标物的预测结果. 具体算法过程如下:</p>
-<p>1.<br><img src="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fw5if40q6lj20vw1fu163.jpg" alt=""></p>
-<p><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw5ifyu74ij20x00ql47d.jpg" alt=""></p>
+<p>1.</p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fw5if40q6lj20vw1fu163.jpg" alt=""></div></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw5ifyu74ij20x00ql47d.jpg" alt=""></div></p>
 
       
     </div>
@@ -766,7 +767,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">192</span>
+                    <span class="site-state-item-count">194</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -884,7 +885,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">33</span>
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -985,7 +988,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">935k</span>
+    <span title="站点总字数">986k</span>
   
 
   
@@ -994,7 +997,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">14:10</span>
+    <span title="站点阅读时长">14:57</span>
   
 </div>
 

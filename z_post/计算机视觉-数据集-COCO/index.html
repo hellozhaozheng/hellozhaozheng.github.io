@@ -118,7 +118,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw1024/d7b90c85ly1fwcngpaj5nj20s60lv405.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/mw1024/d7b90c85ly1fwcnkqsfkxj20rs0au0tk.jpg">
-<meta property="og:updated_time" content="2018-11-10T05:28:11.593Z">
+<meta property="og:updated_time" content="2018-11-22T08:31:03.143Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MicroSoft COCO数据集">
 <meta name="twitter:description" content="评价标准COCO数据集介绍COCO数据集具有5种标签类型, 分别为: 目标检测, 关键点检测, 物体分割, 多边形分割 以及 图像描述. 这些标注数据使用JSON格式存储. 所有文件除了标签项以外都共享同样的数据结构, 如下所示:  标签结构各有不同, 如下所示: Object Detection每一个目标实例的标签都具有一系列条目, 包括该目标的类别id以及分割掩膜(segmentation m">
@@ -247,7 +247,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">192</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">194</span></a>
   </li>
         
         
@@ -343,7 +343,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">33</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
   </li>
         
         
@@ -576,11 +576,11 @@
 
       
         <h1 id="评价标准"><a href="#评价标准" class="headerlink" title="评价标准"></a>评价标准</h1><h1 id="COCO数据集介绍"><a href="#COCO数据集介绍" class="headerlink" title="COCO数据集介绍"></a>COCO数据集介绍</h1><p>COCO数据集具有5种标签类型, 分别为: 目标检测, 关键点检测, 物体分割, 多边形分割 以及 图像描述. 这些标注数据使用<code>JSON</code>格式存储. 所有文件除了标签项以外都共享同样的数据结构, 如下所示:</p>
-<p><img src="https://wx1.sinaimg.cn/mw1024/d7b90c85ly1fwcngpaj5nj20s60lv405.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/mw1024/d7b90c85ly1fwcngpaj5nj20s60lv405.jpg" alt=""></div></p>
 <p>标签结构各有不同, 如下所示:</p>
 <h2 id="Object-Detection"><a href="#Object-Detection" class="headerlink" title="Object Detection"></a>Object Detection</h2><p>每一个目标实例的标签都具有一系列条目, 包括该目标的类别id以及分割掩膜(segmentation mask). 分割掩膜的格式取决于实例表示的是一个单一的目标(iscrowd=0, 使用polygons标注)还是一群目标(iscrowd=1, 使用RLE标注). 注意, 一个单一的物体(iscrowd=0)在被遮挡的情况下, 可能会需要多个多边形来表示. Crowd标签用来标注一大群目标(如一群人). 另外, 每一个物体都会提供一个闭合的bounding box( box的坐标系从图左上角开始,0-indexed). 最后, 标注结构的类别条目存储着从cat id 到类别的映射以及超类别的名字.</p>
 <h2 id="关键点检测"><a href="#关键点检测" class="headerlink" title="关键点检测"></a>关键点检测</h2><h2 id="Stuff-Segmentation"><a href="#Stuff-Segmentation" class="headerlink" title="Stuff Segmentation"></a>Stuff Segmentation</h2><p>Stuff Segmentation的格式和object detection的格式几乎一模一样, 但是stuff segmentation无需<code>iscrowd</code>条目, 因为该条默认置为0. 为了方便访问, coco提供了json和png两种标注格式. 在 json 格式中, <strong>每一个出现在图片中的类别都会单独用一个RLE标签条目编码</strong>(也就是说同类的会被放到同一个RLE编码里面). category_id 则代表当前的物体类别的id.</p>
-<h2 id="Panoptic-Segmentation"><a href="#Panoptic-Segmentation" class="headerlink" title="Panoptic Segmentation"></a>Panoptic Segmentation</h2><p><img src="https://wx4.sinaimg.cn/mw1024/d7b90c85ly1fwcnkqsfkxj20rs0au0tk.jpg" alt=""></p>
+<h2 id="Panoptic-Segmentation"><a href="#Panoptic-Segmentation" class="headerlink" title="Panoptic Segmentation"></a>Panoptic Segmentation</h2><p><div style="width: 600px; margin: auto"><img src="https://wx4.sinaimg.cn/mw1024/d7b90c85ly1fwcnkqsfkxj20rs0au0tk.jpg" alt=""></div></p>
 <h2 id="数据集信息"><a href="#数据集信息" class="headerlink" title="数据集信息"></a>数据集信息</h2><h2 id="标注格式"><a href="#标注格式" class="headerlink" title="标注格式"></a>标注格式</h2><h1 id="COCO-API-使用方法及源码解析"><a href="#COCO-API-使用方法及源码解析" class="headerlink" title="COCO-API 使用方法及源码解析"></a>COCO-API 使用方法及源码解析</h1><p>最常用的是 <code>pycocotools/coco.py</code> 文件中的<code>COCO</code>类, 其内部实现如下:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pycocotools/coco.py</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 首先, 是一大串的注释</span></span><br><span class="line"><span class="comment"># COCO API提供了一系列的辅助函数来帮助载入,解析以及可视化COCO数据集的annotations</span></span><br><span class="line"><span class="comment"># 该文件定义了如下API 函数:</span></span><br><span class="line"><span class="comment"># COCO        - COCO api 类, 用于载入coco的annotation 文件, 同时负责准备对应数据结构来存储</span></span><br><span class="line"><span class="comment"># decodeMask  - 通过rle编码规范, 来对二值mask M进行解码</span></span><br><span class="line"><span class="comment"># encodeMask  - 使用rle编码规范来对二值mak M进行编码</span></span><br><span class="line"><span class="comment"># getAnnIds   - 获得满足给定过滤条件的ann ids(标注)</span></span><br><span class="line"><span class="comment"># getCatIds   - 获得满足给定过滤条件的cat ids(类别)</span></span><br><span class="line"><span class="comment"># getImgIds   - 获得满足给定过滤条件的img ids(图片)</span></span><br><span class="line"><span class="comment"># loadAnns    - 根据指定的ids加载anns</span></span><br><span class="line"><span class="comment"># loadCats    - 根据指定的ids加载cats</span></span><br><span class="line"><span class="comment"># loadImgs    - 根据指定的ids加载imgs</span></span><br><span class="line"><span class="comment"># annToMask   - 将annotation里面的segmentation信息转换成二值mask</span></span><br><span class="line"><span class="comment"># showAnns    - 可视化指定的annotations</span></span><br><span class="line"><span class="comment"># loadRes     - 加载算法结果同时创建API以便访问它们</span></span><br><span class="line"><span class="comment"># download    - 从Mscoco.org.server上下载COCO数据集</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 接下来, 具体看一下COCO类的实现</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">COCO</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, annotation_file=None)</span>:</span></span><br><span class="line">        <span class="comment"># 构造函数</span></span><br><span class="line">        <span class="comment"># 参数annotation_file: 指定了annotation文件的位置</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># dataset, anns, cats, imgs均为字典类型数据</span></span><br><span class="line">        self.dataset, self.anns, self.cats, self.imgs = dict(), dict(), dict(), dict()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># imgToAnns, catToImgs均为defaultdict数据类型(带有默认值的字典)</span></span><br><span class="line">        self.imgToAnns, self.catToImgs = defaultdict(list), defaultdict(list)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> annotation_file == <span class="keyword">None</span>:</span><br><span class="line">            <span class="comment">#...</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 以只读方式加载json标注文件</span></span><br><span class="line">            dataset = json.load(open(annotation_file, <span class="string">'r'</span>))</span><br><span class="line">            <span class="keyword">assert</span> type(dataset)==dict <span class="comment"># 确保读出来的是字典类型</span></span><br><span class="line">            <span class="comment">#...</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 正式将读取的字典数据赋给该类的成员变量</span></span><br><span class="line">            self.dataset = dataset</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 创建索引</span></span><br><span class="line">            self.createIndex()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">createIndex</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># 创建索引</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 三个都是字典数据类型</span></span><br><span class="line">        anns,cats,imgs=&#123;&#125;,&#123;&#125;,&#123;&#125;</span><br><span class="line">        <span class="comment"># 两个defaultdict数据类型</span></span><br><span class="line">        imgToAnns, catToImgs = defaultdict(list), defaultdict(list)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">'annotations'</span> <span class="keyword">in</span> self.dataset:</span><br><span class="line">            <span class="keyword">for</span> ann <span class="keyword">in</span> self.dataset[<span class="string">'annotations'</span>]:</span><br></pre></td></tr></table></figure></p>
 
       
@@ -615,8 +615,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/计算机视觉-数据集-VOC/" rel="prev" title="PASCAL VOC数据集">
-                <i class="fa fa-chevron-left"></i> PASCAL VOC数据集
+              <a href="/z_post/PyTorch-官方教程-FineTuningModels/" rel="prev" title="PyTorch官方教程-FineTuning Torchvision Models">
+                <i class="fa fa-chevron-left"></i> PyTorch官方教程-FineTuning Torchvision Models
               </a>
             
           </div>
@@ -625,8 +625,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/面试-面试题杂记/" rel="next" title="算法题杂记">
-                算法题杂记 <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/计算机视觉-数据集-VOC/" rel="next" title="PASCAL VOC数据集">
+                PASCAL VOC数据集 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -705,7 +705,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">192</span>
+                    <span class="site-state-item-count">194</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -823,7 +823,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">33</span>
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -924,7 +926,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">935k</span>
+    <span title="站点总字数">986k</span>
   
 
   
@@ -933,7 +935,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">14:10</span>
+    <span title="站点阅读时长">14:57</span>
   
 </div>
 

@@ -108,24 +108,28 @@
 
 
 
-  <meta name="description" content="并不是什么厉害的地方只是一个安静的学习角落">
+  <meta name="description" content="文章: Relation Networks for Object Detection作者: Han Hu1, Jiayuan Gu, Zheng Zhang, Jifeng Dai1, Yichen Wei备注: MSRA, Peking University, Oral Paper 摘要尽管长久以来, 人们都任务对图像中物体之间的关系进行建模可以提升目标检测模型的精度, 但是, 就目前而言, 所">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Cpp-STL之vector">
-<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Cpp-STL之vector/index.html">
+<meta property="og:title" content="Relation-Network (CVPR, 2018)">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-Relation-Network-CVPR2018/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="并不是什么厉害的地方只是一个安静的学习角落">
+<meta property="og:description" content="文章: Relation Networks for Object Detection作者: Han Hu1, Jiayuan Gu, Zheng Zhang, Jifeng Dai1, Yichen Wei备注: MSRA, Peking University, Oral Paper 摘要尽管长久以来, 人们都任务对图像中物体之间的关系进行建模可以提升目标检测模型的精度, 但是, 就目前而言, 所">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-13T04:35:08.284Z">
+<meta property="og:image" content="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fxi1bla0fnj20zm0l4n4x.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fxi1c5q4a2j20s40jfgqs.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fxi1cievh3j20rw0i4jtt.jpg">
+<meta property="og:updated_time" content="2018-11-24T06:39:43.201Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Cpp-STL之vector">
-<meta name="twitter:description" content="并不是什么厉害的地方只是一个安静的学习角落">
+<meta name="twitter:title" content="Relation-Network (CVPR, 2018)">
+<meta name="twitter:description" content="文章: Relation Networks for Object Detection作者: Han Hu1, Jiayuan Gu, Zheng Zhang, Jifeng Dai1, Yichen Wei备注: MSRA, Peking University, Oral Paper 摘要尽管长久以来, 人们都任务对图像中物体之间的关系进行建模可以提升目标检测模型的精度, 但是, 就目前而言, 所">
+<meta name="twitter:image" content="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fxi1bla0fnj20zm0l4n4x.jpg">
 
 
 
 
 
 
-  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/Cpp-STL之vector/"/>
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/计算机视觉-Relation-Network-CVPR2018/"/>
 
 
 
@@ -135,7 +139,7 @@
   };
 </script>
 
-  <title>Cpp-STL之vector | 从零开始的BLOG</title>
+  <title>Relation-Network (CVPR, 2018) | 从零开始的BLOG</title>
   
 
 
@@ -243,7 +247,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">188</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">194</span></a>
   </li>
         
         
@@ -339,7 +343,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">32</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
   </li>
         
         
@@ -440,7 +444,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/Cpp-STL之vector/">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/计算机视觉-Relation-Network-CVPR2018/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZeroZone">
@@ -457,7 +461,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Cpp-STL之vector
+          <h1 class="post-title" itemprop="name headline">Relation-Network (CVPR, 2018)
               
             
           </h1>
@@ -483,7 +487,7 @@
                 
               
 
-              <time title="创建时间：2018-11-13 12:35:08" itemprop="dateCreated datePublished" datetime="2018-11-13T12:35:08+08:00">2018-11-13</time>
+              <time title="创建时间：2018-11-22 16:34:24" itemprop="dateCreated datePublished" datetime="2018-11-22T16:34:24+08:00">2018-11-22</time>
             
 
             
@@ -501,7 +505,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/其它/" itemprop="url" rel="index"><span itemprop="name">其它</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/计算机视觉/" itemprop="url" rel="index"><span itemprop="name">计算机视觉</span></a></span>
 
                 
                 
@@ -537,7 +541,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">0</span>
+                <span title="本文字数">4k</span>
               
 
               
@@ -551,7 +555,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">4 分钟</span>
               
             </div>
           
@@ -571,7 +575,49 @@
       
 
       
-        
+        <p><strong>文章:</strong> Relation Networks for Object Detection<br><strong>作者:</strong> Han Hu1, Jiayuan Gu, Zheng Zhang, Jifeng Dai1, Yichen Wei<br><strong>备注:</strong> MSRA, Peking University, Oral Paper</p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>尽管长久以来, 人们都任务对图像中物体之间的关系进行建模可以提升目标检测模型的精度, 但是, 就目前而言, <strong>所有先进的</strong> 目标检测模型都是将物体作为一个独立的个体进行检测的, 并没有在学习的过程中利用到它们之间的关系(Relations).<br>本文提出了一个物体关系模型, 它会通过物体之间的特征和纹理来 <strong>同时</strong> 处理一系列物体之间的关系, 因此允许对这些关系进行建模. 本文提出的方法是轻量级的, 无需额外的监督信息, 并且可以很容易嵌入到现有的模型当中. 在现代的目标检测流水线当中, 本文的方法对于目标识别和去除重复步骤的改进是有效的, 验证了在基于CNN的检测模型中对物体关系建模的有效性. <strong>本文的模型是收个完全的端到端的目标检测模型.</strong></p>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>近年来, 基于深度学习的目标检测取得了很多成功, 但是, 依然没能够利用到物体之间的相关关系信息, 其中一个难点在于目前的检测模型都比较简单, 无法对复杂度物体关系进行建模.<br>本文的方法受到了自然语言处理中 attention 模型的启发, attention 模型中一个元素可以被某个集合的元素的累积权重所影响. 这个累积权重是在模型学习的过程当中学习到的, 近年来, attention 模型在图像描述领域也得到了许多成功应用.<br>在本文中, 我们首次提出了适用于目标检测任务的自适应的 attention 模型. 该模型建立与一个基本的 attention 模型, 不同之处在于其主要元素不再是 words, 而是 objects. 物体(objects)具有2D的空间布局, 并且具有不同的 scale 和 aspect ratio, 这些信息相对于一维的 words 来说更加复杂. 因此, 本文提出的模型会将原来的 attention 权重扩展成两部分: 原始的权重和一个新的几何(geometric)权重. 后者会对物体间的空间关系进行建模, 并且仅仅考虑它们之间的相对几何关系, 使得整个模型具有平移不变性—-这正是物体识别期望的一个性质( <strong>物体检测希望的是平移可变性, 这里会不会有些问题?</strong> ). 通过实验证明, 这里新添加的几何权重(geometric weights) 是非常重要的.<br>本文的模型称为 <code>object relation module</code>, 它和 attention 模型具有相同的优点. 它会接受多个输入, 并且以并行的方式进行处理(相对于序列模型的串行), 并且使可导和 in-place(输入输出的维度相同) 的, 因此, 本文提出的模型可以作为一个基本的 building block 灵活的嵌入到现有的各个模型当中去.<br>如图1所示, 我们可以将 relation module 嵌入到现有的模型当中去, 来提升 instance recognition step, 同时 duplicate removal step.</p>
+<p><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fxi1bla0fnj20zm0l4n4x.jpg" alt=""></p>
+<p>从原理上来说, 我们的方法与目前的大部分检测方法都不相同, 并且可以弥补目标的许多检测方法. 本文的方法采用了一个新的维度: 一系列的物体在被处理时, 会同时对其他物体的识别产生影响, 而不是将每个物体单独识别.</p>
+<h1 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h1><p><strong>Object Relation in post-processing:</strong> 这些方法在 pre-DP 时代取得了不错的效果, 但是在 deep ConvNets 时代却没能表现出其有效性.</p>
+<p><strong>Sequential relation modeling:</strong> LSTM. 在目标检测任务中, 有方法建议令先找到的物体会帮助寻找下一个物体, 但是没能证明该方法的有效性.</p>
+<p><strong>Human centered scenarios:</strong> 关注与人相关的关系检测, 但是需要额外的监督标签.</p>
+<p><strong>Duplicate removal:</strong> 去重, NMS, GossipNet(learn duplicate removal),</p>
+<p><strong>Attention modules in NLP and physical system modeling:</strong> Attention Module.</p>
+<h1 id="物体关系模型-Object-Relation-Module"><a href="#物体关系模型-Object-Relation-Module" class="headerlink" title="物体关系模型(Object Relation Module)"></a>物体关系模型(Object Relation Module)</h1><p>我们首先回顾一个简单的 Attention 模型, 名为 Scaled Dot-Product Attention. 假设输入为 $d_k$ 维的 queries 和 keys, 并且具有 $d_v$ 维的values. 点积会在 query 和所有的 keys 之间进行, 以获取它们之间的相似度, 我们利用 SoftMax 函数来获取 values 的维度. 具体来说, 给定一个 query q, keys(packed into matrices K), values(packed into V), 则输出如下:</p>
+<script type="math/tex; mode=display">v^{out} = softmax( \frac{qK^t}{\sqrt{d_k}}) V \tag 1</script><p>接下来我们描述一下物体关系的计算. 令 $f_G$ 代表物体的几何信息, 即边框的四个坐标, $f_A$ 代表物体的特征信息, 具体形式视任务而定. 当给定 $N$ 个物体 $\{ f_A^n, f_G^n \}, n=1, …, N$ 时, 第 $n$ 个物体和其他所有物体之间的关系特征 $f_R(n)$ 为:</p>
+<script type="math/tex; mode=display">f_R(n) = \sum_{m} \omega^{mn} \cdot (W_V \cdot f_A^m) \tag 2</script><p>上面的输出是第 $n$ 个物体与所有所有物体的特征信息关系的权重和, 通过 $W_V$ 进行线性转换, 关系权重 $\omega^{mn}$ 表明了对其他物体对当前物体的影响程度, 计算公式如下:</p>
+<script type="math/tex; mode=display">\omega^{mn} = \frac{\omega_G^{mn}\cdot exp(w_A^{mn})}{\sum_k \omega_G^{kn}\cdot exp(\omega_A^{kn})} \tag 3</script><p>物体特征的权重 $\omega_A^{mn}$ 计算公式如下:</p>
+<script type="math/tex; mode=display">\omega_A^{mn}  = \frac{dot(W_k f_A^m, W_Q f_A^n)}{\sqrt(d_k)} \tag 4</script><p>这里的 $W_K$ 和 $W_Q$ 都是评价标准(matrices), 它们会将原始的图片特征 $f_A^m$ 和 $f_A^n$ 投影到一个子空间中去, 并在此空间可以描述这些特征的好坏, 投影之后的维度是 $d_k$.<br>几何权重(Geometry weight)计算如下:</p>
+<script type="math/tex; mode=display">\omega_G^{mn} = max{0, W_G \cdot \xi_G(f_G^m, f_G^n)} \tag 5</script><p>这里有两步, 首先, 两个物体的几何特征会被嵌入到一个更高的维度 $\omega_G$ 上, 然后, 为了保证平移不变性和尺寸不变性, 我们会利用一个4个的相对几何信息来代替:</p>
+<script type="math/tex; mode=display">(log(\frac{|x_m - x_n}{w_m}), log(\frac{|y_m - y_n}{h_m}), log(\frac{w_n}{w_m}), log(\frac{h_n}{h_m}))
+
+然后, 嵌入后的相对坐标会通过一个权重矩阵 $W_G$ 转化成一个标量, 并且用ReLU 来激活. 几何特征的attention有效性正如表1(a)所示.
+一个物体关系模型总共会累积 $N_r$ 个关系特征, 并且通过加上下面的项来增加输入的图片特征:
+
+$$f_A^n = f_A^n + Concat[f_R^1(n), ..., f_R^{N_r}(n)], \text{for all} n \tag 6</script><p>上式的流程可以总结出算法1, 如下所示:</p>
+<p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fxi1c5q4a2j20s40jfgqs.jpg" alt=""></p>
+<p>上式算法可以通过基本的操作实现, 如图2所示</p>
+<p><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fxi1cievh3j20rw0i4jtt.jpg" alt=""></p>
+<p>空间复杂度和计算复杂度如下所示:</p>
+<script type="math/tex; mode=display">O(Space) = N_r (2d_f d_k + d_g) + d_f^2</script><script type="math/tex; mode=display">O(Comp) = N d_f(2N_r d_k + d_f) + N^2 N_r(d_g + d_k + d_f/N_r + 1)</script><p>通常情况下: $N_r = 16, d_k = 64, d_g = 64$. 关系模型具有相同的输入和输出, 使得可以更容易作为 building block 添加到现有模型当中.</p>
+<h1 id="目标检测关系模型-Relation-Networks-For-Objects-Detection"><a href="#目标检测关系模型-Relation-Networks-For-Objects-Detection" class="headerlink" title="目标检测关系模型(Relation Networks For Objects Detection)"></a>目标检测关系模型(Relation Networks For Objects Detection)</h1><p>目标检测的流程可以分布以下四步:</p>
+<ul>
+<li>在整张图片上生成特征图谱</li>
+<li>生成候选区域框</li>
+<li>执行实例识别(instance recognition)</li>
+<li>去重(duplicate removal): NMS</li>
+</ul>
+<p>本文提出的物体关系模型主要作用于后两步, 即令起提升 instance recognition 的能力以及具有学习去重的能力.</p>
+<p><strong>Our implementation of different architectures:</strong><br>用 ResNet 作为backbone, 用 RPN 来生成候选区域框, 并对以下几种模型进测试.</p>
+<ul>
+<li>Faster RCNN</li>
+<li>FPN</li>
+<li>DCN<br>抛去以上三者整体结构的区别不说, 它们都是用了同样的 head 网络, 即利用 RoI pooling 后接两个全连接层来生成用于分类和回归的最终的特征图谱.</li>
+</ul>
+<p><strong>Relation for Instance Recognition:</strong></p>
+<script type="math/tex; mode=display">{RoIFeat}_n</script>
       
     </div>
 
@@ -598,8 +644,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/Cpp-STL/" rel="prev" title="C++ 标准模板库STL完整笔记">
-                <i class="fa fa-chevron-left"></i> C++ 标准模板库STL完整笔记
+              <a href="/z_post/计算机视觉-RethinkingPretraining/" rel="prev" title="Rethinking Pretraining">
+                <i class="fa fa-chevron-left"></i> Rethinking Pretraining
               </a>
             
           </div>
@@ -608,8 +654,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/PyTorch-FasterRCNN源码实现/" rel="next" title="Faster-RCNN 源码实现 (PyTorch)">
-                Faster-RCNN 源码实现 (PyTorch) <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/计算机视觉-InceptionV4-InceptionResNet/" rel="next" title="InceptionV4 and Inception-ResNet">
+                InceptionV4 and Inception-ResNet <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -659,8 +705,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -679,7 +734,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">188</span>
+                    <span class="site-state-item-count">194</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -795,7 +850,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -850,6 +909,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关工作"><span class="nav-text">相关工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#物体关系模型-Object-Relation-Module"><span class="nav-text">物体关系模型(Object Relation Module)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目标检测关系模型-Relation-Networks-For-Objects-Detection"><span class="nav-text">目标检测关系模型(Relation Networks For Objects Detection)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
         <div class="back-to-top">
@@ -880,7 +955,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">852k</span>
+    <span title="站点总字数">986k</span>
   
 
   
@@ -889,7 +964,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">12:54</span>
+    <span title="站点阅读时长">14:57</span>
   
 </div>
 

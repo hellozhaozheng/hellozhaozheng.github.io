@@ -108,17 +108,17 @@
 
 
 
-  <meta name="description" content="第一章 STL概论与版本简介1.1 STL 概论STL 的提出是为了提高代码的复用性, 提升编程效率. STL 提供六大组件, 彼此可以组合套用:  容器(containers): 各种数据结构, 如 vector, list, deque, set, map 等 class template; 算法(algorithms): 各种常用算法如 sort, search, copy, erase 等">
+  <meta name="description" content="第一章 STL概论与版本简介STL 的提出是为了提高代码的复用性, 提升编程效率. STL 提供六大组件, 彼此可以组合套用:  容器(containers): 各种数据结构, 如 vector, list, deque, set, map 等 class template; 算法(algorithms): 各种常用算法如 sort, search, copy, erase 等 function">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《STL源码剖析》">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Cpp-Book-STL源码剖析/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="第一章 STL概论与版本简介1.1 STL 概论STL 的提出是为了提高代码的复用性, 提升编程效率. STL 提供六大组件, 彼此可以组合套用:  容器(containers): 各种数据结构, 如 vector, list, deque, set, map 等 class template; 算法(algorithms): 各种常用算法如 sort, search, copy, erase 等">
+<meta property="og:description" content="第一章 STL概论与版本简介STL 的提出是为了提高代码的复用性, 提升编程效率. STL 提供六大组件, 彼此可以组合套用:  容器(containers): 各种数据结构, 如 vector, list, deque, set, map 等 class template; 算法(algorithms): 各种常用算法如 sort, search, copy, erase 等 function">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-21T06:08:51.140Z">
+<meta property="og:updated_time" content="2018-11-22T08:30:53.750Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《STL源码剖析》">
-<meta name="twitter:description" content="第一章 STL概论与版本简介1.1 STL 概论STL 的提出是为了提高代码的复用性, 提升编程效率. STL 提供六大组件, 彼此可以组合套用:  容器(containers): 各种数据结构, 如 vector, list, deque, set, map 等 class template; 算法(algorithms): 各种常用算法如 sort, search, copy, erase 等">
+<meta name="twitter:description" content="第一章 STL概论与版本简介STL 的提出是为了提高代码的复用性, 提升编程效率. STL 提供六大组件, 彼此可以组合套用:  容器(containers): 各种数据结构, 如 vector, list, deque, set, map 等 class template; 算法(algorithms): 各种常用算法如 sort, search, copy, erase 等 function">
 
 
 
@@ -243,7 +243,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">192</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">194</span></a>
   </li>
         
         
@@ -339,7 +339,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">33</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
   </li>
         
         
@@ -537,7 +537,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.3k</span>
+                <span title="本文字数">1.4k</span>
               
 
               
@@ -571,7 +571,7 @@
       
 
       
-        <h1 id="第一章-STL概论与版本简介"><a href="#第一章-STL概论与版本简介" class="headerlink" title="第一章 STL概论与版本简介"></a>第一章 STL概论与版本简介</h1><h2 id="1-1-STL-概论"><a href="#1-1-STL-概论" class="headerlink" title="1.1 STL 概论"></a>1.1 STL 概论</h2><p>STL 的提出是为了提高代码的复用性, 提升编程效率. STL 提供六大组件, 彼此可以组合套用:</p>
+        <h1 id="第一章-STL概论与版本简介"><a href="#第一章-STL概论与版本简介" class="headerlink" title="第一章 STL概论与版本简介"></a>第一章 STL概论与版本简介</h1><p>STL 的提出是为了提高代码的复用性, 提升编程效率. STL 提供六大组件, 彼此可以组合套用:</p>
 <ol>
 <li>容器(containers): 各种数据结构, 如 vector, list, deque, set, map 等 class template;</li>
 <li>算法(algorithms): 各种常用算法如 sort, search, copy, erase 等 function template;</li>
@@ -580,6 +580,7 @@
 <li>配接器(adapters): 一种用来修饰容器(containers), 仿函数(functors), 或者迭代器(iterators)接口的东西. 例如, STL 提供的 queue 和 stack, 虽然看似容器, 其实只能算是一种容器配接器, 因为它们的底层完全借助 deque 完成. 改变 functor 接口者, 称为 function adapter, 改变 container 接口者, 称为 container adapter, 改变 iterator 接口者, 称为 iterator adapter.</li>
 <li>配置器(allocators): 负责空间配置与管理, 从实现角度来看, 配置是是一个实现了动态空间配置, 空间管理, 空间释放的 class template.</li>
 </ol>
+<p>以上六者的关系为: Container 通过 Allocator 取得数据存储空间, Algorithm 通过 Iterator 存取 Container 内容, Functor 可以协助 Algorithm 完成不同的策略变化, Adapter 可以修饰或套接 Functor.</p>
 <h2 id="4-8-priority-queue"><a href="#4-8-priority-queue" class="headerlink" title="4.8 priority_queue"></a>4.8 priority_queue</h2><h3 id="4-8-1-priority-queue-概述"><a href="#4-8-1-priority-queue-概述" class="headerlink" title="4.8.1 priority_queue 概述"></a>4.8.1 priority_queue 概述</h3><p>priority_queue 首先是一个队列, 因此它允许在底端加入元素, 并从顶端取出元素, 除此之外别无其他存取元素的途径. priority_queue带有权值观念, 其内部的元素并非依照插入顺序排序, 而是按照元素的权值进行排列, 权值较高者, 排在最前面.</p>
 <p>缺省情况下 priority_queue 利用一个 max-heap 完成, 也即 <code>top()</code> 元素表示的是队列中值最大的元素.</p>
 <h3 id="4-8-2-priority-queue-定义完整列表"><a href="#4-8-2-priority-queue-定义完整列表" class="headerlink" title="4.8.2 priority_queue 定义完整列表"></a>4.8.2 priority_queue 定义完整列表</h3><p>priority_queue 的实现在缺省情况下是以 vector 为底部容器, 再加上 heap 相关处理规则, 所以其实现非常简单, 也因此, 我们通常并不认为 priority_queue 并非是一种新的容器, 而只是把它归类为 container adapter(容器配接器).</p>
@@ -703,7 +704,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">192</span>
+                    <span class="site-state-item-count">194</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -821,7 +822,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">33</span>
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -885,7 +888,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章-STL概论与版本简介"><span class="nav-text">第一章 STL概论与版本简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-STL-概论"><span class="nav-text">1.1 STL 概论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-8-priority-queue"><span class="nav-text">4.8 priority_queue</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-8-1-priority-queue-概述"><span class="nav-text">4.8.1 priority_queue 概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-8-2-priority-queue-定义完整列表"><span class="nav-text">4.8.2 priority_queue 定义完整列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-8-3-priority-queue-没有迭代器"><span class="nav-text">4.8.3 priority_queue 没有迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-8-4-priority-queue-测试实例"><span class="nav-text">4.8.4 priority_queue 测试实例</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章-STL概论与版本简介"><span class="nav-text">第一章 STL概论与版本简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-8-priority-queue"><span class="nav-text">4.8 priority_queue</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-8-1-priority-queue-概述"><span class="nav-text">4.8.1 priority_queue 概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-8-2-priority-queue-定义完整列表"><span class="nav-text">4.8.2 priority_queue 定义完整列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-8-3-priority-queue-没有迭代器"><span class="nav-text">4.8.3 priority_queue 没有迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-8-4-priority-queue-测试实例"><span class="nav-text">4.8.4 priority_queue 测试实例</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -922,7 +925,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">935k</span>
+    <span title="站点总字数">986k</span>
   
 
   
@@ -931,7 +934,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">14:10</span>
+    <span title="站点阅读时长">14:57</span>
   
 </div>
 

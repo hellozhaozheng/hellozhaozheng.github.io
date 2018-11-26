@@ -118,7 +118,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fw1pzf56s3j20jf0i177e.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fw1pzf7w44j213m0cr0wb.jpg">
-<meta property="og:updated_time" content="2018-10-25T11:54:52.980Z">
+<meta property="og:updated_time" content="2018-11-22T08:30:45.634Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FocalLoss-ICCV2017">
 <meta name="twitter:description" content="文章: Focal Loss for Dense Object Detection作者: Tsung-Yi Lin, Priya Goyal, Ross Girshick, Kaiming He, Piotr Dollár 核心亮点(1) 分析并指出了One Stage方法精度不高的原因:  极度不平衡的正负样本比例: anchor是一种类似sliding windows的选框方式, 这会使得正负">
@@ -247,7 +247,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">192</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">194</span></a>
   </li>
         
         
@@ -343,7 +343,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">33</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
   </li>
         
         
@@ -616,11 +616,11 @@
 <script type="math/tex; mode=display">CE(p_t) = -\alpha log(p_t)</script><h2 id="Focal-Loss-Definition"><a href="#Focal-Loss-Definition" class="headerlink" title="Focal Loss Definition"></a>Focal Loss Definition</h2><p>本文的实验结果表明，类别分布不均会对交叉熵损失函数带来很大的影响。那些很容易被分类的负样本（背景等）贡献了损失函数及其梯度中的大部分影响力。尽管baseline方法的 $\alpha$ 因子可以平衡正负样本之间的比例，但它仍然不能把握好简单样本和困难样本的比例（应该困难样本多一些，简单样本少一些，这样有利于模型的健壮性）。于是，作者就提出了Focal Loss，主要引入了一个“调制因子” $(1-p_t)^\gamma$ ，其中 $\gamma \ge 0$ ，具体的形式化表示如下：</p>
 <script type="math/tex; mode=display">FL(p_t) = -(1-p_t)^\gamma log(p_t)</script><p>直观上来讲，这个“调制因子”可以降低easy example对loss的contribution。同时，还应注意到，Focal Loss的形式不是唯一固定的，作者还在使用了其他不同形式的因子，比如结合了 $\alpha$ 因子：</p>
 <script type="math/tex; mode=display">FL(p_t) = -\alpha_t(1-p_t)^\gamma log(p_t)</script><p>后文的大部分实验都使用的是上面这个形式的Focal Loss。</p>
-<p><img src="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fw1pzf56s3j20jf0i177e.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fw1pzf56s3j20jf0i177e.jpg" alt=""></div></p>
 <h2 id="Class-Imbalance-and-Model-Initialization"><a href="#Class-Imbalance-and-Model-Initialization" class="headerlink" title="Class Imbalance and Model Initialization"></a>Class Imbalance and Model Initialization</h2><p>二值分类模型在初始的时候，对两个类别的预测概率是均等的，在这种初始化条件下，如果某一个类别出现的次数过多，就会对损失函数产生较大的影响。为了解决这个问题，作者特意提出了“先入为主”的概念，也就是使得模型在开始的时候，对稀有类别（如前景类别）的预测概率的初始值设置的低一些，如0.01 。 经过实验表明，这样的方法可以提升模型训练的稳定性。</p>
 <h2 id="Class-Imbalance-and-Two-stage-Detectors"><a href="#Class-Imbalance-and-Two-stage-Detectors" class="headerlink" title="Class Imbalance and Two-stage Detectors"></a>Class Imbalance and Two-stage Detectors</h2><p>Two-stage Detector 并没有使用类似 $\alpha$ 因此的方法来解决样本不均的问题。相反的，它们通过两个机制来降低这个问题带来的影响：（1）two-stage模式和（2）biased minibatch取样。首先，two-stage模式会在第一阶段就将近乎无限物体位置可能性降低到一到两千个，更重要的是，这一到两千个可能位置并不是随机选取的，它们移除了大量的易分类负样本（背景框）。第二，这些方法还设计了biased minibatch的取样策略，比如，保证正样本和负样本的比例为1：3进行训练（这其实相当于起到了 $\alpha$ 因子的作用。</p>
 <h2 id="RetinaNet-Detector"><a href="#RetinaNet-Detector" class="headerlink" title="RetinaNet Detector"></a>RetinaNet Detector</h2><p>RetinaNet是一个单一的、统一的网络，它由一个backbone网络和两个task-specific子网络组成。backbone网络是现成的，主要负责计算卷积特征图谱。第一个子网络负责物体分类任务，第二个子网络负责bounding box回归任务，它们都是在backbone网络输出的卷积图谱上进行计算的。</p>
-<p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fw1pzf7w44j213m0cr0wb.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fw1pzf7w44j213m0cr0wb.jpg" alt=""></div></p>
 <p><strong>Feature Pyramid Network Backbone：</strong></p>
 <p>采用了FPN作为backbone网络。</p>
 <p><strong>Anchors:</strong></p>
@@ -762,7 +762,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">192</span>
+                    <span class="site-state-item-count">194</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -880,7 +880,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">33</span>
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -981,7 +983,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">935k</span>
+    <span title="站点总字数">986k</span>
   
 
   
@@ -990,7 +992,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">14:10</span>
+    <span title="站点阅读时长">14:57</span>
   
 </div>
 

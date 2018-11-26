@@ -133,7 +133,7 @@
 <meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fx48l1cy5pj21kw08aq6d.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fx48l4n1ofj21kw0bxdj7.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fx48l887c6j21kw08incq.jpg">
-<meta property="og:updated_time" content="2018-11-12T05:18:51.455Z">
+<meta property="og:updated_time" content="2018-11-22T08:31:00.742Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Speed Accuracy TradeOffs (CVPR, 2017)">
 <meta name="twitter:description" content="文章: Speed/accuracy trade-offs for modern convolutional object detectors作者: Jonathan Huang, Vivek Rathod, Chen Sun, Menglong Zhu, Anoop Korattikara, Alireza Fathi, Ian Fischer, Zbigniew Wojna, Yang Son">
@@ -262,7 +262,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">192</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">194</span></a>
   </li>
         
         
@@ -358,7 +358,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">33</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
   </li>
         
         
@@ -592,7 +592,7 @@
       
         <p><strong>文章:</strong> Speed/accuracy trade-offs for modern convolutional object detectors<br><strong>作者:</strong> Jonathan Huang, Vivek Rathod, Chen Sun, Menglong Zhu, Anoop Korattikara, Alireza Fathi, Ian Fischer, Zbigniew Wojna, Yang Song, Sergio Guadarrama, Kevin Murphy<br><strong>备注:</strong> Google</p>
 <h1 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h1><p><strong>本文实现了一个灵活统一的目标检测框架, 并对三个主流的目标检测模型做了详细客观的分析和讨论</strong><br>通过该框架, 本文对目前主流的各个模型(Faster, R-FCN, SSD)影响精确度和速度的各个因素展开了详细的分析和讨论, 以此希望能够帮助从业者在面对真实应用场景时, 能够选择适当的模型来解决问题. 同时, 本文还发现了一些新的现象(减少 proposals box 的数量), 使得可以在保持精度的前提下, 提升模型的速度.</p>
-<p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx470hjw5yj213t0o40yg.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx470hjw5yj213t0o40yg.jpg" alt=""></div></p>
 <h1 id="论文细节"><a href="#论文细节" class="headerlink" title="论文细节"></a>论文细节</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本篇文章的目的主要是为在给定平台和应用环境下选择一个合适的目标检测模型提供指导, 即要达到合适的 speed/memory/accuracy 平衡. 为此, 我们研究了多种方法来平衡现代卷积网络检测模型的速度, 准确度, 内存消耗等. 近年来有大量成功的检测模型被提出, 但是, 我们很难直接将这些模型互相比较, 因为它们采用的特征提取器不同(eg, VGG, ResNet), 采用的图片尺寸不同, 硬件设备和软件平台也不同. 因此, 本文提供了一个基于 FasterRCNN, R-FCN, SSD 的统一实现版本, 我们称之为- meta-architectures, 然后通过使用不同的特征提取器, 不同的关键参数来跟踪这些模型之间的差异. 最终的模型有两个极端, 一是极度关注速度, 要求最终的模型可以运行在移动设备上, 二是极度关注准确度, 要求能够在 COCO 数据集上达到最高的分数.</p>
 <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>目前有众多成功的模型, 但是却很难决定哪种场景下使用哪种模型, mAP 评价标准并不能反映所有问题, 还需要同时考虑模型的运行速度和内存消耗.<br>目前, 只有很少的模型讨论的运行速度(R-FCN, SSD, YOLO), 但是它们大多都只是声称它们达到了某个 fps, 并没有深入的展开关于速度和精度之间的讨论.<br>在这篇文章中, 我们希望以一种详尽而公平的方式来探讨这些模型的速度的精度之间的平衡关系. 在评估时, 我们不使用任何 tricks(ensembling, multi-crop, flipping等等), 仅仅评估单一模型的性能, 对于时间的测量, 我们仅关注预测阶段的运行时间, 而不在意训练时长.<br>本文的贡献主要有以下几点:</p>
 <ul>
@@ -602,7 +602,7 @@
 <li>我们尝试了一些以前从未出现过的 meta-architecture 和 feature-extractor 的结合方式, 并讨论了如何利用这些方式来训练 winning entry of the 2016 COCO object detection challenge.</li>
 </ul>
 <h2 id="Meta-architectures"><a href="#Meta-architectures" class="headerlink" title="Meta-architectures"></a>Meta-architectures</h2><p>在我们的文章中, 我们主要讨论三种主流模型: SSD, FasterRCNN 和 R-FCN. 在这三个模型的原文中各自使用了特定的特征提取器(eg, VGG, ResNet). 现在我们将模型和特征提取器解耦, 重新审视这些模型结构.</p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fx494ceorlj21kw0di0yt.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fx494ceorlj21kw0di0yt.jpg" alt=""></div></p>
 <h3 id="SSD"><a href="#SSD" class="headerlink" title="SSD"></a>SSD</h3><p>将画框和分类预测同时进行, 代表一众 one-stage 检测方法</p>
 <h3 id="FasterRCNN"><a href="#FasterRCNN" class="headerlink" title="FasterRCNN"></a>FasterRCNN</h3><p>FasterRCNN 是自 2015 年以来最主流的 two-stage 目标检测模型, 它首先提出了 RPN 网络, 使得候选框推荐的步骤可以整合到神经网络中去, FasterRCNN 也衍生出了多种的版本, 代表着经典的 two-stage 模型.</p>
 <h3 id="R-FCN"><a href="#R-FCN" class="headerlink" title="R-FCN"></a>R-FCN</h3><p>尽管 FasterRCNN 比 FastRCNN 快了一个数量级, 但是相对于 one-stage 方法, 它仍然很慢. 为此, 有人提出了 R-FCN 检测模型, 它和 FasterRCNN 模型类似, 但是将候选框的划取阶段移到了网络模型的最后一层, 使得有更多的卷积层可以共享计算结果, 同时还提出了 PSRoI(position-sensitive), 大大加快了模型的运算速度.</p>
@@ -617,32 +617,33 @@
 <p> <strong>Input size configuration:</strong> M=300 / 600.</p>
 <p> <strong>Training and hyperparameter tuning;</strong> 对于 FasterRCNN 和 R-FCN, 我们用 TF 的 <code>crop_and_resize</code> 操作来代替 RoIPooling 和 PSRoIPooling, 该操作是利用双线性插值进行反向投影的, 其求导机制和原文中的类似.</p>
 <p><strong>Benchmarking procedure:</strong> 32GB RAM, Intex Xeon E5-1650 v2 processor, Nvidia GTX Titan X.</p>
-<p>下面的表2总结了本文使用的特征提取器<br><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fx470e6hkdj20rv0dqacy.jpg" alt=""></p>
-<h2 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h2><p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx470hjw5yj213t0o40yg.jpg" alt=""></p>
-<p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx470lfttsj21e10a378c.jpg" alt=""></p>
+<p>下面的表2总结了本文使用的特征提取器</p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fx470e6hkdj20rv0dqacy.jpg" alt=""></div></p>
+<h2 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h2><p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx470hjw5yj213t0o40yg.jpg" alt=""></div></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx470lfttsj21e10a378c.jpg" alt=""></div></p>
 <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>通常来说, R-FCN 和 SSD 模型要比 Faster RCNN 模块快得多, 但是 Faster RCNN 的精确度更高. 但是, FasterRCNN 可以通过降低候选区域框的数量来提升速度.</p>
 <p><strong>The effect of the feature extractor:</strong> 整体来说, 越强的特征提取器与 mAP 分数成正比, 但是对于 SSD 来说, 这种提升并不明显 (为什么 Inception v2 的 FasterRCNN 和 R-FCN 的 mAP 值那么低?)</p>
-<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fx489ru3zcj213r0gm418.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fx489ru3zcj213r0gm418.jpg" alt=""></div></p>
 <p><strong>The effect of object size:</strong></p>
-<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fx489wwqs3j20xv0k8mz1.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fx489wwqs3j20xv0k8mz1.jpg" alt=""></div></p>
 <p><strong>The effect of image size:</strong> 当 image size 从 600 降到 300 时, 精度度平均会降低 15.88%, 同时 inference time 也会降低 27.4%.</p>
-<p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx48a2fj8sj210j0n2mzv.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx48a2fj8sj210j0n2mzv.jpg" alt=""></div></p>
 <p><strong>The effect of the number of proposals:</strong> proposals 可以大幅度降低测试时间, 同时 mAP 值只会降低一点(Inception ResNet v2, 300 -&gt; 10, 35.4% -&gt; 29%). 我们找到的 sweet point 大约是 50 个候选区域框, 此时可以在保持 300 候选区域框精度的 96% 的前提下, 将测试速度提升 3 倍.</p>
-<p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx48a6iqsaj213p0o1aex.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx48a6iqsaj213p0o1aex.jpg" alt=""></div></p>
 <p><strong>FLOPs analysis:</strong><br>FLOPs(multiply-adds)</p>
-<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fx48aap87jj20y50fh0u0.jpg" alt=""></p>
-<p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx48aeop46j21j90ko78f.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fx48aap87jj20y50fh0u0.jpg" alt=""></div></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx48aeop46j21j90ko78f.jpg" alt=""></div></p>
 <p><strong>Memory analysis:</strong></p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fx48aopxpqj21kw0p0gpx.jpg" alt=""></p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fx48c65691j21kw0l4wiw.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fx48aopxpqj21kw0p0gpx.jpg" alt=""></div></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fx48c65691j21kw0l4wiw.jpg" alt=""></div></p>
 <p><strong>Good localization at .75 IOU means good localization at all IOU thresholds:</strong></p>
-<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fx48cjsjjvj21kw0jpwja.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fx48cjsjjvj21kw0jpwja.jpg" alt=""></div></p>
 <p>表4总结了我们模型的性能(融合了5个FasterRCNN), 并且突出了如何在 COCO 评价标准上提升性能.<br>在模型融合时, 我们选取了5个FasterRCNN模型, 每个模型都是基于ResNet 和 Inception Resnet的, 他们的 stride 不同, 并且使用了不同的损失函数, 以及不完全相同的训练数据. 最终使用ResNet论文中的附录A的方法融合这些模型的检测结果.</p>
-<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fx48l1cy5pj21kw08aq6d.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fx48l1cy5pj21kw08aq6d.jpg" alt=""></div></p>
 <p>表5总结了最后选定的模型的性能表现. 模型融合以及 multi-crop inference 大约使模型的精度提升了7个百分点.</p>
-<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fx48l4n1ofj21kw0bxdj7.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fx48l4n1ofj21kw0bxdj7.jpg" alt=""></div></p>
 <p>表6比较了单个模型和模型融合之间的性能差异</p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fx48l887c6j21kw08incq.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fx48l887c6j21kw08incq.jpg" alt=""></div></p>
 
       
     </div>
@@ -768,7 +769,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">192</span>
+                    <span class="site-state-item-count">194</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -886,7 +887,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">33</span>
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -987,7 +990,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">935k</span>
+    <span title="站点总字数">986k</span>
   
 
   
@@ -996,7 +999,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">14:10</span>
+    <span title="站点阅读时长">14:57</span>
   
 </div>
 

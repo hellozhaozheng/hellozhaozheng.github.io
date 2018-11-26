@@ -127,7 +127,7 @@
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fxdeflviorj215f0qa46c.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fxdeg2ul5kj215m0rn0xc.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fxdegbnnovj219107gjtf.jpg">
-<meta property="og:updated_time" content="2018-11-19T10:41:06.639Z">
+<meta property="og:updated_time" content="2018-11-22T08:30:59.454Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RFB Net (ECCV, 2018)">
 <meta name="twitter:description" content="文章: Receptive Field Block Net for Accurate and Fast Object Detection作者: Songtao Liu, Di Huang, and Yunhong Wang备注: Beihang University 核心亮点本文从感受野大小的角度出发, 提出了 RFB 模块, 可以融合多个感受野特征, 进而提升轻量级网络(SSD)的特征表达能力相">
@@ -256,7 +256,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">192</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">194</span></a>
   </li>
         
         
@@ -352,7 +352,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">33</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
   </li>
         
         
@@ -586,10 +586,10 @@
       
         <p><strong>文章:</strong> Receptive Field Block Net for Accurate and Fast Object Detection<br><strong>作者:</strong> Songtao Liu, Di Huang, and Yunhong Wang<br><strong>备注:</strong> Beihang University</p>
 <h1 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h1><p><strong>本文从感受野大小的角度出发, 提出了 RFB 模块, 可以融合多个感受野特征, 进而提升轻量级网络(SSD)的特征表达能力</strong><br>相比于不断增加模型复杂度(深度,宽度)来增强特征的表达能力, 本文通过一种人工设计的机制来增强轻量级模型的特征表达能力, 以期获得一种既快又好的检测模型.</p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fxdebnztlgj215z0tw4qp.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fxdebnztlgj215z0tw4qp.jpg" alt=""></div></p>
 <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>目前精确度最高的目标检测模型往往面临着巨大的计算开销, 而轻量级的目标检测模型在精度上却不够高. 本文通过利用人工设计来增强轻量级模型的特征, 以期获得一个既快又好的检测模型. 受到人类视觉系统感受野的启发, 文本提出了一个感受野模块(RF Block module), 它将 RFs 的 size 和 eccentricity 之间的关系考虑在内, 来增强特征的分辨能力和鲁棒性. 之后, 我们将 RFB 集成到了 SSD 之中, 建立了一个 RFB Net 检测器. 实验结果显示, 本文的 RFB Net 可以达到目前最高的性能表现.</p>
 <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>通过讨论 two-stage 和 one-stage 模型各自的特点和优势, 本文发现, 相比于不断增加模型复杂度(深度,宽度)来增强特征的表达能力, 另一种可选的做法通过一种人工设计的机制来增强轻量级模型的特征表达能力, 以期获得一种既快又好的检测模型. 另一方面, 多项研究发现, 感受野的大小是视网膜图谱离心率的函数, 并且在不同的图谱上, 离心率会逐渐升高, 如图1所示.</p>
-<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fxdebh1h8ej20zo0u01kx.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fxdebh1h8ej20zo0u01kx.jpg" alt=""></div></p>
 <p>目前的深度网络模型, 大多将不同层之间的感受野设置成相同大小, 这就有可能降低提取到的特征的表达能力. Inception 系列虽然融合了多个尺寸的感受野特征, 但是所有的卷积核仍然是在同一个中心进行采样的. Deformable CNN 尝试自适应的改变卷积核采样点, 尽管采样网格十分灵活, 但是依然没有考虑感受野的 eccentricity 属性, 这使得所有处于感受野当中的像素点都都输出响应具有同等的贡献度, 这会导致一些更重要的信息没有被突出出来.<br>本文根据人类视觉感受野的机制, 提出了 Receptive Field Block(RFB), 来增强轻量级的特征学习能力, 使得他们可以组建出更快更好的检测模型. 具体来说, RFB 通过使用不同大小的卷积核来实现多分支的 pooling 操作, 应用空洞卷积(dilated convolution)来控制它们的离心率(eccentricities), 并且进行 reshape 之后生成最终的特征表示, 如图2所示. 之后, 我们会将该模块集成到 SSD 网络之中, 形成一个更快更好的 one-stage 目标检测模型, 称为 RFB Net.</p>
 <p>本文的贡献主要有以下三点:</p>
 <ul>
@@ -598,13 +598,13 @@
 <li>实验表明本文的 RFB Net 可以在实时运行的速度下在 VOC 和 COCO 数据集上达到 SOTA 的性能, 并且证明了 RFB 模型具有很好的泛化性能(可以连接到 MobileNet 之上).</li>
 </ul>
 <h1 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h1><p><strong>Two-stage detector:</strong> RCNN, Fast, Faster, R-FCN, FPN, Mask R-CNN<br><strong>One-stage detector:</strong> YOLO, SSD, DSSD, RetinaNet<br><strong>Receptive filed:</strong> Inception(多个感受野尺寸共同作用), ASPP, Deformable CNN. 图3展示了这三种方式与本文的 RFB 的区别.</p>
-<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fxdebsf4n4j21090omx50.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fxdebsf4n4j21090omx50.jpg" alt=""></div></p>
 <h1 id="Receptive-Field-Block"><a href="#Receptive-Field-Block" class="headerlink" title="Receptive Field Block"></a>Receptive Field Block</h1><p>本文提出的 RFB 是一个多分支的卷积块, 其内部结构主要包含两个部分: 具有不同卷积核大小的多分支的卷积层, 以及紧跟其后的空洞池化或空洞卷积层. 前一部分和 Inception 相同, 复杂模拟不同尺寸的感受野, 后一部分生成 pRFs(population Receptive Fields) 尺寸和人类视觉离心率之间的关系.</p>
 <p><strong>Multi-branch convolution layer:</strong> 本文使用 Inception V4 和 Inception-ResNet V2 来构成多分支卷积层.<br><strong>Dilated pooling or convolution layer:</strong> 也称为 astrous convolution layer.</p>
 <p>图4展示了本文的 RFB 模块示意图.</p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fxdeco9ni3j21iv0ovgsf.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fxdeco9ni3j21iv0ovgsf.jpg" alt=""></div></p>
 <h1 id="RFB-Net-Detection-Architecture"><a href="#RFB-Net-Detection-Architecture" class="headerlink" title="RFB Net Detection Architecture"></a>RFB Net Detection Architecture</h1><p>本文的 RFB Net 是基于 SSD 和 RFB 模块进行构建的, 其中, RFB 模块会嵌入到 SSD 网络中, 主要的改动在于将 SSD 顶层(head/top)的卷积层替换为 RFB 模块, 如图5所示.</p>
-<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fxded8xzv5j21540m0dml.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fxded8xzv5j21540m0dml.jpg" alt=""></div></p>
 <p><strong>Lightweight backbone:</strong> 保持 SSD 的选择, 使用 VGG16 作为 backbone. (即使还有其他的选择, 但是为了与 SSD 形成对比, 决定选择 VGG16).</p>
 <p><strong>RFB on multi-scale feature maps:</strong> 在 SSD 中, 使用了多个不同大小的卷积特征图谱参与预测, 在本文的实现中, 会将较大的特征图谱后接的卷积层替换为 RFB 模块. 如图5所示.</p>
 <h1 id="Training-Settings"><a href="#Training-Settings" class="headerlink" title="Training Settings"></a>Training Settings</h1><ul>
@@ -612,12 +612,12 @@
 <li>strategies: follow SSD, 包括数据增广, 难负样例挖掘等等</li>
 <li>new conv-layers: MSRA initialization</li>
 </ul>
-<h1 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h1><h2 id="Pascal-VOC-2007"><a href="#Pascal-VOC-2007" class="headerlink" title="Pascal VOC 2007"></a>Pascal VOC 2007</h2><p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fxdedqo5m1j215a0nagrk.jpg" alt=""></p>
-<h2 id="消融实验-Ablation-Study"><a href="#消融实验-Ablation-Study" class="headerlink" title="消融实验(Ablation Study)"></a>消融实验(Ablation Study)</h2><p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fxdeelkkfgj215c0fhtbb.jpg" alt=""></p>
-<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fxdef2wr70j216909w0v7.jpg" alt=""></p>
-<h2 id="COCO"><a href="#COCO" class="headerlink" title="COCO"></a>COCO</h2><p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fxdeflviorj215f0qa46c.jpg" alt=""></p>
-<p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fxdeg2ul5kj215m0rn0xc.jpg" alt=""></p>
-<h2 id="Other-BackBone"><a href="#Other-BackBone" class="headerlink" title="Other BackBone"></a>Other BackBone</h2><p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fxdegbnnovj219107gjtf.jpg" alt=""></p>
+<h1 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h1><h2 id="Pascal-VOC-2007"><a href="#Pascal-VOC-2007" class="headerlink" title="Pascal VOC 2007"></a>Pascal VOC 2007</h2><p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fxdedqo5m1j215a0nagrk.jpg" alt=""></div></p>
+<h2 id="消融实验-Ablation-Study"><a href="#消融实验-Ablation-Study" class="headerlink" title="消融实验(Ablation Study)"></a>消融实验(Ablation Study)</h2><p><div style="width: 600px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fxdeelkkfgj215c0fhtbb.jpg" alt=""></div></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fxdef2wr70j216909w0v7.jpg" alt=""></div></p>
+<h2 id="COCO"><a href="#COCO" class="headerlink" title="COCO"></a>COCO</h2><p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fxdeflviorj215f0qa46c.jpg" alt=""></div></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fxdeg2ul5kj215m0rn0xc.jpg" alt=""></div></p>
+<h2 id="Other-BackBone"><a href="#Other-BackBone" class="headerlink" title="Other BackBone"></a>Other BackBone</h2><p><div style="width: 600px; margin: auto"><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fxdegbnnovj219107gjtf.jpg" alt=""></div></p>
 
       
     </div>
@@ -743,7 +743,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">192</span>
+                    <span class="site-state-item-count">194</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -861,7 +861,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">33</span>
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -962,7 +964,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">935k</span>
+    <span title="站点总字数">986k</span>
   
 
   
@@ -971,7 +973,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">14:10</span>
+    <span title="站点阅读时长">14:57</span>
   
 </div>
 

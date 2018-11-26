@@ -129,7 +129,7 @@
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fwwet23060j21kw0nwag1.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fwwet5sufej20sa0f5aoe.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fwwet9mkjbj20s209s762.jpg">
-<meta property="og:updated_time" content="2018-11-05T07:41:06.142Z">
+<meta property="og:updated_time" content="2018-11-22T08:30:43.971Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Group Normalization">
 <meta name="twitter:description" content="作者: Yuxin Wu and Kaiming He发表: ECCV 2018, Best Paper Honorable Mention 核心亮点针对BN对batch size的依赖问题, 提出了一种新的通用型归一化方法提出了一个用于替代BN的简单算法, 称之为GN(Group Normalization). GN将输入图谱的通道分成不同的组, 并且计算每一组的mean和variance, 然">
@@ -258,7 +258,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">192</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">194</span></a>
   </li>
         
         
@@ -354,7 +354,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">33</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
   </li>
         
         
@@ -588,7 +588,7 @@
       
         <p><strong>作者:</strong> Yuxin Wu and Kaiming He<br><strong>发表:</strong> ECCV 2018, Best Paper Honorable Mention</p>
 <h1 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h1><p><strong>针对BN对batch size的依赖问题, 提出了一种新的通用型归一化方法</strong><br>提出了一个用于替代BN的简单算法, 称之为GN(Group Normalization). GN将输入图谱的通道分成不同的组, 并且计算每一组的mean和variance, 然后将其进行归一化. GN的计算复杂度与batch size 的大小是相互独立的, 并且它的准确度在不同范围内的batch size下仍然是稳定的. 并且在整体表现和不同任务上的效果均强于其他类型的归一化方法(LN,IN等)</p>
-<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fww0h6ugadj20s80kjacr.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fww0h6ugadj20s80kjacr.jpg" alt=""></div></p>
 <h1 id="论文细节"><a href="#论文细节" class="headerlink" title="论文细节"></a>论文细节</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>BN是深度学习中的一项里程碑式的技术, 它可以让不同网络进行训练. 但是按照batch进行归一化的过程会引入一些问题: 当batch的size比较小时, 由于batch的统计期望十分不精确, 会使得BN的误差大幅度增加. 这一点限制了BN在训练大型模型时的使用(如目标检测, 分割等等, 由于GPU内存的限制往往batch的值很小). 因此, 本文提出了一个用于替代BN的简单算法, 称之为GN(Group Normalization). GN将输入图谱的通道分成不同的组, 并且计算每一组的mean和variance, 然后将其进行归一化. GN的计算复杂度与batch size 的大小是相互独立的, 并且它的准确度在不同范围内的batch size下仍然是稳定的. 在ResNet50中, 当batch size为2时,  GN的错误率比BN要低10.6%, 当batch size为经典值时(32,64等), GN的表现也可以媲美BN, 同时, 也超越了其他归一化方法(Layer, Instance, Weight Normalization等). 不仅如此, GN还可以很自然的从预训练的模型中进行fine-tuning. GN在多个任务上都表现出了很好的效果, 可以用其替换掉BN. (只需数行代码即可实现GN).</p>
 <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>BN在多项任务中都起到了很好的实验效果, 但是BN的有效性必须建立在足够大的batch size之上(如32/GPU). 当batch size 比较小时, BN往往无法取得好的效果, 并且还会提升模型的误差, 如图1所示.</p>
 <p>由于硬件GPU显存大小的设置, 在使用较大的模型训练分辨率较高的图片时, 往往不能设置很高的batch size. 因此, 本文提出了GN算法来作为BN的代替.</p>
@@ -604,24 +604,24 @@
 <li>LN: $S_i = \{k | k_N = i_N \}$, 代表 $N$ 不变, 求固定 $N$ 以后 $(C,H,W)$ 的均值和方差(可以看出, 此时的均值和方差已经不受batch size的影响)</li>
 <li>IN: $S_i = \{k | k_N = i_N, k_C = i_C\}$, 代表 $N$ 和 $C$ 都固定时 , $(H,W)$ 的均值和方差. 也就是说是对单个特征中, 单个通道上的均值和方差.</li>
 </ul>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fww4hqied3j21kw0esjwt.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fww4hqied3j21kw0esjwt.jpg" alt=""></div></p>
 <p>上面所有的Normalization方法(BN,LN,IN)都使用了线性偏移来补偿可能引起的数据分布表征丢失问题:</p>
 <script type="math/tex; mode=display">y_i = \gamma x_i + \beta</script><p><strong>Group Norm:</strong> 在Group Norm中, $\mu$, $\sigma$ 以及集合 $S_i$ 的定义如下:</p>
 <script type="math/tex; mode=display">S_i = \{ k | k_N = i_N, \lfloor \frac{k_C}{C/G} \rfloor = \lfloor \frac{i_C}{C/G} \rfloor \}</script><p>上式中, $G$ 是group的数量, 是一个超参数(默认为32), $C/G$ 是每一个group中的channels的数量, $\lfloor \frac{k_C}{C/G} \rfloor = \lfloor \frac{i_C}{C/G} \rfloor \}$ 意味着下标 $i$ 和 $k$ 在同一个group内. GN计算的 $\mu$ 和 $\sigma$ 是处于同一个group的所有通道上的 $(H,W)$ 的均值和方差, 具体的计算方式如图2最右侧所示, 在该图实例中, G=2, 并且每一个group具有3个channels. GN同样会在每一个channel中使用参数 $\gamma$ 和 $\beta$ 对数据执行线性偏移.(注意是每一个通道, 而不是group, 也就是同一个group中的不同通道下的 $\gamma$ 和 $\beta$ 参数是不一样的!)</p>
 <p><strong>Relation to Prior Work:</strong>  很明显, LN和IN实际上可以看做是GN的一种特例情况(如图2). 当 $G=1$ 时, GN就变成LN, 当 $G=C$ 时, GP就变成了IN.</p>
 <h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>就和GN的思想一样, GN实现起来也十分简单, 下图是GN基于python和tensorflow的实现代码, 从代码中可以看到, $\gamma$ 和 $\beta$ 的shape为 [1,C,1,1], 也就是说, $\gamma$ 和 $\beta$ 在同一个group中的不同channel来说, 值是不一样的.</p>
-<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fwwerxxn0kj20s70haad2.jpg" alt=""></p>
-<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fwwes3nh5zj21kw0j5dyd.jpg" alt=""></p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwwes7p05wj21kw0huwuz.jpg" alt=""></p>
-<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fwwesbnq0mj20s809qmyz.jpg" alt=""></p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwwesfiq43j20sd0cajtw.jpg" alt=""></p>
-<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fwwesjygdnj21kw0gpat8.jpg" alt=""></p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwwesnf0lvj20t20j6tcb.jpg" alt=""></p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwwesrox6zj20sl0jwtdr.jpg" alt=""></p>
-<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fwwesvxyoej20sv0jkwyp.jpg" alt=""></p>
-<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fwwet23060j21kw0nwag1.jpg" alt=""></p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwwet5sufej20sa0f5aoe.jpg" alt=""></p>
-<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fwwet9mkjbj20s209s762.jpg" alt=""></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fwwerxxn0kj20s70haad2.jpg" alt=""></div></p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p><div style="width: 600px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fwwes3nh5zj21kw0j5dyd.jpg" alt=""></div></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwwes7p05wj21kw0huwuz.jpg" alt=""></div></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fwwesbnq0mj20s809qmyz.jpg" alt=""></div></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwwesfiq43j20sd0cajtw.jpg" alt=""></div></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fwwesjygdnj21kw0gpat8.jpg" alt=""></div></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwwesnf0lvj20t20j6tcb.jpg" alt=""></div></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwwesrox6zj20sl0jwtdr.jpg" alt=""></div></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fwwesvxyoej20sv0jkwyp.jpg" alt=""></div></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fwwet23060j21kw0nwag1.jpg" alt=""></div></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwwet5sufej20sa0f5aoe.jpg" alt=""></div></p>
+<p><div style="width: 600px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fwwet9mkjbj20s209s762.jpg" alt=""></div></p>
 
       
     </div>
@@ -739,7 +739,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">192</span>
+                    <span class="site-state-item-count">194</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -857,7 +857,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">33</span>
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -958,7 +960,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">935k</span>
+    <span title="站点总字数">986k</span>
   
 
   
@@ -967,7 +969,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">14:10</span>
+    <span title="站点阅读时长">14:57</span>
   
 </div>
 
