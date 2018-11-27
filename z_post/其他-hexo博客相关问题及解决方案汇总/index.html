@@ -50,6 +50,10 @@
 
 
 
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
 
 
 
@@ -87,7 +91,7 @@
     scheme: 'Gemini',
     version: '6.3.0',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
-    fancybox: false,
+    fancybox: true,
     fastclick: false,
     lazyload: false,
     tabs: true,
@@ -115,7 +119,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="数学公式渲染异常https://www.once4623.site/2017/10/03/2017-10-04--Use-MathJax-In-Hexo-Next/ hexo 实现置顶功能hexo 站内搜索https://www.jianshu.com/p/519b45730824 https://blog.csdn.net/ksws0292756/article/details/82714984">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-27T01:48:10.053Z">
+<meta property="og:updated_time" content="2018-11-27T02:19:59.432Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo博客相关问题及解决方案汇总">
 <meta name="twitter:description" content="数学公式渲染异常https://www.once4623.site/2017/10/03/2017-10-04--Use-MathJax-In-Hexo-Next/ hexo 实现置顶功能hexo 站内搜索https://www.jianshu.com/p/519b45730824 https://blog.csdn.net/ksws0292756/article/details/82714984">
@@ -243,7 +247,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">194</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">195</span></a>
   </li>
         
         
@@ -489,6 +493,15 @@
             
           </span>
 
+	  
+  	    <span class="post-updated">
+    		&nbsp; | &nbsp; 更新于
+    		<time itemprop="dateUpdated" datetime="2018-11-27T10:19:59+08:00" content="2018-11-27">
+      		  2018-11-27
+    		</time>
+  	  </span>
+	  
+
           
             <span class="post-category" >
             
@@ -537,7 +550,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">654</span>
+                <span title="本文字数">872</span>
               
 
               
@@ -583,6 +596,10 @@
 <p>方法二: 更新searchdb插件: <code>npm install hexo-generator-searchdb --save</code></p>
 <p>方法三: 文章太多时, 尝试将<code>_comfig.yml</code>中<code>Local Search</code>下的<code>limits</code>设置的更高一些</p>
 <p>方法四: 查看 <code>search.xml</code> 文件: 根据报错信息确定哪一篇文章有问题. 有时候, 报错的行数并不是真的问题所在, 需要不断用排除法才能确定具体的行数, 并且, 有可能该行本身并无错误, 而只有重新敲一遍之后才能正常搜索. <a href="https://www.itfanr.cc/2017/11/24/resolve-hexo-blog-search-exception/" target="_blank" rel="noopener">https://www.itfanr.cc/2017/11/24/resolve-hexo-blog-search-exception/</a></p>
+<h1 id="显示更新时间"><a href="#显示更新时间" class="headerlink" title="显示更新时间"></a>显示更新时间</h1><p><a href="https://www.itfanr.cc/2017/12/06/hexo-blog-optimization/" target="_blank" rel="noopener">https://www.itfanr.cc/2017/12/06/hexo-blog-optimization/</a></p>
+<p>默认的更新时间是最后的修改时间, 也可以手动添加 <code>updated</code> 参数强制设置更新时间.</p>
+<p>修改完成后, 需要重新启动 <code>hexo server</code> 才能正确显示.</p>
+<p>如果显示的是英文: post.updated, 则需要在 languages/zh-CNs 文件中的  <code>post</code> 选项下添加 <code>updated: 更新于</code></p>
 
       
     </div>
@@ -700,7 +717,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">194</span>
+                    <span class="site-state-item-count">195</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -884,7 +901,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数学公式渲染异常"><span class="nav-text">数学公式渲染异常</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hexo-实现置顶功能"><span class="nav-text">hexo 实现置顶功能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hexo-站内搜索"><span class="nav-text">hexo 站内搜索</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一直处于加载状态"><span class="nav-text">一直处于加载状态</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数学公式渲染异常"><span class="nav-text">数学公式渲染异常</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hexo-实现置顶功能"><span class="nav-text">hexo 实现置顶功能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hexo-站内搜索"><span class="nav-text">hexo 站内搜索</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一直处于加载状态"><span class="nav-text">一直处于加载状态</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#显示更新时间"><span class="nav-text">显示更新时间</span></a></li></ol></div>
             
 
           </div>
@@ -921,7 +938,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">982k</span>
+    <span title="站点总字数">986k</span>
   
 
   
@@ -930,7 +947,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">14:53</span>
+    <span title="站点阅读时长">14:56</span>
   
 </div>
 
@@ -1002,6 +1019,8 @@
 
 
 
+  
+
 
 
 
@@ -1029,6 +1048,11 @@
   
   
     <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
 
 

@@ -50,6 +50,10 @@
 
 
 
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
 
 
 
@@ -87,7 +91,7 @@
     scheme: 'Gemini',
     version: '6.3.0',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
-    fancybox: false,
+    fancybox: true,
     fastclick: false,
     lazyload: false,
     tabs: true,
@@ -110,14 +114,14 @@
 
   <meta name="description" content="roidb数据结构roidb的类型是list, 其中的每个元素的数据类型都是dict, roidb列表的长度为数据集的数量(即图片的数量), roidb中每个元素的详细情况如下表所示:     for entry in roidb 数据类型 详细说明     entry[&amp;#39;id&amp;#39;] int 代表了当前image的img_id   entry[&amp;#39;file_name&amp;#39;]">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Detectron 源码解析-roidb数据结构">
-<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Caffe2-Detectron-roidb数据结构/index.html">
+<meta property="og:title" content="Detectron 源码解析(一)-roidb数据结构">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Caffe2-Detectron1-roidb数据结构/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="roidb数据结构roidb的类型是list, 其中的每个元素的数据类型都是dict, roidb列表的长度为数据集的数量(即图片的数量), roidb中每个元素的详细情况如下表所示:     for entry in roidb 数据类型 详细说明     entry[&amp;#39;id&amp;#39;] int 代表了当前image的img_id   entry[&amp;#39;file_name&amp;#39;]">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-12T13:43:49.652Z">
+<meta property="og:updated_time" content="2018-11-27T02:53:29.707Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Detectron 源码解析-roidb数据结构">
+<meta name="twitter:title" content="Detectron 源码解析(一)-roidb数据结构">
 <meta name="twitter:description" content="roidb数据结构roidb的类型是list, 其中的每个元素的数据类型都是dict, roidb列表的长度为数据集的数量(即图片的数量), roidb中每个元素的详细情况如下表所示:     for entry in roidb 数据类型 详细说明     entry[&amp;#39;id&amp;#39;] int 代表了当前image的img_id   entry[&amp;#39;file_name&amp;#39;]">
 
 
@@ -125,7 +129,7 @@
 
 
 
-  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/Caffe2-Detectron-roidb数据结构/"/>
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/Caffe2-Detectron1-roidb数据结构/"/>
 
 
 
@@ -135,7 +139,7 @@
   };
 </script>
 
-  <title>Detectron 源码解析-roidb数据结构 | 从零开始的BLOG</title>
+  <title>Detectron 源码解析(一)-roidb数据结构 | 从零开始的BLOG</title>
   
 
 
@@ -243,7 +247,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">194</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">195</span></a>
   </li>
         
         
@@ -440,7 +444,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/Caffe2-Detectron-roidb数据结构/">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/Caffe2-Detectron1-roidb数据结构/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZeroZone">
@@ -457,7 +461,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Detectron 源码解析-roidb数据结构
+          <h1 class="post-title" itemprop="name headline">Detectron 源码解析(一)-roidb数据结构
               
             
           </h1>
@@ -488,6 +492,15 @@
 
             
           </span>
+
+	  
+  	    <span class="post-updated">
+    		&nbsp; | &nbsp; 更新于
+    		<time itemprop="dateUpdated" datetime="2018-11-27T10:53:29+08:00" content="2018-11-27">
+      		  2018-11-27
+    		</time>
+  	  </span>
+	  
 
           
             <span class="post-category" >
@@ -786,7 +799,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">194</span>
+                    <span class="site-state-item-count">195</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1007,7 +1020,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">982k</span>
+    <span title="站点总字数">986k</span>
   
 
   
@@ -1016,7 +1029,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">14:53</span>
+    <span title="站点阅读时长">14:56</span>
   
 </div>
 
@@ -1088,6 +1101,8 @@
 
 
 
+  
+
 
 
 
@@ -1115,6 +1130,11 @@
   
   
     <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
 
 

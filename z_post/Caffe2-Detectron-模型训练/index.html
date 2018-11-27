@@ -50,6 +50,10 @@
 
 
 
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
 
 
 
@@ -87,7 +91,7 @@
     scheme: 'Gemini',
     version: '6.3.0',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
-    fancybox: false,
+    fancybox: true,
     fastclick: false,
     lazyload: false,
     tabs: true,
@@ -117,7 +121,7 @@
 <meta property="og:description" content="运行Faster-RCNN指令123python tools/train_net.py \    --cfg configs/getting_started/tutorial_1gpu_e2e_faster_rcnn_R-50-FPN.yaml \    OUTPUT_DIR /tmp/detectron-output 上面两行指令第一行指定了config文件的位置, 第二行指定了输出文件的位置.">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://wx1.sinaimg.cn/large/d7b90c85ly1fw6x5xbfw6j213z0f977z.jpg">
-<meta property="og:updated_time" content="2018-11-12T13:44:56.971Z">
+<meta property="og:updated_time" content="2018-11-27T02:52:09.190Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Detectron 源码解析-模型训练">
 <meta name="twitter:description" content="运行Faster-RCNN指令123python tools/train_net.py \    --cfg configs/getting_started/tutorial_1gpu_e2e_faster_rcnn_R-50-FPN.yaml \    OUTPUT_DIR /tmp/detectron-output 上面两行指令第一行指定了config文件的位置, 第二行指定了输出文件的位置.">
@@ -246,7 +250,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">194</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">195</span></a>
   </li>
         
         
@@ -492,6 +496,15 @@
             
           </span>
 
+	  
+  	    <span class="post-updated">
+    		&nbsp; | &nbsp; 更新于
+    		<time itemprop="dateUpdated" datetime="2018-11-27T10:52:09+08:00" content="2018-11-27">
+      		  2018-11-27
+    		</time>
+  	  </span>
+	  
+
           
             <span class="post-category" >
             
@@ -589,7 +602,7 @@
 <p><img src="http://wx1.sinaimg.cn/large/d7b90c85ly1fw6x5xbfw6j213z0f977z.jpg" alt=""></p>
 <p>上图为<code>tools/train_net.py</code>文件函数调用的关系图, 几乎所有的模型都是通过这个脚本运行的, 源码分析如下:</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tools/train_net.py</span></span><br><span class="line"><span class="keyword">from</span> __future <span class="keyword">import</span> ... <span class="comment"># 导入__future__的相关包, 兼容python2</span></span><br><span class="line"><span class="comment">#...</span></span><br><span class="line"><span class="keyword">import</span> cv2 <span class="comment">#由于cv2自身的bug, cv2必须在caffe2之前被导入</span></span><br><span class="line"><span class="comment">#...</span></span><br><span class="line"><span class="keyword">from</span> caffe2.python <span class="keyword">import</span> workspace</span><br><span class="line"><span class="comment"># 导入detectron相关</span></span><br><span class="line"><span class="keyword">from</span> detectron.core.config <span class="keyword">import</span> assert_and_infer_cfg</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> detectron.core.config <span class="keyword">import</span> cfg</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> detectron.utils.logging <span class="keyword">import</span> setup_logging</span><br><span class="line"><span class="comment"># helpful utilities for working with caffe2</span></span><br><span class="line"><span class="keyword">import</span> detectron.utils.c2 <span class="keyword">as</span> c2_utils</span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练文件</span></span><br><span class="line"><span class="keyword">import</span> detectron.utils.train</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入Detectron需要的相关contirb ops(nccl ops)</span></span><br><span class="line">c2_utils.import_contrib_ops()</span><br><span class="line"><span class="comment"># 导入Detectron ops</span></span><br><span class="line">c2_utils.import_detectron_ops()</span><br><span class="line"></span><br><span class="line">cv2.ocl.setUseOpenCL(<span class="keyword">False</span>) <span class="comment">#源码注释已经说得很清楚, 就是为了安全而特意禁用opencl</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse_args</span><span class="params">()</span>:</span></span><br><span class="line">  <span class="comment"># 定义了各种命令行参数, 一般只需要关注--cfg参数, 其他默认即可</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">  <span class="comment"># 初始化caffe2的全局环境,</span></span><br><span class="line">  <span class="comment">#如果希望看到更加详细的初始化信息, 可以将log_level设置为1</span></span><br><span class="line">  workspace.GlobalInit(</span><br><span class="line">    [<span class="string">'caffe2'</span>, <span class="string">'--caffe2_log_level=0'</span>, <span class="string">'--caffe2_gpu_memory_tracking=1'</span>]</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">  <span class="comment">## 设置logging, __name__ = '__main__', 使用了python的logging模块,</span></span><br><span class="line">  logger = setup_logging(__name__)  </span><br><span class="line">  <span class="comment">#...</span></span><br><span class="line">  <span class="comment"># 解析命令行参数</span></span><br><span class="line">  args = parse_args()</span><br><span class="line">  <span class="comment">#...</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> args.cfg_file <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">    <span class="comment"># from detectron.core.config import merge_cfg_from_file</span></span><br><span class="line">    merge_cfg_from_file(args.cfg_file)</span><br><span class="line">  <span class="keyword">if</span> args.opts <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">    <span class="comment"># from detectron.core.config import merge_cfg_from_list</span></span><br><span class="line">    merge_cfg_from_list(args.opts)</span><br><span class="line">  assert_and_infer_cfg()</span><br><span class="line"></span><br><span class="line">  <span class="comment"># 获取并显示当前的nvidia相关信息</span></span><br><span class="line">  smi_output, cuda_ver, cudnn_ver = c2_utils.get_nvidia_info()</span><br><span class="line">  logger.info(...)</span><br><span class="line">  <span class="comment">#...</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># 设置随机种子, 以便每次训练时的网络状态都不同</span></span><br><span class="line">  np.random.seed(cfg.RNG_SEED)</span><br><span class="line"></span><br><span class="line">  <span class="comment"># 最重要的一行代码, 执行训练!</span></span><br><span class="line">  <span class="comment"># import detectron.utils.train</span></span><br><span class="line">  checkpoints = detectron.utils.train.train_model()</span><br><span class="line"></span><br><span class="line">  <span class="comment"># 测试训练好的模型</span></span><br><span class="line">  <span class="keyword">if</span> <span class="keyword">not</span> args.skip_test:</span><br><span class="line">    test_model(...)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_model</span><span class="params">(...)</span>:</span></span><br><span class="line">  <span class="comment"># 测试训练好的模型</span></span><br><span class="line">  <span class="comment">#...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">  main()</span><br></pre></td></tr></table></figure>
-<h1 id="train-py-文件"><a href="#train-py-文件" class="headerlink" title="train.py 文件"></a>train.py 文件</h1><p>可以看到, 上面只是一个启动训练代码的脚本文件, 接下来看一下<code>train.py</code>文件中的<code>train_model()</code>函数的详细情况:</p>
+<h1 id="train-py-文件"><a href="#train-py-文件" class="headerlink" title="train.py 文件"></a>train.py 文件</h1><p>可以看到, 上面只是一个启动训练代码的脚本文件, 接下来看一下<code>detectron/utils/train.py</code>文件中的<code>train_model()</code>函数的详细情况:</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#detectron/utils/train.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train_model</span><span class="params">()</span>:</span></span><br><span class="line">  <span class="string">"""循环训练模型"""</span></span><br><span class="line">  model, weights_file, start_iter, checkpoints, output_dir = create_model()</span><br><span class="line">  <span class="comment">#...</span></span><br></pre></td></tr></table></figure>
 <h1 id="create-model"><a href="#create-model" class="headerlink" title="create_model()"></a><code>create_model()</code></h1><p>在这里, <code>train_model()</code>函数的开始调用了<code>create_model()</code>函数, 在进行后面的代码分析之前, 需要先看看这个函数具体做了什么, 返回了什么:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#detectron/utils/train.py</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train_model</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment">#...</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handle_critical_error</span><span class="params">(model,msg)</span>:</span></span><br><span class="line">    <span class="comment">#...</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_model</span><span class="params">()</span>:</span></span><br><span class="line">  <span class="string">"""创建模型, 并且寻找保存的checkpoints用以继续训练"""</span></span><br><span class="line">  logger = logging.getLogger(__name__)</span><br><span class="line"></span><br><span class="line">  start_iter = <span class="number">0</span></span><br><span class="line">  checkpoints = &#123;&#125;</span><br><span class="line">  <span class="comment"># from detectron.core.config import get_output_dir</span></span><br><span class="line">  <span class="comment"># def get_output_dir(datasets, training=True)</span></span><br><span class="line">  <span class="comment"># 这里只是用了数据集的名字, 并不是使用数据集</span></span><br><span class="line">  <span class="comment"># 在OUTPUT文件夹(由config定义)会创建一个新的文件夹, 并返回该路径:</span></span><br><span class="line">  <span class="comment"># &lt;output-dir&gt;/&lt;train|test&gt;/&lt;dataset-name&gt;/&lt;model-type&gt;/</span></span><br><span class="line">  <span class="comment"># 对于本例来说, cfg.TRAIN.DATASETS = ('coco_2014_train',)</span></span><br><span class="line">  output_dir = get_output_dir(cfg.TRAIN.DATASETS, train = <span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment"># 默认为R-50.pkl的 url 下载地址</span></span><br><span class="line">  weights_file = cfg.TRAIN.WEIGHTS</span><br><span class="line">  <span class="keyword">if</span> cfg.TRAIN.AUTO_RESUME: <span class="comment">#TODO, 这个参数在哪里??</span></span><br><span class="line">    <span class="comment">#...</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># 对于本例, cfg.MODEL.TYPE = generalized_rcnn</span></span><br><span class="line">  logger.info(<span class="string">"Building model: &#123;&#125;"</span>.format(cfg.MODEL.TYPE))</span><br><span class="line"></span><br><span class="line">  <span class="comment"># from detectron.modeling import model_builder</span></span><br><span class="line">  <span class="comment"># def create(model_type_func, train=False, gpu_id=0)</span></span><br><span class="line">  <span class="comment"># 创建一个一般化的模型, 然后将其转化成特定的模型</span></span><br><span class="line">  <span class="comment"># 函数内部使用了detectron/modeling/detector.py 中的DetectionModelHelper类</span></span><br><span class="line">  <span class="comment"># 同时将cfg.MODEL.NUM_CLASSES信息传递给了该类</span></span><br><span class="line">  <span class="comment"># cfg.MODEL.TYPE = generalized_rcnn</span></span><br><span class="line">  <span class="comment"># <span class="doctag">TODO:</span> 此行代码涉及的文件和代码较多, 暂时先不深入探讨, 可以认为是创建了一个模型</span></span><br><span class="line">  model = model_builder.create(cfg.MODEL.TYPE, train=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> cfg.MEMONGER: <span class="comment"># TODO, 这个参数在哪里?</span></span><br><span class="line">      optimize_memory(model)</span><br><span class="line"></span><br><span class="line">  workspace.RunNetOnce(model.param_init_net)</span><br><span class="line">  <span class="keyword">return</span> model, wright_file, start_iter, checkpoints, output_dir</span><br></pre></td></tr></table></figure></p>
 <h1 id="setup-model-for-training"><a href="#setup-model-for-training" class="headerlink" title="setup_model_for_training(...)"></a><code>setup_model_for_training(...)</code></h1><p>接着回到刚才的<code>train_model()</code>函数:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#detectron/utils/train.py</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train_model</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""循环训练模型"""</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 由上面的函数可知:</span></span><br><span class="line">    <span class="comment"># model为DetectionModelHelper类创建的模型对象</span></span><br><span class="line">    <span class="comment"># weights_file即为cfg文件里定义的权重文件的url</span></span><br><span class="line">    <span class="comment"># start_iter = 0</span></span><br><span class="line">    <span class="comment"># checkpoints =&#123;&#125; 字典类型哦!</span></span><br><span class="line">    <span class="comment"># output_dir为根据cfg.OUTPUT_DIR和DATASETS名字创建的输出目录</span></span><br><span class="line">    model, weights_file, start_iter, checkpoints, output_dir = create_model()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="string">"final"</span> <span class="keyword">in</span> checkpoints:</span><br><span class="line">        <span class="comment"># 如果已经训练完成, 则直接返回</span></span><br><span class="line">        <span class="keyword">return</span> checkpoints</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 这里调用了本文件的函数, 主要是为训练模型做准备工作</span></span><br><span class="line">    setup_model_for_training(model, weights_file, output_dir)</span><br><span class="line">    <span class="comment">#...</span></span><br></pre></td></tr></table></figure></p>
@@ -721,7 +734,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">194</span>
+                    <span class="site-state-item-count">195</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -942,7 +955,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">982k</span>
+    <span title="站点总字数">986k</span>
   
 
   
@@ -951,7 +964,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">14:53</span>
+    <span title="站点阅读时长">14:56</span>
   
 </div>
 
@@ -1023,6 +1036,8 @@
 
 
 
+  
+
 
 
 
@@ -1050,6 +1065,11 @@
   
   
     <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
 
 
