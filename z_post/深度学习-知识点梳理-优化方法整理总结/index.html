@@ -108,19 +108,19 @@
 
 
 
-  <meta name="description" content="概览    名称 公式 优化方法简述     SGD $g_t = \nabla_{\theta_{t-1}} f(\theta_{t-1})$  $\delta \theta_t = - \eta * g_t$ 每一次都计算mini-batch的梯度, 然后对参数进行更新   Momentum $m_t = \mu  m_{t-1} + g_t$  $\delta \theta_t = -\et">
+  <meta name="description" content="概览    名称 公式 优化方法简述     SGD $g_t = \nabla_{\theta_{t-1}} f(\theta_{t-1})$  $\delta \theta_t = - \eta \times g_t$ 每一次都计算mini-batch的梯度, 然后对参数进行更新   Momentum $m_t = \mu \times m_{t-1} + g_t$  $\delta \the">
 <meta property="og:type" content="article">
 <meta property="og:title" content="优化方法整理总结">
-<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/深度学习-知识点梳理-优化方法深入解析/index.html">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/深度学习-知识点梳理-优化方法整理总结/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="概览    名称 公式 优化方法简述     SGD $g_t = \nabla_{\theta_{t-1}} f(\theta_{t-1})$  $\delta \theta_t = - \eta * g_t$ 每一次都计算mini-batch的梯度, 然后对参数进行更新   Momentum $m_t = \mu  m_{t-1} + g_t$  $\delta \theta_t = -\et">
+<meta property="og:description" content="概览    名称 公式 优化方法简述     SGD $g_t = \nabla_{\theta_{t-1}} f(\theta_{t-1})$  $\delta \theta_t = - \eta \times g_t$ 每一次都计算mini-batch的梯度, 然后对参数进行更新   Momentum $m_t = \mu \times m_{t-1} + g_t$  $\delta \the">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw1zh9xp8fj20hq0dtjuw.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fw1zh9w3n9j20j90femz6.jpg">
-<meta property="og:updated_time" content="2018-10-16T08:09:58.003Z">
+<meta property="og:updated_time" content="2018-11-27T01:46:28.655Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="优化方法整理总结">
-<meta name="twitter:description" content="概览    名称 公式 优化方法简述     SGD $g_t = \nabla_{\theta_{t-1}} f(\theta_{t-1})$  $\delta \theta_t = - \eta * g_t$ 每一次都计算mini-batch的梯度, 然后对参数进行更新   Momentum $m_t = \mu  m_{t-1} + g_t$  $\delta \theta_t = -\et">
+<meta name="twitter:description" content="概览    名称 公式 优化方法简述     SGD $g_t = \nabla_{\theta_{t-1}} f(\theta_{t-1})$  $\delta \theta_t = - \eta \times g_t$ 每一次都计算mini-batch的梯度, 然后对参数进行更新   Momentum $m_t = \mu \times m_{t-1} + g_t$  $\delta \the">
 <meta name="twitter:image" content="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw1zh9xp8fj20hq0dtjuw.jpg">
 
 
@@ -128,7 +128,7 @@
 
 
 
-  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/深度学习-知识点梳理-优化方法深入解析/"/>
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/深度学习-知识点梳理-优化方法整理总结/"/>
 
 
 
@@ -443,7 +443,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/深度学习-知识点梳理-优化方法深入解析/">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/深度学习-知识点梳理-优化方法整理总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZeroZone">
@@ -586,23 +586,23 @@
 <tbody>
 <tr>
 <td>SGD</td>
-<td>$g_t = \nabla_{\theta_{t-1}} f(\theta_{t-1})$ <br> $\delta \theta_t = - \eta * g_t$</td>
+<td>$g_t = \nabla_{\theta_{t-1}} f(\theta_{t-1})$ <br> $\delta \theta_t = - \eta \times g_t$</td>
 <td>每一次都计算mini-batch的梯度, 然后对参数进行更新</td>
 </tr>
 <tr>
 <td>Momentum</td>
-<td>$m_t = \mu <em> m_{t-1} + g_t$ <br> $\delta \theta_t = -\eta </em> m_t$</td>
+<td>$m_t = \mu \times m_{t-1} + g_t$ <br> $\delta \theta_t = -\eta \times m_t$</td>
 <td>公式中的 $\mu$ 为动量因子,  借助于物理学里面动量的概念, 通过动量的积累来在相关方向上加速SGD优化速度, 同时有助于跳出局部最优, 进而加快收敛</td>
 </tr>
 <tr>
 <td>Nesterov</td>
-<td>$\delta_t = -\eta <em> \mu </em> m_{t-1} - \eta * g_t$</td>
+<td>$\delta_t = -\eta \times \mu \times m_{t-1} - \eta \times g_t$</td>
 <td>Nesterov在梯度更新时做一个矫正, 避免前进太快, 同时提高灵敏度, 从公式可以看出, 动量项 $m_{t-1}$ 没有改变当前的梯度 $g_t$, 而是利用之前的动量来影响当前的动量</td>
 </tr>
 <tr>
 <td>Adagrad</td>
-<td>$n_t = n_{t-1} + g^2_t$ <br> $\delta \theta_t = -\frac{\eta}{\sqrt{n_t + \epsilon}} * g_t$</td>
-<td>Adagrad相当于在学习率前面乘了一个约束项 $\frac{\eta}{n_t + \epsilon}, 使得 $g_t$ 较小的时候, 能够放大梯度, 反之, 在 $g_t$ 较大的时候, 能够约束梯度</td>
+<td>$n_t = n_{t-1} + g^2_t$ <br> $\delta \theta_t = -\frac{\eta}{\sqrt{n_t + \epsilon}} \times g_t$</td>
+<td>Adagrad相当于在学习率前面乘了一个约束项 $\frac{\eta}{n_t + \epsilon}$, 使得 $g_t$ 较小的时候, 能够放大梯度, 反之, 在 $g_t$ 较大的时候, 能够约束梯度</td>
 </tr>
 <tr>
 <td>Adadelta</td>
@@ -616,12 +616,8 @@
 </tr>
 <tr>
 <td>Adam</td>
-<td>$m_t = \mu <em> m_{t-1} + (1-\mu) </em> g_t$ <br> $n_t = \nu<em>n_{t-1} + (1 - \nu) </em> g^2_t$ <br> $\hat m_t = \frac{m_t}{1-\mu_t}$ <br> $\hat n_t = \frac{n_t}{1- \nu_t}$ <br> $\delta \theta_t = -\frac{\hat m_t}{\sqrt{\hat n_t} + \epsilon} * \eta$</td>
-<td>Adam本质上是带有动量项的RMSprop, 它利用梯度的一阶矩估计和二阶矩估计动态调整每个参数的学习率. 公式中, $m_t, n_t$ 分别是对梯度的一阶矩估计和二阶矩估计, 可以看作对期望 $E</td>
-<td>g_t</td>
-<td>, E</td>
-<td>g^2_t</td>
-<td>$ 的估计, $\hat m_t, \hat n_t$ 是对 $m_t$, $n_t$ 的校正, 这样可以近似为对期望的无偏估计.</td>
+<td>$m_t = \mu \times m_{t-1} + (1-\mu) \times g_t$ <br> $n_t = \nu \times n_{t-1} + (1 - \nu) \times g^2_t$ <br> $\hat m_t = \frac{m_t}{1-\mu_t}$ <br> $\hat n_t = \frac{n_t}{1- \nu_t}$ <br> $\delta \theta_t = -\frac{\hat m_t}{\sqrt{\hat n_t} + \epsilon} \times \eta$</td>
+<td>Adam本质上是带有动量项的RMSprop, 它利用梯度的一阶矩估计和二阶矩估计动态调整每个参数的学习率. 公式中, $m_t, n_t$ 分别是对梯度的一阶矩估计和二阶矩估计, 可以看做是对期望 $E g_t$, $E g^2_t$ 的估计, $\hat m_t$, $\hat n_t$ 是对 $m_t$, $n_t$ 的校正, 这样可以近似为对期望的无偏估计</td>
 </tr>
 <tr>
 <td>Adamax</td>
@@ -997,7 +993,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">986k</span>
+    <span title="站点总字数">982k</span>
   
 
   
@@ -1006,7 +1002,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">14:57</span>
+    <span title="站点阅读时长">14:53</span>
   
 </div>
 

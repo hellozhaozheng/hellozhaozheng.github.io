@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="数学公式渲染异常https://www.once4623.site/2017/10/03/2017-10-04--Use-MathJax-In-Hexo-Next/ hexo 实现置顶功能hexo 站内搜索https://www.jianshu.com/p/519b45730824 https://blog.csdn.net/ksws0292756/article/details/82714984">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-08T01:10:25.079Z">
+<meta property="og:updated_time" content="2018-11-27T01:48:10.053Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo博客相关问题及解决方案汇总">
 <meta name="twitter:description" content="数学公式渲染异常https://www.once4623.site/2017/10/03/2017-10-04--Use-MathJax-In-Hexo-Next/ hexo 实现置顶功能hexo 站内搜索https://www.jianshu.com/p/519b45730824 https://blog.csdn.net/ksws0292756/article/details/82714984">
@@ -537,7 +537,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">453</span>
+                <span title="本文字数">654</span>
               
 
               
@@ -574,10 +574,15 @@
         <h1 id="数学公式渲染异常"><a href="#数学公式渲染异常" class="headerlink" title="数学公式渲染异常"></a>数学公式渲染异常</h1><p><a href="https://www.once4623.site/2017/10/03/2017-10-04--Use-MathJax-In-Hexo-Next/" target="_blank" rel="noopener">https://www.once4623.site/2017/10/03/2017-10-04--Use-MathJax-In-Hexo-Next/</a></p>
 <h1 id="hexo-实现置顶功能"><a href="#hexo-实现置顶功能" class="headerlink" title="hexo 实现置顶功能"></a>hexo 实现置顶功能</h1><h1 id="hexo-站内搜索"><a href="#hexo-站内搜索" class="headerlink" title="hexo 站内搜索"></a>hexo 站内搜索</h1><p><a href="https://www.jianshu.com/p/519b45730824" target="_blank" rel="noopener">https://www.jianshu.com/p/519b45730824</a></p>
 <p><a href="https://blog.csdn.net/ksws0292756/article/details/82714984" target="_blank" rel="noopener">https://blog.csdn.net/ksws0292756/article/details/82714984</a></p>
-<h2 id="一直处于加载状态"><a href="#一直处于加载状态" class="headerlink" title="一直处于加载状态"></a>一直处于加载状态</h2><p>首先看是不是有哪些文件的title命名方式有问题, 已知的问题有: 不能有包含半角的冒号(全角可以), 这个可以用<code>hexo g</code>得知, 如果有问题, 则<code>hexo g</code>会报错</p>
+<h2 id="一直处于加载状态"><a href="#一直处于加载状态" class="headerlink" title="一直处于加载状态"></a>一直处于加载状态</h2><p>首先看是不是有哪些文件的title命名方式有问题, 已知的问题有:</p>
+<ul>
+<li>不能有包含半角的冒号(全角可以), 这个可以用<code>hexo g</code>得知, 如果有问题, 则<code>hexo g</code>会报错</li>
+<li>数学公式中用星号代表乘号.</li>
+</ul>
 <p>方法一: <code>hexo clean</code> + <code>hexo g</code> 重新生成<code>search.xml</code>文件</p>
 <p>方法二: 更新searchdb插件: <code>npm install hexo-generator-searchdb --save</code></p>
 <p>方法三: 文章太多时, 尝试将<code>_comfig.yml</code>中<code>Local Search</code>下的<code>limits</code>设置的更高一些</p>
+<p>方法四: 查看 <code>search.xml</code> 文件: 根据报错信息确定哪一篇文章有问题. 有时候, 报错的行数并不是真的问题所在, 需要不断用排除法才能确定具体的行数, 并且, 有可能该行本身并无错误, 而只有重新敲一遍之后才能正常搜索. <a href="https://www.itfanr.cc/2017/11/24/resolve-hexo-blog-search-exception/" target="_blank" rel="noopener">https://www.itfanr.cc/2017/11/24/resolve-hexo-blog-search-exception/</a></p>
 
       
     </div>
@@ -916,7 +921,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">986k</span>
+    <span title="站点总字数">982k</span>
   
 
   
@@ -925,7 +930,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">14:57</span>
+    <span title="站点阅读时长">14:53</span>
   
 </div>
 
