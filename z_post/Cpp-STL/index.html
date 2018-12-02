@@ -119,7 +119,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="vector连续存储结果, 每个元素在内存上是连续的, 支持 高效的随机访问和尾端插入/删除操作, 但其他位置的插入/删除操作效率低下, 可以看做是一个数组, 但是与数组的区别为: 内存空间的扩展. vector 支持动态大小的数据存储, 而数组则必须指定大小, 但需要扩展空间时, 需要手动实现. vector的内存分配原理及实现:在STL内部实现时, 首先分配一个较大的内存空间预备存储, 即ca">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-23T02:15:38.212Z">
+<meta property="og:updated_time" content="2018-11-30T13:45:26.722Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++ 标准模板库STL完整笔记">
 <meta name="twitter:description" content="vector连续存储结果, 每个元素在内存上是连续的, 支持 高效的随机访问和尾端插入/删除操作, 但其他位置的插入/删除操作效率低下, 可以看做是一个数组, 但是与数组的区别为: 内存空间的扩展. vector 支持动态大小的数据存储, 而数组则必须指定大小, 但需要扩展空间时, 需要手动实现. vector的内存分配原理及实现:在STL内部实现时, 首先分配一个较大的内存空间预备存储, 即ca">
@@ -247,7 +247,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">195</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">207</span></a>
   </li>
         
         
@@ -496,8 +496,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2018-11-23T10:15:38+08:00" content="2018-11-23">
-      		  2018-11-23
+    		<time itemprop="dateUpdated" datetime="2018-11-30T21:45:26+08:00" content="2018-11-30">
+      		  2018-11-30
     		</time>
   	  </span>
 	  
@@ -550,7 +550,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">3.6k</span>
+                <span title="本文字数">6.7k</span>
               
 
               
@@ -564,7 +564,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">3 分钟</span>
+                <span title="阅读时长">6 分钟</span>
               
             </div>
           
@@ -641,6 +641,31 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">priority_queue&lt;<span class="keyword">int</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;, greater&lt;<span class="keyword">int</span>&gt;&gt; q;</span><br></pre></td></tr></table></figure>
 <h2 id="自定义排序方法"><a href="#自定义排序方法" class="headerlink" title="自定义排序方法"></a>自定义排序方法</h2><p>优先出列时会对 <code>!cmp</code> 判定, 所以如果希望小的在前, 那么就应该返回 <code>元素1 &gt; 元素2</code></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">cmp</span>&#123;</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">int</span> &amp;a, <span class="keyword">int</span> &amp;b)</span> <span class="keyword">const</span></span>&#123; <span class="comment">// 仿函数</span></span><br><span class="line">        <span class="keyword">return</span> a &gt; b ; <span class="comment">// 排序后, 小的在前</span></span><br><span class="line">        .</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="partial-sort"><a href="#partial-sort" class="headerlink" title="partial_sort"></a>partial_sort</h1><h1 id="nth-element"><a href="#nth-element" class="headerlink" title="nth_element()"></a>nth_element()</h1><p><code>nth_element</code>算法将重新排列区间[first, last)的序列元素, 算法执行完毕后, 会使得</p>
+<ul>
+<li>第 $k$ 个位置的元素在最终的算法执行完毕后, 和整个区间完全排序后该位置的元素相同.</li>
+<li>这个新的<code>nth</code>元素之前的所有元素均 &lt;= (&gt;=) <code>nth</code>元素之后的所有元素.<br>但是该算法并不保证位于第 $k$ 个元素两边区间的元素有序. 该算法和 <code>partial_sort</code> 算法之间一个很大的区别在于: <code>nth_element</code>对于除第 $k$ 位置的元素之外的区间元素的顺序不做保证, 而<code>partial_sort</code>排序后会使得前 $m$ 个数的子区间是有序的. 正因为如此, 在需要无序的前 <code>top_k</code> 个值时, <code>nth_element</code> 相对于 <code>partial_sort</code> 要更快.(只需要找第 $k$ 个值, 其前面的元素即为 top_k, 时间复杂度为 $O(n)$).</li>
+</ul>
+<p>假如有序列<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> v[<span class="number">10</span>]=&#123;<span class="number">41</span>,<span class="number">67</span>,<span class="number">34</span>,<span class="number">0</span>,<span class="number">69</span>,<span class="number">24</span>,<span class="number">78</span>,<span class="number">58</span>,<span class="number">62</span>,<span class="number">64</span>&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>我们用<code>nth_element</code>求第5小的元素, 则可以执行<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::nth_element(v, v+<span class="number">4</span>, v+<span class="number">10</span>);</span><br></pre></td></tr></table></figure></p>
+<p>若使用的是模板<code>vector</code>, 则可执行:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span> &lt;<span class="keyword">int</span>&gt; v = &#123;<span class="number">41</span>,<span class="number">67</span>,<span class="number">34</span>,<span class="number">0</span>,<span class="number">69</span>,<span class="number">24</span>,<span class="number">78</span>,<span class="number">58</span>,<span class="number">62</span>,<span class="number">64</span>&#125;;</span><br><span class="line"><span class="built_in">std</span>::nth_element(v.begin(), v.begin()+<span class="number">4</span>, v.end());</span><br></pre></td></tr></table></figure></p>
+<p>算法执行完毕后, 第5小的元素便是<code>v[4] = 58</code>. 并且, 所有比58小的元素都在<code>v[4]</code>的左边, 大于等于58的都在<code>v[4]</code>的右边.(<code>v[4]</code>在相同元素中排在最前面)</p>
+<p><code>nth_element</code>默认时按照从小到大排序, 如果希望找到第 $k$ 大的元素, 则应该传入相应的仿函数:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::nth_element(v.begin(), v.begin()+<span class="number">4</span>, v.end(), <span class="built_in">std</span>::greater&lt;<span class="keyword">int</span>&gt;());</span><br></pre></td></tr></table></figure></p>
+<p><strong>nen_element的算法原理: 基于 Partition</strong></p>
+<ol>
+<li>从给定的区间[first, last)中使用三点取值法获取一个枢纽值(三点中值)<code>pivot</code>.</li>
+<li>将小于<code>pivot</code>的元素调整至左边区间, 将大于等于<code>pivot</code>的元素调整至右边区间</li>
+<li>判断<code>nth</code>的位置是处在左边的区间还是右边的区间, 然后对<code>nth</code>所在的区间重复进行上述操作, 直到该区间的元素数小于等于3.</li>
+<li>经过上面的操作, 此时的区间元素数小于等于3, 对该区间进行一次全排列, 以固定nth所处位置的元素.</li>
+</ol>
+<p><strong>复杂度分析:</strong><br>基于 Partition , 查找第 $k$ 大/小的元素, 其复杂度为 $O(n)$. 因为当我们找到第一个 Partition 的结果<code>pivot</code>时, 只有三种可能:</p>
+<ul>
+<li><code>pivot</code>的位置就是<code>nth</code>, 则程序结束, 可返回结果</li>
+<li><code>pivot</code>的位置在<code>nth</code>的右边, 则说明<code>nth</code>在<code>pivot</code>的左边, 因此需要在左边的范围内继续调用 Partition</li>
+<li><code>pivot</code>的位置在<code>nth</code>的左边, 则说明<code>nth</code>在<code>pivot</code>的右边, 因此需要在右边的范围内继续调用 Partition</li>
+</ul>
+<p>可以看出, 基于 Partition 的查找第 $k$ 大/小元素的算法, 与快排的一个明显区别就是: <strong>每一次 Partition 之后, nth_element 算法只需要再对两边中的其中一边调用 Partition 即可, 而快排则需要同时对两边都调用 Partition</strong>.<br>鉴于 Partition 的复杂度为 $O(n)$, 则快排因为要进行 $logn$ 次 Partition, 所以快排的时间复杂度就是 $nlogn$.($T(n) = 2\times T(n/2) + O(n)$)<br>而 nth_element 的时间复杂度为 $T(n) = T(n/2) + O(n) = O(n) + O(n/2) + O(n/4) + …$, 也就是 $O(n)$.</p>
+<p>源码剖析:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> _<span class="title">RandomAccessIter</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">inline</span> <span class="title">void</span> <span class="title">nth_element</span>(_<span class="title">RandomAccessIter</span> __<span class="title">first</span>, _<span class="title">RandomAccessIter</span> __<span class="title">nth</span>,</span></span><br><span class="line"><span class="class">	_<span class="title">RandomAccessIter</span> __<span class="title">last</span>) &#123;</span></span><br><span class="line">	__STL_REQUIRES(_RandomAccessIter, _Mutable_RandomAccessIterator);</span><br><span class="line">	__STL_REQUIRES(<span class="keyword">typename</span> iterator_traits&lt;_RandomAccessIter&gt;::value_type,</span><br><span class="line">			_LessThanComparable);</span><br><span class="line">	__nth_element(__first, __nth, __last, __VALUE_TYPE(__first));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> _<span class="title">RandomAccessIter</span>, <span class="title">class</span> _<span class="title">Tp</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> __<span class="title">nth_element</span>(_<span class="title">RandomAccessIter</span> __<span class="title">first</span>, _<span class="title">RandomAccessIter</span> __<span class="title">nth</span>,</span></span><br><span class="line"><span class="class">	_<span class="title">RandomAccessIter</span> __<span class="title">last</span>, _<span class="title">Tp</span>*) &#123;</span></span><br><span class="line">	<span class="keyword">while</span> (__last - __first &gt; <span class="number">3</span>) &#123;    <span class="comment">// 划分区间知道区间元素不大于3</span></span><br><span class="line">		_RandomAccessIter __cut =</span><br><span class="line">				__unguarded_partition(__first, __last, <span class="comment">// 三点均值法 划分区间 返回区间分割后第二个区间的位置</span></span><br><span class="line">			_Tp(__median(*__first,</span><br><span class="line">			*(__first + (__last - __first)/<span class="number">2</span>),</span><br><span class="line">			*(__last - <span class="number">1</span>))));</span><br><span class="line">		<span class="keyword">if</span> (__cut &lt;= __nth)   <span class="comment">// nth落在在第二个区间</span></span><br><span class="line">			__first = __cut;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			__last = __cut;  <span class="comment">// nth落在第一个区间</span></span><br><span class="line">	&#125;</span><br><span class="line">	__insertion_sort(__first, __last); <span class="comment">// 插入排序 处理区间不大于3的子区间进行全排序</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> _<span class="title">RandomAccessIter</span>, <span class="title">class</span> _<span class="title">Tp</span>&gt;</span></span><br><span class="line"><span class="class">_<span class="title">RandomAccessIter</span> __<span class="title">unguarded_partition</span>(_<span class="title">RandomAccessIter</span> __<span class="title">first</span>,</span></span><br><span class="line"><span class="class">	_<span class="title">RandomAccessIter</span> __<span class="title">last</span>,</span></span><br><span class="line"><span class="class">	_<span class="title">Tp</span> __<span class="title">pivot</span>)</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">		<span class="keyword">while</span> (*__first &lt; __pivot)</span><br><span class="line">			++__first;</span><br><span class="line">		--__last;</span><br><span class="line">		<span class="keyword">while</span> (__pivot &lt; *__last)</span><br><span class="line">			--__last;</span><br><span class="line">		<span class="keyword">if</span> (!(__first &lt; __last))</span><br><span class="line">			<span class="keyword">return</span> __first;</span><br><span class="line">		iter_swap(__first, __last);</span><br><span class="line">		++__first;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -678,7 +703,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/PyTorch-FasterRCNN源码实现/" rel="next" title="Faster-RCNN 源码实现 (PyTorch)">
+              <a href="/z_post/PyTorch-FasterRCNN/" rel="next" title="Faster-RCNN 源码实现 (PyTorch)">
                 Faster-RCNN 源码实现 (PyTorch) <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -758,7 +783,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">195</span>
+                    <span class="site-state-item-count">207</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -942,7 +967,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vector"><span class="nav-text">vector</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#deque"><span class="nav-text">deque</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#list"><span class="nav-text">list</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#list与vector的区别"><span class="nav-text">list与vector的区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#queue"><span class="nav-text">queue</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#deque-1"><span class="nav-text">deque</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#map"><span class="nav-text">map</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、map简介"><span class="nav-text">1、map简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、map的功能"><span class="nav-text">2、map的功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-使用map"><span class="nav-text">3. 使用map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-map的构造函数"><span class="nav-text">4. map的构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-数据的插入"><span class="nav-text">5. 数据的插入</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#unordered-map"><span class="nav-text">unordered_map</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#与map的区别"><span class="nav-text">与map的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本使用"><span class="nav-text">基本使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#键的类型"><span class="nav-text">键的类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于-hash-map"><span class="nav-text">关于 hash_map</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#set"><span class="nav-text">set</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#unordered-set"><span class="nav-text">unordered_set</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#priority-queue"><span class="nav-text">priority_queue</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#大顶堆"><span class="nav-text">大顶堆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小顶堆"><span class="nav-text">小顶堆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义排序方法"><span class="nav-text">自定义排序方法</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vector"><span class="nav-text">vector</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#deque"><span class="nav-text">deque</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#list"><span class="nav-text">list</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#list与vector的区别"><span class="nav-text">list与vector的区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#queue"><span class="nav-text">queue</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#deque-1"><span class="nav-text">deque</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#map"><span class="nav-text">map</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、map简介"><span class="nav-text">1、map简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、map的功能"><span class="nav-text">2、map的功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-使用map"><span class="nav-text">3. 使用map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-map的构造函数"><span class="nav-text">4. map的构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-数据的插入"><span class="nav-text">5. 数据的插入</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#unordered-map"><span class="nav-text">unordered_map</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#与map的区别"><span class="nav-text">与map的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本使用"><span class="nav-text">基本使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#键的类型"><span class="nav-text">键的类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于-hash-map"><span class="nav-text">关于 hash_map</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#set"><span class="nav-text">set</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#unordered-set"><span class="nav-text">unordered_set</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#priority-queue"><span class="nav-text">priority_queue</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#大顶堆"><span class="nav-text">大顶堆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小顶堆"><span class="nav-text">小顶堆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义排序方法"><span class="nav-text">自定义排序方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#partial-sort"><span class="nav-text">partial_sort</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nth-element"><span class="nav-text">nth_element()</span></a></li></ol></div>
             
 
           </div>
@@ -979,7 +1004,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">986k</span>
+    <span title="站点总字数">1.1m</span>
   
 
   
@@ -988,7 +1013,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">14:56</span>
+    <span title="站点阅读时长">16:17</span>
   
 </div>
 
