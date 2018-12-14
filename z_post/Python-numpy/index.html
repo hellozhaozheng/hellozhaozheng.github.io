@@ -121,7 +121,7 @@
 <meta property="og:description" content="numpy基础知识ndarray 对象ndarray对象的属性表示一个 n 维数组, 描述相同类型的元素集合, 基于0的索引访问 创建 ndarray 1numpy.array(object, dtype = None, copy = True, order = None, subok = False, ndmin = 0)  object: 可以返回一个数组或任何(嵌套)序列的对象。 dtype">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fw0xe4k4jij20kg0k8gpk.jpg">
-<meta property="og:updated_time" content="2018-11-23T14:41:16.899Z">
+<meta property="og:updated_time" content="2018-12-14T06:04:51.514Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NumPy模块-线性代数计算库">
 <meta name="twitter:description" content="numpy基础知识ndarray 对象ndarray对象的属性表示一个 n 维数组, 描述相同类型的元素集合, 基于0的索引访问 创建 ndarray 1numpy.array(object, dtype = None, copy = True, order = None, subok = False, ndmin = 0)  object: 可以返回一个数组或任何(嵌套)序列的对象。 dtype">
@@ -250,7 +250,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">207</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">230</span></a>
   </li>
         
         
@@ -336,9 +336,9 @@
         
         
           
-          <li class="menu-item menu-item-其它">
-    <a href="/categories/其它/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其它</a>
+          <li class="menu-item menu-item-其他">
+    <a href="/categories/其他/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
   </li>
         
         
@@ -499,8 +499,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2018-11-23T22:41:16+08:00" content="2018-11-23">
-      		  2018-11-23
+    		<time itemprop="dateUpdated" datetime="2018-12-14T14:04:51+08:00" content="2018-12-14">
+      		  2018-12-14
     		</time>
   	  </span>
 	  
@@ -553,7 +553,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">3k</span>
+                <span title="本文字数">6.1k</span>
               
 
               
@@ -567,7 +567,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">3 分钟</span>
+                <span title="阅读时长">6 分钟</span>
               
             </div>
           
@@ -638,7 +638,30 @@
 <li>a: 类似数组的变量.</li>
 <li>dtype: 数据类型, 可选参数.  对于整数输入来说, 默认返回值为<code>float64</code>, 对于其他<code>floating</code>输入来说, 返回值类型与输入类型保持一致.</li>
 </ul>
-<h1 id="np-round"><a href="#np-round" class="headerlink" title="np.round()"></a>np.round()</h1><h1 id="np-newaxis"><a href="#np-newaxis" class="headerlink" title="np.newaxis"></a>np.newaxis</h1><h1 id="np-hstack"><a href="#np-hstack" class="headerlink" title="np.hstack()"></a>np.hstack()</h1><h1 id="np-vstack"><a href="#np-vstack" class="headerlink" title="np.vstack()"></a>np.vstack()</h1>
+<h1 id="np-round"><a href="#np-round" class="headerlink" title="np.round()"></a>np.round()</h1><h1 id="np-newaxis"><a href="#np-newaxis" class="headerlink" title="np.newaxis"></a>np.newaxis</h1><h1 id="np-stack"><a href="#np-stack" class="headerlink" title="np.stack()"></a>np.stack()</h1><p>函数原型为 <code>stack(arrays, axis=0)</code>, 其中, <code>arrays</code> 既可以是列表, 也可以是数组. 其作用是沿着指定的维度(<code>axis</code>)将数组(如果是列表, 就先将列表转化成numpy数组)中的元素 “堆叠” 起来, 代码示例如下:</p>
+<p>首先, 对于列表或者元组, 是 <code>np.stack</code> 会首先将这些列表和元组转化成 numpy 数组, 也可以看做是对将列表作为参数传入到 <code>np.asarray()</code> 中, 例如, 下面的两种写法是等价的:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a = [[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], [<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]]</span><br><span class="line">b = [[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], [<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下面两语句是等价的</span></span><br><span class="line">c = np.stack((a,b), axis=<span class="number">0</span>)</span><br><span class="line">c = np.stack(np.asarray((a,b)), axis=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>即使 <code>a</code> 和 <code>b</code> 本身就是 numpy 数组, 也可以使用 <code>np.asarray()</code>, 如下所示:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a = np.array([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</span><br><span class="line">b = np.array([<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>])</span><br><span class="line"><span class="comment"># 下面两种方式等价</span></span><br><span class="line">c = np.stack((a,b), axis=<span class="number">0</span>)</span><br><span class="line">c = np.stack(np.asarray((a,b)), axis=<span class="number">0</span>)</span><br></pre></td></tr></table></figure></p>
+<p>下面我们来看看其他更多的情况</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个二维数组 a</span></span><br><span class="line">a = np.asarray([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]])</span><br><span class="line">print(a) <span class="comment"># [[1 2 3] [4 5 6]]</span></span><br><span class="line">print(a.shape) <span class="comment"># (2, 3), 故 a 具有两个维度, 其中, 第一个维度的size为2, 第二个维度的size为3</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在a的第一个维度上, 具有两个元素, 分别为 [1 2 3] 和 [4 5 6]</span></span><br><span class="line">print(a[<span class="number">0</span>]) <span class="comment"># [1 2 3]</span></span><br><span class="line">print(a[<span class="number">1</span>]) <span class="comment"># [4 5 6]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在a的第二个维度上, 具有三个元素, 分别为:</span></span><br><span class="line">print(a[<span class="number">0</span>][<span class="number">0</span>]) <span class="comment"># 1</span></span><br><span class="line">print(a[<span class="number">0</span>][<span class="number">1</span>]) <span class="comment"># 2</span></span><br><span class="line">print(a[<span class="number">0</span>][<span class="number">2</span>]) <span class="comment"># 3</span></span><br><span class="line">print(a[<span class="number">1</span>][<span class="number">0</span>]) <span class="comment"># 4</span></span><br><span class="line">print(a[<span class="number">1</span>][<span class="number">1</span>]) <span class="comment"># 5</span></span><br><span class="line">print(a[<span class="number">1</span>][<span class="number">2</span>]) <span class="comment"># 6</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 我们按照定义, 沿着第一个维度(axis=0)将元素堆叠起来, 也就是将元素 [1 2 3] 和 [4 5 6] 堆叠起来, 为:</span></span><br><span class="line">a_0 = np.stack(a, axis=<span class="number">0</span>)</span><br><span class="line">print(a_0) <span class="comment"># [[1 2 3] [4 5 6]]</span></span><br><span class="line">print(a_0.shape) <span class="comment"># (2, 3)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 沿着axis=1 将元素堆叠起来</span></span><br><span class="line">a_1 = np.stack(a, axis=<span class="number">1</span>)</span><br><span class="line">print(a_1) <span class="comment"># [[1 4] [2 5] [3 6]]</span></span><br><span class="line">print(a_1.shape) <span class="comment"># (3, 2)</span></span><br></pre></td></tr></table></figure>
+<p>我们发现, a 的值没有发生变化, 实际上就是这样, 因为我们沿着第一维(0轴), 就是相当于 <strong>将数组其他维保持不变, 只将0轴堆叠, 也就是将: <code>a[0], a[1], a[2],...</code> 堆叠起来</strong> , 就形成了一个新的数组 <code>a_0 = [a[0] a[1]  a[2] ... ]</code>, 仔细观察, 这实际上就是 <code>a</code>. 当 <code>axis=1</code> 时, 我们需要保持其他轴不变, 只将 <code>axis=1</code> 轴上的元素堆叠起来, 也就是要分别将 <code>a[0][0], a[1][0]</code>, <code>a[0][1], a[1][1]</code>, 以及 <code>a[0][2], a[1][2]</code> 堆叠起来.</p>
+<p>下面我们再看一个例子来总结 <code>axis</code> 参数的作用<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">a=[[<span class="number">1</span>],[<span class="number">2</span>],[<span class="number">3</span>]]</span><br><span class="line">b=[[<span class="number">1</span>],[<span class="number">2</span>],[<span class="number">3</span>]]</span><br><span class="line">c=[[<span class="number">1</span>],[<span class="number">2</span>],[<span class="number">3</span>]]</span><br><span class="line">d=[[<span class="number">1</span>],[<span class="number">2</span>],[<span class="number">3</span>]]</span><br><span class="line"></span><br><span class="line">s1 = np.stack((a,b,c,d), axis=<span class="number">0</span>)</span><br><span class="line">s2 = np.stack((a,b,c,d), axis=<span class="number">1</span>)</span><br><span class="line">s3 = np.stack((a,b,c,d), axis=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">print(s1.shape) <span class="comment"># (4, 3, 1)</span></span><br><span class="line">print(s2.shape) <span class="comment"># (3, 4, 1)</span></span><br><span class="line">print(s3.shape) <span class="comment"># (3, 1, 4)</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>可以看出, 经过 <code>np.stack(array, axis=n)</code> 操作后, 新的数组的 shape 值会使得原来第一维的大小移动到 <code>axis</code> 指定的维度, 而其他维的大小会相应移动, 但是相对位置不变</strong><br>知道了维度的变化后, 对于 “堆叠” 的理解就会变得容易得多, 具体来说, 令 <code>n=np.asarray((a,b,c,d))</code>:</p>
+<ul>
+<li>对于 <code>axis=0</code>, 我们堆叠的是: <code>n[0], n[1], n[2], a[3]</code>; 每个 <code>n[i]</code> 的维度都是 3×1, 故而最终的维度为 4×3×1</li>
+<li>对于 <code>axis=1</code>, 我们堆叠的是: <code>n[0][i], n[1][i], a[2][i], a[3][i] for i in range(3)</code>; 每个元素的维度均为</li>
+<li>对于 <code>axis=2</code>, 我们堆叠的是: <code>n[0][..][i], n[1][..][i], n[2][..][i], n3[..][i] for i in range(1)</code>, 式中的 <code>[..]</code> 范围为 0~2, 姑第一维的维度就是 3, 后面的两个维度就是 1×4 (因为i只有0这一种情况)</li>
+</ul>
+<h1 id="np-hstack"><a href="#np-hstack" class="headerlink" title="np.hstack()"></a>np.hstack()</h1><h1 id="np-vstack"><a href="#np-vstack" class="headerlink" title="np.vstack()"></a>np.vstack()</h1><p>直接用一个较复杂的情况来说明 <code>vstack()</code> 对维度的影响:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">a=[[[<span class="number">1</span>],[<span class="number">2</span>],[<span class="number">3</span>]],[[<span class="number">1</span>],[<span class="number">2</span>],[<span class="number">3</span>]]] <span class="comment"># shape: (2, 3, 1)</span></span><br><span class="line">b=[[[<span class="number">1</span>],[<span class="number">2</span>],[<span class="number">3</span>]],[[<span class="number">1</span>],[<span class="number">2</span>],[<span class="number">3</span>]]]</span><br><span class="line">c=[[[<span class="number">1</span>],[<span class="number">2</span>],[<span class="number">3</span>]],[[<span class="number">1</span>],[<span class="number">2</span>],[<span class="number">3</span>]]]</span><br><span class="line">d=[[[<span class="number">1</span>],[<span class="number">2</span>],[<span class="number">3</span>]],[[<span class="number">1</span>],[<span class="number">2</span>],[<span class="number">3</span>]]]</span><br><span class="line"></span><br><span class="line">vs_a = np.vstack(np.array(a)) <span class="comment"># shape of a: (2, 3, 1)</span></span><br><span class="line">print(vs_a.shape) <span class="comment"># (6, 1)</span></span><br><span class="line"></span><br><span class="line">vs = np.vstack((a, b, c, d))</span><br><span class="line">print(vs.shape) <span class="comment"># (8, 3, 1)</span></span><br></pre></td></tr></table></figure>
+<p>根据维度的变化, 我们很容易知道 <code>vstack()</code> 的作用实际上就是将前两维的元素合成一维, 可以简单理解成一种平铺展开的方式, 如下所示<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a= np.array([[[<span class="number">1</span>],[<span class="number">2</span>],[<span class="number">3</span>]],[[<span class="number">1</span>],[<span class="number">2</span>],[<span class="number">3</span>]]])</span><br><span class="line">print(a.shape) <span class="comment"># (2, 3, 1)</span></span><br><span class="line">print(np.vstack(a)) <span class="comment"># (6, 1)</span></span><br><span class="line"><span class="comment"># [[1] [2] [3] [1] [2] [3]]</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>但是注意, 如果传入的数组本身只有两维, 那么就不会将这两维合并, 如下所示:</strong></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = np.array([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]]) <span class="comment"># (2, 3)</span></span><br><span class="line">print(a.shape)</span><br><span class="line">print(np.vstack(a)) <span class="comment"># (2, 3) [[1 2 3] [1 2 3]]</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://blog.csdn.net/csdn15698845876/article/details/73380803" target="_blank" rel="noopener">https://blog.csdn.net/csdn15698845876/article/details/73380803</a></p>
+<h1 id="np-prod"><a href="#np-prod" class="headerlink" title="np.prod()"></a>np.prod()</h1><p>乘积</p>
+<h1 id="np-newaxis-1"><a href="#np-newaxis-1" class="headerlink" title="np.newaxis"></a>np.newaxis</h1><p><code>np.newaxis</code> 在使用上和功能上等价于 None, 使用示例如下:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = np.arange(<span class="number">3</span>) <span class="comment"># x = array([0 1 2])</span></span><br><span class="line">x = x[:, np.newaxis] <span class="comment"># x = array([[0], [1], [2]])</span></span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -761,7 +784,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">207</span>
+                    <span class="site-state-item-count">230</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -945,7 +968,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#numpy基础知识"><span class="nav-text">numpy基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ndarray-对象"><span class="nav-text">ndarray 对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ndarray对象的属性"><span class="nav-text">ndarray对象的属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ndarray对象的方法"><span class="nav-text">ndarray对象的方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#numpy支持的数据类型"><span class="nav-text">numpy支持的数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据类型对象-dtype"><span class="nav-text">数据类型对象 dtype</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#numpy基本操作"><span class="nav-text">numpy基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#根据下标组成新的数组"><span class="nav-text">根据下标组成新的数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比较运算符"><span class="nav-text">比较运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#向量运算"><span class="nav-text">向量运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#矩阵运算"><span class="nav-text">矩阵运算</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#numpy常用函数"><span class="nav-text">numpy常用函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ndarray对象的创建"><span class="nav-text">ndarray对象的创建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#np-array"><span class="nav-text">np.array</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-ndarray"><span class="nav-text">np.ndarray</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-zeros"><span class="nav-text">np.zeros()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-ones"><span class="nav-text">np.ones()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-arange"><span class="nav-text">np.arange()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-random"><span class="nav-text">np.random</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ndarray-reshape"><span class="nav-text">ndarray.reshape()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组拼接"><span class="nav-text">数组拼接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#np-append"><span class="nav-text">np.append()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-concatenate"><span class="nav-text">np.concatenate()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#统计类数值"><span class="nav-text">统计类数值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#np-median"><span class="nav-text">np.median()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-mean"><span class="nav-text">np.mean()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#np-round"><span class="nav-text">np.round()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#np-newaxis"><span class="nav-text">np.newaxis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#np-hstack"><span class="nav-text">np.hstack()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#np-vstack"><span class="nav-text">np.vstack()</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#numpy基础知识"><span class="nav-text">numpy基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ndarray-对象"><span class="nav-text">ndarray 对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ndarray对象的属性"><span class="nav-text">ndarray对象的属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ndarray对象的方法"><span class="nav-text">ndarray对象的方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#numpy支持的数据类型"><span class="nav-text">numpy支持的数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据类型对象-dtype"><span class="nav-text">数据类型对象 dtype</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#numpy基本操作"><span class="nav-text">numpy基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#根据下标组成新的数组"><span class="nav-text">根据下标组成新的数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比较运算符"><span class="nav-text">比较运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#向量运算"><span class="nav-text">向量运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#矩阵运算"><span class="nav-text">矩阵运算</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#numpy常用函数"><span class="nav-text">numpy常用函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ndarray对象的创建"><span class="nav-text">ndarray对象的创建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#np-array"><span class="nav-text">np.array</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-ndarray"><span class="nav-text">np.ndarray</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-zeros"><span class="nav-text">np.zeros()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-ones"><span class="nav-text">np.ones()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-arange"><span class="nav-text">np.arange()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-random"><span class="nav-text">np.random</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ndarray-reshape"><span class="nav-text">ndarray.reshape()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组拼接"><span class="nav-text">数组拼接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#np-append"><span class="nav-text">np.append()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-concatenate"><span class="nav-text">np.concatenate()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#统计类数值"><span class="nav-text">统计类数值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#np-median"><span class="nav-text">np.median()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-mean"><span class="nav-text">np.mean()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#np-round"><span class="nav-text">np.round()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#np-newaxis"><span class="nav-text">np.newaxis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#np-stack"><span class="nav-text">np.stack()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#np-hstack"><span class="nav-text">np.hstack()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#np-vstack"><span class="nav-text">np.vstack()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#np-prod"><span class="nav-text">np.prod()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#np-newaxis-1"><span class="nav-text">np.newaxis</span></a></li></ol></div>
             
 
           </div>
@@ -982,7 +1005,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.1m</span>
+    <span title="站点总字数">1.3m</span>
   
 
   
@@ -991,7 +1014,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">16:17</span>
+    <span title="站点阅读时长">20:01</span>
   
 </div>
 

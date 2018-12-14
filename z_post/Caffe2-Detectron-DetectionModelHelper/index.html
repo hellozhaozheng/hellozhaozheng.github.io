@@ -115,14 +115,14 @@
   <meta name="description" content="DetectionModelHelper 类概览在./detectron/modeling/model_builder.py文件中的, Detectron 使用了 create() 函数来创建目标检测模型, 其中最主要的部分是使用了 detectron/modeling/detector.py文件中的 class DetectionModelHelper()类, 该类是 Detectron 所有类">
 <meta name="keywords" content="Caffe2,Detectron">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Detectron源码解析-网络模型DetectionModelHelper">
+<meta property="og:title" content="Detectron 源码解析-检测模型辅助器(DetectionModelHelper)">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Caffe2-Detectron-DetectionModelHelper/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="DetectionModelHelper 类概览在./detectron/modeling/model_builder.py文件中的, Detectron 使用了 create() 函数来创建目标检测模型, 其中最主要的部分是使用了 detectron/modeling/detector.py文件中的 class DetectionModelHelper()类, 该类是 Detectron 所有类">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-01T13:51:54.840Z">
+<meta property="og:updated_time" content="2018-12-07T12:08:53.927Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Detectron源码解析-网络模型DetectionModelHelper">
+<meta name="twitter:title" content="Detectron 源码解析-检测模型辅助器(DetectionModelHelper)">
 <meta name="twitter:description" content="DetectionModelHelper 类概览在./detectron/modeling/model_builder.py文件中的, Detectron 使用了 create() 函数来创建目标检测模型, 其中最主要的部分是使用了 detectron/modeling/detector.py文件中的 class DetectionModelHelper()类, 该类是 Detectron 所有类">
 
 
@@ -140,7 +140,7 @@
   };
 </script>
 
-  <title>Detectron源码解析-网络模型DetectionModelHelper | 从零开始的BLOG</title>
+  <title>Detectron 源码解析-检测模型辅助器(DetectionModelHelper) | 从零开始的BLOG</title>
   
 
 
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">207</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">230</span></a>
   </li>
         
         
@@ -334,9 +334,9 @@
         
         
           
-          <li class="menu-item menu-item-其它">
-    <a href="/categories/其它/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其它</a>
+          <li class="menu-item menu-item-其他">
+    <a href="/categories/其他/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
   </li>
         
         
@@ -462,7 +462,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Detectron源码解析-网络模型DetectionModelHelper
+          <h1 class="post-title" itemprop="name headline">Detectron 源码解析-检测模型辅助器(DetectionModelHelper)
               
             
           </h1>
@@ -497,8 +497,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2018-12-01T21:51:54+08:00" content="2018-12-01">
-      		  2018-12-01
+    		<time itemprop="dateUpdated" datetime="2018-12-07T20:08:53+08:00" content="2018-12-07">
+      		  2018-12-07
     		</time>
   	  </span>
 	  
@@ -551,7 +551,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">5.2k</span>
+                <span title="本文字数">6k</span>
               
 
               
@@ -590,6 +590,7 @@
 <h1 id="导入的包和函数"><a href="#导入的包和函数" class="headerlink" title="导入的包和函数"></a>导入的包和函数</h1><p>该文件导入的包和函数, 及其它们的功能如下所示:</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./detectron/modeling/detector.py</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 常规包</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> absolute_import</span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> division</span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> unicode_literals</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line"><span class="comment"># caffe2 包</span></span><br><span class="line"><span class="keyword">from</span> caffe2.python <span class="keyword">import</span> cnn <span class="comment"># cnn.CNNModelHelper</span></span><br><span class="line"><span class="keyword">from</span> caffe2.python <span class="keyword">import</span> core</span><br><span class="line"><span class="keyword">from</span> caffe2.python <span class="keyword">import</span> workspace</span><br><span class="line"><span class="keyword">from</span> caffe2.python.modeling <span class="keyword">import</span> initializers</span><br><span class="line"><span class="keyword">from</span> caffe2.python.modeling.parameter_info <span class="keyword">import</span> ParameterTags</span><br><span class="line"></span><br><span class="line"><span class="comment"># detectron 包及函数</span></span><br><span class="line"><span class="keyword">from</span> detectron.core.config <span class="keyword">import</span> cfg</span><br><span class="line"><span class="keyword">from</span> detectron.ops.collect_and_distribute_fpn_rpn_proposals \</span><br><span class="line">    <span class="keyword">import</span> CollectAndDistributeFpnRpnProposalsOp</span><br><span class="line"><span class="keyword">from</span> detectron.ops.generate_proposal_labels <span class="keyword">import</span> GenerateProposalLabelsOp</span><br><span class="line"><span class="keyword">from</span> detectron.ops.generate_proposals <span class="keyword">import</span> GenerateProposalsOp</span><br><span class="line"><span class="keyword">import</span> detectron.roi_data.fast_rcnn <span class="keyword">as</span> fast_rcnn_roi_data</span><br><span class="line"><span class="keyword">import</span> detectron.utils.c2 <span class="keyword">as</span> c2_utils</span><br></pre></td></tr></table></figure>
 <h1 id="初始化函数"><a href="#初始化函数" class="headerlink" title="初始化函数"></a>初始化函数</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># detectron/modeling/detector.py</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># from caffe2.python import cnn</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DetectionModelHelper</span><span class="params">(cnn.CNNModelHelper)</span>:</span></span><br><span class="line"><span class="comment"># 该类是cnn.CNNModelHelper的一个子类, 这一点很重要</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, **kwargs)</span>:</span></span><br><span class="line">        <span class="comment"># 处理属于DetectionModelHelper的特定的参数, 其他的都会传到CNNModelHelper当中</span></span><br><span class="line">        self.train = kwargs.get(<span class="string">'train'</span>, <span class="keyword">False</span>) <span class="comment"># train</span></span><br><span class="line">        self.num_classes = kwargs.get(<span class="string">'num_classes'</span>, <span class="number">-1</span>) <span class="comment"># cfg.MODEL.NUM_CLASSES</span></span><br><span class="line">        <span class="keyword">assert</span> self.num_classes &gt; <span class="number">0</span>, <span class="string">'num_classes must be &gt; 0'</span></span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> (<span class="string">'train'</span>, <span class="string">'num_classes'</span>):</span><br><span class="line">            <span class="keyword">if</span> k <span class="keyword">in</span> kwargs:</span><br><span class="line">                <span class="keyword">del</span> kwargs[k]<span class="comment"># TODO 貌似是因为下面要再次调用构造函数的原因?</span></span><br><span class="line">        <span class="comment"># 设置数据的排列顺序: batchsize, channels, heiht, width</span></span><br><span class="line">        kwargs[<span class="string">'order'</span>] = <span class="string">'NCHW'</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># TODO, 不懂这个选项的实际作用</span></span><br><span class="line">        kwargs[<span class="string">'cudnn_exhaustive_search'</span>] = <span class="keyword">False</span></span><br><span class="line">        super(DetectionModelHelper, self).__init__(**kwargs) <span class="comment"># TODO ?? 这样不会造成递归调用吗? 为什么要递归调用构造函数</span></span><br><span class="line">        self.roi_data_loader = <span class="keyword">None</span></span><br><span class="line">        self.losses = []</span><br><span class="line">        self.metrics = []</span><br><span class="line">        self.do_not_update_params = [] <span class="comment"># 位于该列表中的参数不会被更新</span></span><br><span class="line">        self.net.Proto().type = cfg.MODEL.EXECUTION_TYPE</span><br><span class="line">        self.net.Proto().num_workers = cfg.NUM_GPUS * <span class="number">4</span></span><br><span class="line">        self.prev_use_cudnn = self.use_cudnn</span><br><span class="line">        self.gn_params = [] <span class="comment"># 位于该列表中的元素是GroupNorm参数</span></span><br></pre></td></tr></table></figure>
+<h1 id="损失函数相关"><a href="#损失函数相关" class="headerlink" title="损失函数相关"></a>损失函数相关</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./detectron/modeling/detector.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DetectionModelHelper</span><span class="params">(cnn.CNNModelHelper)</span>:</span></span><br><span class="line">    <span class="comment">#...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">GetLossScale</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="comment"># 当多 GPU 分布式训练时起作用, 根据 GPU 的数量调整损失的大小</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">1.0</span> / cfg.NUM_GPUS</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">AddLosses</span><span class="params">(self, losses)</span>:</span></span><br><span class="line">        <span class="comment"># losses 是一个列表, eg: ['loss_cls', 'loss_bbox']</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> isinstance(losses, list): <span class="comment"># 如果不是列表, 则将其转换成列表</span></span><br><span class="line">        losses = [losses]</span><br><span class="line">        <span class="comment"># 对字符串进行转换, 使得 losses 包含相应blob的引用(将 'gpu_0/foo' 转换成 'foo')</span></span><br><span class="line">        losses = [c2_utils.UnscopeName(str(l)) <span class="keyword">for</span> l <span class="keyword">in</span> losses]</span><br><span class="line">        self.losses = list(set(self.losses + losses))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">AddMetrics</span><span class="params">(self, metrics)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> isinstance(metrics, list):</span><br><span class="line">            metrics = [metrics]</span><br><span class="line">        self.metrics = list(set(self.metrics + metrics))</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -625,8 +626,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/Caffe2-Detectron-FastRCNN-Heads/" rel="prev" title="Caffe2-Detectron-FastRCNN-HEADS">
-                <i class="fa fa-chevron-left"></i> Caffe2-Detectron-FastRCNN-HEADS
+              <a href="/z_post/Caffe2-Detectron-FastRCNN-Heads/" rel="prev" title="Detectron源码解析-Fast R-CNN Heads">
+                <i class="fa fa-chevron-left"></i> Detectron源码解析-Fast R-CNN Heads
               </a>
             
           </div>
@@ -715,7 +716,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">207</span>
+                    <span class="site-state-item-count">230</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -899,7 +900,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DetectionModelHelper-类概览"><span class="nav-text">DetectionModelHelper 类概览</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#导入的包和函数"><span class="nav-text">导入的包和函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初始化函数"><span class="nav-text">初始化函数</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DetectionModelHelper-类概览"><span class="nav-text">DetectionModelHelper 类概览</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#导入的包和函数"><span class="nav-text">导入的包和函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初始化函数"><span class="nav-text">初始化函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#损失函数相关"><span class="nav-text">损失函数相关</span></a></li></ol></div>
             
 
           </div>
@@ -936,7 +937,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.1m</span>
+    <span title="站点总字数">1.3m</span>
   
 
   
@@ -945,7 +946,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">16:17</span>
+    <span title="站点阅读时长">20:01</span>
   
 </div>
 

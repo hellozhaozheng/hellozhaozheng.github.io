@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="源码文件不论是在训练脚本文件 train_net.py 还是在测试脚本文件 test_net.py 中, 都调用了 build_detection_model(cfg) 函数来创建模型, 该函数封装了模型定义的内部细节, 使得我们可以通过配置文件轻松的组合出不同类型的模型, 为了能够更好的了解模型的内部细节, 我们有必要知道这些模型是如何被定义, 又是如何组合到一起的, 为此我们需要对 Maskr">
+<meta name="keywords" content="PyTorch,MaskrcnnBenchmark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MaskrcnnBenchmark 源码解析-模型定义(modeling)之骨架网络(backbone)">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/PyTorch-MaskrcnnBenchmark-modeling-backbone/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="源码文件不论是在训练脚本文件 train_net.py 还是在测试脚本文件 test_net.py 中, 都调用了 build_detection_model(cfg) 函数来创建模型, 该函数封装了模型定义的内部细节, 使得我们可以通过配置文件轻松的组合出不同类型的模型, 为了能够更好的了解模型的内部细节, 我们有必要知道这些模型是如何被定义, 又是如何组合到一起的, 为此我们需要对 Maskr">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-13T07:44:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MaskrcnnBenchmark 源码解析-模型定义(modeling)之骨架网络(backbone)">
+<meta name="twitter:description" content="源码文件不论是在训练脚本文件 train_net.py 还是在测试脚本文件 test_net.py 中, 都调用了 build_detection_model(cfg) 函数来创建模型, 该函数封装了模型定义的内部细节, 使得我们可以通过配置文件轻松的组合出不同类型的模型, 为了能够更好的了解模型的内部细节, 我们有必要知道这些模型是如何被定义, 又是如何组合到一起的, 为此我们需要对 Maskr">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/PyTorch-MaskrcnnBenchmark-modeling-backbone/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>MaskrcnnBenchmark 源码解析-模型定义(modeling)之骨架网络(backbone) | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">230</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-linux">
+    <a href="/categories/Linux/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-面试">
+    <a href="/categories/面试/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其他">
+    <a href="/categories/其他/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/PyTorch-MaskrcnnBenchmark-modeling-backbone/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MaskrcnnBenchmark 源码解析-模型定义(modeling)之骨架网络(backbone)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-06 22:39:55" itemprop="dateCreated datePublished" datetime="2018-12-06T22:39:55+08:00">2018-12-06</time>
+            
+
+            
+          </span>
+
+	  
+  	    <span class="post-updated">
+    		&nbsp; | &nbsp; 更新于
+    		<time itemprop="dateUpdated" datetime="2018-12-13T15:44:35+08:00" content="2018-12-13">
+      		  2018-12-13
+    		</time>
+  	  </span>
+	  
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/PyTorch/" itemprop="url" rel="index"><span itemprop="name">PyTorch</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">25k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">23 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="源码文件"><a href="#源码文件" class="headerlink" title="源码文件"></a>源码文件</h1><p>不论是在训练脚本文件 <code>train_net.py</code> 还是在测试脚本文件 <code>test_net.py</code> 中, 都调用了 <code>build_detection_model(cfg)</code> 函数来创建模型, 该函数封装了模型定义的内部细节, 使得我们可以通过配置文件轻松的组合出不同类型的模型, 为了能够更好的了解模型的内部细节, 我们有必要知道这些模型是如何被定义, 又是如何组合到一起的, 为此我们需要对 MaskrcnnBenchmark 的 modeling 文件夹进行解析, 该文件夹的结构及文件关系如下所示(位于 <code>./maskrcnn_benchmark/modeling/</code> 文件夹下):</p>
+<ul>
+<li>backbone<ul>
+<li><a href="#backbone">backbone.py</a></li>
+<li><a href="#fpn">fpn.py</a></li>
+<li><a href="#resnet">resnet.py</a></li>
+</ul>
+</li>
+<li>detector<ul>
+<li><a href="#detector">detectors.py</a></li>
+<li><a href="#generalized_rcnn">generalized_rcnn.py</a></li>
+</ul>
+</li>
+<li>roi_heads<ul>
+<li>box_head<ul>
+<li><a href="#box_head">box_head.py</a></li>
+<li><a href="#inference">inference.py</a></li>
+<li><a href="#loss">loss.py</a></li>
+<li><a href="#roi_box_feature_extractors">roi_box_feature_extractors.py</a></li>
+<li><a href="#roi_box_predictors">roi_box_predictors.py</a></li>
+</ul>
+</li>
+<li>mask_head<ul>
+<li>inference.py</li>
+<li>loss.py</li>
+<li>mask_head.py</li>
+<li>roi_mask_feature_extractors.py</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>rpn<ul>
+<li><a href="#generator">anchor_generator.py</a></li>
+<li><a href="#inference">inference.py</a></li>
+<li><a href="#loss">loss.py</a></li>
+<li><a href="#rpn">rpn.py</a></li>
+</ul>
+</li>
+<li><a href="#balanced_positive_negative_sampler">balanced_positive_negative_sampler.py</a></li>
+<li><a href="#box_coder">box_coder.py</a></li>
+<li><a href="#matcher">matcher.py</a></li>
+<li><a href="#poolers">poolers.py</a></li>
+<li><a href="#registry">registry.py</a></li>
+<li><a href="#utils">utils.py</a></li>
+</ul>
+<p>下面, 我们根据各个文件和函数之间的逻辑关系(而不是上面的文件顺序), 对 MaskrcnnBenchmark 的模型定义模块展开详细的解析和讨论. 想要透彻了解此部分的代码, 只需要按照本文的顺序仔细阅读即可.</p>
+<h1 id="detector-模型定义入口"><a href="#detector-模型定义入口" class="headerlink" title="detector 模型定义入口"></a>detector 模型定义入口</h1><p>第一部分是 <code>detector</code> 文件夹, 该文件夹中的两个文件定义了是整个 <code>modeling</code> 模块的入口. 文件解析如下</p>
+<p><span id="detectors"></span></p>
+<h2 id="detectors-py-文件解析"><a href="#detectors-py-文件解析" class="headerlink" title="detectors.py 文件解析"></a>detectors.py 文件解析</h2><p>第一个文件 <code>detectors.py</code> 中的代码只有短短几行, 其主要功能就是根据给定的配置信息实例化一个 <code>class GeneralizedRCNN</code> 的对象, 代码如下所示:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/modeling/detector/detectors.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> .generalized_rcnn <span class="keyword">import</span> GeneralizedRCNN</span><br><span class="line"></span><br><span class="line">_DETECTION_META_ARCHITECTURES = &#123;<span class="string">"GeneralizedRCNN"</span>: GeneralizedRCNN&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 该函数是创建模型的入口函数, 也是唯一的模型创建函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_detection_model</span><span class="params">(cfg)</span>:</span></span><br><span class="line">    <span class="comment"># 构建一个模型字典, 虽然只有一对键值, 但是可以方便后续的扩展</span></span><br><span class="line">    meta_arch = _DETECTION_META_ARCHITECTURES[cfg.MODEL.META_ARCHITECTURE]</span><br><span class="line">    <span class="comment"># 下面的语句等价于</span></span><br><span class="line">    <span class="comment"># return GeneralizedRCNN(cfg)</span></span><br><span class="line">    <span class="keyword">return</span> meta_arch(cfg)</span><br></pre></td></tr></table></figure>
+<p>上面的代码利用配置信息 <code>cfg</code> 实例化了一个 <code>class GeneralizedRCNN</code> 类, 该类定义在 <code>./maskrcnn_benchmark/modeling/detector/generalized_rcnn.py</code> 文件中, 关于该文件的解析请看下一节.</p>
+<p><span id="generalized_rcnn"></span></p>
+<h2 id="generalized-rcnn-py-文件解析"><a href="#generalized-rcnn-py-文件解析" class="headerlink" title="generalized_rcnn.py 文件解析"></a>generalized_rcnn.py 文件解析</h2><p>该文件定义了 MaskrcnnBenchmark 的 GeneralizedRCNN 类, 用于表示各种组合后的目标检测模型, 代码解析如下:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"></span><br><span class="line"><span class="comment"># 该函数定义于 ./maskrcnn_benchmark/structures/image_list.py 文件中</span></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.structures.image_list <span class="keyword">import</span> to_image_list</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> ..backbone <span class="keyword">import</span> build_backbone</span><br><span class="line"><span class="keyword">from</span> ..rpn.rpn <span class="keyword">import</span> build_rpn</span><br><span class="line"><span class="keyword">from</span> ..roi_heads.roi_heads <span class="keyword">import</span> build_roi_heads</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义类的具体实现</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GeneralizedRCNN</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="comment"># 该类是 MaskrcnnBenchmark 中所有模型的共同抽象, 目前支持 boxes 和 masks 两种形式的标签</span></span><br><span class="line">    <span class="comment"># 该类主要包含以下三个部分:</span></span><br><span class="line">    <span class="comment"># - backbone</span></span><br><span class="line">    <span class="comment"># - rpn(option)</span></span><br><span class="line">    <span class="comment"># - heads: 利用前面网络输出的 features 和 proposals 来计算 detections / masks.</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, cfg)</span>:</span> <span class="comment"># 根据配置信息初始化模型</span></span><br><span class="line">        super(GeneralizedRCNN, self).__init__()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 根据配置信息创建 backbone 网络</span></span><br><span class="line">        self.backbone = build_backbone(cfg)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 根据配置信息创建 rpn 网络</span></span><br><span class="line">        self.rpn = build_rpn(cfg)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 根据配置信息创建 roi_heads</span></span><br><span class="line">        self.roi_heads = build_roi_heads(cfg)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, images, targets=None)</span>:</span> <span class="comment"># 定义模型的前向传播过程</span></span><br><span class="line">        <span class="comment"># images (list[Tensor] or ImageList)</span></span><br><span class="line">        <span class="comment"># targets (list[BoxList])</span></span><br><span class="line">        <span class="comment"># 返回值: result (list[BoxList] or dict[Tensor])</span></span><br><span class="line">        <span class="comment"># 在训练阶段, 返回字典类型的模型损失, 在测试阶段, 返回模型的预测结果.</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 当 training 设置为 True 时, 必须提供 targets.</span></span><br><span class="line">        <span class="keyword">if</span> self.training <span class="keyword">and</span> targets <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">"In training mode, targets should be passed"</span>)</span><br><span class="line"></span><br><span class="line">        images = to_image_list(images) <span class="comment"># 将图片的数据类型转换成 ImageList</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 利用 backbone 网络获取图片的 features</span></span><br><span class="line">        features =  self.backbone(images.tensors)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 利用 rpn 网络获取 proposals 和相应的 loss</span></span><br><span class="line">        proposals, proposal_losses = self.rpn(images, features, targets)</span><br><span class="line">        <span class="keyword">if</span> self.roi_heads: <span class="comment"># 如何 roi_heads 不为 None 的话, 就计算其输出的结果</span></span><br><span class="line">            x, result, detector_losses = self.roi_heads(features, proposals, targets)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># RPN-only models don't have roi_heads</span></span><br><span class="line">            x = features</span><br><span class="line">            result = proposals</span><br><span class="line">            detector_losses = &#123;&#125;</span><br><span class="line">        <span class="keyword">if</span> self.training: <span class="comment"># 在训练模式下, 输出损失值</span></span><br><span class="line">            losses = &#123;&#125;</span><br><span class="line">            losses.update(detector_losses)</span><br><span class="line">            losses.update(proposal_losses)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> result <span class="comment"># 如果不在训练模式下, 则输出模型的预测结果.</span></span><br></pre></td></tr></table></figure>
+<p>上面的代码中, <code>to_image_list</code> 函数位于 MaskrcnnBenchmark 的结构模块当中, 具体解析可以看<a href="../PyTorch-MaskrcnnBenchmark-structures">structures</a>. 另外, 可以看出, MaskrcnnBenchmark 模型的创建主要依赖于三个函数, 即 <code>build_backbone(cfg)</code>, <code>build_rpn(cfg)</code>, <code>build_roi_heads(cfg)</code>. 下面, 我们就按照模型定义的顺序, 分别讲解这三个函数的内部实现</p>
+<h1 id="backbone-模型骨架定义"><a href="#backbone-模型骨架定义" class="headerlink" title="backbone 模型骨架定义"></a>backbone 模型骨架定义</h1><p><code>modeling/</code> 文件夹下面的 <code>backbone/</code> 文件夹定义了有关模型骨架的相关代码, 该文件夹中总共三个主要的文件, 分别为:</p>
+<ul>
+<li><code>backbone.py</code></li>
+<li><code>fpn.py</code></li>
+<li><code>resnet.py</code></li>
+</ul>
+<p><span id="backbone"></span></p>
+<h2 id="backbone-py-文件解析"><a href="#backbone-py-文件解析" class="headerlink" title="backbone.py 文件解析"></a>backbone.py 文件解析</h2><p>我们在定义骨架网络时使用到的 <code>build_backbone(cfg)</code> 函数, 正位于 <code>./maskrcnn_benchmark/modeling/backbone/backbone.py</code> 文件中, 因此, 我们首先来看看该文件的内部实现.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> OrderedDict <span class="comment"># 导入有序字典</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"></span><br><span class="line"><span class="comment"># 注册器, 用于管理 module 的注册, 使得可以像使用字典一样使用 module</span></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.modeling <span class="keyword">import</span> registry</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> fpn <span class="keyword">as</span> fpn_module <span class="comment"># 同文件夹下的文件, 会在后面讲解</span></span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> resnet <span class="comment"># 同文件夹下的文件, 会在后面讲解</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 resnet 骨架网络, 根据配置信息会被后面的 build_backbone() 函数调用</span></span><br><span class="line"><span class="meta">@registry.BACKBONES.register("R-50-C4")</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_resnet_backbone</span><span class="params">(cfg)</span>:</span></span><br><span class="line">    body = resnet.ResNet(cfg) <span class="comment"># resnet.py 文件中的 class ResNet(cfg)</span></span><br><span class="line">    model = nn.Sequential(OrderedDict([(<span class="string">"body"</span>, body)])) <span class="comment"># 利用 nn.Sequential 定义模型</span></span><br><span class="line">    <span class="keyword">return</span> model</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 fpn 网络, 根据配置信息会被下面 build_backbone 函数调用</span></span><br><span class="line"><span class="meta">@registry.BACKBONES.register("R-50-FPN")</span></span><br><span class="line"><span class="meta">@registry.BACKBONES.register("R-101-FPN")</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_resnet_fpn_backbone</span><span class="params">(cfg)</span>:</span></span><br><span class="line">    body = resnet.ResNet(cfg) <span class="comment"># 先创建 resnet 网络</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取 fpn 所需的channels参数</span></span><br><span class="line">    in_channels_stage2 = cfg.MODEL.RESNETS.RES2_OUT_CHANNELS</span><br><span class="line">    out_channels = cfg.MODEL.BACKBONE.OUT_CHANNELS</span><br><span class="line">    fpn = fpn_module.FPN( <span class="comment"># 利用 fpn.py 文件夹的 class FPN 创建 fpn 网络</span></span><br><span class="line">        in_channels_list=[</span><br><span class="line">            in_channels_stage2,</span><br><span class="line">            in_channels_stage2 * <span class="number">2</span>,</span><br><span class="line">            in_channels_stage2 * <span class="number">4</span>,</span><br><span class="line">            in_channels_stage2 * <span class="number">8</span>,</span><br><span class="line">        ],</span><br><span class="line">        out_channels=out_channels,</span><br><span class="line">        top_blocks=fpn_module.LastLevelMaxPool(),</span><br><span class="line">    )</span><br><span class="line">    model = nn.Sequential(OrderedDict([(<span class="string">"body"</span>, body), (<span class="string">"fpn"</span>, fpn)]))</span><br><span class="line">    <span class="keyword">return</span> model</span><br></pre></td></tr></table></figure>
+<p>上面两个函数分别定义了创建 ResNet 和 FPN 的代码逻辑, 下面我们就用这两个函数来进行模型创建, 代码解析如下:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_backbone</span><span class="params">(cfg)</span>:</span></span><br><span class="line">    <span class="keyword">assert</span> cfg.MODEL.BACKBONE.CONV_BODY <span class="keyword">in</span> registry.BACKBONES, \</span><br><span class="line">        <span class="string">"cfg.MODEL.BACKBONE.CONV_BODY: &#123;&#125; are not registered in registry"</span>.format(</span><br><span class="line">            cfg.MODEL.BACKBONE.CONV_BODY</span><br><span class="line">        )</span><br><span class="line">    <span class="keyword">return</span> registry.BACKBONES[cfg.MODEL.BACKBONE.CONV_BODY](cfg)</span><br></pre></td></tr></table></figure>
+<p><span id="resnet"></span></p>
+<h2 id="resnet-py-网络主体-特征提取器"><a href="#resnet-py-网络主体-特征提取器" class="headerlink" title="resnet.py 网络主体(特征提取器)"></a>resnet.py 网络主体(特征提取器)</h2><p>在上面一节中的 <code>backbone.py</code> 文件中的两个函数 <code>build_resnet_backbone()</code> 和 <code>build_resnet_fpn_backbone()</code> 都使用了 <code>body = resnet.ResNet(cfg)</code> 来创建网络的主体, 这部分的代码定义位于 <code>./maskrcnn_benchmark/modeling/backbone/resnet.py</code> 文件中, 下面我们就该该文件进行解析, 由于该文件篇幅较多, 因此我们先来看一下文件的整体结构:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/modeling/backbone/resnet.py</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入各种包及函数</span></span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.layers ipmort FrozenBatchNorm2d</span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ResNet stage specification</span></span><br><span class="line">StageSpec = <span class="comment">#...</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ResNet</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ResNet</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, cfg)</span>:</span></span><br><span class="line">        super(ResNet, self).__init__()</span><br><span class="line">        <span class="comment"># 初始化</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_freeze_backbone</span><span class="params">(self, freeze_at)</span>:</span></span><br><span class="line">        <span class="comment"># 将指定的参数置为: requires_grad = False</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        <span class="comment"># 定义 resnet 的前向传播过程</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ResNetHead</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ResNetHead</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(...)</span>:</span></span><br><span class="line">        <span class="comment"># 初始化</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">foward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        <span class="comment"># 定义 ResNetHead 的前向传播过程</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_make_stage</span><span class="params">(...)</span>:</span></span><br><span class="line">    <span class="comment"># 创建 ResNet 的 residual-block</span></span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BottleneckWithFixedBatchNorm</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="comment"># 使用固定的BN</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(...)</span>:</span></span><br><span class="line">        <span class="comment"># 初始化</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        <span class="comment"># 定义前向传播过程</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StemWithFixedBatchNorm</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, cfg)</span>:</span></span><br><span class="line">        <span class="comment"># 初始化</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        <span class="comment"># 定义前向传播过程</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">_TRANSFORMATION_MODULES = Registry(&#123;..&#125;)</span><br><span class="line"></span><br><span class="line">_STEM_MODULES = Registry(&#123;..&#125;)</span><br><span class="line"></span><br><span class="line">_STAGE_SPECS = Registry(&#123;..&#125;)</span><br></pre></td></tr></table></figure></p>
+<h3 id="ResNet-Stage-Specification"><a href="#ResNet-Stage-Specification" class="headerlink" title="ResNet Stage Specification"></a>ResNet Stage Specification</h3><p>文件的开头定义了 ResNet 的不同 stage 下的 block 的定义, 使用了 <code>namedtuple</code> 数据结构(命名元组, 可以用名字访问元素)来实现, 如下所示:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">StageSpec = namedtuple(</span><br><span class="line">    <span class="string">"StageSpec"</span>,</span><br><span class="line">    [</span><br><span class="line">        <span class="string">"index"</span>, <span class="comment"># stage 的下标, 如 1, 2, ..., 5</span></span><br><span class="line">        <span class="string">"block_count"</span>, <span class="comment"># stage 当中的 block 的数量</span></span><br><span class="line">        <span class="string">"return_features"</span>, <span class="comment"># 布尔值, 若为 True, 则返回当前 stage 的最后一层的 feature map</span></span><br><span class="line">    ],</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 标准 ResNet 模块</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ResNet-50 full stages 的2~5阶段的卷积层数分别为:3,4,6,3</span></span><br><span class="line">ResNet50StagesTo5 = tuple( <span class="comment"># 元组内部的元素类型为 StageSpec</span></span><br><span class="line">    StageSpec(index=i, block_count=c, return_features=r)</span><br><span class="line">    <span class="keyword">for</span> (i, c, r) <span class="keyword">in</span> ((<span class="number">1</span>, <span class="number">3</span>, <span class="keyword">False</span>), (<span class="number">2</span>, <span class="number">4</span>, <span class="keyword">False</span>), (<span class="number">3</span>, <span class="number">6</span>, <span class="keyword">False</span>), (<span class="number">4</span>, <span class="number">3</span>, <span class="keyword">True</span>))</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ResNet-50-C4, 只使用到第四阶段输出的特征图谱</span></span><br><span class="line">ResNet50StagesTo4 = tuple(</span><br><span class="line">    StageSpec(index=i, block_count=c, return_features=r)</span><br><span class="line">    <span class="keyword">for</span> (i, c, r) <span class="keyword">in</span> ((<span class="number">1</span>, <span class="number">3</span>, <span class="keyword">False</span>), (<span class="number">2</span>, <span class="number">4</span>, <span class="keyword">False</span>), (<span class="number">3</span>, <span class="number">6</span>, <span class="keyword">True</span>))</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ResNet-50-FPN full stages, 由于 FPN需要用到每一个阶段输出的特征图谱, 故 return_features 参数均为 True</span></span><br><span class="line">ResNet50FPNStagesTo5 = tuple(</span><br><span class="line">    StageSpec(index=i, block_count=c, return_features=r)</span><br><span class="line">    <span class="keyword">for</span> (i, c, r) <span class="keyword">in</span> ((<span class="number">1</span>, <span class="number">3</span>, <span class="keyword">True</span>), (<span class="number">2</span>, <span class="number">4</span>, <span class="keyword">True</span>), (<span class="number">3</span>, <span class="number">6</span>, <span class="keyword">True</span>), (<span class="number">4</span>, <span class="number">3</span>, <span class="keyword">True</span>))</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ResNet-101-FPN full stages 的卷积层数分别为: 3, 4, 23, 3</span></span><br><span class="line">ResNet101FPNStagesTo5 = tuple(</span><br><span class="line">    StageSpec(index=i, block_count=c, return_features=r)</span><br><span class="line">    <span class="keyword">for</span> (i, c, r) <span class="keyword">in</span> ((<span class="number">1</span>, <span class="number">3</span>, <span class="keyword">True</span>), (<span class="number">2</span>, <span class="number">4</span>, <span class="keyword">True</span>), (<span class="number">3</span>, <span class="number">23</span>, <span class="keyword">True</span>), (<span class="number">4</span>, <span class="number">3</span>, <span class="keyword">True</span>))</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h3 id="ResNet-类"><a href="#ResNet-类" class="headerlink" title="ResNet 类"></a>ResNet 类</h3><p>为了使阅读代码时不被搞混, 我们首先将文件最后的注册的各个模块贴出来, 这些模块会通过配置文件中的字符串信息来决定调用哪一个类或者参数, 代码如下所示:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">_TRANSFORMATION_MODULES = Registry(&#123;</span><br><span class="line">    <span class="string">"BottleneckWithFixedBatchNorm"</span>: BottleneckWithFixedBatchNorm</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">_STEM_MODULES = Registry(&#123;<span class="string">"StemWithFixedBatchNorm"</span>: StemWithFixedBatchNorm&#125;)</span><br><span class="line"></span><br><span class="line">_STAGE_SPECS = Registry(&#123;</span><br><span class="line">    <span class="string">"R-50-C4"</span>: ResNet50StagesTo4,</span><br><span class="line">    <span class="string">"R-50-C5"</span>: ResNet50StagesTo5,</span><br><span class="line">    <span class="string">"R-50-FPN"</span>: ResNet50FPNStagesTo5,</span><br><span class="line">    <span class="string">"R-101-FPN"</span>: ResNet101FPNStagesTo5,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>当定义完各个 ResNet 模型的 stages 的卷积层数量后, 我们再来看一看 ResNet 类的实现, 代码解析如下所示:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/modeling/backbone/resnet.py</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ResNet</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, cfg)</span>:</span></span><br><span class="line">        super(ResNet, self).__init__()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 如果我们希望在 forward 函数中使用 cfg, 那么我们就应该创建一个副本以供其使用</span></span><br><span class="line">        <span class="comment"># self.cfg = cfg.clone()</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 将配置文件中的字符串转化成具体的实现, 下面三个分别使用了对应的注册模块, 定义在文件的最后</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 这里是 stem 的实现, 也就是 resnet 的第一阶段 conv1</span></span><br><span class="line">        <span class="comment"># cfg.MODEL.RESNETS.STEM_FUNC = "StemWithFixedBatchNorm"</span></span><br><span class="line">        stem_module = _STEM_MODULES[cfg.MODEL.RESNETS.STEM_FUNC]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># resnet conv2_x~conv5_x 的实现</span></span><br><span class="line">        <span class="comment"># eg: cfg.MODEL.CONV_BODY="R-50-FPN"</span></span><br><span class="line">        stage_specs = _STAGE_SPECS[cfg.MODEL.CONV_BODY]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># residual transformation function</span></span><br><span class="line">        <span class="comment"># cfg.MODEL.RESNETS.TRANS_FUNC="BottleneckWithFixedBatchNorm"</span></span><br><span class="line">        transformation_module = _TRANSFORMATION_MODULES[cfg.MODEL.RESNETS.TRANS_FUNC]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取上面各个组成部分的实现以后, 就可以利用这些实现来构建模型了</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 构建 stem module(也就是 resnet 的stage1, 或者 conv1)</span></span><br><span class="line">        self.stem = stem_module(cfg)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取相应的信息来构建 resnet 的其他 stages 的卷积层</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 当 num_groups=1 时为 ResNet, &gt;1 时 为 ResNeXt</span></span><br><span class="line">        num_groups = cfg.MODEL.RESNETS.NUM_GROUPS</span><br><span class="line"></span><br><span class="line">        <span class="comment">#</span></span><br><span class="line">        width_per_group = cfg.MODEL.RESNETS.WIDTH_PER_GROUP</span><br><span class="line"></span><br><span class="line">        <span class="comment"># in_channels 指的是向后面的第二阶段输入时特征图谱的通道数,</span></span><br><span class="line">        <span class="comment"># 也就是 stem 的输出通道数, 默认为 64</span></span><br><span class="line">        in_channels = cfg.MODEL.RESNETS.STEM_OUT_CHANNELS</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 第二阶段输入的特别图谱的通道数</span></span><br><span class="line">        stage2_bottleneck_channels = num_groups * width_per_group</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 第二阶段的输出, resnet 系列标准模型可从 resnet 第二阶段的输出通道数判断后续的通道数</span></span><br><span class="line">        <span class="comment"># 默认为256, 则后续分别为512, 1024, 2048, 若为64, 则后续分别为128, 256, 512</span></span><br><span class="line">        stage2_out_channels = cfg.MODEL.RESNETS.RES2_OUT_CHANNELS</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 创建一个空的 stages 列表和对应的特征图谱字典</span></span><br><span class="line">        self.stages = []</span><br><span class="line">        self.return_features = &#123;&#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> stage_spec <span class="keyword">in</span> stage_specs: <span class="comment"># 关于 stage_specs 的定义可以看上一节</span></span><br><span class="line">            name = <span class="string">"layer"</span> + str(stage_spec.index)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 计算每个stage的输出通道数, 每经过一个stage, 通道数都会加倍</span></span><br><span class="line">            stage2_relative_factor = <span class="number">2</span> ** (stage_spec.index - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 计算输入图谱的通道数</span></span><br><span class="line">            bottleneck_channels = stage2_bottleneck_channels * stage2_relative_factor</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 计算输出图谱的通道数</span></span><br><span class="line">            out_channels = stage2_out_channels * stage2_relative_factor</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 当获取到所有需要的参数以后, 调用本文件的 `_make_stage` 函数,</span></span><br><span class="line">            <span class="comment"># 该函数可以根据传入的参数创建对应 stage 的模块(注意是module而不是model)</span></span><br><span class="line">            module = _make_stage(</span><br><span class="line">                transformation_module,</span><br><span class="line">                in_channels, <span class="comment"># 输入的通道数</span></span><br><span class="line">                bottleneck_channels, <span class="comment"># 压缩后的通道数</span></span><br><span class="line">                out_channels, <span class="comment"># 输出的通道数</span></span><br><span class="line">                stage_spec.block_count, <span class="comment">#当前stage的卷积层数量</span></span><br><span class="line">                num_groups, <span class="comment"># ResNet时为1, ResNeXt时&gt;1</span></span><br><span class="line">                cfg.MODEL.RESNETS.STRIDE_IN_1X1,</span><br><span class="line">                <span class="comment"># 当处于 stage3~5时, 需要在开始的时候使用 stride=2 来downsize</span></span><br><span class="line">                first_stride=int(stage_spec.index &gt; <span class="number">1</span>) + <span class="number">1</span>,</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 下一个 stage 的输入通道数即为当前 stage 的输出通道数</span></span><br><span class="line">            in_channels = out_channels</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 将当前stage模块添加到模型中</span></span><br><span class="line">            self.add_module(name, module)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 将stage的名称添加到列表中</span></span><br><span class="line">            self.stages.append(name)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 将stage的布尔值添加到字典中</span></span><br><span class="line">            self.return_features[name] = stage_spec.return_features</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 根据配置文件的参数选择性的冻结某些层(requires_grad=False)</span></span><br><span class="line">        self._freeze_backbone(cfg.MODEL.BACKBONE.FREEZE_CONV_BODY_AT)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_freeze_backbone</span><span class="params">(self, freeze_at)</span>:</span></span><br><span class="line">        <span class="comment"># 根据给定的参数冻结某些层的参数更新</span></span><br><span class="line">        <span class="keyword">for</span> stage_index <span class="keyword">in</span> range(freeze_at):</span><br><span class="line">            <span class="keyword">if</span> stage_index == <span class="number">0</span>:</span><br><span class="line">                m = self.stem <span class="comment"># resnet 的第一阶段, 即为 stem</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                m = getattr(self, <span class="string">"layer"</span> + str(stage_index))</span><br><span class="line">            <span class="comment"># 将 m 中的所有参数置为不更新状态.</span></span><br><span class="line">            <span class="keyword">for</span> p <span class="keyword">in</span> m.parameters():</span><br><span class="line">                p.requires_grad = <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 定义 ResNet 的前行传播过程</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        outputs = []</span><br><span class="line">        x = self.stem(x) <span class="comment"># 先经过 stem(stage 1)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 再依次计算 stage2~5的结果</span></span><br><span class="line">        <span class="keyword">for</span> stage_name <span class="keyword">in</span> self.stages:</span><br><span class="line">            x = getattr(self, stage_name)(x)</span><br><span class="line">            <span class="keyword">if</span> self.return_features[stage_name]:</span><br><span class="line">                <span class="comment"># 将stage2~5的所有计算结果(也就是特征图谱)以列表形式保存</span></span><br><span class="line">                outputs.append(x)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 将结果返回, outputs为列表形式, 元素为各个stage的特征图谱, 刚好作为 FPN 的输入</span></span><br><span class="line">        <span class="keyword">return</span> outputs</span><br></pre></td></tr></table></figure>
+<h3 id="ResNetHead-类"><a href="#ResNetHead-类" class="headerlink" title="ResNetHead 类"></a>ResNetHead 类</h3><p>接下来, 我们来看看 <code>ResNetHead</code> 类的实现, 代码解析如下所示:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ResNetHead</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        self,</span></span></span><br><span class="line"><span class="function"><span class="params">        block_module,</span></span></span><br><span class="line"><span class="function"><span class="params">        stages,</span></span></span><br><span class="line"><span class="function"><span class="params">        num_groups=<span class="number">1</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        width_per_group=<span class="number">64</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        stride_in_1x1=True,</span></span></span><br><span class="line"><span class="function"><span class="params">        stride_init=None,</span></span></span><br><span class="line"><span class="function"><span class="params">        res2_out_channels=<span class="number">256</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">    )</span>:</span></span><br><span class="line">        super(ResNetHead, self).__init__()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取不同stage的通道数相对于stage2的倍数</span></span><br><span class="line">        stage2_relative_factor = <span class="number">2</span> ** (stages[<span class="number">0</span>].index - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取压缩后的 stage2 的 channels</span></span><br><span class="line">        stage2_bottleneck_channels = num_groups * width_per_group</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取输出的 channels</span></span><br><span class="line">        out_channels = res2_out_channels * stage2_relative_factor</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取输入的 channels</span></span><br><span class="line">        in_channels = out_channels // <span class="number">2</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取压缩后的 channels</span></span><br><span class="line">        bottleneck_channels = stage2_bottleneck_channels * stage2_relative_factor</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 根据给定的名称获取相应 block_module</span></span><br><span class="line">        <span class="comment"># 目前 _TRANSFORMATION_MODULES 只包含 "BottleneckWithFixedBatchNorm" 这一个模块</span></span><br><span class="line">        block_module = _TRANSFORMATION_MODULES[block_module]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 创建一个空的 stages 列表</span></span><br><span class="line">        self.stages = []</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 初始化 stride</span></span><br><span class="line">        stride = stride_init</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> stage <span class="keyword">in</span> stages:</span><br><span class="line">            name = <span class="string">"layer"</span> + str(stage.index)</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> stride:</span><br><span class="line">                <span class="comment"># 当处于 stage3~5时, 需要在开始的时候使用 stride=2 来downsize</span></span><br><span class="line">                stride = int(stage.index &gt; <span class="number">1</span>) + <span class="number">1</span></span><br><span class="line">            module = _make_stage(</span><br><span class="line">                block_module,</span><br><span class="line">                in_channels,</span><br><span class="line">                bottleneck_channels,</span><br><span class="line">                out_channels,</span><br><span class="line">                stage.block_count,</span><br><span class="line">                num_groups,</span><br><span class="line">                stride_in_1x1,</span><br><span class="line">                first_stride=stride,</span><br><span class="line">            )</span><br><span class="line">            stride = <span class="keyword">None</span></span><br><span class="line">            self.add_module(name, module)</span><br><span class="line">            self.stages.append(name)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 定义前向传播过程</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> stage <span class="keyword">in</span> self.stages:</span><br><span class="line">            x = getattr(self, stage)(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br></pre></td></tr></table></figure>
+<h3 id="make-stage"><a href="#make-stage" class="headerlink" title="make_stage"></a>make_stage</h3><p>在上面两个类中, 都使用了 <code>_make_stage()</code> 函数来创建对应的 stage, 下面, 我们就来看看该函数的具体实现, 代码解析如下所示:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/modeling/backbone/resnet.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_make_stage</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    transformation_module,</span></span></span><br><span class="line"><span class="function"><span class="params">    in_channels,</span></span></span><br><span class="line"><span class="function"><span class="params">    bottleneck_channels,</span></span></span><br><span class="line"><span class="function"><span class="params">    out_channels,</span></span></span><br><span class="line"><span class="function"><span class="params">    block_count,</span></span></span><br><span class="line"><span class="function"><span class="params">    num_groups,</span></span></span><br><span class="line"><span class="function"><span class="params">    stride_in_1x1,</span></span></span><br><span class="line"><span class="function"><span class="params">    first_stride,</span></span></span><br><span class="line"><span class="function"><span class="params">)</span>:</span></span><br><span class="line">    blocks = []</span><br><span class="line">    stride = first_stride</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(block_count):</span><br><span class="line">        blocks.append(</span><br><span class="line">            transformation_module(</span><br><span class="line">                in_channels,</span><br><span class="line">                bottleneck_channels,</span><br><span class="line">                out_channels,</span><br><span class="line">                num_groups,</span><br><span class="line">                stride_in_1x1,</span><br><span class="line">                stride,</span><br><span class="line">            )</span><br><span class="line">        )</span><br><span class="line">        stride = <span class="number">1</span></span><br><span class="line">        in_channels = out_channels</span><br></pre></td></tr></table></figure>
+<h3 id="StemWithFixedBatchNorm-类"><a href="#StemWithFixedBatchNorm-类" class="headerlink" title="StemWithFixedBatchNorm 类"></a>StemWithFixedBatchNorm 类</h3><p>该类负责构建 ResNet 的 stem 模块, 也可以认为是 ResNet 的第一阶段(或者说是第零阶段), 在 ResNet 50 中, 该阶段主要包含一个 7×7 大小的卷积核, 在 MaskrcnnBenchmark 的实现中, 为了可以方便的复用实现各个 stage 的代码, 它将第二阶段最开始的 3×3 的 max pooling 层也放到了 stem 中的 <code>forward</code> 函数中实现(一般不带参数网络层的都放在 <code>forward</code> 中), 该类的实现代码解析如下:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/modeling/backbone/resnet.py</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StemWithFixedBatchNorm</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, cfg)</span>:</span></span><br><span class="line">        super(StemWithFixedBatchNorm, self).__init__()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># resnet-50, out_channels=64</span></span><br><span class="line">        out_channels = cfg.MODEL.RESNETS.STEM_OUT_CHANNELS</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 输入的 channels 为 3, 输出为 64</span></span><br><span class="line">        self.conv1 = Conv2d(</span><br><span class="line">            <span class="number">3</span>, out_channels, kernel_size=<span class="number">7</span>, stride=<span class="number">2</span>, padding=<span class="number">3</span>, bias=<span class="keyword">False</span></span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 使用固定参数的 BN 层</span></span><br><span class="line">        self.bn1 = FrozenBatchNorm2d(out_channels)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 定义前向传播过程</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        x = self.conv1(x)</span><br><span class="line">        x = self.bn1(x)</span><br><span class="line">        x = F.relu_(x) <span class="comment"># 原地激活, 因为不含参数, 因此不放在模型定义中, 而放在 forward 中实现</span></span><br><span class="line">        x = F.max_pool2d(x, kernel_size=<span class="number">3</span>, stride=<span class="number">2</span>, padding=<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> x</span><br></pre></td></tr></table></figure>
+<p>上面代码中的 <code>Conv2d</code> 是封装在 <code>./maskrcnn_benchmark/layers/misc.py</code> 文件中的 <code>class Conv2d(nn.Conv2d)</code> 类, 它会根据 tensor 的 <code>numel</code> 参数决定其返回值, 当 <code>x.numel()&gt;0</code> 时, 与普通的 <code>torch.nn.Conv2d()</code> 函数没有区别. 另外还使用了 <code>./maskrcnn_benchmark/layers/batch_norm.py</code> 文件中定义的 <code>class FrozenBatchNorm2d(nn.Module)</code> 类, 该类主要实现了 BN 层的功能, 只不过其中的参数都是固定的, 而非可更新的.</p>
+<h3 id="BottleneckWithFixedBatchNorm-类"><a href="#BottleneckWithFixedBatchNorm-类" class="headerlink" title="BottleneckWithFixedBatchNorm 类"></a>BottleneckWithFixedBatchNorm 类</h3><p>创建完 stem(stage1) 以后, 接下来就是需要创建 resnet 的 stage2~5, 根据 resnet 的特点我们可以知道, resnet2~5 阶段的整体结构是非常相似的, 都是有最基础的 resnet bottleneck block 堆叠形成的, 不同 stage 的 bottleneck block 的数量不同, 对于 resnet50 来说, 每一个阶段的 bottleneck block 的数量分别为 3,4,6,3, 并且各个相邻 stage 之间的通道数都是两倍的关系, 所以可以很容易的从一个 stage 的通道数推知另一个 stage 的通道数, 关于 bottleneck block 的代码解析如下所示:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/modeling/backbone/resnet.py</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BottleneckWithFixedBatchNorm</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        self,</span></span></span><br><span class="line"><span class="function"><span class="params">        in_channels, # bottleneck 的输入 channels</span></span></span><br><span class="line"><span class="function"><span class="params">        bottleneck_channels, # bottleneck 压缩后的 channels</span></span></span><br><span class="line"><span class="function"><span class="params">        out_channels, # 当前stage的输出channels</span></span></span><br><span class="line"><span class="function"><span class="params">        num_groups=<span class="number">1</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        stride_in_1x1=True,</span></span></span><br><span class="line"><span class="function"><span class="params">        stride=<span class="number">1</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">    )</span>:</span></span><br><span class="line">        super(BottleneckWithFixedBatchNorm, self).__init__()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># downsample: 当 bottleneck 的输入和输出的 channels 不相等时, 则需要采用一定的策略</span></span><br><span class="line">        <span class="comment"># 在原文中, 有 A, B, C三种策略, 本文采用的是 B 策略(也是原文推荐的)</span></span><br><span class="line">        <span class="comment"># 即只有在输入输出通道数不相等时才使用 projection shortcuts,</span></span><br><span class="line">        <span class="comment"># 也就是利用参数矩阵映射使得输入输出的 channels 相等</span></span><br><span class="line">        self.downsample = <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 当输入输出通道数不同时, 额外添加一个 1×1 的卷积层使得输入通道数映射成输出通道数</span></span><br><span class="line">        <span class="keyword">if</span> in_channels != out_channels:</span><br><span class="line">            self.downsample = nn.Sequential(</span><br><span class="line">                Conv2d(</span><br><span class="line">                    in_channels, out_channels, kernel_size=<span class="number">1</span>, stride=stride, bias=<span class="keyword">False</span></span><br><span class="line">                ),</span><br><span class="line">                FrozenBatchNorm2d(out_channels), <span class="comment"># 后街一个固定参数的 BN 层</span></span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 在 resnet 原文中, 会在 conv3_1, conv4_1, conv5_1 处使用 stride=2 的卷积</span></span><br><span class="line">        <span class="comment"># 而在 fb.torch.resnet 和 caffe2 的实现中, 是将之后的 3×3 的卷积层的 stride 置为2</span></span><br><span class="line">        <span class="comment"># 下面中的 stride 虽然默认值为1, 但是在函数调用时, 如果stage为3~5, 则会显示置为2</span></span><br><span class="line">        stride_1x1, stride_3x3 = (stride, <span class="number">1</span>) <span class="keyword">if</span> stride_in_1x1 <span class="keyword">else</span> (<span class="number">1</span>, stride)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 当获取到当前stage所需的参数后, 就创建相应的卷积层, 创建原则参见 resnet50 的定义</span></span><br><span class="line">        self.conv1 = Conv2d(</span><br><span class="line">            in_channels,</span><br><span class="line">            bottleneck_channels,</span><br><span class="line">            kernel_size=<span class="number">1</span>,</span><br><span class="line">            stride=stride_1x1,</span><br><span class="line">            bias=<span class="keyword">False</span>,</span><br><span class="line">        )</span><br><span class="line">        self.bn1 = FrozenBatchNorm2d(bottleneck_channels) <span class="comment"># 后接一个固定参数的 BN 层</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 创建 bottleneck 的第二层卷积层</span></span><br><span class="line">        self.conv2 = Conv2d(</span><br><span class="line">            bottleneck_channels,</span><br><span class="line">            bottleneck_channels,</span><br><span class="line">            kernel_size=<span class="number">3</span>,</span><br><span class="line">            stride=stride_3x3,</span><br><span class="line">            padding=<span class="number">1</span>,</span><br><span class="line">            bias=<span class="keyword">False</span>,</span><br><span class="line">            groups=num_groups,</span><br><span class="line">        )</span><br><span class="line">        self.bn2 = FrozenBatchNorm2d(bottleneck_channels) <span class="comment"># 后接一个 BN 层</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 创建 bottleneck 的最后一个卷积层, padding默认为1</span></span><br><span class="line">        self.conv3 = Conv2d(</span><br><span class="line">            bottleneck_channels, out_channels, kernel_size=<span class="number">1</span>, bias=<span class="keyword">False</span></span><br><span class="line">        )</span><br><span class="line">        self.bn3 = FrozenBatchNorm2d(out_channels)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        <span class="comment"># 执行一次forward, 相当于执行一次 bottleneck,</span></span><br><span class="line">        <span class="comment"># 默认情况下, 具有三个卷积层, 一个恒等连接, 每个卷积层之后都带有 BN 和 relu 激活</span></span><br><span class="line">        <span class="comment"># 注意, 最后一个激活函数要放在恒等连接之后</span></span><br><span class="line"></span><br><span class="line">        residual = x <span class="comment"># 恒等连接, 直接令残差等于x即可</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># conv1, bn1</span></span><br><span class="line">        out = self.conv1(x)</span><br><span class="line">        out = self.bn1(out)</span><br><span class="line">        out = F.relu_(out)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># conv2, bn2</span></span><br><span class="line">        out = self.conv2(out)</span><br><span class="line">        out = self.bn2(out)</span><br><span class="line">        out = F.relu_(out)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># conv3, bn3</span></span><br><span class="line">        out0 = self.conv3(out) <span class="comment"># 这里的out0好像没必要带0?</span></span><br><span class="line">        out = self.bn3(out0)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self.downsample <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">            <span class="comment"># 如果输入输出的通道数不同, 则需要通过映射使之相同.</span></span><br><span class="line">            residual = self.downsample(x)</span><br><span class="line"></span><br><span class="line">        out += residual <span class="comment"># H = F + x</span></span><br><span class="line">        out = F.relu_(out) <span class="comment"># 最后进行激活</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> out <span class="comment"># 返回带有残差项的卷积结果</span></span><br></pre></td></tr></table></figure>
+<p><span id="fpn"></span></p>
+<h2 id="fpn-py-特征金字塔网络"><a href="#fpn-py-特征金字塔网络" class="headerlink" title="fpn.py 特征金字塔网络"></a>fpn.py 特征金字塔网络</h2><p>对于 ResNet-50-C4 来说, 只需要上面的 ResNet 模型即可完成特征提取任务, 但是对于 ResNet-50-FPN 来说, 我们还需要实现 FPN 网络以获得更强的特征提取能力, 在 <code>backbone.py</code> 文件中的 <code>build_resnet_fpn_backbone(cfg)</code> 函数中, 就使用了 <code>fpn = fpn_module.FPN(...)</code> 来创建一个 FPN 类的实例对象, 并且利用 <code>nn.Sequential()</code> 将 ResNet 和 FPN 组合在一起形成一个模型, 并将其返回, 下面, 我们就来看看 FPN 网络的具体实现, 实例代码位于 <code>./maskrcnn_benchmark/modeling/backbone/fpn.py</code> 文件中, 解析如下:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/modeling/backbone/fpn.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FPN</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="comment"># 在一系列的 feature map (实际上就是stage2~5的最后一层输出)添加 FPN</span></span><br><span class="line">    <span class="comment"># 这些 feature maps 的 depth 假定是不断递增的, 并且 feature maps 必须是连续的(从stage角度)</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, in_channels_list, out_channels, top_blocks=None)</span>:</span></span><br><span class="line">        <span class="comment"># in_channels_list (list[int]): 指示了送入 fpn 的每个 feature map 的通道数</span></span><br><span class="line">        <span class="comment"># out_channels (int): FPN表征的通道数, 所有的特征图谱最终都会转换成这个通道数大小</span></span><br><span class="line">        <span class="comment"># top_blocks (nn.Module or None): 当提供了 top_blocks 时, 就会在 FPN 的最后</span></span><br><span class="line">        <span class="comment"># 的输出上进行一个额外的 op, 然后 result 会扩展成 result list 返回</span></span><br><span class="line">        super(FPN, self).__init__()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 创建两个空列表</span></span><br><span class="line">        self.inner_blocks = []</span><br><span class="line">        self.layer_blocks = []</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 假设我们使用的是 ResNet-50-FPN 和配置, 则 in_channels_list 的值为:</span></span><br><span class="line">        <span class="comment"># [256, 512, 1024, 2048]</span></span><br><span class="line">        <span class="keyword">for</span> idx, in_channels <span class="keyword">in</span> enumerate(in_channels_list, <span class="number">1</span>): <span class="comment"># 下标从1开始</span></span><br><span class="line">            <span class="comment"># 用下表起名: fpn_inner1, fpn_inner2, fpn_inner3, fpn_inner4</span></span><br><span class="line">            inner_block = <span class="string">"fpn_inner&#123;&#125;"</span>.format(idx)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># fpn_layer1, fpn_layer2, fpn_layer3, fpn_layer4</span></span><br><span class="line">            layer_block = <span class="string">"fpn_layer&#123;&#125;"</span>.format(idx)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 创建 inner_block 模块, 这里 in_channels 为各个stage输出的通道数</span></span><br><span class="line">            <span class="comment"># out_channels 为 256, 定义在用户配置文件中</span></span><br><span class="line">            <span class="comment"># 这里的卷积核大小为1, 该卷积层主要作用为改变通道数到 out_channels(降维)</span></span><br><span class="line">            inner_block_module = nn.Conv2d(in_channels, out_channels, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 改变 channels 后, 在每一个 stage 的特征图谱上再进行 3×3 的卷积计算, 通道数不变</span></span><br><span class="line">            layer_block_module = nn.Conv2d(out_channels, out_channels, <span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> module <span class="keyword">in</span> [inner_block_module, layer_block_module]:</span><br><span class="line">                <span class="comment"># Caffe2 的实现使用了 XavierFill,</span></span><br><span class="line">                <span class="comment"># 实际上相当于 PyTorch 中的 kaiming_uniform_</span></span><br><span class="line">                nn.init.kaiming_uniform_(module.weight, a=<span class="number">1</span>)</span><br><span class="line">                nn.init.constant_(module.bias, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 在当前的特征图谱上添加 FPN</span></span><br><span class="line">            self.add_module(inner_block, inner_block_module) <span class="comment">#name, module</span></span><br><span class="line">            self.add_module(layer_block, layer_block_module)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 将当前 stage 的 fpn 模块的名字添加到对应的列表当中</span></span><br><span class="line">            self.inner_blocks.append(inner_block)</span><br><span class="line">            self.layer_blocks.append(layer_block)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 将top_blocks作为 FPN 类的成员变量</span></span><br><span class="line">        self.top_blocks = top_blocks</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        <span class="comment"># x (list[Tensor]): 每个 feature level 的 feature maps,</span></span><br><span class="line">        <span class="comment"># ResNet的计算结果正好满足 FPN 的输入要求, 也因此可以使用 nn.Sequential 将二者直接结合</span></span><br><span class="line">        <span class="comment"># results (tuple[Tensor]): 经过FPN后的特征图谱组成的列表, 排列顺序是高分辨率的在前</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 先计算最后一层(分辨率最低)特征图谱的fpn结果.</span></span><br><span class="line">        last_inner = getattr(self, self.inner_blocks[<span class="number">-1</span>])(x[<span class="number">-1</span>])</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 创建一个空的结果列表</span></span><br><span class="line">        results=[]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 将最后一层的计算结果添加到 results 中</span></span><br><span class="line">        results.append(getattr(self, self.layer_blocks[<span class="number">-1</span>])(last_inner))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment"># [:-1] 获取了前三项, [::-1] 代表从头到尾切片, 步长为-1, 效果为列表逆置</span></span><br><span class="line">        <span class="comment"># 举例来说, zip里的操作 self.inner_block[:-1][::-1] 的运行结果为</span></span><br><span class="line">        <span class="comment"># [fpn_inner3, fpn_inner2, fpn_inner1], 相当于对列表进行了逆置</span></span><br><span class="line">        <span class="keyword">for</span> feature, inner_block, layer_block <span class="keyword">in</span> zip(</span><br><span class="line">            x[:<span class="number">-1</span>][::<span class="number">-1</span>], self.inner_block[:<span class="number">-1</span>][::<span class="number">-1</span>], self.layer_blocks[:<span class="number">-1</span>][::<span class="number">-1</span>]</span><br><span class="line">        ):</span><br><span class="line">            <span class="comment"># 根据给定的scale参数对特征图谱进行放大/缩小, 这里scale=2, 所以是放大</span></span><br><span class="line">            inner_top_down = F.interpolate(last_inner, scale_factor=<span class="number">2</span>, mode=<span class="string">"nearest"</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 获取 inner_block 的计算结果</span></span><br><span class="line">            inner_lateral = getattr(self, inner_block)(feature)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 将二者叠加, 作为当前stage的输出 同时作为下一个stage的输入</span></span><br><span class="line">            last_inner = inner_lateral + inner_top_down</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 将当前stage输出添加到结果列表中, 注意还要用 layer_block 执行卷积计算</span></span><br><span class="line">            <span class="comment"># 同时为了使得分辨率最大的在前, 我们需要将结果插入到0位置</span></span><br><span class="line">            results.insert(<span class="number">0</span>, getattr(self, layer_block)(last_inner))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 如果 top_blocks 不为空, 则执行这些额外op</span></span><br><span class="line">        <span class="keyword">if</span> self.top_blocks <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">            last_results = self.top_blocks(results[<span class="number">-1</span>])</span><br><span class="line">            results.extend(last_results) <span class="comment"># 将新计算的结果追加到列表中</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 以元组(只读)形式返回</span></span><br><span class="line">        <span class="keyword">return</span> tuple(results)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 最后一级的 max pool 层</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LastLevelMaxPool</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> [F.max_pool2d(x, <span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>)]</span><br></pre></td></tr></table></figure>
+<h1 id="roi-heads"><a href="#roi-heads" class="headerlink" title="roi_heads"></a>roi_heads</h1><h2 id="box-head"><a href="#box-head" class="headerlink" title="box_head"></a>box_head</h2><h2 id="mask-head"><a href="#mask-head" class="headerlink" title="mask_head"></a>mask_head</h2><h2 id="roi-heads-py"><a href="#roi-heads-py" class="headerlink" title="roi_heads.py"></a>roi_heads.py</h2>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PyTorch/" rel="tag"><i class="fa fa-tag"></i> PyTorch</a>
+          
+            <a href="/tags/MaskrcnnBenchmark/" rel="tag"><i class="fa fa-tag"></i> MaskrcnnBenchmark</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/Cpp-stringstream/" rel="prev" title="C++中的字符串流-stringstream">
+                <i class="fa fa-chevron-left"></i> C++中的字符串流-stringstream
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/Python-argparse/" rel="next" title="argparse-命令行解析模块">
+                argparse-命令行解析模块 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">230</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#源码文件"><span class="nav-text">源码文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#detector-模型定义入口"><span class="nav-text">detector 模型定义入口</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#detectors-py-文件解析"><span class="nav-text">detectors.py 文件解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#generalized-rcnn-py-文件解析"><span class="nav-text">generalized_rcnn.py 文件解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#backbone-模型骨架定义"><span class="nav-text">backbone 模型骨架定义</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#backbone-py-文件解析"><span class="nav-text">backbone.py 文件解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#resnet-py-网络主体-特征提取器"><span class="nav-text">resnet.py 网络主体(特征提取器)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ResNet-Stage-Specification"><span class="nav-text">ResNet Stage Specification</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ResNet-类"><span class="nav-text">ResNet 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ResNetHead-类"><span class="nav-text">ResNetHead 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#make-stage"><span class="nav-text">make_stage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StemWithFixedBatchNorm-类"><span class="nav-text">StemWithFixedBatchNorm 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BottleneckWithFixedBatchNorm-类"><span class="nav-text">BottleneckWithFixedBatchNorm 类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fpn-py-特征金字塔网络"><span class="nav-text">fpn.py 特征金字塔网络</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#roi-heads"><span class="nav-text">roi_heads</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#box-head"><span class="nav-text">box_head</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mask-head"><span class="nav-text">mask_head</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#roi-heads-py"><span class="nav-text">roi_heads.py</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">1.3m</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">20:01</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

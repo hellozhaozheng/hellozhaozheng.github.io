@@ -112,22 +112,36 @@
 
 
 
-  <meta name="description" content="文章:作者: 背景介绍核心亮点论文细节Region Proposals Networks 原文中, 作者用ZF model为例对RPN网络进行讲解, ZF model的最后一层卷积层Conv5具有256个卷积核, 也就是说它生成的特征图谱的shape为 $W\times H\times 256$, RPN网络的第一层可以认为是一个卷积层, 卷积核的尺寸为 $n\times n$ (文中使用的是 3">
+  <meta name="description" content="文章:作者: 背景介绍核心亮点摘要在本文中, 我们提出了一个候选区域框推荐网络(Region Proposal Network, RPN), 该网络可以与检测模型的网络共享图片的卷积计算结果. PRN 是一个可以在每一个位置上同时预测物体边界(object bounds)以及前后景置信度(objectness scores)的全卷积网络. RPN 可以通过端到端的训练来生成高质量的候选框区域, 而">
 <meta name="keywords" content="目标检测,论文解读">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Faster R-CNN (NIPS, 2015)">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-FasterRCNN-NIPS2015/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="文章:作者: 背景介绍核心亮点论文细节Region Proposals Networks 原文中, 作者用ZF model为例对RPN网络进行讲解, ZF model的最后一层卷积层Conv5具有256个卷积核, 也就是说它生成的特征图谱的shape为 $W\times H\times 256$, RPN网络的第一层可以认为是一个卷积层, 卷积核的尺寸为 $n\times n$ (文中使用的是 3">
+<meta property="og:description" content="文章:作者: 背景介绍核心亮点摘要在本文中, 我们提出了一个候选区域框推荐网络(Region Proposal Network, RPN), 该网络可以与检测模型的网络共享图片的卷积计算结果. PRN 是一个可以在每一个位置上同时预测物体边界(object bounds)以及前后景置信度(objectness scores)的全卷积网络. RPN 可以通过端到端的训练来生成高质量的候选框区域, 而">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fw9s61fiidj20nc0e579t.jpg">
-<meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fw9s61fiidj20nc0e579t.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fxseevwsqkj21n50hctlj.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fxsf9g1udsj21q00s3152.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/mw1024/d7b90c85ly1fw9tvpr5doj20xz0lk1kx.jpg">
-<meta property="og:updated_time" content="2018-12-01T05:51:16.506Z">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fxseqf6a69j21fa0jpqpj.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fxserec80rj219w0700tt.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fxsf9g1udsj21q00s3152.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fxses5eo8xj21hx0dpq6y.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fxsese9ppjj21h00bz0wn.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fxseso62vaj21gg08rjtv.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fxseszi56sj21fp0bhad9.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fxsetia0l7j21fi0ahacv.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fxseupadmlj20xz0g117h.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fxsevorhqej20v70907cs.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fxsevx06smj217m0cpq5n.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fxsewgfnp5j21h008rtbh.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fxsewwg162j21eh09j76v.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fxsexjkme6j20ug0ewgxe.jpg">
+<meta property="og:updated_time" content="2018-12-02T09:00:47.648Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Faster R-CNN (NIPS, 2015)">
-<meta name="twitter:description" content="文章:作者: 背景介绍核心亮点论文细节Region Proposals Networks 原文中, 作者用ZF model为例对RPN网络进行讲解, ZF model的最后一层卷积层Conv5具有256个卷积核, 也就是说它生成的特征图谱的shape为 $W\times H\times 256$, RPN网络的第一层可以认为是一个卷积层, 卷积核的尺寸为 $n\times n$ (文中使用的是 3">
-<meta name="twitter:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fw9s61fiidj20nc0e579t.jpg">
+<meta name="twitter:description" content="文章:作者: 背景介绍核心亮点摘要在本文中, 我们提出了一个候选区域框推荐网络(Region Proposal Network, RPN), 该网络可以与检测模型的网络共享图片的卷积计算结果. PRN 是一个可以在每一个位置上同时预测物体边界(object bounds)以及前后景置信度(objectness scores)的全卷积网络. RPN 可以通过端到端的训练来生成高质量的候选框区域, 而">
+<meta name="twitter:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fxseevwsqkj21n50hctlj.jpg">
 
 
 
@@ -252,7 +266,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">207</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">230</span></a>
   </li>
         
         
@@ -338,9 +352,9 @@
         
         
           
-          <li class="menu-item menu-item-其它">
-    <a href="/categories/其它/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其它</a>
+          <li class="menu-item menu-item-其他">
+    <a href="/categories/其他/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
   </li>
         
         
@@ -501,8 +515,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2018-12-01T13:51:16+08:00" content="2018-12-01">
-      		  2018-12-01
+    		<time itemprop="dateUpdated" datetime="2018-12-02T17:00:47+08:00" content="2018-12-02">
+      		  2018-12-02
     		</time>
   	  </span>
 	  
@@ -555,7 +569,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.1k</span>
+                <span title="本文字数">2.6k</span>
               
 
               
@@ -569,7 +583,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">2 分钟</span>
               
             </div>
           
@@ -590,13 +604,33 @@
 
       
         <p><strong>文章:</strong><br><strong>作者:</strong></p>
-<h1 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h1><h1 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h1><h1 id="论文细节"><a href="#论文细节" class="headerlink" title="论文细节"></a>论文细节</h1><h2 id="Region-Proposals-Networks"><a href="#Region-Proposals-Networks" class="headerlink" title="Region Proposals Networks"></a>Region Proposals Networks</h2><p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fw9s61fiidj20nc0e579t.jpg" alt=""></div></p>
-<p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fw9s61fiidj20nc0e579t.jpg" alt=""><br>原文中, 作者用ZF model为例对RPN网络进行讲解, ZF model的最后一层卷积层Conv5具有256个卷积核, 也就是说它生成的特征图谱的shape为 $W\times H\times 256$, RPN网络的第一层可以认为是一个卷积层, 卷积核的尺寸为 $n\times n$ (文中使用的是 3×3), 卷积核的个数为 256 (维持通道数不变). 利用该层的卷积层对Conv5的特征图谱操作, 最终生成的特征图谱大小仍然为 $W\times H\times 256$ (只不过此时,图谱中的每个点都会原图谱中的 $n\timesn$ 个点相关联). 对于这个图谱中的每个点, 我们认为它是一个anchor, 可以将它看做是一个元素个数为256的1维向量 (因为通道数为256).</p>
-<p>然后, 对于每一个anchor, 都会分配 $k$ 个anchor boxes. 每个anchor box都要分前景后景, 也就是分是否包含物体, 同时, 每一个anchor box还要输出预测物体相对于anchor的偏移坐标量.</p>
+<h1 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h1><h1 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h1><h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>在本文中, 我们提出了一个候选区域框推荐网络(Region Proposal Network, RPN), 该网络可以与检测模型的网络共享图片的卷积计算结果. PRN 是一个可以在每一个位置上同时预测物体边界(object bounds)以及前后景置信度(objectness scores)的全卷积网络. RPN 可以通过端到端的训练来生成高质量的候选框区域, 而这些区域可以提供给 Fast R-CNN 网络来进行目标检测任务. 更进一步地, 本文通过共享卷积特征的方法将 RPN 和 Fast R-CNN 网络融合成了一个单独的网络(RPN 的作用类似于一种注意了机制, 即告诉 Fast R-CNN 应该对哪里进行检测). 当使用深度卷积网络 VGG-16 时, 我们的检测模型可以在 GPU 上达到 5fps 的检测帧率, 同时在 VOC 2007, 2012 和 MS COCO 数据集上达到了 state-of-the-art 的精确度.</p>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>Fast R-CNN 目标检测模型取得了很大的成功, 但是它使用的候选区域框仍然是通过 Selective Search 或者 EdgeBoxes 算法来获得的, 这种方式是在 CPU 上运行的, 相对来说比较慢. 因此, 一个明显的思路就是利用 GPU 来加速候选区域框的生成. 在本文中, 我们提出了一个新的深度网络模型, 可以代替 Selective Search 算法来为 Fast R-CNN 提供候选区域框, 并且与 Fast R-CNN 通过共享卷积计算结果, RPN 可以节省大量的计算成本.<br>我们观察到, 用于检测目标的卷积特征图谱, 同样可以用来生成候选区域框, 因此, 我们在 backbone 卷积网络之上额外添加一些卷积层来构成 RPN 网络, RPN 网络和 Fast R-CNN 网络的分类器和回归器是并列关系.</p>
+<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fxseevwsqkj21n50hctlj.jpg" alt="图1"></p>
+<p>如图1(a)和(b)所示, 目前主流的候选框生成算法都是通过 “图片金字塔” 或者 “过滤器金字塔” 来生成候选框的, 而 RPN 网络通过引入一种新颖的 “anchor” boxes 来达到生成不同尺寸和比例的候选框. 为了融合 RPNs 和 Fast R-CNN 物体检测模型, 我们提出了交替 fine-tuning 候选框生成任务和目标检测任务的训练策略, 在训练其中一个网络时, 将另一个网络固定.</p>
+<h1 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h1><p><strong>Object Proposals:</strong> Selective Search, EdgeBoxes.</p>
+<p><strong>Deep Networks for Object Detection:</strong> R-CNN, OverFeat, MultiBox</p>
+<h1 id="Faster-R-CNN"><a href="#Faster-R-CNN" class="headerlink" title="Faster R-CNN"></a>Faster R-CNN</h1><p>本文将提升的模型命名为 Faster R-CNN, 它主要由两部分组成. 其一是用于生成候选区域框的深度全卷积网络, 其二是 Fast R-CNN 检测模型. 整体的检测系统是一个统一的目标检测网络, 如图2所示.</p>
+<p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fxsf9g1udsj21q00s3152.jpg" alt="图2"></p>
+<h1 id="Region-Proposals-Networks"><a href="#Region-Proposals-Networks" class="headerlink" title="Region Proposals Networks"></a>Region Proposals Networks</h1><p>RPN 网络会将一张任意尺寸的图片作为输入, 同时会输出一系列的矩形候选框, 每一个候选框都带有一个前后景置信度(objectness score). 因为我们希望 RPN 网络和 Fast R-CNN 网络能够共享卷积计算结果, 因此我们假设两个网络中的卷积层是相同的. 我们以 ZF model(具有5层卷积层) 为例对RPN网络进行讲解, ZF model的最后一层卷积层Conv5具有256个卷积核, 也就是说它生成的特征图谱的shape为 $W\times H\times 256$, RPN网络的第一层可以认为是一个卷积层, 卷积核的尺寸为 $n\times n$ (文中使用的是 3×3), 卷积核的个数为 256 (维持通道数不变). 利用该层的卷积层对 Conv5 的特征图谱操作, 最终生成的特征图谱大小仍然为 $W\times H\times 256$ (只不过此时,图谱中的每个点都会与原图谱中的 $k\times k$ 个点相关联). 对于这个图谱中的每个点, 我们认为它是一个 anchor, 可以将它看做是一个元素个数为256的1维向量 (因为通道数为256).<br>然后, 对于每一个anchor, 都会分配 $k$ 个anchor boxes. 每个anchor box都要分前景后景, 也就是分是否包含物体, 同时, 每一个anchor box还要输出预测物体相对于anchor的偏移坐标量.</p>
 <p>训练的时候会选择128个postive anchor boxes 和128个negative anchor boxes.</p>
-<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/mw1024/d7b90c85ly1fw9tvpr5doj20xz0lk1kx.jpg" alt=""></div></p>
+<p><img src="https://wx2.sinaimg.cn/mw1024/d7b90c85ly1fw9tvpr5doj20xz0lk1kx.jpg" alt=""></p>
 <p>实际上, RPN网络由两部分构成: 一个卷积层, 一对全连接层分别输出分类结果(cls layer)以及坐标回归结果(reg layer).</p>
 <p>实现上: 利用了一个卷积核大小为 $n\times n$ 的卷积层, 后接两个 $1\times 1$ 的卷积层.(分别用于回归和分类)</p>
+<p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fxseqf6a69j21fa0jpqpj.jpg" alt="图3"></p>
+<p>表1<br><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fxserec80rj219w0700tt.jpg" alt=""></p>
+<p>表2<br><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fxsf9g1udsj21q00s3152.jpg" alt=""></p>
+<p>表3<br><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fxses5eo8xj21hx0dpq6y.jpg" alt=""></p>
+<p>表4<br><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fxsese9ppjj21h00bz0wn.jpg" alt=""></p>
+<p>表5<br><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fxseso62vaj21gg08rjtv.jpg" alt=""></p>
+<p>表6<br><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fxseszi56sj21fp0bhad9.jpg" alt=""></p>
+<p>表7<br><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fxsetia0l7j21fi0ahacv.jpg" alt=""></p>
+<p>表8<br><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fxseupadmlj20xz0g117h.jpg" alt=""></p>
+<p>表9<br><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fxsevorhqej20v70907cs.jpg" alt=""></p>
+<p>图4<br><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fxsevx06smj217m0cpq5n.jpg" alt=""></p>
+<p>表10<br><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fxsewgfnp5j21h008rtbh.jpg" alt=""></p>
+<p>表11<br><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fxsewwg162j21eh09j76v.jpg" alt=""></p>
+<p>表12<br><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fxsexjkme6j20ug0ewgxe.jpg" alt=""></p>
 <h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数:"></a>损失函数:</h2><script type="math/tex; mode=display">L(\{p_i\}, \{t_i\}) = \frac{1}{N_{cls}} \sum_i L_{cls}(p_i, p_i^* ) + \lambda \frac{1}{N_{reg}} \sum_i p_i^* L_{reg}(t_i, t_i^* )</script><h2 id="RPN和FastRCNN共享卷积参数"><a href="#RPN和FastRCNN共享卷积参数" class="headerlink" title="RPN和FastRCNN共享卷积参数"></a>RPN和FastRCNN共享卷积参数</h2><p>原文为了使RPN和FastRCNN共享卷积参数, 讨论了三种不同的训练策略:</p>
 <ul>
 <li>Alternating training: 先训练RPN, 然后用RPN产生的候选区域来训练Fast RCNN, 之后, FastRCNN更新参数以后, 继续用来训练RPN. 该策略是本篇paper所有的实验使用的训练方法</li>
@@ -727,7 +761,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">207</span>
+                    <span class="site-state-item-count">230</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -911,7 +945,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景介绍"><span class="nav-text">背景介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#核心亮点"><span class="nav-text">核心亮点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#论文细节"><span class="nav-text">论文细节</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Region-Proposals-Networks"><span class="nav-text">Region Proposals Networks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#损失函数"><span class="nav-text">损失函数:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RPN和FastRCNN共享卷积参数"><span class="nav-text">RPN和FastRCNN共享卷积参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如果anchor-box有两个物体重叠了-怎么处理"><span class="nav-text">如果anchor box有两个物体重叠了?  怎么处理????</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bounding-box-回归的时候-为什么不直接对坐标回归-而是采用偏移量和缩放度"><span class="nav-text">bounding box 回归的时候, 为什么不直接对坐标回归, 而是采用偏移量和缩放度?</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景介绍"><span class="nav-text">背景介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#核心亮点"><span class="nav-text">核心亮点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Related-Work"><span class="nav-text">Related Work</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Faster-R-CNN"><span class="nav-text">Faster R-CNN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Region-Proposals-Networks"><span class="nav-text">Region Proposals Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#损失函数"><span class="nav-text">损失函数:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RPN和FastRCNN共享卷积参数"><span class="nav-text">RPN和FastRCNN共享卷积参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如果anchor-box有两个物体重叠了-怎么处理"><span class="nav-text">如果anchor box有两个物体重叠了?  怎么处理????</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bounding-box-回归的时候-为什么不直接对坐标回归-而是采用偏移量和缩放度"><span class="nav-text">bounding box 回归的时候, 为什么不直接对坐标回归, 而是采用偏移量和缩放度?</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -948,7 +982,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.1m</span>
+    <span title="站点总字数">1.3m</span>
   
 
   
@@ -957,7 +991,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">16:17</span>
+    <span title="站点阅读时长">20:01</span>
   
 </div>
 

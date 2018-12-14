@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="源码文件在 ./maskrcnn_benchmark/structures/ 文件夹中, 定义了许多检测模式使用的数据结构, 如 BoxList, ImageList 等, 下面我们就将对这些数据结构以后适用于它们的操作进行讲解, 涉及到的源码文件如下所示:  bounding_box.py boxlist_ops.py image_list.py segmentation_mask.py   b">
+<meta name="keywords" content="PyTorch,MaskrcnnBenchmark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MaskrcnnBenchmark 源码解析-数据结构(structures)">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/PyTorch-MaskrcnnBenchmark-structures/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="源码文件在 ./maskrcnn_benchmark/structures/ 文件夹中, 定义了许多检测模式使用的数据结构, 如 BoxList, ImageList 等, 下面我们就将对这些数据结构以后适用于它们的操作进行讲解, 涉及到的源码文件如下所示:  bounding_box.py boxlist_ops.py image_list.py segmentation_mask.py   b">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-14T08:49:30.902Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MaskrcnnBenchmark 源码解析-数据结构(structures)">
+<meta name="twitter:description" content="源码文件在 ./maskrcnn_benchmark/structures/ 文件夹中, 定义了许多检测模式使用的数据结构, 如 BoxList, ImageList 等, 下面我们就将对这些数据结构以后适用于它们的操作进行讲解, 涉及到的源码文件如下所示:  bounding_box.py boxlist_ops.py image_list.py segmentation_mask.py   b">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/PyTorch-MaskrcnnBenchmark-structures/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>MaskrcnnBenchmark 源码解析-数据结构(structures) | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">230</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-linux">
+    <a href="/categories/Linux/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-面试">
+    <a href="/categories/面试/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其他">
+    <a href="/categories/其他/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/PyTorch-MaskrcnnBenchmark-structures/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MaskrcnnBenchmark 源码解析-数据结构(structures)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-10 13:53:05" itemprop="dateCreated datePublished" datetime="2018-12-10T13:53:05+08:00">2018-12-10</time>
+            
+
+            
+          </span>
+
+	  
+  	    <span class="post-updated">
+    		&nbsp; | &nbsp; 更新于
+    		<time itemprop="dateUpdated" datetime="2018-12-14T16:49:30+08:00" content="2018-12-14">
+      		  2018-12-14
+    		</time>
+  	  </span>
+	  
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/PyTorch/" itemprop="url" rel="index"><span itemprop="name">PyTorch</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">14k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">13 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="源码文件"><a href="#源码文件" class="headerlink" title="源码文件"></a>源码文件</h1><p>在 <code>./maskrcnn_benchmark/structures/</code> 文件夹中, 定义了许多检测模式使用的数据结构, 如 <code>BoxList</code>, <code>ImageList</code> 等, 下面我们就将对这些数据结构以后适用于它们的操作进行讲解, 涉及到的源码文件如下所示:</p>
+<ul>
+<li><a href="#BoxList">bounding_box.py</a></li>
+<li><a href="#boxlist_ops">boxlist_ops.py</a></li>
+<li><a href="#ImageList">image_list.py</a></li>
+<li><a href="#Mask">segmentation_mask.py</a></li>
+</ul>
+<p><span id="BoxList"></span></p>
+<h1 id="bounding-box-py-文件解析"><a href="#bounding-box-py-文件解析" class="headerlink" title="bounding_box.py 文件解析"></a>bounding_box.py 文件解析</h1><p>该文件的主要内容就是定义了 <code>class BoxList(object)</code> 类, 该类用于表示一系列的 bounding boxes. 这些 boxes 会以 N×4 大小的 Tensor 来表示. 为了唯一的确定 boxes 在图片中的准确位置, 该类还保存了图片的维度, 另外, 也可以添加额外的信息到特定的 bounding box 中, 如标签信息.</p>
+<h2 id="文件概览"><a href="#文件概览" class="headerlink" title="文件概览"></a>文件概览</h2><p>该文件篇幅较长, 文件概览如下所示:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/structures/bounding_box.py</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BoxList</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, bbox, image_size, mode=<span class="string">"xyxy"</span>)</span>:</span></span><br><span class="line">        <span class="comment"># 初始化函数</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_field</span><span class="params">(self, field, field_data)</span>:</span></span><br><span class="line">        self.extra_fields[field] = field_data</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_field</span><span class="params">(self, field)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.extra_fields[field]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fields</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> list(self.extra_fields.keys())</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_copy_extra_fields</span><span class="params">(self, bbox)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> bbox.extra_fields.items():</span><br><span class="line">            self.extra_fields[k] = v</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">convert</span><span class="params">(self, mode)</span>:</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_split_into_xyxy</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">resize</span><span class="params">(self, size, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">transpose</span><span class="params">(self, method)</span>:</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">crop</span><span class="params">(self, box)</span>:</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">to</span><span class="params">(self, device)</span>:</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, item)</span>:</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.bbox.shape[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">clip_to_image</span><span class="params">(self, remove_empty=True)</span>:</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">area</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">copy_with_fields</span><span class="params">(self, fields)</span>:</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+<h2 id="class-BoxList-解析"><a href="#class-BoxList-解析" class="headerlink" title="class BoxList 解析"></a>class BoxList 解析</h2><p>下面我们对该类进行解析, 由于这个类的定义比较长, 且这个文件没有外部函数, 所有的函数都是类的成员函数, 因此, 我们将这个类拆分来讲解, 以方便我们查阅.</p>
+<h3 id="初始化函数"><a href="#初始化函数" class="headerlink" title="初始化函数"></a>初始化函数</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/structures/bounding_box.py</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 转换标志</span></span><br><span class="line">FLIP_LEFT_RIGHT = <span class="number">0</span></span><br><span class="line">FLIP_TOP_BOTTOM = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BoxList</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="comment"># 该类用于表示一系列的 bounding boxes. 这些 boxes 会以 N×4 大小的 Tensor 来表示.</span></span><br><span class="line">    <span class="comment"># 为了唯一的确定 boxes 在图片中的准确位置, 该类还保存了图片的维度,</span></span><br><span class="line">    <span class="comment"># 另外, 也可以添加额外的信息到特定的 bounding box 中, 如标签信息.</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, bbox, image_size, mode=<span class="string">"xyxy"</span>)</span>:</span></span><br><span class="line">        <span class="comment"># bbox (tensor): n×4, 代表n个box, 如: [[0,0,10,10],[0,0,5,5]]</span></span><br><span class="line">        <span class="comment"># image_size: (width, height)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 根据 bbox 的数据类型获取对应的 device</span></span><br><span class="line">        device = bbox.device <span class="keyword">if</span> isinstance(bbox, torch.Tensor) <span class="keyword">else</span> torch.device(<span class="string">"cpu"</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 将 bbox 转换成 tensor 类型</span></span><br><span class="line">        bbox = torch.as_tensor(bbox, dtype=torch.float32, device=device)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># bbox 的维度数量必须为2, 并且第二维必须为 4, 即 shape=(n, 4), 代表 n 个 box</span></span><br><span class="line">        <span class="keyword">if</span> bbox.ndimension() != <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(</span><br><span class="line">                <span class="string">"bbox should have 2 dimensions, got &#123;&#125;"</span>.format(bbox.ndimension())</span><br><span class="line">            )</span><br><span class="line">        <span class="keyword">if</span> bbox.size(<span class="number">-1</span>) !=<span class="number">4</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(</span><br><span class="line">                <span class="string">"last dimension of bbox should have a"</span></span><br><span class="line">                <span class="string">"size of 4, got &#123;&#125;"</span>.format(bbox.size(<span class="number">-1</span>))</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 只支持以下两种模式</span></span><br><span class="line">        <span class="keyword">if</span> mode <span class="keyword">not</span> <span class="keyword">in</span> (<span class="string">"xyxy"</span>, <span class="string">"xywh"</span>):</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">"mode should be 'xyxy' or 'xywh'"</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 为成员变量赋值</span></span><br><span class="line">        self.bbox = bbox</span><br><span class="line">        self.size = image_size</span><br><span class="line">        self.mode = mode</span><br><span class="line">        self.extra_fields = &#123;&#125; <span class="comment"># 以字典结构存储额外信息</span></span><br></pre></td></tr></table></figure>
+<h3 id="extra-fields-操作函数"><a href="#extra-fields-操作函数" class="headerlink" title="extra_fields 操作函数"></a>extra_fields 操作函数</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/structures/bounding_box.py</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BoxList</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="comment">#...</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 添加新的键值或覆盖旧的键值</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_field</span><span class="params">(self, field, field_data)</span>:</span></span><br><span class="line">            self.extra_fields[field] = field_data</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取指定键对应的值</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_field</span><span class="params">(self, field)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.extra_fields[field]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 判断额外信息中是否存在该键</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">has_field</span><span class="params">(self, field)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> field <span class="keyword">in</span> self.extra_fields</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 以列表的形式返回所有的键的名称</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fields</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> list(self.extra_fields.keys())</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将另一个 BoxList 类型的额外信息(字典)复制到到的额外信息(extra_fields)中.</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_copy_extra_fields</span><span class="params">(self, bbox)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> bbox.extra_fields.items():</span><br><span class="line">            self.extra_fields[k] = v</span><br></pre></td></tr></table></figure>
+<h3 id="convert-模式转换函数"><a href="#convert-模式转换函数" class="headerlink" title="convert() 模式转换函数"></a>convert() 模式转换函数</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/structures/bounding_box.py</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BoxList</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="comment">#...</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将当前 bbox 的表示形式转换成参数指定的模式</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">convert</span><span class="params">(self, mode)</span>:</span></span><br><span class="line">        <span class="comment"># 只支持以下两种模式</span></span><br><span class="line">        <span class="keyword">if</span> mode <span class="keyword">not</span> <span class="keyword">in</span> (<span class="string">"xyxy"</span>, <span class="string">"xywh"</span>):</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">"mode should be 'xyxy' or 'xywh'"</span>)</span><br><span class="line">        <span class="keyword">if</span> mode == self.mode:</span><br><span class="line">            <span class="keyword">return</span> self</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 调用成员函数, 将坐标表示转化成 (x1,y1,x2,y2) 的形式</span></span><br><span class="line">        xmin, ymin, xmax, ymax = self._split_into_xyxy()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> mode == <span class="string">"xyxy"</span>:</span><br><span class="line">            <span class="comment"># 如果模式为 "xyxy", 则直接将 xmin, ymin, xmax, ymax 合并成 n×4 的 bbox</span></span><br><span class="line">            bbox = torch.cat((xmin, ymin, xmax, ymax), dim=<span class="number">-1</span>)</span><br><span class="line">            <span class="comment"># 这里创建了一个新的 BoxList 实例</span></span><br><span class="line">            bbox = BoxList(bbox, self.size, mode)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 否则的话, 就将 xmin, ymin, xmax, ymax 转化成 (x,y,w,h) 后再连接在一起</span></span><br><span class="line">            TO_REMOVE = <span class="number">1</span></span><br><span class="line">            torch.cat((xmin, ymin, xmax - xmin + TO_REMOVE, ymax - ymin + TO_REMOVE), dim=<span class="number">-1</span>)</span><br><span class="line">            <span class="comment"># 创建新的 BoxList 实例</span></span><br><span class="line">            bbox = BoxList(bbox, self.size, mode=mode)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 复制当前实例的 extra_fields 信息到这个新创建的实例当中, 并将这个新实例返回</span></span><br><span class="line">        bbox._copy_extra_fields(self)</span><br><span class="line">        <span class="keyword">return</span> bbox</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取 bbox 的 (x1,y1,x2,y2)形式的坐标表示, .split 为 torch 内置函数, 用于将 tensor 分成多块</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_split_into_xyxy</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self.mode == <span class="string">"xyxy"</span>:</span><br><span class="line">            <span class="comment"># x, y 的 shape 为 n × 1, 代表着 n 个 box 的 x, y 坐标</span></span><br><span class="line">            xmin, ymin, xmax, ymax = self.split(<span class="number">1</span>, dim=<span class="number">-1</span>)</span><br><span class="line">            <span class="keyword">return</span> xmin, ymin, xmax, ymax</span><br><span class="line">        <span class="keyword">elif</span> self.mode == <span class="string">"xywh"</span>:</span><br><span class="line">            TO_REMOVE = <span class="number">1</span></span><br><span class="line">            <span class="comment"># 4 个 tensor 的 shape 均为 n×1</span></span><br><span class="line">            xmin, ymin, w, h = self.bbox.split(<span class="number">1</span>, dim=<span class="number">-1</span>)</span><br><span class="line">            <span class="keyword">return</span>(</span><br><span class="line">                xmin,</span><br><span class="line">                ymin,</span><br><span class="line">                xmin + (w - TO_REMOVE).clamp(min=<span class="number">0</span>),</span><br><span class="line">                ymin + (w - TO_REMOVE).clamp(min=<span class="number">0</span>),</span><br><span class="line">            )</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> RuntimeError(<span class="string">"Should not be here"</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="resize-放缩函数"><a href="#resize-放缩函数" class="headerlink" title="resize() 放缩函数"></a>resize() 放缩函数</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/structures/bounding_box.py</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BoxList</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="comment">#...</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将所有的 boxes 按照给定的 size 和图片的尺寸进行放缩, 创建一个副本存储放缩后的 boxes 并返回</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">resize</span><span class="params">(self, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="comment"># size: 指定放缩后的大小 (width, height)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 计算宽和高的放缩比例(new_size/old_size)</span></span><br><span class="line">        ratios = tuple(float(s) / float(s_orig) <span class="keyword">for</span> s, s_orig <span class="keyword">in</span> zip(size, self.size))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 宽高放缩比例相同</span></span><br><span class="line">        <span class="keyword">if</span> ratios[<span class="number">0</span>] == ratios[<span class="number">1</span>]:</span><br><span class="line">            ratio = ratios[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 令所有的 bbox 都乘以放缩比例, 不论 bbox 是以 xyxy 形式还是以 xywh 表示</span></span><br><span class="line">            <span class="comment"># 乘以系数就可以正确的将 bbox 的坐标转化到放缩后图片的对应坐标</span></span><br><span class="line">            scaled_box = self.box * ratio</span><br><span class="line"></span><br><span class="line">            bbox = BoxList(scaled_box, size, mode=self.mode)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 复制/转化其他信息</span></span><br><span class="line">            <span class="keyword">for</span> k, v <span class="keyword">in</span> self.extra_fields.items():</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> isinstance(v, torch.Tensor):</span><br><span class="line">                    v = v.resize(size, *args, **kwargs)</span><br><span class="line">                bbox.add_field(k, v)</span><br><span class="line">            <span class="keyword">return</span> bbox</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 宽高的放缩比例不同, 因此, 需要拆分后分别放缩然后在连接在一起</span></span><br><span class="line">        ratio_width, ratio_height = ratios</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取 bbox 的左上角和右下角的坐标</span></span><br><span class="line">        xmin, ymin, xmax, ymax = self._split_into_xyxy()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 分别对宽 (xmax, xmin) 和高 (ymax, ymin) 进行放缩</span></span><br><span class="line">        scaled_xmin = xmin * ratio_width</span><br><span class="line">        scaled_xmax = xmax * ratio_width</span><br><span class="line">        scaled_ymin = ymin * ratio_height</span><br><span class="line">        scaled_ymax = ymax * ratio_height</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 将左上角和右下角坐标连接起来, 组合放缩后的 bbox 表示</span></span><br><span class="line">        scaled_box = torch.cat(</span><br><span class="line">            (scaled_xmin, scaled_ymin, scaled_xmax, scaled_ymax), dim=<span class="number">-1</span></span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        bbox = BoxList(scaled_box, size, mode=<span class="string">"xyxy"</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 复制或转化其他信息</span></span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> self.extra_fields.items():</span><br><span class="line">            <span class="keyword">if</span> k <span class="keyword">not</span> isinstance(v, torch.Tensor):</span><br><span class="line">                v = v.resize(size, *args, **kwargs)</span><br><span class="line"></span><br><span class="line">            bbox.add_field(k, v)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 将 bbox 转换成指定的模式(因为前面强制转换成 xyxy 模式了, 所这里要转回去)</span></span><br><span class="line">        retrun bbox.convert(self.mode)</span><br></pre></td></tr></table></figure>
+<h3 id="transpose-图片翻转或旋转"><a href="#transpose-图片翻转或旋转" class="headerlink" title="transpose() 图片翻转或旋转"></a>transpose() 图片翻转或旋转</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/structures/bounding_box.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BoxList</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="comment">#...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">transpose</span><span class="params">(self, method)</span>:</span></span><br><span class="line">        <span class="comment"># 对 bbox 进行转换(翻转或者旋转90度)</span></span><br><span class="line">        <span class="comment"># methon (int) 此处只能为 0 或 1, 目前仅仅支持两个转换方法</span></span><br><span class="line">        <span class="comment"># FLIP_LEFT_RIGHT = 0, FLIP_TOP_BOTTOM = 1</span></span><br><span class="line">        <span class="comment"># :param method: One of :py:attr:`PIL.Image.FLIP_LEFT_RIGHT`,</span></span><br><span class="line">        <span class="comment"># :py:attr:`PIL.Image.FLIP_TOP_BOTTOM`, :py:attr:`PIL.Image.ROTATE_90`,</span></span><br><span class="line">        <span class="comment"># :py:attr:`PIL.Image.ROTATE_180`, :py:attr:`PIL.Image.ROTATE_270`,</span></span><br><span class="line">        <span class="comment"># :py:attr:`PIL.Image.TRANSPOSE` or :py:attr:`PIL.Image.TRANSVERSE`.</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 目前仅仅支持 FLIP_LEFT_RIGHT 和 FLIP_TOP_BOTTOM 两种方式</span></span><br><span class="line">        <span class="keyword">if</span> method <span class="keyword">not</span> <span class="keyword">in</span> (FLIP_LEFT_RIGHT, FLIP_TOP_BOTTOM):</span><br><span class="line">            <span class="keyword">raise</span> NotImplementedError(</span><br><span class="line">                <span class="string">"Only FLIP_LEFT_RIGHT and FLIP_TOP_BOTTOM implemented"</span></span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取图片的宽和高</span></span><br><span class="line">        image_width, image_height = self.size</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取左上角和右下角的坐标</span></span><br><span class="line">        xmin, ymin, xmax, ymax = self._split_into_xyxy()</span><br><span class="line">        <span class="keyword">if</span> method == FLIP_LEFT_RIGHT: <span class="comment"># method=0</span></span><br><span class="line">            TO_REMOVE = <span class="number">1</span></span><br><span class="line">            transposed_xmin = image_width - xmax - TO_REMOVE</span><br><span class="line">            transposed_xmax = image_width - xmin - TO_REMOVE</span><br><span class="line">            transposed_ymin = ymin</span><br><span class="line">            transposed_ymax = ymax</span><br><span class="line">        <span class="keyword">elif</span> method == FLIP_TOP_BOTTOM:</span><br><span class="line">            transposed_xmin = xmin</span><br><span class="line">            transposed_xmax = xmax</span><br><span class="line">            transposed_ymin = image_height - ymax</span><br><span class="line">            transposed_ymax = image_height - ymin</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 将转换后的坐标组合起来形成新的 boxes</span></span><br><span class="line">        transposed_boxes = torch.cat(</span><br><span class="line">            (transposed_xmin, transposed_ymin, transposed_xmax, transposed_ymax), dim=<span class="number">-1</span></span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 根据转换后的 boxes 坐标创建一个新的 BoxList 实例, 同时将 extra_fields 信息复制</span></span><br><span class="line">        bbox = BoxList(transposed_boxes, self.size, mode=<span class="string">"xyxy"</span>)</span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> self.extra_fields.items():</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> isinstance(v, torch.Tensor):</span><br><span class="line">                v = v.transpose(method)</span><br><span class="line">            bbox.add_field(k, v)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 将 bbox 的 mode 转换后返回</span></span><br><span class="line">        <span class="keyword">return</span> bbox.convert(self.mode)</span><br></pre></td></tr></table></figure>
+<h3 id="crop-裁剪函数"><a href="#crop-裁剪函数" class="headerlink" title="crop() 裁剪函数"></a>crop() 裁剪函数</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/structures/bounding_box.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BoxList</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="comment">#...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">crop</span><span class="params">(self, box)</span>:</span></span><br><span class="line">        <span class="comment"># box 是一个4元组, 指定了希望剪裁的区域的左上角和右下角</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取当前所有 boxes 的最左, 最上, 最下, 最右的坐标</span></span><br><span class="line">        xmin, ymin, xmax, ymax = self._split_into_xyxy()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取欲剪裁的 box 的宽和高</span></span><br><span class="line">        w, h = box[<span class="number">2</span>] - box[<span class="number">0</span>], box[<span class="number">3</span>] - box[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 根据 box 指定的区域, 对所有的 proposals boxes 进行剪裁</span></span><br><span class="line">        <span class="comment"># 即改变其坐标的位置, 如果发现有超出规定尺寸的情况, 则将其截断</span></span><br><span class="line">        cropped_xmin = (xmin - box[<span class="number">0</span>]).clamp(min=<span class="number">0</span>, max=w)</span><br><span class="line">        cropped_ymin = (ymin - box[<span class="number">1</span>]).clamp(min=<span class="number">0</span>, max=h)</span><br><span class="line">        cropped_xmax = (xmax - box[<span class="number">0</span>]).clamp(min=<span class="number">0</span>, max=w)</span><br><span class="line">        cropped_ymax = (ymax - box[<span class="number">1</span>]).clamp(min=<span class="number">0</span>, max=h)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 将新的剪裁后的 box 坐标连接起来创建一个新的 BoxList 实例</span></span><br><span class="line">        bbox = BoxList(cropped_box, (w, h), mode=<span class="string">"xyxy"</span>)</span><br><span class="line">        <span class="comment"># 复制其他信息</span></span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> self.extra_fields.items():</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> isinstance(v, torch.Tensor):</span><br><span class="line">                v = v.crop(box)</span><br><span class="line">            bbox.add_field(k, v)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 将 bbox 的模式转换成传入时的模式</span></span><br><span class="line">        <span class="keyword">return</span> bbox.convert(self.mode)</span><br></pre></td></tr></table></figure>
+<h3 id="to-设备转移函数"><a href="#to-设备转移函数" class="headerlink" title="to() 设备转移函数"></a>to() 设备转移函数</h3><p>将 BoxList 实例转化到指定的设备上(创建新实例返回).</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/structures/bounding_box.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BoxList</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="comment">#...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">to</span><span class="params">(self, device)</span>:</span></span><br><span class="line">        <span class="comment"># device: "cuda:x" or "cpu"</span></span><br><span class="line">        <span class="comment"># 将当前的 bbox 移动到指定的 device 上, 并且重新创建一个新的 BoxList 实例</span></span><br><span class="line">        bbox = BoxList(self.bbox.to(device), self.size, self.mode)</span><br><span class="line">        <span class="comment"># 深度复制</span></span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> self.extra_fields.items():</span><br><span class="line">            <span class="keyword">if</span> hasattr(v, <span class="string">"to"</span>):</span><br><span class="line">                v = v.to(device)</span><br><span class="line">            bbox.add_field(k, v)</span><br><span class="line">        <span class="keyword">return</span> bbox</span><br></pre></td></tr></table></figure>
+<h3 id="clip-to-image"><a href="#clip-to-image" class="headerlink" title="clip_to_image()"></a>clip_to_image()</h3><p>该函数将 bbox 的坐标限制在 image 的尺寸内, 以便可以将边框显示在 image uh.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/structures/bounding_box.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BoxList</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="comment">#...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">clip_to_image</span><span class="params">(self, remove_empty=True)</span>:</span></span><br><span class="line">        TO_REMOVE = <span class="number">1</span></span><br><span class="line">        self.bbox[:, <span class="number">0</span>].clamp_(min=<span class="number">0</span>, max=self.size[<span class="number">0</span>] - TO_REMOVE)</span><br><span class="line">        self.bbox[:, <span class="number">1</span>].clamp_(min=<span class="number">0</span>, max=self.size[<span class="number">1</span>] - TO_REMOVE)</span><br><span class="line">        self.bbox[:, <span class="number">2</span>].clamp_(min=<span class="number">0</span>, max=self.size[<span class="number">0</span>] - TO_REMOVE)</span><br><span class="line">        self.bbox[:, <span class="number">3</span>].clamp_(min=<span class="number">0</span>, max=self.size[<span class="number">1</span>] - TO_REMOVE)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> remove_empty:</span><br><span class="line">            box = self.bbox</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 该语句会返回一个 n×1 的列表, 对应着 n 个 box, 如果 box 的坐标满足</span></span><br><span class="line">            <span class="comment"># 下面的语句条件, 则对应位为 1, 否则 为 0,</span></span><br><span class="line">            keep = (box[:, <span class="number">3</span>] &gt; box[:, <span class="number">1</span>]) &amp; (box[:, <span class="number">2</span>] &gt; box[:, <span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 返回那些对应位为 1 的 box</span></span><br><span class="line">            <span class="keyword">return</span> self[keep]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> self</span><br></pre></td></tr></table></figure>
+<h3 id="area-获取区域面积函数"><a href="#area-获取区域面积函数" class="headerlink" title="area() 获取区域面积函数"></a>area() 获取区域面积函数</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/structures/bounding_box.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BoxList</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="comment">#...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">area</span><span class="params">(self)</span>:</span></span><br><span class="line">        box = self.bbox</span><br><span class="line">        <span class="keyword">if</span> self.mode = <span class="string">"xyxy"</span>:</span><br><span class="line">            TO_REMOVE = <span class="number">1</span></span><br><span class="line">            <span class="comment"># 一个像素点的面积我们认为是 1, 而不是 0</span></span><br><span class="line">            area = (box[:, <span class="number">2</span>] - box[:, <span class="number">0</span>] + TO_REMOVE) * (box[:, <span class="number">3</span>] - box[:, <span class="number">1</span>] + TO_REMOVE)</span><br><span class="line">        <span class="keyword">elif</span> self.mode == <span class="string">"xywh"</span>:</span><br><span class="line">            <span class="comment"># 直接令 w * h</span></span><br><span class="line">            area = box[:, <span class="number">2</span>] * box[:, <span class="number">3</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> RuntimeError(<span class="string">"Should not be here"</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="copy-with-fields-深度复制函数"><a href="#copy-with-fields-深度复制函数" class="headerlink" title="copy_with_fields() 深度复制函数"></a>copy_with_fields() 深度复制函数</h3><p>连带 BoxList 的 <code>extra_fields</code> 信息进行复制, 返回一个新的 BoxList 实例</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/structures/bounding_box.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BoxList</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="comment">#...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">copy_with_fields</span><span class="params">(self, fields)</span>:</span></span><br><span class="line">        bbox = BoxList(self.bbox, self.size, self.mode)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> isinstance(fields, (list, tuple)):</span><br><span class="line">            <span class="comment"># 将 fields 包裹在列表里面, 注意 [fields] 和 list(fields) 的区别</span></span><br><span class="line">            fields = [fields]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 遍历 fields 中的所有元素, 并将其添加到当前的 BoxList 实例 bbox 中</span></span><br><span class="line">        <span class="keyword">for</span> field <span class="keyword">in</span> fields:</span><br><span class="line">            bbox.add_field(field, self.get_field(field))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span>  bbox</span><br></pre></td></tr></table></figure>
+<h3 id="其他函数"><a href="#其他函数" class="headerlink" title="其他函数"></a>其他函数</h3><p>getitem(), len(), repr()</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/structures/bounding_box.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BoxList</span><span class="params">(object)</span>:</span></span><br><span class="line">        <span class="comment">#...</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, item)</span>:</span></span><br><span class="line">            <span class="comment"># item 必须是列表类型</span></span><br><span class="line">            <span class="comment"># 假设 bbox 是一个 BoxList 实例, 那么我们可以利用下面语句得到该实例的子集</span></span><br><span class="line">            <span class="comment"># sub_bbox = bbox[[0,3,4,8]]</span></span><br><span class="line">            <span class="comment"># one_bbox = bbox[[2]]</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 创建新的子集实例</span></span><br><span class="line">            bbox = BoxList(self.bbox[item], self.size, self.mode)</span><br><span class="line">            <span class="comment"># 复制其他信息</span></span><br><span class="line">            <span class="keyword">for</span> k, v <span class="keyword">in</span> self.extra_fields.items():</span><br><span class="line">                bbox.add_field(k, v[item])</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> bbox</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">__len__</span><span class="params">(self)</span>:</span></span><br><span class="line">            <span class="comment"># 获取当前 BoxList 中含有的 box 的数量</span></span><br><span class="line">            <span class="keyword">return</span> self.bbox.shape[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></span><br><span class="line">            <span class="comment"># 改变 print(BoxList_a) 的打印信息, 使之显示更多的有用信息, 示例如下:</span></span><br><span class="line">            <span class="comment"># BoxList(num_boxes=2, image_width=10, image_height=10, mode=xyxy)</span></span><br><span class="line">            s = self.__class__.__name__ + <span class="string">"("</span></span><br><span class="line">            s += <span class="string">"num_boxes=&#123;&#125;, "</span>.format(len(self))</span><br><span class="line">            s += <span class="string">"image_width=&#123;&#125;, "</span>.format(self.size[<span class="number">0</span>])</span><br><span class="line">            s += <span class="string">"image_height=&#123;&#125;, "</span>.format(self.size[<span class="number">1</span>])</span><br><span class="line">            s += <span class="string">"mode=&#123;&#125;)"</span>.format(self.mode)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> s</span><br></pre></td></tr></table></figure>
+<p><span id="boxlist_ops"></span></p>
+<h1 id="boxlist-ops-py"><a href="#boxlist-ops-py" class="headerlink" title="boxlist_ops.py"></a>boxlist_ops.py</h1><p>该文件定义了一些与 BoxList 类型数据有关的操作, 根据函数的相互调用关系, 可以分为以下四个主要的函数:</p>
+<ul>
+<li><code>boxlist_nms()</code>:</li>
+<li><code>remove_small_boxes()</code>:</li>
+<li><code>boxlist_iou()</code>:</li>
+<li><code>cat_boxlist()</code>:</li>
+</ul>
+<p>下面我们按照顺序对分别上面的函数进行解析</p>
+<h2 id="boxlist-nms-函数"><a href="#boxlist-nms-函数" class="headerlink" title="boxlist_nms() 函数"></a>boxlist_nms() 函数</h2><h2 id="remove-small-boxes-函数"><a href="#remove-small-boxes-函数" class="headerlink" title="remove_small_boxes() 函数"></a>remove_small_boxes() 函数</h2><h2 id="boxlist-iou-函数"><a href="#boxlist-iou-函数" class="headerlink" title="boxlist_iou() 函数"></a>boxlist_iou() 函数</h2><p><span id="cat_boxlist"></span></p>
+<h2 id="cat-boxlist-函数"><a href="#cat-boxlist-函数" class="headerlink" title="cat_boxlist() 函数"></a>cat_boxlist() 函数</h2><p>该函数会将一个组成元素为 BoxList 的列表合并成一个 BoxList 对象. <strong>注意, 列表中的 BoxList 对象必须具有相同 image size.</strong></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><span id="ImageList"></span></p>
+<h1 id="image-list-py"><a href="#image-list-py" class="headerlink" title="image_list.py"></a>image_list.py</h1><p><span id="Mask"></span></p>
+<h1 id="segmentation-mask-py"><a href="#segmentation-mask-py" class="headerlink" title="segmentation_mask.py"></a>segmentation_mask.py</h1>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PyTorch/" rel="tag"><i class="fa fa-tag"></i> PyTorch</a>
+          
+            <a href="/tags/MaskrcnnBenchmark/" rel="tag"><i class="fa fa-tag"></i> MaskrcnnBenchmark</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/PyTorch-MaskrcnnBenchmark-layers/" rel="prev" title="MaskrcnnBenchmark 源码解析-各个网络层的封装实现(layers)">
+                <i class="fa fa-chevron-left"></i> MaskrcnnBenchmark 源码解析-各个网络层的封装实现(layers)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/Python-tqdm/" rel="next" title="tqdm模块-进度条">
+                tqdm模块-进度条 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">230</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#源码文件"><span class="nav-text">源码文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bounding-box-py-文件解析"><span class="nav-text">bounding_box.py 文件解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#文件概览"><span class="nav-text">文件概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#class-BoxList-解析"><span class="nav-text">class BoxList 解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化函数"><span class="nav-text">初始化函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#extra-fields-操作函数"><span class="nav-text">extra_fields 操作函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#convert-模式转换函数"><span class="nav-text">convert() 模式转换函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#resize-放缩函数"><span class="nav-text">resize() 放缩函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#transpose-图片翻转或旋转"><span class="nav-text">transpose() 图片翻转或旋转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#crop-裁剪函数"><span class="nav-text">crop() 裁剪函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#to-设备转移函数"><span class="nav-text">to() 设备转移函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#clip-to-image"><span class="nav-text">clip_to_image()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#area-获取区域面积函数"><span class="nav-text">area() 获取区域面积函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#copy-with-fields-深度复制函数"><span class="nav-text">copy_with_fields() 深度复制函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他函数"><span class="nav-text">其他函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#boxlist-ops-py"><span class="nav-text">boxlist_ops.py</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#boxlist-nms-函数"><span class="nav-text">boxlist_nms() 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#remove-small-boxes-函数"><span class="nav-text">remove_small_boxes() 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#boxlist-iou-函数"><span class="nav-text">boxlist_iou() 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cat-boxlist-函数"><span class="nav-text">cat_boxlist() 函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#image-list-py"><span class="nav-text">image_list.py</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#segmentation-mask-py"><span class="nav-text">segmentation_mask.py</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">1.3m</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">20:01</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

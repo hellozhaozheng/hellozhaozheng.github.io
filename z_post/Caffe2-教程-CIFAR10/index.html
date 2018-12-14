@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言本示例主要包含以下几个主要部分:  下载 Cifar10 数据集 将 Images 写入 lmdbs 定义并且训练 model 保存训练好的 model 加载训练好的 model 在 testing imdb 上面执行 inference 继续训练以提高 test accuracy 测试 retrained model  项目地址: https://github.com/caffe2/tuto">
+<meta name="keywords" content="Caffe2,目标检测">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Caffe2 教程-CIFAR 10">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Caffe2-教程-CIFAR10/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="前言本示例主要包含以下几个主要部分:  下载 Cifar10 数据集 将 Images 写入 lmdbs 定义并且训练 model 保存训练好的 model 加载训练好的 model 在 testing imdb 上面执行 inference 继续训练以提高 test accuracy 测试 retrained model  项目地址: https://github.com/caffe2/tuto">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fxvyyldzmgj21fr0p0woc.jpg">
+<meta property="og:updated_time" content="2018-12-11T13:44:24.507Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Caffe2 教程-CIFAR 10">
+<meta name="twitter:description" content="前言本示例主要包含以下几个主要部分:  下载 Cifar10 数据集 将 Images 写入 lmdbs 定义并且训练 model 保存训练好的 model 加载训练好的 model 在 testing imdb 上面执行 inference 继续训练以提高 test accuracy 测试 retrained model  项目地址: https://github.com/caffe2/tuto">
+<meta name="twitter:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fxvyyldzmgj21fr0p0woc.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/Caffe2-教程-CIFAR10/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Caffe2 教程-CIFAR 10 | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">230</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-linux">
+    <a href="/categories/Linux/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-面试">
+    <a href="/categories/面试/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其他">
+    <a href="/categories/其他/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/Caffe2-教程-CIFAR10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Caffe2 教程-CIFAR 10
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-06-21 20:02:37" itemprop="dateCreated datePublished" datetime="2018-06-21T20:02:37+08:00">2018-06-21</time>
+            
+
+            
+          </span>
+
+	  
+  	    <span class="post-updated">
+    		&nbsp; | &nbsp; 更新于
+    		<time itemprop="dateUpdated" datetime="2018-12-11T21:44:24+08:00" content="2018-12-11">
+      		  2018-12-11
+    		</time>
+  	  </span>
+	  
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Caffe2/" itemprop="url" rel="index"><span itemprop="name">Caffe2</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">37k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">34 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本示例主要包含以下几个主要部分:</p>
+<ul>
+<li>下载 Cifar10 数据集</li>
+<li>将 Images 写入 lmdbs</li>
+<li>定义并且训练 model</li>
+<li>保存训练好的 model</li>
+<li>加载训练好的 model</li>
+<li>在 testing imdb 上面执行 inference</li>
+<li>继续训练以提高 test accuracy</li>
+<li>测试 retrained model</li>
+</ul>
+<p>项目地址: <a href="https://github.com/caffe2/tutorials" target="_blank" rel="noopener">https://github.com/caffe2/tutorials</a></p>
+<h1 id="导入必要的包"><a href="#导入必要的包" class="headerlink" title="导入必要的包"></a>导入必要的包</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> absolute_import</span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> division</span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> unicode_literals</span><br><span class="line"></span><br><span class="line">%matplotlib inline</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> lmdb</span><br><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line"><span class="keyword">from</span> imageio <span class="keyword">import</span> imread</span><br><span class="line"><span class="keyword">import</span> caffe2.python.predictor.predictor_exporter <span class="keyword">as</span> pe</span><br><span class="line"><span class="keyword">from</span> caffe2.proto <span class="keyword">import</span> caffe2_pb2</span><br><span class="line"><span class="keyword">from</span> caffe2.python.predictor <span class="keyword">import</span> mobile_exporter</span><br><span class="line"><span class="keyword">from</span> caffe2.python <span class="keyword">import</span>(</span><br><span class="line">    brew,</span><br><span class="line">    core,</span><br><span class="line">    model_helper,</span><br><span class="line">    net_drawer,</span><br><span class="line">    optimizer,</span><br><span class="line">    visualize,</span><br><span class="line">    workspace</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置全局初始化信息 , 如果需要看到更加详细的初始化信息, 需要将caffe2_log_level参数设置为 1</span></span><br><span class="line">core.GlobalInit([<span class="string">'caffe2'</span>, <span class="string">'--caffe2_log_level=0'</span>])</span><br></pre></td></tr></table></figure>
+<h1 id="下载并解压数据集"><a href="#下载并解压数据集" class="headerlink" title="下载并解压数据集"></a>下载并解压数据集</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> tarfile</span><br><span class="line"><span class="comment"># 设置下载路径相关变量</span></span><br><span class="line"><span class="comment"># data_folder为data下载并解压的地方, 这个路径需要根据你自己的电脑环境设置</span></span><br><span class="line">data_folder = os.path.join(</span><br><span class="line">            os.path.expanduser(<span class="string">'~'</span>),</span><br><span class="line">            <span class="string">'caffe2_notebooks'</span>, <span class="string">'tutorial_data'</span>, <span class="string">'cifar10'</span></span><br><span class="line">            )</span><br><span class="line"><span class="comment"># root_folder为checkpoints文件和.pb模型定义文件存放的地方</span></span><br><span class="line">root_folder = os.path.join(</span><br><span class="line">            os.path.expanduser(<span class="string">'~'</span>),</span><br><span class="line">            <span class="string">'caffe2_notebooks'</span>, <span class="string">'tutorial_files'</span>, <span class="string">'tutorial_cifar10'</span></span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">url = <span class="string">"http://pjreddie.com/media/files/cifar.tgz"</span>   <span class="comment"># url to data</span></span><br><span class="line">filename = url.split(<span class="string">"/"</span>)[<span class="number">-1</span>]                       <span class="comment"># download file name</span></span><br><span class="line">download_path = os.path.join(data_folder, filename) <span class="comment"># path to extract data to</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.isdir(data_folder):</span><br><span class="line">    os.makedirs(data_folder)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果data不存在, 就下载并解压之</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(download_path.strip(<span class="string">'.tgz'</span>)):</span><br><span class="line">    <span class="comment"># Download data</span></span><br><span class="line">    r = requests.get(url, stream=<span class="keyword">True</span>)</span><br><span class="line">    print(<span class="string">"Downloading... &#123;&#125; to &#123;&#125;"</span>.format(url, download_path))</span><br><span class="line">    open(download_path, <span class="string">'wb'</span>).write(r.content)</span><br><span class="line">    print(<span class="string">"Finished downloading..."</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Unpack images from tgz file</span></span><br><span class="line">    print(<span class="string">'Extracting images from tarball...'</span>)</span><br><span class="line">    tar = tarfile.open(download_path, <span class="string">'r'</span>)</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> tar:</span><br><span class="line">        tar.extract(item, data_folder)</span><br><span class="line">    print(<span class="string">"Completed download and extraction!"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">"Image directory already exists. Moving on..."</span>)</span><br></pre></td></tr></table></figure>
+<p>接下来看一看数据集中的一些示例:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> glob</span><br><span class="line"><span class="keyword">from</span> skimage <span class="keyword">import</span> io</span><br><span class="line"></span><br><span class="line"><span class="comment"># Grab 5 image paths from training set to display</span></span><br><span class="line">sample_imgs = glob.glob(os.path.join(data_folder, <span class="string">"cifar"</span>, <span class="string">"train"</span>) + <span class="string">'/*.png'</span>)[:<span class="number">5</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot images</span></span><br><span class="line">f, ax = plt.subplots(<span class="number">1</span>, <span class="number">5</span>, figsize=(<span class="number">10</span>,<span class="number">10</span>))</span><br><span class="line">plt.tight_layout()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">    ax[i].set_title(sample_imgs[i].split(<span class="string">"_"</span>)[<span class="number">-1</span>].split(<span class="string">"."</span>)[<span class="number">0</span>])</span><br><span class="line">    ax[i].axis(<span class="string">'off'</span>)</span><br><span class="line">    ax[i].imshow(io.imread(sample_imgs[i]).astype(np.uint8))</span><br></pre></td></tr></table></figure></p>
+<h1 id="创建-LMDBs-数据结构"><a href="#创建-LMDBs-数据结构" class="headerlink" title="创建 LMDBs 数据结构"></a>创建 LMDBs 数据结构</h1><p>现在我们已经拥有了数据, 接下来需要写入LMDBs用于训练, 验证和测试. 为了根据每个类别来分离图片, 下面将会使用到一个经常在caffe框架中使用的技术, 创建label files. 具体来说, label files就是将每个.png图片对应到它的类别上面去:<br>/path/to/im1.png 7<br>/path/to/im2.png 3<br>/path/to/im3.png 5<br>/path/to/im4.png 0<br>…</p>
+<p>根据不同的数据集, 创建labels的方式有些许区别</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Paths to train and test directories</span></span><br><span class="line">training_dir_path = os.path.join(</span><br><span class="line">            os.path.expanduser(<span class="string">'~'</span>),</span><br><span class="line">            <span class="string">'caffe2_notebooks'</span>, <span class="string">'tutorial_data'</span>, <span class="string">'cifar10'</span>, <span class="string">'cifar'</span>, <span class="string">'train'</span></span><br><span class="line">            )</span><br><span class="line">testing_dir_path = os.path.join(</span><br><span class="line">            os.path.expanduser(<span class="string">'~'</span>),</span><br><span class="line">            <span class="string">'caffe2_notebooks'</span>, <span class="string">'tutorial_data'</span>, <span class="string">'cifar10'</span>, <span class="string">'cifar'</span>, <span class="string">'test'</span></span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line"><span class="comment"># Paths to label files</span></span><br><span class="line">training_labels_path = os.path.join(</span><br><span class="line">            os.path.expanduser(<span class="string">'~'</span>),</span><br><span class="line">             <span class="string">'caffe2_notebooks'</span>, <span class="string">'tutorial_data'</span>, <span class="string">'cifar10'</span>, <span class="string">'training_dictionary.txt'</span></span><br><span class="line">              )</span><br><span class="line">validation_labels_path = os.path.join(</span><br><span class="line">            os.path.expanduser(<span class="string">'~'</span>),</span><br><span class="line">            <span class="string">'caffe2_notebooks'</span>, <span class="string">'tutorial_data'</span>, <span class="string">'cifar10'</span>, <span class="string">'validation_dictionary.txt'</span></span><br><span class="line">            )</span><br><span class="line">testing_labels_path = os.path.join(</span><br><span class="line">            os.path.expanduser(<span class="string">'~'</span>),</span><br><span class="line">            <span class="string">'caffe2_notebooks'</span>, <span class="string">'tutorial_data'</span>, <span class="string">'cifar10'</span>, <span class="string">'testing_dictionary.txt'</span></span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line"><span class="comment"># Paths to LMDBs</span></span><br><span class="line">training_lmdb_path = os.path.join(</span><br><span class="line">            os.path.expanduser(<span class="string">'~'</span>),</span><br><span class="line">            <span class="string">'caffe2_notebooks'</span>, <span class="string">'tutorial_data'</span>, <span class="string">'cifar10'</span>, <span class="string">'training_lmdb'</span></span><br><span class="line">            )</span><br><span class="line">validation_lmdb_path = os.path.join(</span><br><span class="line">            os.path.expanduser(<span class="string">'~'</span>),</span><br><span class="line">            <span class="string">'caffe2_notebooks'</span>, <span class="string">'tutorial_data'</span>, <span class="string">'cifar10'</span>, <span class="string">'validation_lmdb'</span></span><br><span class="line">            )</span><br><span class="line">testing_lmdb_path = os.path.join(</span><br><span class="line">            os.path.expanduser(<span class="string">'~'</span>),</span><br><span class="line">            <span class="string">'caffe2_notebooks'</span>, <span class="string">'tutorial_data'</span>, <span class="string">'cifar10'</span>, <span class="string">'testing_lmdb'</span></span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line"><span class="comment"># Path to labels.txt</span></span><br><span class="line">labels_path = os.path.join(</span><br><span class="line">            os.path.expanduser(<span class="string">'~'</span>),</span><br><span class="line">            <span class="string">'caffe2_notebooks'</span>, <span class="string">'tutorial_data'</span>, <span class="string">'cifar10'</span>, <span class="string">'cifar'</span>, <span class="string">'labels.txt'</span></span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line"><span class="comment"># Open label file handler</span></span><br><span class="line">labels_handler = open(labels_path, <span class="string">"r"</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create classes dictionary to map string labels to integer labels</span></span><br><span class="line">classes = &#123;&#125;</span><br><span class="line">i = <span class="number">0</span></span><br><span class="line">lines = labels_handler.readlines()</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sorted(lines):</span><br><span class="line">    line = line.rstrip()</span><br><span class="line">    classes[line] = i</span><br><span class="line">    i += <span class="number">1</span></span><br><span class="line">labels_handler.close()</span><br><span class="line"></span><br><span class="line">print(<span class="string">"classes:"</span>, classes)</span><br></pre></td></tr></table></figure>
+<p>输出如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">classes: &#123;</span><br><span class="line">    &apos;automobile&apos;: 1, &apos;airplane&apos;: 0, &apos;truck&apos;: 9, &apos;ship&apos;: 8, &apos;dog&apos;: 5,</span><br><span class="line">    &apos;horse&apos;: 7, &apos;cat&apos;: 3, &apos;frog&apos;: 6, &apos;deer&apos;: 4, &apos;bird&apos;: 2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>既然现在我们已经拥有了从类别字符串名到数字的映射关系, 我们就可以创建用于训练, 验证和推演的标签文件了. 我们会将数据分成以下三个部分:</p>
+<ul>
+<li>training: 44000 images (73%)</li>
+<li>validation: 6000 images (10%)</li>
+<li>testing: 10000 image (17%)</li>
+</ul>
+<p>注意到我们的验证数据集仅仅只是训练数据集的一个子集, 我们这么做是为了查看我们当前的模型在面对没有见过的数据集时的表现怎么样. 为了得到分布相对均匀的训练集合验证集, 我们首先读取所有的图片(路径), 将其随机打乱, 然后拆分成数据集和验证集. 代码如下:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> shuffle</span><br><span class="line"></span><br><span class="line"><span class="comment"># Open file handlers</span></span><br><span class="line">training_labels_handler = open(training_labels_path, <span class="string">"w"</span>)</span><br><span class="line">validation_labels_handler = open(validation_labels_path, <span class="string">"w"</span>)</span><br><span class="line">testing_labels_handler = open(testing_labels_path, <span class="string">"w"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 training, validation, testing 的标签文件</span></span><br><span class="line">i = <span class="number">0</span></span><br><span class="line">validation_count = <span class="number">6000</span></span><br><span class="line"><span class="comment"># 将所有的训练集的图片路径读取到imgs中, 以字符串列表的形式存储</span></span><br><span class="line">imgs = glob.glob(training_dir_path+<span class="string">"/*.png"</span>)</span><br><span class="line">shuffle(imgs) <span class="comment"># 打乱文件路径</span></span><br><span class="line"><span class="keyword">for</span> img <span class="keyword">in</span> imgs:</span><br><span class="line">    <span class="keyword">if</span> i &lt; validation_count:</span><br><span class="line">        <span class="comment"># img的形式为 path/train/31205_frog.png</span></span><br><span class="line">        validation_labels_handler.write(img + <span class="string">' '</span> + str(classes[img.split(<span class="string">'_'</span>)[<span class="number">-1</span>].split(<span class="string">'.'</span>)[<span class="number">0</span>]]) + <span class="string">'\n'</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        training_labels_handler.write(img + <span class="string">' '</span> + str(classes[img.split(<span class="string">'_'</span>)[<span class="number">0</span>].split(<span class="string">'.'</span>)[<span class="number">0</span>]]) + <span class="string">'\n'</span>)</span><br><span class="line">    i += <span class="number">1</span></span><br><span class="line">print(<span class="string">"Finished writing training and validation label files"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据 test image 的信息存储 test labels 到文件中</span></span><br><span class="line"><span class="keyword">for</span> img <span class="keyword">in</span> glob.glob(testing_dir_path+<span class="string">'/*.png'</span>): <span class="comment"># 获取所有 test 图片的文件路径</span></span><br><span class="line">    testing_labels_handler.write(img + <span class="string">' '</span> + str(classes[img.split(<span class="string">'_'</span>)[<span class="number">-1</span>].split(<span class="string">'.'</span>)[<span class="number">0</span>]]) + <span class="string">'\n'</span>)</span><br><span class="line">print(<span class="string">"Finished writing testing label files"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Close file handlers</span></span><br><span class="line">training_labels_handler.close()</span><br><span class="line">validation_labels_handler.close()</span><br><span class="line">testing_labels_handler.close()</span><br></pre></td></tr></table></figure>
+<p>现在, 我们已经可以开始用这些创建好的标签文件来构建我们的 LMDBs 数据集了. 下面的代码采纳自 Caffe2 的 <a href="https://github.com/caffe2/caffe2/blob/master/caffe2/python/examples/lmdb_create_example.py" target="_blank" rel="noopener">lmdb_create_example.py</a> 脚本. 请注意在将数据送入 LMDB 之前, 首先要将图片的颜色通道从 RGB 变成 BGR, 并且要将图片矩阵从 HWC 变成 CHW. 另外, Caffe2 接受的输入格式为 NCHW, 这里的 N 代表 batch-size.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">write_lmdb</span><span class="params">(labels_file_path, lmdb_path)</span>:</span></span><br><span class="line">    labels_handler = open(labels_file_path, <span class="string">"r"</span>)</span><br><span class="line">    print(<span class="string">"&gt;&gt;&gt;Write database..."</span>)</span><br><span class="line">    LMDB_MAP_SIZE = <span class="number">1</span> &lt;&lt; <span class="number">40</span> <span class="comment"># 设置 lmdb 的size</span></span><br><span class="line">    print(<span class="string">"LMDB_MAP_SIZE"</span>, LMDB_MAP_SIZE)</span><br><span class="line">    env = lmdb.open(lmdb_path, map_size=LMDB_MAP_SIZE) <span class="comment"># &lt;class 'Environment'&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> env.begin(write=<span class="keyword">True</span>) <span class="keyword">as</span> txn:</span><br><span class="line">        count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> labels_handler.readlines():</span><br><span class="line">            line = line.rstrip() <span class="comment"># 去除最后的回车</span></span><br><span class="line">            im_path = line.split()[<span class="number">0</span>]</span><br><span class="line">            im_label = int(line.split()[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">            <span class="comment"># from imageio import imread, 读取图片</span></span><br><span class="line">            img_data = imread(im_path).astype(np.float32)</span><br><span class="line">            <span class="comment"># 将 RGB 转换成 BGR 格式</span></span><br><span class="line">            img_data = img_data[:, :, (<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>)]</span><br><span class="line">            <span class="comment"># 将 HWC 转换成 CHW 格式</span></span><br><span class="line">            img_data = np.transpose(img_data, (<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">            tensor_protos = caffe2_pb2.TensorProtos() <span class="comment"># 创建 TensorProtos</span></span><br><span class="line">            img_tensor = tensor_protos.protos.add() <span class="comment"># 获取 TensorProto</span></span><br><span class="line">            img_tensor.dims.extend(img_data.shape) <span class="comment"># 将img_tensor.dims从[]扩展成[3,32,32]</span></span><br><span class="line">            img_tensor.data_type = <span class="number">1</span> <span class="comment"># 将类型置为 float</span></span><br><span class="line">            flatten_img = img_data.reshape(np.prod(img_data.shape)) <span class="comment"># 将 img_data 的维度变成 32×32×3 = 3072 维(单维度)</span></span><br><span class="line">            img_tensor.float_data.extend(flatten_img) <span class="comment"># 将 flatten_img 填入 img_tensor(初始时为空)</span></span><br><span class="line">            label_tensor = tensor_protos.protos.add() <span class="comment"># 获取一个新的 TensorProto</span></span><br><span class="line">            label_tensor.data_type = <span class="number">2</span> <span class="comment"># 置为 int 类型</span></span><br><span class="line">            label_tensor.int32_data.append(im_label) <span class="comment"># 将 label(int类型, 表示标签编号) 添加到 label_tensor 中.</span></span><br><span class="line">            txn.put( <span class="comment"># 第一个参数为 key, 第二个为 value</span></span><br><span class="line">                <span class="string">'&#123;&#125;'</span>.format(count).encode(<span class="string">'ascii'</span>),</span><br><span class="line">                tensor_protos.SerializeToString()</span><br><span class="line">            )</span><br><span class="line">            <span class="keyword">if</span> ((count % <span class="number">1000</span> == <span class="number">0</span>)):</span><br><span class="line">                print(<span class="string">"Inserted &#123;&#125; rows"</span>.format(count))</span><br><span class="line">            count = count + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        print(<span class="string">"Inserted &#123;&#125; rows"</span>.format(count))</span><br><span class="line">        print(<span class="string">"\nLMDB saved at "</span> + lmdb_path + <span class="string">"\n\n"</span>)</span><br><span class="line">        labels_path.close()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 调用上面定义好的 LMDBs 写入函数</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(training_lmdb_path):</span><br><span class="line">    print(<span class="string">"Writing training LMDB"</span>)</span><br><span class="line">    write_lmdb(training_labels_path, training_lmdb_path)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(training_lmdb_path, <span class="string">"already exists!"</span>)</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(validation_lmdb_path):</span><br><span class="line">    print(<span class="string">"Writing validation LMDB"</span>)</span><br><span class="line">    write_lmdb(validation_labels_path, validation_lmdb_path)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(validation_lmdb_path, <span class="string">"already exists!"</span>)</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(testing_lmdb_path):</span><br><span class="line">    print(<span class="string">"Writing testing LMDB"</span>)</span><br><span class="line">    write_lmdb(testing_labels_path, testing_lmdb_path)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(testing_lmdb_path, <span class="string">"already exists!"</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="定义-CNN-模型"><a href="#定义-CNN-模型" class="headerlink" title="定义 CNN 模型"></a>定义 CNN 模型</h1><p>既然我们已经将数据存储成了 LMDBs 的格式, 那么是时候建立相应的网络模型了! 首先, 设置一些路径变量, 定义数据集的具体参数, 同时定义训练参数.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># caffe2 的 init 网络 和 predict 网络的位置</span></span><br><span class="line">init_net_out = <span class="string">'cifar10_init_net.pb'</span></span><br><span class="line">predict_net_out = <span class="string">'cifar10_predict_net.pb'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据集相关参数</span></span><br><span class="line">image_width = <span class="number">32</span></span><br><span class="line">image_height = <span class="number">32</span></span><br><span class="line">image_channels = <span class="number">3</span></span><br><span class="line">num_classes = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 网络训练参数</span></span><br><span class="line">training_iters = <span class="number">2000</span></span><br><span class="line">training_net_batch_size = <span class="number">100</span></span><br><span class="line">validation_images = <span class="number">6000</span></span><br><span class="line">validation_interval = <span class="number">100</span>  <span class="comment"># 每经过100次训练迭代, 就会进行一次验证迭代.</span></span><br><span class="line">checkpoint_iters = <span class="number">1000</span> <span class="comment"># 每经过1000次迭代, 就会输出一次 checkpoint db</span></span><br></pre></td></tr></table></figure>
+<p>创建相应的目录, 然后将该目录设置为工作目录.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># root_folder = /home/zerozone/caffe2_notebooks/tutorial_files/tutorial_cifar10</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.isdir(root_folder):</span><br><span class="line">    os.makedirs(root_folder) <span class="comment">#</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将根目录设置为工作目录</span></span><br><span class="line">workspace.ResetWorkspace(root_folder)</span><br></pre></td></tr></table></figure>
+<h2 id="AddInput-数据输入层"><a href="#AddInput-数据输入层" class="headerlink" title="AddInput() 数据输入层"></a>AddInput() 数据输入层</h2><p>下面的任务是利用 helper functions 来模块化我们的代码, 最终使其构成相应的网络模型. 我们将会使用 ModelHelper 类来定义和表示我们的模型, 同时会包含相应的参数信息. 我们将利用 brew 模块来向我们的模型中添加相应的网络层.<br><strong>需要注意的是, 调用上面的代码并不会使模型执行任何实际上的计算, 相反的, 我们是在搭建一个计算操作的图结构(graph of operators), 这个图最终指明了当数据传入时, 网络应该进行哪些 forward 和 backward 计算.</strong><br>第一个 helper function 是<code>AddInput</code>, 它向我们的网络添加了输入(数据)层. 注意到, 图片已经存储到了我们的 LMDBs 数据结构中, 因此在将其送入网络模型之前, 还需要一些简单的预处理操作. 第一, 我们先从 LMDB 中读取 raw image data 和 labels, 它们的类型都是 uint8([0,255] pixel values). 接着我们将数据转换成浮点类型, 同时将图片的像素值放缩到 [0,1] 之间, 使其在训练时可以更快收敛. 最后, 我们会调用<code>model.StopGradient(data, data)</code>来组织在 backward 过程中计算关于数据的梯度(因为我们只需要关于参数的梯度). 最后, 是一些关于引号中的名称含义:</p>
+<ul>
+<li>“data_unint8” 和 “label” 代表着与 DB 输入数据相关的 blobs 的名字</li>
+<li>如果名字是 input blob, 则代表当 operator 运行时的 blob_name</li>
+<li>如果名字是 output blob, 则代表是某个 operator 创建的 blob 的名字.</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">AddInput</span><span class="params">(model, batch_size, db, db_dtype)</span>:</span></span><br><span class="line">    <span class="comment"># 加载数据</span></span><br><span class="line">    data_uint8, label = brew.db_input(</span><br><span class="line">        model, <span class="comment"># ModelHelper 实例</span></span><br><span class="line">        blobs_out=[<span class="string">"data_uint8"</span>, <span class="string">"label"</span>],</span><br><span class="line">        batch_size=batch_size,</span><br><span class="line">        db=db,</span><br><span class="line">        db_type=db_type,</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将数据转换成 float</span></span><br><span class="line">    data = model.Cast(data_uint8, <span class="string">"data"</span>, to=core.DataType.FLOAT)</span><br><span class="line">    <span class="comment"># 将 data 从 [0, 255] 放缩到 [0,1]</span></span><br><span class="line">    data = model.Scale(data, data, scale=float(<span class="number">1.</span>/<span class="number">256</span>))</span><br><span class="line">    <span class="comment"># 避免计算数据的梯度</span></span><br><span class="line">    data = model.StopGradient(data, data)</span><br><span class="line">    <span class="keyword">return</span> data, label</span><br></pre></td></tr></table></figure>
+<p>根据后文的调用语句:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">data, label = AddInput(</span><br><span class="line">                train_model_zz, batch_size=training_net_batch_size, <span class="comment"># 100</span></span><br><span class="line">                db=training_lmdb_path, <span class="comment"># /home/zerozone/caffe2_notebooks/tutorial_data/cifar10/training_lmdb</span></span><br><span class="line">                db_type=<span class="string">"lmdb"</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>调用后, 模型中会增加四个新的 <code>op</code>(原本模型中的 <code>op</code> 为 0 个), 如下所示:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">name: &quot;train_net&quot;</span><br><span class="line">op &#123;</span><br><span class="line">  input: &quot;dbreader_/home/zerozone/caffe2_notebooks/tutorial_data/cifar10/training_lmdb&quot;</span><br><span class="line">  output: &quot;data_uint8&quot;</span><br><span class="line">  output: &quot;label&quot;</span><br><span class="line">  name: &quot;&quot;</span><br><span class="line">  type: &quot;TensorProtosDBInput&quot;</span><br><span class="line">  arg &#123;</span><br><span class="line">    name: &quot;batch_size&quot;</span><br><span class="line">    i: 100</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">op &#123;</span><br><span class="line">  input: &quot;data_uint8&quot;</span><br><span class="line">  output: &quot;data&quot;</span><br><span class="line">  name: &quot;&quot;</span><br><span class="line">  type: &quot;Cast&quot;</span><br><span class="line">  arg &#123;</span><br><span class="line">    name: &quot;to&quot;</span><br><span class="line">    i: 1</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">op &#123;</span><br><span class="line">  input: &quot;data&quot;</span><br><span class="line">  output: &quot;data&quot;</span><br><span class="line">  name: &quot;&quot;</span><br><span class="line">  type: &quot;Scale&quot;</span><br><span class="line">  arg &#123;</span><br><span class="line">    name: &quot;scale&quot;</span><br><span class="line">    f: 0.00390625</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">op &#123;</span><br><span class="line">  input: &quot;data&quot;</span><br><span class="line">  output: &quot;data&quot;</span><br><span class="line">  name: &quot;&quot;</span><br><span class="line">  type: &quot;StopGradient&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Add-Original-CIFAR10-Model-模型核心"><a href="#Add-Original-CIFAR10-Model-模型核心" class="headerlink" title="Add_Original_CIFAR10_Model() 模型核心"></a>Add_Original_CIFAR10_Model() 模型核心</h2><p>处理好输入层以后, 接下来实现 CNN 模型的定义. 本教程使用的网络模型拥有三层卷积层和池化层, 并且使用 ReLU 激活函数. 我们将会使用 <code>update_dims</code> 函数来帮助我们根据卷积层和池化层造成的维度的降低程度. 维度会以下列公式为依据发生变化:</p>
+<script type="math/tex; mode=display">height_{out}=\frac{height_{in}-kernel+2*pad}{stride}+1</script><script type="math/tex; mode=display">width_{out}=\frac{width_{in}-kernel+2*pad}{stride}+1</script><p>尽管使用 <code>update_dims</code> 函数不是必须的, 但我们发现这是一种避免手动计算维度变化的很不错的策略选择, 尤其是在决定全连接层的参数的时候.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 辅助计算维度变化的函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_dims</span><span class="params">(height, width, kernel, stride, pad)</span>:</span></span><br><span class="line">    new_height = ((height - kernel + <span class="number">2</span>*pad)//stride) + <span class="number">1</span></span><br><span class="line">    new_width = ((width - kernel + <span class="number">2</span>*pad)//stride) + <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> new_height, new_width</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Add_Original_CIFAR10_Model</span><span class="params">(model, data, num_classes, image_height, image_width, image_channels)</span>:</span></span><br><span class="line">    <span class="comment"># 第一层卷积层</span></span><br><span class="line">    conv1 = brew.conv(</span><br><span class="line">                model, data, <span class="string">'conv1'</span>, dim_in=image_channels, dim_out=<span class="number">32</span>,</span><br><span class="line">                kernel=<span class="number">5</span>, stride=<span class="number">1</span>, pad=<span class="number">2</span></span><br><span class="line">    )</span><br><span class="line">    h,w = update_dims(height=image_height, width=image_width, kernel=<span class="number">5</span>, stride=<span class="number">1</span>, pad=<span class="number">2</span>)</span><br><span class="line">    <span class="comment"># 第一层池化层</span></span><br><span class="line">    pool1 = brew.max_pool(model, conv1, <span class="string">"pool1"</span>, kernel=<span class="number">2</span>, stride=<span class="number">2</span>)</span><br><span class="line">    h,w = update_dims(height=h, width=w, kernel=<span class="number">3</span>, stride=<span class="number">2</span>, pad=<span class="number">0</span>)</span><br><span class="line">    <span class="comment"># 第一层激活层</span></span><br><span class="line">    relu1 = brew.relu(model, pool1, <span class="string">"relu1"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 第二层</span></span><br><span class="line">    conv2 = brew.conv(</span><br><span class="line">                model, relu1, <span class="string">"conv2"</span>, dim_in=<span class="number">32</span>, dim_out=<span class="number">32</span>,</span><br><span class="line">                kernel=<span class="number">5</span>, stride=<span class="number">1</span>, pad=<span class="number">2</span></span><br><span class="line">    )</span><br><span class="line">    h,w = update_dims(height=h, width=w, kernel=<span class="number">5</span>, stride=<span class="number">2</span>, pad=<span class="number">2</span>)</span><br><span class="line">    relu2 = brew.relu(model, conv2, <span class="string">"relu2"</span>)</span><br><span class="line">    pool2 = brew.average_pool(model, relu2, <span class="string">"pool2"</span>, kernel=<span class="number">3</span>, stride=<span class="number">2</span>)</span><br><span class="line">    h,w = update_dims(height=h, width=w, kernel=<span class="number">3</span>, stride=<span class="number">2</span>, pad=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 第三次</span></span><br><span class="line">    conv3 = brew.conv(</span><br><span class="line">                model, pool2, <span class="string">"conv3"</span>, dim_in=<span class="number">32</span>, dim_out=<span class="number">64</span>,</span><br><span class="line">                kernel=<span class="number">5</span>, stride=<span class="number">1</span>, pad=<span class="number">2</span></span><br><span class="line">    )</span><br><span class="line">    h,w = update_dims(height=h, width=w, kernel=<span class="number">5</span>, stride=<span class="number">1</span>, pad=<span class="number">2</span>)</span><br><span class="line">    relu3 = brew.relu(model, conv3, <span class="string">"relu3"</span>)</span><br><span class="line">    pool3 = brew.average_pool(model, relu3, <span class="string">"pool3"</span>, kernel=<span class="number">3</span>, stride=<span class="number">2</span>)</span><br><span class="line">    h,w = update_dims(height=h, width=w, kernel=<span class="number">3</span>, stride=<span class="number">2</span>, pad=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 全连接层, 通过动态维护w,h变量, 省去了手动计算的麻烦</span></span><br><span class="line">    fc1 = brew.fc(model, pool3, <span class="string">"fc1"</span>, dim_in=<span class="number">64</span>*h*w, dim_out=<span class="number">64</span>)</span><br><span class="line">    fc2 = brew.fc(model, fc1, <span class="string">"fc2"</span>, dim_in=<span class="number">64</span>, dim_out=num_classes)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Softmax 网络层, 将输出转换成概率</span></span><br><span class="line">    softmax = brew.softmax(model, fc2, <span class="string">"softmax"</span>)</span><br><span class="line">    <span class="keyword">return</span> softmax</span><br></pre></td></tr></table></figure>
+<p>后文在调用该函数时的代码如下所示:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">softmax = Add_Original_CIFAR10_Model(</span><br><span class="line">                train_model, data, num_classes</span><br><span class="line">                image_height, image_width, image_channels</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>由于此处涉及的 op 过多, 并且大部分都是重复的, 因此这里我们仅仅贴出网络中 conv1, pool1, relu1 的 op, 其他网络层的 op 类似.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">op &#123;</span><br><span class="line">  input: &quot;data&quot;</span><br><span class="line">  input: &quot;conv1_w&quot;</span><br><span class="line">  input: &quot;conv1_b&quot;</span><br><span class="line">  output: &quot;conv1&quot;</span><br><span class="line">  name: &quot;&quot;</span><br><span class="line">  type: &quot;Conv&quot;</span><br><span class="line">  arg &#123;</span><br><span class="line">    name: &quot;exhaustive_search&quot;</span><br><span class="line">    i: 0</span><br><span class="line">  &#125;</span><br><span class="line">  arg &#123;</span><br><span class="line">    name: &quot;stride&quot;</span><br><span class="line">    i: 1</span><br><span class="line">  &#125;</span><br><span class="line">  arg &#123;</span><br><span class="line">    name: &quot;order&quot;</span><br><span class="line">    s: &quot;NCHW&quot;</span><br><span class="line">  &#125;</span><br><span class="line">  arg &#123;</span><br><span class="line">    name: &quot;pad&quot;</span><br><span class="line">    i: 2</span><br><span class="line">  &#125;</span><br><span class="line">  arg &#123;</span><br><span class="line">    name: &quot;kernel&quot;</span><br><span class="line">    i: 5</span><br><span class="line">  &#125;</span><br><span class="line">  engine: &quot;CUDNN&quot;</span><br><span class="line">&#125;</span><br><span class="line">op &#123;</span><br><span class="line">  input: &quot;conv1&quot;</span><br><span class="line">  output: &quot;pool1&quot;</span><br><span class="line">  name: &quot;&quot;</span><br><span class="line">  type: &quot;MaxPool&quot;</span><br><span class="line">  arg &#123;</span><br><span class="line">    name: &quot;kernel&quot;</span><br><span class="line">    i: 3</span><br><span class="line">  &#125;</span><br><span class="line">  arg &#123;</span><br><span class="line">    name: &quot;cudnn_exhaustive_search&quot;</span><br><span class="line">    i: 0</span><br><span class="line">  &#125;</span><br><span class="line">  arg &#123;</span><br><span class="line">    name: &quot;stride&quot;</span><br><span class="line">    i: 2</span><br><span class="line">  &#125;</span><br><span class="line">  arg &#123;</span><br><span class="line">    name: &quot;order&quot;</span><br><span class="line">    s: &quot;NCHW&quot;</span><br><span class="line">  &#125;</span><br><span class="line">  engine: &quot;CUDNN&quot;</span><br><span class="line">&#125;</span><br><span class="line">op &#123;</span><br><span class="line">  input: &quot;pool1&quot;</span><br><span class="line">  output: &quot;relu1&quot;</span><br><span class="line">  name: &quot;&quot;</span><br><span class="line">  type: &quot;Relu&quot;</span><br><span class="line">  arg &#123;</span><br><span class="line">    name: &quot;cudnn_exhaustive_search&quot;</span><br><span class="line">    i: 0</span><br><span class="line">  &#125;</span><br><span class="line">  arg &#123;</span><br><span class="line">    name: &quot;order&quot;</span><br><span class="line">    s: &quot;NCHW&quot;</span><br><span class="line">  &#125;</span><br><span class="line">  engine: &quot;CUDNN&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="AddTrainingOperators-损失函数及优化器"><a href="#AddTrainingOperators-损失函数及优化器" class="headerlink" title="AddTrainingOperators() 损失函数及优化器"></a>AddTrainingOperators() 损失函数及优化器</h2><p>我们的下一个辅助函数是 <code>AddTrainingOperators()</code>. 这个函数将会被我们的训练模型所调用, 用于添加相应的损失函数和优化机制. 我们将会在模型的 <code>softmax</code> 输出和图片的真实标签上使用平均交叉熵来计算模型的损失. 然后我们会添加一个计算损失函数梯度的 operators 到模型中. 最终, 我们会使用 Caffe2 中 <code>optimizer</code> 类的 <code>build_sgd</code> 函数作为我们的优化函数.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">AddTrainingOperators</span><span class="params">(model, softmax, label)</span>:</span></span><br><span class="line">    xent = model.LabelCrossEntropy([softmax, label], <span class="string">'xent'</span>)</span><br><span class="line">    <span class="comment"># 计算 loss 的期望值</span></span><br><span class="line">    loss = model.AveragedLoss(xent, <span class="string">"loss"</span>)</span><br><span class="line">    <span class="comment"># from caffe2.python import optimizer</span></span><br><span class="line">    optimizer.build_sgd(</span><br><span class="line">        model,</span><br><span class="line">        base_learning_rate=<span class="number">0.01</span>,</span><br><span class="line">        policy=<span class="string">"fixed"</span>,</span><br><span class="line">        momentum=<span class="number">0.9</span>,</span><br><span class="line">        weight_decay=<span class="number">0.004</span></span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+<p>后文的调用语句如下:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddTrainingOperators(train_model, softmax, label)</span><br></pre></td></tr></table></figure></p>
+<p>此处涉及到的 op 也非常的多, 主要包含了计算之前每一个操作的梯度, 这里我们也只简单的列出一些 op 作为示例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">op &#123;</span><br><span class="line">  input: &quot;fc1&quot;</span><br><span class="line">  input: &quot;fc2_w&quot;</span><br><span class="line">  input: &quot;fc2_grad&quot;</span><br><span class="line">  output: &quot;fc2_w_grad&quot;</span><br><span class="line">  output: &quot;fc2_b_grad&quot;</span><br><span class="line">  output: &quot;fc1_grad&quot;</span><br><span class="line">  name: &quot;&quot;</span><br><span class="line">  type: &quot;FCGradient&quot;</span><br><span class="line">  arg &#123;</span><br><span class="line">    name: &quot;use_cudnn&quot;</span><br><span class="line">    i: 1</span><br><span class="line">  &#125;</span><br><span class="line">  arg &#123;</span><br><span class="line">    name: &quot;cudnn_exhaustive_search&quot;</span><br><span class="line">    i: 0</span><br><span class="line">  &#125;</span><br><span class="line">  arg &#123;</span><br><span class="line">    name: &quot;order&quot;</span><br><span class="line">    s: &quot;NCHW&quot;</span><br><span class="line">  &#125;</span><br><span class="line">  is_gradient_op: true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="AddAccuracy-模型准确率"><a href="#AddAccuracy-模型准确率" class="headerlink" title="AddAccuracy() 模型准确率"></a>AddAccuracy() 模型准确率</h2><p>下面的函数用于计算我们当前模型的 top-1 准确率.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">AddAccuracy</span><span class="params">(model, softmax, label)</span>:</span></span><br><span class="line">    <span class="comment"># blobs_in 为 [softmax, label]</span></span><br><span class="line">    <span class="comment"># blobs_out 为 "accuracy"</span></span><br><span class="line">    accuracy = brew.accuracy(model, [softmax, label], <span class="string">"accuracy"</span>)</span><br><span class="line">    <span class="keyword">return</span> accuracy</span><br></pre></td></tr></table></figure>
+<p>后文的调用语句如下:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddAccuracy(val_model, softmax, label)</span><br></pre></td></tr></table></figure></p>
+<p>本函数增加了一个新的 op, 如下所示:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">op &#123;</span><br><span class="line">  input: <span class="string">"softmax"</span></span><br><span class="line">  input: <span class="string">"label"</span></span><br><span class="line">  output: <span class="string">"accuracy"</span></span><br><span class="line">  name: <span class="string">""</span></span><br><span class="line">  type: <span class="string">"Accuracy"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="检查点"><a href="#检查点" class="headerlink" title="检查点"></a>检查点</h2><p>下面的函数会在每经过一定次数的迭代之后输出一个 checkpoint db. 一个 checkpoint 本质上来说是模型在训练过程中的一种保存成文件的模型状态. checkpoint 在快速加载训练好或者训练中的模型时非常有用, 并且它们能够在长时间的模型训练的过程中提高有力的安全保障. Caffe2 的 checkpoint 文件类似于 Caffe 的定期输出的 .caffemodel 文件. 我们利用 <code>brew</code> 和 <code>iter</code> operator 来跟踪迭代次数, 并把它们保存成 LMDBs 的形式.<br>在使用 checkpoints 的时候, 你必须时刻注意在训练过程是否将之前同名检查点给覆盖掉. 如果你尝试覆盖一个 checkpoint db, 那么将会产生报错. 为了解决这种情况, 我们将会把 checkpoints 以一种唯一的命名字典保存在我们的 <code>root_folder</code> 下面. 这个字典的名字会基于当前的系统时间戳, 以避免出现重复.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 root_folder 目录下创建唯一的命名字典</span></span><br><span class="line">unique_timestamp = str(datetime.datetime.now().strftime(<span class="string">'%Y-%m-%d_%H-%M-%S'</span>))</span><br><span class="line">checkpoint_dir = os.path.join(root_folder. unique_timestamp)</span><br><span class="line">os.makedirs(checkpoint_dir)</span><br><span class="line">print(<span class="string">"Checkpoint output location: "</span>, checkpoint_dir)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将 checkpoint 添加到给定的模型当中</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">AddCheckpoints</span><span class="params">(train_model, checkpoint_iters, db_type)</span>:</span> <span class="comment"># 注意这里第一个参数是train_model, 原始教程里写错了, 会导致运行出错</span></span><br><span class="line">    ITER = brew.iter(train_model, <span class="string">"iter"</span>)</span><br><span class="line">    train_model.Checkpoint(</span><br><span class="line">                [ITER] + train_model.params, [],</span><br><span class="line">                db=os.path.join(unique_timestamp, <span class="string">"cifar10_checkpoint_%05d.lmdb"</span>),</span><br><span class="line">                dy_type=<span class="string">"lmdb"</span>, every=checkpoint_iters</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+<h1 id="利用-ModelHelper-初始化模型"><a href="#利用-ModelHelper-初始化模型" class="headerlink" title="利用 ModelHelper 初始化模型"></a>利用 ModelHelper 初始化模型</h1><p>现在既然我们已经创建了必要的辅助函数, 那么是时候初始化模型, 同时使用相应的函数来定义模型的计算图(operator graphs). <strong>请记住此时我们还没有执行模型.</strong></p>
+<p>首先, 定义 train model:</p>
+<ol>
+<li>用 ModelHelper class 初始化模型</li>
+<li>利用 <code>AddInput()</code> 函数添加数据输入层</li>
+<li>添加 Cifar10 模型, 该模型返回一个 softmax blob</li>
+<li>利用 <code>AddTrainingOperators()</code> 函数添加 training operators, 此处需要使用第三步中的 softmax blob</li>
+<li>利用 <code>AddCheckpoints()</code> 函数添加定时的 checkpoints.</li>
+</ol>
+<p>下面, 我们来定义 validation model, 该模型在结构上与 training model 是相同的, 但是其数据来源于另一个 LMDB 文件, 并且使用了不同的 batch size. 具体定义如下:</p>
+<ol>
+<li>利用 ModelHelper class 对模型进行初始化(需要将参数 <code>init_params</code> 设置为 <code>False</code>);</li>
+<li>利用 <code>AddInput()</code> 函数添加数据输入层;</li>
+<li>添加 Cifar10 模型, 该模型返回一个 softmax blob;</li>
+<li>利用 <code>AddAccuracy()</code> 函数添加 accuracy layer, 此处需要使用第三步中的 softmax blob;</li>
+</ol>
+<p>最后, 我们定义 deploy model 如下:</p>
+<ol>
+<li>利用 ModelHelper class 初始化模型(需令 <code>init_params=False</code>);</li>
+<li>添加 Cifar10 模型, 以 “data” 作为模型输入 input blob.</li>
+</ol>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">arg_scope = &#123;<span class="string">"order"</span>: <span class="string">"NCHW"</span>&#125; <span class="comment"># 字典, 在 ModelHelper 中, arg_scope["order"] 的默认值即为 "NCHW", 因此该语句可省略</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># TRAINING MODEL</span></span><br><span class="line"><span class="comment"># 利用 ModelHelper class 初始化 training model</span></span><br><span class="line">train_model = model_helper.ModelHelper(name=<span class="string">"train_net"</span>, arg_scope=arg_scope)</span><br><span class="line"><span class="comment"># 从 lmdb 文件添加数据输入层</span></span><br><span class="line">data, label = AddInput(</span><br><span class="line">    train_model, batch_size=training_net_batch_szie,</span><br><span class="line">    db=training_lmdb_path,</span><br><span class="line">    db_type=<span class="string">"lmdb"</span></span><br><span class="line">)</span><br><span class="line"><span class="comment"># 添加模型核心定义, 将返回的值保存在 'softmax' 变量中</span></span><br><span class="line">softmax = Add_Original_CIFAR10_Model(</span><br><span class="line">                train_model, data, num_classes,</span><br><span class="line">                image_height, image_width, image_channels</span><br><span class="line">)</span><br><span class="line"><span class="comment"># 利用上面返回的 softmax 添加 training operators</span></span><br><span class="line">AddTrainingOperators(train_model, softmax, label)</span><br><span class="line"><span class="comment"># 添加 periodic checkpoint 输出到模型中</span></span><br><span class="line">AddCheckpoints(train_model, checkpoint_iters, db_type=<span class="string">"lmdb"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># VALIDATION MODEL</span></span><br><span class="line"><span class="comment"># 利用 ModelHelper class 初始化 val model</span></span><br><span class="line">val_model = model_helper.ModelHelper(</span><br><span class="line">    name=<span class="string">"val_net"</span>, arg_scope=arg_scope, init_params=<span class="keyword">False</span></span><br><span class="line">)</span><br><span class="line"><span class="comment"># 从 validation_lmdb 文件添加数据输入层</span></span><br><span class="line">data, label = AddInput(</span><br><span class="line">    val_model, batch_size=validation_images,</span><br><span class="line">    db=validation_lmbd_path,</span><br><span class="line">    db_type=<span class="string">"lmdb"</span></span><br><span class="line">)</span><br><span class="line"><span class="comment"># 添加模型定义, 并将返回值存储在 'softmax' 变量中</span></span><br><span class="line">softmax = Add_Original_CIFAR10_Model(</span><br><span class="line">    val_model, data, num_classes,</span><br><span class="line">    image_height, image_width, image_channels</span><br><span class="line">)</span><br><span class="line"><span class="comment"># 添加 accuracy operator</span></span><br><span class="line">AddAccuracy(val_model, softmax, label)</span><br><span class="line"></span><br><span class="line"><span class="comment"># DEPLOY MODEL</span></span><br><span class="line"><span class="comment"># 利用 ModelHelper class 初始化 deploy model</span></span><br><span class="line">deploy_model = model_helper.ModelHelper(</span><br><span class="line">    name=<span class="string">"deploy_net"</span>, arg_scope=arg_scope, init_params=<span class="keyword">False</span></span><br><span class="line">)</span><br><span class="line"><span class="comment"># 添加模型定义, 输入数据为 "data"</span></span><br><span class="line">Add_Original_CIFAR10_Model(</span><br><span class="line">    deploy_model, <span class="string">"data"</span>, num_classes,</span><br><span class="line">    image_height, image_width, image_channels</span><br><span class="line">)</span><br><span class="line">print(<span class="string">"Training, Validation, and Deploy models all defined"</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="开始训练"><a href="#开始训练" class="headerlink" title="开始训练"></a>开始训练</h1><p>最后, 既然我们已经拥有了模型, 并且定义了相应的 operator graphs, 那么就应该开始真正意义上的执行 training process 了. Under the hood, 我们已经定义将我们的模型以 operator graphs 的形式定义, 并且序列化成了 protobuf 格式. 最后一步就是要将这些 protobufs 送入 Caffe2 的 C++ 后端, 以便建立模型并执行它. 还记得 ModelHelper 模型对象拥有的两个网络吗:</p>
+<ul>
+<li>param_init_net: 包含参数和初始数据</li>
+<li>net: 包含定义好的网络结构(operator graph)</li>
+</ul>
+<p>以上的两个网络都需要执行, 并且我们必须先执行 param_init_net 网络, 注意, 该网络只需要被执行一次, 因此我们利用 <code>workspace.RunNetOnce()</code> 函数来执行, 这个函数会经过一个实例化, 运行, 然后销毁网络的过程. 如果我们需要多次运行某个网络, 就像我们需要多次运行 training nets 和 validation nets 一样, 那么我们必须先利用 <code>workspace.CreateNet()</code> 手动创建网络, 然后利用多次调用 <code>workspace.RunNet()</code> 的方式达到多次运行网络的目的, 从这里我们也就可以看出 <code>RunNetOnce</code> 和 <code>RunNet</code> 之间的区别了, 简单来说, 前者会在执行之前自动创建网络, 而后者只能运行已经创建好的网络, 也正是因为这样, 后者的执行速度要比前者快.<br>当我们利用 <code>workspace.RunNet()</code> 执行 train_model 以后, 这会在一个 batch 的数据上执行 forward 和 backward 过程, 而在执行 val_model 时, 只会执行 forward 过程(同时会计算准确率).</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化并创建 training network</span></span><br><span class="line">workspace.RunNetOnce(train_model.param_init_net)</span><br><span class="line">workspace.CreateNet(train_model.net, overwrite=<span class="keyword">True</span>) <span class="comment"># overwrite 参数代表是否允许覆盖checkpoint文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化并创建 validation network</span></span><br><span class="line">workspace.RunNetOnce(val_model.param_init_net)</span><br><span class="line">workspace.CreateNet(val_model.net, overwrite=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 Placeholder, 用于跟踪 loss 和 validation accuracy</span></span><br><span class="line">loss = np.zeros(int(math.ceil(training_iters/validation_interval))) <span class="comment"># shape = (2000/100,) = (20,)</span></span><br><span class="line">val_accuracy = np.zeros(int(math.ceil(training_iters/validation_interval))) <span class="comment"># shape = (20,)</span></span><br><span class="line">val_count = <span class="number">0</span></span><br><span class="line">iteration_list = np.zeros(int(math.ceil(training_iters/validation_interval))) <span class="comment"># shape = (20,)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 现在, 开始运行网络 (forward &amp; backward padd)</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(training_iters):</span><br><span class="line">    workspace.RunNet(train_model.net)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 每经过 validation_interval 次迭代就执行一次 validation net</span></span><br><span class="line">    <span class="keyword">if</span> (i % validation_interval == <span class="number">0</span>):</span><br><span class="line">        print(<span class="string">"Training iter:"</span>, i)</span><br><span class="line">        <span class="comment"># 获取当前 workspace 内的名为 "loss" 的 blob</span></span><br><span class="line">        loss[val_count] = workspace.FetchBlob(<span class="string">"loss"</span>) <span class="comment"># 记录一次 loss</span></span><br><span class="line">        <span class="comment"># 注意, 在 Caffe2 中, 同一个 workspace 的参数会被所有当前 workspace 内的模型所共享,</span></span><br><span class="line">        <span class="comment"># 也就是说, 虽然看起来 train_net 和 val_net 是分别利用 ModelHelper 定义的,</span></span><br><span class="line">        <span class="comment"># 但是, 当他们在workspace中获取参数的值时(通过名字, 如"loss"), 会获得相同的值,</span></span><br><span class="line">        <span class="comment"># 因此, 这里可以直接运行 val_net 来计算 train_net 训练的准确率.</span></span><br><span class="line">        workspace.RunNet(val_model.net)</span><br><span class="line">        val_accuracy[val_count] = workspace.FetchBlob(<span class="string">"accuracy"</span>)</span><br><span class="line">        print(<span class="string">"Loss:"</span>, str(loss[val_count]))</span><br><span class="line">        print(<span class="string">"Validation accuracy:"</span>, str(val_accuracy[val_count])+<span class="string">"\n"</span>)</span><br><span class="line">        iteration_list[val_count] = i <span class="comment"># 记录当前迭代次数</span></span><br><span class="line">        val_count += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>下面的代码用于将训练过程中的 accuracy 和 loss 绘制出来, 以方便我们观察和分析.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">plt.title(<span class="string">"Training loss vs. Validation Accuracy"</span>)</span><br><span class="line">plt.plot(iteration_list, loss, <span class="string">'b'</span>)</span><br><span class="line">plt.plot(iteration_list, val_accuracy, <span class="string">'r'</span>)</span><br><span class="line">plt.xlabel(<span class="string">"Training iteration"</span>)</span><br><span class="line">plt.legend((<span class="string">'Loss'</span>, <span class="string">'Validation Accuracy'</span>), loc=<span class="string">'upper right'</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="保存训练好的模型"><a href="#保存训练好的模型" class="headerlink" title="保存训练好的模型"></a>保存训练好的模型</h1><p>当我们在 workspace 中训练好模型的参数以后, 我们就可以利用 <code>mobile_exporter</code> 来导出部署模型. 在 Caffe2 中, 预训练的模型通常情况下会存储成两个单独的 protobuf(.pb) 文件(inti_net 和 predict_net). 模型也可以被存储为 db 格式, 但是最好存储成 pb 格式, 因为这种格式在社区中更流行. 为了保持一致性, 我们将这些参数保存在相同的 checkpoints 的唯一目录下.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始化并创建 deploy 网络</span></span><br><span class="line">workspace.RunNetOnce(deploy_model.param_init_net)</span><br><span class="line">workspace.CreateNet(deploy_model.net, overwrite=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 利用 mobile_exporter 的 Export 函数来获取 init_net 和 predict_net</span></span><br><span class="line">init_net, predict_net = mobile_exporter.Export(</span><br><span class="line">    workspace, deploy_model.net, deploy_model.params)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义 output files 的路径</span></span><br><span class="line">full_init_net_out = os.path.join(checkpoint_dir, init_net_out)</span><br><span class="line">full_predict_net_out = os.path.join(checkpoint_dir, predict_net_out)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将两个网络写入文件</span></span><br><span class="line"><span class="keyword">with</span> open(full_init_net_out, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.write(init_net.SerializeToString())</span><br><span class="line"><span class="keyword">with</span> open(full_predict_net_out, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.write(predict_net.SerializeToString())</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Model saved as "</span> + full_init_net_out + <span class="string">" and "</span> + full_predict_net_out)</span><br></pre></td></tr></table></figure>
+<h1 id="利用训练好的模型进行推演"><a href="#利用训练好的模型进行推演" class="headerlink" title="利用训练好的模型进行推演"></a>利用训练好的模型进行推演</h1><p>在保存好模型以后, 我们试着来使用这个模型进行推演, 首先定义一些路径相关变量, 方便我们加载特定的模型.<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Train lmdb, 定义训练集的 lmdb路径</span></span><br><span class="line">TRAIN_LMDB = os.path.join(os.path.expanduser(<span class="string">'~'</span>),<span class="string">"caffe2_notebooks/tutorial_data/cifar10/training_lmdb"</span>)</span><br><span class="line"><span class="comment"># Test lmdb, 定义验证集的 lmdb 路径</span></span><br><span class="line">TEST_LMDB = os.path.join(os.path.expanduser(<span class="string">'~'</span>),<span class="string">"caffe2_notebooks/tutorial_data/cifar10/testing_lmdb"</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 提起保存好的 protobuf 文件.</span></span><br><span class="line">part1_runs_path = os.path.join(os.path.expanduser(<span class="string">'~'</span>), <span class="string">"caffe2_notebooks"</span>, <span class="string">"tutorial_files"</span>, <span class="string">"tutorial_cifar10"</span>)</span><br><span class="line"><span class="comment"># runs 为一个列表, 列表的长度跟路径中 checkpoint 的个数有关, 按日期排序, 日期大的在后面</span></span><br><span class="line">runs = sorted(glob.glob(part1_runs_path + <span class="string">"/*"</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Init net</span></span><br><span class="line">INIT_NET = os.path.join(runs[<span class="number">-1</span>], <span class="string">"cifar10_init_net.pb"</span>)</span><br><span class="line"><span class="comment"># Predict net</span></span><br><span class="line">PREDICT_NET = os.path.join(runs[<span class="number">-1</span>], <span class="string">"cifar10_predict_net.pb"</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Make sure they all exist</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">not</span> os.path.exists(TRAIN_LMDB)) <span class="keyword">or</span> (<span class="keyword">not</span> os.path.exists(TEST_LMDB)) <span class="keyword">or</span> (<span class="keyword">not</span> os.path.exists(INIT_NET)) <span class="keyword">or</span> (<span class="keyword">not</span> os.path.exists(PREDICT_NET)):</span><br><span class="line">    print(<span class="string">"ERROR: input not found!"</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">"Success, you may continue!"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>构建 Testing model</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 利用 ModelHelper 创建 testing model</span></span><br><span class="line">arg_scope = &#123;<span class="string">"order"</span>: <span class="string">"NCHW"</span>&#125;</span><br><span class="line">test_model = model_helper.ModelHelper(</span><br><span class="line">    name=<span class="string">"test_model"</span>, arg_scope=arg_scope, init_params=<span class="keyword">False</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加 data layer, 注意使用 TEST_LMDB</span></span><br><span class="line">data, _ = AddInputLayer(test_model, <span class="number">1</span>, TEST_LMDB, <span class="string">'lmdb'</span>) <span class="comment"># batch size 为 1</span></span><br></pre></td></tr></table></figure>
+<p>下面我们使用保存好的模型参数来填充(populate) Model Helper. 想要构建用于 testing 的模型, 我们不需要在 model helper 重新创建 params, 同样也不需要添加 gradient operators, 因为我们仅仅执行 forward pass. 我们只需要利用 predict_net.pb 和 init_net.pb 文件中的参数填充 testing model 的 <code>.net</code> 和 <code>.param_init_net</code> 成员即可. 为此, 我们需要从 pb 文件中创建 <code>caffe2_pb</code> 对象, 然后再利用 <code>caffe2_pb</code> 对象创建 <code>Net</code> 对象, 接着将 <code>net</code> 对象 <strong>添加(append)</strong> 到 <code>.net</code> 和 <code>.param_init</code> 成员中即可. 请注意, 这里的添加操作非常重要, 如果没有执行 <strong>append</strong>, 我们将会抹去刚刚添加的输入层.</p>
+<p>会想上面的程序, 保存好的模型需要一个名为 “data” 输入, 同时会产生一个名为 “softmax” 的输出. Conveniently(but not accidentally), 输入层函数(<code>AddInputLayer()</code>)会从 lmdb 中读取数据, 并且将读取到的信息以 “data” 命名的 blob 存入 workspace 当中. 同样重要的是要记住我们添加到模型中的每个保存的网络中包含着什么. <code>predict_net</code> 包含着模型的结构, 包括 forward pass 的相关 ops. 而 <code>init_net</code> 包含着 <code>predict_net</code> 中的 ops 所需的参数的权重信息. 举例来说, 如果在 <code>predict_net</code> 中存在一个名为 <code>fc1</code> 的 op, 那么 <code>init_net</code> 就会包含这个全连接层的权重矩阵和偏置项 <code>(fc1_w)</code> 和 <code>(fc1_b)</code>.<br>当我们 append 网络以后, 我们添加了一个 accuracy 层到模型中, 它是利用网络输出的 <code>softmax</code> 以及数据的真实标签来计算 <code>accuracy</code> 的. 最终, 我们可以利用 <code>workspace.FetchBlob()</code> 来手动的获取指定 blob 的值.<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用 init net 来填充(populate) model helper 对象, 用于给模型提供权重参数</span></span><br><span class="line">init_net_proto = caffe2_pb2.NetDef()</span><br><span class="line"><span class="keyword">with</span> open(INIT_NET, <span class="string">"rb"</span>) <span class="keyword">as</span> f:</span><br><span class="line">    init_net_proto.ParseFromString(f.read())</span><br><span class="line">test_model.param_init_net = test_model.param_init_net.AppendNet(</span><br><span class="line">    core.Net(init_net_proto)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用 predict net 来添加模型的 net, 用于定义模型的结构</span></span><br><span class="line">predict_net_proto = caffe2_pb2.NetDef()</span><br><span class="line"><span class="keyword">with</span> open(PREDICT_NET, <span class="string">"rb"</span>) <span class="keyword">as</span> f:</span><br><span class="line">    predict_net_proto.ParseFromString(f.read())</span><br><span class="line">test_model.net = test_model.net.AppendNet(core.Net(predict_net_proto))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加 accuracy, 三个参数分别为: model, blobs_in, blobs_out</span></span><br><span class="line">accuracy = brew.accuracy(test_model, [<span class="string">'softmax'</span>, <span class="string">'label'</span>], <span class="string">'accuracy'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>接下来, 我们来运行 testing model 以查看结果.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 先利用 init_net 初始化 test_model, 然后再创建该模型</span></span><br><span class="line">workspace.RunNetOnce(test_model.param_init_net)</span><br><span class="line">workspace.RunNet(test.net, overwrite=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Stat keeper</span></span><br><span class="line">avg_accuracy = <span class="number">0.0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行网络的总次数, 因为我们的测试数据集总共有 10000 张图片, 并且模型 batch 为 1, 故设置为 10000</span></span><br><span class="line">test_iters = <span class="number">10000</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Main testing loop</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(test_iters):</span><br><span class="line">    workspace.RunNet(test_model.net)</span><br><span class="line">    acc = workspace.FetchBlob(<span class="string">'accuracy'</span>)</span><br><span class="line">    avg_accuracy += acc</span><br><span class="line">    <span class="keyword">if</span> (i % <span class="number">500</span> == <span class="number">0</span>) <span class="keyword">and</span> (i &gt; <span class="number">0</span>):</span><br><span class="line">        print(<span class="string">"Iter:&#123;&#125;, Current Accuracy: &#123;&#125;"</span>.format(i, avg_accuracy/float(i)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出相关信息</span></span><br><span class="line">print(<span class="string">"*************************"</span>)</span><br><span class="line">print(<span class="string">"Final Test Accuracy: "</span>, avg_accuracy/float(test_iters))</span><br></pre></td></tr></table></figure>
+<p>输出结果如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Iter: 500, Current Accuracy: 0.654</span><br><span class="line">Iter: 1000, Current Accuracy: 0.663</span><br><span class="line">Iter: 1500, Current Accuracy: 0.640666666667</span><br><span class="line">Iter: 2000, Current Accuracy: 0.643</span><br><span class="line">Iter: 2500, Current Accuracy: 0.6356</span><br><span class="line">Iter: 3000, Current Accuracy: 0.639333333333</span><br><span class="line">Iter: 3500, Current Accuracy: 0.639142857143</span><br><span class="line">Iter: 4000, Current Accuracy: 0.63625</span><br><span class="line">Iter: 4500, Current Accuracy: 0.636444444444</span><br><span class="line">Iter: 5000, Current Accuracy: 0.6352</span><br><span class="line">Iter: 5500, Current Accuracy: 0.638181818182</span><br><span class="line">Iter: 6000, Current Accuracy: 0.638666666667</span><br><span class="line">Iter: 6500, Current Accuracy: 0.638461538462</span><br><span class="line">Iter: 7000, Current Accuracy: 0.636428571429</span><br><span class="line">Iter: 7500, Current Accuracy: 0.634533333333</span><br><span class="line">Iter: 8000, Current Accuracy: 0.63475</span><br><span class="line">Iter: 8500, Current Accuracy: 0.633058823529</span><br><span class="line">Iter: 9000, Current Accuracy: 0.632111111111</span><br><span class="line">Iter: 9500, Current Accuracy: 0.632421052632</span><br><span class="line">*********************************************</span><br><span class="line">Final Test Accuracy:  0.6321</span><br></pre></td></tr></table></figure>
+<h1 id="利用-checkpoint-对模型进行再训练"><a href="#利用-checkpoint-对模型进行再训练" class="headerlink" title="利用 checkpoint 对模型进行再训练"></a>利用 checkpoint 对模型进行再训练</h1><p>从上面的结果我们可以看出, 我们模型在精度上虽然比随机猜测要高一些, 但是如果能够进行更多次迭代的训练, 模型的精度应该还会进一步提高, 为此, 我们需要进行以下步骤:</p>
+<ul>
+<li>创建一个新的 model helper</li>
+<li>指定训练数据集和 training imdb</li>
+<li>利用 <code>Add_Original_CIFAR10_Model()</code> 重新定义模型的结构.</li>
+<li>从之前保存的 init_net.pb 文件中获取相应的参数权重</li>
+<li>继续训练</li>
+</ul>
+<p>下面我们新创建了一个 model helper 对象用于训练, 请注意要将 <code>init_params</code> 参数设置为 <code>False</code>. 这一点非常重要, 因为我们不希望 brew 自动初始化参数, 而是从文件中加载权重(也就是我们自己来设置这些参数的值). 一旦我们创建了 model helper, 我们将会添加 input layer 并将其指向 training lmdb.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义训练的迭代次数</span></span><br><span class="line">training_iters = <span class="number">3000</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 清空当前的工作空间(主要是清空之前的 testing stage 产生的信息)</span></span><br><span class="line">workspace.ResetWorkspace()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个新的 model</span></span><br><span class="line">arg_scope = &#123;<span class="string">"order"</span>: <span class="string">"NCHW"</span>&#125;</span><br><span class="line">train_model = model_helper.ModelHelper(</span><br><span class="line">    name=<span class="string">"cifar10_train"</span>, arg_scope=arg_scope, init_params=<span class="keyword">False</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 向模型中添加 data layer</span></span><br><span class="line">data, _ =  AddInputLayer(train_model, <span class="number">100</span>, TRAIN_LMDB, <span class="string">'lmdb'</span>)</span><br><span class="line">softmax = Add_Original_CIFAR10_Model(train_model, data, <span class="number">10</span>, <span class="number">32</span>, <span class="number">32</span>, <span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用之前保存的文件来填充 model 对象的 param_init_net 成员</span></span><br><span class="line">init_net_proto = caffe2_pb2.NetDef()</span><br><span class="line"><span class="keyword">with</span> open(INIT_NET, <span class="string">"rb"</span>) <span class="keyword">as</span> f:</span><br><span class="line">    init_net_proto.ParseFromString(f.read())</span><br><span class="line">tmp_init_net = core.Net(init_net_proto)</span><br><span class="line">train_model.param_init_net = train_model.param_init_net.AppendNet(tmp_init_net)</span><br></pre></td></tr></table></figure>
+<p>下面的代码指定了损失函数和优化器, 和之前的代码没什么不同.<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 向模型中添加 training operators</span></span><br><span class="line">xent = train_model.LabelCrossEntropy([softmax, <span class="string">'label'</span>], <span class="string">'xent'</span>)</span><br><span class="line"><span class="comment"># 计算 loss</span></span><br><span class="line">loss = train_model.AveragedLoss(xent, <span class="string">"loss"</span>)</span><br><span class="line"><span class="comment"># 根据模型的精度</span></span><br><span class="line">accuracy = brew.accuracy(train_model, [softmax, <span class="string">"label"</span>], <span class="string">"accuracy"</span>)</span><br><span class="line"><span class="comment"># 添加计算梯度的 ops</span></span><br><span class="line">train_model.AddGradientOperators([loss])</span><br><span class="line"><span class="comment"># 指定优化算法</span></span><br><span class="line">optimizer.build_ssd(</span><br><span class="line">    train_model,</span><br><span class="line">    base_learning_rate=<span class="number">0.01</span>,</span><br><span class="line">    policy=<span class="string">"fixed"</span>,</span><br><span class="line">    momentum=<span class="number">0.9</span>,</span><br><span class="line">    weight_decay=<span class="number">0.004</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p><strong>注意:</strong><br>我们可以利用 <code>GetOptimizationParamInfo()</code> 函数来获得会被优化函数优化的参数. 如果你希望以不同的方式训练你的模型, 而模型看起来并没有被正确训练, 那么检查一下这个函数的返回值. 如果返回值为空, 那么就说明定义的网络没有训练任何东西! 这就是我们在 <code>Add_Original_CIFAR10_Model()</code> 函数中利用 brew 来创建网络层的原因之一, 因为 brew 会自动帮我们创建网络层所需的参数. 而如果我们已经在 Model Helper 中 append <code>.net</code>, 那么就会返回空, 意味着没有任何参数被优化. 在工作区中, 当你 append 一个 net 以后, 你需要利用 <code>create_param()</code> 手动的创建 params.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> param <span class="keyword">in</span> train_model.GetOptimizationParamInfo():</span><br><span class="line">    print(<span class="string">"Param to be optimized: "</span>, param)</span><br></pre></td></tr></table></figure>
+<p>正常情况下, 应该输出如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Param to be optimized:  conv3_b</span><br><span class="line">Param to be optimized:  fc2_w</span><br><span class="line">Param to be optimized:  fc1_b</span><br><span class="line">Param to be optimized:  conv1_b</span><br><span class="line">Param to be optimized:  conv2_b</span><br><span class="line">Param to be optimized:  conv3_w</span><br><span class="line">Param to be optimized:  fc2_b</span><br><span class="line">Param to be optimized:  fc1_w</span><br><span class="line">Param to be optimized:  conv2_w</span><br><span class="line">Param to be optimized:  conv1_w</span><br></pre></td></tr></table></figure></p>
+<p>定义好模型以后, 输入下面的代码开始训练:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始化并创建 train model 的网络</span></span><br><span class="line">workspace.RunNetOnce(train_model.param_init_net)</span><br><span class="line">workspace.CreateNet(train_model.net, overwrite=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Run the training loop</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(training_iters):</span><br><span class="line">    workspace.RunNet(train_model.net)</span><br><span class="line">    acc = workspace.FetchBlob(<span class="string">'accuracy'</span>)</span><br><span class="line">    loss = workspace.FetchBlob(<span class="string">'loss'</span>)</span><br><span class="line">    <span class="keyword">if</span> i % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">"Iter: &#123;&#125;, Loss: &#123;&#125;, Accuracy: &#123;&#125;"</span>.format(i, loss, acc))</span><br></pre></td></tr></table></figure>
+<p>正常情况下, 输出如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">Iter: 0, Loss: 1.02017736435, Accuracy: 0.629999995232</span><br><span class="line">Iter: 100, Loss: 1.03627979755, Accuracy: 0.639999985695</span><br><span class="line">Iter: 200, Loss: 1.01044285297, Accuracy: 0.649999976158</span><br><span class="line">Iter: 300, Loss: 1.11098098755, Accuracy: 0.569999992847</span><br><span class="line">Iter: 400, Loss: 0.857563138008, Accuracy: 0.660000026226</span><br><span class="line">Iter: 500, Loss: 0.947329521179, Accuracy: 0.689999997616</span><br><span class="line">Iter: 600, Loss: 1.03314650059, Accuracy: 0.660000026226</span><br><span class="line">Iter: 700, Loss: 0.916410207748, Accuracy: 0.72000002861</span><br><span class="line">Iter: 800, Loss: 0.780662596226, Accuracy: 0.730000019073</span><br><span class="line">Iter: 900, Loss: 0.84335398674, Accuracy: 0.709999978542</span><br><span class="line">Iter: 1000, Loss: 0.813905596733, Accuracy: 0.740000009537</span><br><span class="line">Iter: 1100, Loss: 0.696036875248, Accuracy: 0.730000019073</span><br><span class="line">Iter: 1200, Loss: 0.901836633682, Accuracy: 0.680000007153</span><br><span class="line">Iter: 1300, Loss: 0.892839670181, Accuracy: 0.649999976158</span><br><span class="line">Iter: 1400, Loss: 0.832642018795, Accuracy: 0.72000002861</span><br><span class="line">Iter: 1500, Loss: 0.771974146366, Accuracy: 0.72000002861</span><br><span class="line">Iter: 1600, Loss: 0.926190078259, Accuracy: 0.699999988079</span><br><span class="line">Iter: 1700, Loss: 0.884124755859, Accuracy: 0.680000007153</span><br><span class="line">Iter: 1800, Loss: 0.891266524792, Accuracy: 0.660000026226</span><br><span class="line">Iter: 1900, Loss: 0.633636891842, Accuracy: 0.75</span><br><span class="line">Iter: 2000, Loss: 0.643068671227, Accuracy: 0.77999997139</span><br><span class="line">Iter: 2100, Loss: 0.827954411507, Accuracy: 0.740000009537</span><br><span class="line">Iter: 2200, Loss: 0.845260441303, Accuracy: 0.689999997616</span><br><span class="line">Iter: 2300, Loss: 0.806422412395, Accuracy: 0.689999997616</span><br><span class="line">Iter: 2400, Loss: 0.742512345314, Accuracy: 0.740000009537</span><br><span class="line">Iter: 2500, Loss: 0.785759627819, Accuracy: 0.759999990463</span><br><span class="line">Iter: 2600, Loss: 0.530824780464, Accuracy: 0.790000021458</span><br><span class="line">Iter: 2700, Loss: 0.726455926895, Accuracy: 0.709999978542</span><br><span class="line">Iter: 2800, Loss: 0.945818066597, Accuracy: 0.670000016689</span><br><span class="line">Iter: 2900, Loss: 0.67063999176, Accuracy: 0.810000002384</span><br></pre></td></tr></table></figure>
+<h1 id="利用-Retrained-模型进行推演"><a href="#利用-Retrained-模型进行推演" class="headerlink" title="利用 Retrained 模型进行推演"></a>利用 Retrained 模型进行推演</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">arg_scope = &#123;<span class="string">"order"</span>: <span class="string">"NCHW"</span>&#125;</span><br><span class="line"><span class="comment"># 构建模型</span></span><br><span class="line">test_model = model_helper.ModelHelper(</span><br><span class="line">    name=<span class="string">"test_model"</span>, arg_scope=arg_scope, init_params=<span class="keyword">False</span></span><br><span class="line">)</span><br><span class="line"><span class="comment"># 将输入层指向 test lmdb</span></span><br><span class="line">data, _ = AddInputLayer(test_model, <span class="number">1</span>, TEST_LMDB, <span class="string">'lmdb'</span>)</span><br><span class="line"><span class="comment"># 创建模型结构</span></span><br><span class="line">softmax = Add_Original_CIFAR10_Model(test_model, data, <span class="number">10</span>, <span class="number">32</span>, <span class="number">32</span>, <span class="number">3</span>)</span><br><span class="line">accuracy = brew.accuracy(test_model, [<span class="string">'softmax'</span>, <span class="string">'label'</span>], <span class="string">'accuracy'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Prime the net (准备网络)</span></span><br><span class="line">workspace.RunNetOnce(test_model.param_init_net)</span><br><span class="line">workspace.CreateNet(test_model.net, overwrite=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># CIFAR10 的混合矩阵</span></span><br><span class="line">cmat = np.zeros((<span class="number">10</span>, <span class="number">10</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Stat keepers</span></span><br><span class="line">avg_accuracy = <span class="number">0.0</span></span><br><span class="line">test_iters = <span class="number">10000</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Main testing loop</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(test_iters):</span><br><span class="line">    workspace.RunNet(test_model.net)</span><br><span class="line">    acc = workspace.FetchBlob(<span class="string">'accuracy'</span>)</span><br><span class="line">    avg_accuracy += acc</span><br><span class="line">    <span class="keyword">if</span> (i % <span class="number">500</span> == <span class="number">0</span>) <span class="keyword">and</span> (i &gt; <span class="number">0</span>):</span><br><span class="line">        print(<span class="string">"Iter: &#123;&#125;, Current Accuracy: &#123;&#125;"</span>.format(i, avg_accuracy/float(i)))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取 top-1 预测结果</span></span><br><span class="line">    results = workspace.FetchBlob(<span class="string">'softmax'</span>)[<span class="number">0</span>]</span><br><span class="line">    label = workspace.FetchBlob(<span class="string">'label'</span>)[<span class="number">0</span>]</span><br><span class="line">    max_index, max_value = max(enumerate(results), key=operator.itemgetter(<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 更新混合矩阵</span></span><br><span class="line">    cmat[label, max_index] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Report final testing results</span></span><br><span class="line">print(<span class="string">"***************************"</span>)</span><br><span class="line">print(<span class="string">"Final Test Accuracy: "</span>, avg_accuracy/float(test_iters))</span><br></pre></td></tr></table></figure>
+<p>正常情况下, 输出如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Iter: 500, Current Accuracy: 0.712</span><br><span class="line">Iter: 1000, Current Accuracy: 0.721</span><br><span class="line">Iter: 1500, Current Accuracy: 0.718</span><br><span class="line">Iter: 2000, Current Accuracy: 0.713</span><br><span class="line">Iter: 2500, Current Accuracy: 0.71</span><br><span class="line">Iter: 3000, Current Accuracy: 0.716</span><br><span class="line">Iter: 3500, Current Accuracy: 0.72</span><br><span class="line">Iter: 4000, Current Accuracy: 0.71675</span><br><span class="line">Iter: 4500, Current Accuracy: 0.719555555556</span><br><span class="line">Iter: 5000, Current Accuracy: 0.7194</span><br><span class="line">Iter: 5500, Current Accuracy: 0.720363636364</span><br><span class="line">Iter: 6000, Current Accuracy: 0.721166666667</span><br><span class="line">Iter: 6500, Current Accuracy: 0.720461538462</span><br><span class="line">Iter: 7000, Current Accuracy: 0.719571428571</span><br><span class="line">Iter: 7500, Current Accuracy: 0.7188</span><br><span class="line">Iter: 8000, Current Accuracy: 0.7185</span><br><span class="line">Iter: 8500, Current Accuracy: 0.718235294118</span><br><span class="line">Iter: 9000, Current Accuracy: 0.718</span><br><span class="line">Iter: 9500, Current Accuracy: 0.717157894737</span><br><span class="line">*********************************************</span><br><span class="line">Final Test Accuracy:  0.7169</span><br></pre></td></tr></table></figure>
+<h1 id="查看结果"><a href="#查看结果" class="headerlink" title="查看结果"></a>查看结果</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Plot confusion matrix</span></span><br><span class="line">fig = plt.figure(figsize=(<span class="number">10</span>,<span class="number">10</span>))</span><br><span class="line">plt.tight_layout()</span><br><span class="line">ax = fig.add_subplot(<span class="number">111</span>)</span><br><span class="line">res = ax.imshow(cmat, cmap=plt.cm.rainbow,interpolation=<span class="string">'nearest'</span>)</span><br><span class="line">width, height = cmat.shape</span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> xrange(width):</span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> xrange(height):</span><br><span class="line">        ax.annotate(str(cmat[x,y]), xy=(y, x),horizontalalignment=<span class="string">'center'</span>,verticalalignment=<span class="string">'center'</span>)</span><br><span class="line"></span><br><span class="line">classes = [<span class="string">'Airplane'</span>,<span class="string">'Automobile'</span>,<span class="string">'Bird'</span>,<span class="string">'Cat'</span>,<span class="string">'Deer'</span>,<span class="string">'Dog'</span>,<span class="string">'Frog'</span>,<span class="string">'Horse'</span>,<span class="string">'Ship'</span>,<span class="string">'Truck'</span>]</span><br><span class="line">plt.xticks(range(width), classes, rotation=<span class="number">0</span>)</span><br><span class="line">plt.yticks(range(height), classes, rotation=<span class="number">0</span>)</span><br><span class="line">ax.set_xlabel(<span class="string">'Predicted Class'</span>)</span><br><span class="line">ax.set_ylabel(<span class="string">'True Class'</span>)</span><br><span class="line">plt.title(<span class="string">'CIFAR-10 Confusion Matrix'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>输出如下:</p>
+<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fxvyyldzmgj21fr0p0woc.jpg" alt=""></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Caffe2/" rel="tag"><i class="fa fa-tag"></i> Caffe2</a>
+          
+            <a href="/tags/目标检测/" rel="tag"><i class="fa fa-tag"></i> 目标检测</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/TensorFlow-读书笔记-深入理解TF/" rel="prev" title="《深入理解TensorFlow架构设计与实现原理》">
+                <i class="fa fa-chevron-left"></i> 《深入理解TensorFlow架构设计与实现原理》
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/TensorFlow-踩坑记录-no_attribute_FIFOQueue/" rel="next" title="报错module 'tensorflow' has no attribute 'FIFOQueue'">
+                报错module 'tensorflow' has no attribute 'FIFOQueue' <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">230</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#导入必要的包"><span class="nav-text">导入必要的包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#下载并解压数据集"><span class="nav-text">下载并解压数据集</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建-LMDBs-数据结构"><span class="nav-text">创建 LMDBs 数据结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#定义-CNN-模型"><span class="nav-text">定义 CNN 模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#AddInput-数据输入层"><span class="nav-text">AddInput() 数据输入层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-Original-CIFAR10-Model-模型核心"><span class="nav-text">Add_Original_CIFAR10_Model() 模型核心</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AddTrainingOperators-损失函数及优化器"><span class="nav-text">AddTrainingOperators() 损失函数及优化器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AddAccuracy-模型准确率"><span class="nav-text">AddAccuracy() 模型准确率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#检查点"><span class="nav-text">检查点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#利用-ModelHelper-初始化模型"><span class="nav-text">利用 ModelHelper 初始化模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开始训练"><span class="nav-text">开始训练</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#保存训练好的模型"><span class="nav-text">保存训练好的模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#利用训练好的模型进行推演"><span class="nav-text">利用训练好的模型进行推演</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#利用-checkpoint-对模型进行再训练"><span class="nav-text">利用 checkpoint 对模型进行再训练</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#利用-Retrained-模型进行推演"><span class="nav-text">利用 Retrained 模型进行推演</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查看结果"><span class="nav-text">查看结果</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">1.3m</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">20:01</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

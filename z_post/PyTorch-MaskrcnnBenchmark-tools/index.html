@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="源码文件 ./tools/train_net.py ./tools/test_net.py   train_net.py 文件概览为了更好的解读 MaskrcnnBenchmark 的源代码, 我们首先来看看执行模型训练代码的脚本文件都使用了哪些类和函数, 该脚本可以训练 MaskrcnnBenchmark 中的所有模型, 因此, 我们可以从该文件出发, 顺藤摸瓜的探索, 以期最终能够对整个 Ma">
+<meta name="keywords" content="目标检测,PyTorch,MaskrcnnBenchmark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MaskrcnnBenchmark 源码解析-训练&#x2F;推演工具脚本(tools)">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/PyTorch-MaskrcnnBenchmark-tools/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="源码文件 ./tools/train_net.py ./tools/test_net.py   train_net.py 文件概览为了更好的解读 MaskrcnnBenchmark 的源代码, 我们首先来看看执行模型训练代码的脚本文件都使用了哪些类和函数, 该脚本可以训练 MaskrcnnBenchmark 中的所有模型, 因此, 我们可以从该文件出发, 顺藤摸瓜的探索, 以期最终能够对整个 Ma">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-09T07:35:14.192Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MaskrcnnBenchmark 源码解析-训练&#x2F;推演工具脚本(tools)">
+<meta name="twitter:description" content="源码文件 ./tools/train_net.py ./tools/test_net.py   train_net.py 文件概览为了更好的解读 MaskrcnnBenchmark 的源代码, 我们首先来看看执行模型训练代码的脚本文件都使用了哪些类和函数, 该脚本可以训练 MaskrcnnBenchmark 中的所有模型, 因此, 我们可以从该文件出发, 顺藤摸瓜的探索, 以期最终能够对整个 Ma">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/PyTorch-MaskrcnnBenchmark-tools/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>MaskrcnnBenchmark 源码解析-训练/推演工具脚本(tools) | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">230</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-linux">
+    <a href="/categories/Linux/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-面试">
+    <a href="/categories/面试/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其他">
+    <a href="/categories/其他/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/PyTorch-MaskrcnnBenchmark-tools/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MaskrcnnBenchmark 源码解析-训练/推演工具脚本(tools)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-06 19:15:39" itemprop="dateCreated datePublished" datetime="2018-12-06T19:15:39+08:00">2018-12-06</time>
+            
+
+            
+          </span>
+
+	  
+  	    <span class="post-updated">
+    		&nbsp; | &nbsp; 更新于
+    		<time itemprop="dateUpdated" datetime="2018-12-09T15:35:14+08:00" content="2018-12-09">
+      		  2018-12-09
+    		</time>
+  	  </span>
+	  
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/PyTorch/" itemprop="url" rel="index"><span itemprop="name">PyTorch</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">15k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">13 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="源码文件"><a href="#源码文件" class="headerlink" title="源码文件"></a>源码文件</h1><ul>
+<li><a href="#train_net">./tools/train_net.py</a></li>
+<li><a href="#test_net">./tools/test_net.py</a></li>
+</ul>
+<p><span id="train_net"></span></p>
+<h1 id="train-net-py-文件概览"><a href="#train-net-py-文件概览" class="headerlink" title="train_net.py 文件概览"></a>train_net.py 文件概览</h1><p>为了更好的解读 MaskrcnnBenchmark 的源代码, 我们首先来看看执行模型训练代码的脚本文件都使用了哪些类和函数, 该脚本可以训练 MaskrcnnBenchmark 中的所有模型, 因此, 我们可以从该文件出发, 顺藤摸瓜的探索, 以期最终能够对整个 MaskrcnnBenchmark 框架有一个全面系统的了解, 那么接下来就先来改一下该文件的大致结构, 如下所示:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 导入各种包</span></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.config <span class="keyword">import</span> cfg</span><br><span class="line"><span class="comment">#...</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(cfg, local_rank, distributed)</span>:</span></span><br><span class="line">    <span class="comment"># ... 训练脚本核心代码</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(cfg, model, distributed)</span>:</span></span><br><span class="line">    <span class="comment"># ... 推演代码</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># ... 主函数, 会在内部调用上述函数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<h2 id="train-net-导入的各种包和函数"><a href="#train-net-导入的各种包和函数" class="headerlink" title="train_net 导入的各种包和函数"></a>train_net 导入的各种包和函数</h2><p>首先来看看该文件导入了那些包和函数, 同时我们会针对性的简单介绍一下它们的主要作用和功能.<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./tools/train_net.py</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 下面的这个必须在导入所有包之前导入, 不能放到其他位置. TODO 原因</span></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.utils.env <span class="keyword">import</span> setup_environment</span><br><span class="line"></span><br><span class="line"><span class="comment"># 常规包</span></span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.config <span class="keyword">import</span> cfg <span class="comment"># 导入默认配置信息</span></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.data <span class="keyword">import</span> make_data_loader <span class="comment"># 数据集载入</span></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.solver <span class="keyword">import</span> make_lr_scheduler <span class="comment"># 学习率更新策略</span></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.solver <span class="keyword">import</span> make_optimizer <span class="comment"># 设置优化器, 封装了PyTorch的SGD类</span></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.engine.inference <span class="keyword">import</span> inference <span class="comment"># 推演代码</span></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.engine.trainer <span class="keyword">import</span> do_train <span class="comment"># 模型训练的核心逻辑. 会重点解析</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 调用了 ./maskrcnn_benchmark/modeling/detector/ 中的 build_detection_model() 函数</span></span><br><span class="line"><span class="comment"># 该函数和 Detectron 中的类似, 都是用来创建目标检测模型的, 这也是创建模型的入口函数, 十分重要</span></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.modeling.detector <span class="keyword">import</span> build_detection_model</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.checkpoint <span class="keyword">import</span> DetectronCheckpointer</span><br><span class="line"></span><br><span class="line"><span class="comment"># 封装了 PyTorch 的 torch.utils.collect_env.get_preety_env_info 函数, 同时附加了 PIL.__version__ 版本新</span></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.utils.collect_env <span class="keyword">import</span> collect_env_info</span><br><span class="line"></span><br><span class="line"><span class="comment"># 分布式训练相关设置, 由于我的gpu个数为1, 因此 get_rank() 会返回 0</span></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.utils.comm <span class="keyword">import</span> synchronize, get_rank</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.utils.imports <span class="keyword">import</span> import_file</span><br><span class="line"></span><br><span class="line"><span class="comment"># 封装了 logging 模块, 用于向屏幕输出一些日志信息</span></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.utils.logger <span class="keyword">import</span> set_up_logger</span><br><span class="line"></span><br><span class="line"><span class="comment"># 封装了 os.mkdirs 函数, 当文件夹已存在时会自动略过, 不会提示错误</span></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.utils.miscellaneous <span class="keyword">import</span> mkdir</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>cfg</code>: 详情可看<a href="../PyTorch-MaskrcnnBenchmark-config">MaskrcnnBenchmark 默认配置</a></li>
+<li><code>make_data_loader</code>: 详情可看<a href="../PyTorch-MaskrcnnBenchmark-data/#build">数组载入</a></li>
+<li><code>make_lr_scheduler</code>: 详情可看<a href="../PyTorch-MaskrcnnBenchmark-solver">优化器及学习率更新策略</a></li>
+<li><code>make_optimizer</code>: 详情可看<a href="../PyTorch-MaskrcnnBenchmark-solver">优化器及学习率更新策略</a></li>
+<li><code>inference</code>: 该函数是执行模型推演逻辑的核心代码, 具体的解析请看<a href="../PyTorch-MaskrcnnBenchmark-engine/#inference">inference</a></li>
+<li><code>do_train</code>: 该函数是执行模型训练逻辑的核心代码, 具体的解析请看<a href="../PyTorch-MaskrcnnBenchmark-engine/#trainer">do_train</a></li>
+<li><code>build_detection_model</code>: 详情可看<a href="../PyTorch-MaskrcnnBenchmark-modeling">模型创建</a></li>
+<li><code>DetectronCheckpointer</code>: 详情可看<a href="../PyTorch-MaskrcnnBenchmark-utils/#checkpoint">DetectronCheckpoint</a></li>
+<li><code>collect_env_info</code>: 详情可看<a href="../PyTorch-MaskrcnnBenchmark-utils/#collect_env">collect_env_info</a></li>
+<li><code>synchronize</code> 和 <code>get_rank</code>: 详情可看<a href="../PyTorch-MaskrcnnBenchmark-utils/#comm">comm</a></li>
+<li><code>import_file</code>: 详情可看<a href="../PyTorch-MaskrcnnBenchmark-utils/#imports">imports</a></li>
+<li><code>set_logger</code>: 详情可看<a href="../PyTorch-MaskrcnnBenchmark-utils/#logger">logger</a></li>
+<li><code>mkdir</code>: 详情可看<a href="../PyTorch-MaskrcnnBenchmark-utils/#miscellaneous">mkdir</a></li>
+</ul>
+<p>相比于 Detectron 来说, MaskrcnnBenchmark 的默认配置文件显得相当 “清爽”, 定义的配置项也很精简, 下面就是 <code>cfg</code> 的部分配置清单, 输入 <code>print(cfg)</code> 即可看到全部配置项.<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">DATALOADER:</span></span><br><span class="line"><span class="attr">  ASPECT_RATIO_GROUPING:</span> <span class="literal">True</span></span><br><span class="line"><span class="attr">  NUM_WORKERS:</span> <span class="number">4</span></span><br><span class="line"><span class="attr">  SIZE_DIVISIBILITY:</span> <span class="number">0</span></span><br><span class="line"><span class="attr">DATASETS:</span></span><br><span class="line"><span class="attr">  TEST:</span> <span class="string">()</span></span><br><span class="line"><span class="attr">  TRAIN:</span> <span class="string">()</span></span><br><span class="line"><span class="attr">INPUT:</span></span><br><span class="line"><span class="attr">  MAX_SIZE_TEST:</span> <span class="number">1333</span></span><br><span class="line"><span class="attr">  MAX_SIZE_TRAIN:</span> <span class="number">1333</span></span><br><span class="line"><span class="attr">  MIN_SIZE_TEST:</span> <span class="number">800</span></span><br><span class="line"><span class="attr">  MIN_SIZE_TRAIN:</span> <span class="number">800</span></span><br><span class="line"><span class="attr">  PIXEL_MEAN:</span> <span class="string">[102.9801,</span> <span class="number">115.9465</span><span class="string">,</span> <span class="number">122.7717</span><span class="string">]</span></span><br><span class="line"><span class="attr">  PIXEL_STD:</span> <span class="string">[1.0,</span> <span class="number">1.0</span><span class="string">,</span> <span class="number">1.0</span><span class="string">]</span></span><br><span class="line"><span class="attr">  TO_BGR255:</span> <span class="literal">True</span></span><br><span class="line"><span class="attr">MODEL:</span></span><br><span class="line"><span class="attr">  BACKBONE:</span></span><br><span class="line"><span class="attr">    CONV_BODY:</span> <span class="string">R-50-C4</span></span><br><span class="line"><span class="attr">    FREEZE_CONV_BODY_AT:</span> <span class="number">2</span></span><br><span class="line"><span class="attr">    OUT_CHANNELS:</span> <span class="number">1024</span></span><br><span class="line"><span class="attr">  DEVICE:</span> <span class="string">cuda</span></span><br><span class="line"><span class="comment"># ...</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="train-net-main-主函数"><a href="#train-net-main-主函数" class="headerlink" title="train_net.main() 主函数"></a>train_net.main() 主函数</h2><p>下面我们根据脚本的执行顺序, 先来看看主函数的代码:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./tools/train_net.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    parser = argparse.ArgumentParser(description=<span class="string">"PyTorch Object Detection Training"</span>)</span><br><span class="line">    parser.add_argument(</span><br><span class="line">        <span class="comment"># 这里虽然是 config-file, 但要用 args.config_file来访问, 不能用 args.config-file 访问.</span></span><br><span class="line">        <span class="string">"--config-file"</span>,</span><br><span class="line">        default=<span class="string">""</span>,</span><br><span class="line">        metavar=<span class="string">"FILE"</span>,</span><br><span class="line">        help=<span class="string">"path to config file"</span>,</span><br><span class="line">        type=str,</span><br><span class="line">    )</span><br><span class="line">    parser.add_argument(<span class="string">"--local_rank"</span>, type=int, default=<span class="number">0</span>)</span><br><span class="line">    parser.add_argument(</span><br><span class="line">        <span class="string">"--skip-test"</span>,</span><br><span class="line">        dest=<span class="string">"skip_test"</span>,</span><br><span class="line">        help=<span class="string">"Do not test the final model"</span>,</span><br><span class="line">        action=<span class="string">"store_true"</span>,</span><br><span class="line">    )</span><br><span class="line">    parser.add_argument(</span><br><span class="line">        <span class="string">"opts"</span>,</span><br><span class="line">        help=<span class="string">"Modify config options using the command-line"</span>,</span><br><span class="line">        default=<span class="keyword">None</span>,</span><br><span class="line">        nargs=argparse.REMAINDER, <span class="comment"># 这一行不能少</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    args = parser.parse_args()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取 gpu 的数量, 我电脑只有一个GPU, 故 num_gpus = 1</span></span><br><span class="line">    num_gpus = int(os.environ[<span class="string">"WORLD_SIZE"</span>]) <span class="keyword">if</span> <span class="string">"WORLD_SIZE"</span> <span class="keyword">in</span> os.environ <span class="keyword">else</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 是否进行多GPU的分布式训练</span></span><br><span class="line">    args.distributed = num_gpus &gt; <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 设置分布式训练时的一些初始化信息</span></span><br><span class="line">    <span class="keyword">if</span> args.distributed:</span><br><span class="line">        torch.cuda.set_device(args.local_rank)</span><br><span class="line">        torch.distributed.init_process_group(</span><br><span class="line">            backend=<span class="string">"nccl"</span>, init_method=<span class="string">"env://"</span></span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将 config_file 指定的配置项覆盖到默认配置项当中</span></span><br><span class="line">    cfg.merge_from_file(args.config_file)</span><br><span class="line">    cfg.merge_from_list(args.opts)</span><br><span class="line">    cfg.freeze() <span class="comment"># 冻结所有的配置项, 防止修改</span></span><br><span class="line"></span><br><span class="line">    output_dir = cfg.OUTPUT_DIR</span><br><span class="line">    <span class="keyword">if</span> output_dir: <span class="comment"># 这里封装了 os.mkdir, 使得当output_dir存在时, 会直接略过, 不会返回错误</span></span><br><span class="line">        mkdir(output_dir)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 下面的多行代码都是一些向屏幕上输出相关信息的日志代码</span></span><br><span class="line">    <span class="comment"># 同时也会保存在 output_dir 文件夹下的 log.txt 文件内</span></span><br><span class="line">    <span class="comment"># 输出的信息来源于自身系统以及配置文件中的信息</span></span><br><span class="line">    logger = setup_logger(<span class="string">"maskrcnn_benchmark"</span>, output_dir, get_rank())</span><br><span class="line">    logger.info(<span class="string">"Using &#123;&#125; GPUs"</span>.format(num_gpus))</span><br><span class="line">    logger.info(args)</span><br><span class="line"></span><br><span class="line">    logger.info(<span class="string">"Collecting env info (might take some time)"</span>)</span><br><span class="line">    logger.info(<span class="string">"\n"</span> + collect_env_info())</span><br><span class="line"></span><br><span class="line">    logger.info(<span class="string">"Loaded configuration file &#123;&#125;"</span>.format(args.config_file))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 打开指定的配置文件, 并读取其中的相关信息, 将值存储在 config_str 中, 然后输出到屏幕上</span></span><br><span class="line">    <span class="keyword">with</span> open(args.config_file, <span class="string">"r"</span>) <span class="keyword">as</span> cf:</span><br><span class="line">        config_str = <span class="string">"\n"</span> + cf.read()</span><br><span class="line">        logger.info(config_str)</span><br><span class="line">    logger.info(<span class="string">"Running with config:\n&#123;&#125;"</span>.format(cfg))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 调用 train 函数, 该函数会执行模型训练的代码逻辑, 详解可看后文</span></span><br><span class="line">    model = train(cfg, args.local_rank, args.distributed)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> args.skip_test:</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 同理, 该函数会执行模型推演的代码逻辑, 详情可看后文</span></span><br><span class="line">        test(cfg, model, args.distributed)</span><br></pre></td></tr></table></figure>
+<h2 id="train-net-train-训练脚本"><a href="#train-net-train-训练脚本" class="headerlink" title="train_net.train() 训练脚本"></a>train_net.train() 训练脚本</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(cfg, local_rank, distributed)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 该语句调用了 ./maskrcnn_benchmark/modeling/detector/ 中的 build_detection_model() 函数</span></span><br><span class="line">    <span class="comment"># 该函数和 Detectron 中的类似, 都是用来创建目标检测模型的, 这也是创建模型的入口函数, 十分重要</span></span><br><span class="line">    <span class="comment"># 这里我们只需要知道该函数会根据我们的配置文件返回一个网络模型就可以了</span></span><br><span class="line">    model = build_detection_model(cfg)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 默认为 "cuda"</span></span><br><span class="line">    device = torch.device(cfg.MODEL.DEVICE)</span><br><span class="line">    model.to(device) <span class="comment"># 将模型移到指定设备上</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 封装了 torch.optiom.SGD() 函数, 根据tensor的requires_grad属性构成需要更新的参数列表</span></span><br><span class="line">    optimizer = make_optimizer(cfg, model)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 根据配置信息设置 optimizer 的学习率更新策略</span></span><br><span class="line">    scheduler = make_lr_scheduler(cfg, optimizer)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 分布式训练情况下, 并行处理数据</span></span><br><span class="line">    <span class="keyword">if</span> distributed:</span><br><span class="line">        model = torch.nn.parallel.DistributedDataParallel(</span><br><span class="line">            model, device_ids=[local_rank], output_device=local_rank,</span><br><span class="line">            <span class="comment"># this should be removed if we update BatchNorm stats</span></span><br><span class="line">            broadcast_buffers=<span class="keyword">False</span>,</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建一个参数字典, 并将迭代次数置为0</span></span><br><span class="line">    arguments = &#123;&#125;</span><br><span class="line">    arguments[<span class="string">"iteration"</span>] = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取输出的文件夹路径, 默认为 '.', 这里建议将 cfg.OUTPUT_DIR 提前设置成自己的路径.</span></span><br><span class="line">    output_dir = cfg.OUTPUT_DIR</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 因为我只有一个gpu, 所以这里 save_to_disk=True</span></span><br><span class="line">    save_to_disk = get_rank() == <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># DetectronCheckpointer 对象, 后面会用在 do_train() 函数的参数</span></span><br><span class="line">    checkpointer = DetectronCheckpointer(</span><br><span class="line">        cfg, model, optimizer, scheduler, output_dir, save_to_disk</span><br><span class="line">    )</span><br><span class="line">    extra_checkpoint_data = checkpointer.load(cfg.MODEL.WEIGHT) <span class="comment"># 加载指定权重文件</span></span><br><span class="line">    arguments.update(extra_checkpoint_data) <span class="comment"># 字典的update方法, 对字典的键值进行更新</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># data_loader 的类型为列表, 内部元素类型为 torch.utils.data.DataLoader</span></span><br><span class="line">    <span class="comment"># 注意, 当is_train=True时, 要确保 cfg.DATASETS.TRAIN 的值为一个列表</span></span><br><span class="line">    <span class="comment"># 并且必须指向一个或多个存在的anns文件, 默认情况下该值为空, 所以必须在配置文件中指定</span></span><br><span class="line">    data_loader = make_data_loader(</span><br><span class="line">        cfg,</span><br><span class="line">        is_train=<span class="keyword">True</span>,</span><br><span class="line">        is_distributed=distributed,</span><br><span class="line">        start_iter=arguments[<span class="string">"iteration"</span>],</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    checkpoint_period = cfg.SOLVER.CHECKPOINT_PERIOD <span class="comment"># 默认值为2500</span></span><br><span class="line"></span><br><span class="line">    do_train(</span><br><span class="line">        model,</span><br><span class="line">        data_loader,</span><br><span class="line">        optimizer,</span><br><span class="line">        scheduler,</span><br><span class="line">        checkpointer,</span><br><span class="line">        device,</span><br><span class="line">        checkpoint_period,</span><br><span class="line">        arguments,</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> model</span><br></pre></td></tr></table></figure>
+<p>在执行模型训练逻辑时, 该函数调用了 <code>./maskrcnn_benchmark/engine/trainer.py</code> 文件中的 <code>do_train()</code>函数, 该函数是执行训练逻辑的核心代码, 具体的解析请看<a href="../PyTorch-MaskrcnnBenchmark-engine/#trainer">do_train</a></p>
+<p>我们注意到, 在代码的第一句开头使用了 <code>./maskrcnn_benchmark/modeling/detector/</code> 文件夹下面的用来创建目标检测模型的函数, 这也是创建模型的入口函数, 十分重要. 关于该函数的详细解析可以查看讲解<a href="../PyTorch-MaskrcnnBenchmark-modeling">模型创建</a>的博文, 这里只需要知道该函数会根据我们的配置文件返回一个模型就可以了, 如果想查看该模型的具体网络结构及其参数, 可以利用 <code>print(model)</code> 查看, 如下所示为当前当前配置信息下的部分结构信息:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">GeneralizedRCNN(</span><br><span class="line">  (backbone): Sequential(</span><br><span class="line">    (body): ResNet(</span><br><span class="line">      (stem): StemWithFixedBatchNorm(</span><br><span class="line">        (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)</span><br><span class="line">        (bn1): FrozenBatchNorm2d()</span><br><span class="line">      )</span><br><span class="line">      (layer1): Sequential(</span><br><span class="line">        (0): BottleneckWithFixedBatchNorm(</span><br><span class="line">          (downsample): Sequential(</span><br><span class="line">            (0): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)</span><br><span class="line">            (1): FrozenBatchNorm2d()</span><br><span class="line">          )</span><br><span class="line">          (conv1): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)</span><br><span class="line">          (bn1): FrozenBatchNorm2d()</span><br><span class="line">          (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)</span><br><span class="line">          (bn2): FrozenBatchNorm2d()</span><br><span class="line">          (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)</span><br><span class="line">          (bn3): FrozenBatchNorm2d()</span><br><span class="line">        )</span><br><span class="line">#...</span><br></pre></td></tr></table></figure></p>
+<h2 id="train-net-test-推演脚本"><a href="#train-net-test-推演脚本" class="headerlink" title="train_net.test() 推演脚本"></a>train_net.test() 推演脚本</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(cfg, model, distributed)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> distributed:</span><br><span class="line">        model = model.module</span><br><span class="line">    torch.cuda.empty_cache()  <span class="comment"># TODO check if it helps. releases unoccupied memory</span></span><br><span class="line">    iou_types = (<span class="string">"bbox"</span>,)</span><br><span class="line">    <span class="keyword">if</span> cfg.MODEL.MASK_ON:<span class="comment"># 如果mask为Ture, 则添加分割信息</span></span><br><span class="line">        iou_types = iou_types + (<span class="string">"segm"</span>,)</span><br><span class="line">    output_folders = [<span class="keyword">None</span>] * len(cfg.DATASETS.TEST) <span class="comment"># 根据标签文件数确定输出文件夹数</span></span><br><span class="line">    dataset_names = cfg.DATASETS.TEST</span><br><span class="line">    <span class="keyword">if</span> cfg.OUTPUT_DIR:</span><br><span class="line">        <span class="keyword">for</span> idx, dataset_name <span class="keyword">in</span> enumerate(dataset_names):<span class="comment"># 遍历标签文件</span></span><br><span class="line">            output_folder = os.path.join(cfg.OUTPUT_DIR, <span class="string">"inference"</span>, dataset_name)</span><br><span class="line">            mkdir(output_folder) <span class="comment"># 创建输出文件夹</span></span><br><span class="line">            output_folders[idx] = output_folder <span class="comment"># 将文件夹的路径名放入列表</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 根据配置文件信息创建数据集</span></span><br><span class="line">    data_loaders_val = make_data_loader(cfg, is_train=<span class="keyword">False</span>, is_distributed=distributed)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 遍历每个标签文件, 执行 inference 过程.</span></span><br><span class="line">    <span class="keyword">for</span> output_folder, dataset_name, data_loader_val <span class="keyword">in</span> zip(output_folders, dataset_names, data_loaders_val):</span><br><span class="line">        inference(</span><br><span class="line">            model,</span><br><span class="line">            data_loader_val,</span><br><span class="line">            dataset_name=dataset_name,</span><br><span class="line">            iou_types=iou_types,</span><br><span class="line">            box_only=cfg.MODEL.RPN_ONLY,</span><br><span class="line">            device=cfg.MODEL.DEVICE,</span><br><span class="line">            expected_results=cfg.TEST.EXPECTED_RESULTS,</span><br><span class="line">            expected_results_sigma_tol=cfg.TEST.EXPECTED_RESULTS_SIGMA_TOL,</span><br><span class="line">            output_folder=output_folder,</span><br><span class="line">        )</span><br><span class="line">        synchronize() <span class="comment"># 多GPU推演时的同步函数</span></span><br></pre></td></tr></table></figure>
+<p>在执行模型的推演逻辑时, 该函数调用了 <code>./maskrcnn_benchmark/engine/inference.py</code> 文件中的 <code>inference()</code>函数, 该函数是执行推演逻辑的核心代码, 具体的解析请看<a href="../PyTorch-MaskrcnnBenchmark-engine/#inference">inference</a></p>
+<p><span id="test_net"></span></p>
+<h1 id="test-net-py-文件概览"><a href="#test-net-py-文件概览" class="headerlink" title="test_net.py 文件概览"></a>test_net.py 文件概览</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./tools/test_net.py</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入各种包及函数</span></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.config <span class="keyword">import</span> cfg</span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 主程序</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<h2 id="test-net-导入的各种包及函数"><a href="#test-net-导入的各种包及函数" class="headerlink" title="test_net 导入的各种包及函数"></a>test_net 导入的各种包及函数</h2><p>我们首先看看该文件导入的包及函数</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./tools/test_net.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.utils.env <span class="keyword">import</span> setup_environment</span><br><span class="line"></span><br><span class="line"><span class="comment"># 常规包</span></span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.config <span class="keyword">import</span> cfg <span class="comment"># 导入全局配置</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.data <span class="keyword">import</span> make_data_loader <span class="comment"># 数据载入器</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.engine.inference <span class="keyword">import</span> inference <span class="comment"># 模型推演函数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.modeling.detector <span class="keyword">import</span> build_detection_model <span class="comment"># 创建模型</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.utils.checkpoint <span class="keyword">import</span> DetectronCheckpointer</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.utils.collect_env <span class="keyword">import</span> collect_env_info</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.utils.comm <span class="keyword">import</span> synchronize, get_rank</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.utils.logger <span class="keyword">import</span> setup_logger</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.utils.miscellaneous <span class="keyword">import</span> mkdir</span><br></pre></td></tr></table></figure>
+<p>可以看出, 在 <code>./tools/test_net.py</code> 文件中导入的包和函数和 <code>./tools/train_net.py</code> 差不多, 我们已经在之前简单介绍了这些包的功能和用途, 并给出了详细解析的链接, 这里我们就不再重复介绍, 有疑惑的可以翻到上面去看关于 <code>train_net.py</code> 导入的包及函数的解析.</p>
+<h2 id="test-net-main-主函数"><a href="#test-net-main-主函数" class="headerlink" title="test_net.main() 主函数"></a>test_net.main() 主函数</h2><p>由于在进行模型推演时, 我们只需要准备好预训练文件, 数据集, 以及模型结构就可以完成整个推演过程, 因此在 <code>test_net.py</code> 脚本中只用了一个主函数来完成这些功能, 下面我们就来看看这个主函数的具体实现吧.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./tools/test_net.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    parser = argparse.ArgumentParser(description=<span class="string">"PyTorch Object Detection Inference"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 权重文件路径</span></span><br><span class="line">    parser.add_argument(</span><br><span class="line">        <span class="string">"--config-file"</span>,</span><br><span class="line">        default=<span class="string">"/private/home/fmassa/github/detectron.pytorch_v2/configs/e2e_faster_rcnn_R_50_C4_1x_caffe2.yaml"</span>,</span><br><span class="line">        metavar=<span class="string">"FILE"</span>,</span><br><span class="line">        help=<span class="string">"path to config file"</span>,</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="comment"># local_rank</span></span><br><span class="line">    parser.add_argument(<span class="string">"--local_rank"</span>, type=int, default=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 其他的配置选项</span></span><br><span class="line">    parser.add_argument(</span><br><span class="line">        <span class="string">"opts"</span>,</span><br><span class="line">        help=<span class="string">"Modify config options using the command-line"</span>,</span><br><span class="line">        default=<span class="keyword">None</span>,</span><br><span class="line">        nargs=argparse.REMAINDER,</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    args = parser.parse_args()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取 gpu 数目</span></span><br><span class="line">    num_gpus = int(os.environ[<span class="string">"WORLD_SIZE"</span>]) <span class="keyword">if</span> <span class="string">"WORLD_SIZE"</span> <span class="keyword">in</span> os.environ <span class="keyword">else</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 根据gpu数目设置distributed布尔变量</span></span><br><span class="line">    distributed = num_gpus &gt; <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> distributed:</span><br><span class="line">        torch.cuda.set_device(args.local_rank)</span><br><span class="line">        torch.distributed.init_process_group(</span><br><span class="line">            backend=<span class="string">"nccl"</span>, init_method=<span class="string">"env://"</span></span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 将指定的配置文件的设置覆盖到全局设置中</span></span><br><span class="line">        cfg.merge_from_file(args.config_file)</span><br><span class="line">        cfg.merge_from_list(args.opts)</span><br><span class="line">        cfg.freeze() <span class="comment"># 冻结配置信息, 防止更改</span></span><br><span class="line"></span><br><span class="line">        save_dir = <span class="string">""</span></span><br><span class="line">        logger = setup_logger(<span class="string">"maskrcnn_benchmark"</span>, save_dir, get_rank())</span><br><span class="line">        logger.info(<span class="string">"Using &#123;&#125; GPUs"</span>.format(num_gpus))</span><br><span class="line">        logger.info(cfg)</span><br><span class="line"></span><br><span class="line">        logger.info(<span class="string">"Collecting env info (might take some time)"</span>)</span><br><span class="line">        logger.info(<span class="string">"\n"</span> + collect_env_info())</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 根据配置信息创建模型</span></span><br><span class="line">        model = build_detection_model(cfg)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 将模型移动到指定设备上</span></span><br><span class="line">        model.to(cfg.MODEL.DEVICE)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取输出文件夹父路径</span></span><br><span class="line">        output_dir = cfg.OUTPUT_DIR</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 加载权重</span></span><br><span class="line">        checkpointer = DetectronCheckpointer(cfg, model, save_dir=output_dir)</span><br><span class="line">        _ = checkpointer.load(cfg.MODEL.WEIGHT)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 设置 iou 类型</span></span><br><span class="line">        iou_types = (<span class="string">"bbox"</span>,)</span><br><span class="line">        <span class="keyword">if</span> cfg.MODEL.MASK_ON:</span><br><span class="line">            iou_types = iou_types + (<span class="string">"segm"</span>,)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 根据数据集的数量定义输出文件夹</span></span><br><span class="line">        output_folders = [<span class="keyword">None</span>] * len(cfg.DATASETS.TEST)</span><br><span class="line"></span><br><span class="line">        dataset_names = cfg.DATASETS.TEST</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 创建输出文件夹</span></span><br><span class="line">        <span class="keyword">if</span> cfg.OUTPUT_DIR:</span><br><span class="line">            <span class="keyword">for</span> idx, dataset_name <span class="keyword">in</span> enumerate(dataset_names):</span><br><span class="line">                output_folder = os.path.join(cfg.OUTPUT_DIR, <span class="string">"inference"</span>, dataset_name)</span><br><span class="line">                mkdir(output_folder)</span><br><span class="line">                output_folders[idx] = output_folder</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 加载测试数据集</span></span><br><span class="line">        data_loaders_val = make_data_loader(cfg, is_train=<span class="keyword">False</span>, is_distributed=distributed)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 对数据集中的数据按批次调用inference函数</span></span><br><span class="line">        <span class="keyword">for</span> output_folder, dataset_name, data_loader_val <span class="keyword">in</span> zip(output_folders, dataset_names, data_loaders_val):</span><br><span class="line">            inference(</span><br><span class="line">                model,</span><br><span class="line">                data_loader_val,</span><br><span class="line">                dataset_name=dataset_name,</span><br><span class="line">                iou_types=iou_types,</span><br><span class="line">                box_only=cfg.MODEL.RPN_ONLY,</span><br><span class="line">                device=cfg.MODEL.DEVICE,</span><br><span class="line">                expected_results=cfg.TEST.EXPECTED_RESULTS,</span><br><span class="line">                expected_results_sigma_tol=cfg.TEST.EXPECTED_RESULTS_SIGMA_TOL,</span><br><span class="line">                output_folder=output_folder,</span><br><span class="line">                )</span><br><span class="line">            synchronize()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/目标检测/" rel="tag"><i class="fa fa-tag"></i> 目标检测</a>
+          
+            <a href="/tags/PyTorch/" rel="tag"><i class="fa fa-tag"></i> PyTorch</a>
+          
+            <a href="/tags/MaskrcnnBenchmark/" rel="tag"><i class="fa fa-tag"></i> MaskrcnnBenchmark</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/Python-argparse/" rel="prev" title="argparse-命令行解析模块">
+                <i class="fa fa-chevron-left"></i> argparse-命令行解析模块
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/PyTorch-MaskcnnBenchmark-乱七八糟/" rel="next" title="MaskrcnnBenchmark 源码解析-乱七八糟">
+                MaskrcnnBenchmark 源码解析-乱七八糟 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">230</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#源码文件"><span class="nav-text">源码文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#train-net-py-文件概览"><span class="nav-text">train_net.py 文件概览</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#train-net-导入的各种包和函数"><span class="nav-text">train_net 导入的各种包和函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#train-net-main-主函数"><span class="nav-text">train_net.main() 主函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#train-net-train-训练脚本"><span class="nav-text">train_net.train() 训练脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#train-net-test-推演脚本"><span class="nav-text">train_net.test() 推演脚本</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#test-net-py-文件概览"><span class="nav-text">test_net.py 文件概览</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#test-net-导入的各种包及函数"><span class="nav-text">test_net 导入的各种包及函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#test-net-main-主函数"><span class="nav-text">test_net.main() 主函数</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">1.3m</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">20:01</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

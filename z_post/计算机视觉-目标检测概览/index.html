@@ -133,7 +133,7 @@
 <meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fww0h6ugadj20s80kjacr.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fwskrv3tdtj20rt0p61kx.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fx5hgur618j20o30klwgh.jpg">
-<meta property="og:updated_time" content="2018-12-01T05:49:21.562Z">
+<meta property="og:updated_time" content="2018-12-04T06:48:46.086Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【置顶】基于深度学习的目标检测">
 <meta name="twitter:description" content="前言下面对每篇文章及模型的亮点和优势进行了简单总结, 点击模型标题可以跳转至相关论文解读 (都是按照自己的理解记录的, 难免存在纰漏或者词不达意的地方, 望谅解. ) 基于深度学习的目标检测发展轨迹下面是自RCNN以来有关目标检测的文章，其中，加粗的部分为具有标志性意义的检测模型。 RCNN (CVPR, 2013, 必读) $\longrightarrow$ OverFeat (ICLR, 20">
@@ -262,7 +262,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">207</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">230</span></a>
   </li>
         
         
@@ -348,9 +348,9 @@
         
         
           
-          <li class="menu-item menu-item-其它">
-    <a href="/categories/其它/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其它</a>
+          <li class="menu-item menu-item-其他">
+    <a href="/categories/其他/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
   </li>
         
         
@@ -515,8 +515,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2018-12-01T13:49:21+08:00" content="2018-12-01">
-      		  2018-12-01
+    		<time itemprop="dateUpdated" datetime="2018-12-04T14:48:46+08:00" content="2018-12-04">
+      		  2018-12-04
     		</time>
   	  </span>
 	  
@@ -611,7 +611,57 @@
 <p><a href="#Speed-Accuracy TradeOff">Speed-Accuracy TradeOff (CVPR, 2017)</a></p>
 <p><a href="#Cascade R-CNN">Cascade R-CNN (CVPR, 2018)</a></p>
 <p><a href="#RFB Net">RFB Net (ECCV, 2018)</a></p>
+<p><a href="#Pelee">Pelee (NIPS, 2018)</a></p>
 <p><img src="https://github.com/hoya012/deep_learning_object_detection/blob/master/assets/deep_learning_object_detection_history.PNG?raw=true" alt=""></p>
+<h1 id="主流框架模型对比"><a href="#主流框架模型对比" class="headerlink" title="主流框架模型对比"></a>主流框架模型对比</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>特点</th>
+<th>性能</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Faster R-CNN</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>YOLO</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>SSD</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>FPN</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>RetinaNet</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Mask R-CNN</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
 <h1 id="经典模型结构"><a href="#经典模型结构" class="headerlink" title="经典模型结构"></a>经典模型结构</h1><ul>
 <li><a href="../计算机视觉-ResNet-CVPR2016">ResNet (CVPR, 2016)</a></li>
 <li><a href="../计算机视觉-Inception系列V1-V4">Inception系列V1-V4</a></li>
@@ -648,6 +698,18 @@
 </tr>
 <tr>
 <td>ResNet</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>InceptionResNet</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>ResNeXt</td>
 <td></td>
 <td></td>
 </tr>
@@ -807,7 +869,8 @@
 <p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx5hgur618j20o30klwgh.jpg" alt=""></p>
 <p><span id="SofterNMS"></span></p>
 <h1 id="SofterNMS-Arxiv-2018"><a href="#SofterNMS-Arxiv-2018" class="headerlink" title="SofterNMS (Arxiv, 2018)"></a><a href="../计算机视觉-Arxiv2018-SofterNMS">SofterNMS (Arxiv, 2018)</a></h1><p><strong>提出了一种新的边框回归损失函数和NMS算法</strong><br>作者提出了一种 <strong>基于KL散度的边框回归损失函数</strong>, 可以同时学习到边框的形变量和位置变化量. 最终产生的位置变化量会与位置的精确度有很强的联系, 然后将其使用在本文提出的 <strong>新的NMS</strong> 算法上, 以此提高准确度.</p>
-<h1 id="参考文献："><a href="#参考文献：" class="headerlink" title="参考文献："></a>参考文献：</h1><ul>
+<p><span id="Pelee"></span></p>
+<h1 id="Pelee-NIPS-2018"><a href="#Pelee-NIPS-2018" class="headerlink" title="Pelee (NIPS, 2018)"></a><a href="../计算机视觉-Pelee-NIPS2018">Pelee (NIPS, 2018)</a></h1><h1 id="参考文献："><a href="#参考文献：" class="headerlink" title="参考文献："></a>参考文献：</h1><ul>
 <li><a href="https://github.com/hoya012/deep_learning_object_detection" target="_blank" rel="noopener">https://github.com/hoya012/deep_learning_object_detection</a></li>
 <li><a href="https://arxiv.org/pdf/1809.02165v1.pdf" target="_blank" rel="noopener">Deep Learning for Generic Object Detection: A Survey</a></li>
 </ul>
@@ -846,7 +909,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/计算机视觉-论文解读-DenseNet/" rel="prev" title="DenseNet-xxx">
+              <a href="/z_post/计算机视觉-DenseNet/" rel="prev" title="DenseNet-xxx">
                 <i class="fa fa-chevron-left"></i> DenseNet-xxx
               </a>
             
@@ -936,7 +999,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">207</span>
+                    <span class="site-state-item-count">230</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1120,7 +1183,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于深度学习的目标检测发展轨迹"><span class="nav-text">基于深度学习的目标检测发展轨迹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#经典模型结构"><span class="nav-text">经典模型结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他论文"><span class="nav-text">其他论文</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Trick"><span class="nav-text">Trick</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RCNN-CVPR-2014"><span class="nav-text">RCNN (CVPR, 2014)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OverFeat-ICLR-2014"><span class="nav-text">OverFeat (ICLR, 2014)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MultiBox-CVPR2014"><span class="nav-text">MultiBox-CVPR2014</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SPPNet-ECCV2014"><span class="nav-text">SPPNet-ECCV2014</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MR-CNN"><span class="nav-text">MR-CNN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DeepBox"><span class="nav-text">DeepBox</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AttentionNet"><span class="nav-text">AttentionNet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FastRCNN"><span class="nav-text">FastRCNN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DeepProposal"><span class="nav-text">DeepProposal</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Faster-RCNN-NIPS-2015"><span class="nav-text">Faster RCNN(NIPS, 2015)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#YOLO-v1"><span class="nav-text">YOLO v1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#G-CNN"><span class="nav-text">G-CNN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AZNet"><span class="nav-text">AZNet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inside-OutsideNet-ION"><span class="nav-text">Inside-OutsideNet(ION)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HyperNet-CVPR-16"><span class="nav-text">HyperNet CVPR 16</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OHEM-CVPR2016"><span class="nav-text">OHEM-CVPR2016</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CRAFT"><span class="nav-text">CRAFT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MultiPatNet-MPN"><span class="nav-text">MultiPatNet(MPN)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SSD"><span class="nav-text">SSD</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GBDNet"><span class="nav-text">GBDNet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CPF"><span class="nav-text">CPF</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MS-CNN"><span class="nav-text">MS-CNN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#R-FCN-NIPS-2016"><span class="nav-text">R-FCN (NIPS, 2016)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Speed-Accuracy-TradeOff-CVPR-2017"><span class="nav-text">Speed-Accuracy TradeOff (CVPR, 2017)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PVANET"><span class="nav-text">PVANET</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DeepID-Net"><span class="nav-text">DeepID-Net</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NoC"><span class="nav-text">NoC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DSSD"><span class="nav-text">DSSD</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TDM"><span class="nav-text">TDM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Feature-Pyramid-Net-FPN"><span class="nav-text">Feature Pyramid Net(FPN)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#YOLO-v2"><span class="nav-text">YOLO v2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RON"><span class="nav-text">RON</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DCN-ICCV2017"><span class="nav-text">DCN-ICCV2017</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DeNet"><span class="nav-text">DeNet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Couple-Net-ICCV-2017"><span class="nav-text">Couple Net (ICCV, 2017)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Focal-Loss-ICCV2017"><span class="nav-text">Focal Loss-ICCV2017</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Mask-R-CNN-ICCV-2017"><span class="nav-text">Mask R-CNN (ICCV,2017)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DSOD"><span class="nav-text">DSOD</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SMN"><span class="nav-text">SMN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#YOLO-v3"><span class="nav-text">YOLO v3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SIN"><span class="nav-text">SIN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#STDN"><span class="nav-text">STDN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RefineDet"><span class="nav-text">RefineDet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MegDet"><span class="nav-text">MegDet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DA-Faster-R-CNN"><span class="nav-text">DA Faster R-CNN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SNIP"><span class="nav-text">SNIP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Relation-Network"><span class="nav-text">Relation-Network</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cascade-R-CNN-CVPR-2018"><span class="nav-text">Cascade R-CNN (CVPR, 2018)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RFB-Net-ECCV-2018"><span class="nav-text">RFB Net (ECCV, 2018)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Group-Normalization-ECCV2018"><span class="nav-text">Group Normalization-ECCV2018</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SoftNMS-ICCV-2017"><span class="nav-text">SoftNMS (ICCV, 2017)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Non-local-Neural-Networks-CVPR-2018"><span class="nav-text">Non-local Neural Networks (CVPR, 2018)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SofterNMS-Arxiv-2018"><span class="nav-text">SofterNMS (Arxiv, 2018)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文献："><span class="nav-text">参考文献：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于深度学习的目标检测发展轨迹"><span class="nav-text">基于深度学习的目标检测发展轨迹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主流框架模型对比"><span class="nav-text">主流框架模型对比</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#经典模型结构"><span class="nav-text">经典模型结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他论文"><span class="nav-text">其他论文</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Trick"><span class="nav-text">Trick</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RCNN-CVPR-2014"><span class="nav-text">RCNN (CVPR, 2014)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OverFeat-ICLR-2014"><span class="nav-text">OverFeat (ICLR, 2014)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MultiBox-CVPR2014"><span class="nav-text">MultiBox-CVPR2014</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SPPNet-ECCV2014"><span class="nav-text">SPPNet-ECCV2014</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MR-CNN"><span class="nav-text">MR-CNN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DeepBox"><span class="nav-text">DeepBox</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AttentionNet"><span class="nav-text">AttentionNet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FastRCNN"><span class="nav-text">FastRCNN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DeepProposal"><span class="nav-text">DeepProposal</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Faster-RCNN-NIPS-2015"><span class="nav-text">Faster RCNN(NIPS, 2015)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#YOLO-v1"><span class="nav-text">YOLO v1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#G-CNN"><span class="nav-text">G-CNN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AZNet"><span class="nav-text">AZNet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inside-OutsideNet-ION"><span class="nav-text">Inside-OutsideNet(ION)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HyperNet-CVPR-16"><span class="nav-text">HyperNet CVPR 16</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OHEM-CVPR2016"><span class="nav-text">OHEM-CVPR2016</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CRAFT"><span class="nav-text">CRAFT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MultiPatNet-MPN"><span class="nav-text">MultiPatNet(MPN)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SSD"><span class="nav-text">SSD</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GBDNet"><span class="nav-text">GBDNet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CPF"><span class="nav-text">CPF</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MS-CNN"><span class="nav-text">MS-CNN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#R-FCN-NIPS-2016"><span class="nav-text">R-FCN (NIPS, 2016)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Speed-Accuracy-TradeOff-CVPR-2017"><span class="nav-text">Speed-Accuracy TradeOff (CVPR, 2017)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PVANET"><span class="nav-text">PVANET</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DeepID-Net"><span class="nav-text">DeepID-Net</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NoC"><span class="nav-text">NoC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DSSD"><span class="nav-text">DSSD</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TDM"><span class="nav-text">TDM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Feature-Pyramid-Net-FPN"><span class="nav-text">Feature Pyramid Net(FPN)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#YOLO-v2"><span class="nav-text">YOLO v2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RON"><span class="nav-text">RON</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DCN-ICCV2017"><span class="nav-text">DCN-ICCV2017</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DeNet"><span class="nav-text">DeNet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Couple-Net-ICCV-2017"><span class="nav-text">Couple Net (ICCV, 2017)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Focal-Loss-ICCV2017"><span class="nav-text">Focal Loss-ICCV2017</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Mask-R-CNN-ICCV-2017"><span class="nav-text">Mask R-CNN (ICCV,2017)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DSOD"><span class="nav-text">DSOD</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SMN"><span class="nav-text">SMN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#YOLO-v3"><span class="nav-text">YOLO v3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SIN"><span class="nav-text">SIN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#STDN"><span class="nav-text">STDN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RefineDet"><span class="nav-text">RefineDet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MegDet"><span class="nav-text">MegDet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DA-Faster-R-CNN"><span class="nav-text">DA Faster R-CNN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SNIP"><span class="nav-text">SNIP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Relation-Network"><span class="nav-text">Relation-Network</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cascade-R-CNN-CVPR-2018"><span class="nav-text">Cascade R-CNN (CVPR, 2018)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RFB-Net-ECCV-2018"><span class="nav-text">RFB Net (ECCV, 2018)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Group-Normalization-ECCV2018"><span class="nav-text">Group Normalization-ECCV2018</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SoftNMS-ICCV-2017"><span class="nav-text">SoftNMS (ICCV, 2017)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Non-local-Neural-Networks-CVPR-2018"><span class="nav-text">Non-local Neural Networks (CVPR, 2018)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SofterNMS-Arxiv-2018"><span class="nav-text">SofterNMS (Arxiv, 2018)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pelee-NIPS-2018"><span class="nav-text">Pelee (NIPS, 2018)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文献："><span class="nav-text">参考文献：</span></a></li></ol></div>
             
 
           </div>
@@ -1157,7 +1220,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.1m</span>
+    <span title="站点总字数">1.3m</span>
   
 
   
@@ -1166,7 +1229,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">16:17</span>
+    <span title="站点阅读时长">20:01</span>
   
 </div>
 

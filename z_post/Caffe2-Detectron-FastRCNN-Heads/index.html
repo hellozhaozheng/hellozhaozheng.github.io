@@ -112,18 +112,18 @@
 
 
 
-  <meta name="description" content="# 1234567891011121314# ./detectron/modeling/fast_rcnn_head.py# ...from detectron.core.config import cfg# ...# ----------------------------------- ## Fast R-CNN outputs and losses# --------------------">
+  <meta name="description" content="源码文件./detectron/modeling/fast_rcnn_heads.py Fast R-CNN Heads本文件定义了 Fast R-CNN Heads 的结构, 即 backbone 网络之上的两个并列的预测层: 分类层和回归层. Fast R-CNN 的设计如下: 1234... -&amp;gt; RoI ----\                               /-&amp;g">
 <meta name="keywords" content="Caffe2,Detectron">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Caffe2-Detectron-FastRCNN-HEADS">
+<meta property="og:title" content="Detectron源码解析-Fast R-CNN Heads">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Caffe2-Detectron-FastRCNN-Heads/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="# 1234567891011121314# ./detectron/modeling/fast_rcnn_head.py# ...from detectron.core.config import cfg# ...# ----------------------------------- ## Fast R-CNN outputs and losses# --------------------">
+<meta property="og:description" content="源码文件./detectron/modeling/fast_rcnn_heads.py Fast R-CNN Heads本文件定义了 Fast R-CNN Heads 的结构, 即 backbone 网络之上的两个并列的预测层: 分类层和回归层. Fast R-CNN 的设计如下: 1234... -&amp;gt; RoI ----\                               /-&amp;g">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-01T14:43:24.092Z">
+<meta property="og:updated_time" content="2018-12-02T14:09:49.817Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Caffe2-Detectron-FastRCNN-HEADS">
-<meta name="twitter:description" content="# 1234567891011121314# ./detectron/modeling/fast_rcnn_head.py# ...from detectron.core.config import cfg# ...# ----------------------------------- ## Fast R-CNN outputs and losses# --------------------">
+<meta name="twitter:title" content="Detectron源码解析-Fast R-CNN Heads">
+<meta name="twitter:description" content="源码文件./detectron/modeling/fast_rcnn_heads.py Fast R-CNN Heads本文件定义了 Fast R-CNN Heads 的结构, 即 backbone 网络之上的两个并列的预测层: 分类层和回归层. Fast R-CNN 的设计如下: 1234... -&amp;gt; RoI ----\                               /-&amp;g">
 
 
 
@@ -140,7 +140,7 @@
   };
 </script>
 
-  <title>Caffe2-Detectron-FastRCNN-HEADS | 从零开始的BLOG</title>
+  <title>Detectron源码解析-Fast R-CNN Heads | 从零开始的BLOG</title>
   
 
 
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">207</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">230</span></a>
   </li>
         
         
@@ -334,9 +334,9 @@
         
         
           
-          <li class="menu-item menu-item-其它">
-    <a href="/categories/其它/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其它</a>
+          <li class="menu-item menu-item-其他">
+    <a href="/categories/其他/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
   </li>
         
         
@@ -462,7 +462,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Caffe2-Detectron-FastRCNN-HEADS
+          <h1 class="post-title" itemprop="name headline">Detectron源码解析-Fast R-CNN Heads
               
             
           </h1>
@@ -497,8 +497,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2018-12-01T22:43:24+08:00" content="2018-12-01">
-      		  2018-12-01
+    		<time itemprop="dateUpdated" datetime="2018-12-02T22:09:49+08:00" content="2018-12-02">
+      		  2018-12-02
     		</time>
   	  </span>
 	  
@@ -551,7 +551,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.8k</span>
+                <span title="本文字数">3.6k</span>
               
 
               
@@ -565,7 +565,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">2 分钟</span>
+                <span title="阅读时长">3 分钟</span>
               
             </div>
           
@@ -585,12 +585,16 @@
       
 
       
-        <p>#</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./detectron/modeling/fast_rcnn_head.py</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"><span class="keyword">from</span> detectron.core.config <span class="keyword">import</span> cfg</span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ----------------------------------- #</span></span><br><span class="line"><span class="comment"># Fast R-CNN outputs and losses</span></span><br><span class="line"><span class="comment"># ----------------------------------- #</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_fast_rcnn_outputs</span><span class="params">(model, blob_in, dim)</span>:</span></span><br><span class="line">    <span class="comment"># 添加 RoI 分类器和 bounding box 回归器的输出</span></span><br><span class="line">    <span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+        <h1 id="源码文件"><a href="#源码文件" class="headerlink" title="源码文件"></a>源码文件</h1><p><code>./detectron/modeling/fast_rcnn_heads.py</code></p>
+<h1 id="Fast-R-CNN-Heads"><a href="#Fast-R-CNN-Heads" class="headerlink" title="Fast R-CNN Heads"></a>Fast R-CNN Heads</h1><p>本文件定义了 Fast R-CNN Heads 的结构, 即 backbone 网络之上的两个并列的预测层: 分类层和回归层. Fast R-CNN 的设计如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">... -&gt; RoI ----\                               /-&gt; box cls output -&gt; cls loss</span><br><span class="line">                -&gt; RoIFeatureXform -&gt; box head</span><br><span class="line">... -&gt; Feature /                               \-&gt; box reg output -&gt; reg loss</span><br><span class="line">       Map</span><br></pre></td></tr></table></figure>
+<p>首先, Fast R-CNN 会利用 RoI pooling 生成固定长度的 RoI 的特征表示, 然后利用此特征进行物体的类别预测和边框回归预测.</p>
+<h1 id="fast-rcnn-heads-py-文件概览"><a href="#fast-rcnn-heads-py-文件概览" class="headerlink" title="fast_rcnn_heads.py 文件概览"></a>fast_rcnn_heads.py 文件概览</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./detectron/modeling/fast_rcnn_head.py</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"><span class="keyword">from</span> detectron.core.config <span class="keyword">import</span> cfg</span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ----------------------------------- #</span></span><br><span class="line"><span class="comment"># Fast R-CNN outputs and losses</span></span><br><span class="line"><span class="comment"># ----------------------------------- #</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_fast_rcnn_outputs</span><span class="params">(model, blob_in, dim)</span>:</span></span><br><span class="line">    <span class="comment"># 添加 RoI 分类器和 bounding box 回归器的输出</span></span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_fast_rcnn_losses</span><span class="params">(model)</span>:</span></span><br><span class="line">    <span class="comment"># 添加损失函数</span></span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ----------------------------------- #</span></span><br><span class="line"><span class="comment"># Box heads</span></span><br><span class="line"><span class="comment"># ----------------------------------- #</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_roi_2mlp_head</span><span class="params">(model, blob_in, dim_in, spatial_scale)</span>:</span></span><br><span class="line">    <span class="comment"># 添加具有两层隐藏层的 ReLU MLP</span></span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_roi_Xconv1fc_head</span><span class="params">(model, blob_in, dim_in, spatial_scale)</span>:</span></span><br><span class="line">    <span class="comment"># 添加一层 X conv + 一层 fc 作为 head</span></span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_roi_Xconv1fc_gn_head</span><span class="params">(model, blob_in, dim_in, spatial_scale)</span>:</span></span><br><span class="line">    <span class="comment"># 添加一层 X conv + 一层 fc 作为 head, 同时使用 GN</span></span><br><span class="line">    <span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+<h1 id="导入的包及函数"><a href="#导入的包及函数" class="headerlink" title="导入的包及函数"></a>导入的包及函数</h1><p>老样子, 我们先看一下这个文件使用了哪些包和函数<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./detectron/modeling/fast_rcnn_heads.py</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 常规包</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> absolute_import</span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> division</span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_functioin</span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> unicode_literals</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> detectron.core.config <span class="keyword">import</span> cfg</span><br><span class="line"><span class="keyword">from</span> detectron.utils.c2 <span class="keyword">import</span> const_fill</span><br><span class="line"><span class="keyword">from</span> detectron.utils.c2 <span class="keyword">import</span> gauss_fill</span><br><span class="line"><span class="keyword">from</span> detectron.utils.net <span class="keyword">import</span> get_group_on</span><br><span class="line"><span class="keyword">import</span> detectron.utils.blob <span class="keyword">as</span> blob_utils</span><br></pre></td></tr></table></figure></p>
 <h1 id="Fast-R-CNN-outputs-and-losses"><a href="#Fast-R-CNN-outputs-and-losses" class="headerlink" title="Fast R-CNN outputs and losses"></a>Fast R-CNN outputs and losses</h1><p><code>add_fast_rcnn_outputs()</code>会在<code>./detectron/modeling/model_builder.py</code>中的<code>_add_fast_rcnn_head()</code>函数中调用, 如果此时模型处于训练状态, 还会同时调用<code>add_fast_rcnn_losses()</code>函数. 下面我们就先来看一下这两个函数的内部实现. 首先是<code>add_fast_rcnn_outputs()</code>函数.</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_fast_rcnn_outputs</span><span class="params">(model, blob_in, dim)</span>:</span></span><br><span class="line">    <span class="comment"># 依据 Fast R-CNN 的设计, 创建 box 分类层</span></span><br><span class="line">    model.FC(</span><br><span class="line">        blob_in,</span><br><span class="line">        <span class="string">'cls_score'</span>, <span class="comment"># blob_out, 以名称存在于 workspace 当中</span></span><br><span class="line">        dim, <span class="comment"># dim_in</span></span><br><span class="line">        model.num_classes, <span class="comment"># dim_out</span></span><br><span class="line">        weight_init=gauss_fill(<span class="number">0.01</span>), <span class="comment"># 该函数来自于 detectron.utils.c2 文件</span></span><br><span class="line">        bias_init=const_fill(<span class="number">0.0</span>)</span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> model.train: <span class="comment"># == test</span></span><br><span class="line">        <span class="comment"># 在推演的时候, 仅仅添加softmax</span></span><br><span class="line">        <span class="comment"># 在训练的时候, 需要将softmax和交叉熵结合</span></span><br><span class="line">        model.Softmax(<span class="string">'cls_score'</span>, <span class="string">'cls_prob'</span>, engine=<span class="string">'CUDNN'</span>)</span><br><span class="line">    <span class="comment"># Box 回归层</span></span><br><span class="line">    num_bbox_reg_classes=( <span class="comment"># 回归层的类别数, 当只要求分成前景和后景时, 为2, 当要求对分成对应类别时, 为 num_classes</span></span><br><span class="line">        <span class="number">2</span> <span class="keyword">if</span> cfg.MODEL.CLS_AGNOSTIC_BBOX_REG <span class="keyword">else</span> model.num_classes</span><br><span class="line">    )</span><br><span class="line">    model.FC(</span><br><span class="line">        blob_in,</span><br><span class="line">        <span class="string">'bbox_pred'</span>,</span><br><span class="line">        dim, <span class="comment"># dim_in</span></span><br><span class="line">        num_bbox_reg_classes*<span class="number">4</span>, <span class="comment"># dim_out</span></span><br><span class="line">        weight_init=gauss_fill(<span class="number">0.001</span>),</span><br><span class="line">        bias_init=const_fill(<span class="number">0.0</span>)</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
 <p>可以看到, 上面的函数是根据 Fast R-CNN 中两个并列的预测层进行定义的, 这两个预测层分别为物体类别置信度的分类预测层, 以及物体边框坐标点的回归预测层, 其中回归预测层在 Fast R-CNN 中的类别默认值为2, 即类别不可知(class-agnostic), 只分前景和背景, 并且预测出前景框和背景框的坐标.</p>
-<p>下面是 Fast R-CNN 的损失定义<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_fast_rcnn_losses</span><span class="params">(model)</span>:</span></span><br><span class="line">    <span class="comment"># 添加 RoI 分类损失以及 bounding box 回归损失</span></span><br><span class="line">    cls_prob, loss_cls = model.net.SoftmaxWithLoss(</span><br><span class="line">        [<span class="string">'cls_score'</span>, <span class="string">'labels_int32'</span>], [<span class="string">'cls_prob'</span>, <span class="string">'loss_cls'</span>],</span><br><span class="line">        scale=model.GetLossScale()</span><br><span class="line">    )</span><br></pre></td></tr></table></figure></p>
+<p>下面是 Fast R-CNN 的损失定义<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_fast_rcnn_losses</span><span class="params">(model)</span>:</span></span><br><span class="line">    <span class="comment"># 添加 RoI 分类损失</span></span><br><span class="line">    cls_prob, loss_cls = model.net.SoftmaxWithLoss(</span><br><span class="line">        [<span class="string">'cls_score'</span>, <span class="string">'labels_int32'</span>], [<span class="string">'cls_prob'</span>, <span class="string">'loss_cls'</span>],</span><br><span class="line">        scale=model.GetLossScale()</span><br><span class="line">    )</span><br><span class="line">    <span class="comment"># 添加 bounding box 回归损失</span></span><br><span class="line">    loss_bbox = model.net.SmoothL1Loss(</span><br><span class="line">        [</span><br><span class="line">            <span class="string">'bbox_pred'</span>, <span class="string">'bbox_targets'</span>, <span class="string">'bbox_inside_weights'</span>,</span><br><span class="line">            <span class="string">'bbox_outside_weights'</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="string">'loss_bbox'</span>,</span><br><span class="line">        scale=model.GetLossScale()</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 求梯度</span></span><br><span class="line">    loss_gradients = blob_utils.get_loss_gradients(model, [loss_cls, loss_bbox])</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -636,8 +640,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/Caffe2-Detectron-DetectionModelHelper/" rel="next" title="Detectron源码解析-网络模型DetectionModelHelper">
-                Detectron源码解析-网络模型DetectionModelHelper <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/Caffe2-Detectron-DetectionModelHelper/" rel="next" title="Detectron 源码解析-检测模型辅助器(DetectionModelHelper)">
+                Detectron 源码解析-检测模型辅助器(DetectionModelHelper) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -716,7 +720,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">207</span>
+                    <span class="site-state-item-count">230</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -900,7 +904,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Fast-R-CNN-outputs-and-losses"><span class="nav-text">Fast R-CNN outputs and losses</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#源码文件"><span class="nav-text">源码文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Fast-R-CNN-Heads"><span class="nav-text">Fast R-CNN Heads</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#fast-rcnn-heads-py-文件概览"><span class="nav-text">fast_rcnn_heads.py 文件概览</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#导入的包及函数"><span class="nav-text">导入的包及函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Fast-R-CNN-outputs-and-losses"><span class="nav-text">Fast R-CNN outputs and losses</span></a></li></ol></div>
             
 
           </div>
@@ -937,7 +941,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.1m</span>
+    <span title="站点总字数">1.3m</span>
   
 
   
@@ -946,7 +950,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">16:17</span>
+    <span title="站点阅读时长">20:01</span>
   
 </div>
 

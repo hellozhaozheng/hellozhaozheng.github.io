@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="源码文件在 Faster R-CNN 中, 首次提出了 RPN 网络, 该网络用于生成目标检测任务所需要候选区域框, 在 MaskrcnnBenchmark 中, 关于 RPN 网络的定义位于 ./maskrcnn_benchmark/modeling/rpn/ 文件夹中, 该文件夹包含以下四个文件:  anchor_generator.py inference.py loss.py rpn.py">
+<meta name="keywords" content="PyTorch,MaskrcnnBenchmark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MaskrcnnBenchmark 源码解析-模型定义(modeling)之RPN网络">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/PyTorch-MaskrcnnBenchmark-modeling-rpn/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="源码文件在 Faster R-CNN 中, 首次提出了 RPN 网络, 该网络用于生成目标检测任务所需要候选区域框, 在 MaskrcnnBenchmark 中, 关于 RPN 网络的定义位于 ./maskrcnn_benchmark/modeling/rpn/ 文件夹中, 该文件夹包含以下四个文件:  anchor_generator.py inference.py loss.py rpn.py">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-14T08:40:12.661Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MaskrcnnBenchmark 源码解析-模型定义(modeling)之RPN网络">
+<meta name="twitter:description" content="源码文件在 Faster R-CNN 中, 首次提出了 RPN 网络, 该网络用于生成目标检测任务所需要候选区域框, 在 MaskrcnnBenchmark 中, 关于 RPN 网络的定义位于 ./maskrcnn_benchmark/modeling/rpn/ 文件夹中, 该文件夹包含以下四个文件:  anchor_generator.py inference.py loss.py rpn.py">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/PyTorch-MaskrcnnBenchmark-modeling-rpn/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>MaskrcnnBenchmark 源码解析-模型定义(modeling)之RPN网络 | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">230</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-linux">
+    <a href="/categories/Linux/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-面试">
+    <a href="/categories/面试/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其他">
+    <a href="/categories/其他/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/PyTorch-MaskrcnnBenchmark-modeling-rpn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MaskrcnnBenchmark 源码解析-模型定义(modeling)之RPN网络
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-12 10:34:06" itemprop="dateCreated datePublished" datetime="2018-12-12T10:34:06+08:00">2018-12-12</time>
+            
+
+            
+          </span>
+
+	  
+  	    <span class="post-updated">
+    		&nbsp; | &nbsp; 更新于
+    		<time itemprop="dateUpdated" datetime="2018-12-14T16:40:12+08:00" content="2018-12-14">
+      		  2018-12-14
+    		</time>
+  	  </span>
+	  
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/PyTorch/" itemprop="url" rel="index"><span itemprop="name">PyTorch</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">25k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">22 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="源码文件"><a href="#源码文件" class="headerlink" title="源码文件"></a>源码文件</h1><p>在 Faster R-CNN 中, 首次提出了 RPN 网络, 该网络用于生成目标检测任务所需要候选区域框, 在 MaskrcnnBenchmark 中, 关于 RPN 网络的定义位于 <code>./maskrcnn_benchmark/modeling/rpn/</code> 文件夹中, 该文件夹包含以下四个文件:</p>
+<ul>
+<li><a href="#anchor_generator">anchor_generator.py</a></li>
+<li><a href="#inference">inference.py</a></li>
+<li><a href="#loss">loss.py</a></li>
+<li><a href="#rpn">rpn.py</a></li>
+</ul>
+<p>在 <code>class GeneralizedRCNN(nn.Module)</code> 类中, 会通过 <code>self.rpn = build_rpn(cfg)</code> 函数来创建 RPN 网络, 该函数位于 <code>./maskrcnn_benchmark/modeling/rpn/rpn.py</code> 文件中, 下面我们就先来看看该文件的内部实现.</p>
+<p><span id="rpn"></span></p>
+<h1 id="rpn-py-区域候选框网络"><a href="#rpn-py-区域候选框网络" class="headerlink" title="rpn.py 区域候选框网络"></a>rpn.py 区域候选框网络</h1><p>在 <code>rpn.py</code> 文件中的最后, 定义了 <code>build_fpn()</code> 函数, 如下所示:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_fpn</span><span class="params">(cfg)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> RPNModule(cfg)</span><br></pre></td></tr></table></figure>
+<p>可以看出, 构建 RPN 网络的核心定义在 <code>class RPNModule</code> 中, 该类的定义如下所示:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/modeling/rpn/rpn.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.modeling <span class="keyword">import</span> registry</span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.modeling.box_coder <span class="keyword">import</span> BoxCoder</span><br><span class="line"><span class="keyword">from</span> .loss <span class="keyword">import</span> make_rpn_loss_evaluator</span><br><span class="line"><span class="keyword">from</span> .anchor_generator <span class="keyword">import</span> make_anchor_generator</span><br><span class="line"><span class="keyword">from</span> .inference <span class="keyword">import</span> make_rpn_postprocessor</span><br><span class="line"></span><br><span class="line"><span class="meta">@registry.RPN_HEADS.register("SingleConvHead")</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RPNHead</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="comment"># 利用分类层和回归层添加一个简单的 RPN heads</span></span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RPNModule</span><span class="params">(torch.nn.Module)</span>:</span></span><br><span class="line">    <span class="comment"># 用于 RPN 计算的 Module.</span></span><br><span class="line">    <span class="comment"># 从 backbone 中获取特征图谱用于计算</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, cfg)</span>:</span><span class="comment">#</span></span><br><span class="line">        super(RPNModule, self).__init__()</span><br><span class="line"></span><br><span class="line">        self.cfg = cfg.clone()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># from .anchor_generator import make_anchor_generator</span></span><br><span class="line">        <span class="comment"># 根据配置文件的信息输出对应的 anchor, 详细的实现逻辑需要查看 anchor_generator.py文件</span></span><br><span class="line">        anchor_generator = make_anchor_generator(cfg)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># cfg.MODEL.BACKBONE.OUT_CHANNELS = 256 (默认为256*4), 即stage2的输出通道数</span></span><br><span class="line">        in_channels = cfg.MODEL.BACKBONE.OUT_CHANNELS</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 创建 rpn heads, 具体的代码解析请看 class RPNHead</span></span><br><span class="line">        <span class="comment"># cfg.MODEL.RPN.RPN_HEAD = "SingleConvRPNHead"</span></span><br><span class="line">        rpn_head = registry.RPN_HEADS[cfg.MODEL.RPN.RPN_HEAD]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># num_anchors_per_location() 是 AnchorGenerator 的成员函数, 具体解析请看后文</span></span><br><span class="line">        head = rpn_head(</span><br><span class="line">            cfg, in_channels, anchor_generator.num_anchors_per_location()[<span class="number">0</span>]</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># from maskrcnn_benchmark.modeling.box_coder import BoxCoder</span></span><br><span class="line">        <span class="comment"># class BoxCoder(object) 类定义在 ./maskrcnn_benchmark/modeling/box_coder.py 文件中</span></span><br><span class="line">        <span class="comment"># 其主要功能是将 bounding boxes 的表示形式编码成易于训练的形式(详细信息可查看R-CNN原文)</span></span><br><span class="line">        rpn_box_coder = BoxCoder(weights=(<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># from .inference import make_rpn_postprocessor</span></span><br><span class="line">        <span class="comment"># 根据配置信息对候选框进行后处理, 选取合适的框用于训练</span></span><br><span class="line">        box_selector_train = make_rpn_postprocessor(cfg, rpn_box_coder, is_train=Fasle)</span><br><span class="line">        <span class="comment"># 选取合适的框用于测试</span></span><br><span class="line">        box_selector_test = make_rpn_postprocessor(cfg, rpn_box_coder, is_train=<span class="keyword">False</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 利用得到的box获取损失函数</span></span><br><span class="line">        loss_evaluator = make_rpn_loss_evaluator(cfg, rpn_box_coder)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 设置相应的成员</span></span><br><span class="line">        self.anchor_generator = anchor_generator</span><br><span class="line">        self.head = head</span><br><span class="line">        self.box_selector_train = box_selector_train</span><br><span class="line">        self.box_selector_test = box_selector_test</span><br><span class="line">        self.loss_evaluator = loss_evaluator</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 定义前向传播过程</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, images, features, targets=None)</span>:</span></span><br><span class="line">        <span class="comment"># images (ImageList):</span></span><br><span class="line">        <span class="comment"># features (list[Tensor]):</span></span><br><span class="line">        <span class="comment"># targets (list[BoxList]):</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 返回值:</span></span><br><span class="line">        <span class="comment"># boxes (list[BoxList]):</span></span><br><span class="line">        <span class="comment"># losses (dict[Tensor]):</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 利用给定的特征图谱计算相应的 rpn 结果</span></span><br><span class="line">        objectness, rpn_box_regression = self.head(features)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 在图片上生成 anchors</span></span><br><span class="line">        anchors = self.anchor_generator(images, features)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 当处在训练状态时, 调用 _foward_train(), 当处在推演状态时, 调用 _forward_test()</span></span><br><span class="line">        <span class="keyword">if</span> self.training:</span><br><span class="line">            <span class="keyword">return</span> self._forward_train(anchors, objectness, rpn_box_regression, targets)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self._forward_test(anchors, objectness, rpn_box_regression)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 训练状态时的前向传播函数</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_forward_train</span><span class="params">(self, anchors, objectness, rpn_box_regression, targets)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self.cfg.MODEL.RPN_ONLY:</span><br><span class="line">            <span class="comment"># 当处在 rpn-only 的训练模式时, 网络的 loss 仅仅与rpn的 objectness 和</span></span><br><span class="line">            <span class="comment"># rpn_box_regression values 有关, 因此无需将 anchors 转化成 boxes</span></span><br><span class="line">            boxes = anchors</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 对于 end-to-end 模型来说, anchors 必须被转化成 boxes,</span></span><br><span class="line">            <span class="comment"># 然后采样到目标检测网络的 batch 中用于训练, 注意此时不更新网络参数</span></span><br><span class="line">            <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">                boxes = self.box_selector_train(</span><br><span class="line">                    anchors, objectness, rpn_box_regression, targets</span><br><span class="line">                )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取损失函数的结果</span></span><br><span class="line">        loss_objectness, loss_rpn_box_reg = self.loss_evaluator(</span><br><span class="line">            anchors, objectness, rpn_box_regression, targets</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 创建一个loss字典</span></span><br><span class="line">        losses = &#123;</span><br><span class="line">            <span class="string">"loss_objectness"</span>: loss_objectness,</span><br><span class="line">            <span class="string">"loss_rpn_box_reg"</span>: loss_rpn_box_reg,</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> boxes, losses</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 测试状态时的前向传播函数</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_forward_test</span><span class="params">(self, anchors, objectness, rpn_box_regression)</span>:</span></span><br><span class="line">        <span class="comment"># 将 anchors 转化成对应的 boxes</span></span><br><span class="line">        boxes = self.box_selector_test(anchors, objectness, rpn_box_regression)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self.cfg.MODEL.RPN_ONLY:</span><br><span class="line">            <span class="comment"># 对于 end-to-end 模型来说, RPN proposals 仅仅只是网络的一个中间状态,</span></span><br><span class="line">            <span class="comment"># 我们无需将它们以降序顺序存储, 直接返回 FPN 结果即可</span></span><br><span class="line">            <span class="comment"># 但是对于 RPN-only 模式下, RPN 的输出就是最终结果, 我们需要以置信度从高</span></span><br><span class="line">            <span class="comment"># 到低的顺序保存结果并返回.</span></span><br><span class="line">            inds = [</span><br><span class="line">                box.get_field(<span class="string">"objectness"</span>).sort(descending=<span class="keyword">True</span>)[<span class="number">1</span>] <span class="keyword">for</span> box <span class="keyword">in</span> boxes</span><br><span class="line">            ]</span><br><span class="line">            boxes = [box[ind] <span class="keyword">for</span> box, ind <span class="keyword">in</span> zip(boxes, inds)]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> boxes, &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>在 <code>class RPNModule</code> 中, 使用了 <code>class RPNHead</code> 作为其头部, 下面我们就来看一下该类的定义及实现:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ../maskrcnn_benchmark/modeling/rpn/rpn.py</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@registry.RPN_HEADS.register("SingleConvRPNHead")</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RPNHead</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="comment"># 添加 classification 和 regression heads</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, cfg, in_channels, num_anchors)</span>:</span></span><br><span class="line">        <span class="comment"># cfg: 配置信息</span></span><br><span class="line">        <span class="comment"># in_channels (int): 输入特征的通道数</span></span><br><span class="line">        <span class="comment"># num_anchors (int): 需要预测的 anchors 的数量</span></span><br><span class="line"></span><br><span class="line">        super(RPNHead, self).__init__()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 维持通道数不变</span></span><br><span class="line">        self.conv = nn.Conv2d(</span><br><span class="line">            in_channels, in_channels, kernel_size=<span class="number">3</span>, stride=<span class="number">1</span>, padding=<span class="number">1</span></span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># objectness 预测层, 输出的 channels 数为 anchors 的数量.(每一点对应 k 个 anchors)</span></span><br><span class="line">        self.cls_logits = nn.Conv2d(in_channels, num_anchors, kernel_size=<span class="number">1</span>, stride=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 预测 box 回归的网络层</span></span><br><span class="line">        self.bbox_pred = nn.Conv2d(</span><br><span class="line">            in_channels, num_anchors * <span class="number">4</span>, kernel_size=<span class="number">1</span>, stride=<span class="number">1</span></span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 对定义的网络层参数进行初始化</span></span><br><span class="line">        <span class="keyword">for</span> l <span class="keyword">in</span> [self.conv, self.cls_logits, self.bbox_pred]:</span><br><span class="line">            torch.nn.init.normal_(l.weight, std=<span class="number">0.01</span>)</span><br><span class="line">            torch.nn.init.constant_(l.bias, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 定义 rpn head 的前向传播过程</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">            logits = []</span><br><span class="line">            bbox_reg = []</span><br><span class="line">            <span class="keyword">for</span> feature <span class="keyword">in</span> x:</span><br><span class="line">                <span class="comment"># 先执行卷积+激活</span></span><br><span class="line">                t = F.relu(self.conv(feature))</span><br><span class="line"></span><br><span class="line">                <span class="comment"># 根据卷积+激活后的结果预测objectness</span></span><br><span class="line">                logits.append(self.cls_logits(t))</span><br><span class="line"></span><br><span class="line">                <span class="comment"># 根据卷积+激活后的结果预测 bbox</span></span><br><span class="line">                bbox_reg.append(self.bbox_pred(t))</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> logits, bbox_reg</span><br></pre></td></tr></table></figure>
+<p>在定义 <code>RPNModule</code> 时, 分别使用了 <code>make_anchor_generator()</code>, <code>make_rpn_postprocessor()</code> 和 <code>make_rpn_loss_evaluator()</code> 函数来构建模型的 <code>anchor_generator</code>, <code>box_selector</code> 以及 <code>loss_evaluator</code>, 这三个函数分别定义在其他的三个文件中, 下面我们就根据函数的调用顺序, 对这几个文件展开解析.</p>
+<p><span id="anchor_generator"></span></p>
+<h1 id="anchor-generator-py-生成-anchors"><a href="#anchor-generator-py-生成-anchors" class="headerlink" title="anchor_generator.py 生成 anchors"></a>anchor_generator.py 生成 anchors</h1><p>首先是 <code>make_anchor_generator()</code> 函数, 该函数定义在 <code>rpn/</code> 文件夹下的 <code>anchor_generator.py</code> 文件中, 由于该文件内容较多, 因此, 我们先看一下文件的整体概览, 了解一下文件中都包含了哪些类和函数.</p>
+<h2 id="文件概览"><a href="#文件概览" class="headerlink" title="文件概览"></a>文件概览</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/modeling/rpn/anchor_generator.py</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 包的导入</span></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.structures.bounding_box <span class="keyword">import</span> BoxList</span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BufferList</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="comment"># 和 nn.ParameterList 差不多, 但是是针对 buffers 的</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, buffers=None)</span>:</span></span><br><span class="line">        <span class="comment"># 初始化函数</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">extend</span><span class="params">(self, buffers)</span>:</span></span><br><span class="line">        <span class="comment"># buffer 扩展</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># 获取 buffer 长度</span></span><br><span class="line">        <span class="keyword">return</span> len(self._buffers)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># buffer 迭代器</span></span><br><span class="line">        <span class="keyword">return</span> iter(self._buffers.values())</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AnchorGenerator</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="comment"># 对于给定的一系列 image sizes 和 feature maps, 计算对应的 anchors</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(...)</span>:</span></span><br><span class="line">        <span class="comment"># 初始化函数</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">num_anchors_per_location</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># 获取每个位置的 anchors 数量</span></span><br><span class="line">        <span class="keyword">return</span> [len(cell_anchors) <span class="keyword">for</span> cell_anchors <span class="keyword">in</span> self.cell_anchors]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">grid_anchors</span><span class="params">(self, grid_sizes)</span>:</span></span><br><span class="line">        <span class="comment"># 获取 anchors</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_visibility_to</span><span class="params">(self, boxlist)</span>:</span></span><br><span class="line">        <span class="comment"># ???</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, image_list, feature_maps)</span>:</span></span><br><span class="line">        <span class="comment"># 定义前向传播过程</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">make_anchor_generator</span><span class="params">(config)</span>:</span></span><br><span class="line">    <span class="comment"># 根据配置信息创建 AnchorGenerator 对象实例</span></span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generator_anchors</span><span class="params">(...)</span>:</span></span><br><span class="line">    <span class="comment"># 根据给定的 stride, sizes, aspect_ratio 等参数返回一个 anchor box 组成的矩阵</span></span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_generate_anchors</span><span class="params">(base_size, scales, aspect_ratios)</span>:</span></span><br><span class="line">    <span class="comment"># 返回 anchor windows ??</span></span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_whctrs</span><span class="params">(anchor)</span>:</span></span><br><span class="line">    <span class="comment"># 返回某个 anchor 的宽高以及中心坐标</span></span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_mkanchors</span><span class="params">(ws, hs, x_ctr, y_ctr)</span>:</span></span><br><span class="line">    <span class="comment"># 给定关于一系列 centers 的宽和高, 返回对应的 anchors</span></span><br><span class="line">    <span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+<h2 id="make-anchor-generator-函数"><a href="#make-anchor-generator-函数" class="headerlink" title="make_anchor_generator() 函数"></a>make_anchor_generator() 函数</h2><p>由于外部文件往往通过 <code>make_anchor_generator(config)</code> 函数来获取对应的 anchors, 因此, 我们就从这个函数入手解析, 代码如下所示:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">make_anchor_generator</span><span class="params">(config)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 定义了 RPN 网络的默认的 anchor 的面积大小</span></span><br><span class="line">    <span class="comment"># 默认值为: (32, 64, 128, 256, 512)</span></span><br><span class="line">    anchor_sizes = config.MODEL.RPN.ANCHOR_SIZES</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 定义了 RPN 网络 anchor 的高宽比</span></span><br><span class="line">    <span class="comment"># 默认值为: (0.5, 1.0, 2.0)</span></span><br><span class="line">    aspect_ratios = config.MODEL.RPN.ASPECT_RATIOS</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 定义了 RPN 网络中 feature map 采用的 stride,</span></span><br><span class="line">    <span class="comment"># 对于 FPN 来说, strides 的值应该与 scales 的值匹配</span></span><br><span class="line">    <span class="comment"># 默认值为: (16,)</span></span><br><span class="line">    anchor_stride = config.MODEL.RPN.ANCHOR_STRIDE</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 移除那些超过图片 STRADDLE_THRESH 个像素大小的 anchors, 起到剪枝作用</span></span><br><span class="line">    <span class="comment"># 默认值为 0, 如果想要关闭剪枝功能, 则将该值置为 -1 或者一个很大的数, 如 100000</span></span><br><span class="line">    straddle_thresh = config.MODEL.RPN.STRADDLE_THRESH</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> config.MODEL.RPN.USE_FPN:</span><br><span class="line">        <span class="comment"># 当使用 fpn 时, 要确保rpn与fpn的相关参数匹配</span></span><br><span class="line">        <span class="keyword">assert</span> len(anchor_stride) == len(</span><br><span class="line">            anchor_sizes</span><br><span class="line">        ), <span class="string">"FPN should have len(ANCHOR_STRIDE) == len(ANCHOR_SIZES)"</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">assert</span> len(anchor_stride) == <span class="number">1</span>, <span class="string">"Non-FPN should have a single ANCHOR_STRIDE"</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 当获取到相关的参数以后, 创建一个 AnchorGenerator 实例并将其返回</span></span><br><span class="line">    anchor_generator = AnchorGenerator(</span><br><span class="line">        anchor_sizes, aspect_ratios, anchor_stride, straddle_thresh</span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">return</span> anchor_generator</span><br></pre></td></tr></table></figure>
+<h2 id="AnchorGenerator-类"><a href="#AnchorGenerator-类" class="headerlink" title="AnchorGenerator 类"></a>AnchorGenerator 类</h2><p>根据上面的函数我们知道, <code>make_anchor_generator(config)</code> 函数会根据对应的配置文件创建一个 AnchorGenerator 的实例, 因此, 我们下面就对 <code>class AnchorGenerator(nn.Module)</code> 类进行解析, 代码如下:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/modeling/rpn/anchor_generator.py</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AnchorGenerator</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="comment"># 对于给定的 image sizes 和 feature maps, 计算对应的 anchors</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        self,</span></span></span><br><span class="line"><span class="function"><span class="params">        sizes=<span class="params">(<span class="number">128</span>, <span class="number">256</span>, <span class="number">512</span>)</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        aspect_ratios=<span class="params">(<span class="number">0.5</span>, <span class="number">1.0</span>, <span class="number">2.0</span>)</span></span></span></span><br><span class="line"><span class="function"><span class="params">        anchor_strides=<span class="params">(<span class="number">8</span>, <span class="number">16</span>, <span class="number">32</span>)</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        straddle_thresh=<span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">    )</span>:</span></span><br><span class="line">        super(AnchorGenerator, self).__init__()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> len(anchor_strides) == <span class="number">1</span>:</span><br><span class="line">            <span class="comment"># 如果 anchor_strides 的长度为1, 说明没有 fpn 部分, 则直接调用相关函数</span></span><br><span class="line">            anchor_stride = anchor_strides[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 此处调用了本文件的 generate_anchors 函数, 详解见后文</span></span><br><span class="line">            cell_anchors = [</span><br><span class="line">                generate_anchors(anchor_stride, sizes, aspect_ratios).float()</span><br><span class="line">            ]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> len(anchor_strides) != len(sizes):</span><br><span class="line">                <span class="keyword">raise</span> RuntimeError(<span class="string">"FPN should have #anchor_strides == #sizes"</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 调用 generate_anchors 函数</span></span><br><span class="line">            cell_anchors = [</span><br><span class="line">                generate_anchors(anchor_stride, (size,), aspect_ratios).float()</span><br><span class="line">                <span class="keyword">for</span> anchor_stride, size <span class="keyword">in</span> zip(anchor_strides, sizes)</span><br><span class="line">            ]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 将 strides, cell_anchors, straddle_thresh 作为 AnchorGenerator 的成员</span></span><br><span class="line">        self.strides = anchor_strides</span><br><span class="line">        self.cell_anchors = BufferList(cell_anchors) <span class="comment"># 使用了 BufferList 类</span></span><br><span class="line">        self.straddle_thresh = straddle_thresh</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 返回每一个 location 上对应的 anchors 的数量</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">num_anchors_per_location</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> [len(cell_anchors) <span class="keyword">for</span> cell_anchors <span class="keyword">in</span> self.cell_anchors]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 用于生成所有特征图谱的 anchors, 会被 forward 函数调用.</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">grid_anchors</span><span class="params">(self, grid_sizes)</span>:</span></span><br><span class="line">        <span class="comment"># 创建一个空的 anchors 列表</span></span><br><span class="line">        anchors = []</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 针对各种组合</span></span><br><span class="line">        <span class="keyword">for</span> size, stride, base_anchors <span class="keyword">in</span> zip(</span><br><span class="line">            grid_sizes, self.strides, self.cell_anchors</span><br><span class="line">        ):</span><br><span class="line">            <span class="comment"># 获取 grid 的尺寸和 base_anchors 的 device</span></span><br><span class="line">            grid_height, grid_width = size</span><br><span class="line">            device = base_anchors.device</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 按照步长获取偏移量</span></span><br><span class="line">            shifts_x = torch.arange(</span><br><span class="line">                <span class="number">0</span>, grid_width * stride, step=stride, dtype=torch.float32, device=device</span><br><span class="line">            )</span><br><span class="line">            <span class="comment"># 获取 y 的偏移量</span></span><br><span class="line">            shifts_y = torch.arange(</span><br><span class="line">                <span class="number">0</span>, grid_height * stride, step=stride, dtype=torch.float32, device=device</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 创建关于 shifts_y, shifts_x 的 meshgrid</span></span><br><span class="line">            shift_y, shift_x = torch.meshgrid(shifts_y, shifts_x)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 将二者展开成一维</span></span><br><span class="line">            shift_x = shift_x.reshape(<span class="number">-1</span>)</span><br><span class="line">            shift_y = shift_y.reshape(<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line">            shifts = torch.stack((shift_x, shift_y, shift_x, shift_y), dim=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">            anchors.append(</span><br><span class="line">                (shifts.view(<span class="number">-1</span>, <span class="number">1</span>, <span class="number">4</span>) + base_anchors.view(<span class="number">1</span>, <span class="number">-1</span>, <span class="number">4</span>)).reshape(<span class="number">-1</span>, <span class="number">4</span>)</span><br><span class="line">            )</span><br><span class="line">        <span class="keyword">return</span> anchors</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_visibility_to</span><span class="params">(self, boxlist)</span>:</span></span><br><span class="line">        <span class="comment">## TODO... 解析</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, image_list, feature_maps)</span>:</span></span><br><span class="line">        <span class="comment"># TODO... 解析</span></span><br></pre></td></tr></table></figure>
+<h2 id="根据参数生成-anchors"><a href="#根据参数生成-anchors" class="headerlink" title="根据参数生成 anchors"></a>根据参数生成 anchors</h2><p>在 <code>class AnchorGenerator</code> 中, 利用了 <code>generate_anchors()</code> 函数来生成对应的 anchors, 该函数是生成 anchors 的入口函数, 在生成 anchors 时, 需要进行一些计算和转换, 其大致流程和对应的实现函数如下所示</p>
+<ol>
+<li>获取生成 anchors 必要的参数, 包括: <code>stride</code>, <code>sizes</code>, 和 <code>aspect_ratios</code>, 其中, <code>stride</code> 代表特征图谱上的 anchors 的基础尺寸, <code>sizes</code> 代表 anchor 对应在原始图片中的大小(以像素为单位), 因此, 我们容易知道 anchor 在特征图谱上的放缩比例为 <code>sizes/stride</code>, <code>aspect_ratios</code> 代表 anchors 的高宽比, 于是, 最终返回的 anchors 的数量就是 <code>sizes</code> (在特征图谱上固定 base_window 的尺寸, 根据比例的不同来对应不同大小的物体)的数量和 <code>aspect_ratios</code> 数量的乘积;</li>
+<li>在获取特征图谱上对应的 base_size(stride)后, 我们将其表示成 <code>[x1, y1, x2, y2]</code>(坐标是相对于 anchor 的中心而言的) 的 box 形式. 例如对于 <code>stride=4</code> 的情况, 我们将其表示成 <code>[0, 0, 3, 3]</code>, 此部分的实现位于 <code>_generate_anchors(...)</code> 函数中</li>
+<li><p>然后根据 <code>aspect_ratios</code> 的值来获取不同的 anchor boxes 的尺寸, 例如, 对于 <code>stride=4</code> 的 base_anchor 来说, 如果参数 <code>aspect_ratios</code> 为 <code>[0.5, 1.0, 2.0]</code>, 那么它就应该返回面积不变, 但是高宽比分别为 <code>[0.5, 1.0, 2.0]</code> 的三个 box 的坐标, 也就是应该返回下面的 box 数组(注意到这里 box 的比例实际上是 <code>[5/2, 1, 2/5]</code>, 并不是绝对符合 <code>aspect_ratios</code>, 这是因为像素点只能为整数, 后面还能对这些坐标取整). 这部分的实现位于 <code>_ratio_enum()</code> 函数中;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[[-1.   0.5  4.   2.5]</span><br><span class="line"> [ 0.   0.   3.   3. ]</span><br><span class="line"> [ 0.5 -1.   2.5  4. ]]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在获取到不同比例的特征图谱上的 box 坐标以后, 我们就该利用 <code>scales = sizes/stride</code> 来将这些 box 坐标映射到原始图像中, 也就是按照对应的比例将这些 box 放大, 对于我们刚刚举的例子 <code>scales = 32/4 = 8</code> 来说, 最终的 box 的坐标如下所示. 这部分的代码实现位于 <code>_scale_num()</code> 函数中.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[[-22., -10.,  25.,  13.],</span><br><span class="line"> [-14., -14.,  17.,  17.],</span><br><span class="line"> [-10., -22.,  13.,  25.]]</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>代码解析如下:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/modeling/rpn/anchor_generator.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_anchors</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    stride=<span class="number">16</span>, sizes=<span class="params">(<span class="number">32</span>, <span class="number">64</span>, <span class="number">128</span>, <span class="number">256</span>, <span class="number">512</span>)</span>, aspect_ratios=<span class="params">(<span class="number">0.5</span>, <span class="number">1</span>, <span class="number">2</span>)</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span>:</span></span><br><span class="line">    <span class="comment"># 该函数会生成一个 anchor boxes 列表, 列表中的元素为以 (x1, x2, y1, y2) 形式表示的 box</span></span><br><span class="line">    <span class="comment"># 这些 box 的坐标是相对于 anchor 的中心而言的, 其大小为 sizes 数组中元素的平方</span></span><br><span class="line">    <span class="comment"># 这里的默认参数对应的是使用 resnet-C4 作为 backbone 的 faster_rcnn 模型</span></span><br><span class="line">    <span class="comment"># 如果使用了 FPN, 则不同的 size 会对应到不同的特征图谱上, 下面我们利用 FPN 的参数来讲解代码</span></span><br><span class="line">    <span class="comment"># fpn 第一阶段参数值为:(注意sizes必须写成元组或列表的形成)</span></span><br><span class="line">    <span class="comment"># stride=4, sizes=(32,), aspect_ratios=(0.5, 1, 2)</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> _generate_anchors( <span class="comment"># 调用 _generate_anchors() 函数</span></span><br><span class="line">        stride, <span class="comment"># stride=4</span></span><br><span class="line">        np.array(sizes, dtype=np.float) / stride, <span class="comment"># sizes / stride = 32 / 4 = 8</span></span><br><span class="line">        np.array(aspect_ratios, dtype=np.float), <span class="comment"># [0.5, 1, 2]</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_generate_anchors</span><span class="params">(base_size, scales, aspect_ratios)</span>:</span></span><br><span class="line">    <span class="comment"># 根据调用语句知, 参数值分别为: 4, 8, [0.5, 1, 2]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 首先得到 anchor 的 base box 坐标(相对于 anchor 中心而言), [0, 0, 3, 3]</span></span><br><span class="line">    anchor = np.array([<span class="number">1</span>, <span class="number">1</span>, base_size, base_size], dtype=np.float) - <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 根据 base_box 和给定的高宽比, 得到拥有不同高宽比的 anchors,</span></span><br><span class="line">    <span class="comment"># 此处是使 anchor 的比例转化成 [0.5, 1, 2], 对应的 box 为:</span></span><br><span class="line">    <span class="comment">#[[-1.   0.5  4.   2.5]</span></span><br><span class="line">    <span class="comment"># [ 0.   0.   3.   3. ]</span></span><br><span class="line">    <span class="comment"># [ 0.5 -1.   2.5  4. ]]</span></span><br><span class="line">    <span class="comment"># 注意到这里的 box 的比例实际为 [5/2, 1, 2/5], 具体原理可查看 _ratio_enum() 函数解析</span></span><br><span class="line">    anchors = _ratio_enum(anchor, aspect_ratios)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 得到不同高宽比的 anchors 以后, 按照给定的比例(scales)将其缩放到原始图像中,</span></span><br><span class="line">    <span class="comment"># 此处 scales 的值只有一个, 即为 8, 因此, 将上面的 boxes 放大 8 倍(指的是宽高各放大 8 倍, 故总面积会放大64倍), 得到新的 boxes 坐标如下:</span></span><br><span class="line">    <span class="comment">#[[-22., -10.,  25.,  13.],</span></span><br><span class="line">    <span class="comment"># [-14., -14.,  17.,  17.],</span></span><br><span class="line">    <span class="comment"># [-10., -22.,  13.,  25.]]</span></span><br><span class="line">    <span class="comment"># 这里的 vstack 用于将 3 个 1×4 的数组合并成一个 3×4 的数组, 如上所示.</span></span><br><span class="line">    <span class="comment"># anchors[i, :] 代表的是一个 box 的坐标, 如: [-1.  0.5  4.  2.5]</span></span><br><span class="line">    anchors = np.vstack(</span><br><span class="line">        [_scale_enum(anchors[i, :], scales) <span class="keyword">for</span> i <span class="keyword">in</span> range(anchors.shape[<span class="number">0</span>])]</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将numpy数组转换成tensors, 然后返回, anchor的 shape 为: (n, 4), 其中 n 为 anchors 的数量</span></span><br><span class="line">    <span class="keyword">return</span> torch.from_numpy(anchors)</span><br></pre></td></tr></table></figure>
+<p>在上面的函数上, 分别使用了 <code>_ratio_enum()</code> 和 <code>_scale_enum()</code> 函数来实现高宽比和放缩比的组合, 下面, 我们就先对这两个函数进行解析:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">./maskrcnn_benchmark/modeling/rpn/anchor_generator.py</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_ratio_enum</span><span class="params">(anchor, ratios)</span>:</span></span><br><span class="line">    <span class="comment"># 该函数按照给定的 ratios 将 base anchor 转化成具有不同高宽比的多个 anchor boxes, 假设:</span></span><br><span class="line">    <span class="comment"># anchor: [0.  0.  3.  3.]</span></span><br><span class="line">    <span class="comment"># ratios: [0.5, 1.0, 2.0]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取 anchor 的宽, 高, 以及中心点的坐标</span></span><br><span class="line">    w, h, x_ctr, y_ctr = _whctrs(anchor)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取 anchor 的面积</span></span><br><span class="line">    size = w * h</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 根据高宽比获取 size_ratios 变量, 后续会用该变量对 box 的高宽比进行转化</span></span><br><span class="line">    size_ratios = size / ratios</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ws = sqrt(size) / sqrt(ratios)</span></span><br><span class="line">    <span class="comment"># hs = sqrt(size) * sqrt(ratios)</span></span><br><span class="line">    <span class="comment"># 高宽比 = hs/ws = sqrt(ratios) * sqrt(ratios) = ratios</span></span><br><span class="line">    <span class="comment"># round 代表四舍五入</span></span><br><span class="line">    ws = np.round(np.sqrt(size_ratios))</span><br><span class="line">    hs = np.round(ws * ratios)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 根据新的 w 和 h, 生成新的 box 坐标(x1, x2, y1, y2) 并将其返回</span></span><br><span class="line">    anchors = _mkanchors(ws, hs, x_ctr, y_ctr)</span><br><span class="line">    <span class="keyword">return</span> anchors</span><br></pre></td></tr></table></figure>
+<p>接下来看看对放缩比进行遍历的函数 <code>_scale_enum()</code> 的代码实现<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_scale_enum</span><span class="params">(anchor, scales)</span>:</span></span><br><span class="line">    <span class="comment"># anchor: [-1.   0.5  4.   2.5] (举例)</span></span><br><span class="line">    <span class="comment"># scales: 8</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取 anchor 的宽, 高, 以及中心坐标</span></span><br><span class="line">    w, h, x_ctr, y_ctr = _whctrs(anchor)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将宽和高各放大8倍</span></span><br><span class="line">    ws = w * scales</span><br><span class="line">    hs = h * scales</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 根据新的宽, 高, 中心坐标, 将 anchor 转化成 (x1, x2, y1, y2) 的形式</span></span><br><span class="line">    <span class="keyword">return</span> anchors</span><br></pre></td></tr></table></figure></p>
+<p>在 <code>_ratio_enum()</code> 和 <code>_scale_enum()</code> 函数中, 都使用了 <code>_whctrs()</code> 和 <code>_mkanchors</code> 函数, 前者可以根据 box 的坐标信息得到 box 的宽高以及中心点坐标, 后者则是根据宽高以及中心点坐标得到 box 的 (x1, y1, x2, y2) 形式, 这两个函数的代码解析如下所示:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">./maskrcnn_benchmark/modeling/rpn/anchor_generator.py</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_whctrs</span><span class="params">(anchor)</span>:</span></span><br><span class="line">    <span class="comment"># 根据左上角和右下角坐标返回该 box 的宽高以及中心点坐标</span></span><br><span class="line">    w = anchor[<span class="number">2</span>] - anchor[<span class="number">0</span>] + <span class="number">1</span></span><br><span class="line">    h = anchor[<span class="number">3</span>] - anchor[<span class="number">1</span>] + <span class="number">1</span></span><br><span class="line">    x_ctr = anchor[<span class="number">0</span>] + <span class="number">0.5</span> * (w - <span class="number">1</span>)</span><br><span class="line">    y_ctr = anchor[<span class="number">1</span>] + <span class="number">0.5</span> * (h - <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> w, h, x_ctr, y_ctr</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_mkanchors</span><span class="params">(ws, hs, x_ctr, y_ctr)</span>:</span></span><br><span class="line">    <span class="comment"># 将给定的宽, 高以及中心点坐标转化成 (x1, y1, x2, y2) 的坐标形式</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 这里新增加了一个维度, 以便可以是有 hstack 将结果叠加.</span></span><br><span class="line">    ws = ws[:, np.newaxis]</span><br><span class="line">    hs = hs[:, np.newaxis]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将结果组合起来并返回</span></span><br><span class="line">    anchors = np.hstack(</span><br><span class="line">        (</span><br><span class="line">            x_ctr - <span class="number">0.5</span> * (ws - <span class="number">1</span>),</span><br><span class="line">            y_ctr - <span class="number">0.5</span> * (hs - <span class="number">1</span>),</span><br><span class="line">            x_ctr + <span class="number">0.5</span> * (ws - <span class="number">1</span>),</span><br><span class="line">            y_ctr + <span class="number">0.5</span> * (hs - <span class="number">1</span>),</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> anchors</span><br></pre></td></tr></table></figure></p>
+<p>经过以上步骤, 最终的 anchors 会被作为初始化参数来实例化一个 <code>class BufferList(nn.Module)</code> 对象, 这一部分的详细解析可以翻到上面的关于 <code>class AnchorGenerator(nn.Module)</code> 的解析.</p>
+<p><span id="inference"></span></p>
+<h1 id="inference-py-文件解析"><a href="#inference-py-文件解析" class="headerlink" title="inference.py 文件解析"></a>inference.py 文件解析</h1><p>在 <code>class RPNModule(torch.nn.Module)</code> 中, 使用了下面的语句来分别创建训练时和测试时的 box selector:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rpn_box_coder = BoxCoder(weights=(<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>))</span><br><span class="line"></span><br><span class="line">box_selector_train = make_rpn_postprocessor(cfg, rpn_box_coder, is_train=<span class="keyword">True</span>)</span><br><span class="line">box_selector_test = make_rpn_postprocessor(cfg, rpn_box_coder, is_train=<span class="keyword">False</span>)</span><br></pre></td></tr></table></figure></p>
+<p>以 <code>box_selector_train</code> 为例, 该方法用于在 end-to-end 的模型中, 返回训练用的 boxes, 调用形式如下:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">boxes = self.box_selector_train(</span><br><span class="line">    anchors, objectness, rpn_box_regression, targets</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>由于 <code>make_rpn_postprocessor()</code> 函数位于 <code>inference.py</code> 文件中, 因此, 我们将在这一小节对该文件进行解析.(关于 <code>BoxCoder</code> 的解析请看<a href="../PyTorch-MaskrcnnBenchmark-modeling-other/#box_coder">模型定义-其他辅助文件解析</a>)</p>
+<h2 id="inference-py-文件概览"><a href="#inference-py-文件概览" class="headerlink" title="inference.py 文件概览"></a>inference.py 文件概览</h2><p><code>./maskrcnn_benchmark/modeling/rpn/inference.py</code> 文件概览如下:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/modeling/rpn/inference.py</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入各种包及函数</span></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.modeling.box_coder <span class="keyword">import</span> BoxCoder</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RPNPostProcessor</span><span class="params">(torch.nn.Module)</span>:</span></span><br><span class="line">    <span class="comment"># 在将 proposals 喂到网络的 heads 之前, 先对 RPN 输出的 boxes 执行后处理</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(...)</span>:</span></span><br><span class="line">        <span class="comment"># 初始化函数</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_gt_proposals</span><span class="params">(self, proposals, targets)</span>:</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward_for_single_feature_map</span><span class="params">(self, anchors, objectness, box_regression)</span>:</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, anchors, objectness, box_regression, targets=None)</span>:</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">select_over_all_levels</span><span class="params">(self, boxlists)</span>:</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">make_rpn_postprocessor</span><span class="params">(config, rpn_box_coder, is_train)</span>:</span></span><br><span class="line">    <span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+<h2 id="make-rpn-postprocessor-入口函数"><a href="#make-rpn-postprocessor-入口函数" class="headerlink" title="make_rpn_postprocessor() 入口函数"></a>make_rpn_postprocessor() 入口函数</h2><p>在 <code>rpn.py</code> 中使用了 <code>make_rpn_postprocessor()</code> 函数来创建 <code>class RPNPostProcessor(nn.Module)</code> 实例, 该函数的第二个参数是一个 <code>class BoxCoder(object)</code> 的实例, 关于该类的解析请看<a href="../PyTorch-MaskrcnnBenchmark-modeling-other/#box_coder">模型定义-其他辅助文件解析</a>).<br><code>make_rpn_postprocessor()</code> 函数解析如下:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/modeling/rpn/rpn.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">make_rpn_postprocessor</span><span class="params">(config, rpn_box_coder, is_train)</span>:</span></span><br><span class="line">    <span class="comment"># rpn_box_coder: BoxCoder 实例</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># eg: 2000</span></span><br><span class="line">    fpn_post_nms_top_n = config.MODEL.RPN.FPN_POST_NMS_TOP_N_TRAIN</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> is_train:</span><br><span class="line">        <span class="comment"># eg: 1000</span></span><br><span class="line">        fpn_post_nms_top_n = config.MODEL.RPN.FPN_POST_NMS_TOP_N_TRAIN</span><br><span class="line"></span><br><span class="line">    <span class="comment"># eg: 2000</span></span><br><span class="line">    pre_nms_top_n = config.MODEL.RPN.PRE_NMS_TOP_N_TRAIN</span><br><span class="line"></span><br><span class="line">    <span class="comment"># eg: 2000</span></span><br><span class="line">    post_nms_top_n = config.MODEL.RPN.POST_NMS_TOP_N_TRAIN</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> is_train:</span><br><span class="line">        <span class="comment"># eg: 1000</span></span><br><span class="line">        pre_nms_top_n = config.MODEL.RPN.PRE_NMS_TOP_N_TEST</span><br><span class="line">        <span class="comment"># eg: 1000</span></span><br><span class="line">        post_nms_top_n = config.MODEL.RPN.POST_NMS_TOP_N_TEST</span><br><span class="line"></span><br><span class="line">    <span class="comment"># eg: 0.7</span></span><br><span class="line">    nms_thresh = config.MODEL.RPN.NMS_THRESH</span><br><span class="line"></span><br><span class="line">    <span class="comment"># eg: 0</span></span><br><span class="line">    min_size = config.MODEL.RPN.MIN_SIZE</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 根据配置参数创建一个 RPNPostProcessor 实例</span></span><br><span class="line">    box_selector = RPNPostProcessor(</span><br><span class="line">        pre_nms_top_n=pre_nms_top_n,</span><br><span class="line">        post_nms_top_n=post_nms_top_n,</span><br><span class="line">        nms_thresh=nms_thresh,</span><br><span class="line">        min_size=min_size,</span><br><span class="line">        box_coder=rpn_box_coder,</span><br><span class="line">        fpn_post_nms_top_n=fpn_post_nms_top_n,</span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">return</span> box_selector</span><br></pre></td></tr></table></figure>
+<p>可以看到, 上面函数的主要功能就是根据配置文件的信息创建一个 RPNPostProcessor 的实例对象, 下面我们来看看这个类的定义.</p>
+<h2 id="RPNPostProcessor-类"><a href="#RPNPostProcessor-类" class="headerlink" title="RPNPostProcessor 类"></a>RPNPostProcessor 类</h2><p>RPNPostProcessor 类中的 proposals 使用了 <code>BoxList</code> 数据结构, 关于该结构的定义可以看<a href="../PyTorch-MaskrcnnBenchmark-structures/#BoxList">BoxList结构解析</a>. 另外, 还使用了三个函数: <code>cat_boxlist()</code>, <code>boxlist_nms()</code>, 以及 <code>remove_small_boxes()</code>, 关于它们的详细解析请看<a href="../PyTorch-MaskrcnnBenchmark-structures/#boxlist_ops">BoxList Ops 解析</a></p>
+<p>RPNPostProcessor 类的代码解析如下:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/modeling/rpn/inference.py</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RPNPostProcessor</span><span class="params">(torch.nn.Module)</span>:</span></span><br><span class="line">    <span class="comment"># 该类主要完成对 RPN boxes 的后处理功能(在将 boxes 送到 heads 之前执行)</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        self,</span></span></span><br><span class="line"><span class="function"><span class="params">        pre_nms_top_n,</span></span></span><br><span class="line"><span class="function"><span class="params">        post_nms_top_n,</span></span></span><br><span class="line"><span class="function"><span class="params">        nms_thresh,</span></span></span><br><span class="line"><span class="function"><span class="params">        min_size,</span></span></span><br><span class="line"><span class="function"><span class="params">        box_coder=None,</span></span></span><br><span class="line"><span class="function"><span class="params">        fpn_post_nms_top_n=None,</span></span></span><br><span class="line"><span class="function"><span class="params">    )</span>:</span></span><br><span class="line">        <span class="comment"># pre_nms_top_n (int)</span></span><br><span class="line">        <span class="comment"># post_nms_top_n (int)</span></span><br><span class="line">        <span class="comment"># nms_thresh (float)</span></span><br><span class="line">        <span class="comment"># min_size (int)</span></span><br><span class="line">        <span class="comment"># box_coder (BoxCoder)</span></span><br><span class="line">        <span class="comment"># fpn_post_nms_top_n (int)</span></span><br><span class="line">        super(RPNPostProcessor, self).__init__()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 将传送进来的参数都变成成员变量</span></span><br><span class="line">        self.pre_nms_top_n = pre_nms_top_n</span><br><span class="line">        self.post_nms_top_n = post_nms_top_n</span><br><span class="line">        self.nms_thresh = nms_thresh</span><br><span class="line">        self.min_size = min_size</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> box_coder <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            box_coder = BoxCoder(weights=(<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>))</span><br><span class="line">        self.box_coder = box_coder</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> fpn_post_nms_top_n <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            fpn_post_nms_top_n = post_nms_top_n</span><br><span class="line">        self.fpn_post_nms_top_n = fpn_post_nms_top_n</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_gt_proposals</span><span class="params">(self, proposals, targets)</span>:</span></span><br><span class="line">        <span class="comment"># proposals: list[BoxList]</span></span><br><span class="line">        <span class="comment"># proposals: list[BoxList]</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取当前正在操作的设备</span></span><br><span class="line">        device = proposals[<span class="number">0</span>].bbox.device</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 调用 BoxList 的 copy_with_fields 方法</span></span><br><span class="line">        gt_boxes = [target.copy_with_fields([]) <span class="keyword">for</span> target <span class="keyword">in</span> targets]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 添加一个虚拟维度, "objectness"</span></span><br><span class="line">        <span class="keyword">for</span> gt_box <span class="keyword">in</span> gt_boxes:</span><br><span class="line">            gt_box.add_field(<span class="string">"objectness"</span>, torch.ones(len(gt_box), device=device))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># from maskrcnn_benchmark.structures.boxlist_ops import cat_boxlist</span></span><br><span class="line">        <span class="comment"># 调用 boxlist_ops.py 中的 cat_boxlist 函数</span></span><br><span class="line">        proposals = [</span><br><span class="line">            cat_boxlist((proposal, gt_box))</span><br><span class="line">            <span class="keyword">for</span> proposal, gt_box zip(proposals, gt_boxes)</span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> proposals</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward_for_single_feature_map</span><span class="params">(self, anchors, objectness, box_regression)</span>:</span></span><br><span class="line">        <span class="comment"># anchors: list[BoxList]</span></span><br><span class="line">        <span class="comment"># objectness: tensor of size N, A, H, W</span></span><br><span class="line">        <span class="comment"># box_regression: tensor of size N, A * 4, H, W</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取当前的设备</span></span><br><span class="line">        device = objectness.device</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取 objectness 的 shape</span></span><br><span class="line">        N, A, H, W = objectness.shape</span><br><span class="line"></span><br><span class="line">        <span class="comment"># TODO</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, anchors, objectness, box_regression, targets=None)</span>:</span></span><br><span class="line">        <span class="comment"># anchors: list[list[BoxList]]</span></span><br><span class="line">        <span class="comment"># objectness: list[tensor]</span></span><br><span class="line">        <span class="comment"># box_regression: list[tensor]</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 返回值:</span></span><br><span class="line">        <span class="comment"># boxlists (list[BoxList]): 经过 box decoding 和 NMS 操作的处理后的 anchors,</span></span><br><span class="line"></span><br><span class="line">        sampled_boxes = []</span><br><span class="line">        num_levels = len(objectness)</span><br><span class="line">        anchors = list(zip(*anchors))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 调用类的 forward_for_single_feature_map() 成员函数</span></span><br><span class="line">        <span class="keyword">for</span> a, o, b <span class="keyword">in</span> zip(anchors, objectness, box_regression):</span><br><span class="line">            sampled_boxes.append(self.forward_for_single_feature_map(a, o, b))</span><br><span class="line"></span><br><span class="line">        boxlists = list(zip(*sampled_boxes))</span><br><span class="line">        <span class="comment"># 调用 boxlist_ops.py 文件中的 cat_boxlist函数</span></span><br><span class="line">        boxlists = [cat_boxlist(boxliist) <span class="keyword">for</span> boxlist <span class="keyword">in</span> boxlists]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> num_levels &gt; <span class="number">1</span>:</span><br><span class="line">            <span class="comment"># 调用类的 select_over_all_levels 成员函数</span></span><br><span class="line">            boxlists = self.select_over_all_levels(boxlists)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 添加 gt bboxes 到 proposals 当中去</span></span><br><span class="line">        <span class="keyword">if</span> self.training <span class="keyword">and</span> targets <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">            <span class="comment"># 调用类的 add_gt_proposals 成员函数</span></span><br><span class="line">            boxlists = self.add_gt_proposals(boxlists, targets)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> boxlists</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">select_over_all_level</span><span class="params">(self, boxlists)</span>:</span></span><br><span class="line">        <span class="comment"># 在训练阶段和测试阶段的行为不同, 在训练阶段, post_nms_top_n 是在所有的 proposals 上进行的,</span></span><br><span class="line">        <span class="comment"># 而在测试阶段, 是在每一个图片上的 proposals 上进行的</span></span><br><span class="line">        <span class="comment"># TODO</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><span id="loss"></span></p>
+<h1 id="loss-py"><a href="#loss-py" class="headerlink" title="loss.py"></a>loss.py</h1>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PyTorch/" rel="tag"><i class="fa fa-tag"></i> PyTorch</a>
+          
+            <a href="/tags/MaskrcnnBenchmark/" rel="tag"><i class="fa fa-tag"></i> MaskrcnnBenchmark</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/PyTorch-MaskrcnnBenchmark-modeling-other/" rel="prev" title="MaskrcnnBenchmark 源码解析-模型定义(modeling)之辅助文件解析">
+                <i class="fa fa-chevron-left"></i> MaskrcnnBenchmark 源码解析-模型定义(modeling)之辅助文件解析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/PyTorch-MaskrcnnBenchmark-layers/" rel="next" title="MaskrcnnBenchmark 源码解析-各个网络层的封装实现(layers)">
+                MaskrcnnBenchmark 源码解析-各个网络层的封装实现(layers) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">230</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#源码文件"><span class="nav-text">源码文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#rpn-py-区域候选框网络"><span class="nav-text">rpn.py 区域候选框网络</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#anchor-generator-py-生成-anchors"><span class="nav-text">anchor_generator.py 生成 anchors</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#文件概览"><span class="nav-text">文件概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#make-anchor-generator-函数"><span class="nav-text">make_anchor_generator() 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AnchorGenerator-类"><span class="nav-text">AnchorGenerator 类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#根据参数生成-anchors"><span class="nav-text">根据参数生成 anchors</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#inference-py-文件解析"><span class="nav-text">inference.py 文件解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#inference-py-文件概览"><span class="nav-text">inference.py 文件概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#make-rpn-postprocessor-入口函数"><span class="nav-text">make_rpn_postprocessor() 入口函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RPNPostProcessor-类"><span class="nav-text">RPNPostProcessor 类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#loss-py"><span class="nav-text">loss.py</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">1.3m</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">20:01</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

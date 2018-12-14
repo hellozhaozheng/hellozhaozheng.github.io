@@ -119,7 +119,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="collections 是Python的一个集合模块, 它在内置数据结构 (dict, list, set, tuple) 的基础上, 提供了一些额外的集合型数据结构:     类型 说明 备注     deque 双端队列, 可以快速的从头/尾两端添加或删除元素 New in 2.4   defaultdict 带有默认值的字典 New in version 2.5   namedtuple 命">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-31T12:51:13.335Z">
+<meta property="og:updated_time" content="2018-12-10T12:40:21.934Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="collections模块-集合型数据结构">
 <meta name="twitter:description" content="collections 是Python的一个集合模块, 它在内置数据结构 (dict, list, set, tuple) 的基础上, 提供了一些额外的集合型数据结构:     类型 说明 备注     deque 双端队列, 可以快速的从头/尾两端添加或删除元素 New in 2.4   defaultdict 带有默认值的字典 New in version 2.5   namedtuple 命">
@@ -247,7 +247,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">207</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">230</span></a>
   </li>
         
         
@@ -333,9 +333,9 @@
         
         
           
-          <li class="menu-item menu-item-其它">
-    <a href="/categories/其它/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其它</a>
+          <li class="menu-item menu-item-其他">
+    <a href="/categories/其他/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
   </li>
         
         
@@ -496,8 +496,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2018-10-31T20:51:13+08:00" content="2018-10-31">
-      		  2018-10-31
+    		<time itemprop="dateUpdated" datetime="2018-12-10T20:40:21+08:00" content="2018-12-10">
+      		  2018-12-10
     		</time>
   	  </span>
 	  
@@ -550,7 +550,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">875</span>
+                <span title="本文字数">1.5k</span>
               
 
               
@@ -645,7 +645,9 @@
 <h1 id="deque"><a href="#deque" class="headerlink" title="deque"></a>deque</h1><p><code>deque</code> 是double-ended queue 的缩写, 即双端队列. List存储数据的优势在于按索引查找元素很快, 但是插入和删除元素就很慢了, 因为List是基于数组实现的. <code>deque</code> 是为了高效插入和删除的双向列表, 适合用于跌列和栈, 而且线程安全, 其原型如下:</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">collections.deque([iterable[, maxlen]])</span><br></pre></td></tr></table></figure>
 <p><code>deque</code> 除了list固有的方法外, 还新增了 <code>appendleft / popleft</code> 等方法允许高效的在队列的开头插入或删除元素, 其时间复杂度为 $O(1)$</p>
-<h1 id="defaultdict"><a href="#defaultdict" class="headerlink" title="defaultdict"></a>defaultdict</h1><h1 id="namedtuple"><a href="#namedtuple" class="headerlink" title="namedtuple"></a>namedtuple</h1><h1 id="Counter"><a href="#Counter" class="headerlink" title="Counter"></a>Counter</h1><h1 id="OrderedDict"><a href="#OrderedDict" class="headerlink" title="OrderedDict"></a>OrderedDict</h1><p><code>OrderedDict</code> 是 <code>dict</code> 的一个自雷, 支持所有的 <code>dict</code> 方法, 它能够保持 <code>dict</code> 的有序性, 其原型如下:</p>
+<h1 id="defaultdict"><a href="#defaultdict" class="headerlink" title="defaultdict"></a>defaultdict</h1><h1 id="namedtuple"><a href="#namedtuple" class="headerlink" title="namedtuple"></a>namedtuple</h1><p><code>namedtuple</code> 是继承自 <code>tuple</code> 的子类, 它会创建一个和 <code>tuple</code> 类似的对象, 而且对象拥有可以访问的属性, 注意, <strong>这些属性是只读的</strong>, 示例如下:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> namedtuple</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个 namedtuple 类型: User 类型, 该类型包含三个属性: name, sex 和 age.</span></span><br><span class="line">User = namedtuple(<span class="string">"User"</span>, [<span class="string">"name"</span>, <span class="string">"sex"</span>, <span class="string">"age"</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个 User 类型的对象 u1</span></span><br><span class="line">u1 = User(name=<span class="string">"u1"</span>, sex=<span class="string">"male"</span>, age=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过 . 访问对象的属性</span></span><br><span class="line">print(u1.name, u1.sex, u1.age) <span class="comment"># "u1" "male" 1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 属性一旦确定就是只读的, 不能直接修改</span></span><br><span class="line">u1.age = <span class="number">2</span> <span class="comment"># 报错: AttributeError: can't set attribute</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果非要修改, 可以使用 _replace, 这种方法实际上是创建再替换, 而非修改, 不过效果上相同</span></span><br><span class="line">u1 = u1._replace(age=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 利用 _asdict() 方法可将 namedtuple 类型转换成 OrderedDict 类型.</span></span><br><span class="line">u1_d = u1._asdict()</span><br></pre></td></tr></table></figure>
+<h1 id="Counter"><a href="#Counter" class="headerlink" title="Counter"></a>Counter</h1><h1 id="OrderedDict"><a href="#OrderedDict" class="headerlink" title="OrderedDict"></a>OrderedDict</h1><p><code>OrderedDict</code> 是 <code>dict</code> 的一个自雷, 支持所有的 <code>dict</code> 方法, 它能够保持 <code>dict</code> 的有序性, 其原型如下:</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">collections.OrderedDict([items])</span><br></pre></td></tr></table></figure>
 
       
@@ -684,8 +686,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/Caffe2-caffe2源码解析/" rel="next" title="【置顶】深度学习框架底层实现原理-caffe2源码探究">
-                【置顶】深度学习框架底层实现原理-caffe2源码探究 <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/Caffe2-caffe2源码解析/" rel="next" title="深度学习框架底层实现原理-caffe2源码探究">
+                深度学习框架底层实现原理-caffe2源码探究 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -764,7 +766,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">207</span>
+                    <span class="site-state-item-count">230</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -985,7 +987,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.1m</span>
+    <span title="站点总字数">1.3m</span>
   
 
   
@@ -994,7 +996,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">16:17</span>
+    <span title="站点阅读时长">20:01</span>
   
 </div>
 
