@@ -1,0 +1,1670 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="讲师: liuyubobobo 第一章 算法面试到底是什么鬼1-1在面对一个算法题时, 面试官有时候看重的并不是你能否在有限的时间内解出来, 更看重的是你 是否有一个合理的思考路径, 要把算法面试的过程看做是和面试官一起探讨一个问题的解决方案, 对于问题的细节和应用环境, 可以和面试官沟通(不要提问太多, 可以自己提出假设, 自己解答), 在沟通的过程中, 一步一步深入到问题的细节, 并完善自己的">
+<meta name="keywords" content="视频教程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《玩转算法面试LeetCode》视频教程笔记">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/面试-视频教程-玩转算法面试/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="讲师: liuyubobobo 第一章 算法面试到底是什么鬼1-1在面对一个算法题时, 面试官有时候看重的并不是你能否在有限的时间内解出来, 更看重的是你 是否有一个合理的思考路径, 要把算法面试的过程看做是和面试官一起探讨一个问题的解决方案, 对于问题的细节和应用环境, 可以和面试官沟通(不要提问太多, 可以自己提出假设, 自己解答), 在沟通的过程中, 一步一步深入到问题的细节, 并完善自己的">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-02-26T01:52:30.085Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《玩转算法面试LeetCode》视频教程笔记">
+<meta name="twitter:description" content="讲师: liuyubobobo 第一章 算法面试到底是什么鬼1-1在面对一个算法题时, 面试官有时候看重的并不是你能否在有限的时间内解出来, 更看重的是你 是否有一个合理的思考路径, 要把算法面试的过程看做是和面试官一起探讨一个问题的解决方案, 对于问题的细节和应用环境, 可以和面试官沟通(不要提问太多, 可以自己提出假设, 自己解答), 在沟通的过程中, 一步一步深入到问题的细节, 并完善自己的">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/面试-视频教程-玩转算法面试/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>《玩转算法面试LeetCode》视频教程笔记 | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">243</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-linux">
+    <a href="/categories/Linux/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-面试">
+    <a href="/categories/面试/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其他">
+    <a href="/categories/其他/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/面试-视频教程-玩转算法面试/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">《玩转算法面试LeetCode》视频教程笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-03 22:11:55" itemprop="dateCreated datePublished" datetime="2019-01-03T22:11:55+08:00">2019-01-03</time>
+            
+
+            
+          </span>
+
+	  
+  	    <span class="post-updated">
+    		&nbsp; | &nbsp; 更新于
+    		<time itemprop="dateUpdated" datetime="2019-02-26T09:52:30+08:00" content="2019-02-26">
+      		  2019-02-26
+    		</time>
+  	  </span>
+	  
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/面试/" itemprop="url" rel="index"><span itemprop="name">面试</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">3.5k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">3 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>讲师:</strong> liuyubobobo</p>
+<h1 id="第一章-算法面试到底是什么鬼"><a href="#第一章-算法面试到底是什么鬼" class="headerlink" title="第一章 算法面试到底是什么鬼"></a>第一章 算法面试到底是什么鬼</h1><h2 id="1-1"><a href="#1-1" class="headerlink" title="1-1"></a>1-1</h2><p>在面对一个算法题时, 面试官有时候看重的并不是你能否在有限的时间内解出来, 更看重的是你 <strong>是否有一个合理的思考路径</strong>, 要把算法面试的过程看做是和面试官一起探讨一个问题的解决方案, 对于问题的细节和应用环境, 可以和面试官沟通(不要提问太多, 可以自己提出假设, 自己解答), 在沟通的过程中, 一步一步深入到问题的细节, 并完善自己的假设. 这种沟通是非常重要的, 它暗示了你的思考问题的方式.</p>
+<p><strong>举例来说: 如果我们被要求对一组数据进行排序:</strong></p>
+<blockquote>
+<p>直接用快排?(这不是一个好的答案)<br>提问: 这组数据有着什么样的特征?<br>例如: 有没有可能包含有大量的重复元素?(如果是的, 那么三路快排是更好的选择, 在很多语言的标准库中, 实现排序的基本算法就是三路快排)<br>又例如: 是否大部分数据距离它的正确位置很近? 是否近乎有序? 如快递订单排序. (如果是的话, 则插入排序更好)<br>又例如: 是否数据的取值范围有限? 比如对学生成绩排序. (如果是, 那么计数排序更好)<br>又例如: 是否需要稳定排序? (若是, 则归并更好)<br>又例如: 数据的存储状况(数据结构)是怎么样的? 如果使用的是链表, 则不能进行随机存取, 就无法使用快排, 而应该使用归并排序.<br>又例如, 如果数据量很大, 内存放不下, 那么久必须使用外部排序算法</p>
+</blockquote>
+<p>其他主要注意的地方: 对问题的独到见解, 优化, 代码规范, 容错率.</p>
+<p><strong>对于算法面试, 人难亦难, 因此不要轻言放弃, 关键在于你所表达出的解决问题的思路.</strong> 甚至可以通过表达解题思路的方向, 得出结论: 这个问题的解决方案, 应该在哪个领域, 我可以通过查阅或者进一步学习解决问题.</p>
+<h2 id="1-2"><a href="#1-2" class="headerlink" title="1-2"></a>1-2</h2><p><strong>注意算法面试只是技术面试的一部分, 其中一个优秀不代表另一个也优秀</strong></p>
+<p><strong>重点考察项目经历和项目中遇到的问题, 从这些可以看出你对于技术的态度是怎么样的</strong></p>
+<p><strong>如: 你遇到过的印象最深刻的bug是什么? 你有说如何处理这个bug的?</strong> 这个问题没有参考答案, 因人而异, 却很容易看出一个人的真实水平是怎样的, 也可以看出你在技术领域的深度, 因此, 建议对这类问题有所准备.</p>
+<p>近年来喜欢考察的点: 系统设计(scalability), 即系统在面对大规模设计时遇到的一些常见问题, 关于这些问题也有一些常见的思路和解决思路, 建议提前准备.(这些问题不属于算法面试的内容, 因此本课程不会过多介绍, 建议自己查阅相关资料进行整理)</p>
+<p><strong>不能只准备算法的面试, 也要根据自己所申请职位的不同, 对专业领域的知识熟练掌握, 这很重要</strong></p>
+<p><strong>项目很重要, 最好能好好准备, 并且对于简历上出现的项目一定要非常熟悉</strong></p>
+<p><strong>不是 “项目” 的项目:</strong> 一本优秀书籍的代码整理, 个人技术博客等.</p>
+<p><strong>通过过去了解你的行为方式:</strong></p>
+<ul>
+<li>遇到的最大挑战?</li>
+<li>犯过哪些致命的错误?</li>
+<li>遭遇的失败?</li>
+<li>最享受的工作内容?</li>
+<li>遇到冲突的处理方式?</li>
+<li>做的最与众不同的事?</li>
+</ul>
+<p>对于以上问题, 最后提前准备, 并且最好与自己的实际项目或者应聘的岗位相挂钩, 回答不要太过笼统, 最好能举出具体的事例(可信度更高), 能反映出你的一些个人素质和性格(对公司有利的).</p>
+<p><strong>准备好合适的问题问面试官.</strong> 这些问题可以反映出你关心的是什么. 如</p>
+<ul>
+<li>整个小组的大概运行模式是怎么样的?</li>
+<li>整个项目的后序规划是怎么样的?</li>
+<li>贵公司中某个产品的某个问题是如何解决的?</li>
+<li>贵公司为什么会选择某些技术或标准? 具体的考量是怎么样的?</li>
+<li>我对某个技术很感兴趣, 在贵公司的小组中我会有怎么样的机会深入这种技术?</li>
+</ul>
+<h2 id="1-3"><a href="#1-3" class="headerlink" title="1-3"></a>1-3</h2><p><strong>准备算法面试不需要啃完一本《算法导论》</strong></p>
+<p>对于学习, 我们不能要求一步到位, 很多书, 很多知识, 我们都是要阅读, <strong>理解很多遍</strong>, 慢慢的熟练, 直到内化到自己的血液中. <strong>学习切记完美主义</strong></p>
+<p>高级数据结构和算法被提及的概率较低(但是对于某些特殊岗位, 这些算法也有可能是必考题). 如: 红黑树, 计算几何, B-Tree, 数论, 斐波那契堆, FFT(傅里叶变换)</p>
+<p><strong>远远不需要达到ACM竞赛的水平</strong></p>
+<p><strong>算法面试的准备范围:</strong> 不要轻视基础算法和数据结构, 而只关注 “有意思” 的题目. 基础算法大致有:</p>
+<ul>
+<li>各种排序算法</li>
+<li>基础数据结构和算法的实现: 如堆, 二叉树, 图, …</li>
+<li>基础数据结构的使用: 如链表, 栈, 队列, 哈希表, 图, Trie, 并查, …</li>
+<li>基础算法: 深度优先, 广度优先, 二分查找, 递归</li>
+<li>基本算法思想: 递归, 分治, 回溯搜索, 贪心, 动态规划</li>
+</ul>
+<p><strong>在进行实际时, 一味的刷题, 过度的在意正确与否, 而不去考虑题目背后的算法思想, 往往效率很低.(好像自己做了很多题, 但实际上收货并不大 )</strong></p>
+<h2 id="1-4-解法算法面试问题的整体思路"><a href="#1-4-解法算法面试问题的整体思路" class="headerlink" title="1-4 解法算法面试问题的整体思路"></a>1-4 解法算法面试问题的整体思路</h2><p><strong>注意题目中的条件</strong>:<br>有一些题目的条件本身就是暗示, 如:</p>
+<ul>
+<li>有序数组</li>
+<li>设计指定复杂度的算法, 如 $O(nlogn)$, 那么就要考虑分治或者排序</li>
+<li>无需考虑额外空间, 那么就要考虑申请额外的空间</li>
+<li>数据规模大概是10000, 对于此, 那么 $O(n^2)$ 是可以接受的</li>
+</ul>
+<p><strong>当没有思路的时候:</strong></p>
+<ul>
+<li>自己给自己几个简单的测试用例, 试验一下</li>
+<li>不要忽视暴力解法, 暴力解法通常是思考的起点</li>
+<li>优化算法: 常见的算法思路, 常见的数据结构</li>
+<li>空间和时间的交换(哈希)</li>
+<li>对数据进行预处理(排序)</li>
+<li>在复杂度的瓶颈处寻找答案</li>
+</ul>
+<p>在实际编写时, 要注意对极端条件的判断:</p>
+<ul>
+<li>数组为空? 字符串为空? 数量为0? 指针为 <code>nullptr</code>?</li>
+<li>变量名, 模块化, 复用性, 这些可以给面试官留下好印象</li>
+</ul>
+<p>对于基本问题, 如实现堆, 二叉树等, 要做到可以白板变成.</p>
+<h1 id="第二章-面试中的复杂度分析"><a href="#第二章-面试中的复杂度分析" class="headerlink" title="第二章 面试中的复杂度分析"></a>第二章 面试中的复杂度分析</h1><h2 id="2-1-大-O-记法"><a href="#2-1-大-O-记法" class="headerlink" title="2-1 大 O 记法"></a>2-1 大 O 记法</h2><p>大 O 记法: $n$ 表示数据规模, $O(f(n))$ 表示运行算法所需要执行的指令数, 和 $f(n)$ 成正比.</p>
+<p>$O(n^2)$ 不一定比 $O(n)$ 快, 如: $10000\times n$ 和 $10\times n^2$</p>
+<p>在学术界, 严格的讲, $O(f(n))$ 表示算法执行的上界. 但是在业界, 我们就用其表示算法执行的下界. (如归并排序, 在数据量不同时, 有时是 $O(nlogn)$, 有时是 $O(n^2)$, 但是, 在面试时, 我们就说是 $O(nlogn)$ 就可以)</p>
+<p>虽然算法复杂度是用例相关的, 但是在面试中, 我们更在意的是平均的时间复杂度. 不会扣得特别细.(心里有数即可)</p>
+<h2 id="2-2-数据规模的概念"><a href="#2-2-数据规模的概念" class="headerlink" title="2-2 数据规模的概念"></a>2-2 数据规模的概念</h2><p>对 $10^5$ 的数据进行选择排序, 结果计算机假死? (这很正常, $O(n^2)$ 算法需要 $10^10$ 次操作, 这大概需要几十秒, 而这会使得程序内存超限.)</p>
+<p><strong>如果要想在 1s 之内解决问题:</strong></p>
+<ul>
+<li>$O(n^2)$ 的算法可以处理大约 $10^4$ 级别的数据.</li>
+<li>$O(n)$ 的算法可以处理大约 $10^8$ 级别的数据.(例如, 如果面试官说数据规模为一千万, 那么不用想, 我们的算法复杂度必须为 $O(n)$)</li>
+<li>$O(nlogn)$ 的算法可以处理大约 $10^7$ 级别的数据.(以上是对简单的操作而言, 如果单次的操作较复杂, 那么可以对上面的级别再低估一点, 如缩小10倍一般就没问题了)</li>
+</ul>
+<p>空间复杂度: 需要注意的是递归空间的占用, 递归了多少次, 其占用的空间复杂度就大致为多少.</p>
+<h2 id="2-3-常见的复杂度分析"><a href="#2-3-常见的复杂度分析" class="headerlink" title="2-3 常见的复杂度分析"></a>2-3 常见的复杂度分析</h2><p>注意循环语句的坏境.</p>
+<p>注意下面双重循环的复杂度, 并不是 $O(n^2)$. 因为外层循环不是 $O(n)$, 而是 $O(logn)$.<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">hello</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> sz = <span class="number">1</span>; sz &lt; n; sz += sz)</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++)</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;<span class="string">"hello"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="2-4-复杂度试验"><a href="#2-4-复杂度试验" class="headerlink" title="2-4 复杂度试验"></a>2-4 复杂度试验</h2><p>自以为写出了一个 $O(nlogn)$ 的算法, 但实际上是 $O(n^2)$ 的算法. (复杂度前面的常数有可能差距很大)</p>
+<p>实验, 观察趋势. 每次将数据规模提高两倍, 看时间的变化.</p>
+<h1 id="第三章-数组中的问题其实最常见"><a href="#第三章-数组中的问题其实最常见" class="headerlink" title="第三章 数组中的问题其实最常见"></a>第三章 数组中的问题其实最常见</h1><h1 id="第四章-查找表相关问题"><a href="#第四章-查找表相关问题" class="headerlink" title="第四章 查找表相关问题"></a>第四章 查找表相关问题</h1><h1 id="第五章-在链表中穿针引线"><a href="#第五章-在链表中穿针引线" class="headerlink" title="第五章 在链表中穿针引线"></a>第五章 在链表中穿针引线</h1><h1 id="第六章-栈-队列-优先队列"><a href="#第六章-栈-队列-优先队列" class="headerlink" title="第六章 栈, 队列, 优先队列"></a>第六章 栈, 队列, 优先队列</h1><h1 id="第七章-二叉树和递归"><a href="#第七章-二叉树和递归" class="headerlink" title="第七章 二叉树和递归"></a>第七章 二叉树和递归</h1><h1 id="第八章-递归和回溯法"><a href="#第八章-递归和回溯法" class="headerlink" title="第八章 递归和回溯法"></a>第八章 递归和回溯法</h1><h1 id="第九章-动态规划基础"><a href="#第九章-动态规划基础" class="headerlink" title="第九章 动态规划基础"></a>第九章 动态规划基础</h1><h1 id="第十章-贪心算法"><a href="#第十章-贪心算法" class="headerlink" title="第十章 贪心算法"></a>第十章 贪心算法</h1>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/视频教程/" rel="tag"><i class="fa fa-tag"></i> 视频教程</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/项目-EasyInfer/" rel="prev" title="【置顶】通用深度学习推理框架-EasyInfer">
+                <i class="fa fa-chevron-left"></i> 【置顶】通用深度学习推理框架-EasyInfer
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/面试-算法刷题-LeetCode-record/" rel="next" title="LeetCode算法题(记录总结)">
+                LeetCode算法题(记录总结) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">243</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章-算法面试到底是什么鬼"><span class="nav-text">第一章 算法面试到底是什么鬼</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1"><span class="nav-text">1-1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2"><span class="nav-text">1-2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3"><span class="nav-text">1-3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-解法算法面试问题的整体思路"><span class="nav-text">1-4 解法算法面试问题的整体思路</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二章-面试中的复杂度分析"><span class="nav-text">第二章 面试中的复杂度分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-大-O-记法"><span class="nav-text">2-1 大 O 记法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-数据规模的概念"><span class="nav-text">2-2 数据规模的概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-常见的复杂度分析"><span class="nav-text">2-3 常见的复杂度分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-复杂度试验"><span class="nav-text">2-4 复杂度试验</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三章-数组中的问题其实最常见"><span class="nav-text">第三章 数组中的问题其实最常见</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四章-查找表相关问题"><span class="nav-text">第四章 查找表相关问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第五章-在链表中穿针引线"><span class="nav-text">第五章 在链表中穿针引线</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第六章-栈-队列-优先队列"><span class="nav-text">第六章 栈, 队列, 优先队列</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第七章-二叉树和递归"><span class="nav-text">第七章 二叉树和递归</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第八章-递归和回溯法"><span class="nav-text">第八章 递归和回溯法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第九章-动态规划基础"><span class="nav-text">第九章 动态规划基础</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第十章-贪心算法"><span class="nav-text">第十章 贪心算法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">1.6m</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">23:43</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

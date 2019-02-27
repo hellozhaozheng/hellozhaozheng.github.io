@@ -113,14 +113,14 @@
 
 
   <meta name="description" content="第十六章 string类和标准模板库16.1 string 类头文件：  string：支持的是string类 string.h / cstring：　支持的是C-风格字符串的C库字符串函数  16.1.1 构造字符串string类的构造函数如下（用ctor标识，这是传统C++中构造函数的缩写，表中的NBTS（null-terminated string）标识以空字符结束的字符串——传统的C字符串">
-<meta name="keywords" content="读书笔记">
+<meta name="keywords" content="读书笔记,C++">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《C++ PrimerPlus》 第十六章">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Cpp-Book-CppPrimerPlusChapter16/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="第十六章 string类和标准模板库16.1 string 类头文件：  string：支持的是string类 string.h / cstring：　支持的是C-风格字符串的C库字符串函数  16.1.1 构造字符串string类的构造函数如下（用ctor标识，这是传统C++中构造函数的缩写，表中的NBTS（null-terminated string）标识以空字符结束的字符串——传统的C字符串">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-15T02:37:09.290Z">
+<meta property="og:updated_time" content="2019-02-25T11:26:51.304Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《C++ PrimerPlus》 第十六章">
 <meta name="twitter:description" content="第十六章 string类和标准模板库16.1 string 类头文件：  string：支持的是string类 string.h / cstring：　支持的是C-风格字符串的C库字符串函数  16.1.1 构造字符串string类的构造函数如下（用ctor标识，这是传统C++中构造函数的缩写，表中的NBTS（null-terminated string）标识以空字符结束的字符串——传统的C字符串">
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">230</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">243</span></a>
   </li>
         
         
@@ -344,7 +344,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
   </li>
         
         
@@ -497,8 +497,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2018-10-15T10:37:09+08:00" content="2018-10-15">
-      		  2018-10-15
+    		<time itemprop="dateUpdated" datetime="2019-02-25T19:26:51+08:00" content="2019-02-25">
+      		  2019-02-25
     		</time>
   	  </span>
 	  
@@ -551,7 +551,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">9.1k</span>
+                <span title="本文字数">9.3k</span>
               
 
               
@@ -687,9 +687,10 @@
 </table>
 </div>
 <p>除此之外，<code>string</code>库还提供了其他相关的方法：<code>rfind()</code> ,<code>find_first_of()</code>, <code>find_last_of()</code>, <code>find_first_not_of()</code>, <code>find_last_not_of()</code>等等。</p>
-<h3 id="16-1-4-stirng类还提供了哪些功能"><a href="#16-1-4-stirng类还提供了哪些功能" class="headerlink" title="16.1.4 stirng类还提供了哪些功能"></a>16.1.4 stirng类还提供了哪些功能</h3><p>还有很多功能，具体可看p665或者附录F。</p>
+<h3 id="16-1-4-stirng类还提供了哪些功能"><a href="#16-1-4-stirng类还提供了哪些功能" class="headerlink" title="16.1.4 stirng类还提供了哪些功能"></a>16.1.4 stirng类还提供了哪些功能</h3><p>更详细的可以查看附录F.</p>
+<p>capacity(): 返回当前分配给字符串的内存块大小<br>reserve(): 请求能够申请的最小的内存块<br>c_str(): 返回一个指向 C 风格字符串的指针(char *)</p>
 <h3 id="16-1-5-字符串种类"><a href="#16-1-5-字符串种类" class="headerlink" title="16.1.5 字符串种类"></a>16.1.5 字符串种类</h3><p>表面上看起来<code>string</code>类是基于<code>char</code>类型的，但是，实际上，<code>string</code>库是基于一个模板类的：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">CharT</span>,</span></span><br><span class="line"><span class="class">    <span class="title">class</span> <span class="title">Traits</span> = <span class="title">std</span>:</span>:char_traits&lt;CharT&gt;,</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Allocator</span> = <span class="title">std</span>:</span>:allocator&lt;CharT&gt;</span><br><span class="line">&gt; <span class="class"><span class="keyword">class</span> <span class="title">basic_string</span>;</span></span><br></pre></td></tr></table></figure></p>
-<p>模板<code>basic_string</code>有多个具体化，每个具体化都有一个<code>typedef</code>名称，如<code>string</code>、<code>wstring</code>、<code>u16string</code>等等。</p>
+<p>模板<code>basic_string</code>有四个具体化，每个具体化都有一个<code>typedef</code>名称，如<code>string</code>对应<code>basic_string&lt;char&gt;</code>、<code>wstring</code>对应<code>basic_string&lt;wchar_t&gt;</code>、<code>u16string</code>对应<code>basic_string&lt;char16_t&gt;</code>等等。</p>
 <h2 id="16-2-智能指针模板类"><a href="#16-2-智能指针模板类" class="headerlink" title="16.2 智能指针模板类"></a>16.2 智能指针模板类</h2><p>智能指针是行为类似于指针的 <strong>类对象</strong> 。共有三种可以帮助管理动态内存分配的智能指针模板：</p>
 <ul>
 <li>auto_ptr</li>
@@ -869,6 +870,8 @@
           
             <a href="/tags/读书笔记/" rel="tag"><i class="fa fa-tag"></i> 读书笔记</a>
           
+            <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C++</a>
+          
         </div>
       
 
@@ -970,7 +973,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">230</span>
+                    <span class="site-state-item-count">243</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1090,7 +1093,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">34</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1179,7 +1186,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-heart"></i>
   </span>
@@ -1191,7 +1198,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.3m</span>
+    <span title="站点总字数">1.6m</span>
   
 
   
@@ -1200,7 +1207,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">20:01</span>
+    <span title="站点阅读时长">23:43</span>
   
 </div>
 

@@ -113,14 +113,14 @@
 
 
   <meta name="description" content="统一的初始化过程在 C++98/03 中, 我们只能对普通数组和POD( plain old data, 简单来说就是可以用memcpy复制的对象) 类型使用初始化列表, 如下:123456int arr[3] = &amp;#123;1,2,3&amp;#125;;struct A&amp;#123;    int x;    int y;&amp;#125;a = &amp;#123;1,2&amp;#125;; 但是在C++11中, 初始">
-<meta name="keywords" content="知识点梳理">
+<meta name="keywords" content="C++,知识点梳理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++11新特性-初始化列表">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Cpp-初始化列表/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="统一的初始化过程在 C++98/03 中, 我们只能对普通数组和POD( plain old data, 简单来说就是可以用memcpy复制的对象) 类型使用初始化列表, 如下:123456int arr[3] = &amp;#123;1,2,3&amp;#125;;struct A&amp;#123;    int x;    int y;&amp;#125;a = &amp;#123;1,2&amp;#125;; 但是在C++11中, 初始">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-15T03:21:13.593Z">
+<meta property="og:updated_time" content="2019-02-25T11:28:55.466Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++11新特性-初始化列表">
 <meta name="twitter:description" content="统一的初始化过程在 C++98/03 中, 我们只能对普通数组和POD( plain old data, 简单来说就是可以用memcpy复制的对象) 类型使用初始化列表, 如下:123456int arr[3] = &amp;#123;1,2,3&amp;#125;;struct A&amp;#123;    int x;    int y;&amp;#125;a = &amp;#123;1,2&amp;#125;; 但是在C++11中, 初始">
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">230</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">243</span></a>
   </li>
         
         
@@ -344,7 +344,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
   </li>
         
         
@@ -497,8 +497,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2018-10-15T11:21:13+08:00" content="2018-10-15">
-      		  2018-10-15
+    		<time itemprop="dateUpdated" datetime="2019-02-25T19:28:55+08:00" content="2019-02-25">
+      		  2019-02-25
     		</time>
   	  </span>
 	  
@@ -589,7 +589,7 @@
 <p>但是在C++11中, 初始化列表的适用性被放大, 可以作用于任何类型对象的初始化</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">T test&#123;&#125;;</span><br><span class="line"><span class="comment">//如:</span></span><br><span class="line"><span class="keyword">int</span> a&#123;<span class="number">2</span>&#125;; <span class="comment">// 与 int a=2;  int a(2); 等价</span></span><br><span class="line"><span class="built_in">std</span>:<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; pyments &#123;<span class="number">35.99</span>, <span class="number">129.22</span>&#125;;</span><br><span class="line">Foo fool&#123;<span class="number">123</span>,<span class="number">456</span>,<span class="number">789</span>&#125;; <span class="comment">//Foo为一个类或结构体</span></span><br></pre></td></tr></table></figure>
 <h1 id="C-的类对象创建过程"><a href="#C-的类对象创建过程" class="headerlink" title="C++的类对象创建过程"></a>C++的类对象创建过程</h1><p>C++ 在创建类时需要经过两个阶段：分配空间（Allocation）和初始化（Initialization）</p>
-<h2 id="分配空间"><a href="#分配空间" class="headerlink" title="分配空间"></a>分配空间</h2><p>创建C++类对象的第一步就是为其分配内存空间。对于全局对象，静态对象以及分配在栈区域内的对象，对它们的内存分配是在编译阶段就完成了，而对于分配在堆区域内的对象，它们的分配是在运行是动态进行的。内存空间的分配过程涉及到两个关键的问题：需要分配空间的大小以及是否有足够的内存空间来满足分配。</p>
+<h2 id="分配空间"><a href="#分配空间" class="headerlink" title="分配空间"></a>分配空间</h2><p>创建C++类对象的第一步就是为其分配内存空间。对于全局对象，静态对象以及分配在栈区域内的对象，对它们的内存分配是在编译阶段就完成了，而对于分配在堆区域内的对象，它们的分配是在运行时动态进行的。内存空间的分配过程涉及到两个关键的问题：需要分配空间的大小以及是否有足够的内存空间来满足分配。</p>
 <h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>首先需要区分两个概念：初始化（Initialization）和赋值（Assignment）。初始化早于赋值，它是随着对象的诞生一起进行的。而赋值是在对象诞生以后又给予它一个新的值。</p>
 <p>在C++中，提供了类成员的初始化列表，并且初始化列表是先于构造函数体内的代码执行的。</p>
 <h2 id="关于成员初始化列表"><a href="#关于成员初始化列表" class="headerlink" title="关于成员初始化列表"></a>关于成员初始化列表</h2><p>对于以下三种情况，必须使用成员初始化列表</p>
@@ -597,7 +597,7 @@
 <li>需要初始化的数据成员是对象的情况（包含继承情况下，通过显示调用父类的构造函数对父类数据成员进行初始化）</li>
 <li>需要初始化const修饰的类成员</li>
 <li>需要初始化引用成员数据</li>
-<li>子类初始化父类的私有成员，需要在（并且只能在）参数初始化列表中显示调用父类的构造函数。（这种其实可以并到第一种情况，因为初始化私有成员，就以为着初始化对象）</li>
+<li>子类初始化父类的私有成员，需要在（并且只能在）参数初始化列表中显示调用父类的构造函数。（这种其实可以并到第一种情况，因为初始化私有成员，就意味着初始化对象）</li>
 </ul>
 <p>类对象是默认使用初始化列表的，当没有无参构造函数时，就必须显式使用初始化列表（所以不论如何，都会使用到初始化列表）。</p>
 <p>当类成员中含有一个const对象时，或者一个引用时，必须经过成员初始化列表进行初始化，因为const对象或者引用在声明的同时必须初始化，<strong>而在构造函数中，做的是对它们的赋值，并不是初始化。</strong></p>
@@ -626,6 +626,8 @@
       
         <div class="post-tags">
           
+            <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C++</a>
+          
             <a href="/tags/知识点梳理/" rel="tag"><i class="fa fa-tag"></i> 知识点梳理</a>
           
         </div>
@@ -649,7 +651,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/Cpp-知识点梳理-Cpp中类的对象和对象指针之间的区别/" rel="next" title="C++中类的对象和对象指针之间的区别">
+              <a href="/z_post/Cpp-类的对象和对象指针之间的区别/" rel="next" title="C++中类的对象和对象指针之间的区别">
                 C++中类的对象和对象指针之间的区别 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -729,7 +731,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">230</span>
+                    <span class="site-state-item-count">243</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -849,7 +851,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">34</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -938,7 +944,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-heart"></i>
   </span>
@@ -950,7 +956,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.3m</span>
+    <span title="站点总字数">1.6m</span>
   
 
   
@@ -959,7 +965,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">20:01</span>
+    <span title="站点阅读时长">23:43</span>
   
 </div>
 

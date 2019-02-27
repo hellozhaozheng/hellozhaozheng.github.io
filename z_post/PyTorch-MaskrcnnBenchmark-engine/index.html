@@ -113,14 +113,14 @@
 
 
   <meta name="description" content="源码文件./maskrcnn_benchmark/engine/trainer.py./maskrcnn_benchmark/engine/inference.py 模型测试/推演时, 无需计算每个参数的梯度, 因此会大大减少 GPU 的显存占用空间  trainer.py 文件概览本文件中的代码是用来定义模型训练的步骤的, 当我们确定了模型, 数据集载入器, 优化器, 更新策略等相关组件以后,">
-<meta name="keywords" content="PyTorch,MaskrcnnBenchmark">
+<meta name="keywords" content="目标检测,PyTorch,MaskrcnnBenchmark">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MaskrcnnBenchmark 源码解析-训练&#x2F;推演核心代码(engine)">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/PyTorch-MaskrcnnBenchmark-engine/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="源码文件./maskrcnn_benchmark/engine/trainer.py./maskrcnn_benchmark/engine/inference.py 模型测试/推演时, 无需计算每个参数的梯度, 因此会大大减少 GPU 的显存占用空间  trainer.py 文件概览本文件中的代码是用来定义模型训练的步骤的, 当我们确定了模型, 数据集载入器, 优化器, 更新策略等相关组件以后,">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-09T06:45:02.545Z">
+<meta property="og:updated_time" content="2019-02-25T11:38:46.071Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MaskrcnnBenchmark 源码解析-训练&#x2F;推演核心代码(engine)">
 <meta name="twitter:description" content="源码文件./maskrcnn_benchmark/engine/trainer.py./maskrcnn_benchmark/engine/inference.py 模型测试/推演时, 无需计算每个参数的梯度, 因此会大大减少 GPU 的显存占用空间  trainer.py 文件概览本文件中的代码是用来定义模型训练的步骤的, 当我们确定了模型, 数据集载入器, 优化器, 更新策略等相关组件以后,">
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">230</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">243</span></a>
   </li>
         
         
@@ -344,7 +344,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
   </li>
         
         
@@ -497,8 +497,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2018-12-09T14:45:02+08:00" content="2018-12-09">
-      		  2018-12-09
+    		<time itemprop="dateUpdated" datetime="2019-02-25T19:38:46+08:00" content="2019-02-25">
+      		  2019-02-25
     		</time>
   	  </span>
 	  
@@ -600,7 +600,7 @@
 <p><span id="inference"></span></p>
 <h1 id="inference-py-文件概览"><a href="#inference-py-文件概览" class="headerlink" title="inference.py 文件概览"></a>inference.py 文件概览</h1><p>该文件定义了模型推演时的代码逻辑, 在拥有预训练的模型文件时, 可以通过调用本文件的函数来进行模型测试或模型推演, 文件的函数概览如下所示:</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/engine/inference.py</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入各种包及函数</span></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compute_on_dataset</span><span class="params">(model, data_loader, device)</span>:</span></span><br><span class="line">    <span class="comment"># 计算结果</span></span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_accumulate_predictions_from_multiple_gpus</span><span class="params">(predictions_per_gpu)</span>:</span></span><br><span class="line">    <span class="comment"># 累积预测</span></span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">inference</span><span class="params">(...)</span>:</span></span><br><span class="line">    <span class="comment"># 模型测试/推演核心代码</span></span><br><span class="line">    <span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
-<h2 id="inference-导入各种包及函数"><a href="#inference-导入各种包及函数" class="headerlink" title="inference 导入各种包及函数"></a>inference 导入各种包及函数</h2><p>我们首先来看看该文件导入了那些包及函数</p>
+<h2 id="inference-导入各种包及函数"><a href="#inference-导入各种包及函数" class="headerlink" title="inference 导入各种包及函数"></a>inference 导入各种包及函数</h2><p>我们首先来看看该文件导入了哪些包及函数</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/engine/inference.py</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入常规包</span></span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入评价函数, 包含 coco_evaluation 和 voc_evaluation</span></span><br><span class="line"><span class="keyword">from</span> maskrcnn_benchmark.data <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">from</span> ..utils.comm <span class="keyword">import</span> is_main_process</span><br><span class="line"><span class="keyword">from</span> ..utils.comm <span class="keyword">import</span> scatter_gather</span><br><span class="line"><span class="keyword">from</span> ..utils.comm <span class="keyword">import</span> synchronize</span><br></pre></td></tr></table></figure>
 <p><code>evaluate</code>: 该函数封装了 <code>coco_evaluation</code> 和 <code>voc_evaluation</code>, 具体解析可以查看<a href="../PyTorch-MaskrcnnBenchmark-data/#evaluation">data</a>.<br>其余三个函数都来自 <code>comm.py</code> 文件, 详情着看 <a href="../PyTorch-MaskrcnnBenchmark-utils/#comm">comm</a></p>
 <h2 id="inference-inference-模型测试-推演核心代码"><a href="#inference-inference-模型测试-推演核心代码" class="headerlink" title="inference.inference() 模型测试/推演核心代码"></a>inference.inference() 模型测试/推演核心代码</h2><p>下面我们按照函数的调用顺序, 先来看看模型测试/推演的核心代码, 解析如下</p>
@@ -628,6 +628,8 @@
     <footer class="post-footer">
       
         <div class="post-tags">
+          
+            <a href="/tags/目标检测/" rel="tag"><i class="fa fa-tag"></i> 目标检测</a>
           
             <a href="/tags/PyTorch/" rel="tag"><i class="fa fa-tag"></i> PyTorch</a>
           
@@ -734,7 +736,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">230</span>
+                    <span class="site-state-item-count">243</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -854,7 +856,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">34</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -943,7 +949,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-heart"></i>
   </span>
@@ -955,7 +961,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.3m</span>
+    <span title="站点总字数">1.6m</span>
   
 
   
@@ -964,7 +970,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">20:01</span>
+    <span title="站点阅读时长">23:43</span>
   
 </div>
 

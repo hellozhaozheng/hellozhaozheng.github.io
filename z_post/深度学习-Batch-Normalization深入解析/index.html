@@ -113,7 +113,7 @@
 
 
   <meta name="description" content="BN:总的来说，BN通过将每一层网络的输入进行normalization，保证输入分布的均值与方差固定在一定范围内，减少了网络中的Internal Covariate Shift问题，并在一定程度上缓解了梯度消失，加速了模型收敛；并且BN使得网络对参数、激活函数更加具有鲁棒性，降低了神经网络模型训练和调参的复杂度；最后BN训练过程中由于使用mini-batch的mean/variance每次都不同">
-<meta name="keywords" content="BN">
+<meta name="keywords" content="深度学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Batch-Normalization深入解析">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/深度学习-Batch-Normalization深入解析/index.html">
@@ -123,7 +123,7 @@
 <meta property="og:image" content="https://morvanzhou.github.io/static/results/ML-intro/NB2.png">
 <meta property="og:image" content="https://morvanzhou.github.io/static/results/ML-intro/NB5.png">
 <meta property="og:image" content="https://morvanzhou.github.io/static/results/ML-intro/NB6.png">
-<meta property="og:updated_time" content="2018-10-16T06:51:11.129Z">
+<meta property="og:updated_time" content="2019-02-26T13:37:20.419Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Batch-Normalization深入解析">
 <meta name="twitter:description" content="BN:总的来说，BN通过将每一层网络的输入进行normalization，保证输入分布的均值与方差固定在一定范围内，减少了网络中的Internal Covariate Shift问题，并在一定程度上缓解了梯度消失，加速了模型收敛；并且BN使得网络对参数、激活函数更加具有鲁棒性，降低了神经网络模型训练和调参的复杂度；最后BN训练过程中由于使用mini-batch的mean/variance每次都不同">
@@ -252,7 +252,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">230</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">243</span></a>
   </li>
         
         
@@ -348,7 +348,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
   </li>
         
         
@@ -501,8 +501,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2018-10-16T14:51:11+08:00" content="2018-10-16">
-      		  2018-10-16
+    		<time itemprop="dateUpdated" datetime="2019-02-26T21:37:20+08:00" content="2019-02-26">
+      		  2019-02-26
     		</time>
   	  </span>
 	  
@@ -555,7 +555,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">3.8k</span>
+                <span title="本文字数">4k</span>
               
 
               
@@ -569,7 +569,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">3 分钟</span>
+                <span title="阅读时长">4 分钟</span>
               
             </div>
           
@@ -642,10 +642,15 @@
 <p>在Caffe2实现中, BN层需要和Scale层配合使用, 其中, BN专门用于做归一化操作, 而后续的线性变换层, 会交给Scale层去做.</p>
 <p>训练阶段:<br>在训练时利用当前batch的mean和variance来进行BN处理, 同时使用滑动平均的方式不断的更新global 的mean和variance, 并将其存储起来.</p>
 <p>测试阶段:<br>在预测阶段, 直接使用模型存储好的均值和方差进行计算</p>
+<h1 id="使用-BN-时的前一层卷积网络可以不加偏置项-降低模型参数量"><a href="#使用-BN-时的前一层卷积网络可以不加偏置项-降低模型参数量" class="headerlink" title="使用 BN 时的前一层卷积网络可以不加偏置项(降低模型参数量)"></a>使用 BN 时的前一层卷积网络可以不加偏置项(降低模型参数量)</h1><p>当使用 BN 时, 无论加偏置还是不加偏置, 效果都是一样的, 公式证明如下:</p>
+<p>当卷积层后跟batchnormalization层时为什么不要<br><a href="https://blog.csdn.net/u010698086/article/details/78046671" target="_blank" rel="noopener">https://blog.csdn.net/u010698086/article/details/78046671</a></p>
+<p>CC<a href="https://zhuanlan.zhihu.com/p/36222443" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/36222443</a></p>
+<p>另外, 在 BN 中的 $\beta$ 参数也可以起到一定的偏置作用.</p>
 <h1 id="使用BN时应注意的问题"><a href="#使用BN时应注意的问题" class="headerlink" title="使用BN时应注意的问题"></a>使用BN时应注意的问题</h1><ol>
 <li>训练/测试阶段的使用</li>
 </ol>
 <p>在实际应用中, 均值和方差是通过滑动平均方法在训练数据集上得到的, 如果换了其他的任务或数据集, 建议先finetune之后再使用BN层存储的均值和方差.  同时, 注意训练时的均值和方差是来自于当前batch的.</p>
+<p><strong>滑动平均的计算方式:</strong></p>
 <ol>
 <li>隐藏层中BN的数据大小</li>
 </ol>
@@ -670,7 +675,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/BN/" rel="tag"><i class="fa fa-tag"></i> BN</a>
+            <a href="/tags/深度学习/" rel="tag"><i class="fa fa-tag"></i> 深度学习</a>
           
         </div>
       
@@ -683,7 +688,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/深度学习-知识点梳理-各种激活函数深入解析/" rel="prev" title="各种激活函数整理总结">
+              <a href="/z_post/深度学习-各种激活函数深入解析/" rel="prev" title="各种激活函数整理总结">
                 <i class="fa fa-chevron-left"></i> 各种激活函数整理总结
               </a>
             
@@ -693,7 +698,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/深度学习-知识点梳理-各种初始化方法深入分析/" rel="next" title="各种初始化方法整理总结">
+              <a href="/z_post/深度学习-各种初始化方法深入分析/" rel="next" title="各种初始化方法整理总结">
                 各种初始化方法整理总结 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -773,7 +778,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">230</span>
+                    <span class="site-state-item-count">243</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -893,7 +898,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">34</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -957,7 +966,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Normalization"><span class="nav-text">Normalization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要进行Normalization"><span class="nav-text">为什么要进行Normalization?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN的提出背景"><span class="nav-text">BN的提出背景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Internal-Covariate-Shift"><span class="nav-text">Internal Covariate Shift</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是Batch-Normalization"><span class="nav-text">什么是Batch Normalization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN的优点"><span class="nav-text">BN的优点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN的具体实现及其反向传播"><span class="nav-text">BN的具体实现及其反向传播</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用BN时应注意的问题"><span class="nav-text">使用BN时应注意的问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Normalization"><span class="nav-text">Normalization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要进行Normalization"><span class="nav-text">为什么要进行Normalization?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN的提出背景"><span class="nav-text">BN的提出背景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Internal-Covariate-Shift"><span class="nav-text">Internal Covariate Shift</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是Batch-Normalization"><span class="nav-text">什么是Batch Normalization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN的优点"><span class="nav-text">BN的优点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN的具体实现及其反向传播"><span class="nav-text">BN的具体实现及其反向传播</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-BN-时的前一层卷积网络可以不加偏置项-降低模型参数量"><span class="nav-text">使用 BN 时的前一层卷积网络可以不加偏置项(降低模型参数量)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用BN时应注意的问题"><span class="nav-text">使用BN时应注意的问题</span></a></li></ol></div>
             
 
           </div>
@@ -982,7 +991,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-heart"></i>
   </span>
@@ -994,7 +1003,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.3m</span>
+    <span title="站点总字数">1.6m</span>
   
 
   
@@ -1003,7 +1012,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">20:01</span>
+    <span title="站点阅读时长">23:43</span>
   
 </div>
 

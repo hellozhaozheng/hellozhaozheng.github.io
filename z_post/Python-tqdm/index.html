@@ -112,18 +112,18 @@
 
 
 
-  <meta name="description" content="并不是什么厉害的地方只是一个安静的学习角落">
+  <meta name="description" content="12345from tqdm import tqdmimport timefor i in tqdm(range(1000)):    time.sleep(0.01) 效果如下:137%|█████████                     | 370/1000 [00:03&amp;lt;00:06, 98.89it/s] 只要是可迭代的对象都可以使用 tqdm, 例如 PyTorch 的 Da">
 <meta name="keywords" content="Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="tqdm模块-进度条">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Python-tqdm/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="并不是什么厉害的地方只是一个安静的学习角落">
+<meta property="og:description" content="12345from tqdm import tqdmimport timefor i in tqdm(range(1000)):    time.sleep(0.01) 效果如下:137%|█████████                     | 370/1000 [00:03&amp;lt;00:06, 98.89it/s] 只要是可迭代的对象都可以使用 tqdm, 例如 PyTorch 的 Da">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-08T12:01:37.750Z">
+<meta property="og:updated_time" content="2018-12-20T03:20:46.391Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tqdm模块-进度条">
-<meta name="twitter:description" content="并不是什么厉害的地方只是一个安静的学习角落">
+<meta name="twitter:description" content="12345from tqdm import tqdmimport timefor i in tqdm(range(1000)):    time.sleep(0.01) 效果如下:137%|█████████                     | 370/1000 [00:03&amp;lt;00:06, 98.89it/s] 只要是可迭代的对象都可以使用 tqdm, 例如 PyTorch 的 Da">
 
 
 
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">230</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">243</span></a>
   </li>
         
         
@@ -344,7 +344,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
   </li>
         
         
@@ -497,8 +497,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2018-12-08T20:01:37+08:00" content="2018-12-08">
-      		  2018-12-08
+    		<time itemprop="dateUpdated" datetime="2018-12-20T11:20:46+08:00" content="2018-12-20">
+      		  2018-12-20
     		</time>
   	  </span>
 	  
@@ -551,7 +551,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">0</span>
+                <span title="本文字数">515</span>
               
 
               
@@ -585,7 +585,13 @@
       
 
       
-        
+        <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> tqdm(range(<span class="number">1000</span>)):</span><br><span class="line">    time.sleep(<span class="number">0.01</span>)</span><br></pre></td></tr></table></figure>
+<p>效果如下:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">37</span>%|█████████                     | <span class="number">370</span>/<span class="number">1000</span> [<span class="number">00</span>:<span class="number">03</span>&lt;<span class="number">00</span>:<span class="number">06</span>, <span class="number">98.89</span>it/s]</span><br></pre></td></tr></table></figure></p>
+<p>只要是可迭代的对象都可以使用 <code>tqdm</code>, 例如 PyTorch 的 <code>DataLoader</code> 对象:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> inputs, labels <span class="keyword">in</span> tqdm(dataloader):</span><br><span class="line">    <span class="comment"># ... 输出形式和上面相同</span></span><br></pre></td></tr></table></figure>
+<h1 id="tqdm-不能单行显示的问题"><a href="#tqdm-不能单行显示的问题" class="headerlink" title="tqdm 不能单行显示的问题"></a>tqdm 不能单行显示的问题</h1><p>原因: 有些 IDE 不支持回车(CR), 导致每次新的进度条不能覆盖旧的进度条, 出现原因的问题也可能是手动终止进程导致 tqdm 没有完全退出导致的, 应使用 <code>t.close()</code> 使其正确关闭:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">with</span> tqdm(...) <span class="keyword">as</span> t:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> t:</span><br><span class="line">            ...</span><br><span class="line"><span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">    t.close()</span><br><span class="line">    <span class="keyword">raise</span></span><br><span class="line">t.close()</span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -679,8 +685,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -699,7 +714,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">230</span>
+                    <span class="site-state-item-count">243</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -819,7 +834,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">34</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -874,6 +893,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tqdm-不能单行显示的问题"><span class="nav-text">tqdm 不能单行显示的问题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
         <div class="back-to-top">
@@ -892,7 +927,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-heart"></i>
   </span>
@@ -904,7 +939,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.3m</span>
+    <span title="站点总字数">1.6m</span>
   
 
   
@@ -913,7 +948,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">20:01</span>
+    <span title="站点阅读时长">23:43</span>
   
 </div>
 

@@ -119,7 +119,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="交换两个数的特殊方法加法注意: 有可能导致溢出 123a = a + b;         //但是加法可能会最终导致溢出b = a - b;a = a - b; 异或123a = a^b;b = a^b;a = a^b; 上面的实习原理是利用异或的自身特性: 12a ^ a = 0a ^ 0 = a 注意: 用异或交换两个整数存在一个陷阱 当交换两个相同的数字时, 由于异或自身的特性, 会使得这">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-18T04:22:17.516Z">
+<meta property="og:updated_time" content="2018-12-15T01:38:09.869Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法题杂记">
 <meta name="twitter:description" content="交换两个数的特殊方法加法注意: 有可能导致溢出 123a = a + b;         //但是加法可能会最终导致溢出b = a - b;a = a - b; 异或123a = a^b;b = a^b;a = a^b; 上面的实习原理是利用异或的自身特性: 12a ^ a = 0a ^ 0 = a 注意: 用异或交换两个整数存在一个陷阱 当交换两个相同的数字时, 由于异或自身的特性, 会使得这">
@@ -247,7 +247,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">230</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">243</span></a>
   </li>
         
         
@@ -343,7 +343,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
   </li>
         
         
@@ -496,8 +496,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2018-10-18T12:22:17+08:00" content="2018-10-18">
-      		  2018-10-18
+    		<time itemprop="dateUpdated" datetime="2018-12-15T09:38:09+08:00" content="2018-12-15">
+      		  2018-12-15
     		</time>
   	  </span>
 	  
@@ -609,7 +609,7 @@
 <h2 id="分析："><a href="#分析：" class="headerlink" title="分析："></a>分析：</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">SumOfTwoSubarray</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (n.size() &lt; <span class="number">2</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">throw</span> exception();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; left(n.size()), right(n.size());</span><br><span class="line">	<span class="keyword">int</span> sum = n[<span class="number">0</span>], maxnum = n[<span class="number">0</span>];</span><br><span class="line">	left[<span class="number">0</span>] = n[<span class="number">0</span>];</span><br><span class="line">	right.back() = n.back();</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">uint32_t</span> i = <span class="number">1</span>; i &lt; n.size()<span class="number">-1</span>; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (sum &gt; <span class="number">0</span>)</span><br><span class="line">			sum += n[i];</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			sum = n[i];</span><br><span class="line">		<span class="keyword">if</span> (sum &gt; maxnum)</span><br><span class="line">		&#123;</span><br><span class="line">			maxnum = sum;			</span><br><span class="line">		&#125;</span><br><span class="line">		left[i] = maxnum;</span><br><span class="line">	&#125;</span><br><span class="line">	sum = n.back();</span><br><span class="line">	maxnum = n.back();</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">uint32_t</span> i = n.size()<span class="number">-2</span>; i &gt;=<span class="number">1</span>; --i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (sum &gt; <span class="number">0</span>)</span><br><span class="line">			sum += n[i];</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			sum = n[i];</span><br><span class="line">		<span class="keyword">if</span> (sum &gt; maxnum)</span><br><span class="line">		&#123;</span><br><span class="line">			maxnum = sum;</span><br><span class="line">		&#125;</span><br><span class="line">		right[i] = maxnum;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> res = <span class="number">0x80000000</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">uint32_t</span> i = <span class="number">0</span>; i &lt; n.size() - <span class="number">1</span>; ++i)</span><br><span class="line">		res = max(res, left[i] + right[i + <span class="number">1</span>]);</span><br><span class="line">	<span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>新建两个数组left和right，left[i]表示n[0:i]的连续子数组的最大和，right[i]表示n[i:length-1]的连续子数组的最大和。left[i]+right[i+1]的最大值就是答案。</p>
 <p><a href="https://blog.csdn.net/bupt8846/article/details/48115931" target="_blank" rel="noopener">https://blog.csdn.net/bupt8846/article/details/48115931</a></p>
-
+<h1 id="随机数算法的实现"><a href="#随机数算法的实现" class="headerlink" title="随机数算法的实现"></a>随机数算法的实现</h1><h2 id="实现均匀分布的随机采样"><a href="#实现均匀分布的随机采样" class="headerlink" title="实现均匀分布的随机采样"></a>实现均匀分布的随机采样</h2><h2 id="实际正态分布的随机采样"><a href="#实际正态分布的随机采样" class="headerlink" title="实际正态分布的随机采样"></a>实际正态分布的随机采样</h2>
       
     </div>
 
@@ -726,7 +726,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">230</span>
+                    <span class="site-state-item-count">243</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -846,7 +846,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">34</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -910,7 +914,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#交换两个数的特殊方法"><span class="nav-text">交换两个数的特殊方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#加法"><span class="nav-text">加法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异或"><span class="nav-text">异或</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#不开根号求平方根"><span class="nav-text">不开根号求平方根</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#牛顿迭代法"><span class="nav-text">牛顿迭代法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二分法"><span class="nav-text">二分法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#有两个数组-数组很大-其中一个数组存储着n个人的名字-另一个数组存储着这n个人的身高"><span class="nav-text">有两个数组, 数组很大, 其中一个数组存储着n个人的名字, 另一个数组存储着这n个人的身高?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题一-现在需要找出m个身高最高的人的名字-要求时间和空间复杂度最低"><span class="nav-text">问题一: 现在需要找出m个身高最高的人的名字, 要求时间和空间复杂度最低</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题二-哪些排序算法时间复杂度是-O-1-的-哪些不是"><span class="nav-text">问题二: 哪些排序算法时间复杂度是 $O(1)$ 的, 哪些不是</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题三-哪些排序算法是稳定的-哪些是不稳定的"><span class="nav-text">问题三: 哪些排序算法是稳定的, 哪些是不稳定的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题四-现在需要设计一个算法-每次从这n个人当中挑出一个人-要求最终跳出的所有人当中-身高高的人站的比例大"><span class="nav-text">问题四: 现在需要设计一个算法, 每次从这n个人当中挑出一个人, 要求最终跳出的所有人当中, 身高高的人站的比例大</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数"><span class="nav-text">函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#轮盘赌算法"><span class="nav-text">轮盘赌算法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#求下面函数的返回值"><span class="nav-text">求下面函数的返回值:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在多线程和大量并发环境下，如果有一个平均运行一百万次出现一次的bug，-你如何调试这个bug。"><span class="nav-text">在多线程和大量并发环境下，如果有一个平均运行一百万次出现一次的bug， 你如何调试这个bug。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#n个数里面求最大的m个数-堆"><span class="nav-text">n个数里面求最大的m个数, (堆)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#求两个不相交的连续子数组的最大和"><span class="nav-text">求两个不相交的连续子数组的最大和</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目："><span class="nav-text">题目：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析："><span class="nav-text">分析：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#交换两个数的特殊方法"><span class="nav-text">交换两个数的特殊方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#加法"><span class="nav-text">加法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异或"><span class="nav-text">异或</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#不开根号求平方根"><span class="nav-text">不开根号求平方根</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#牛顿迭代法"><span class="nav-text">牛顿迭代法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二分法"><span class="nav-text">二分法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#有两个数组-数组很大-其中一个数组存储着n个人的名字-另一个数组存储着这n个人的身高"><span class="nav-text">有两个数组, 数组很大, 其中一个数组存储着n个人的名字, 另一个数组存储着这n个人的身高?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题一-现在需要找出m个身高最高的人的名字-要求时间和空间复杂度最低"><span class="nav-text">问题一: 现在需要找出m个身高最高的人的名字, 要求时间和空间复杂度最低</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题二-哪些排序算法时间复杂度是-O-1-的-哪些不是"><span class="nav-text">问题二: 哪些排序算法时间复杂度是 $O(1)$ 的, 哪些不是</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题三-哪些排序算法是稳定的-哪些是不稳定的"><span class="nav-text">问题三: 哪些排序算法是稳定的, 哪些是不稳定的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题四-现在需要设计一个算法-每次从这n个人当中挑出一个人-要求最终跳出的所有人当中-身高高的人站的比例大"><span class="nav-text">问题四: 现在需要设计一个算法, 每次从这n个人当中挑出一个人, 要求最终跳出的所有人当中, 身高高的人站的比例大</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数"><span class="nav-text">函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#轮盘赌算法"><span class="nav-text">轮盘赌算法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#求下面函数的返回值"><span class="nav-text">求下面函数的返回值:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在多线程和大量并发环境下，如果有一个平均运行一百万次出现一次的bug，-你如何调试这个bug。"><span class="nav-text">在多线程和大量并发环境下，如果有一个平均运行一百万次出现一次的bug， 你如何调试这个bug。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#n个数里面求最大的m个数-堆"><span class="nav-text">n个数里面求最大的m个数, (堆)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#求两个不相交的连续子数组的最大和"><span class="nav-text">求两个不相交的连续子数组的最大和</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目："><span class="nav-text">题目：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析："><span class="nav-text">分析：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随机数算法的实现"><span class="nav-text">随机数算法的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实现均匀分布的随机采样"><span class="nav-text">实现均匀分布的随机采样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实际正态分布的随机采样"><span class="nav-text">实际正态分布的随机采样</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -935,7 +939,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-heart"></i>
   </span>
@@ -947,7 +951,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.3m</span>
+    <span title="站点总字数">1.6m</span>
   
 
   
@@ -956,7 +960,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">20:01</span>
+    <span title="站点阅读时长">23:43</span>
   
 </div>
 

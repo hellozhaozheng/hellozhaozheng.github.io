@@ -112,18 +112,18 @@
 
 
 
-  <meta name="description" content="[ToC] https://zhuanlan.zhihu.com/p/46237848?utm_source=wechat_session&amp;amp;utm_medium=social vector 和 list 的区别new, delete, malloc, free的关系delete会调用对象的析构函数, 和new对应 free只会释放内存, 和malloc. malloc/free是C++/C">
-<meta name="keywords" content="知识点梳理">
+  <meta name="description" content="一. 基础篇C++ 在 C 的基础上加了什么 包含全部的 C 语言部分 面向对象编程思想, 封装, 继承, 多态 泛型编程, 模板 STL 库  C 和 C++ 互相调用因为 C++ 重载, 而 C 不重载, 函数名编译的结果都不一样, 因此如果 C++ 直接调用 C 的函数, 因为二者编译的不同, 就会失败. C++ 调用 C: 例如一个.h文件中有个foo(int)的声明, 其实现在.c中,">
+<meta name="keywords" content="C++,知识点梳理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++面试总结">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/面试-Cpp面试总结/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="[ToC] https://zhuanlan.zhihu.com/p/46237848?utm_source=wechat_session&amp;amp;utm_medium=social vector 和 list 的区别new, delete, malloc, free的关系delete会调用对象的析构函数, 和new对应 free只会释放内存, 和malloc. malloc/free是C++/C">
+<meta property="og:description" content="一. 基础篇C++ 在 C 的基础上加了什么 包含全部的 C 语言部分 面向对象编程思想, 封装, 继承, 多态 泛型编程, 模板 STL 库  C 和 C++ 互相调用因为 C++ 重载, 而 C 不重载, 函数名编译的结果都不一样, 因此如果 C++ 直接调用 C 的函数, 因为二者编译的不同, 就会失败. C++ 调用 C: 例如一个.h文件中有个foo(int)的声明, 其实现在.c中,">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-30T06:47:49.927Z">
+<meta property="og:updated_time" content="2019-02-26T07:14:55.423Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++面试总结">
-<meta name="twitter:description" content="[ToC] https://zhuanlan.zhihu.com/p/46237848?utm_source=wechat_session&amp;amp;utm_medium=social vector 和 list 的区别new, delete, malloc, free的关系delete会调用对象的析构函数, 和new对应 free只会释放内存, 和malloc. malloc/free是C++/C">
+<meta name="twitter:description" content="一. 基础篇C++ 在 C 的基础上加了什么 包含全部的 C 语言部分 面向对象编程思想, 封装, 继承, 多态 泛型编程, 模板 STL 库  C 和 C++ 互相调用因为 C++ 重载, 而 C 不重载, 函数名编译的结果都不一样, 因此如果 C++ 直接调用 C 的函数, 因为二者编译的不同, 就会失败. C++ 调用 C: 例如一个.h文件中有个foo(int)的声明, 其实现在.c中,">
 
 
 
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">230</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">243</span></a>
   </li>
         
         
@@ -344,7 +344,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
   </li>
         
         
@@ -497,8 +497,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2018-10-30T14:47:49+08:00" content="2018-10-30">
-      		  2018-10-30
+    		<time itemprop="dateUpdated" datetime="2019-02-26T15:14:55+08:00" content="2019-02-26">
+      		  2019-02-26
     		</time>
   	  </span>
 	  
@@ -551,7 +551,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">6.8k</span>
+                <span title="本文字数">9.9k</span>
               
 
               
@@ -565,7 +565,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">6 分钟</span>
+                <span title="阅读时长">9 分钟</span>
               
             </div>
           
@@ -585,50 +585,41 @@
       
 
       
-        <p>[ToC]</p>
-<p><a href="https://zhuanlan.zhihu.com/p/46237848?utm_source=wechat_session&amp;utm_medium=social" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/46237848?utm_source=wechat_session&amp;utm_medium=social</a></p>
-<h1 id="vector-和-list-的区别"><a href="#vector-和-list-的区别" class="headerlink" title="vector 和 list 的区别"></a>vector 和 list 的区别</h1><h1 id="new-delete-malloc-free的关系"><a href="#new-delete-malloc-free的关系" class="headerlink" title="new, delete, malloc, free的关系"></a>new, delete, malloc, free的关系</h1><p>delete会调用对象的析构函数, 和new对应</p>
-<p>free只会释放内存, 和malloc.</p>
-<p>malloc/free是C++/C 语言的标准库函数,  new/deletec是C++语言的运算符.</p>
-<p>它们都可用于申请动态内存和释放内存, 对于非内部数据类型的对象而言, 光用malloc/free无法满足动态对象的要求, 对象在创建的同时要自动执行构造函数, 在消亡之时要自动执行析构函数, 由于malloc/free是库函数而不是运算符, 因此不在编译器控制权限之内, 不能够把执行构造函数和析构函数的任务强加于malloc/free. 因此C++语言需要一个能完成动态内存分配和初始化工作的运算符new, 以及一个能完成清理与释放内存工作的运算符delete.</p>
-<h1 id="new-delete-malloc-free的内部实现"><a href="#new-delete-malloc-free的内部实现" class="headerlink" title="new, delete, malloc, free的内部实现"></a>new, delete, malloc, free的内部实现</h1><h1 id="delete-和-delete-的区别"><a href="#delete-和-delete-的区别" class="headerlink" title="delete 和 delete []的区别"></a>delete 和 delete []的区别</h1><p>delete只会调用一次析构函数, 而delete[]会调用数组内每一个成员的析构函数. 在More Effective C++中有更为详细的解释: 当delete操作符用于数组时, 它为每个数组元素调用析构函数, 然后调用operator delete来释放内存</p>
-<p>在对 <strong>内建数据类型</strong> 使用时, delete和delete[]是等价的, 因此delete[]会调用数组元素的析构函数, 但是内部数据类型没有析构函数, 所以可以直接使用.</p>
-<h1 id="子类析构时要调用父类的析构函数吗"><a href="#子类析构时要调用父类的析构函数吗" class="headerlink" title="子类析构时要调用父类的析构函数吗?"></a>子类析构时要调用父类的析构函数吗?</h1><p>调用</p>
-<p>析构函数调用的次序是先调用派生类的析构, 后调用基类的析构, 也就是说在基类的析构函数调用的时候, 派生类的信息已经全部销毁了.</p>
-<p>定义一个对象时先调用基类的构造函数, 然后调用派生类的构造函数, 析构的时候恰好相反, 先调用派生类的析构函数, 然后调用基类的析构函数</p>
-<h1 id="什么是引用-声明和使用引用时要注意哪些问题"><a href="#什么是引用-声明和使用引用时要注意哪些问题" class="headerlink" title="什么是引用? 声明和使用引用时要注意哪些问题?"></a>什么是引用? 声明和使用引用时要注意哪些问题?</h1><p>引用就是某个变量的”别名”(alias).</p>
-<p>声明一个引用的时候, 切记要对其进行初始化.</p>
-<p>声明完毕后, 相当于目标变量具有了两个名称, 即原名称和引用名, 引用名与该变量绑定, 不能再把该引用名作为其他变量名的别名.</p>
-<p>对引用求地址, 就是对目标变量取地址, 即我们常说引用名是目标变量名的一个别名. 注意, <strong>引用是占据空间的, 编译器一般将引用实现为const指针, 即指向位置不可变的指针. 所以实际上引用与一般指针同样占用内存</strong></p>
-<p><strong>不能建立引用的数组.</strong> 因为数组是一个由若干个元素所组成的集合, 所以无法建立一个由引用组成的集合. <strong>但是可以建立数组的引用(即数组的别名)</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int x=2,y=3,z=4;</span><br><span class="line">int&amp; ref[3] = &#123;&amp;x, &amp;y, &amp;z&#125;; //非法!</span><br><span class="line"></span><br><span class="line">int arr[3]&#123;1,2,3&#125;;</span><br><span class="line">int(&amp;ref) [3] = arr; //合法, ref是一个引用, 指向一个包含3个元素的一维数组</span><br></pre></td></tr></table></figure>
-<h1 id="引用和指针的关系与区别"><a href="#引用和指针的关系与区别" class="headerlink" title="引用和指针的关系与区别?"></a>引用和指针的关系与区别?</h1><p><strong>关系:</strong></p>
-<p>编译器一般会将引用实现为const指针, 所以可以将引用看做是一种特殊的指针</p>
-<p><strong>区别:</strong></p>
-<ol>
-<li>引用不能为空, 即引用必须连接到一块合法的内存 <code>int &amp;a;</code> 错误</li>
-<li>一旦引用被初始化为一个对象, 就不能再被指向另一个对象(因为引用时const指针)</li>
-<li>引用必须在创建的同时被初始化, 而指针可以在任何时间被初始化</li>
-</ol>
-<h1 id="将引用作为函数参数有哪些特点"><a href="#将引用作为函数参数有哪些特点" class="headerlink" title="将引用作为函数参数有哪些特点?"></a>将引用作为函数参数有哪些特点?</h1><ol>
-<li>由于引用可以看做是const指针, 因此传递引用给函数和传递指针给函数的效果是一样的, 这时, 被调函数的形参就成为原来主调函数中的实参变量或对象的一个别名来使用, 所以在被调函数中对形参变量的操作就是对其相应的目标对象的操作.</li>
-<li>使用引用传递参数时, 在内存中并不会产生实参的副本, 因此, 当参数传递的数据较大时, 用引用的空间利用率高</li>
-</ol>
-<h1 id="将引用作为函数返回值类型的优势和注意事项"><a href="#将引用作为函数返回值类型的优势和注意事项" class="headerlink" title="将引用作为函数返回值类型的优势和注意事项?"></a>将引用作为函数返回值类型的优势和注意事项?</h1><p>优势:<br>在内存中不会产生被返回值的副本 ( <strong>注意:</strong> 正是因为这个原因, 所以返回一个局部变量的引用是不可取的. )</p>
-<p>注意事项:</p>
-<ol>
-<li>不能返回局部变量的引用: 因为在内存中不会产生被返回值的副本, 随着该局部变量生存期的结束, 引用指向的变量就失效了, 此时会产生runtime error错误.</li>
-<li>不要返回函数内部<code>new</code>分配的内存的引用: 虽然不存在局部变量的自动销毁问题, 但是对于这种情况, 又是会面临其他尴尬局面. 例如, 被函数返回的引用只是作为一个临时变量出现, 而没有被赋予一个实际的变量, 那么这个引用所指向的空间(由new分配)就无法释放 很容易造成内存泄漏.</li>
-<li>可以返回对象成员的引用, 但最好是const. 主要原因是当对象的属性与某种业务规则相关联的时候, 其赋值常常与某些其他属性或者对象的状态有关, 因此有必要将赋值操作封装在一个业务规则中. 如果其他对象可以获得该属性的非常量引用(或指针), 那么对该属性的单纯赋值会破坏业务规则的完整性.</li>
-<li>引用和流操作符的重载, 因为这两个操作符常常希望被连续使用, 因此这两个操作符重载时的返回值应该是一个仍然支持操作符特性的流引用</li>
-</ol>
-<p><a href="http://wyude.lofter.com/post/1cb19406_68f16ad" target="_blank" rel="noopener">http://wyude.lofter.com/post/1cb19406_68f16ad</a></p>
-<h1 id="在什么时候需要使用常引用"><a href="#在什么时候需要使用常引用" class="headerlink" title="在什么时候需要使用常引用?"></a>在什么时候需要使用常引用?</h1><p>如果既要利用引用提高程序的效率, 又要保护传递给函数的数据不在函数中被改变, 就应该使用常引用, 同时如果传入的实参是const类型的变量, 则形参必须也声明为const. <strong>通常, 如果引用型参数在能够被定义为const的情况下, 优先定义为const</strong>.</p>
-<h1 id="什么是函数指针"><a href="#什么是函数指针" class="headerlink" title="什么是函数指针?"></a>什么是函数指针?</h1><h1 id="结构体和联合体有什么区别"><a href="#结构体和联合体有什么区别" class="headerlink" title="结构体和联合体有什么区别?"></a>结构体和联合体有什么区别?</h1><ol>
+        <h1 id="一-基础篇"><a href="#一-基础篇" class="headerlink" title="一. 基础篇"></a>一. 基础篇</h1><h2 id="C-在-C-的基础上加了什么"><a href="#C-在-C-的基础上加了什么" class="headerlink" title="C++ 在 C 的基础上加了什么"></a>C++ 在 C 的基础上加了什么</h2><ul>
+<li>包含全部的 C 语言部分</li>
+<li>面向对象编程思想, 封装, 继承, 多态</li>
+<li>泛型编程, 模板</li>
+<li>STL 库</li>
+</ul>
+<h2 id="C-和-C-互相调用"><a href="#C-和-C-互相调用" class="headerlink" title="C 和 C++ 互相调用"></a>C 和 C++ 互相调用</h2><p>因为 C++ 重载, 而 C 不重载, 函数名编译的结果都不一样, 因此如果 C++ 直接调用 C 的函数, 因为二者编译的不同, 就会失败.</p>
+<p>C++ 调用 C: 例如一个<code>.h</code>文件中有个<code>foo(int)</code>的声明, 其实现在<code>.c</code>中, 那么当 C++ 包含这个<code>.h</code>文件的时候就要用<code>extern &quot;C&quot;</code>, 否则编译器编译的不一样, 就调用不到, C++ 调用一个 C 语言编写的 DLL 时, 当包括<code>.DLL</code>的头文件或声明接口函数时, 应加入<code>extern &quot;C&quot;</code></p>
+<h2 id="C-的编译和链接过程"><a href="#C-的编译和链接过程" class="headerlink" title="C++ 的编译和链接过程"></a>C++ 的编译和链接过程</h2><p><a href="../Cpp-编译和链接">C++ 编译和链接</a></p>
+<h2 id="结构体和联合体有什么区别"><a href="#结构体和联合体有什么区别" class="headerlink" title="结构体和联合体有什么区别?"></a>结构体和联合体有什么区别?</h2><ol>
 <li>结构体和联合体都是由多个不同的数据类型成员组成, 但在任何同一时刻, 联合体中只存放了一个被选中的成员(所有成员共用一块地址空间), 而结构体的所有成员都存在(不同成员的存放地址不同)</li>
 <li>对于联合体的不同成员赋值, 将会对覆盖其他成员, 原来成员的值就不存在了, 而对于结构的不同成员赋值是互不影响的</li>
 </ol>
-<h1 id="重载-overload-和重写-覆盖-override-的区别"><a href="#重载-overload-和重写-覆盖-override-的区别" class="headerlink" title="重载(overload)和重写/覆盖(override)的区别?"></a>重载(overload)和重写/覆盖(override)的区别?</h1><p>从定义上来说:</p>
+<h2 id="封装-继承-多态-重载-重写-覆盖概念解析"><a href="#封装-继承-多态-重载-重写-覆盖概念解析" class="headerlink" title="封装, 继承, 多态, 重载, 重写/覆盖概念解析"></a>封装, 继承, 多态, 重载, 重写/覆盖概念解析</h2><ul>
+<li><strong>封装</strong>: 是指将数据和相关的函数放在一起作为一个整体, 一般称之为”类”, 封装的意义在于保护或者放置数据被无意间破坏.</li>
+<li><strong>继承</strong>: 通常是指类的继承, 主要目的是为了重用代码, 节省开发时间.</li>
+<li><strong>多态</strong>: 是指”一个接口, 多种形态”, 在 C++ 中的多态主要是通过虚函数实现的.</li>
+<li><strong>重载</strong>: 是指同名函数具有不同的函数签名(参数个数及参数类型), 程序调用函数时, 会根据不同的函数签名决定调用哪个函数</li>
+<li><strong>重写/覆盖</strong>: 是指子类重写父类的方法(需要有<code>virtual</code>关键字), 声明完成一致, 实现不同.</li>
+<li><strong>隐藏</strong>: 派生类实现了一个与基类中同名的函数, 则基类中的同名函数会被隐藏(无论参数列表是否相同)</li>
+</ul>
+<h3 id="子类不能从父类继承的函数"><a href="#子类不能从父类继承的函数" class="headerlink" title="子类不能从父类继承的函数"></a>子类不能从父类继承的函数</h3><p>不能继承的有:</p>
+<ul>
+<li>构造函数</li>
+<li>拷贝构造函数</li>
+<li>析构函数</li>
+</ul>
+<p>可以继承的有:</p>
+<ul>
+<li>静态成员变量</li>
+<li>静态成员函数</li>
+<li>友元函数</li>
+<li>赋值操作符=</li>
+</ul>
+<h3 id="重载-overload-和重写-覆盖-override-的区别"><a href="#重载-overload-和重写-覆盖-override-的区别" class="headerlink" title="重载(overload)和重写/覆盖(override)的区别?"></a>重载(overload)和重写/覆盖(override)的区别?</h3><p>从定义上来说:</p>
 <ul>
 <li>重载: 是指允许存在多个同名函数, 但是这些函数的参数签名不同(参数个数, 参数类型, const)</li>
 <li>重写: 是在继承时体现的, 是指子类重新定义父类虚函数的方法, 其中父类函数必须有<code>virtual</code>关键字, 且不能有<code>static</code>, 子类函数与父类函数签名相同, 且返回值也要相同(或者 <strong>返回值协变</strong> ), 访问权限修饰符可以不同.</li>
@@ -638,24 +629,118 @@
 <li>重载: 编译器会根据函数不同的函数签名, 对这些同名函数的名称做一些修饰, 然后这些同名函数就成了不同的函数(至少对编译器来说是这样的), 这些修饰后的同名函数的调用, 在编译期间就已经确定了, 因此它们的地址也已经确定了, 因此, <strong>重载与多态无关</strong></li>
 <li>重写: 重写与多态息息相关. 当子类重新定义了父类的虚函数以后, 父类指针会根据赋给它的不同的子类指针, <strong>动态</strong> 的调用属于子类的该函数, 这样的函数调用在编译期间是无法确定的(无法给出子类的虚函数的地址). 只有在执行阶段, 子类的函数地址才能够确定.</li>
 </ul>
-<h1 id="C-中的协变与逆变"><a href="#C-中的协变与逆变" class="headerlink" title="C++中的协变与逆变"></a>C++中的协变与逆变</h1><p><a href="https://www.jianshu.com/p/db76a8b08694" target="_blank" rel="noopener">https://www.jianshu.com/p/db76a8b08694</a></p>
-<h1 id="哪些情况下只能用初始化列表-initialization-list-而不能用赋值-assignment"><a href="#哪些情况下只能用初始化列表-initialization-list-而不能用赋值-assignment" class="headerlink" title="哪些情况下只能用初始化列表(initialization list) 而不能用赋值 (assignment)?"></a>哪些情况下只能用初始化列表(initialization list) 而不能用赋值 (assignment)?</h1><p><a href="../Cpp-初始化列表">Cpp-初始化列表</a></p>
-<h1 id="C-是不是类型安全的"><a href="#C-是不是类型安全的" class="headerlink" title="C++是不是类型安全的?"></a>C++是不是类型安全的?</h1><p>不是, 因为两个不同类型的指针之间可以强制转换.</p>
-<h1 id="描述内存分配方式以及它们之间的区别"><a href="#描述内存分配方式以及它们之间的区别" class="headerlink" title="描述内存分配方式以及它们之间的区别?"></a>描述内存分配方式以及它们之间的区别?</h1><ol>
+<p><a href="../多态、重载、重写基本概念解析">C++ 中的多态、重载、重写基本概念解析</a></p>
+<h2 id="友元类和友元函数"><a href="#友元类和友元函数" class="headerlink" title="友元类和友元函数"></a>友元类和友元函数</h2><ul>
+<li>能访问私有成员</li>
+<li>破坏封装性</li>
+<li>友元关系不可传递</li>
+<li>友元关系的单向性</li>
+<li>友元声明的形式及数量不受限制</li>
+</ul>
+<h2 id="访问权限"><a href="#访问权限" class="headerlink" title="访问权限"></a>访问权限</h2><p>可被访问的范围:</p>
+<ul>
+<li>public: 类中函数, 子类函数, 友元函数, 类的对象</li>
+<li>protected: 类中函数, 子类函数, 友元函数</li>
+<li>private: 类中函数, 友元函数</li>
+</ul>
+<p>继承方式的属性变化:</p>
+<ul>
+<li>public: 不发生变化</li>
+<li>protected: public 变为 protected</li>
+<li>private: public 和 protected 变为 private</li>
+</ul>
+<h2 id="范围解析运算符"><a href="#范围解析运算符" class="headerlink" title="范围解析运算符"></a>范围解析运算符</h2><ul>
+<li>全局作用域符(<code>::name</code>): 用于名称(类, 类成员, 成员函数, 变量等)前, 表示作用域为全局命名空间</li>
+<li>类作用域符(<code>class::name</code>): 用于表示指定类型的作用域范围是具体某个类的</li>
+<li>命名空间作用域符(<code>namespace::name</code>): 用于表示指定类型的作用域范围是具体某个命名空间的</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> count = <span class="number">10</span>; <span class="comment">//全局(::)的count</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">20</span>; <span class="comment">//局部的count</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;::count; <span class="comment">// 输出 10, std为命名空间</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;count; <span class="comment">// 输出 20</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="避免文件被多次编译"><a href="#避免文件被多次编译" class="headerlink" title="避免文件被多次编译"></a>避免文件被多次编译</h2><ul>
+<li>pragma once: 编程器相关, 有的编译器支持, 有的编译器不支持(大部分都支持).</li>
+<li>ifndef/define/endif: C/C++ 语言的宏定义, 在所有编译器上都是有效的.</li>
+</ul>
+<h2 id="float与0比较时需要注意什么"><a href="#float与0比较时需要注意什么" class="headerlink" title="float与0比较时需要注意什么?"></a>float与0比较时需要注意什么?</h2><p>需要注意精度表示的问题, 不能使用<code>f == 0</code> 而应使用<code>f&lt;0.00001 &amp;&amp; f&gt;0.00001</code>类似的语句.</p>
+<h2 id="什么情况下会发生运行时错误-runtime-error"><a href="#什么情况下会发生运行时错误-runtime-error" class="headerlink" title="什么情况下会发生运行时错误(runtime error)?"></a>什么情况下会发生运行时错误(runtime error)?</h2><p>数组越界访问, 除数为0 , 堆栈溢出</p>
+<h2 id="数组和指向数组名的指针有什么区别"><a href="#数组和指向数组名的指针有什么区别" class="headerlink" title="数组和指向数组名的指针有什么区别?"></a>数组和指向数组名的指针有什么区别?</h2><p>数组的内存空间要么在静态存储区中(全局数组), 要么在栈中. 而指针可以随时指向任意类型的内存块.</p>
+<p>在使用sizeof运算符时, 数组返回的是整个数组所占的字节数, 指针返回的是指针变量本身的字节数. C++/C 语言没有办法知道指针所指的内存容量, 除非在申请内存时记住它, <strong>注意当数组作为函数的参数进行传递时, 该数组名就会自动退化为同类型的指针, 也就是说此时再使用sizeof时, 返回的是指针变量的大小, 而不是数组大小</strong></p>
+<h2 id="哪些情况下只能用初始化列表-initialization-list-而不能用赋值-assignment"><a href="#哪些情况下只能用初始化列表-initialization-list-而不能用赋值-assignment" class="headerlink" title="哪些情况下只能用初始化列表(initialization list) 而不能用赋值 (assignment)?"></a>哪些情况下只能用初始化列表(initialization list) 而不能用赋值 (assignment)?</h2><p><a href="../Cpp-初始化列表">Cpp-初始化列表</a></p>
+<h2 id="C-是不是类型安全的"><a href="#C-是不是类型安全的" class="headerlink" title="C++是不是类型安全的?"></a>C++是不是类型安全的?</h2><p>不是, 因为两个不同类型的指针之间可以强制转换.</p>
+<h2 id="描述-C-的内存分配方式以及它们之间的区别"><a href="#描述-C-的内存分配方式以及它们之间的区别" class="headerlink" title="描述 C++ 的内存分配方式以及它们之间的区别?"></a>描述 C++ 的内存分配方式以及它们之间的区别?</h2><ol>
 <li>从静态存储区域分配: 内存在程序 <strong>编译</strong> 时就已经分配好, 这块内存在程序的整个运行期间都一直存在, 例如全局变量, static变量等.</li>
 <li>从栈中分配: 函数内的局部变量的存储单元都会在栈上创建, 函数执行结束时这些存储单元会被自动释放</li>
 <li>从堆中分配: 也称为动态内存. 程序在运行的时候用<code>malloc</code>或<code>new</code>申请任意大小的内存, 程序员自己负责在何时使用和释放这些内存. 动态内存的生存期由程序员自己决定, 使用非常灵活, 但相关的内存泄漏问题也尝尝发生.</li>
 </ol>
-<h1 id="float与0比较时需要注意什么"><a href="#float与0比较时需要注意什么" class="headerlink" title="float与0比较时需要注意什么?"></a>float与0比较时需要注意什么?</h1><p>需要注意精度表示的问题, 不能使用<code>f == 0</code> 而应使用<code>f&lt;0.00001 &amp;&amp; f&gt;0.00001</code>类似的语句.</p>
-<h1 id="const和-define相比-有何优点"><a href="#const和-define相比-有何优点" class="headerlink" title="const和#define相比, 有何优点?"></a>const和#define相比, 有何优点?</h1><ol>
-<li><code>const</code>常量具有数据类型, 而宏常量没有数据类型. 编译器可以对前者进行类型安全检查, 而对后者只会进行字符替换, 没有类型安全检查, 容易发生意想不到的错误.</li>
-<li>有些集成化的调试工具可以对const常量进行调试, 但是不能对宏常量进行调试</li>
+<h2 id="虚函数"><a href="#虚函数" class="headerlink" title="虚函数"></a>虚函数</h2><p><a href="../Cpp-virutal关键字">C++ 中的 virtual 关键字</a></p>
+<h2 id="explicit-关键字"><a href="#explicit-关键字" class="headerlink" title="explicit 关键字"></a>explicit 关键字</h2><p>用<code>explicit</code>关键字修饰的构造函数可以用来防止函数参数的隐式转换</p>
+<p><strong><code>explicit</code>关键字只能用于类内部的构造函数的声明上, 而不能用在类外部的函数定义上</strong></p>
+<p>Effective C++建议, 除非有一个好的理由允许构造函数被用于隐式类型转换, 否则应该将其声明为<code>explicit</code>.</p>
+<h2 id="extern-关键字"><a href="#extern-关键字" class="headerlink" title="extern 关键字"></a>extern 关键字</h2><p>extern 一般是使用在多文件之间需要共享某些代码时. 在本文件中使用 extern 关键字代表这是一个声明, 其定义在其他文件中.</p>
+<p>在变量之前加上<code>extern</code>关键字表明这是一个声明, 其定义可能在其他文件处, 注意不能对其进行初始化, 否则表明这是一个定义而不是声明.</p>
+<p>默认情况下, const 对象仅在本文件内有效, 我们可以通过 extern 关键字来使得 const 对象在多个文件中共享.</p>
+<p>一个源文件定义了<code>char a[6]</code>, 在另一个文件使用<code>extern char *a</code>进行声明, 可以吗?<br>不可以, 因为指向类型 T 的指针并不等价与类型 T 数组, 提示我们声明和定义要严格一样的格式.</p>
+<h2 id="const-关键字"><a href="#const-关键字" class="headerlink" title="const 关键字"></a>const 关键字</h2><ol>
+<li>修饰普通类型的变量: 变量会变成常量, 其值不能再被更改</li>
+<li>修饰指针变量: 常量指针, 指向常量的指针, 指向常量的常量指针.</li>
+<li>修饰函数参数: 值传递(无需const, 因为自带保护作用), 指针/引用传递(可防止数据被意外篡改)</li>
+<li>修饰函数返回值: 内置类型(加不加const区别不大), 自定义类型, 指针/引用.</li>
+<li>修饰类成员函数</li>
 </ol>
-<h1 id="什么情况下会发生运行时错误-runtime-error"><a href="#什么情况下会发生运行时错误-runtime-error" class="headerlink" title="什么情况下会发生运行时错误(runtime error)?"></a>什么情况下会发生运行时错误(runtime error)?</h1><p>数组越界访问, 除数为0 , 堆栈溢出</p>
-<h1 id="数组和指向数组名的指针有什么区别"><a href="#数组和指向数组名的指针有什么区别" class="headerlink" title="数组和指向数组名的指针有什么区别?"></a>数组和指向数组名的指针有什么区别?</h1><p>数组的内存空间要么在静态存储区中(全局数组), 要么在栈中. 而指针可以随时指向任意类型的内存块.</p>
-<p>在使用sizeof运算符时, 数组返回的是整个数组所占的字节数, 指针返回的是指针变量本身的字节数. C++/C 语言没有办法知道指针所指的内存容量, 除非在申请内存时记住它, <strong>注意当数组作为函数的参数进行传递时, 该数组名就会自动退化为同类型的指针, 也就是说此时再使用sizeof时, 返回的是指针变量的大小, 而不是数组大小</strong></p>
-<h1 id="int-a-10-int-表示的是什么"><a href="#int-a-10-int-表示的是什么" class="headerlink" title="int (* a[10])(int) 表示的是什么?"></a>int (* a[10])(int) 表示的是什么?</h1><p>a是一个函数指针数组, 数组中的每个元素都是函数指针, 指向参数和返回值为int的函数.</p>
-<h1 id="栈内存与文字常量区"><a href="#栈内存与文字常量区" class="headerlink" title="栈内存与文字常量区"></a>栈内存与文字常量区</h1><h1 id="this指针"><a href="#this指针" class="headerlink" title="this指针"></a>this指针</h1><ul>
+<p><a href="../Cpp-const关键字">C++ 中的<code>const</code>关键字</a></p>
+<h2 id="static-关键字"><a href="#static-关键字" class="headerlink" title="static 关键字"></a>static 关键字</h2><h3 id="修饰种类"><a href="#修饰种类" class="headerlink" title="修饰种类"></a>修饰种类</h3><ol>
+<li>修饰全局/局部变量(指示内/无链接性, 静态持续性)</li>
+<li>修饰类的数据成员</li>
+<li>修饰类的成员函数(无<code>this</code>指针)</li>
+<li><code>const static</code>类型数据</li>
+</ol>
+<p><strong>注意:</strong> C++ 中不能同时用<code>static</code>和<code>const</code>修饰成员函数, 因为 C++ 编译器在实现<code>const</code>的成员函数的时候为了确保该函数不会修改类中参数的值, 会在函数中添加一个隐式的参数<code>const this*</code>, 但当一个成员为<code>static</code>的时候, 该函数是没有<code>this</code>指针的, 也就是说此时的<code>const</code>和<code>static</code>是冲突的, 不能一起使用.</p>
+<h3 id="存储持续性"><a href="#存储持续性" class="headerlink" title="存储持续性"></a>存储持续性</h3><ol>
+<li>自动存储持续性</li>
+<li>静态存储持续性</li>
+<li>动态存储持续性(new)</li>
+<li>线程存储持续性(C++11)</li>
+</ol>
+<h3 id="链接性"><a href="#链接性" class="headerlink" title="链接性"></a>链接性</h3><ol>
+<li>外部链接性(可以在其他文件中被访问)</li>
+<li>内部链接性(只能在本文件中被访问, static)</li>
+<li>无链接性(只能在当前函数或代码块中被访问, static)</li>
+</ol>
+<p>静态局部变量保存在全局数据区, 而不是保存在栈中, 每次的值保持到下一次调用, 知道下次赋新值</p>
+<p>类的静态成员在类实例化之前就存在了, 并分配了内存, 而函数的静态局部变量会在执行函数时才分配内存.</p>
+<p>const全局常量的链接性为内部, 因此可以放在头文件中而不会重定义</p>
+<p><a href="../Cpp-static关键字">C++ 中的<code>static</code>关键字</a></p>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><h3 id="什么是引用-声明和使用引用时要注意哪些问题"><a href="#什么是引用-声明和使用引用时要注意哪些问题" class="headerlink" title="什么是引用? 声明和使用引用时要注意哪些问题?"></a>什么是引用? 声明和使用引用时要注意哪些问题?</h3><p>引用就是某个变量的”别名”(alias).</p>
+<p>声明一个引用的时候, 切记要对其进行初始化.</p>
+<p>声明完毕后, 相当于目标变量具有了两个名称, 即原名称和引用名, 引用名与该变量绑定, 不能再把该引用名作为其他变量名的别名.</p>
+<p>对引用求地址, 就是对目标变量取地址, 即我们常说引用名是目标变量名的一个别名. 注意, <strong>引用是不占据空间的, 虽然编译器一般将引用实现为const指针, 即指向位置不可变的指针. 但是一般编译器对引用会设置一些限制条件, 因此从程序员的角度来说, 我们认为引用就是别名, 也就是它不占据空间.</strong></p>
+<p><strong>不能建立引用的数组.</strong> 因为数组是一个由若干个元素所组成的集合, 所以无法建立一个由引用组成的集合. <strong>但是可以建立数组的引用(即数组的别名)</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int x=2,y=3,z=4;</span><br><span class="line">int&amp; ref[3] = &#123;&amp;x, &amp;y, &amp;z&#125;; //非法!</span><br><span class="line"></span><br><span class="line">int arr[3]&#123;1,2,3&#125;;</span><br><span class="line">int(&amp;ref) [3] = arr; //合法, ref是一个引用, 指向一个包含3个元素的一维数组</span><br></pre></td></tr></table></figure>
+<h3 id="引用和指针的关系与区别"><a href="#引用和指针的关系与区别" class="headerlink" title="引用和指针的关系与区别?"></a>引用和指针的关系与区别?</h3><p><strong>关系:</strong><br>编译器一般会将引用实现为const指针, 所以可以将引用看做是一种特殊的指针</p>
+<p><strong>区别:</strong></p>
+<ul>
+<li>指针也是一种变量, 引用则是变量的别名</li>
+<li>指针可以先声明再赋值, 引用必须在定义的同时初始化</li>
+<li>指针可以重新指向其他变量, 引用一旦绑定就无法更改(行为上更像是常量指针)</li>
+<li>指针占用内存大小, 而引用不占内存大小(编译器会限制对引用的操作, 使得在程序员角度看来, 引用就是别名, 不占内存)</li>
+</ul>
+<p>C++ PrimerPlus中对 <strong>对象</strong> 的定义是: 一块能存储数据并具有某种类型的内存空间. 也就是说, 一个对象, 它拥有 <strong>值</strong> 和 <strong>地址</strong> 两种属性, 在运行程序时, 计算机会为该对象分配存储空间, 来存储该对象的值, 我们可以通过该对象的地址, 来访问这一块存储空间中的值.</p>
+<p>在 C++ 中, <strong>指针</strong> 实际上也是一种 <strong>对象</strong>, 它同样拥有 <strong>值</strong> 和 <strong>地址</strong> 两种属性, 只不过指针存储的数据类型是其他对象的地址, 当我们想要通过来地址访问其他对象时, 就要使用”*“来访问.</p>
+<p>而对象有常量和变量之分, 指针也一样, 在 C++ 中, 常量指针是指这个指针的值是不可改变的, 也就是它所存储的地址是不可以改变的, 而指向常量的指针是指不能通过该指针来改变这个指针所指向的对象.</p>
+<p>引用在行为上就更像是常量指针, 我们可以把它理解成是变量的别名, 在定义一个引用的时候, 程序时把该引用和它的初始值绑定在一起, 也就是说, 我们在定义引用的同时, <strong>就必须对其进行初始化</strong>, 并且, <strong>引用一经声明, 就不可以再与其他的变量绑定</strong>.</p>
+<h3 id="将引用作为函数参数有哪些特点"><a href="#将引用作为函数参数有哪些特点" class="headerlink" title="将引用作为函数参数有哪些特点?"></a>将引用作为函数参数有哪些特点?</h3><ol>
+<li>由于引用可以看做是const指针, 因此传递引用给函数和传递指针给函数的效果是一样的, 这时, 被调函数的形参就成为原来主调函数中的实参变量或对象的一个别名来使用, 所以在被调函数中对形参变量的操作就是对其相应的目标对象的操作.</li>
+<li>使用引用传递参数时, 在内存中并不会产生实参的副本, 因此, 当参数传递的数据较大时, 用引用的空间利用率高</li>
+</ol>
+<h3 id="将引用作为函数返回值类型的优势和注意事项"><a href="#将引用作为函数返回值类型的优势和注意事项" class="headerlink" title="将引用作为函数返回值类型的优势和注意事项?"></a>将引用作为函数返回值类型的优势和注意事项?</h3><p>优势:<br>在内存中不会产生被返回值的副本 ( <strong>注意:</strong> 正是因为这个原因, 所以返回一个局部变量的引用是不可取的. )</p>
+<p>注意事项:</p>
+<ol>
+<li>不能返回局部变量的引用: 因为在内存中不会产生被返回值的副本, 随着该局部变量生存期的结束, 引用指向的变量就失效了, 此时会产生runtime error错误.</li>
+<li>不要返回函数内部<code>new</code>分配的内存的引用: 虽然不存在局部变量的自动销毁问题, 但是对于这种情况, 又是会面临其他尴尬局面. 例如, 被函数返回的引用只是作为一个临时变量出现, 而没有被赋予一个实际的变量, 那么这个引用所指向的空间(由new分配)就无法释放 很容易造成内存泄漏.</li>
+<li>可以返回对象成员的引用, 但最好是const. 主要原因是当对象的属性与某种业务规则相关联的时候, 其赋值常常与某些其他属性或者对象的状态有关, 因此有必要将赋值操作封装在一个业务规则中. 如果其他对象可以获得该属性的非常量引用(或指针), 那么对该属性的单纯赋值会破坏业务规则的完整性.</li>
+<li>引用和流操作符的重载, 因为这两个操作符常常希望被连续使用, 因此这两个操作符重载时的返回值应该是一个仍然支持操作符特性的流引用</li>
+</ol>
+<p><a href="http://wyude.lofter.com/post/1cb19406_68f16ad" target="_blank" rel="noopener">http://wyude.lofter.com/post/1cb19406_68f16ad</a></p>
+<h3 id="在什么时候需要使用常引用"><a href="#在什么时候需要使用常引用" class="headerlink" title="在什么时候需要使用常引用?"></a>在什么时候需要使用常引用?</h3><p>如果既要利用引用提高程序的效率, 又要保护传递给函数的数据不在函数中被改变, 就应该使用常引用, 同时如果传入的实参是const类型的变量, 则形参必须也声明为const. <strong>通常, 如果引用型参数在能够被定义为const的情况下, 优先定义为const</strong>.</p>
+<h2 id="this指针"><a href="#this指针" class="headerlink" title="this指针"></a>this指针</h2><ul>
 <li><code>this</code>指针是一个 <strong>隐含于</strong> 每一个非静态成员函数中的特殊指针. 它指向正在被该成员函数操作的那个对象</li>
 <li>当一个对象调用其成员函数时, 编译程序会先将对象的地址赋给<code>this</code>指针, 然后调用成员函数, 每次成员函数存取数据成员时, 会隐含使用<code>this</code>指针.</li>
 <li>当一个成员函数被调用时, 自动向它传递一个隐含的参数, 该参数是一个指向这个成员函数所在的对象的指针</li>
@@ -668,7 +753,29 @@
 </ul>
 </li>
 </ul>
-<h1 id="inline内联函数"><a href="#inline内联函数" class="headerlink" title="inline内联函数"></a>inline内联函数</h1><p>在C/C++中, 如果有一些函数被频繁调用, 那么就会不断的进行函数入栈出栈的操作, 这会造成栈空间以及程序运行时间的消耗. 栈空间就是指放置程序的局部数据以及函数内数据的内存空间, 在正常情况下, 栈空间都是有限的, 如果频繁大量的使用就会造成栈空间不足的问题, <strong>函数的死循环递归调用的最终结果就是导致占内存空间的枯竭</strong></p>
+<h2 id="函数参数的入栈顺序"><a href="#函数参数的入栈顺序" class="headerlink" title="函数参数的入栈顺序"></a>函数参数的入栈顺序</h2><p>从右往左, 原因是为了支持可变长参数.<br>通过堆栈分析可知, 自左向右的入栈方式, 最前面的参数被压在栈底, 除非知道参数个数, 否则是无法通过栈指针的相对位移求得最左边的参数的, 这样就变成了左边参数个数的不确定, 这个动态参数个数的方向相反, 因此, C/C++ 中函数参数采用自右向左的入栈顺序, 主要原因是为了支持可变长的参数形式.</p>
+<h2 id="函数指针和函数对象-仿函数"><a href="#函数指针和函数对象-仿函数" class="headerlink" title="函数指针和函数对象(仿函数)"></a>函数指针和函数对象(仿函数)</h2><p>两方面用途:</p>
+<ul>
+<li>函数调用</li>
+<li>作为函数参数进行传递</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const double * (*pf[3])(const double *, int) = &#123;f1, f2, f3&#125;</span><br><span class="line">// pf 是一个函数指针数组, 数组中的每一个元素都是一个函数指针,</span><br><span class="line">// 指向了形式为 const double * (const double *, int) 的函数</span><br></pre></td></tr></table></figure>
+<p><a href="../Cpp-函数指针和函数对象">Cpp-函数指针和函数对象</a></p>
+<h2 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h2><p>C++提供了一些特殊的成员函数，它们会在一定条件下自动创建:</p>
+<ul>
+<li>默认构造函数</li>
+<li>复制/拷贝构造函数</li>
+<li>移动构造函数</li>
+<li>赋值运算符</li>
+<li>移动赋值运算符</li>
+<li>地址运算符</li>
+</ul>
+<p>带参数的构造函数也可以是默认构造函数, 只要所有参数都有默认值. 但是最终的类只能有一个构造函数, 否则会在调用时产生二义性.</p>
+<p>按值传递参数或返回值时, 会产生对象副本, 此时就调用了复制构造函数, 使用引用可以避免频繁调用复制构造函数.</p>
+<h3 id="子类析构时要调用父类的析构函数吗"><a href="#子类析构时要调用父类的析构函数吗" class="headerlink" title="子类析构时要调用父类的析构函数吗?"></a>子类析构时要调用父类的析构函数吗?</h3><p>调用(自动调用, 无需手动调用)</p>
+<p>析构函数调用的次序是先调用派生类的析构, 后调用基类的析构, 也就是说在基类的析构函数调用的时候, 派生类的信息已经全部销毁了.</p>
+<p>定义一个对象时先调用基类的构造函数, 然后调用派生类的构造函数, 析构的时候恰好相反, 先调用派生类的析构函数, 然后调用基类的析构函数</p>
+<h2 id="内联函数"><a href="#内联函数" class="headerlink" title="内联函数"></a>内联函数</h2><p>在C/C++中, 如果有一些函数被频繁调用, 那么就会不断的进行函数入栈出栈的操作, 这会造成栈空间以及程序运行时间的消耗. 栈空间就是指放置程序的局部数据以及函数内数据的内存空间, 在正常情况下, 栈空间都是有限的, 如果频繁大量的使用就会造成栈空间不足的问题, <strong>函数的死循环递归调用的最终结果就是导致占内存空间的枯竭</strong></p>
 <p><strong>特征:</strong></p>
 <ul>
 <li>相当于把内联函数里面的内容直接写在了调用内联函数处 (类似于<code>#define</code>或者<code>typedef</code>的那种<code>替换</code>操作)</li>
@@ -694,29 +801,33 @@
 <p><strong>虚函数可以是内联函数吗</strong></p>
 <ul>
 <li><p>虚函数在语法上可以是内联函数, 内联是可以修饰虚函数的, 但是当虚函数表现多态性的时候是不能内联的. (在具体实现时, 到底是否内联, 是由编译器决定的), 如下:</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Base</span> &#123;</span></span><br><span class="line">    <span class="keyword">virtual</span> ~Base() &#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Foo</span><span class="params">()</span> </span>&#123; <span class="built_in">printf</span>(<span class="string">"Base::Foo()\n"</span>); &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Derived</span> :</span> Base &#123;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Foo</span><span class="params">()</span> </span>&#123; <span class="built_in">printf</span>(<span class="string">"Derived::Foo()\n"</span>); &#125;</span><br><span class="line">&#125;;</span><br><span class="line">Base* b = <span class="keyword">new</span> Derived; <span class="comment">// 非 static 令编译器不能在编译期知道 b 指向那个类型的对像</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    b-&gt;Foo();       <span class="comment">// 不可能内联</span></span><br><span class="line">    b-&gt;Base::Foo(); <span class="comment">// 非多态调用，可以内联（但具体是否内联由编译器决定）</span></span><br><span class="line">    <span class="keyword">delete</span> b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Base</span> &#123;</span></span><br><span class="line">    <span class="keyword">virtual</span> ~Base() &#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Foo</span><span class="params">()</span> </span>&#123; <span class="built_in">printf</span>(<span class="string">"Base::Foo()\n"</span>); &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Derived</span>:</span> Base &#123;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Foo</span><span class="params">()</span> </span>&#123; <span class="built_in">printf</span>(<span class="string">"Derived::Foo()\n"</span>); &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Base* b = <span class="keyword">new</span> Derived; <span class="comment">// 非 static 令编译器不能在编译期知道 b 指向那个类型的对像</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    b-&gt;Foo();       <span class="comment">// 不可能内联</span></span><br><span class="line">    b-&gt;Base::Foo(); <span class="comment">// 非多态调用，可以内联（但具体是否内联由编译器决定）</span></span><br><span class="line">    <span class="keyword">delete</span> b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>内联实际上是在建议编译器内联, 而虚函数的多态性需要在运行期起作用, 编译器无法知道运行期具体调用哪个代码, 因此虚函数表现为多态性时, 不可以内联</p>
 </li>
 <li><code>inline virtual</code> 唯一可以内联的时候是: 编译器知道所调用的对象是哪个类(如 Base::who()), 这只有在编译器具有 <strong>实际对象而不是对象的指针或引用时才会发生</strong>.</li>
 </ul>
-<h1 id="explicit-关键字"><a href="#explicit-关键字" class="headerlink" title="explicit 关键字"></a>explicit 关键字</h1><p>用<code>explicit</code>关键字修饰的构造函数可以用来防止函数参数的隐式转换</p>
-<p><strong><code>explicit</code>关键字只能用于类内部的构造函数的声明上, 而不能用在类外部的函数定义上</strong></p>
-<p>Effective C++建议, 除非有一个好的理由允许构造函数被用于隐式类型转换, 否则应该将其声明为<code>explicit</code>.</p>
-<h1 id="友元类和友元函数"><a href="#友元类和友元函数" class="headerlink" title="友元类和友元函数"></a>友元类和友元函数</h1><ul>
-<li>能访问私有成员</li>
-<li>破坏封装性</li>
-<li>友元关系不可传递</li>
-<li>友元关系的单向性</li>
-<li>友元声明的形式及数量不受限制</li>
+<h2 id="动态内存申请"><a href="#动态内存申请" class="headerlink" title="动态内存申请"></a>动态内存申请</h2><h3 id="new-delete-malloc-free的关系的区别"><a href="#new-delete-malloc-free的关系的区别" class="headerlink" title="new, delete, malloc, free的关系的区别"></a>new, delete, malloc, free的关系的区别</h3><p>delete会调用对象的析构函数, 和new对应</p>
+<p>free只会释放内存, 和malloc.</p>
+<p>malloc/free是C++/C 语言的标准库函数,  new/deletec是C++语言的运算符.</p>
+<p>它们都可用于申请动态内存和释放内存, 对于非内部数据类型的对象而言, 光用 malloc/free 无法满足动态对象的要求, 对象在创建的同时要自动执行构造函数, 在消亡之时要自动执行析构函数, 由于malloc/free是库函数而不是运算符, 因此不在编译器控制权限之内, 不能够把执行构造函数和析构函数的任务强加于malloc/free. 因此C++语言需要一个能完成动态内存分配和初始化工作的运算符new, 以及一个能完成清理与释放内存工作的运算符delete.</p>
+<h3 id="new-delete-malloc-free的内部实现"><a href="#new-delete-malloc-free的内部实现" class="headerlink" title="new, delete, malloc, free的内部实现"></a>new, delete, malloc, free的内部实现</h3><h3 id="delete-和-delete-的区别"><a href="#delete-和-delete-的区别" class="headerlink" title="delete 和 delete []的区别"></a>delete 和 delete []的区别</h3><p>delete只会调用一次析构函数, 而delete[]会调用数组内每一个成员的析构函数. 在More Effective C++中有更为详细的解释: 当delete操作符用于数组时, 它为每个数组元素调用析构函数, 然后调用operator delete来释放内存</p>
+<p>在对 <strong>内建数据类型</strong> 使用时, delete和delete[]是等价的, 因此delete[]会调用数组元素的析构函数, 但是内部数据类型没有析构函数, 所以可以直接使用.</p>
+<h1 id="二-模板篇"><a href="#二-模板篇" class="headerlink" title="二. 模板篇"></a>二. 模板篇</h1><h2 id="常用的数据结构及其特点"><a href="#常用的数据结构及其特点" class="headerlink" title="常用的数据结构及其特点"></a>常用的数据结构及其特点</h2><ul>
+<li>array</li>
+<li>vector</li>
+<li>list</li>
+<li>queue</li>
+<li>deque</li>
+<li>priority_queue</li>
+<li>map</li>
+<li>unordered_map</li>
+<li>set</li>
+<li>unordered_set</li>
 </ul>
-<h1 id="范围解析运算符"><a href="#范围解析运算符" class="headerlink" title=":: 范围解析运算符"></a>:: 范围解析运算符</h1><ul>
-<li>全局作用域符(<code>::name</code>): 用于名称(类, 类成员, 成员函数, 变量等)前, 表示作用域为全局命名空间</li>
-<li>类作用域符(<code>class::name</code>): 用于表示指定类型的作用域范围是具体某个类的</li>
-<li>命名空间作用域符(<code>namespace::name</code>): 用于表示指定类型的作用域范围是具体某个命名空间的</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> count = <span class="number">10</span>; <span class="comment">//全局(::)的count</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">20</span>; <span class="comment">//局部的count</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;::count; <span class="comment">// 输出 10, std为命名空间</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;count; <span class="comment">// 输出 20</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<h1 id="vector-和-list-的区别"><a href="#vector-和-list-的区别" class="headerlink" title="vector 和 list 的区别"></a>vector 和 list 的区别</h1><h1 id="三-高级篇"><a href="#三-高级篇" class="headerlink" title="三. 高级篇"></a>三. 高级篇</h1><h2 id="lambda-表达式"><a href="#lambda-表达式" class="headerlink" title="lambda 表达式"></a>lambda 表达式</h2><p><a href="../Cpp-lambda表达式">Cpp-lambda表达式</a></p>
+<h2 id="C-中的协变与逆变"><a href="#C-中的协变与逆变" class="headerlink" title="C++中的协变与逆变"></a>C++中的协变与逆变</h2><p><a href="https://www.jianshu.com/p/db76a8b08694" target="_blank" rel="noopener">https://www.jianshu.com/p/db76a8b08694</a></p>
+<h1 id="栈内存与文字常量区"><a href="#栈内存与文字常量区" class="headerlink" title="栈内存与文字常量区"></a>栈内存与文字常量区</h1>
       
     </div>
 
@@ -735,6 +846,8 @@
     <footer class="post-footer">
       
         <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C++</a>
           
             <a href="/tags/知识点梳理/" rel="tag"><i class="fa fa-tag"></i> 知识点梳理</a>
           
@@ -839,7 +952,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">230</span>
+                    <span class="site-state-item-count">243</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -959,7 +1072,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">34</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1023,7 +1140,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vector-和-list-的区别"><span class="nav-text">vector 和 list 的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#new-delete-malloc-free的关系"><span class="nav-text">new, delete, malloc, free的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#new-delete-malloc-free的内部实现"><span class="nav-text">new, delete, malloc, free的内部实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#delete-和-delete-的区别"><span class="nav-text">delete 和 delete []的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#子类析构时要调用父类的析构函数吗"><span class="nav-text">子类析构时要调用父类的析构函数吗?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是引用-声明和使用引用时要注意哪些问题"><span class="nav-text">什么是引用? 声明和使用引用时要注意哪些问题?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#引用和指针的关系与区别"><span class="nav-text">引用和指针的关系与区别?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#将引用作为函数参数有哪些特点"><span class="nav-text">将引用作为函数参数有哪些特点?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#将引用作为函数返回值类型的优势和注意事项"><span class="nav-text">将引用作为函数返回值类型的优势和注意事项?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在什么时候需要使用常引用"><span class="nav-text">在什么时候需要使用常引用?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是函数指针"><span class="nav-text">什么是函数指针?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结构体和联合体有什么区别"><span class="nav-text">结构体和联合体有什么区别?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重载-overload-和重写-覆盖-override-的区别"><span class="nav-text">重载(overload)和重写/覆盖(override)的区别?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-中的协变与逆变"><span class="nav-text">C++中的协变与逆变</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#哪些情况下只能用初始化列表-initialization-list-而不能用赋值-assignment"><span class="nav-text">哪些情况下只能用初始化列表(initialization list) 而不能用赋值 (assignment)?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-是不是类型安全的"><span class="nav-text">C++是不是类型安全的?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#描述内存分配方式以及它们之间的区别"><span class="nav-text">描述内存分配方式以及它们之间的区别?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#float与0比较时需要注意什么"><span class="nav-text">float与0比较时需要注意什么?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#const和-define相比-有何优点"><span class="nav-text">const和#define相比, 有何优点?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么情况下会发生运行时错误-runtime-error"><span class="nav-text">什么情况下会发生运行时错误(runtime error)?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数组和指向数组名的指针有什么区别"><span class="nav-text">数组和指向数组名的指针有什么区别?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#int-a-10-int-表示的是什么"><span class="nav-text">int (* a[10])(int) 表示的是什么?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#栈内存与文字常量区"><span class="nav-text">栈内存与文字常量区</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#this指针"><span class="nav-text">this指针</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#inline内联函数"><span class="nav-text">inline内联函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#explicit-关键字"><span class="nav-text">explicit 关键字</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#友元类和友元函数"><span class="nav-text">友元类和友元函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#范围解析运算符"><span class="nav-text">:: 范围解析运算符</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一-基础篇"><span class="nav-text">一. 基础篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-在-C-的基础上加了什么"><span class="nav-text">C++ 在 C 的基础上加了什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-和-C-互相调用"><span class="nav-text">C 和 C++ 互相调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-的编译和链接过程"><span class="nav-text">C++ 的编译和链接过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构体和联合体有什么区别"><span class="nav-text">结构体和联合体有什么区别?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#封装-继承-多态-重载-重写-覆盖概念解析"><span class="nav-text">封装, 继承, 多态, 重载, 重写/覆盖概念解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#子类不能从父类继承的函数"><span class="nav-text">子类不能从父类继承的函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重载-overload-和重写-覆盖-override-的区别"><span class="nav-text">重载(overload)和重写/覆盖(override)的区别?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#友元类和友元函数"><span class="nav-text">友元类和友元函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问权限"><span class="nav-text">访问权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#范围解析运算符"><span class="nav-text">范围解析运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#避免文件被多次编译"><span class="nav-text">避免文件被多次编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#float与0比较时需要注意什么"><span class="nav-text">float与0比较时需要注意什么?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么情况下会发生运行时错误-runtime-error"><span class="nav-text">什么情况下会发生运行时错误(runtime error)?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组和指向数组名的指针有什么区别"><span class="nav-text">数组和指向数组名的指针有什么区别?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哪些情况下只能用初始化列表-initialization-list-而不能用赋值-assignment"><span class="nav-text">哪些情况下只能用初始化列表(initialization list) 而不能用赋值 (assignment)?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-是不是类型安全的"><span class="nav-text">C++是不是类型安全的?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#描述-C-的内存分配方式以及它们之间的区别"><span class="nav-text">描述 C++ 的内存分配方式以及它们之间的区别?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚函数"><span class="nav-text">虚函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#explicit-关键字"><span class="nav-text">explicit 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extern-关键字"><span class="nav-text">extern 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#const-关键字"><span class="nav-text">const 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#static-关键字"><span class="nav-text">static 关键字</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修饰种类"><span class="nav-text">修饰种类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储持续性"><span class="nav-text">存储持续性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链接性"><span class="nav-text">链接性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引用"><span class="nav-text">引用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是引用-声明和使用引用时要注意哪些问题"><span class="nav-text">什么是引用? 声明和使用引用时要注意哪些问题?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用和指针的关系与区别"><span class="nav-text">引用和指针的关系与区别?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将引用作为函数参数有哪些特点"><span class="nav-text">将引用作为函数参数有哪些特点?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将引用作为函数返回值类型的优势和注意事项"><span class="nav-text">将引用作为函数返回值类型的优势和注意事项?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在什么时候需要使用常引用"><span class="nav-text">在什么时候需要使用常引用?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#this指针"><span class="nav-text">this指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数参数的入栈顺序"><span class="nav-text">函数参数的入栈顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数指针和函数对象-仿函数"><span class="nav-text">函数指针和函数对象(仿函数)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造函数"><span class="nav-text">构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#子类析构时要调用父类的析构函数吗"><span class="nav-text">子类析构时要调用父类的析构函数吗?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内联函数"><span class="nav-text">内联函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态内存申请"><span class="nav-text">动态内存申请</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#new-delete-malloc-free的关系的区别"><span class="nav-text">new, delete, malloc, free的关系的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#new-delete-malloc-free的内部实现"><span class="nav-text">new, delete, malloc, free的内部实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#delete-和-delete-的区别"><span class="nav-text">delete 和 delete []的区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二-模板篇"><span class="nav-text">二. 模板篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用的数据结构及其特点"><span class="nav-text">常用的数据结构及其特点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vector-和-list-的区别"><span class="nav-text">vector 和 list 的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三-高级篇"><span class="nav-text">三. 高级篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#lambda-表达式"><span class="nav-text">lambda 表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-中的协变与逆变"><span class="nav-text">C++中的协变与逆变</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#栈内存与文字常量区"><span class="nav-text">栈内存与文字常量区</span></a></li></ol></div>
             
 
           </div>
@@ -1048,7 +1165,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-heart"></i>
   </span>
@@ -1060,7 +1177,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.3m</span>
+    <span title="站点总字数">1.6m</span>
   
 
   
@@ -1069,7 +1186,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">20:01</span>
+    <span title="站点阅读时长">23:43</span>
   
 </div>
 

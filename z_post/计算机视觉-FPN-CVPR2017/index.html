@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="文章: Feature Pyramid Networks for Object Detectin作者: Tsung-Yi Lin, Piotr Dollar, Ross Girshick, Kaiming He, Bharath Hariharan, and Serge Belongie 核心亮点提出了多尺度的特征金字塔结构将最后一层特征图谱进行不断进行上采样, 并与每一个金字塔阶级的特征图谱进行">
+<meta name="keywords" content="目标检测,计算机视觉,论文解读">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FPN (CVPR, 2017)">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-FPN-CVPR2017/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="文章: Feature Pyramid Networks for Object Detectin作者: Tsung-Yi Lin, Piotr Dollar, Ross Girshick, Kaiming He, Bharath Hariharan, and Serge Belongie 核心亮点提出了多尺度的特征金字塔结构将最后一层特征图谱进行不断进行上采样, 并与每一个金字塔阶级的特征图谱进行">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fy9h88eypoj21xi0sx1kx.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fy9gwgg1dhj21k50ltgzy.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fy9guhouhvj217x0hrn4b.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fy9gxelwczj21m80f2n1v.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fy9gxx88aaj21lh0dmaey.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fy9gycey9dj21lh0a7n10.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fy9gyue4j2j21lr0h6n3j.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fy9gzlarcnj20xb09qgn8.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fy9h11hrm5j215d0ie4ff.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fy9h1zwjgaj21ed0lqdzh.jpg">
+<meta property="og:updated_time" content="2019-02-25T11:45:50.085Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="FPN (CVPR, 2017)">
+<meta name="twitter:description" content="文章: Feature Pyramid Networks for Object Detectin作者: Tsung-Yi Lin, Piotr Dollar, Ross Girshick, Kaiming He, Bharath Hariharan, and Serge Belongie 核心亮点提出了多尺度的特征金字塔结构将最后一层特征图谱进行不断进行上采样, 并与每一个金字塔阶级的特征图谱进行">
+<meta name="twitter:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fy9h88eypoj21xi0sx1kx.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/计算机视觉-FPN-CVPR2017/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>FPN (CVPR, 2017) | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">243</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-linux">
+    <a href="/categories/Linux/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-面试">
+    <a href="/categories/面试/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其他">
+    <a href="/categories/其他/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/计算机视觉-FPN-CVPR2017/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">FPN (CVPR, 2017)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-18 14:36:46" itemprop="dateCreated datePublished" datetime="2018-10-18T14:36:46+08:00">2018-10-18</time>
+            
+
+            
+          </span>
+
+	  
+  	    <span class="post-updated">
+    		&nbsp; | &nbsp; 更新于
+    		<time itemprop="dateUpdated" datetime="2019-02-25T19:45:50+08:00" content="2019-02-25">
+      		  2019-02-25
+    		</time>
+  	  </span>
+	  
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/计算机视觉/" itemprop="url" rel="index"><span itemprop="name">计算机视觉</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">7.8k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">7 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>文章:</strong> Feature Pyramid Networks for Object Detectin<br><strong>作者:</strong> Tsung-Yi Lin, Piotr Dollar, Ross Girshick, Kaiming He, Bharath Hariharan, and Serge Belongie</p>
+<h1 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h1><p><strong>提出了多尺度的特征金字塔结构</strong><br>将最后一层特征图谱进行不断进行上采样, 并与每一个金字塔阶级的特征图谱进行加法合并操作, 得到新的表征能力更强的不同金字塔层次的特征图谱, 然后将RoI按照尺寸分别映射到这些特征图谱上, 再在每个特征图谱上进行类别和位置预测. 可以直观感受到, 这种多尺度的特征图谱在面对不同尺寸的物体时, 具有更好的鲁棒性, 尤其是在面对小型物体时. 同时, 这种特征金字塔结构是一种通用的特征提取结构, 可以应用到不同的网络框架中, 显著提高(5~8%)模型的召回率(因为提出了更多不同尺度, 不同特征信息的anchor box), 并且可以广泛提高(2~3%)模型的mAP.</p>
+<h1 id="论文细节"><a href="#论文细节" class="headerlink" title="论文细节"></a>论文细节</h1><h1 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h1><p>在面对不同尺度的物体检测问题时, 特征金字塔结构是一个非常基本的组成部分, 但是最近的检测模型都舍弃了这一结构(Fast RCNN, Faster RCNN, YOLOv2等), 其一部分原因是因为这个结构对计算和内存的要求较高. 本文在控制资源消耗的情况下, 建立了一个跨所有层的特征金字塔结构网络, 达到了当时的STOA性能.</p>
+<p>传统的特征金字塔结构对于计算资源和内存资源的依赖较为严重, 同时深度卷积网络在不同阶段的卷积层, 虽然较好的传递了特征, 但是因为每一层的输出通道数不同, 会导致层与层之间形成一种潜在的语义鸿沟. 较高的分辨率好好具有更多的低级信息(在深层会被过滤掉), 但是多于的信息也会对降低泛化能力, 较低的分辨率则具有权重更高的重要信息, 但是这样也会使得小目标物体难以检测.</p>
+<h1 id="SSD与FPN中多尺度特征图谱融合的区别"><a href="#SSD与FPN中多尺度特征图谱融合的区别" class="headerlink" title="SSD与FPN中多尺度特征图谱融合的区别"></a>SSD与FPN中多尺度特征图谱融合的区别</h1><p>SSD算是首批结合多尺度特征金字塔的检测系统, 但是SSD为了避免用到过多的低级特征(高层卷积图谱上的特征), 放弃使用以及计算好的特征特普, 而是从网络的最后一层卷积层开始, 添加新的卷积层, 并在这些新添加的卷积层上进行特征金字塔融合. 这样做一个很直观的结果就是, 它会错过很多高分辨率特征图谱上的特征信息, 而这些特征信息在面对小物体检测时是十分有用的.(这也是SSD对小物体检测较为敏感的原因之一).</p>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fy9h88eypoj21xi0sx1kx.jpg" alt="图1"></p>
+<p>一种标准的使用特征金字塔的方式是利用图片金字塔来获得不同尺寸的特征图谱, 如图1(a)所示. 但是这种方式有一个很明显的缺点就是金字塔上的所有特征图谱都是独立计算的, 使得计算成本很高. 这种方法在人工设计图片特征的时代十分受用. 而随着深度卷积网络的兴起, 我们可以从一张单一的特征图谱上获取到大量的抽象特征, 这使得我们可以利用一张图片就能获得足够的信息来做出预测, 如图(b)所示. 之后, 计算机学家们又重新将多尺度的特征图谱应用到卷积神经网络中, 使得神经网络的输出结果更加鲁棒, 更加准确, 目前很多的检测模型都会使用 multi-scale testing 来进一步提升模型的精度, 与图1(a)不同的是, 这种 multi-scale 是在特征图谱上进行的, 因此省去了很多重复计算, 降低了计算成本. 但是即使节省了卷积计算, 我们还是要进行多次后续的计算过程, 这使得推演时间增加, 因此, 这种方法在实际中并不推荐(多在竞赛中使用). 并且, 如果只在测试阶段采用 multis-scale 的话, 就会造成训练/推演时间的不一致, 使得在端到端的训练时时间变长(因为在训练时还会进行验证), 因此, 在 Fast 和 Faster R-CNN 中, 我们默认是不进行 multi-scale 的(尽管它有助于提高精度).<br>除了图片金字塔以外, 卷积神经网络在每一层都会输出一个特征图谱, 我们可以利用这些图谱构建一个特征金字塔, SSD 是首个在这些特征图谱上建立特征层级的模型, 如图(c)所示. 理想情况下, SSD 的特征金字塔是从多个卷积层输出的特征图谱得到的, 因此它的计算成本几乎为零. 但是为了避免使用到那些表征能力不强的低阶特征图谱(浅层), SSD 只使用了深层的特征图谱(conv4_3), 同时在 backbone 网络的后面又添加了几层卷积层来提取高表征能力的特征图谱. 但是这样就是的 SSD 错过了那些低阶特征的信息, 这些低阶特征中往往包含了高阶特征不具有的信息, 如小物体的特征信息, 这也是为什么 SSD 对小物体不敏感的原因之一.<br>本文的目标就是建立一个可以利用所有尺度的特征图谱都特征金字塔结构. 为了达到这个目标, 我们通过 top-down pathway 和 lateral connections 建立了一个可以结合低阶特征和高阶特征的特征金字塔结构, 如图1(d)所示. 由图易知, 这个特征金字塔在所有尺度的特征图谱上都具有很强的语义特征, 同时可以从一张单一的图片出发, 利用很低的计算成本建立起来. 换句话说就是, 我们可以在不牺牲模型特征表达能力, 速度, 以及内存消耗的情况下, 创建一个网络模型内部的特征金字塔结构. 和本文的特征金字塔比较相似的结构是利用 top-down 和 skip-connection 建立的网络, 如图2(top)所示, 该网络的主要目前是产生一个 <strong>单一的</strong> 具有很强表征能力的特征图谱, 而我们的模型是在不同层次的特征图谱上进行预测的, 如图2(down)所示.</p>
+<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fy9gwgg1dhj21k50ltgzy.jpg" alt="图2"></p>
+<h1 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h1><p><strong>Hand-engineered features and early neural networks:</strong> SIFT, HOG, shallow networks</p>
+<p><strong>Deep ConvNet object detectors:</strong> OverFeat, R-CNN, SPPnet, Fast R-CNN, Faster R-CNN</p>
+<p><strong>Methods using multiple layers:</strong> FCN, HyperNet, ParseNet, ION, SSD, MS-CNN</p>
+<h1 id="Feature-Pyramid-Networks"><a href="#Feature-Pyramid-Networks" class="headerlink" title="Feature Pyramid Networks"></a>Feature Pyramid Networks</h1><p>输入: 任意尺寸的单张图片(不进行尺度缩放)<br>输出: 以全卷积的方式在不同层次上输出对应映射尺寸的特征图谱</p>
+<p>构建FPN包含三个步骤, 分别为 bottom-up pathway, top-down pathway 和 lateral connections, 介绍如下:</p>
+<p><strong>自下而上的路径:</strong> 该方式是根据backbone 卷积网络的前馈计算过程进行的. 特征图通常经过卷积计算后是会越来越小的, 也有一些特征层的输出和原来大小一样, 成为处于同一个网络阶段(“same network stage”). 对于本文, 将每一个”network stage”看做是一个金字塔级别. 然后选择每个阶段的最后一层作为特征图的参考集合(因为每一个 stage 的最深层理应具有最强的特征表示). 具体来说, 对于ResNets, 使用了每一个阶段的最后一个残差结构的特征激活输出, 将这些残差模块conv2, conv3, conv4, conv5 的输出表示为 $\{C_2, C_3, C_4, C_5\}$, 并且注意到他们相对于输入图像具有 $\{4,8,16,32\}$ 像素的步长(原始图片与特征图谱宽或高的比例). 由于 conv1 的特征图谱占用内存较多, 因此我们没有将它包括在金字塔中.</p>
+<p><strong>自上而下的路径以及横向连接:</strong><br>自上而下的路径是通过在更粗糙, 但是语义更强的高层特征图(深层)上进行上采样来得到更高分辨率的图谱, 然后将这些上采样之后的feature map 与自下而上(自浅而深)的特征图谱通过横向连接的方式拼接在一起.(横向连接的feature map的size是一样大的). 那些bottom-up frature map 具有较为低级的语义信息(低级是指抽象程度低), 但是这些图谱的位置精度更高, 因为它们经过的下采样次数更少. 下面的图3显示了构建top-down feature map的模块. 对于一个粗糙精度的特征图谱, 首先将其上采样至2倍(为了简单, 直接使用最近邻), 然后将上采样后的特征图谱与对应的自下而上的图谱进行按元素相加合并(element-wise addition, 合并前自下而上的图谱会将经过1×1卷积降低通道数). 这个过程会一直迭代, 直到最浅的卷积图谱也被合并为止. 在最开始的时候, 最深层的合并是使用1×1卷积来生成待合并的 top-bottom feature map的. 最后, 会用3×3的卷积在所有合并后的特征图谱上进行卷积操作, 以此来得到最终的特征图谱(以此来消除上采样的混叠效应) $\{P_2, P_3, P_4, P_5\}$, 他们具有与$\{C_2, C_3, C_4, C_5\}$ 相同的大小.</p>
+<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fy9guhouhvj217x0hrn4b.jpg" alt="图3"></p>
+<p>由于所有层的金字塔卷积都是使用的共享的分类器和回归器, 因此文章固定了特征图谱的通道数量(256). 文章使用的是最简单的网络结构, 同时也存在其他更好的连接设计, 但本文的主要目的是探讨FPN的有效性, 因此没要尝试过多的连接组合.</p>
+<h1 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h1><p>FPN是一种用于在卷积网络内部建立特征金字塔的一般化的解决方案, 下面利用Faster RCNN来证明FPN的有效性.</p>
+<h2 id="Feature-Pyramid-Networks-for-RPN"><a href="#Feature-Pyramid-Networks-for-RPN" class="headerlink" title="Feature Pyramid Networks for RPN"></a>Feature Pyramid Networks for RPN</h2><p>RPN会在最后一层的特征图谱上, 利用 3×3 的卷积核, 生成同样大小的特征图谱, 然后在这个新的图谱上画anchor boxes, 并利用两个1×1的卷积核进行二分类和回归任务. 本文用FPN替换了RPN的单一尺度的特征图谱, 然后依然使用 3×3 卷积核两个1×1的卷积核进行二分类和回归任务. 同时, 因为 RPN 会在每一个等级上的特征图谱的每一个 location 上进行遍历, 因此, 对于同一个金字塔层, 都使用相同的一个固定尺寸的anchors (这一点和 Faster RCNN 不一样, 后者采用的是在同一张特征图谱上, 选取不同尺度的  multi-scale 策略). 相反的, 我们会在不同的金字塔层上, 使用不同的尺寸大小, 具体来说, 对于$\{P_2, P_3, P_4, P_5, P_6\}$ (这里的 $P_6$ 仅仅为了覆盖更大的尺寸 $512^2$, 它是通过在 $P_5$ 上进行 stride 为 2 的降采样得到的), 其anchors的大小分别为 ${32^2, 64^2, 128^2, 256^2, 512^2}$, 每一层anchors的宽高比例为{1:2, 1:1, 2:1}, 因此, 总共具有15个 anchors (对于每一个 location 而言, 对比 Faster R-CNN, 每一个 location 具有默认具有 3×3=9 个 anchors)<br>训练时的标签赋值策略和FasterRCNN是一样的, 都会根据 IoU 的大小为每一个 anchors 贴上正负样本的浅标签, 或者不贴.</p>
+<p>按照上述的策略, 我们可以很简单的在 RPN 中使用 FPN 网络, 更具体的细节会在实验部分给出.</p>
+<h2 id="Feature-Pyramid-Networks-for-Fast-RCNN"><a href="#Feature-Pyramid-Networks-for-Fast-RCNN" class="headerlink" title="Feature Pyramid Networks for Fast RCNN"></a>Feature Pyramid Networks for Fast RCNN</h2><p>将FPN用于FastRCNN时, 需要在不同的层次上赋予不同尺度的 RoI 大小.(因为 RoI pooling 是根据特征图谱和原图的尺寸关系决定的)<br>我们将特征金字塔看做是从图片金字塔产生的特征图谱, 因此我们可以采用和 Fast R-CNN 相同的分配策略来完成 RoI pooling, 具体来说, 我们将宽度为 $w$ ,高度为 $h$ 的 RoI (这里的宽和高是针对原始图片而言的)通过如下公式分配到特征金字塔的 $P_k$ 等级上:</p>
+<script type="math/tex; mode=display">k = \lfloor k_0 + log_2(\frac{\sqrt{wh}}{224})</script><p>这里 224 是标准的ImageNet预训练的大小, 而 $K_0$ 是则大小为 $w\times h = 224^2$ 的RoI应该映射到的目标级别. 类似于基于 ResNet 的 Faster RCNN 使用 $C_4$ 作为单尺度特征映射, 我们将 $k_0$ 设置为4 (也就是说, 与图片一样大的RoI会映射到 $P_4$ 的特征图谱上). 上式表明, 如果RoI的尺度变的更小(如224的0.5倍), 那么该RoI就应该映射到分辨率更高的金字塔图谱上(如 $k=3$ ).(也就是说不同大小的RoI会映射到不同金字塔层级的特征图谱上, 总的来说, 越小的RoI, 会映射到更浅层的特征图谱上, 因为太深的图谱可能已经将小物体信息过滤掉了)</p>
+<p>文章将预测器(分类和坐标回归)应用到所有金字塔层级的RoI上面. 需要注意, <strong>预测器(heads)在所有层级上的权重都是共享的.</strong> . 在ResNet中, 会在conv4的特征图谱上在加上一个conv5, 但是本章已经将conv5用于构建特征金字塔. 所以和ResNet不同, 文章很直接的利用RoI pooling来获取 $7\times 7$ 的特征 (注意不是基于滑动窗口的检测器, 这一点和YOLO差不多), 并且会使用2层1024维的 fc 隐藏层(后接 ReLU), 然后才会送入最终的预测器层当中(分类和位置回归). <strong>注意到, 和标准的 conv5 head 相比, 我们的 2-fc MLP head 具有更少的权重参数, 运行速度也更快</strong></p>
+<h1 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h1><p>用COCO 80ktrain和35k val进行实验. 所有的网络均在ImageNet1k上预训练.</p>
+<h2 id="Region-Proposal-with-RPN"><a href="#Region-Proposal-with-RPN" class="headerlink" title="Region Proposal with RPN"></a>Region Proposal with RPN</h2><p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fy9gxelwczj21m80f2n1v.jpg" alt="表1"></p>
+<p><strong>实验细节:</strong><br>表1中的所有模型都是以端到端的方式训练的, 输入图片的尺寸被resize, 其最短边长为800像素. 8块GPU同步训练, 每个GPU的minibatch为两张图片, 每张图片的anchors为256. weight decay为0.0001, momentum为0.9. learning rate 开始的30k图片是0.02, 之后是0.002. 训练时包含了那些处于image之外的anchor boxes(Faster选择忽略).</p>
+<h3 id="消融实验"><a href="#消融实验" class="headerlink" title="消融实验"></a>消融实验</h3><p><strong>Comparisons with baselines:</strong> 为了公平比较, 我们使用了两种 baseline 方法, 一个采用 C4 特征图谱, 一个采用 C5 特征图谱, 并且他们的 scales 都是 $\{ 32^2, 64^2, 128^2, 256^2, 512^2\}$, 表1(b)相对于表1(a)并没有提高, 说明单一的更高层级的特征图谱不足以输出更好的结果, 因此当层级更高时, 虽然表征能力更强, 但同时特征图谱也变的更加粗糙. 而使用 FPN 则可以大大提高目标的准确率和召回率(AR), 如表1(c)所示. 尤其是在面对小物体和中等物体等多尺度物体时, 会显著提高AR指标.</p>
+<p><strong>top-down</strong> 表1(d)显示了不带 top-down pathway 的 FPN 实验结果, 与表1(b)相比, 可以看出, 带有 top-down pathway 的特征图谱加强可以使得特征图谱具有很强的语义特征信息和更好的分辨率.(原始的特征图谱之间的语义鸿沟更大, 层与层之间的联系比较简单粗糙)</p>
+<p><strong>lateral connections:</strong> 虽然top-down方式的特征图谱具有很强的语义特征信息和更好的分辨率效果, 但是由于经过不断的降采样和上采样过程, 该特征图谱的位置信息可能会变得不够精确. <strong>lateral connections</strong> 同时结合具有精确位置信息的特征图谱和具有强语义信息的图谱, 进而达到更好的效果. 当没有 <strong>lateral connections</strong> 时(也就是不使用 down-top 的特征图谱), 效果明显下降, 如表1(e)所示.</p>
+<p><strong>Pyramid结构的重要性:</strong> 如果我们只在特征图谱 $P_2$ 上进行检测, 这就像是Faster RCNN的单尺度方法一样, 所有的anchors都在最后一层图谱上, 这种变体比Faster RCNN好但是比FPN差, 如表1(f)所示. 直观上来说, 在所有特征层上进行检测, 对不同尺度的物体的鲁棒性要更好. 同时我们也注意到, 由于 $P_2$ 的分辨率较高, 因此它会产生更多的 anchors, 但是最终的精度并没有提供太过, 这说明生成大量的 anchors 并不足以提升模型的精度.</p>
+<h2 id="利用Fast-Faster-RCNN进行目标检测"><a href="#利用Fast-Faster-RCNN进行目标检测" class="headerlink" title="利用Fast/Faster RCNN进行目标检测"></a>利用Fast/Faster RCNN进行目标检测</h2><p>接下来我们在基于区域的检测器上来使用验证 FPN 的有效性, 我们利用AP(Average Precision)指标对FPN进行验证.</p>
+<p><strong>实验细节:</strong><br>图片被缩放到最短边长为 800 pixels; 在 8 个 GPU 上利用同步 SGD 来训练模型, 每一个 GPU 上的 mini-batch 中包含 2 张图片, 每张图片有 512 个 RoIs. weight decay 为 0.0001, momentum 为 0.9; lr 在前 60k mini-batches 为 0.02, 在后 20k 为 0.002, 在训练时每张图片会产生 2000 个 RoIs, 在测试时会产生 1000 个 RoIs. 在 COCO 数据集上训练带有 FPN 的 Fast R-CNN 需要 10 个小时.</p>
+<h3 id="Fast-R-CNN"><a href="#Fast-R-CNN" class="headerlink" title="Fast R-CNN"></a>Fast R-CNN</h3><p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fy9gxx88aaj21lh0dmaey.jpg" alt="表2"></p>
+<h3 id="Faster-R-CNN-on-consistent-proposals"><a href="#Faster-R-CNN-on-consistent-proposals" class="headerlink" title="Faster R-CNN(on consistent proposals)"></a>Faster R-CNN(on consistent proposals)</h3><p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fy9gycey9dj21lh0a7n10.jpg" alt="表3"></p>
+<h3 id="Comparing-with-COCO-Competition-Winners"><a href="#Comparing-with-COCO-Competition-Winners" class="headerlink" title="Comparing with COCO Competition Winners"></a>Comparing with COCO Competition Winners</h3><p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fy9gyue4j2j21lr0h6n3j.jpg" alt="表4"></p>
+<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fy9gzlarcnj20xb09qgn8.jpg" alt="表5"></p>
+<p>在Faster RCNN上使用FPN, mAP提高了 2%, 其中小物体的mAP提高了2.1%.(固定的候选区域集合)</p>
+<p>在面对consistent proposals时(因为RPN和Fast RCNN要共享权重,所以会不断迭代训练), FPN比Faster RCNN的AP高 <strong>2.3</strong> 点, 比AP@0.5高 <strong>3.8</strong> 点.</p>
+<p>FasterRCNN中RPN和FastRCNN的权重共享大约可以提升mAP值0.5左右(0.2~0.7), 同时, 权重共享也可以降低预测时间(0.148 vs 0.172, ResNet50, M40 GPU因为不用计算两个不同的权重参数, RPN与Fast RCNN用的是一个权重参数).</p>
+<p><strong>FPN没有使用很多流行的提升精度的方法, 如迭代回归, 难样例挖掘, 上下文建模, 数据增强等等. 但是FPN仍然在目标检测, 实例分割, 关键点检测等多项任务上刷新了最高分. 如果使用这些trick, 理论上会获得更高的精度.</strong></p>
+<p>FPN是一种通用的特征提取方法, 他同样也适用于实例分割任务, 并且可以取得很好的效果.</p>
+<h1 id="Extensions-Segmentation-Proposals"><a href="#Extensions-Segmentation-Proposals" class="headerlink" title="Extensions: Segmentation Proposals"></a>Extensions: Segmentation Proposals</h1><p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fy9h11hrm5j215d0ie4ff.jpg" alt="图4"></p>
+<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fy9h1zwjgaj21ed0lqdzh.jpg" alt="表6"></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/目标检测/" rel="tag"><i class="fa fa-tag"></i> 目标检测</a>
+          
+            <a href="/tags/计算机视觉/" rel="tag"><i class="fa fa-tag"></i> 计算机视觉</a>
+          
+            <a href="/tags/论文解读/" rel="tag"><i class="fa fa-tag"></i> 论文解读</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/Python-json/" rel="prev" title="json模块">
+                <i class="fa fa-chevron-left"></i> json模块
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/面试-数学题/" rel="next" title="数学题">
+                数学题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">243</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#核心亮点"><span class="nav-text">核心亮点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#论文细节"><span class="nav-text">论文细节</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#背景介绍"><span class="nav-text">背景介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SSD与FPN中多尺度特征图谱融合的区别"><span class="nav-text">SSD与FPN中多尺度特征图谱融合的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关工作"><span class="nav-text">相关工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Feature-Pyramid-Networks"><span class="nav-text">Feature Pyramid Networks</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#应用"><span class="nav-text">应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Feature-Pyramid-Networks-for-RPN"><span class="nav-text">Feature Pyramid Networks for RPN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Feature-Pyramid-Networks-for-Fast-RCNN"><span class="nav-text">Feature Pyramid Networks for Fast RCNN</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实验"><span class="nav-text">实验</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Region-Proposal-with-RPN"><span class="nav-text">Region Proposal with RPN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#消融实验"><span class="nav-text">消融实验</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用Fast-Faster-RCNN进行目标检测"><span class="nav-text">利用Fast/Faster RCNN进行目标检测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fast-R-CNN"><span class="nav-text">Fast R-CNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Faster-R-CNN-on-consistent-proposals"><span class="nav-text">Faster R-CNN(on consistent proposals)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Comparing-with-COCO-Competition-Winners"><span class="nav-text">Comparing with COCO Competition Winners</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Extensions-Segmentation-Proposals"><span class="nav-text">Extensions: Segmentation Proposals</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">1.6m</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">23:43</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

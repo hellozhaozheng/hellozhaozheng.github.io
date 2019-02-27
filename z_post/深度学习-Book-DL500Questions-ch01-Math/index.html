@@ -1,0 +1,1745 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="本篇博文为个人读书笔记, 更详细的内容请查看《深度学习500问》原版书籍 第一章 数学基础1.1 标量, 向量, 矩阵, 张量之间的联系标量 (scalar)一个标量表示一个单独的数. 向量 (vector)一个向量表示一组数, 通过次序中的索引, 我们可以确定每个单独的数. 矩阵 (matrix)矩阵是具有相同特征和维度的对象的集合, 表现为一张二维数据表. 张量 (tensor)神经网络中的张">
+<meta name="keywords" content="读书笔记,深度学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《深度学习500问》 第一章 数学基础">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/深度学习-Book-DL500Questions-ch01-Math/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="本篇博文为个人读书笔记, 更详细的内容请查看《深度学习500问》原版书籍 第一章 数学基础1.1 标量, 向量, 矩阵, 张量之间的联系标量 (scalar)一个标量表示一个单独的数. 向量 (vector)一个向量表示一组数, 通过次序中的索引, 我们可以确定每个单独的数. 矩阵 (matrix)矩阵是具有相同特征和维度的对象的集合, 表现为一张二维数据表. 张量 (tensor)神经网络中的张">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://hellozhaozheng.github.io/z_post/深度学习-Book-DL500Questions-ch01-Math/img/ch1/conditional_probability.jpg">
+<meta property="og:updated_time" content="2018-12-18T10:48:29.892Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《深度学习500问》 第一章 数学基础">
+<meta name="twitter:description" content="本篇博文为个人读书笔记, 更详细的内容请查看《深度学习500问》原版书籍 第一章 数学基础1.1 标量, 向量, 矩阵, 张量之间的联系标量 (scalar)一个标量表示一个单独的数. 向量 (vector)一个向量表示一组数, 通过次序中的索引, 我们可以确定每个单独的数. 矩阵 (matrix)矩阵是具有相同特征和维度的对象的集合, 表现为一张二维数据表. 张量 (tensor)神经网络中的张">
+<meta name="twitter:image" content="https://hellozhaozheng.github.io/z_post/深度学习-Book-DL500Questions-ch01-Math/img/ch1/conditional_probability.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/深度学习-Book-DL500Questions-ch01-Math/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>《深度学习500问》 第一章 数学基础 | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">243</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-linux">
+    <a href="/categories/Linux/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-面试">
+    <a href="/categories/面试/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其他">
+    <a href="/categories/其他/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/深度学习-Book-DL500Questions-ch01-Math/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">《深度学习500问》 第一章 数学基础
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-17 16:35:55" itemprop="dateCreated datePublished" datetime="2018-12-17T16:35:55+08:00">2018-12-17</time>
+            
+
+            
+          </span>
+
+	  
+  	    <span class="post-updated">
+    		&nbsp; | &nbsp; 更新于
+    		<time itemprop="dateUpdated" datetime="2018-12-18T18:48:29+08:00" content="2018-12-18">
+      		  2018-12-18
+    		</time>
+  	  </span>
+	  
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">9.2k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">8 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>本篇博文为个人读书笔记, 更详细的内容请查看<a href="https://github.com/scutan90/DeepLearning-500-questions" target="_blank" rel="noopener">《深度学习500问》原版书籍</a></strong></p>
+<h1 id="第一章-数学基础"><a href="#第一章-数学基础" class="headerlink" title="第一章 数学基础"></a>第一章 数学基础</h1><h1 id="1-1-标量-向量-矩阵-张量之间的联系"><a href="#1-1-标量-向量-矩阵-张量之间的联系" class="headerlink" title="1.1 标量, 向量, 矩阵, 张量之间的联系"></a>1.1 标量, 向量, 矩阵, 张量之间的联系</h1><p><strong>标量 (scalar)</strong><br>一个标量表示一个单独的数.</p>
+<p><strong>向量 (vector)</strong><br>一个向量表示一组数, 通过次序中的索引, 我们可以确定每个单独的数.</p>
+<p><strong>矩阵 (matrix)</strong><br>矩阵是具有相同特征和维度的对象的集合, 表现为一张二维数据表.</p>
+<p><strong>张量 (tensor)</strong><br>神经网络中的张量和物理学中的张量不是同一个概念, 在神经网络中, 我们所说的张量可以看做是多维数组, 例如在 PyTorch 中我们的张量通常可以中 numpy 的 ndarray 数据结构互相转换</p>
+<p><strong>四者之间关系</strong></p>
+<blockquote>
+<p>标量是0阶张量, 向量是一阶张量, 矩阵是二阶张量.(可以这么看)</p>
+</blockquote>
+<h1 id="1-2-张量与矩阵的区别"><a href="#1-2-张量与矩阵的区别" class="headerlink" title="1.2 张量与矩阵的区别?"></a>1.2 张量与矩阵的区别?</h1><p>张量的范围大过矩阵, 对于二阶张量来说, 我们可以把它看做是一个矩阵, 也可以说矩阵是一种特殊的二阶张量</p>
+<h1 id="1-3-矩阵和向量相乘结果"><a href="#1-3-矩阵和向量相乘结果" class="headerlink" title="1.3 矩阵和向量相乘结果"></a>1.3 矩阵和向量相乘结果</h1><p>一个 $m$ 行 $n$ 列的矩阵和 $n$ 行向量相乘, 最后得到就是一个 $m$ 行的向量.</p>
+<h1 id="1-4-向量和矩阵的范数归纳"><a href="#1-4-向量和矩阵的范数归纳" class="headerlink" title="1.4 向量和矩阵的范数归纳"></a>1.4 向量和矩阵的范数归纳</h1><p><strong>向量的范数</strong><br>定义一个向量为: $\vec{a}=[-5, 6, 8, -10]$. 任意一组向量设为$\vec{x}=(x_1,x_2,…,x_N)$. 其不同范数求解如下:</p>
+<ul>
+<li>$L_1$ 范数: 向量的各个元素的 <strong>绝对值</strong> 之和, 上述向量 $\vec{a}$ 的 $L_1$ 范数结果就是 29.</li>
+</ul>
+<script type="math/tex; mode=display">\Vert\vec{x}\Vert_1=\sum_{i=1}^N\vert{x_i}\vert</script><ul>
+<li>$L_2$ 范数: 向量的每个元素的平方之和, 最终再开平方根, 上述 $\vec{a}$ 的 $L_2$ 范数结果就是 15.</li>
+</ul>
+<script type="math/tex; mode=display">\Vert\vec{x}\Vert_2=\sqrt{\sum_{i=1}^N{\vert{x_i}\vert}^2}</script><ul>
+<li>$L_p$ 范数: 向量元素绝对值的 $p$ 次方和的 $1/p$ 次幂.</li>
+</ul>
+<script type="math/tex; mode=display">L_p=\Vert\vec{x}\Vert_p=\sqrt[p]{\sum_{i=1}^{N}\vert{x_i}\vert^p}</script><ul>
+<li>负无穷范数: 向量的所有元素的绝对值中最小的: 上述向量 $\vec{a}$ 的负无穷范数结果就是 5.   </li>
+</ul>
+<script type="math/tex; mode=display">\Vert\vec{x}\Vert_{-\infty}=\min{\vert{x_i}}\vert</script><ul>
+<li>正无穷范数: 向量的所有元素的绝对值中最大的: 上述向量 $\vec{a}$ 的负无穷范数结果就是 10.</li>
+</ul>
+<script type="math/tex; mode=display">\Vert\vec{x}\Vert_{+\infty}=\max{|{x_i}|}</script><p><strong>矩阵的范数</strong>  </p>
+<p>​定义一个矩阵 $A=[-1, 2, -3; 4, -6, 6]$.  任意矩阵定义为: $A_{m\times n}$, 其元素为 $a_{ij}$. 矩阵的范数定义为</p>
+<script type="math/tex; mode=display">\Vert{A}\Vert_p =\sup_{x\neq 0}\frac{\Vert{Ax}\Vert_p}{\Vert{x}\Vert_p}</script><p>​当向量取不同范数时(注意这里 1 范数和 $L_1$ 范数的区别, 在深度学习中, 我们一般面对的是张量, 因此只考虑 $L_1$ 等范数), 相应得到了不同的矩阵范数.</p>
+<ul>
+<li><strong>矩阵的 1 范数(列范数)</strong>: 矩阵的每一列上的元素绝对值先求和, 再从中取个最大的(列和最大), 上述矩阵 $A$ 的1范数先得到 $[5,8,9]$, 再取最大的最终结果就是: 9.</li>
+</ul>
+<script type="math/tex; mode=display">
+\Vert A\Vert_1=\max_{1\le j\le}\sum_{i=1}^m|{a_{ij}}|</script><ul>
+<li><strong>矩阵的 2 范数</strong>: 矩阵$A^TA$的最大特征值开平方根, 上述矩阵$A$的2范数得到的最终结果是: 10.0623. 下式中, $\lambda_{max}(A^T A)$ 为 $A^T A$ 的特征值绝对值的最大值.</li>
+</ul>
+<script type="math/tex; mode=display">\Vert A\Vert_2=\sqrt{\lambda_{max}(A^T A)}</script><ul>
+<li><strong>矩阵的无穷范数(行范数)</strong>: 矩阵的每一行上的元素绝对值先求和, 再从中取个最大的(行和最大), 上述矩阵 $A$ 的1范数先得到 $[6; 16]$, 再取最大的最终结果就是: 16.</li>
+</ul>
+<script type="math/tex; mode=display">\Vert A\Vert_{\infty}=\max_{1\le i \le n}\sum_{j=1}^n |{a_{ij}}|</script><ul>
+<li><p><strong>矩阵的核范数</strong>: 矩阵的奇异值(将矩阵svd分解)之和, 这个范数可以用来低秩表示(因为最小化核范数, 相当于最小化矩阵的秩——低秩), 上述矩阵A最终结果就是: 10.9287.   </p>
+</li>
+<li><p><strong>矩阵的 L0 范数</strong>: 矩阵的非 0 元素的个数, 通常用它来表示稀疏, L0 范数越小 0 元素越多, 也就越稀疏, 上述矩阵$A$最终结果就是: 6.</p>
+</li>
+<li><strong>矩阵的 L1 范数</strong>: 矩阵中的每个元素绝对值之和, 它是 L0 范数的最优凸近似, 因此它也可以表示稀疏, 上述矩阵 $A$ 最终结果就是: 22.   </li>
+<li><strong>矩阵的 F 范数</strong>: 矩阵的各个元素平方之和再开平方根, 它通常也叫做矩阵的 <strong>L2范数</strong>, 它的有点在它是一个凸函数, 可以求导求解, 易于计算, 上述矩阵A最终结果就是: 10.0995.   </li>
+</ul>
+<script type="math/tex; mode=display">\Vert A\Vert_F=\sqrt{(\sum_{i=1}^m\sum_{j=1}^n{|a_{ij}|}^2)}</script><ul>
+<li><strong>矩阵的L21范数</strong>: 矩阵先以每一列为单位, 求每一列的F范数(也可认为是向量的2范数), 然后再将得到的结果求L1范数(也可认为是向量的1范数), 很容易看出它是介于L1和L2之间的一种范数, 上述矩阵$A$最终结果就是: 17.1559.</li>
+<li><strong>矩阵的 Lp 范数</strong></li>
+</ul>
+<script type="math/tex; mode=display">\Vert A\Vert_p=\sqrt[p]{(\sum_{i=1}^m\sum_{j=1}^n{| a_{ij}|}^p)}</script><p><strong>在深度学习中, 我们常用的范数是针对张量而言的, 这些范数的计算和矩阵的 L 系范数的计算方式相同.</strong></p>
+<h1 id="1-5-如何判断一个矩阵为正定"><a href="#1-5-如何判断一个矩阵为正定" class="headerlink" title="1.5 如何判断一个矩阵为正定?"></a>1.5 如何判断一个矩阵为正定?</h1><ul>
+<li>顺序主子式全大于0;</li>
+<li>存在可逆矩阵 $C$ 使 $C^TC$ 等于该矩阵;</li>
+<li>正惯性指数等于 $n$;</li>
+<li>合同于单位矩阵 $E$(即: 规范形为 $E$)</li>
+<li>标准形中主对角元素全为正;</li>
+<li>特征值全为正;</li>
+<li>是某基的度量矩阵.</li>
+</ul>
+<h1 id="1-6-导数偏导计算"><a href="#1-6-导数偏导计算" class="headerlink" title="1.6 导数偏导计算"></a>1.6 导数偏导计算</h1><h2 id="导数"><a href="#导数" class="headerlink" title="导数"></a>导数</h2><p>​导数代表了在 <strong>自变量变化趋于无穷小的时候, 函数值的变化与自变量的变化的比值</strong>. 几何意义是这个点的 <strong>切线</strong>. 物理意义是该时刻的 <strong>(瞬时)变化率</strong>.<br>​<br><strong>注意</strong>: 在一元函数中, 只有一个自变量变动, 也就是说只存在一个方向的变化率, 这也就是为什么一元函数没有偏导数的原因. 在物理学中有平均速度和瞬时速度之说. 平均速度为</p>
+<script type="math/tex; mode=display">v=\frac{s}{t}</script><p>​其中 $v$ 表示平均速度, $s$ 表示路程, $t$ 表示时间. 这个公式可以改写为</p>
+<script type="math/tex; mode=display">\bar{v}=\frac{\Delta s}{\Delta t}=\frac{s(t_0+\Delta t)-s(t_0)}{\Delta t}</script><p>​其中 $\Delta s$ 表示两点之间的距离, 而 $\Delta t$ 表示走过这段距离需要花费的时间. 当 $\Delta t$ 趋向于 0($\Delta t \to 0$)时, 也就是时间变得很短时, 平均速度也就变成了在 $t_0$ 时刻的瞬时速度, 表示成如下形式:</p>
+<script type="math/tex; mode=display">v(t_0)=\lim_{\Delta t \to 0}{\bar{v}}=\lim_{\Delta t \to 0}{\frac{\Delta s}{\Delta t}}=\lim_{\Delta t \to 0}{\frac{s(t_0+\Delta t)-s(t_0)}{\Delta t}}</script><p>​实际上, 上式表示的是路程 $s$ 关于时间 $t$ 的函数在 $t=t_0$ 处的导数. 一般的, 这样定义导数: 如果平均变化率的极限存在, 即有</p>
+<script type="math/tex; mode=display">\lim_{\Delta x \to 0}{\frac{\Delta y}{\Delta x}}=\lim_{\Delta x \to 0}{\frac{f(x_0+\Delta x)-f(x_0)}{\Delta x}}</script><p>​则称此极限为函数 $y=f(x)$ 在点 $x_0$ 处的导数. 记作 $f’(x_0)$ 或 $y’\vert_{x=x_0}$ 或 $\frac{dy}{dx}\vert_{x=x_0}$ 或 $\frac{df(x)}{dx}\vert_{x=x_0}$. 通俗地说, 导数就是曲线在某一点切线的斜率.</p>
+<h2 id="偏导数"><a href="#偏导数" class="headerlink" title="偏导数"></a>偏导数</h2><p>​既然谈到偏导数, 那就至少涉及到两个自变量. 以两个自变量 $x, y$ 为例, $z=f(x,y)$, 从导数到偏导数, 也就是从曲线来到了曲面. 曲线上的一点, 其切线只有一条. 但是曲面上的一点, 切线有无数条. 而 <strong>偏导数就是指多元函数沿着坐标轴的变化率</strong>.<br>​<strong>注意</strong>: 直观地说, 偏导数也就是函数在某一点上沿坐标轴正方向的的变化率.<br>设函数 $z=f(x,y)$ 在点 $(x_0,y_0)$ 的领域内有定义, 当 $y=y_0$ 时, $z$ 可以看作关于 $x$ 的一元函数 $f(x,y_0)$, 若该一元函数在 $x=x_0$ 处可导, 即有</p>
+<script type="math/tex; mode=display">\lim_{\Delta x \to 0}{\frac{f(x_0+\Delta x,y_0)-f(x_0,y_0)}{\Delta x}}=A</script><p>​函数的极限 $A$ 存在. 那么称 $A$ 为函数 $z=f(x,y)$ 在点 $(x_0,y_0)$ 处关于自变量 $x$ 的偏导数, 记作 $f_x(x_0,y_0)$ 或 $\frac{\partial z}{\partial x}\vert_{y=y_0}^{x=x_0}$ 或 $\frac{\partial f}{\partial x}\vert_{y=y_0}^{x=x_0}$ 或 $z_x\vert_{y=y_0}^{x=x_0}$.</p>
+<p>​偏导数在求解时可以将另外一个变量看做常数, 利用普通的求导方式求解, 比如 $z=3x^2+xy$ 关于 $x$ 的偏导数就为 $z_x=6x+y$, 这个时候 $y$ 相当于 $x$ 的系数.<br>某点 $(x_0,y_0)$ 处的偏导数的几何意义为曲面 $z=f(x,y)$ 与面 $x=x_0$ 或面 $y=y_0$ 的交线在 $y=y_0$ 或 $x=x_0$ 处切线的斜率.   </p>
+<h1 id="1-7-导数和偏导数有什么区别"><a href="#1-7-导数和偏导数有什么区别" class="headerlink" title="1.7 导数和偏导数有什么区别?"></a>1.7 导数和偏导数有什么区别?</h1><p>​导数和偏导没有本质区别, 如果极限存在, 都是当自变量的变化量趋于0时, 函数值的变化量与自变量变化量比值的极限.   </p>
+<blockquote>
+<ul>
+<li>一元函数, 一个 $y$ 对应一个 $x$, 导数只有一个.   </li>
+<li>二元函数, 一个 $z$ 对应一个 $x$ 和一个 $y$, 有两个导数: 一个是 $z$ 对 $x$ 的导数, 一个是 $z$ 对 $y$ 的导数, 称之为偏导. 当对自身 $z$ 求导时, 则要求同时求对 $x$ 和对 $y$ 的导数 $z’(x,y) = z’(x)z(y)+z(x)z’(y)$.</li>
+<li>求偏导时要注意, 对一个变量求导, 则视另一个变量为常数, 只对该变量求导, 从而将偏导的求解转化成了一元函数的求导.</li>
+</ul>
+</blockquote>
+<h1 id="1-8-特征值分解与特征向量"><a href="#1-8-特征值分解与特征向量" class="headerlink" title="1.8 特征值分解与特征向量"></a>1.8 特征值分解与特征向量</h1><ul>
+<li>特征值分解可以得到特征值与特征向量;</li>
+<li>特征值表示的是这个特征到底有多重要, 而特征向量表示这个特征是什么.   </li>
+</ul>
+<p>如果说一个向量 $\vec{v}$ 是方阵 $A$ 的特征向量, 将一定可以表示成下面的形式:</p>
+<script type="math/tex; mode=display">A \vec{v} = \lambda \vec{v}</script><p>$\lambda$ 为特征向量 $\vec{v}$ 对应的特征值. 特征值分解是将一个矩阵分解为如下形式:<br>​    </p>
+<script type="math/tex; mode=display">A=Q\sum Q^{-1}</script><p>其中, $Q$ 是这个矩阵 $A$ 的特征向量组成的矩阵, $\sum$ 是一个对角矩阵, 每一个对角线元素就是一个特征值, 里面的特征值是由大到小排列的, 这些特征值所对应的特征向量就是描述这个矩阵变化方向(从主要的变化到次要的变化排列). 也就是说矩阵 $A$ 的信息可以由其特征值和特征向量表示.</p>
+<h1 id="1-9-奇异值与特征值有什么关系"><a href="#1-9-奇异值与特征值有什么关系" class="headerlink" title="1.9 奇异值与特征值有什么关系?"></a>1.9 奇异值与特征值有什么关系?</h1><p>TODO: 奇异值这里没搞懂</p>
+<p>​那么奇异值和特征值是怎么对应起来的呢? 我们将一个矩阵$A$的转置乘以$A$, 并对$AA^T$求特征值, 则有下面的形式:</p>
+<script type="math/tex; mode=display">(A^TA)V = \lambda V</script><p>这里$V$就是上面的右奇异向量, 另外还有:</p>
+<script type="math/tex; mode=display">\sigma_i = \sqrt{\lambda_i}, u_i=\frac{1}{\sigma_i}A\mu_i</script><p>这里的 $\sigma$ 就是奇异值, $u$ 就是上面说的左奇异向量. 【证明那个哥们也没给】<br>​奇异值 $\sigma$ 跟特征值类似, 在矩阵 $\sum$ 中也是从大到小排列, 而且 $\sigma$ 的减少特别的快, 在很多情况下, 前 10% 甚至 1% 的奇异值的和就占了全部的奇异值之和的 99% 以上了. 也就是说, 我们也可以用前 $r$($r$ 远小于 $m、n$)个的奇异值来近似描述矩阵, 即部分奇异值分解:</p>
+<script type="math/tex; mode=display">A_{m\times n}\approx U_{m \times r}\sum_{r\times r}V_{r \times n}^T</script><p>右边的三个矩阵相乘的结果将会是一个接近于$A$的矩阵, 在这儿, $r$ 越接近于 $n$, 则相乘的结果越接近于$A$.</p>
+<h1 id="1-10-机器学习为什么要使用概率"><a href="#1-10-机器学习为什么要使用概率" class="headerlink" title="1.10 机器学习为什么要使用概率?"></a>1.10 机器学习为什么要使用概率?</h1><p>​事件的概率是衡量该事件发生的可能性的量度. 虽然在一次随机试验中某个事件的发生是带有偶然性的, 但那些可在相同条件下大量重复的随机试验却往往呈现出明显的数量规律.<br>​机器学习除了处理不确定量, 也需处理随机量. 不确定性和随机性可能来自多个方面, 使用概率论来量化不确定性.<br>​概率论在机器学习中扮演着一个 <strong>核心角色</strong>, 因为机器学习算法的设计通常依赖于 <strong>对数据的概率假设</strong>.   </p>
+<blockquote>
+<p>​ 例如在机器学习(Andrew Ng)的课中, 会有一个朴素贝叶斯假设就是条件独立的一个例子. 该学习算法对内容做出假设, 用来分辨电子邮件是否为垃圾邮件. 假设无论邮件是否为垃圾邮件, 单词 $x$ 出现在邮件中的概率条件独立于单词 $y$. 很明显这个假设是有失一般性的, 因为某些单词几乎总是同时出现. 然而, 最终结果是, 这个简单的假设对结果的影响并不大, 且无论如何都可以让我们快速判别垃圾邮件.</p>
+</blockquote>
+<h1 id="1-11-变量与随机变量有什么区别"><a href="#1-11-变量与随机变量有什么区别" class="headerlink" title="1.11 变量与随机变量有什么区别?"></a>1.11 变量与随机变量有什么区别?</h1><p><strong>随机变量</strong>(random variable)<br>​表示随机现象(在一定条件下, 并不总是出现相同结果的现象称为随机现象)中各种结果的实值函数(一切可能的样本点). 例如某一时间内公共汽车站等车乘客人数, 电话交换台在一定时间内收到的呼叫次数等, 都是随机变量的实例.<br>​随机变量与模糊变量的不确定性的本质差别在于, 后者的测定结果仍具有不确定性, 即模糊性.</p>
+<p><strong>变量与随机变量的区别:</strong><br>​当变量的取值的概率不是1时,变量就变成了随机变量; 当随机变量取值的概率为1时,随机变量就变成了变量.</p>
+<blockquote>
+<p>比如: 当变量 $x$ 值为 100 的概率为1的话,那么 $x=100$ 就是确定了的,不会再有变化,除非有进一步运算.<br>​    当变量 $x$ 的值为 100 的概率不为 1, 比如为 50 的概率是 0.5,为 100 的概率是 0.5, 那么这个变量就是会随不同条件而变化的, 是随机变量, 取到 50 或者 100 的概率都是 0.5,即 50%.  </p>
+</blockquote>
+<h1 id="1-12-常见概率分布"><a href="#1-12-常见概率分布" class="headerlink" title="1.12 常见概率分布"></a>1.12 常见概率分布</h1><h1 id="1-13-举例理解条件概率"><a href="#1-13-举例理解条件概率" class="headerlink" title="1.13 举例理解条件概率"></a>1.13 举例理解条件概率</h1><p>条件概率公式如下:</p>
+<script type="math/tex; mode=display">P(A | B) = \frac{P(A\cap B)}{P(B)}</script><p>​说明: 在同一个样本空间 $\Omega$ 中的事件或者子集 $A$ 与 $B$, 如果随机从 $\Omega$ 中选出的一个元素属于 $B$, 那么下一个随机选择的元素属于 $A$ 的概率就定义为在 $B$ 的前提下 $A$ 的条件概率.<br><img src="./img/ch1/conditional_probability.jpg" alt="条件概率"></p>
+<p>​根据文氏图, 可以很清楚地看到在事件B发生的情况下, 事件A发生的概率就是 $P(A\cap B)$ 除以 $P(B)$.</p>
+<blockquote>
+<p>​举例: 一对夫妻有两个小孩, 已知其中一个是女孩, 则另一个是女孩子的概率是多少? (面试、笔试都碰到过)<br><strong>穷举法</strong>: 已知其中一个是女孩, 那么样本空间为男女, 女女, 女男, 则另外一个仍然是女生的概率就是1/3.<br><strong>条件概率法</strong>: $P(女|女)=P(女女)/P(女)$,夫妻有两个小孩, 那么它的样本空间为女女, 男女, 女男, 男男, 则$P(女女)$为1/4, $P(女)= 1-P(男男)=3/4$,所以最后$1/3$.<br>这里大家可能会误解, 男女和女男是同一种情况, 但实际上类似姐弟和兄妹是不同情况.</p>
+</blockquote>
+<h1 id="1-14-联合概率与边缘概率的联系和区别"><a href="#1-14-联合概率与边缘概率的联系和区别" class="headerlink" title="1.14 联合概率与边缘概率的联系和区别?"></a>1.14 联合概率与边缘概率的联系和区别?</h1><p><strong>区别:</strong><br>​- 联合概率: 联合概率指类似于 $P(X=a,Y=b)$ 这样, 包含多个条件, 且 <strong>所有条件同时成立的概率</strong>. 联合概率是指在多元的概率分布中多个随机变量分别满足各自条件的概率.<br>​- 边缘概率: 边缘概率是某个事件发生的概率, 而与其它事件无关. 边缘概率指类似于 $P(X=a)$, $P(Y=b)$ 这样, 仅与单个随机变量有关的概率.</p>
+<p><strong>联系:</strong><br>​由联合分布可求边缘分布, 但若只知道边缘分布, 无法保证一定可以求得联合分布.   </p>
+<h1 id="1-15-条件概率的链式法则"><a href="#1-15-条件概率的链式法则" class="headerlink" title="1.15 条件概率的链式法则"></a>1.15 条件概率的链式法则</h1><p>​由条件概率的定义, 可直接得出下面的乘法公式:<br>​乘法公式 设 $A, B$ 是两个事件, 并且$P(A) &gt; 0$, 则有</p>
+<script type="math/tex; mode=display">P(AB) = P(B|A)P(A)</script><p>​推广</p>
+<script type="math/tex; mode=display">P(ABC)=P(C|AB)P(B|A)P(A)</script><p>​一般地, 用归纳法可证: 若 $P(A_1A_2…A_n)&gt;0$, 则有</p>
+<script type="math/tex; mode=display">P(A_1A_2...A_n)=P(A_n|A_1A_2...A_{n-1})P(A_{n-1}|A_1A_2...A_{n-2})...P(A_2|A_1)P(A_1)
+=P(A_1)\prod_{i=2}^{n}P(A_i|A_1A_2...A_{i-1})</script><p>​任何多维随机变量联合概率分布, 都可以分解成只有一个变量的条件概率相乘形式.</p>
+<h1 id="1-16-独立性和条件独立性"><a href="#1-16-独立性和条件独立性" class="headerlink" title="1.16 独立性和条件独立性"></a>1.16 独立性和条件独立性</h1><h2 id="独立性"><a href="#独立性" class="headerlink" title="独立性"></a>独立性</h2><p>​两个随机变量 $x$ 和 $y$, 概率分布表示成两个因子乘积形式, 一个因子只包含 $x$, 另一个因子只包含 $y$, 两个随机变量相互独立(independent).<br>​条件有时为不独立的事件之间带来独立, 有时也会把本来独立的事件, 因为此条件的存在, 而失去独立性.<br>​举例: $P(XY)=P(X)P(Y)$, 事件 $X$ 和事件 $Y$ 独立. 此时给定 $Z$, 会使得 $P(X,Y|Z) \neq P(X|Z)P(Y|Z)$.</p>
+<p>​事件独立时, 联合概率等于边缘概率的乘积. 这是一个非常好的数学性质, 然而不幸的是, 无条件的独立是十分稀少的, 因为大部分情况下, 事件之间都是互相影响的.</p>
+<h2 id="条件独立性"><a href="#条件独立性" class="headerlink" title="条件独立性"></a>条件独立性</h2><p>​给定 $Z$ 的情况下, $X$ 和 $Y$ 条件独立, 当且仅当</p>
+<script type="math/tex; mode=display">X\bot Y|Z \iff P(X,Y|Z) = P(X|Z)P(Y|Z)</script><p>​$X$ 和 $Y$ 的关系依赖于 $Z$, 而不是直接产生.   </p>
+<blockquote>
+<p>举例:定义如下事件:<br>$X$: 明天下雨;<br>$Y$: 今天的地面是湿的;<br>$Z$: 今天下雨;<br>$Z$事件的成立, 对 $X$ 和 $Y$ 均有影响, 然而, 在 $Z$ 事件成立的前提下, 今天的地面情况对明天是否下雨没有影响.</p>
+</blockquote>
+<h1 id="1-17-期望、方差、协方差、相关系数总结"><a href="#1-17-期望、方差、协方差、相关系数总结" class="headerlink" title="1.17 期望、方差、协方差、相关系数总结"></a>1.17 期望、方差、协方差、相关系数总结</h1><h2 id="期望"><a href="#期望" class="headerlink" title="期望"></a>期望</h2><p>​在概率论和统计学中, 数学期望(或均值, 亦简称期望)是试验中每次可能结果的概率乘以其结果的总和. 它反映随机变量平均取值的大小.</p>
+<ul>
+<li>线性运算:  $E(ax+by+c) = aE(x)+bE(y)+c$  </li>
+<li>​推广形式:  $E(\sum_{k=1}^{n}{a_ix_i+c}) = \sum_{k=1}^{n}{a_iE(x_i)+c}$</li>
+<li>函数期望: 设$f(x)$为$x$的函数, 则$f(x)$的期望为<ul>
+<li>离散函数:  $E(f(x))=\sum_{k=1}^{n}{f(x_k)P(x_k)}$</li>
+<li>连续函数:  $E(f(x))=\int_{-\infty}^{+\infty}{f(x)p(x)dx}$</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>注意:</p>
+<ul>
+<li>函数的期望不等于期望的函数, 即 $E(f(x)) \neq f(E(x))$  </li>
+<li>一般情况下, 乘积的期望不等于期望的乘积.   </li>
+<li>如果 $X$ 和 $Y$ 相互独立, 则 $E(xy)=E(x)E(y)​$.   </li>
+</ul>
+</blockquote>
+<h2 id="方差"><a href="#方差" class="headerlink" title="方差"></a>方差</h2><p>​概率论中方差用来度量随机变量和其数学期望(即均值)之间的偏离程度. 方差是一种特殊的期望. 定义为:</p>
+<script type="math/tex; mode=display">Var(x) = E((x-E(x))^2)</script><blockquote>
+<p>方差性质:   </p>
+<p>1) $Var(x) = E(x^2) -E(x)^2$<br>2) 常数的方差为0;<br>3) 方差不满足线性性质;<br>4) 如果 $X$ 和 $Y$ 相互独立,  $Var(ax+by)=a^2Var(x)+b^2Var(y)$   </p>
+</blockquote>
+<h2 id="协方差"><a href="#协方差" class="headerlink" title="协方差"></a>协方差</h2><p>​协方差是衡量两个变量线性相关性强度及变量尺度.   两个随机变量的协方差定义为:</p>
+<script type="math/tex; mode=display">Cov(x,y)=E((x-E(x))(y-E(y)))</script><p>​方差是一种特殊的协方差. 当 $X=Y$ 时, $Cov(x,y)=Var(x)=Var(y)$.</p>
+<blockquote>
+<p>协方差性质:   </p>
+<p>1) 独立变量的协方差为0.<br>2) 协方差计算公式:</p>
+</blockquote>
+<script type="math/tex; mode=display">Cov(\sum_{i=1}^{m}{a_ix_i}, \sum_{j=1}^{m}{b_jy_j}) = \sum_{i=1}^{m} \sum_{j=1}^{m}{a_ib_jCov(x_iy_i)}</script><blockquote>
+<p>3)特殊情况:</p>
+</blockquote>
+<script type="math/tex; mode=display">Cov(a+bx, c+dy) = bdCov(x, y)</script><h2 id="相关系数"><a href="#相关系数" class="headerlink" title="相关系数"></a>相关系数</h2><p>​相关系数是研究变量之间线性相关程度的量. 两个随机变量的相关系数定义为:</p>
+<script type="math/tex; mode=display">Corr(x,y) = \frac{Cov(x,y)}{\sqrt{Var(x)Var(y)}}</script><blockquote>
+<p>相关系数的性质:<br>1)有界性. 相关系数的取值范围是 , 可以看成无量纲的协方差.<br>2)值越接近1, 说明两个变量正相关性(线性)越强. 越接近-1, 说明负相关性越强, 当为0时, 表示两个变量没有相关性.   </p>
+</blockquote>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/读书笔记/" rel="tag"><i class="fa fa-tag"></i> 读书笔记</a>
+          
+            <a href="/tags/深度学习/" rel="tag"><i class="fa fa-tag"></i> 深度学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/深度学习-Book-DL500Questions/" rel="prev" title="深度学习-Book-DL500Questions">
+                <i class="fa fa-chevron-left"></i> 深度学习-Book-DL500Questions
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/计算机视觉-RethinkingPretraining-arXiv2018/" rel="next" title="Rethinking ImageNet Pretraining (arXiv, 2018)">
+                Rethinking ImageNet Pretraining (arXiv, 2018) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">243</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章-数学基础"><span class="nav-text">第一章 数学基础</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-1-标量-向量-矩阵-张量之间的联系"><span class="nav-text">1.1 标量, 向量, 矩阵, 张量之间的联系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-2-张量与矩阵的区别"><span class="nav-text">1.2 张量与矩阵的区别?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-3-矩阵和向量相乘结果"><span class="nav-text">1.3 矩阵和向量相乘结果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-4-向量和矩阵的范数归纳"><span class="nav-text">1.4 向量和矩阵的范数归纳</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-5-如何判断一个矩阵为正定"><span class="nav-text">1.5 如何判断一个矩阵为正定?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-6-导数偏导计算"><span class="nav-text">1.6 导数偏导计算</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#导数"><span class="nav-text">导数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#偏导数"><span class="nav-text">偏导数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-7-导数和偏导数有什么区别"><span class="nav-text">1.7 导数和偏导数有什么区别?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-8-特征值分解与特征向量"><span class="nav-text">1.8 特征值分解与特征向量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-9-奇异值与特征值有什么关系"><span class="nav-text">1.9 奇异值与特征值有什么关系?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-10-机器学习为什么要使用概率"><span class="nav-text">1.10 机器学习为什么要使用概率?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-11-变量与随机变量有什么区别"><span class="nav-text">1.11 变量与随机变量有什么区别?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-12-常见概率分布"><span class="nav-text">1.12 常见概率分布</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-13-举例理解条件概率"><span class="nav-text">1.13 举例理解条件概率</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-14-联合概率与边缘概率的联系和区别"><span class="nav-text">1.14 联合概率与边缘概率的联系和区别?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-15-条件概率的链式法则"><span class="nav-text">1.15 条件概率的链式法则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-16-独立性和条件独立性"><span class="nav-text">1.16 独立性和条件独立性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#独立性"><span class="nav-text">独立性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#条件独立性"><span class="nav-text">条件独立性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-17-期望、方差、协方差、相关系数总结"><span class="nav-text">1.17 期望、方差、协方差、相关系数总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#期望"><span class="nav-text">期望</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方差"><span class="nav-text">方差</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#协方差"><span class="nav-text">协方差</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关系数"><span class="nav-text">相关系数</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">1.6m</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">23:43</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

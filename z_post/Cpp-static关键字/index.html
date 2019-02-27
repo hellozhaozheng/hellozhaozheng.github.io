@@ -113,14 +113,14 @@
 
 
   <meta name="description" content="static关键字常用方法    用法 示例 说明     在局部变量前使用static int main(){ static int a;} 该变量具有静态持续性, 但是无链接性   静态成员数据 class A{static int a}; int A::a = 1 只能在类外部定义并初始化静态成员变量, 不能在类内部声明时定义或初始化静态变量, 因为声明只是描述了如何分配内存, 但实际上并不">
-<meta name="keywords" content="知识点梳理">
+<meta name="keywords" content="C++,知识点梳理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++中的static关键字">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Cpp-static关键字/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="static关键字常用方法    用法 示例 说明     在局部变量前使用static int main(){ static int a;} 该变量具有静态持续性, 但是无链接性   静态成员数据 class A{static int a}; int A::a = 1 只能在类外部定义并初始化静态成员变量, 不能在类内部声明时定义或初始化静态变量, 因为声明只是描述了如何分配内存, 但实际上并不">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-20T04:47:04.119Z">
+<meta property="og:updated_time" content="2019-02-25T11:28:09.710Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++中的static关键字">
 <meta name="twitter:description" content="static关键字常用方法    用法 示例 说明     在局部变量前使用static int main(){ static int a;} 该变量具有静态持续性, 但是无链接性   静态成员数据 class A{static int a}; int A::a = 1 只能在类外部定义并初始化静态成员变量, 不能在类内部声明时定义或初始化静态变量, 因为声明只是描述了如何分配内存, 但实际上并不">
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">230</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">243</span></a>
   </li>
         
         
@@ -344,7 +344,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
   </li>
         
         
@@ -497,8 +497,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2018-11-20T12:47:04+08:00" content="2018-11-20">
-      		  2018-11-20
+    		<time itemprop="dateUpdated" datetime="2019-02-25T19:28:09+08:00" content="2019-02-25">
+      		  2019-02-25
     		</time>
   	  </span>
 	  
@@ -631,10 +631,10 @@
 <li>和C语言一样，C++也为 <strong>静态</strong> 存储持续性变量提供了3种链接性(其他类型的持续性变量均是无链接性的)，这三种链接性都在整个程序执行期间存在，与自动变量相比，它们的寿命更长。(Primer p309)<ul>
 <li>外部链接性（可在其他文件中访问）</li>
 <li>内部链接性（只能在当前文件中访问）</li>
-<li>无链接性（只能在当前函数或代码块中访问，与自动变量不同的是，就算不在函数中，变量也存在，只是不能访问）</li>
+<li>无链接性（只能在当前函数或代码块中访问，<strong>与自动变量不同的是，就算不在函数中，变量也存在，只是不能访问</strong>）</li>
 </ul>
 </li>
-<li>由于静态变量的数目在程序运行期间是不变的，因此程序不需要使用特殊的装置（如栈）来管理它们, 而是将它们放在全局数据区。编译器将分配固定的内存块来存储所有的静态变量，这些变量在整个程序执行期间一直存在。另外，如果没有显式地初始化静态变量，编译器将把它设置为0。在默认情况下，<strong>静态</strong> 数组和结构将每个元素或成员的所有位都设置为0。p309</li>
+<li>由于静态变量的数目在程序运行期间是不变的，因此程序不需要使用特殊的装置（如栈）来管理它们, 而是将它们放在 <strong>全局数据区</strong>。编译器将分配固定的内存块来存储所有的静态变量，这些变量在整个程序执行期间一直存在。另外，如果没有显式地初始化静态变量，编译器将把它设置为0。在默认情况下，<strong>静态</strong> 数组和结构将每个元素或成员的所有位都设置为0。p309</li>
 <li><p>创建三种链接性的静态持续变量：p309</p>
 <ul>
 <li>外部链接性：必须在代码块的外面声明</li>
@@ -661,7 +661,7 @@
 <li><p><strong>单定义规则（One Definition Rule，ODR）：</strong> 变量只能定义一次。为满足这种需求，C++提供了两种变量声明：p311</p>
 <ul>
 <li>定义声明（简称定义）：为变量分配存储空间。</li>
-<li>引用声明（简称声明）：不给变量分配存储空间，引用已有的变量。使用关键字extern<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">double up; //定义声明</span><br><span class="line">exterm int blem; //blem在别处定义</span><br></pre></td></tr></table></figure>
+<li>引用声明（简称声明）：不给变量分配存储空间，引用已有的变量。使用关键字extern<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">double up; //定义声明</span><br><span class="line">extern int blem; //blem在别处定义</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -672,7 +672,7 @@
 <h1 id="静态持续性、内部链接性"><a href="#静态持续性、内部链接性" class="headerlink" title="静态持续性、内部链接性"></a>静态持续性、内部链接性</h1><ul>
 <li>将作用域为整个文件的变量声明为静态外部变量（内部链接性），就不必担心其名称与其他文件中的外部变量发生冲突.</li>
 </ul>
-<p>通常, 当在函数体内定义一个变量时, 该变量是一个自动存储变量, 每当运行到该语句时都会给该局部变量分配 <strong>栈内存</strong>, 而随着程序退出函数体, 系统就会自动收回这一部分内存. 但有时候我们需要在两次调用之间对变量的值进行保存. 通常的想法是定义一个全局变量来实现, 但是这样一来, 变量就不再属于该函数本身了. 因此, 可以使用静态局部变量来解决, 静态局部变量保存在全局数据区, 而不是保存在栈中, 每次的值保持到下一次调用, 知道下次赋新值.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//file1</span><br><span class="line">int errors = 20;</span><br><span class="line"></span><br><span class="line">//file2</span><br><span class="line">int errors = 5;</span><br><span class="line">int main()&#123;</span><br><span class="line">  cout&lt;&lt;errors; //报错，errors与file1中的外部变量重定义</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//解决方法：file2</span><br><span class="line">static int errors = 5;</span><br><span class="line">int main()&#123;</span><br><span class="line">  cout&lt;&lt;errors; // 输出5</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>通常, 当在函数体内定义一个变量时, 该变量是一个自动存储变量, 每当运行到该语句时都会给该局部变量分配 <strong>栈内存</strong>, 而随着程序退出函数体, 系统就会自动收回这一部分内存. 但有时候我们需要在两次调用之间对变量的值进行保存. 通常的想法是定义一个全局变量来实现, 但是这样一来, 变量就不再属于该函数本身了. 因此, 可以使用静态局部变量来解决, 静态局部变量保存在全局数据区, 而不是保存在栈中, 每次的值保持到下一次调用, 直到下次赋新值.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//file1</span><br><span class="line">int errors = 20;</span><br><span class="line"></span><br><span class="line">//file2</span><br><span class="line">int errors = 5;</span><br><span class="line">int main()&#123;</span><br><span class="line">  cout&lt;&lt;errors; //报错，errors与file1中的外部变量重定义</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//解决方法：file2</span><br><span class="line">static int errors = 5;</span><br><span class="line">int main()&#123;</span><br><span class="line">  cout&lt;&lt;errors; // 输出5</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h1 id="静态存储持续性、无链接性"><a href="#静态存储持续性、无链接性" class="headerlink" title="静态存储持续性、无链接性"></a>静态存储持续性、无链接性</h1><ul>
 <li>局部静态变量：虽然该变量只在该代码块中可用，但它在该代码块不处于活动状态时仍然存在。因此在两次函数调用之间，静态局部变量的值将 <strong>保持不变</strong> 。</li>
 </ul>
@@ -735,8 +735,8 @@
 <li>由于没有<code>this</code>指针上的开销, 因此静态成员函数在速度上会小优于类的全局函数</li>
 <li>类对象或对象指针可以像调用普通函数一样使用<code>.</code>或<code>-&gt;</code>来调用静态成员函数, 也可以使用<code>&lt;类名&gt;::&lt;静态成员函数名&gt;()</code>的方式来调用</li>
 </ul>
-<h1 id="静态成员函数与this指针"><a href="#静态成员函数与this指针" class="headerlink" title="静态成员函数与this指针"></a>静态成员函数与<code>this</code>指针</h1><p>普通的成员函数一般都隐含了一个<code>this</code>指针, <code>this</code>指针指向类的对象本身, 因为普通成员函数总是属于类的某个具体对象, 通常情况下, <code>this</code>指针是缺省的, 如函数 <code>func()</code> 实际上是<code>this-&gt;func()</code>, 但是与普通函数相比, 静态成员函数由于不与任何对象相联系, 因此它不具有<code>this</code>指针, 从这个意义上讲, 它就 <strong>无法访问属于类对象的非静态数据成员, 也无法访问非静态成员函数</strong>, 只能访问或调用静态的数据或函数.</p>
-<h1 id="const与static"><a href="#const与static" class="headerlink" title="const与static"></a>const与static</h1><p><code>const</code> 只是对于单个类对象来说是常量, 而对于整个类来说实际上是变量, 如果要维护一个对于整个类来说的常量, 应该使用<code>const static</code>或者<code>static cosnt</code>(二者等价)来声明, 与普通<code>static</code>成员数据不太一样的是, <strong><code>const static</code>成员数据需要在类中声明的同时就进行初始化(因为const数据在定义是必须初始化, 而static又是的该变量独立于具体对象, 所以必须在声明时初始化或者在类外部初始化, 也不能在构造函数初始化列表中初始化)</strong> :<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Myclass</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">static</span> <span class="keyword">int</span> a = <span class="number">3</span>; <span class="comment">// 声明并初始化</span></span><br><span class="line">    cosnt <span class="keyword">int</span> b = <span class="number">4</span>; <span class="comment">//这样是可以的, 但是这样所有变量的b都为4,且不能改变, 还不如声明为const static</span></span><br><span class="line">    <span class="comment">//所以最好还是在构造函数的初始化列表中对非静态const进行初始化</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> c;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> Myclass::c = <span class="number">5</span>; <span class="comment">//在类外部初始化. 不要带static关键字</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="静态成员函数与-this-指针"><a href="#静态成员函数与-this-指针" class="headerlink" title="静态成员函数与 this 指针"></a>静态成员函数与 this 指针</h1><p>普通的成员函数一般都隐含了一个<code>this</code>指针, <code>this</code>指针指向类的对象本身, 因为普通成员函数总是属于类的某个具体对象, 通常情况下, <code>this</code>指针是缺省的, 如函数 <code>func()</code> 实际上是<code>this-&gt;func()</code>, 但是与普通函数相比, 静态成员函数由于不与任何对象相联系, 因此它不具有<code>this</code>指针, 从这个意义上讲, 它就 <strong>无法访问属于类对象的非静态数据成员, 也无法访问非静态成员函数</strong>, 只能访问或调用静态的数据或函数.</p>
+<h1 id="const与static"><a href="#const与static" class="headerlink" title="const与static"></a>const与static</h1><p><code>const</code> 只是对于单个类对象来说是常量, 而对于整个类来说实际上是变量, 如果要维护一个对于整个类来说的常量, 应该使用<code>const static</code>或者<code>static cosnt</code>(二者等价)来声明, 与普通<code>static</code>成员数据不太一样的是, <strong><code>const static</code>成员数据需要在类中声明的同时就进行初始化(因为const数据在定义是必须初始化, 而static又使得该变量独立于具体对象, 所以必须在声明时初始化或者在类外部初始化, 也不能在构造函数初始化列表中初始化)</strong> :<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Myclass</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">static</span> <span class="keyword">int</span> a = <span class="number">3</span>; <span class="comment">// 声明并初始化</span></span><br><span class="line">    cosnt <span class="keyword">int</span> b = <span class="number">4</span>; <span class="comment">//这样是可以的, 但是这样所有变量的b都为4,且不能改变, 还不如声明为const static</span></span><br><span class="line">    <span class="comment">//所以最好还是在构造函数的初始化列表中对非静态const进行初始化</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> c;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> Myclass::c = <span class="number">5</span>; <span class="comment">//在类外部初始化. 不要带static关键字</span></span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -757,6 +757,8 @@
       
         <div class="post-tags">
           
+            <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C++</a>
+          
             <a href="/tags/知识点梳理/" rel="tag"><i class="fa fa-tag"></i> 知识点梳理</a>
           
         </div>
@@ -770,7 +772,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/Cpp-知识点梳理-Cpp中的virutal关键字/" rel="prev" title="C++中的virtual关键字">
+              <a href="/z_post/Cpp-virutal关键字/" rel="prev" title="C++中的virtual关键字">
                 <i class="fa fa-chevron-left"></i> C++中的virtual关键字
               </a>
             
@@ -780,8 +782,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/项目-双流手语识别系统—-框架设计/" rel="next" title="双流手语识别系统：（一）框架设计">
-                双流手语识别系统：（一）框架设计 <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/Cpp-踩坑记录-Vector数据的内存分配问题/" rel="next" title="Vector数据的内存分配问题">
+                Vector数据的内存分配问题 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -860,7 +862,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">230</span>
+                    <span class="site-state-item-count">243</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -980,7 +982,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">34</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1044,7 +1050,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#static关键字常用方法"><span class="nav-text">static关键字常用方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#存储持续性"><span class="nav-text">存储持续性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#作用域和链接性"><span class="nav-text">作用域和链接性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态持续性、外部链接性"><span class="nav-text">静态持续性、外部链接性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态持续性、内部链接性"><span class="nav-text">静态持续性、内部链接性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态存储持续性、无链接性"><span class="nav-text">静态存储持续性、无链接性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#说明符和限定符"><span class="nav-text">说明符和限定符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#函数的链接性和static关键字"><span class="nav-text">函数的链接性和static关键字</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#语言链接性"><span class="nav-text">语言链接性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#面向对象的static关键字-类中的static关键字"><span class="nav-text">面向对象的static关键字(类中的static关键字)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态成员数据"><span class="nav-text">静态成员数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态成员函数"><span class="nav-text">静态成员函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态成员函数与this指针"><span class="nav-text">静态成员函数与this指针</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#const与static"><span class="nav-text">const与static</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#static关键字常用方法"><span class="nav-text">static关键字常用方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#存储持续性"><span class="nav-text">存储持续性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#作用域和链接性"><span class="nav-text">作用域和链接性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态持续性、外部链接性"><span class="nav-text">静态持续性、外部链接性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态持续性、内部链接性"><span class="nav-text">静态持续性、内部链接性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态存储持续性、无链接性"><span class="nav-text">静态存储持续性、无链接性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#说明符和限定符"><span class="nav-text">说明符和限定符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#函数的链接性和static关键字"><span class="nav-text">函数的链接性和static关键字</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#语言链接性"><span class="nav-text">语言链接性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#面向对象的static关键字-类中的static关键字"><span class="nav-text">面向对象的static关键字(类中的static关键字)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态成员数据"><span class="nav-text">静态成员数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态成员函数"><span class="nav-text">静态成员函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态成员函数与-this-指针"><span class="nav-text">静态成员函数与 this 指针</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#const与static"><span class="nav-text">const与static</span></a></li></ol></div>
             
 
           </div>
@@ -1069,7 +1075,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-heart"></i>
   </span>
@@ -1081,7 +1087,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.3m</span>
+    <span title="站点总字数">1.6m</span>
   
 
   
@@ -1090,7 +1096,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">20:01</span>
+    <span title="站点阅读时长">23:43</span>
   
 </div>
 

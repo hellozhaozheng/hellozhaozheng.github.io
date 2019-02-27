@@ -113,13 +113,14 @@
 
 
   <meta name="description" content="列表遍历列表:123456789101112131415161718192021222324252627zz_list = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;]for index in list:    print(index)    # 0    # 1    # 2    # 3for index in range(len(list)):    print(index)    # 0">
+<meta name="keywords" content="Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python 手册">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Python-手册/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="列表遍历列表:123456789101112131415161718192021222324252627zz_list = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;]for index in list:    print(index)    # 0    # 1    # 2    # 3for index in range(len(list)):    print(index)    # 0">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-14T08:42:02.691Z">
+<meta property="og:updated_time" content="2019-02-25T12:02:39.516Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python 手册">
 <meta name="twitter:description" content="列表遍历列表:123456789101112131415161718192021222324252627zz_list = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;]for index in list:    print(index)    # 0    # 1    # 2    # 3for index in range(len(list)):    print(index)    # 0">
@@ -247,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">230</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">243</span></a>
   </li>
         
         
@@ -343,7 +344,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
   </li>
         
         
@@ -496,8 +497,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2018-12-14T16:42:02+08:00" content="2018-12-14">
-      		  2018-12-14
+    		<time itemprop="dateUpdated" datetime="2019-02-25T20:02:39+08:00" content="2019-02-25">
+      		  2019-02-25
     		</time>
   	  </span>
 	  
@@ -550,7 +551,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">6.1k</span>
+                <span title="本文字数">6.9k</span>
               
 
               
@@ -596,7 +597,7 @@
 <p>遍历values:</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输出均为 1 2 3</span></span><br><span class="line"><span class="keyword">for</span> value <span class="keyword">in</span> zz_dict.itervalues():</span><br><span class="line">    print(value)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> value <span class="keyword">in</span> zz_dict.values():</span><br><span class="line">    print(value)</span><br></pre></td></tr></table></figure>
 <p>遍历keys和values</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输出为: x corresponds to 1 (其余两个也一样)</span></span><br><span class="line"><span class="keyword">for</span> key, value <span class="keyword">in</span> zz_dict.iteritems():</span><br><span class="line">    print(key, <span class="string">"corresponds to"</span>, value)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> key, value <span class="keyword">in</span> zz_dict.items():</span><br><span class="line">    print(key, <span class="string">"corresponds to"</span>, value)</span><br></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输出为: x corresponds to 1 (其余两个也一样)</span></span><br><span class="line"><span class="keyword">for</span> key, value <span class="keyword">in</span> zz_dict.iteritems():  <span class="comment"># python3 没有iteritems</span></span><br><span class="line">    print(key, <span class="string">"corresponds to"</span>, value)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> key, value <span class="keyword">in</span> zz_dict.items():</span><br><span class="line">    print(key, <span class="string">"corresponds to"</span>, value)</span><br></pre></td></tr></table></figure>
 <h1 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h1><h2 id="str-rstrip"><a href="#str-rstrip" class="headerlink" title="str.rstrip()"></a>str.rstrip()</h2><p><strong>参数:</strong><br><code>chars</code>: 指定删除的字符(默认为空格或换行符)</p>
 <p><strong>返回值:</strong><br>返回删除指定字符后的新字符串</p>
 <p><strong>备注:</strong><br>删除字符串末尾的指定字符(默认为空格或换行符)</p>
@@ -627,12 +628,19 @@
 <li><code>_var</code>: 在一个模块中以单下划线开头的变量和函数会被默认当做内部函数, 在使用<code>from a_module import *</code> 导入时, 这部分变量和函数不会被导入. 不过如果使用<code>import a_module</code>导入模块时, 仍然可以用<code>a_module._var</code>的形式访问该变量或函数</li>
 <li><code>var_</code>: 有时候, 一个变量的最适合的名称已经被另一个关键字所占用. 在这种情况下, 可以在名称的末尾附加一个下划线来解决冲突.</li>
 <li><code>__var</code>: 双下划线前缀会导致Python解释器重写属性名称, 以避免子类中的命名冲突. 举例来说, 如果在<code>class Test</code>中有一个成员<code>__x</code>, 那么当利用内置函数<code>dir(Test)</code>来查看类的属性时, 会发现<code>__x</code>被解释器重命名为<code>_Test__x</code>. 双下划线的名称修饰同样也适用于方法名称.</li>
-<li><code>__var__</code>: 双下划线开头和结尾的是一些 Python 的特殊对象, 如类成员的 <code>__init__</code>, <code>__del__</code>, <code>__name__</code>, <code>__call</code> 等. Python 官方推荐永远不要讲这样的命名方式应用于自己的变量或函数. 有一种说法是说双下划线建议为类的私有成员, 但是 PEP8 当前的官方版本中并没有明说.</li>
+<li><code>__var__</code>: 双下划线开头和结尾的是一些 Python 的特殊对象, 如类成员的 <code>__init__</code>, <code>__del__</code>, <code>__name__</code>, <code>__call__</code> 等. Python 官方推荐永远不要讲这样的命名方式应用于自己的变量或函数. 有一种说法是说双下划线建议为类的私有成员, 但是 PEP8 当前的官方版本中并没有明说.</li>
 <li><code>_</code>: 有时候我们会用一个独立的下划线作为一个名字, 这通常是用来指示某个变量时临时的或者无关紧要的.</li>
 </ul>
-<h1 id="类的特殊方法"><a href="#类的特殊方法" class="headerlink" title="类的特殊方法"></a>类的特殊方法</h1><h2 id="getitem"><a href="#getitem" class="headerlink" title="getitem()"></a><strong>getitem</strong>()</h2><p>凡是在类中定义了 <code>__getitem__()</code> 方法, 那么它的实例对象就是可以通过 <code>[]</code> 操作符来访问指定的成员或进行特定的行为, 大多数情况下会将该方法实现成通过索引来方法元素的形式.</p>
+<h1 id="类的特殊方法"><a href="#类的特殊方法" class="headerlink" title="类的特殊方法"></a>类的特殊方法</h1><h2 id="call"><a href="#call" class="headerlink" title="call()"></a><strong>call</strong>()</h2><p>在 Python 中, 函数实际上也是一个对象:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f = abs</span><br><span class="line">print(f.__name__) <span class="comment"># 'abs'</span></span><br><span class="line">print(f(<span class="number">-123</span>)) <span class="comment"># 123</span></span><br></pre></td></tr></table></figure>
+<p>从上面可以看出, 函数是一个对象, 当它赋给另一个变量时, 该变量也是一个函数对象, 可以起到与原函数相同的效果. 在 Python 中, 一个类实例也可以变成一个可调用对象, 只需要实现一个特殊方法 <code>__call__()</code> 即可. 下面我们举例把 Person 类变成一个可调用对象:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, gender)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.gender = gender</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, friend)</span>:</span></span><br><span class="line">        print(<span class="string">"name:"</span>, self.name)</span><br><span class="line">        print(<span class="string">"friend:"</span>, friend)</span><br></pre></td></tr></table></figure>
+<p>接下来我们就可以将 Person 类的实例对象当做一个函数来使用, 如下所示:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">p = Person(<span class="string">'Bob'</span>, <span class="string">'male'</span>)</span><br><span class="line">p(<span class="string">'Tim'</span>)</span><br><span class="line"><span class="comment"># name: Bob</span></span><br><span class="line"><span class="comment"># friend: Tim</span></span><br></pre></td></tr></table></figure>
+<h2 id="getitem"><a href="#getitem" class="headerlink" title="getitem()"></a><strong>getitem</strong>()</h2><p>凡是在类中定义了 <code>__getitem__()</code> 方法, 那么它的实例对象就是可以通过 <code>[]</code> 操作符来访问指定的成员或进行特定的行为, 大多数情况下会将该方法实现成通过索引来方法元素的形式.</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DataBase</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super(DataBase, self).__init__()</span><br><span class="line">        self.vals = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, key)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.vals[key]</span><br></pre></td></tr></table></figure>
 <h2 id="setitem"><a href="#setitem" class="headerlink" title="setitem()"></a><strong>setitem</strong>()</h2><p>使得可以通过 <code>A[3] = 4</code>, <code>B[&quot;a&quot;] = 5</code> 等方式来对类中的元素进行赋值</p>
+<h2 id="file"><a href="#file" class="headerlink" title="file()"></a><strong>file</strong>()</h2><p>查看模块的路径</p>
 <h2 id="len"><a href="#len" class="headerlink" title="len()"></a><strong>len</strong>()</h2><p>使得类对象可以使用 Python 的内建方法 <code>len()</code>, 返回你自定义的数值.</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DictDemo</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,key,value)</span>:</span></span><br><span class="line">        self.dict = &#123;&#125;</span><br><span class="line">        self.dict[key] = value</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self,key)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.dict[key]</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__setitem__</span><span class="params">(self,key,value)</span>:</span></span><br><span class="line">        self.dict[key] = value</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> len(self.dict)</span><br><span class="line">dictDemo = DictDemo(<span class="string">'key0'</span>,<span class="string">'value0'</span>)</span><br><span class="line">print(dictDemo[<span class="string">'key0'</span>]) <span class="comment">#value0</span></span><br><span class="line">dictDemo[<span class="string">'key1'</span>] = <span class="string">'value1'</span></span><br><span class="line">print(dictDemo[<span class="string">'key1'</span>]) <span class="comment">#value1</span></span><br><span class="line">print(len(dictDemo)) <span class="comment">#2</span></span><br></pre></td></tr></table></figure>
 <h2 id="repr"><a href="#repr" class="headerlink" title="repr()"></a><strong>repr</strong>()</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, value=<span class="string">'hello, world!'</span>)</span>:</span></span><br><span class="line">        self.data = value</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>t = Test()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>t</span><br><span class="line">&lt;__main__.Test at <span class="number">0x7fa91c307190</span>&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> t</span><br><span class="line">&lt;__main__.Test object at <span class="number">0x7fa91c307190</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 看到了么？上面打印类对象并不是很友好，显示的是对象的内存地址</span></span><br><span class="line"><span class="comment"># 下面我们重构下该类的__repr__以及__str__，看看它们俩有啥区别</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重构__repr__</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestRepr</span><span class="params">(Test)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'TestRepr(%s)'</span> % self.data</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>tr = TestRepr()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>tr</span><br><span class="line">TestRepr(hello, world!)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> tr</span><br><span class="line">TestRepr(hello, world!)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重构__repr__方法后，不管直接输出对象还是通过print打印的信息都按我们__repr__方法中定义的格式进行显示了</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重构__str__</span></span><br><span class="line">calss TestStr(Test):</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'[Value: %s]'</span> % self.data</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>ts = TestStr()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>ts</span><br><span class="line">&lt;__main__.TestStr at <span class="number">0x7fa91c314e50</span>&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> ts</span><br><span class="line">[Value: hello, world!]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 你会发现，直接输出对象ts时并没有按我们__str__方法中定义的格式进行输出，而用print输出的信息却改变了</span></span><br></pre></td></tr></table></figure>
@@ -642,7 +650,9 @@
 <p><strong>双星号:</strong> 将所有参数以 <strong>字典</strong> 的形式导入<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bar</span><span class="params">(param1, **param2)</span>:</span></span><br><span class="line">    print(param1)</span><br><span class="line">    print(param2)</span><br><span class="line">bar(<span class="number">1</span>, a=<span class="number">2</span>, b=<span class="number">3</span>)</span><br><span class="line"><span class="comment"># 1</span></span><br><span class="line"><span class="comment"># &#123;'a': 2, 'b': 3&#125;</span></span><br></pre></td></tr></table></figure></p>
 <p>当然这两个用法可以同时出现在一个函数中:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fun</span><span class="params">(a, b=<span class="number">10</span>, *args, **kwargs)</span>:</span></span><br><span class="line">    print(a)</span><br><span class="line">    print(b)</span><br><span class="line">    print(args)</span><br><span class="line">    print(kwargs)</span><br><span class="line">fun(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,e=<span class="number">5</span>,f=<span class="number">6</span>)</span><br><span class="line"><span class="comment"># 1</span></span><br><span class="line"><span class="comment"># 2</span></span><br><span class="line"><span class="comment"># (3,4)</span></span><br><span class="line"><span class="comment"># &#123;'e': 5, 'f': 6&#125;</span></span><br></pre></td></tr></table></figure></p>
 <h1 id="globals-函数"><a href="#globals-函数" class="headerlink" title="globals() 函数"></a>globals() 函数</h1><p>该函数会以字典类型返回当前位置的全部全局变量</p>
-<h1 id="stripe"><a href="#stripe" class="headerlink" title="stripe()"></a>stripe()</h1><h1 id="readlines"><a href="#readlines" class="headerlink" title="readlines()"></a>readlines()</h1>
+<h1 id="stripe"><a href="#stripe" class="headerlink" title="stripe()"></a>stripe()</h1><h1 id="readlines"><a href="#readlines" class="headerlink" title="readlines()"></a>readlines()</h1><h1 id="lambda-函数"><a href="#lambda-函数" class="headerlink" title="lambda 函数"></a>lambda 函数</h1><p><a href="https://www.cnblogs.com/evening/archive/2012/03/29/2423554.html" target="_blank" rel="noopener">https://www.cnblogs.com/evening/archive/2012/03/29/2423554.html</a></p>
+<h1 id="3-6新功能-f-string"><a href="#3-6新功能-f-string" class="headerlink" title="3.6新功能 f string"></a>3.6新功能 f string</h1><p><a href="https://imliyan.com/blogs/article/Python3.6%E6%96%B0%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%AF%AD%E6%B3%95/" target="_blank" rel="noopener">https://imliyan.com/blogs/article/Python3.6%E6%96%B0%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%AF%AD%E6%B3%95/</a></p>
+
       
     </div>
 
@@ -659,6 +669,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+          
+        </div>
       
 
       
@@ -759,7 +775,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">230</span>
+                    <span class="site-state-item-count">243</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -879,7 +895,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">34</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -943,7 +963,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#列表"><span class="nav-text">列表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#遍历列表"><span class="nav-text">遍历列表:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#append-方法"><span class="nav-text">append() 方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extend-方法"><span class="nav-text">extend() 方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#序列切片-双冒号"><span class="nav-text">序列切片(双冒号)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#update-方法"><span class="nav-text">update() 方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字典"><span class="nav-text">字典</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字符串"><span class="nav-text">字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#str-rstrip"><span class="nav-text">str.rstrip()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#str-strip"><span class="nav-text">str.strip()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#str-split"><span class="nav-text">str.split()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件"><span class="nav-text">文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reduce-函数"><span class="nav-text">reduce() 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zip-函数"><span class="nav-text">zip() 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#getattr-函数"><span class="nav-text">getattr() 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#property"><span class="nav-text">@property</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dir-函数"><span class="nav-text">dir() 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#下划线"><span class="nav-text">下划线</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类的特殊方法"><span class="nav-text">类的特殊方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#getitem"><span class="nav-text">getitem()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setitem"><span class="nav-text">setitem()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#len"><span class="nav-text">len()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#repr"><span class="nav-text">repr()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#str"><span class="nav-text">str()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#星号"><span class="nav-text">星号 *</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用于计算"><span class="nav-text">用于计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用于函数参数"><span class="nav-text">用于函数参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#globals-函数"><span class="nav-text">globals() 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#stripe"><span class="nav-text">stripe()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#readlines"><span class="nav-text">readlines()</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#列表"><span class="nav-text">列表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#遍历列表"><span class="nav-text">遍历列表:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#append-方法"><span class="nav-text">append() 方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extend-方法"><span class="nav-text">extend() 方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#序列切片-双冒号"><span class="nav-text">序列切片(双冒号)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#update-方法"><span class="nav-text">update() 方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字典"><span class="nav-text">字典</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字符串"><span class="nav-text">字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#str-rstrip"><span class="nav-text">str.rstrip()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#str-strip"><span class="nav-text">str.strip()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#str-split"><span class="nav-text">str.split()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件"><span class="nav-text">文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reduce-函数"><span class="nav-text">reduce() 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zip-函数"><span class="nav-text">zip() 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#getattr-函数"><span class="nav-text">getattr() 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#property"><span class="nav-text">@property</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dir-函数"><span class="nav-text">dir() 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#下划线"><span class="nav-text">下划线</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类的特殊方法"><span class="nav-text">类的特殊方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#call"><span class="nav-text">call()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getitem"><span class="nav-text">getitem()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setitem"><span class="nav-text">setitem()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#file"><span class="nav-text">file()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#len"><span class="nav-text">len()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#repr"><span class="nav-text">repr()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#str"><span class="nav-text">str()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#星号"><span class="nav-text">星号 *</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用于计算"><span class="nav-text">用于计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用于函数参数"><span class="nav-text">用于函数参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#globals-函数"><span class="nav-text">globals() 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#stripe"><span class="nav-text">stripe()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#readlines"><span class="nav-text">readlines()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lambda-函数"><span class="nav-text">lambda 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-6新功能-f-string"><span class="nav-text">3.6新功能 f string</span></a></li></ol></div>
             
 
           </div>
@@ -968,7 +988,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-heart"></i>
   </span>
@@ -980,7 +1000,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.3m</span>
+    <span title="站点总字数">1.6m</span>
   
 
   
@@ -989,7 +1009,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">20:01</span>
+    <span title="站点阅读时长">23:43</span>
   
 </div>
 

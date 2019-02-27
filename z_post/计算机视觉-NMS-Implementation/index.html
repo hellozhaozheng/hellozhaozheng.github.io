@@ -113,15 +113,16 @@
 
 
   <meta name="description" content="【链接】非极大值抑制算法(NMS)及python实现https://blog.csdn.net/Blateyang/article/details/79113030 【链接】NMS-非极大值抑制-Python实现https://blog.csdn.net/u011436429/article/details/80107042 NMS 概念非极大值抑制(Non-Maximum Suppression">
+<meta name="keywords" content="目标检测,源码实现,Python,计算机视觉,Cpp">
 <meta property="og:type" content="article">
-<meta property="og:title" content="NMS相关算法Python实现">
+<meta property="og:title" content="NMS 算法源码实现">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-NMS-Implementation/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="【链接】非极大值抑制算法(NMS)及python实现https://blog.csdn.net/Blateyang/article/details/79113030 【链接】NMS-非极大值抑制-Python实现https://blog.csdn.net/u011436429/article/details/80107042 NMS 概念非极大值抑制(Non-Maximum Suppression">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-05T07:55:46.714Z">
+<meta property="og:updated_time" content="2019-02-26T13:43:45.921Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="NMS相关算法Python实现">
+<meta name="twitter:title" content="NMS 算法源码实现">
 <meta name="twitter:description" content="【链接】非极大值抑制算法(NMS)及python实现https://blog.csdn.net/Blateyang/article/details/79113030 【链接】NMS-非极大值抑制-Python实现https://blog.csdn.net/u011436429/article/details/80107042 NMS 概念非极大值抑制(Non-Maximum Suppression">
 
 
@@ -139,7 +140,7 @@
   };
 </script>
 
-  <title>NMS相关算法Python实现 | 从零开始的BLOG</title>
+  <title>NMS 算法源码实现 | 从零开始的BLOG</title>
   
 
 
@@ -247,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">230</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">243</span></a>
   </li>
         
         
@@ -343,7 +344,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
   </li>
         
         
@@ -461,7 +462,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">NMS相关算法Python实现
+          <h1 class="post-title" itemprop="name headline">NMS 算法源码实现
               
             
           </h1>
@@ -496,8 +497,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2018-11-05T15:55:46+08:00" content="2018-11-05">
-      		  2018-11-05
+    		<time itemprop="dateUpdated" datetime="2019-02-26T21:43:45+08:00" content="2019-02-26">
+      		  2019-02-26
     		</time>
   	  </span>
 	  
@@ -514,7 +515,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/其它/" itemprop="url" rel="index"><span itemprop="name">其它</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/计算机视觉/" itemprop="url" rel="index"><span itemprop="name">计算机视觉</span></a></span>
 
                 
                 
@@ -550,7 +551,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">966</span>
+                <span title="本文字数">975</span>
               
 
               
@@ -587,9 +588,8 @@
         <p>【链接】非极大值抑制算法(NMS)及python实现<br><a href="https://blog.csdn.net/Blateyang/article/details/79113030" target="_blank" rel="noopener">https://blog.csdn.net/Blateyang/article/details/79113030</a></p>
 <p>【链接】NMS-非极大值抑制-Python实现<br><a href="https://blog.csdn.net/u011436429/article/details/80107042" target="_blank" rel="noopener">https://blog.csdn.net/u011436429/article/details/80107042</a></p>
 <h1 id="NMS-概念"><a href="#NMS-概念" class="headerlink" title="NMS 概念"></a>NMS 概念</h1><p>非极大值抑制(Non-Maximum Suppression, NMS), 顾名思义就是抑制那些不是极大值的元素, 可以理解为局部最大值搜索. 这个局部代表的是一个领域, 领域有两个参数可变, 一是领域的维数, 而是领域的大小. 对于目标检测来说, 非极大值抑制主要用于提取局部区域内分数最高的窗口.</p>
-<p>算法实现:</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">nms</span><span class="params">(boxes, scores, overlap=<span class="number">0.5</span>, top_k=<span class="number">200</span>)</span>:</span></span><br><span class="line">    <span class="comment"># boxes: Shape: [num_boxes, 4]</span></span><br><span class="line">    <span class="comment"># scores: Shape: [num_boxes]</span></span><br><span class="line"></span><br><span class="line">    keep = scores.</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    img_path = <span class="string">"./nms_test.jpg"</span></span><br><span class="line"></span><br><span class="line">    bounding_boxes = [(<span class="number">187</span>, <span class="number">82</span>, <span class="number">337</span>, <span class="number">317</span>), (<span class="number">150</span>, <span class="number">67</span>, <span class="number">305</span>, <span class="number">282</span>), (<span class="number">246</span>, <span class="number">121</span>, <span class="number">368</span>, <span class="number">304</span>)]</span><br><span class="line">    scores = [<span class="number">0.9</span>, <span class="number">0.75</span>, <span class="number">0.8</span>]</span><br><span class="line"></span><br><span class="line">    img = cv2.imread(img_path)</span><br><span class="line">    ori_img = img.copy()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Draw Parameters</span></span><br><span class="line">    font = cv2.FONT_HERSHEY_SIMPLEX</span><br><span class="line">    font_scale = <span class="number">1</span></span><br><span class="line">    thickness = <span class="number">2</span></span><br><span class="line"></span><br><span class="line">    nms_threshold = <span class="number">0.4</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (start_x, start_y, end_x, end_y), confidence <span class="keyword">in</span> zip(bounding</span><br><span class="line">    _boxes, scores):</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
-
+<h1 id="Python-实现"><a href="#Python-实现" class="headerlink" title="Python 实现"></a>Python 实现</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">nms</span><span class="params">(boxes, scores, overlap=<span class="number">0.5</span>, top_k=<span class="number">200</span>)</span>:</span></span><br><span class="line">    <span class="comment"># boxes: Shape: [num_boxes, 4]</span></span><br><span class="line">    <span class="comment"># scores: Shape: [num_boxes]</span></span><br><span class="line"></span><br><span class="line">    keep = scores.</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    img_path = <span class="string">"./nms_test.jpg"</span></span><br><span class="line"></span><br><span class="line">    bounding_boxes = [(<span class="number">187</span>, <span class="number">82</span>, <span class="number">337</span>, <span class="number">317</span>), (<span class="number">150</span>, <span class="number">67</span>, <span class="number">305</span>, <span class="number">282</span>), (<span class="number">246</span>, <span class="number">121</span>, <span class="number">368</span>, <span class="number">304</span>)]</span><br><span class="line">    scores = [<span class="number">0.9</span>, <span class="number">0.75</span>, <span class="number">0.8</span>]</span><br><span class="line"></span><br><span class="line">    img = cv2.imread(img_path)</span><br><span class="line">    ori_img = img.copy()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Draw Parameters</span></span><br><span class="line">    font = cv2.FONT_HERSHEY_SIMPLEX</span><br><span class="line">    font_scale = <span class="number">1</span></span><br><span class="line">    thickness = <span class="number">2</span></span><br><span class="line"></span><br><span class="line">    nms_threshold = <span class="number">0.4</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (start_x, start_y, end_x, end_y), confidence <span class="keyword">in</span> zip(bounding</span><br><span class="line">    _boxes, scores):</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<h1 id="C-实现"><a href="#C-实现" class="headerlink" title="C++ 实现"></a>C++ 实现</h1>
       
     </div>
 
@@ -606,6 +606,20 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/目标检测/" rel="tag"><i class="fa fa-tag"></i> 目标检测</a>
+          
+            <a href="/tags/源码实现/" rel="tag"><i class="fa fa-tag"></i> 源码实现</a>
+          
+            <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+          
+            <a href="/tags/计算机视觉/" rel="tag"><i class="fa fa-tag"></i> 计算机视觉</a>
+          
+            <a href="/tags/Cpp/" rel="tag"><i class="fa fa-tag"></i> Cpp</a>
+          
+        </div>
       
 
       
@@ -706,7 +720,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">230</span>
+                    <span class="site-state-item-count">243</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -826,7 +840,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">34</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -890,7 +908,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#NMS-概念"><span class="nav-text">NMS 概念</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#NMS-概念"><span class="nav-text">NMS 概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Python-实现"><span class="nav-text">Python 实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-实现"><span class="nav-text">C++ 实现</span></a></li></ol></div>
             
 
           </div>
@@ -915,7 +933,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-heart"></i>
   </span>
@@ -927,7 +945,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.3m</span>
+    <span title="站点总字数">1.6m</span>
   
 
   
@@ -936,7 +954,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">20:01</span>
+    <span title="站点阅读时长">23:43</span>
   
 </div>
 

@@ -113,14 +113,14 @@
 
 
   <meta name="description" content="源码文件在 ./maskrcnn_benchmark/structures/ 文件夹中, 定义了许多检测模式使用的数据结构, 如 BoxList, ImageList 等, 下面我们就将对这些数据结构以后适用于它们的操作进行讲解, 涉及到的源码文件如下所示:  bounding_box.py boxlist_ops.py image_list.py segmentation_mask.py   b">
-<meta name="keywords" content="PyTorch,MaskrcnnBenchmark">
+<meta name="keywords" content="目标检测,PyTorch,MaskrcnnBenchmark">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MaskrcnnBenchmark 源码解析-数据结构(structures)">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/PyTorch-MaskrcnnBenchmark-structures/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="源码文件在 ./maskrcnn_benchmark/structures/ 文件夹中, 定义了许多检测模式使用的数据结构, 如 BoxList, ImageList 等, 下面我们就将对这些数据结构以后适用于它们的操作进行讲解, 涉及到的源码文件如下所示:  bounding_box.py boxlist_ops.py image_list.py segmentation_mask.py   b">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-14T08:49:30.902Z">
+<meta property="og:updated_time" content="2019-02-25T11:39:21.831Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MaskrcnnBenchmark 源码解析-数据结构(structures)">
 <meta name="twitter:description" content="源码文件在 ./maskrcnn_benchmark/structures/ 文件夹中, 定义了许多检测模式使用的数据结构, 如 BoxList, ImageList 等, 下面我们就将对这些数据结构以后适用于它们的操作进行讲解, 涉及到的源码文件如下所示:  bounding_box.py boxlist_ops.py image_list.py segmentation_mask.py   b">
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">230</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">243</span></a>
   </li>
         
         
@@ -344,7 +344,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
   </li>
         
         
@@ -497,8 +497,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2018-12-14T16:49:30+08:00" content="2018-12-14">
-      		  2018-12-14
+    		<time itemprop="dateUpdated" datetime="2019-02-25T19:39:21+08:00" content="2019-02-25">
+      		  2019-02-25
     		</time>
   	  </span>
 	  
@@ -551,7 +551,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">14k</span>
+                <span title="本文字数">17k</span>
               
 
               
@@ -565,7 +565,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">13 分钟</span>
+                <span title="阅读时长">15 分钟</span>
               
             </div>
           
@@ -621,9 +621,13 @@
 <li><code>cat_boxlist()</code>:</li>
 </ul>
 <p>下面我们按照顺序对分别上面的函数进行解析</p>
-<h2 id="boxlist-nms-函数"><a href="#boxlist-nms-函数" class="headerlink" title="boxlist_nms() 函数"></a>boxlist_nms() 函数</h2><h2 id="remove-small-boxes-函数"><a href="#remove-small-boxes-函数" class="headerlink" title="remove_small_boxes() 函数"></a>remove_small_boxes() 函数</h2><h2 id="boxlist-iou-函数"><a href="#boxlist-iou-函数" class="headerlink" title="boxlist_iou() 函数"></a>boxlist_iou() 函数</h2><p><span id="cat_boxlist"></span></p>
+<h2 id="boxlist-nms-函数"><a href="#boxlist-nms-函数" class="headerlink" title="boxlist_nms() 函数"></a>boxlist_nms() 函数</h2><p>该函数会对一个 BoxList 类型数据中的 box 执行非极大值抑制算法, 这些 box 的 socre 值可以通过 score_field 获取, 代码的核心逻辑实际上是调用了 <code>./maskrcnn_benchmark/layers/nms.py</code> 文件中的 <code>_box_nms()</code> 函数, 关于该函数的详细解析可以看 <a href="../PyTorch-MaskrcnnBenchmark-layers/#nms">nms 解析</a></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/structures/boxlist_ops.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">boxlist_nms</span><span class="params">(boxlist, nms_thresh, max_proposals=<span class="number">-1</span>, score_field=<span class="string">"score"</span>)</span>:</span></span><br><span class="line">    <span class="comment"># boxlist (BoxList)</span></span><br><span class="line">    <span class="comment"># nms_thresh (float)</span></span><br><span class="line">    <span class="comment"># max_proposals (int): top-k</span></span><br><span class="line">    <span class="comment"># score_field (str): 键</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> nms_thresh &lt;= <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> boxlist</span><br><span class="line"></span><br><span class="line">    mode = boxlist.mode <span class="comment"># 缓存当前的模式</span></span><br><span class="line">    boxlist = boxlist.convert(<span class="string">"xyxy"</span>) <span class="comment"># 转换成指定模式</span></span><br><span class="line">    boxes = boxlist.bbox <span class="comment"># 获取 n*4 的 bbox 列表</span></span><br><span class="line">    score = boxlist.get_field(score_field) <span class="comment"># 获取对应的 socre 列表</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 调用 _box_nms 执行非极大值抑制抑制</span></span><br><span class="line">    keep = _box_nms(boxes, score, nms_thresh)</span><br><span class="line">    <span class="keyword">if</span> max_proposals &gt; <span class="number">0</span>: <span class="comment"># 只保留 top-k</span></span><br><span class="line">        keep = keep[: max_proposals]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># keep为下标列表, 指示了需要保存哪些box, 这里已经重写了 __getitem__ 方法, 因此会根据下标返回 BoxList</span></span><br><span class="line">    boxlist = boxlist[keep]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> boxlist.convert[mode]</span><br></pre></td></tr></table></figure>
+<h2 id="remove-small-boxes-函数"><a href="#remove-small-boxes-函数" class="headerlink" title="remove_small_boxes() 函数"></a>remove_small_boxes() 函数</h2><p>该函数执行后, BoxList 中只会保留那些尺寸大于一定值的区域 box.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/structures/boxlist_ops.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">remove_small_boxes</span><span class="params">(boxlist, min_size)</span>:</span></span><br><span class="line">    <span class="comment"># boxlist (BoxList)</span></span><br><span class="line">    <span class="comment"># min_size (int)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取 xywh 形式的bbox列表</span></span><br><span class="line">    xywh_boxes = boxlist.convert(<span class="string">"xywh"</span>).bbox</span><br><span class="line"></span><br><span class="line">    <span class="comment"># torch 的 unbind 函数, 用于 "移除" tensor 的维度,</span></span><br><span class="line">    _, _, ws, hs = xywh_boxes.unbind(dim=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    keep = (</span><br><span class="line">        (ws &gt;= min_size) &amp; (hs &gt;= min_size)</span><br><span class="line">    ).()</span><br></pre></td></tr></table></figure>
+<h2 id="boxlist-iou-函数"><a href="#boxlist-iou-函数" class="headerlink" title="boxlist_iou() 函数"></a>boxlist_iou() 函数</h2><p><span id="cat_boxlist"></span></p>
 <h2 id="cat-boxlist-函数"><a href="#cat-boxlist-函数" class="headerlink" title="cat_boxlist() 函数"></a>cat_boxlist() 函数</h2><p>该函数会将一个组成元素为 BoxList 的列表合并成一个 BoxList 对象. <strong>注意, 列表中的 BoxList 对象必须具有相同 image size.</strong></p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./maskrcnn_benchmark/structures/boxlist.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cat_boxlist</span><span class="params">(bboxes)</span>:</span></span><br><span class="line">    <span class="comment"># bboxes (list[BoxList])</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 确保类型为列表或元组, 且其中元素类型为 BoxList</span></span><br><span class="line">    <span class="keyword">assert</span> isinstance(bboxes, (list, tuple))</span><br><span class="line">    <span class="keyword">assert</span> all(isinstance(bbox, BoxList) <span class="keyword">for</span> bbox <span class="keyword">in</span> bboxes)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 确保所有的 BoxList 的 size , mode, 以及 extra_fields 字典的 keys 是相同的</span></span><br><span class="line">    size = bboxes[<span class="number">0</span>].size</span><br><span class="line">    <span class="keyword">assert</span> all(bbox.size == size <span class="keyword">for</span> bbox <span class="keyword">in</span> bboxes)</span><br><span class="line"></span><br><span class="line">    mode = bboxes[<span class="number">0</span>].mode</span><br><span class="line">    <span class="keyword">assert</span> all(bbox.mode == mode <span class="keyword">for</span> bbox <span class="keyword">in</span> bboxes)</span><br><span class="line"></span><br><span class="line">    fields = set(bboxes[<span class="number">0</span>].fields()) <span class="comment"># 获取字典的所有 key 值</span></span><br><span class="line">    <span class="keyword">assert</span> all(set(bbox.fields()) == fields <span class="keyword">for</span> bbox <span class="keyword">in</span> bboxes)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 调用本文件的 _cat() 方法, 将 bboxes 里面的 BoxList 数据连接成一个 BoxList, 具体解析看下方</span></span><br><span class="line">    cat_boxes = BoxList(_cat([bbox.bbox <span class="keyword">for</span> bbox <span class="keyword">in</span> boxes], dim=<span class="number">0</span>), size, mode)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将各个 BoxList 的 fields 补充上</span></span><br><span class="line">    <span class="keyword">for</span> field <span class="keyword">in</span> fields:</span><br><span class="line">        data = _cat([bbox.get_field(field) <span class="keyword">for</span> bbox <span class="keyword">in</span> bboxes], dim=<span class="number">0</span>)</span><br><span class="line">        cat_boxes.add_field(field, data)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> cat_boxes</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_cat</span><span class="params">(tensors, dim=<span class="number">0</span>)</span>:</span></span><br><span class="line">    <span class="comment"># 调用 torch.cat 将数据连接</span></span><br><span class="line">    <span class="keyword">assert</span> isinstance(tenosrs, (list, tuple))</span><br><span class="line">    <span class="keyword">if</span> len(tensors) == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> tensors[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">return</span> torch.cat(tensors, dim)</span><br></pre></td></tr></table></figure>
 <p><span id="ImageList"></span></p>
 <h1 id="image-list-py"><a href="#image-list-py" class="headerlink" title="image_list.py"></a>image_list.py</h1><p><span id="Mask"></span></p>
 <h1 id="segmentation-mask-py"><a href="#segmentation-mask-py" class="headerlink" title="segmentation_mask.py"></a>segmentation_mask.py</h1>
@@ -645,6 +649,8 @@
     <footer class="post-footer">
       
         <div class="post-tags">
+          
+            <a href="/tags/目标检测/" rel="tag"><i class="fa fa-tag"></i> 目标检测</a>
           
             <a href="/tags/PyTorch/" rel="tag"><i class="fa fa-tag"></i> PyTorch</a>
           
@@ -751,7 +757,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">230</span>
+                    <span class="site-state-item-count">243</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -871,7 +877,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">34</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -960,7 +970,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-heart"></i>
   </span>
@@ -972,7 +982,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.3m</span>
+    <span title="站点总字数">1.6m</span>
   
 
   
@@ -981,7 +991,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">20:01</span>
+    <span title="站点阅读时长">23:43</span>
   
 </div>
 

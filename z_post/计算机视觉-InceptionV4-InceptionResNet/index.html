@@ -113,16 +113,21 @@
 
 
   <meta name="description" content="文章:Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning作者: Christian Szegedy, Sergey Ioffe, Vincent Vanhoucke, Alex Alemi     模型 特点 说明     Inception V1     Inception V2">
+<meta name="keywords" content="计算机视觉,论文解读,网络结构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="InceptionV4 and Inception-ResNet">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-InceptionV4-InceptionResNet/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="文章:Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning作者: Christian Szegedy, Sergey Ioffe, Vincent Vanhoucke, Alex Alemi     模型 特点 说明     Inception V1     Inception V2">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-20T08:04:19.803Z">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1g0izm5ab4vj21hc0u01kx.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1g0izm1fg4kj21hc0u01kx.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1g0izm3b5adj21hc0u04qp.jpg">
+<meta property="og:updated_time" content="2019-02-26T13:08:33.644Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="InceptionV4 and Inception-ResNet">
 <meta name="twitter:description" content="文章:Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning作者: Christian Szegedy, Sergey Ioffe, Vincent Vanhoucke, Alex Alemi     模型 特点 说明     Inception V1     Inception V2">
+<meta name="twitter:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1g0izm5ab4vj21hc0u01kx.jpg">
 
 
 
@@ -247,7 +252,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">230</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">243</span></a>
   </li>
         
         
@@ -343,7 +348,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">34</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
   </li>
         
         
@@ -496,8 +501,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2018-11-20T16:04:19+08:00" content="2018-11-20">
-      		  2018-11-20
+    		<time itemprop="dateUpdated" datetime="2019-02-26T21:08:33+08:00" content="2019-02-26">
+      		  2019-02-26
     		</time>
   	  </span>
 	  
@@ -550,7 +555,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">257</span>
+                <span title="本文字数">1k</span>
               
 
               
@@ -622,6 +627,12 @@
 </tbody>
 </table>
 </div>
+<h1 id="Inception-v4"><a href="#Inception-v4" class="headerlink" title="Inception v4"></a>Inception v4</h1><p>Inception v4 网络的设计主要沿用了之前在 Inception v2/v3 中提到的几个 CNN 网络的设计原则, 这次谷歌团队将 Inception 网络迁移到了 TensorFlow 上面来执行, 因此降低了系统内存, 算力等条件的限制, 故而可以使用并行性更高的网络设计. 首先在 Inception 网络设计中, 最开始的几层总是不建议使用 Inception 等模块来节省计算以提取信息, 因此它们多是采用普通的卷积层或者相关简单的 Inception 模块, 如图3所示. 剩下的图4~8为 Inception v4 中的各个不同大小的 feature map grid 所使用的 Inception 模型及它们之间的连接. 细看就会发现它们的设计也主要遵循之前在 Inception v3 中所使用的原则, 只是更加复杂了一些. 最终的 Inception v4 网络的结构如下图左侧所示.</p>
+<p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1g0izm5ab4vj21hc0u01kx.jpg" alt="InceptionV4"></p>
+<h1 id="Inception-ResNet-v1"><a href="#Inception-ResNet-v1" class="headerlink" title="Inception ResNet v1"></a>Inception ResNet v1</h1><p>Inception ResNet v1 网络主要被用来与 Inception v3 模型性能进行比较, 因此它所用的 Inception 子网络的计算相对常规模块有所减少, 这是为了保证使得它的整体计算和内存消耗与 Inception v3 近似, 如此才能保证公平性(毕竟谷歌工程师的观点是令 CNN 深度网络在算力与内存受限的情况下性能最优化). Inception v3 的网络结构如下图所示.</p>
+<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1g0izm1fg4kj21hc0u01kx.jpg" alt="InceptionResNetV1"></p>
+<h1 id="Inception-ResNet-v2"><a href="#Inception-ResNet-v2" class="headerlink" title="Inception ResNet v2"></a>Inception ResNet v2</h1><p>Inception ResNet v2 主要被设计来探索残差模块用于 Inception 网络时所尽可能带来的性能提升. 因此它是论文给出的最终性能最高的网络设计方案, 其模型结构如下所示:</p>
+<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1g0izm3b5adj21hc0u04qp.jpg" alt="InceptionResNetV2"></p>
 
       
     </div>
@@ -639,6 +650,16 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/计算机视觉/" rel="tag"><i class="fa fa-tag"></i> 计算机视觉</a>
+          
+            <a href="/tags/论文解读/" rel="tag"><i class="fa fa-tag"></i> 论文解读</a>
+          
+            <a href="/tags/网络结构/" rel="tag"><i class="fa fa-tag"></i> 网络结构</a>
+          
+        </div>
       
 
       
@@ -710,8 +731,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -730,7 +760,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">230</span>
+                    <span class="site-state-item-count">243</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -850,7 +880,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">34</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -905,6 +939,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Inception-v4"><span class="nav-text">Inception v4</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inception-ResNet-v1"><span class="nav-text">Inception ResNet v1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inception-ResNet-v2"><span class="nav-text">Inception ResNet v2</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
         <div class="back-to-top">
@@ -923,7 +973,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-heart"></i>
   </span>
@@ -935,7 +985,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.3m</span>
+    <span title="站点总字数">1.6m</span>
   
 
   
@@ -944,7 +994,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">20:01</span>
+    <span title="站点阅读时长">23:43</span>
   
 </div>
 
