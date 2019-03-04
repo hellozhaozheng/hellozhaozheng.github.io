@@ -112,18 +112,18 @@
 
 
 
-  <meta name="description" content="string.substr坑源: leetcode, 第140题, Word Brak II s.substr(word.size()) 可以通过, 但是s.substr(0, word.size()) 报错 runtime error. 原因:1basic_string substr(size_type pos=0, size_type count=npos) const; 当只指定一个参数时,">
-<meta name="keywords" content="C++">
+  <meta name="description" content="gcc/g++的编译链接原理及注意事项LINUX下默认搜索头文件及库文件的路径 编译连接 多个文件编译在linux下编译，下面有三个文件，分别是1.cpp 和 2.cpp 和myhead.h 文件。 1.cpp 123456789#include &amp;lt;iostream&amp;gt;#include &quot;myhead.h&quot;using namespace std;int main()&amp;#123;    p">
+<meta name="keywords" content="踩坑记录,C++">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Cpp-踩坑">
+<meta property="og:title" content="C++-踩坑">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Cpp-踩坑/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="string.substr坑源: leetcode, 第140题, Word Brak II s.substr(word.size()) 可以通过, 但是s.substr(0, word.size()) 报错 runtime error. 原因:1basic_string substr(size_type pos=0, size_type count=npos) const; 当只指定一个参数时,">
+<meta property="og:description" content="gcc/g++的编译链接原理及注意事项LINUX下默认搜索头文件及库文件的路径 编译连接 多个文件编译在linux下编译，下面有三个文件，分别是1.cpp 和 2.cpp 和myhead.h 文件。 1.cpp 123456789#include &amp;lt;iostream&amp;gt;#include &quot;myhead.h&quot;using namespace std;int main()&amp;#123;    p">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-25T11:30:07.572Z">
+<meta property="og:updated_time" content="2019-03-04T14:14:56.040Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Cpp-踩坑">
-<meta name="twitter:description" content="string.substr坑源: leetcode, 第140题, Word Brak II s.substr(word.size()) 可以通过, 但是s.substr(0, word.size()) 报错 runtime error. 原因:1basic_string substr(size_type pos=0, size_type count=npos) const; 当只指定一个参数时,">
+<meta name="twitter:title" content="C++-踩坑">
+<meta name="twitter:description" content="gcc/g++的编译链接原理及注意事项LINUX下默认搜索头文件及库文件的路径 编译连接 多个文件编译在linux下编译，下面有三个文件，分别是1.cpp 和 2.cpp 和myhead.h 文件。 1.cpp 123456789#include &amp;lt;iostream&amp;gt;#include &quot;myhead.h&quot;using namespace std;int main()&amp;#123;    p">
 
 
 
@@ -140,7 +140,7 @@
   };
 </script>
 
-  <title>Cpp-踩坑 | 从零开始的BLOG</title>
+  <title>C++-踩坑 | 从零开始的BLOG</title>
   
 
 
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">242</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">236</span></a>
   </li>
         
         
@@ -462,7 +462,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Cpp-踩坑
+          <h1 class="post-title" itemprop="name headline">C++-踩坑
               
             
           </h1>
@@ -488,7 +488,7 @@
                 
               
 
-              <time title="创建时间：2018-11-20 10:16:00" itemprop="dateCreated datePublished" datetime="2018-11-20T10:16:00+08:00">2018-11-20</time>
+              <time title="创建时间：2018-09-20 10:16:00" itemprop="dateCreated datePublished" datetime="2018-09-20T10:16:00+08:00">2018-09-20</time>
             
 
             
@@ -497,8 +497,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-02-25T19:30:07+08:00" content="2019-02-25">
-      		  2019-02-25
+    		<time itemprop="dateUpdated" datetime="2019-03-04T22:14:56+08:00" content="2019-03-04">
+      		  2019-03-04
     		</time>
   	  </span>
 	  
@@ -551,7 +551,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">290</span>
+                <span title="本文字数">3k</span>
               
 
               
@@ -565,7 +565,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">3 分钟</span>
               
             </div>
           
@@ -585,11 +585,49 @@
       
 
       
-        <h1 id="string-substr"><a href="#string-substr" class="headerlink" title="string.substr"></a>string.substr</h1><p><strong>坑源:</strong> leetcode, 第140题, Word Brak II</p>
+        <h1 id="gcc-g-的编译链接原理及注意事项"><a href="#gcc-g-的编译链接原理及注意事项" class="headerlink" title="gcc/g++的编译链接原理及注意事项"></a>gcc/g++的编译链接原理及注意事项</h1><p>LINUX下默认搜索头文件及库文件的路径</p>
+<p>编译连接</p>
+<p>多个文件编译在linux下编译，下面有三个文件，分别是1.cpp 和 2.cpp 和myhead.h 文件。</p>
+<p>1.cpp</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"myhead.h"</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    print();</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"yes !"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2.cpp</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"myhead.h"</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">" print "</span>&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>myhead.h</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __myhead_h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __myhead_h</span></span><br><span class="line"><span class="function"><span class="keyword">void</span>  <span class="title">print</span><span class="params">()</span></span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>假如他们都在一个目录下面，那么编译流程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">g++ -c 2.cpp             #将2.cpp 编译成2.o 文件</span><br><span class="line">g++ 1.cpp -o a.out 2.o   #多个文件一起链接</span><br></pre></td></tr></table></figure>
+<p>or<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">g++ -c 2.cpp</span><br><span class="line">g++ -c 1.cpp</span><br><span class="line">g++ 1.o 2.o -o test</span><br></pre></td></tr></table></figure></p>
+<h1 id="重写C-中异常类的what方法"><a href="#重写C-中异常类的what方法" class="headerlink" title="重写C++中异常类的what方法"></a>重写C++中异常类的what方法</h1><h2 id="待补充完善：错误原因以及为什么这么修改"><a href="#待补充完善：错误原因以及为什么这么修改" class="headerlink" title="待补充完善：错误原因以及为什么这么修改"></a>待补充完善：错误原因以及为什么这么修改</h2><h2 id="坑源"><a href="#坑源" class="headerlink" title="坑源"></a>坑源</h2><p>在实现项目ZeroTensor的专属异常类时，需要实现<code>exception</code>类的<code>what</code>方法。</p>
+<h2 id="出现问题及解决办法"><a href="#出现问题及解决办法" class="headerlink" title="出现问题及解决办法"></a>出现问题及解决办法</h2><p>首先需要看一下<code>exception</code>基类中关于<code>what</code>方法的原始定义：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>下面是正确的重写方式</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">const</span> <span class="keyword">char</span> *<span class="title">what</span><span class="params">()</span> <span class="keyword">const</span> <span class="title">throw</span><span class="params">()</span> override </span>&#123; <span class="keyword">return</span> error_msg_.c_str(); &#125;</span><br></pre></td></tr></table></figure>
+<p>如果去掉throw() ， 则会报错：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">looser <span class="keyword">throw</span> specifier <span class="keyword">for</span> ‘<span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keyword">char</span>* zerotensor::ZerotensorError::what() <span class="keyword">const</span>’</span><br><span class="line">      <span class="keyword">const</span> <span class="keyword">char</span> *what() <span class="keyword">const</span> override &#123; <span class="keyword">return</span> error_msg_.c_str(); &#125;</span><br></pre></td></tr></table></figure>
+<p>如果将char * 改为 string，则会报错：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">error: ‘<span class="keyword">const</span> <span class="built_in">string</span> zerotensor::ZerotensorError::what() <span class="keyword">const</span>’ cannot be overloaded</span><br><span class="line">      <span class="function"><span class="keyword">const</span> <span class="built_in">string</span> <span class="title">what</span><span class="params">()</span> <span class="keyword">const</span> <span class="title">throw</span><span class="params">()</span> override </span>&#123; <span class="keyword">return</span> error_msg_; &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="声明模板类对象，报错“undefined-reference-to”"><a href="#声明模板类对象，报错“undefined-reference-to”" class="headerlink" title="声明模板类对象，报错“undefined reference to”"></a>声明模板类对象，报错“undefined reference to”</h1><h2 id="坑源-1"><a href="#坑源-1" class="headerlink" title="坑源"></a>坑源</h2><p>实现ZeroTensor项目中的<code>Shape3D</code>类时，为了可以处理多种类型的数据（int，double等），需要使用模板类</p>
+<h2 id="出现问题和解决办法"><a href="#出现问题和解决办法" class="headerlink" title="出现问题和解决办法"></a>出现问题和解决办法</h2><p>在实现的时候将模板类的声明和定义写在的不同位置，编译时报错：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">undefined reference to XXXX</span><br></pre></td></tr></table></figure></p>
+<p>这是因为模板类并不是普通的类和成员函数！它们只是说明了如何生成类和成员函数定义。因此，不能将模板成员函数放在独立的实现文件中。</p>
+<p>由于模板不是函数，因此它们不能单独编译。模板必须与特定的模板实例化请求一起使用。为此，最简单的方法是将所有模板信息放在一个头文件中，并在要使用这些模板的文件中包含该头文件！</p>
+<p>还有另一种解决办法就是在<code>stack.h</code>文件的末尾加上<code>#include stack.cpp</code>，并在<code>stack.cpp</code>文件中去掉对应的包含语句。</p>
+<h1 id="string-substr"><a href="#string-substr" class="headerlink" title="string.substr"></a>string.substr</h1><p><strong>坑源:</strong> leetcode, 第140题, Word Brak II</p>
 <p><code>s.substr(word.size())</code> 可以通过, 但是<code>s.substr(0, word.size())</code> 报错 <code>runtime error</code>.</p>
 <p>原因:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">basic_string <span class="title">substr</span><span class="params">(size_type pos=<span class="number">0</span>, size_type count=npos)</span> <span class="keyword">const</span></span>;</span><br></pre></td></tr></table></figure></p>
 <p>当只指定一个参数时, 该参数表示的是 <code>pos</code> 的位置, 而 <code>count</code> 则默认会是字符串中剩余字符的数量.</p>
 <p>如果 <code>pos</code> 的值大于字符串的size, 则会报运行时错误(<code>runtime error</code>).</p>
+<h1 id="vector数据的内存分配问题"><a href="#vector数据的内存分配问题" class="headerlink" title="vector数据的内存分配问题"></a>vector数据的内存分配问题</h1><p>首先，要知道，程序所拥有的栈资源是及其有限的（Linux下用<code>ulimit -a</code>或者<code>ulimit -s</code>可查当前栈的大小。  因此在写程序时，绝对不能肆意使用占空间，否则就会报出<code>Segmentation fault</code>。</p>
+<p>在用vector实现三维数据时，以下的代码就会产生段错误</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> HEIGHT=<span class="number">2</span>,WIDTH=<span class="number">3</span>,DEPTH=<span class="number">5</span>;</span><br><span class="line">    <span class="comment">// construct array3D[HEIGHT][WIDTH][DEPTH]</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; &gt; &gt; array3D;</span><br><span class="line"></span><br><span class="line">    array3D.resize(HEIGHT);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; HEIGHT; ++i) &#123;</span><br><span class="line">        array3D[i].resize(WIDTH);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; WIDTH; ++j)</span><br><span class="line">            array3D[i][j].resize(DEPTH);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上出现段错误的原因在于申请了过多的vecotr，导致占空间不够用，从而出现段错误，现在来看以下vector在内存中具体是如何存储的，首先看一下以下三种方式的声明：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;T&gt; vec;</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;T&gt;* Vec = <span class="keyword">new</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;T&gt;();</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;T*&gt; vec;</span><br></pre></td></tr></table></figure>
+<p>假设<code>T</code>是一个类型或者一个定义好的类，则以上三种情况的内存分配情况如下：</p>
+<ul>
+<li>对于<code>std::vector&lt;T&gt; vec</code>；<code>vec</code>在栈上（stack），而其中的元素<code>T</code>保存在堆上（heap）；</li>
+<li>对于<code>std::vector&lt;T&gt;* Vec = new std::vector&lt;T&gt;()</code>；<code>vec</code>和其中的元素<code>T</code>都保存在堆上；</li>
+<li>对于<code>std::vector&lt;T*&gt; vec</code>；<code>vec</code>在栈上（stack），而其中的元素<code>T</code>保存在堆上（heap）；和第一种情况类似。</li>
+</ul>
+<p>存储在栈上的元素，往往无需手动管理内存空间，通常会自动释放，而在堆上的空间，则需要手动管理。</p>
 
       
     </div>
@@ -610,6 +648,8 @@
       
         <div class="post-tags">
           
+            <a href="/tags/踩坑记录/" rel="tag"><i class="fa fa-tag"></i> 踩坑记录</a>
+          
             <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C++</a>
           
         </div>
@@ -623,8 +663,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/计算机视觉-InceptionV2/" rel="prev" title="Inception V2">
-                <i class="fa fa-chevron-left"></i> Inception V2
+              <a href="/z_post/CUDA-CUDA示例学习-一维数组的矢量求和/" rel="prev" title="用CUDA进行一维数组的矢量求和">
+                <i class="fa fa-chevron-left"></i> 用CUDA进行一维数组的矢量求和
               </a>
             
           </div>
@@ -633,8 +673,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/PyTorch-踩坑/" rel="next" title="PyTorch-踩坑">
-                PyTorch-踩坑 <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/Cpp-Book-CppPrimerPlusChapter16/" rel="next" title="《C++ PrimerPlus》 第十六章">
+                《C++ PrimerPlus》 第十六章 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -713,7 +753,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">242</span>
+                    <span class="site-state-item-count">236</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -903,7 +943,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#string-substr"><span class="nav-text">string.substr</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#gcc-g-的编译链接原理及注意事项"><span class="nav-text">gcc/g++的编译链接原理及注意事项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重写C-中异常类的what方法"><span class="nav-text">重写C++中异常类的what方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#待补充完善：错误原因以及为什么这么修改"><span class="nav-text">待补充完善：错误原因以及为什么这么修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#坑源"><span class="nav-text">坑源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#出现问题及解决办法"><span class="nav-text">出现问题及解决办法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#声明模板类对象，报错“undefined-reference-to”"><span class="nav-text">声明模板类对象，报错“undefined reference to”</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#坑源-1"><span class="nav-text">坑源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#出现问题和解决办法"><span class="nav-text">出现问题和解决办法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#string-substr"><span class="nav-text">string.substr</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vector数据的内存分配问题"><span class="nav-text">vector数据的内存分配问题</span></a></li></ol></div>
             
 
           </div>
