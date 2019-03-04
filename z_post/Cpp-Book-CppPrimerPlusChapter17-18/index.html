@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="18.3 新的类功能18.3.1 特殊的成员函数18.3.2 默认的方法和禁用的方法在C++中，如果只在程序中提供了移动构造函数，那么编译器将不会自动创建默认的构造函数、复制构造函数和复制赋值构造函数。在这种情况下，可以使用关键字default显式的声明这些方法的默认版本：（即只给出函数头，后接=default，则这些方法的默认版本就会被创建） 12345678class Someclass&amp;#1">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-25T11:26:46.877Z">
+<meta property="og:updated_time" content="2019-03-01T08:01:18.084Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《C++ PrimerPlus》 第十七章～第十八章">
 <meta name="twitter:description" content="18.3 新的类功能18.3.1 特殊的成员函数18.3.2 默认的方法和禁用的方法在C++中，如果只在程序中提供了移动构造函数，那么编译器将不会自动创建默认的构造函数、复制构造函数和复制赋值构造函数。在这种情况下，可以使用关键字default显式的声明这些方法的默认版本：（即只给出函数头，后接=default，则这些方法的默认版本就会被创建） 12345678class Someclass&amp;#1">
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">243</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">242</span></a>
   </li>
         
         
@@ -344,7 +344,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
   </li>
         
         
@@ -497,8 +497,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-02-25T19:26:46+08:00" content="2019-02-25">
-      		  2019-02-25
+    		<time itemprop="dateUpdated" datetime="2019-03-01T16:01:18+08:00" content="2019-03-01">
+      		  2019-03-01
     		</time>
   	  </span>
 	  
@@ -551,7 +551,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">565</span>
+                <span title="本文字数">2.9k</span>
               
 
               
@@ -565,7 +565,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">3 分钟</span>
               
             </div>
           
@@ -589,7 +589,33 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Someclass</span><br><span class="line">&#123;</span><br><span class="line">  public:</span><br><span class="line">  Someclass(Someclass &amp;&amp;);</span><br><span class="line">  Someclass() = default;</span><br><span class="line">  Someclass(const Someclass &amp;) = default;</span><br><span class="line">  Someclass&amp; operator=(const Someclass &amp;) = default;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>另一方面，关键字<code>delete</code>可用于禁止编译器使用特定的方法，例如，要禁止复制对象，可禁用复制构造函数和复制赋值运算符（之前是通过将其访问权限设值为private来实现的，现在的实现方法更容易理解，且不易犯错）：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
 <p>关键字<code>default</code>智能用于6个特殊的成员函数，但<code>delete</code>可用于任何成员函数。<code>delete</code>的一种可能用法是禁止特定的转换。</p>
-<h2 id="18-6-可变参数模板"><a href="#18-6-可变参数模板" class="headerlink" title="18.6 可变参数模板"></a>18.6 可变参数模板</h2>
+<h2 id="18-4-Lambda-函数"><a href="#18-4-Lambda-函数" class="headerlink" title="18.4 Lambda 函数"></a>18.4 Lambda 函数</h2><p>C++ 11 中提供了 Lambda 函数(表达式), 它们提供了一种有用的服务, 对使用函数谓词的 STL 算法来说尤其如此.</p>
+<h3 id="18-4-1-比较函数指针-函数对象-仿函数-和-Lambda-函数"><a href="#18-4-1-比较函数指针-函数对象-仿函数-和-Lambda-函数" class="headerlink" title="18.4.1 比较函数指针, 函数对象(仿函数)和 Lambda 函数"></a>18.4.1 比较函数指针, 函数对象(仿函数)和 Lambda 函数</h3><ol>
+<li>函数指针可以完成基本的函数功能, 并且可以作为参数传递给 STL 的算法函数.</li>
+<li>仿函数本身是一个类的对象, 因此, 它不仅仅可以完成函数的功能, 还能在此基础上封装更多的信息, 以完成更加复杂的功能, 同样, 仿函数(类实例)也可以作为参数传递给接受函数指针为参数的函数.</li>
+<li>Lambda 表达式可以创建匿名函数, 即无需给函数命名, 在 C++11 中, 对于接受函数指针或仿函数的函数, 可以使用 lambda 表达式作为其参数.</li>
+</ol>
+<p>lambda 表达式的返回类型是通过<code>decltype</code>根据返回值判断得到的, 如果 lambda 中不包含返回语句, 那么推断出的返回类型将为<code>void</code>. <strong>注意</strong>, 仅当 lambda 表达式完全由一条返回语句组成时, 自动类型推断才管用, 否则, 需要使用新增的返回类型后置语法, 如下所示:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[](<span class="keyword">double</span> x)-&gt;<span class="keyword">double</span> &#123;<span class="keyword">int</span> y = x; <span class="keyword">return</span> x - y;&#125;; <span class="comment">// 返回值类型为 double</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="18-4-2-为何使用-lambda"><a href="#18-4-2-为何使用-lambda" class="headerlink" title="18.4.2 为何使用 lambda"></a>18.4.2 为何使用 lambda</h3><ul>
+<li>距离: 让定义位于使用的地方附近, 这样就无需翻阅多页的源代码, 以了解函数的实际功能. 同时, 在修改代码时, 如果需要修改的代码涉及到的内容都在附近, 那么也会更加方便. 从这种角度看, 函数指针就无法满足这种要求, 因为不能在函数内部定义其他函数. 另外, 对于距离这一点, 仿函数也有同样的优势, 因为我们可以在函数的内部定义类.</li>
+<li>简洁: 相比于函数指针的定义和仿函数的定义来说, lambda 表达式的定义更加简洁, 我们可以给一个 lambda 表达式指定名称, 这样可以通过该名称多次使用对应的 lambda 表达式.</li>
+<li>效率: 通常, 函数指针会阻止内联, 因为编译器传统上不会内联其地址被获取的函数, 函数地址的概念意味着非内联函数. 而仿函数和 lambda 通常不会阻止内联.</li>
+<li>功能: lambda 表达式具有一些额外的功能, 具体地说, lambda 表达式可以访问作用域内的任何动态变量, 我们只要将需要的变量放在捕获括号里面即可.</li>
+</ul>
+<h2 id="18-6-可变参数模板"><a href="#18-6-可变参数模板" class="headerlink" title="18.6 可变参数模板"></a>18.6 可变参数模板</h2><p>可变参数模板(variadic template)可以创建能够接受可变数量参数的模板函数和模板类. 要创建可变参数模板, 需要理解几个要点:</p>
+<ul>
+<li>模板参数包(parameter pack)</li>
+<li>函数参数包</li>
+<li>展开参数包(unpack)</li>
+<li>递归</li>
+</ul>
+<h3 id="18-6-1-模板和函数参数包"><a href="#18-6-1-模板和函数参数包" class="headerlink" title="18.6.1 模板和函数参数包"></a>18.6.1 模板和函数参数包</h3><p>C++11 提供了一个用省略号表示的元运算符(meta-operator), 让您能够声明表示模板参数包的标识符, 模板参数包基本上是一个类型列表. 同样, 它还让您能够声明表示函数参数包的标识符, 而函数参数包基本上是一个值列表. 其语法如下:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Args&gt; <span class="comment">// Args 是一个模板参数包</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show_list</span><span class="params">(Args... args)</span> </span>&#123; <span class="comment">// args是一个函数参数包</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码中, <code>Args</code>是一个模板参数包, 而<code>args</code>是一个函数参数包. <code>Args</code>与<code>T</code>的差别在于, <code>T</code>与一种类型匹配, 而<code>Args</code>与任意数量(包括零)的类型匹配. 对于下面的函数调用:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show_list(<span class="string">'S'</span>, <span class="number">80</span>, <span class="string">"sweet"</span>, <span class="number">4.5</span>);</span><br></pre></td></tr></table></figure></p>
+<p>在上面的情况下, 参数包<code>Args</code>包含与函数调用中的参数匹配的类型: <code>char</code>, <code>int</code>, <code>const char*</code> 和 <code>double</code>. 我们可以用使用模板类型<code>T</code>一样使用<code>Args</code>, <code>Args... args</code> 意味着函数参数包<code>args</code>包含的值列表与模板参数包<code>Args</code>包含类型列表匹配—-无论是类型还是数量都匹配. 在上面的示例中, <code>args</code>包含值<code>&#39;S&#39;, 80, &quot;sweet&quot;, 4.5</code>.</p>
+<h3 id="18-6-2-展开参数包"><a href="#18-6-2-展开参数包" class="headerlink" title="18.6.2 展开参数包"></a>18.6.2 展开参数包</h3><p>我们无法通过索引来获取参数包中的参数, 也就是不能使用<code>Args[2]</code>来访问包中的第三个类型. 相反, 可将省略号放在函数参数包名的右边, 将参数包展开, 如下所示:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Args&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show_list</span><span class="params">(Args... args)</span> </span>&#123;</span><br><span class="line">    show_list(args...); <span class="comment">// 将展开后的 args 传递给 show_list, 但是这样会造成无限递归.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="18-6-3-在可变参数模板函数中使用递归"><a href="#18-6-3-在可变参数模板函数中使用递归" class="headerlink" title="18.6.3 在可变参数模板函数中使用递归"></a>18.6.3 在可变参数模板函数中使用递归</h3><p>展开参数后, 如果我们直接在<code>show_list</code>函数中进行展开, 那么它又会将新展开的参数作为参数包进行展开, 这样就会导致无限递归, 因此, 我们需要正确的使用递归来对参数包进行展开. 这里的核心理念是, 将函数参数包展开,对列表中的第一项进行处理, 再将余下的内容传递给递归调用, 以此类推, 直到列表为空. 与常规递归一样, 确保递归终止很重要(可通过添加一个只处理单项的模板来实现最后一项的特殊处理, 同时还可以起到结束递归的作用), 这里的技巧是将模板头改为如下所示:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Args&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show_list</span><span class="params">(T value, Args... args)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>对于上述定义, 我们每次递归调用时, <code>args</code>都会变短, 这样, 最终就可以终止递归. 具体例子见p829.</p>
+
       
     </div>
 
@@ -714,7 +740,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">243</span>
+                    <span class="site-state-item-count">242</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -838,7 +864,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">36</span>
+                      
+                    
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -902,7 +930,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#18-3-新的类功能"><span class="nav-text">18.3 新的类功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#18-3-1-特殊的成员函数"><span class="nav-text">18.3.1 特殊的成员函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18-3-2-默认的方法和禁用的方法"><span class="nav-text">18.3.2 默认的方法和禁用的方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-6-可变参数模板"><span class="nav-text">18.6 可变参数模板</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#18-3-新的类功能"><span class="nav-text">18.3 新的类功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#18-3-1-特殊的成员函数"><span class="nav-text">18.3.1 特殊的成员函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18-3-2-默认的方法和禁用的方法"><span class="nav-text">18.3.2 默认的方法和禁用的方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-4-Lambda-函数"><span class="nav-text">18.4 Lambda 函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#18-4-1-比较函数指针-函数对象-仿函数-和-Lambda-函数"><span class="nav-text">18.4.1 比较函数指针, 函数对象(仿函数)和 Lambda 函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18-4-2-为何使用-lambda"><span class="nav-text">18.4.2 为何使用 lambda</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-6-可变参数模板"><span class="nav-text">18.6 可变参数模板</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#18-6-1-模板和函数参数包"><span class="nav-text">18.6.1 模板和函数参数包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18-6-2-展开参数包"><span class="nav-text">18.6.2 展开参数包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18-6-3-在可变参数模板函数中使用递归"><span class="nav-text">18.6.3 在可变参数模板函数中使用递归</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -948,7 +976,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">23:43</span>
+    <span title="站点阅读时长">24:20</span>
   
 </div>
 

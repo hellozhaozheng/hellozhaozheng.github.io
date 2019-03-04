@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="一. 基础篇C++ 在 C 的基础上加了什么 包含全部的 C 语言部分 面向对象编程思想, 封装, 继承, 多态 泛型编程, 模板 STL 库  C 和 C++ 互相调用因为 C++ 重载, 而 C 不重载, 函数名编译的结果都不一样, 因此如果 C++ 直接调用 C 的函数, 因为二者编译的不同, 就会失败. C++ 调用 C: 例如一个.h文件中有个foo(int)的声明, 其实现在.c中,">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-26T07:14:55.423Z">
+<meta property="og:updated_time" content="2019-03-01T08:59:52.814Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++面试总结">
 <meta name="twitter:description" content="一. 基础篇C++ 在 C 的基础上加了什么 包含全部的 C 语言部分 面向对象编程思想, 封装, 继承, 多态 泛型编程, 模板 STL 库  C 和 C++ 互相调用因为 C++ 重载, 而 C 不重载, 函数名编译的结果都不一样, 因此如果 C++ 直接调用 C 的函数, 因为二者编译的不同, 就会失败. C++ 调用 C: 例如一个.h文件中有个foo(int)的声明, 其实现在.c中,">
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">243</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">242</span></a>
   </li>
         
         
@@ -344,7 +344,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
   </li>
         
         
@@ -497,8 +497,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-02-26T15:14:55+08:00" content="2019-02-26">
-      		  2019-02-26
+    		<time itemprop="dateUpdated" datetime="2019-03-01T16:59:52+08:00" content="2019-03-01">
+      		  2019-03-01
     		</time>
   	  </span>
 	  
@@ -551,7 +551,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">9.9k</span>
+                <span title="本文字数">12k</span>
               
 
               
@@ -565,7 +565,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">9 分钟</span>
+                <span title="阅读时长">11 分钟</span>
               
             </div>
           
@@ -813,21 +813,67 @@
 <p>它们都可用于申请动态内存和释放内存, 对于非内部数据类型的对象而言, 光用 malloc/free 无法满足动态对象的要求, 对象在创建的同时要自动执行构造函数, 在消亡之时要自动执行析构函数, 由于malloc/free是库函数而不是运算符, 因此不在编译器控制权限之内, 不能够把执行构造函数和析构函数的任务强加于malloc/free. 因此C++语言需要一个能完成动态内存分配和初始化工作的运算符new, 以及一个能完成清理与释放内存工作的运算符delete.</p>
 <h3 id="new-delete-malloc-free的内部实现"><a href="#new-delete-malloc-free的内部实现" class="headerlink" title="new, delete, malloc, free的内部实现"></a>new, delete, malloc, free的内部实现</h3><h3 id="delete-和-delete-的区别"><a href="#delete-和-delete-的区别" class="headerlink" title="delete 和 delete []的区别"></a>delete 和 delete []的区别</h3><p>delete只会调用一次析构函数, 而delete[]会调用数组内每一个成员的析构函数. 在More Effective C++中有更为详细的解释: 当delete操作符用于数组时, 它为每个数组元素调用析构函数, 然后调用operator delete来释放内存</p>
 <p>在对 <strong>内建数据类型</strong> 使用时, delete和delete[]是等价的, 因此delete[]会调用数组元素的析构函数, 但是内部数据类型没有析构函数, 所以可以直接使用.</p>
-<h1 id="二-模板篇"><a href="#二-模板篇" class="headerlink" title="二. 模板篇"></a>二. 模板篇</h1><h2 id="常用的数据结构及其特点"><a href="#常用的数据结构及其特点" class="headerlink" title="常用的数据结构及其特点"></a>常用的数据结构及其特点</h2><ul>
+<h1 id="二-字符串及模板篇"><a href="#二-字符串及模板篇" class="headerlink" title="二. 字符串及模板篇"></a>二. 字符串及模板篇</h1><h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><p>更详细的总结可见:<a href="../Cpp-string">C++ string 完整笔记</a></p>
+<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><p>详细总结请见: <a href="../Cpp-STL">C++ 标准模板库STL完整笔记</a></p>
+<h3 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h3><p><strong>顺序式容器</strong></p>
+<ul>
 <li>array</li>
 <li>vector</li>
 <li>list</li>
-<li>queue</li>
 <li>deque</li>
-<li>priority_queue</li>
+</ul>
+<p><strong>关联式容器</strong></p>
+<ul>
 <li>map</li>
 <li>unordered_map</li>
+<li>multimap</li>
+<li>unordered_multimap</li>
 <li>set</li>
 <li>unordered_set</li>
+<li>multiset</li>
+<li>unordered_multiset</li>
 </ul>
-<h1 id="vector-和-list-的区别"><a href="#vector-和-list-的区别" class="headerlink" title="vector 和 list 的区别"></a>vector 和 list 的区别</h1><h1 id="三-高级篇"><a href="#三-高级篇" class="headerlink" title="三. 高级篇"></a>三. 高级篇</h1><h2 id="lambda-表达式"><a href="#lambda-表达式" class="headerlink" title="lambda 表达式"></a>lambda 表达式</h2><p><a href="../Cpp-lambda表达式">Cpp-lambda表达式</a></p>
+<p><strong>容器适配器</strong></p>
+<ul>
+<li>queue</li>
+<li>priority_queue</li>
+</ul>
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><h4 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h4><p>调用示例:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec = &#123;<span class="number">2</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">5</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">8</span>&#125;;</span><br><span class="line"><span class="comment">// sort: 默认将区间升序排序</span></span><br><span class="line"><span class="built_in">std</span>::sort(vec.begin(), vec.end(),</span><br><span class="line">        [](<span class="keyword">int</span> a, <span class="keyword">int</span> b)&#123;<span class="keyword">return</span> a &gt;= b;&#125;);</span><br><span class="line"><span class="comment">// is_sort: 默认检查区间元素是否按照升序排列</span></span><br><span class="line"><span class="built_in">std</span>::is_sort(vec.begin(), vec.end(),</span><br><span class="line">        [](<span class="keyword">int</span> a, <span class="keyword">int</span> b)&#123;<span class="keyword">return</span> a &gt;= b;&#125;);</span><br><span class="line"><span class="comment">// is_sorted_until: 返回满足范围 [first, it) 已排序的最后的迭代器it.</span></span><br><span class="line"><span class="keyword">auto</span> it = <span class="built_in">std</span>::is_sort_until(vec.begin(), vec.begin()+<span class="number">3</span>, vec.end(),</span><br><span class="line">        [](<span class="keyword">int</span> a, <span class="keyword">int</span> b)&#123;<span class="keyword">return</span> a &gt;= b;&#125;);</span><br><span class="line"><span class="keyword">if</span> (it = vec.end()) <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; *it &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"><span class="comment">// partial_sort: 将区间内较小的k个元素排序, 对数复杂度</span></span><br><span class="line"><span class="built_in">std</span>::partial_sort(vec.begin(), vec.begin()+<span class="number">3</span>, vec.end(),</span><br><span class="line">        [](<span class="keyword">int</span> a, <span class="keyword">int</span> b)&#123;<span class="keyword">return</span> a &gt;= b;&#125;);</span><br><span class="line"><span class="comment">// partial_sort_copy: 先将区间内的元素复制, 然后再进行部分排序, 部分排序的数量根据目标范围决定</span></span><br><span class="line"><span class="built_in">std</span>::partial_sort_copy(vec.begin(), vec.end(), copy.begin(), copy.end(),</span><br><span class="line">        <span class="built_in">std</span>::greater&lt;<span class="keyword">int</span>&gt;()); <span class="comment">// 注意这里的greater带有(), 说明是函数, 而不是类型</span></span><br><span class="line"><span class="comment">// stable_sort: 稳定排序, 将区间内的元素排序, 同时保持相等的元素之间的顺序不变</span></span><br><span class="line"><span class="built_in">std</span>::stable_sort(vec.begin(), vec.end(),</span><br><span class="line">        [](<span class="keyword">int</span> a, <span class="keyword">int</span> b)&#123;<span class="keyword">return</span> a &gt;= b;&#125;);</span><br><span class="line"><span class="comment">// nth_element: 对给定的区间部分排序, 使得第n个元素位于排序后的正确位置上, 并且前半段的元素小于等于后半段元素</span></span><br><span class="line"><span class="built_in">std</span>::nth_element(vec.begin(), vec.begin() + vec.size() / <span class="number">2</span>, vec.end()</span><br><span class="line">        <span class="built_in">std</span>::greater&lt;<span class="keyword">int</span>&gt;());</span><br></pre></td></tr></table></figure></p>
+<h4 id="查找-搜索"><a href="#查找-搜索" class="headerlink" title="查找/搜索"></a>查找/搜索</h4><ul>
+<li>binary_search:</li>
+<li>equal_range:</li>
+<li>lower_bound:</li>
+<li>upper_bound:</li>
+<li>search</li>
+<li>search_n</li>
+<li>find</li>
+<li>find_if</li>
+<li>find_if_not</li>
+<li>find_end</li>
+<li>find_first_of</li>
+<li>adjacent_find</li>
+<li>count</li>
+<li>count_if</li>
+<li>all_of</li>
+<li>any_of</li>
+<li>none_of</li>
+<li>mismatch</li>
+<li>for_each</li>
+<li>for_each_n</li>
+</ul>
+<h4 id="最值"><a href="#最值" class="headerlink" title="最值"></a>最值</h4><ul>
+<li>max</li>
+<li>max_element</li>
+<li>min</li>
+<li>min_element</li>
+<li>minmax</li>
+<li>minmax_element</li>
+<li>clamp: 在一堆边界值间夹住一个值</li>
+</ul>
+<h4 id="修改序列"><a href="#修改序列" class="headerlink" title="修改序列"></a>修改序列</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// generate: 根据函数结果将其值赋给范围内的每个元素</span></span><br><span class="line"><span class="built_in">std</span>::srand(<span class="number">0</span>);</span><br><span class="line"><span class="built_in">std</span>::generate(vec.begin(), vec.end(),</span><br><span class="line">        []()&#123;<span class="keyword">return</span> <span class="built_in">std</span>::rand() % <span class="number">100</span>;&#125;);</span><br><span class="line"><span class="comment">// generate_n: 根据函数结果将其值赋给范围起始的前n个元素</span></span><br></pre></td></tr></table></figure>
+<h4 id="划分"><a href="#划分" class="headerlink" title="划分"></a>划分</h4><h4 id="排列"><a href="#排列" class="headerlink" title="排列"></a>排列</h4><h4 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h4><h4 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h4><h4 id="复制-替换"><a href="#复制-替换" class="headerlink" title="复制/替换"></a>复制/替换</h4><h1 id="三-高级篇"><a href="#三-高级篇" class="headerlink" title="三. 高级篇"></a>三. 高级篇</h1><h2 id="lambda-表达式"><a href="#lambda-表达式" class="headerlink" title="lambda 表达式"></a>lambda 表达式</h2><p><a href="../Cpp-lambda表达式">C++中的lambda表达式</a></p>
 <h2 id="C-中的协变与逆变"><a href="#C-中的协变与逆变" class="headerlink" title="C++中的协变与逆变"></a>C++中的协变与逆变</h2><p><a href="https://www.jianshu.com/p/db76a8b08694" target="_blank" rel="noopener">https://www.jianshu.com/p/db76a8b08694</a></p>
-<h1 id="栈内存与文字常量区"><a href="#栈内存与文字常量区" class="headerlink" title="栈内存与文字常量区"></a>栈内存与文字常量区</h1>
+<h1 id="栈内存与文字常量区"><a href="#栈内存与文字常量区" class="headerlink" title="栈内存与文字常量区"></a>栈内存与文字常量区</h1><h1 id="Linux-多进程-多线程并发"><a href="#Linux-多进程-多线程并发" class="headerlink" title="Linux 多进程, 多线程并发"></a>Linux 多进程, 多线程并发</h1>
       
     </div>
 
@@ -952,7 +998,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">243</span>
+                    <span class="site-state-item-count">242</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1076,7 +1122,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">36</span>
+                      
+                    
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1140,7 +1188,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一-基础篇"><span class="nav-text">一. 基础篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-在-C-的基础上加了什么"><span class="nav-text">C++ 在 C 的基础上加了什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-和-C-互相调用"><span class="nav-text">C 和 C++ 互相调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-的编译和链接过程"><span class="nav-text">C++ 的编译和链接过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构体和联合体有什么区别"><span class="nav-text">结构体和联合体有什么区别?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#封装-继承-多态-重载-重写-覆盖概念解析"><span class="nav-text">封装, 继承, 多态, 重载, 重写/覆盖概念解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#子类不能从父类继承的函数"><span class="nav-text">子类不能从父类继承的函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重载-overload-和重写-覆盖-override-的区别"><span class="nav-text">重载(overload)和重写/覆盖(override)的区别?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#友元类和友元函数"><span class="nav-text">友元类和友元函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问权限"><span class="nav-text">访问权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#范围解析运算符"><span class="nav-text">范围解析运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#避免文件被多次编译"><span class="nav-text">避免文件被多次编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#float与0比较时需要注意什么"><span class="nav-text">float与0比较时需要注意什么?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么情况下会发生运行时错误-runtime-error"><span class="nav-text">什么情况下会发生运行时错误(runtime error)?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组和指向数组名的指针有什么区别"><span class="nav-text">数组和指向数组名的指针有什么区别?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哪些情况下只能用初始化列表-initialization-list-而不能用赋值-assignment"><span class="nav-text">哪些情况下只能用初始化列表(initialization list) 而不能用赋值 (assignment)?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-是不是类型安全的"><span class="nav-text">C++是不是类型安全的?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#描述-C-的内存分配方式以及它们之间的区别"><span class="nav-text">描述 C++ 的内存分配方式以及它们之间的区别?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚函数"><span class="nav-text">虚函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#explicit-关键字"><span class="nav-text">explicit 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extern-关键字"><span class="nav-text">extern 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#const-关键字"><span class="nav-text">const 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#static-关键字"><span class="nav-text">static 关键字</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修饰种类"><span class="nav-text">修饰种类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储持续性"><span class="nav-text">存储持续性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链接性"><span class="nav-text">链接性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引用"><span class="nav-text">引用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是引用-声明和使用引用时要注意哪些问题"><span class="nav-text">什么是引用? 声明和使用引用时要注意哪些问题?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用和指针的关系与区别"><span class="nav-text">引用和指针的关系与区别?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将引用作为函数参数有哪些特点"><span class="nav-text">将引用作为函数参数有哪些特点?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将引用作为函数返回值类型的优势和注意事项"><span class="nav-text">将引用作为函数返回值类型的优势和注意事项?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在什么时候需要使用常引用"><span class="nav-text">在什么时候需要使用常引用?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#this指针"><span class="nav-text">this指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数参数的入栈顺序"><span class="nav-text">函数参数的入栈顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数指针和函数对象-仿函数"><span class="nav-text">函数指针和函数对象(仿函数)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造函数"><span class="nav-text">构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#子类析构时要调用父类的析构函数吗"><span class="nav-text">子类析构时要调用父类的析构函数吗?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内联函数"><span class="nav-text">内联函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态内存申请"><span class="nav-text">动态内存申请</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#new-delete-malloc-free的关系的区别"><span class="nav-text">new, delete, malloc, free的关系的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#new-delete-malloc-free的内部实现"><span class="nav-text">new, delete, malloc, free的内部实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#delete-和-delete-的区别"><span class="nav-text">delete 和 delete []的区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二-模板篇"><span class="nav-text">二. 模板篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用的数据结构及其特点"><span class="nav-text">常用的数据结构及其特点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vector-和-list-的区别"><span class="nav-text">vector 和 list 的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三-高级篇"><span class="nav-text">三. 高级篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#lambda-表达式"><span class="nav-text">lambda 表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-中的协变与逆变"><span class="nav-text">C++中的协变与逆变</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#栈内存与文字常量区"><span class="nav-text">栈内存与文字常量区</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一-基础篇"><span class="nav-text">一. 基础篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-在-C-的基础上加了什么"><span class="nav-text">C++ 在 C 的基础上加了什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-和-C-互相调用"><span class="nav-text">C 和 C++ 互相调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-的编译和链接过程"><span class="nav-text">C++ 的编译和链接过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构体和联合体有什么区别"><span class="nav-text">结构体和联合体有什么区别?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#封装-继承-多态-重载-重写-覆盖概念解析"><span class="nav-text">封装, 继承, 多态, 重载, 重写/覆盖概念解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#子类不能从父类继承的函数"><span class="nav-text">子类不能从父类继承的函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重载-overload-和重写-覆盖-override-的区别"><span class="nav-text">重载(overload)和重写/覆盖(override)的区别?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#友元类和友元函数"><span class="nav-text">友元类和友元函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问权限"><span class="nav-text">访问权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#范围解析运算符"><span class="nav-text">范围解析运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#避免文件被多次编译"><span class="nav-text">避免文件被多次编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#float与0比较时需要注意什么"><span class="nav-text">float与0比较时需要注意什么?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么情况下会发生运行时错误-runtime-error"><span class="nav-text">什么情况下会发生运行时错误(runtime error)?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组和指向数组名的指针有什么区别"><span class="nav-text">数组和指向数组名的指针有什么区别?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哪些情况下只能用初始化列表-initialization-list-而不能用赋值-assignment"><span class="nav-text">哪些情况下只能用初始化列表(initialization list) 而不能用赋值 (assignment)?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-是不是类型安全的"><span class="nav-text">C++是不是类型安全的?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#描述-C-的内存分配方式以及它们之间的区别"><span class="nav-text">描述 C++ 的内存分配方式以及它们之间的区别?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚函数"><span class="nav-text">虚函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#explicit-关键字"><span class="nav-text">explicit 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extern-关键字"><span class="nav-text">extern 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#const-关键字"><span class="nav-text">const 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#static-关键字"><span class="nav-text">static 关键字</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修饰种类"><span class="nav-text">修饰种类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储持续性"><span class="nav-text">存储持续性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链接性"><span class="nav-text">链接性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引用"><span class="nav-text">引用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是引用-声明和使用引用时要注意哪些问题"><span class="nav-text">什么是引用? 声明和使用引用时要注意哪些问题?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用和指针的关系与区别"><span class="nav-text">引用和指针的关系与区别?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将引用作为函数参数有哪些特点"><span class="nav-text">将引用作为函数参数有哪些特点?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将引用作为函数返回值类型的优势和注意事项"><span class="nav-text">将引用作为函数返回值类型的优势和注意事项?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在什么时候需要使用常引用"><span class="nav-text">在什么时候需要使用常引用?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#this指针"><span class="nav-text">this指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数参数的入栈顺序"><span class="nav-text">函数参数的入栈顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数指针和函数对象-仿函数"><span class="nav-text">函数指针和函数对象(仿函数)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造函数"><span class="nav-text">构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#子类析构时要调用父类的析构函数吗"><span class="nav-text">子类析构时要调用父类的析构函数吗?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内联函数"><span class="nav-text">内联函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态内存申请"><span class="nav-text">动态内存申请</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#new-delete-malloc-free的关系的区别"><span class="nav-text">new, delete, malloc, free的关系的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#new-delete-malloc-free的内部实现"><span class="nav-text">new, delete, malloc, free的内部实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#delete-和-delete-的区别"><span class="nav-text">delete 和 delete []的区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二-字符串及模板篇"><span class="nav-text">二. 字符串及模板篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串"><span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模板"><span class="nav-text">模板</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#容器"><span class="nav-text">容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法"><span class="nav-text">算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#排序"><span class="nav-text">排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查找-搜索"><span class="nav-text">查找/搜索</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最值"><span class="nav-text">最值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改序列"><span class="nav-text">修改序列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#划分"><span class="nav-text">划分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#排列"><span class="nav-text">排列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集合"><span class="nav-text">集合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#堆"><span class="nav-text">堆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复制-替换"><span class="nav-text">复制/替换</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三-高级篇"><span class="nav-text">三. 高级篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#lambda-表达式"><span class="nav-text">lambda 表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-中的协变与逆变"><span class="nav-text">C++中的协变与逆变</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#栈内存与文字常量区"><span class="nav-text">栈内存与文字常量区</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-多进程-多线程并发"><span class="nav-text">Linux 多进程, 多线程并发</span></a></li></ol></div>
             
 
           </div>
@@ -1186,7 +1234,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">23:43</span>
+    <span title="站点阅读时长">24:20</span>
   
 </div>
 

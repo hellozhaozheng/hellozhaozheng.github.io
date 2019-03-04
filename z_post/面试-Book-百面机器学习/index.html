@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="第一章 特征工程1. 特征归一化7. 图像数据不足时的处理方法在图像分类任务中, 训练数据不足会带来什么问题, 如何缓解数据量不足带来的问题?一个模型的信息来源主要有两个方面:  训练数据中蕴含的信息 模型形成过程中(包括构造, 学习, 推理等), 人们提供的先验信息  当训练数据不足时, 说明模型从原始数据中获取的信息比较少, 这种情况下要想保证模型的效果, 就需要更多的先验信息  先验信息可以">
+<meta name="keywords" content="读书笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《百面机器学习》">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/面试-Book-百面机器学习/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="第一章 特征工程1. 特征归一化7. 图像数据不足时的处理方法在图像分类任务中, 训练数据不足会带来什么问题, 如何缓解数据量不足带来的问题?一个模型的信息来源主要有两个方面:  训练数据中蕴含的信息 模型形成过程中(包括构造, 学习, 推理等), 人们提供的先验信息  当训练数据不足时, 说明模型从原始数据中获取的信息比较少, 这种情况下要想保证模型的效果, 就需要更多的先验信息  先验信息可以">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fw2rqo4zu0j20k00bcaas.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fw2rqo4zlbj20k00bfjse.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw2rqo5t7mj20k00bct9r.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fw2rlw987gj206j085dia.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fw2rlw9q2gj208u07wn0b.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fw2rlw8oihj205n06p767.jpg">
+<meta property="og:updated_time" content="2019-03-02T12:29:52.807Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《百面机器学习》">
+<meta name="twitter:description" content="第一章 特征工程1. 特征归一化7. 图像数据不足时的处理方法在图像分类任务中, 训练数据不足会带来什么问题, 如何缓解数据量不足带来的问题?一个模型的信息来源主要有两个方面:  训练数据中蕴含的信息 模型形成过程中(包括构造, 学习, 推理等), 人们提供的先验信息  当训练数据不足时, 说明模型从原始数据中获取的信息比较少, 这种情况下要想保证模型的效果, 就需要更多的先验信息  先验信息可以">
+<meta name="twitter:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fw2rqo4zu0j20k00bcaas.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/面试-Book-百面机器学习/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>《百面机器学习》 | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">242</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-linux">
+    <a href="/categories/Linux/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-面试">
+    <a href="/categories/面试/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其他">
+    <a href="/categories/其他/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/面试-Book-百面机器学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">《百面机器学习》
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-09-26 15:04:01" itemprop="dateCreated datePublished" datetime="2018-09-26T15:04:01+08:00">2018-09-26</time>
+            
+
+            
+          </span>
+
+	  
+  	    <span class="post-updated">
+    		&nbsp; | &nbsp; 更新于
+    		<time itemprop="dateUpdated" datetime="2019-03-02T20:29:52+08:00" content="2019-03-02">
+      		  2019-03-02
+    		</time>
+  	  </span>
+	  
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/面试/" itemprop="url" rel="index"><span itemprop="name">面试</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">12k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">11 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="第一章-特征工程"><a href="#第一章-特征工程" class="headerlink" title="第一章 特征工程"></a>第一章 特征工程</h1><h2 id="1-特征归一化"><a href="#1-特征归一化" class="headerlink" title="1. 特征归一化"></a>1. 特征归一化</h2><h2 id="7-图像数据不足时的处理方法"><a href="#7-图像数据不足时的处理方法" class="headerlink" title="7. 图像数据不足时的处理方法"></a>7. 图像数据不足时的处理方法</h2><h3 id="在图像分类任务中-训练数据不足会带来什么问题-如何缓解数据量不足带来的问题"><a href="#在图像分类任务中-训练数据不足会带来什么问题-如何缓解数据量不足带来的问题" class="headerlink" title="在图像分类任务中, 训练数据不足会带来什么问题, 如何缓解数据量不足带来的问题?"></a>在图像分类任务中, 训练数据不足会带来什么问题, 如何缓解数据量不足带来的问题?</h3><p>一个模型的信息来源主要有两个方面:</p>
+<ul>
+<li>训练数据中蕴含的信息</li>
+<li>模型形成过程中(包括构造, 学习, 推理等), 人们提供的先验信息</li>
+</ul>
+<p><strong>当训练数据不足时, 说明模型从原始数据中获取的信息比较少, 这种情况下要想保证模型的效果, 就需要更多的先验信息</strong></p>
+<ul>
+<li>先验信息可以作用在模型上, 例如让模型采用特定的内在结构, 条件假设或添加其他一些约束条件</li>
+<li>先验信息也可以直接施加在数据集上, 让其展现处更多的,更有用的信息, 以利于后续模型的训练和学习.</li>
+</ul>
+<p>具体到图像分类任务上训练数据不足带来的问题主要表现在<strong>过拟合方面</strong>. 所以, 对应的处理方法大致分为两类:</p>
+<ul>
+<li>基于模型的方法: 采用降低过拟合风险的措施,包括简化模型(如将非线性简化成线性), 添加约束项以缩小假设空间(如L1和L2正则化), 集成学习, Dropout超参数等.</li>
+<li>基于数据的方法, 主要通过数据扩充(Data Augmentation), 即根据一些先验知识, 在保持特定信息的前提下, 对原始数据进行适合变换以达到扩充数据集的效果.</li>
+</ul>
+<p>在图像分类任务中，在保持图像类别不变的前提下，可以对训练集中的每幅图像进行以下变换：</p>
+<ul>
+<li>观察角度：一定程度内的随机旋转、平移、缩放、裁剪、填充、左右翻转等</li>
+<li>噪声扰动：椒盐噪声、高斯白噪声</li>
+<li>颜色变换：在RGB颜色空间上进行主成分分析</li>
+<li>其他：亮度、清晰度、对比度、锐度</li>
+</ul>
+<p>其他扩充数据方法：特征提取, 在图像的特征空间内进行变换：数据扩充or上采样技术，如SMOTE（Synthetic Minority Over-sampling Technique)。</p>
+<p>最后，迁移学习或者用GAN合成一些新样本也可帮助解决数据不足问题。</p>
+<h1 id="第三章-经典算法"><a href="#第三章-经典算法" class="headerlink" title="第三章 经典算法"></a>第三章 经典算法</h1><h2 id="1-支持向量机"><a href="#1-支持向量机" class="headerlink" title="1. 支持向量机"></a>1. 支持向量机</h2><p>知识点: SVM模型推导, 核函数, SMO(Sequential Minimal Optimizaiton)算法</p>
+<h3 id="问题1-在空间上线性可分的两类点-分别向SVM分类的超平面上做投降-这些点在超平面上的投影仍然是线性可分的吗"><a href="#问题1-在空间上线性可分的两类点-分别向SVM分类的超平面上做投降-这些点在超平面上的投影仍然是线性可分的吗" class="headerlink" title="问题1: 在空间上线性可分的两类点, 分别向SVM分类的超平面上做投降, 这些点在超平面上的投影仍然是线性可分的吗"></a>问题1: 在空间上线性可分的两类点, 分别向SVM分类的超平面上做投降, 这些点在超平面上的投影仍然是线性可分的吗</h3><p>首先明确下题目概念: 当前的空间已经是线性可分的空间,有可能是样本空间,也有可能是映射后的特征空间. 题目问的是将当前空间中的点全部投影都当前的分类超平面上, 提问在分类超平面上投影的点是否仍然线性可分.</p>
+<p>先说结论: <strong>对于任意线性可分的两组点, 它们在SVM分类的超平面上的投影都是线性不可分的</strong></p>
+<p>解释一(反证法直观推导):</p>
+<p>首先根据拉格朗日对偶优化问题的公式和KKT条件要求,可以知道, SVM的分类结果仅仅依赖于支持向量, 那么此时我们假设存在一个SVM分类超平面使所有支持向量在该超平面上的投影依然线性可分, 那么根据初等几何只是我们可以知道, 两个类别中距离最近的两个点, 它们连线的中垂线所组成的新的超平面是相较于当前超平面更优的解.  这与我们的假设相矛盾, 故线性可分的两组点, 投影到超平面上以后是线性不可分的.(具体可画图或看p53)</p>
+<p>解释二(超平面分离定理,Separatin Hyperplane Theorem, SHT):</p>
+<p>STH定理描述: 对于不想交的两个凸集, 存在一个超平面, 将两个凸集分离. 对于二维的情况, 两个凸集间的距离最短两点连线的中垂线就是一个将它们分离的超平面</p>
+<p>根据此定理, 我们先对线性可分的这两组点求格子的凸包, 而SVM求得的超平面就是这两个凸包上距离最短的两点连线的中垂线,根据凸包的性质容易知道, 凸包上的点要么是样本点, 要么是两个样本点之间连线上的点, 那么, 两个凸包之间距离最短的两个点可以分为三个情况: 1)两边都是样本点, 2)两边都不是样本点, 3)一边是一边不是. 不论对于哪种情况, 当对中垂线(超平面)投影后, 两类点都是线性不可分的(具体可画图或者看p54)</p>
+<h3 id="问题2-是否存在一组参数使SVM训练误差为0"><a href="#问题2-是否存在一组参数使SVM训练误差为0" class="headerlink" title="问题2: 是否存在一组参数使SVM训练误差为0?"></a>问题2: 是否存在一组参数使SVM训练误差为0?</h3><p>问题详细描述: 一个使用高斯核( $K(x,z) = e^{-| x- z|^2/\gamma^2})$ 训练的SVM中, 试证明若给定训练集中 <strong>不存在两个点在同一个位置</strong> (如果在同一个位置,则这两个点不可分), 则存在一组参数 $\vec \alpha$ 和参数 $\gamma$, 使得SVM的训练误差为0.</p>
+<p><strong>结论:存在(可想象成是过拟合)</strong></p>
+<p>公式证明:</p>
+<p>TODO</p>
+<p>以上推导证明可以看出, 对于任意样本的预测结果 $f(\vec x^{(i)})$, 与样本真实标签 $y^{(i)}$ 的距离都小于1 , 因此, 当训练样本为正例时, 由于 $y^{(i)}=1$, 则必有 $f(\vec x^{(i)}) &gt;0 $, 样本被预测为正例. 负例也是同理. 因此所有样本的类别都被正确预测, 训练误差为0.</p>
+<h3 id="问题3-训练误差为0的SVM分类器一定存在吗"><a href="#问题3-训练误差为0的SVM分类器一定存在吗" class="headerlink" title="问题3: 训练误差为0的SVM分类器一定存在吗"></a>问题3: 训练误差为0的SVM分类器一定存在吗</h3><p>问题详细描述: 虽然在问题2中找到了一组参数使得SVM的训练误差为0, 但是这组参数不一定是满足SVM条件的一个解, 在实际训练一个 <strong>不加入松弛变量</strong> 的SVM模型时, 是否能保证得到的SVM分类器满足训练误差为0呢?</p>
+<p><strong>结论: 存在</strong></p>
+<p>上一题找到了一组参数使得SVM的分类器训练误差为0, 但是训练误差为0的参数并不一定是SVM模型的一个解, 它还需要满足限制条件 $y^{(i)} f(x^{(i)}) \geq 1$ .</p>
+<p>因为SVM模型中解的限制条件为 $y^{(i)} f(x^{(i)}) \geq 1$ (等号为支持向量样本点) , 而上题我们只得到了   $y^{(i)} f(x^{(i)}) &gt; 0$, 因此需要找到另一组参数满足更强的条件</p>
+<p>TODO公式推导</p>
+<p>根据以上推导过程, 可以找到一个SVM的解, 同时一定使模型分类误差为0</p>
+<h3 id="问题4-加入松弛变量的SVM的训练误差可以为0吗"><a href="#问题4-加入松弛变量的SVM的训练误差可以为0吗" class="headerlink" title="问题4: 加入松弛变量的SVM的训练误差可以为0吗"></a>问题4: 加入松弛变量的SVM的训练误差可以为0吗</h3><p><strong>结论: 不一定能得到训练误差为0的模型(但不是一定不能, 具体看问题)</strong></p>
+<p>这是由于加入松弛变量后, 优化目标变成了 $\min_{\vec w, b, x_i^{(i)}} \frac{1}{2} |\vec w |^2_2 + C \sum_{i=1}^{m} x_i^{(i)}$  ,并不再是仅仅使训练误差最小, 同时还会考虑后面的惩罚项, 而当C的取值较小时, 一个带有训练误差, 但参数项较小的点将会称为更优的结果.</p>
+<h2 id="2-逻辑回归"><a href="#2-逻辑回归" class="headerlink" title="2. 逻辑回归"></a>2. 逻辑回归</h2><p>逻辑回归通常用来解决二分类问题(也可以解决多分类问题), 我通过 Logistic 函数将拟合函数的输出值归一化到 (0, 1) 之间, 我们可以将其认为是分类为 1 类的预测概率. Logistic 函数公式(和 Sigmoid 函数形式形式相同)如下:</p>
+<script type="math/tex; mode=display">g(z) = \frac{1}{1+e^{-z}}</script><p>Logistic(Sigmoid) 函数的求导公式有一个特性: $g’(z) = g(z)(1 - g(z))$.</p>
+<p>逻辑回归本质上还是线性回归, 只是在特征到结果的映射中加入了一层函数映射, 即先把特征线性求和, 然后使用函数 $g(z)$ 将连续结果值映射到 (0, 1) 之间, 我们将线性回归模型的表达式代入到 Logistic(Sigmoid) 函数之中, 就得到了逻辑回归的表达式:</p>
+<script type="math/tex; mode=display">h_\theta (x) = g(\theta^T x) = \frac{1}{1 + e^{-\theta^Tx}}</script><h3 id="问题1-逻辑回归相比于线性回归-有何异同"><a href="#问题1-逻辑回归相比于线性回归-有何异同" class="headerlink" title="问题1: 逻辑回归相比于线性回归, 有何异同?"></a>问题1: 逻辑回归相比于线性回归, 有何异同?</h3><p>最本质区别: 逻辑回归处理的是分类问题, 线性回归处理的是回归问题. 在逻辑回归中, 因变量的取值是一个 <strong>二元分布(不是二项分布)</strong>. 而线性回归中实际上求解的是对真实函数关系的一个近似拟合.</p>
+<p>实际上, 我们将逻辑回归的公式整理一下, 就可以得到 $log\frac{p}{1-p} = \theta^T x$, 其中, $p = P(y=1 | x)$, 也就是将给定输入 $x$ 预测为正样本的概率. 那也就是说, 逻辑回归实际上也可以看做是对 $log\frac{p}{1-p}$ 的线性回归. 但是在关于逻辑回归的讨论中, 我们均认为 $y$ 是因变量, 而不是 $\frac{p}{1-p}$, 这便引出逻辑回归与线性回归最大的区别, 即 <strong>逻辑回归中的因变量是离散的</strong>, 而 <strong>线性回归中的因变量是连续的</strong>. 并且在自变量 $x$ 和超参数 $\theta$ 确定的情况下, 逻辑回归可以看做是广义线性模型在因变量 $y$ 服从二元分布时的一个特殊情况, 而使用最小二乘法求解线性回归时, 我们认为因变量 $y$ 服从正态分布.</p>
+<h3 id="当使用逻辑回归处理多标签的分类问题时-有哪些常见做法-分别应用于哪些场景-它们之间又有怎样的关系"><a href="#当使用逻辑回归处理多标签的分类问题时-有哪些常见做法-分别应用于哪些场景-它们之间又有怎样的关系" class="headerlink" title="当使用逻辑回归处理多标签的分类问题时, 有哪些常见做法, 分别应用于哪些场景, 它们之间又有怎样的关系?"></a>当使用逻辑回归处理多标签的分类问题时, 有哪些常见做法, 分别应用于哪些场景, 它们之间又有怎样的关系?</h3><p>使用哪一种办法处理多分类取决于具体问题的定义.</p>
+<p><strong>如果一个样本只对应于一个标签</strong><br>此时, 我们可以假设每个样本属于不同标签的概率服从于几何分布, 即使用多项逻辑回归(Softmax Regression)来进行分类</p>
+<script type="math/tex; mode=display">h_theta (x) = \begin{bmatrix} p(y = 1 | x; \theta) \\ p(y = 2 | x; \theta) \\ ... \\ p(y = k | x; \theta) \end{bmatrix} = \frac{1}{\sum^k_{j=1} e^{\theta^T_j x}} \begin{bmatrix} e^{\theta^T_1 x} \\ e^{\theta^T_2 x} \\ ... \\ e^{\theta^T_k x} \end{bmatrix}</script><p>上式中, $\theta_1, \theta_2, …, \theta_k \in \mathbb{R}^n$ 为模型的参数, 而 $\frac{1}{\sum^k_{j=1} e^{e^T_j x}}$ 可以看做是对概率的归一化. 当只有两类时, 我们可以利用参数冗余的特点消除掉一个参数, 这样, 就可以得到和逻辑回归一直的公式, 因此, 多项逻辑回归实际上是二分类逻辑回归在多分类标签下的一种扩展.</p>
+<p><strong>当存在一个样本属于多个标签的情况</strong><br>此时, 我们可以训练 $k$ 个二分类的逻辑回归分类器, 第 $i$ 个分类器用以区分每个样本是否可以归为第 $i$ 类, 训练该分类器时, 需要把标签重新整理为”第 $i$ 类标签”与”其他类标签两类”. 这也是 SVM 在处理多分类问题时的方法.</p>
+<h1 id="第八章-采样"><a href="#第八章-采样" class="headerlink" title="第八章 采样"></a>第八章 采样</h1><h2 id="1-采样的作用"><a href="#1-采样的作用" class="headerlink" title="1. 采样的作用"></a>1. 采样的作用</h2><h1 id="第九章-前向神经网络"><a href="#第九章-前向神经网络" class="headerlink" title="第九章 前向神经网络"></a>第九章 前向神经网络</h1><h2 id="1-多层感知机与布尔函数"><a href="#1-多层感知机与布尔函数" class="headerlink" title="1. 多层感知机与布尔函数"></a>1. 多层感知机与布尔函数</h2><h3 id="问题1-多层感知机表示异或逻辑时最少需要几个隐含层-仅考虑二元输入"><a href="#问题1-多层感知机表示异或逻辑时最少需要几个隐含层-仅考虑二元输入" class="headerlink" title="问题1: 多层感知机表示异或逻辑时最少需要几个隐含层(仅考虑二元输入)?"></a>问题1: 多层感知机表示异或逻辑时最少需要几个隐含层(仅考虑二元输入)?</h3><p><strong>考虑零个隐藏层的情况(等同于逻辑回归):</strong></p>
+<p>逻辑回归公式如下:</p>
+<script type="math/tex; mode=display">Z = sigmoid(AX+BY+C)</script><p>具体的真值表为:</p>
+<p>// TODO表格</p>
+<p>接着考虑下面的情况:</p>
+<p>//TODO</p>
+<p>由上可知, <strong>采用逻辑回归(即不带隐藏层的感知机)无法精确学习出一个输出为异或的模型表示</strong></p>
+<p><strong>考虑具有一个隐藏层的情况:</strong></p>
+<p>如下图, 假设有两个隐藏单元,</p>
+<p>//TODO</p>
+<h3 id="问题2-如果只使用一个隐层-需要多少隐节点能够实现包含n元输入的任意布尔函数"><a href="#问题2-如果只使用一个隐层-需要多少隐节点能够实现包含n元输入的任意布尔函数" class="headerlink" title="问题2: 如果只使用一个隐层, 需要多少隐节点能够实现包含n元输入的任意布尔函数?"></a>问题2: 如果只使用一个隐层, 需要多少隐节点能够实现包含n元输入的任意布尔函数?</h3><p>//TODO 完善</p>
+<p><strong>结论: 在最差情况下, n元布尔函数的析取范式最多包含 $2^{(n-1)}$ 个不可规约的合取范式(异或), 因此对于单隐层的感知机, 需要 $2^{(n-1)}$ 个隐层节点实现</strong></p>
+<h3 id="问题3-考虑多隐层的情况-实现包含n元输入的任意布尔函数最少需要多少个网络节点和网络层"><a href="#问题3-考虑多隐层的情况-实现包含n元输入的任意布尔函数最少需要多少个网络节点和网络层" class="headerlink" title="问题3: 考虑多隐层的情况, 实现包含n元输入的任意布尔函数最少需要多少个网络节点和网络层?"></a>问题3: 考虑多隐层的情况, 实现包含n元输入的任意布尔函数最少需要多少个网络节点和网络层?</h3><p>// TODO</p>
+<h2 id="2-深度神经网络中的激活函数"><a href="#2-深度神经网络中的激活函数" class="headerlink" title="2. 深度神经网络中的激活函数"></a>2. 深度神经网络中的激活函数</h2><p>为什么要使用激活函数: 在现实世界里, 往往会遇到线性不可分问题(如XOR异或函数), 需要非线性变换对数据的分布进行重新映射. 对于深度神经网络, 我们在每一层线性变换后叠加一个非线性激活函数, <strong>以避免多层网络等效于单层线性函数, 从而获得更强大的学习和拟合能力</strong></p>
+<h3 id="问题1-写出常用激活函数及其导数"><a href="#问题1-写出常用激活函数及其导数" class="headerlink" title="问题1: 写出常用激活函数及其导数"></a>问题1: 写出常用激活函数及其导数</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>激活函数</th>
+<th>形式</th>
+<th>导数形式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sigmoid</td>
+<td>$f(x) =\frac{1}{1+e^{-x}}$</td>
+<td>$f’(x)(1-f(x))$</td>
+</tr>
+<tr>
+<td>Tanh</td>
+<td>$f(x) = tanh(x)= \frac{e^x-e^{-x}}{e^x+e^{-x}}$</td>
+<td>$f’(x) = 1-(f(z))^2$</td>
+</tr>
+<tr>
+<td>ReLU</td>
+<td>$f(x)=max(0,x)=\begin{cases} 0 &amp; x \leq 0 \\ x &amp; x&gt;0 \end{cases}$</td>
+<td>$f’(x)=\begin{cases} 0 &amp; x\leq 0 \\ 1 &amp; x&gt;0 \end{cases}$</td>
+</tr>
+<tr>
+<td>Leaky ReLU</td>
+<td>$f(x)=max(\alpha x,x)=\begin{cases} \alpha x &amp; x \leq 0 \\ x &amp; x&gt;0 \end{cases} \alpha 通常为0.1$</td>
+<td>$f(x)=max(\alpha x,x)=\begin{cases} \alpha  &amp; x \leq 0 \\ 1 &amp; x&gt;0 \end{cases}$</td>
+</tr>
+<tr>
+<td>Maxout</td>
+<td>$f(x) = max(w_1^T x + b_1, w_2^T x + b_2)$</td>
+<td>$f(x) = max(w_1, w_2)$</td>
+</tr>
+<tr>
+<td>ELU</td>
+<td>$f(x) = \begin{cases} x &amp; x \geq 0 \\ \alpha(e^x - 1) &amp; x&lt;0 \end{cases}$</td>
+<td>$f(x) = \begin{cases} 1 &amp; x \geq 0 \\ \alpha e^x &amp; x&lt;0 \end{cases}$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>更多关于激活函数的讨论见[这里]</p>
+<h3 id="问题2-为什么Sigmoid和Tanh激活函数会导致梯度消失的现象"><a href="#问题2-为什么Sigmoid和Tanh激活函数会导致梯度消失的现象" class="headerlink" title="问题2: 为什么Sigmoid和Tanh激活函数会导致梯度消失的现象"></a>问题2: 为什么Sigmoid和Tanh激活函数会导致梯度消失的现象</h3><p>主要原因是它们在输入值过大或过小时都具有神经元饱和问题, 也就是说当输入很小或很大时, 其导数趋近于0, 又因为神经网络训练时依赖的是梯度下降法, 而根据链式法则的特点, 导数在趋近于0时就会出现梯度消失现象,导致浅层网络权重更新停滞</p>
+<h3 id="问题3-ReLU系列的激活函数相对于Sigmoid和Tanh激活函数的有点是什么-它们有什么局限性"><a href="#问题3-ReLU系列的激活函数相对于Sigmoid和Tanh激活函数的有点是什么-它们有什么局限性" class="headerlink" title="问题3: ReLU系列的激活函数相对于Sigmoid和Tanh激活函数的有点是什么,它们有什么局限性?"></a>问题3: ReLU系列的激活函数相对于Sigmoid和Tanh激活函数的有点是什么,它们有什么局限性?</h3><p>优点:</p>
+<ul>
+<li>计算上,ReLU只需要一个阈值, 复杂度低</li>
+<li>ReLU在正无穷范围内, 都具有非饱和性, 可以提供相对宽的激活边界, 缓解梯度消失问题</li>
+<li>ReLU的负无穷总是输出0, 通过单侧一直提供了网络的稀疏表达能力, 经过ReLU激活的神经元输出中会有很多的0, 形成了稀疏矩阵, 通过实验发现, 这样的稀疏矩阵可以提高网络的性能.</li>
+</ul>
+<p>局限性: 主要在于其训练过程中会导致神经元死亡.</p>
+<p>这是由于ReLU在遇到负梯度时会将其置为0, 且在之后也不被任何数据激活,即流经该神经元的梯度永远为0, 不对任何数据产生相应. 在实际训练中, 如果学习率设置较大, 会导致超过一定比例的神经元不可逆死亡, 进而参数梯度无法更新, 整个训练过程失败</p>
+<p>解决方法: Leaky ReLU.</p>
+<p>Leaky ReLU的参数 $\alpha$ 通常是一个很小的值, 也就是说可以实现一定程度上的单侧抑制,保证了网络的稀疏表达能力. 同时, 在输入为负时, 保留了部分信息, 避免了神经元死亡问题</p>
+<p>但是LeakyReLU的缺点就是参数 $\alpha$ 的选择需要大量实验和先验知识, 这无疑给训练带来的麻烦, 基于此, PReLU选择将 $\alpha$ 作为网络中一个可学习的参数, 进行反向传播训练.  还有一个就是RReLU, 它令 $\alpha$的选择服从一定的分布, 并进行随机采样, 这在一定程度上能起到正则化的作用</p>
+<h2 id="3-多层感知机的反向传播算法"><a href="#3-多层感知机的反向传播算法" class="headerlink" title="3. 多层感知机的反向传播算法"></a>3. 多层感知机的反向传播算法</h2><p>在网络训练中, 前向传播最终产生一个标量损失函数, 反向传播算法(Back Propagation)则将损失函数的信息沿网络层向后传播用以计算梯度, 打到优化网络参数的目的</p>
+<h3 id="问题1-写出多层感知机的平方误差和交叉熵损失函数"><a href="#问题1-写出多层感知机的平方误差和交叉熵损失函数" class="headerlink" title="问题1: 写出多层感知机的平方误差和交叉熵损失函数"></a>问题1: 写出多层感知机的平方误差和交叉熵损失函数</h3><h3 id="问题2-根据问题1中定义的损失函数-推导各层参数更新的梯度计算公式"><a href="#问题2-根据问题1中定义的损失函数-推导各层参数更新的梯度计算公式" class="headerlink" title="问题2: 根据问题1中定义的损失函数, 推导各层参数更新的梯度计算公式"></a>问题2: 根据问题1中定义的损失函数, 推导各层参数更新的梯度计算公式</h3><h3 id="问题3-平方误差损失函数和交叉熵损失函数分别适合什么场景"><a href="#问题3-平方误差损失函数和交叉熵损失函数分别适合什么场景" class="headerlink" title="问题3: 平方误差损失函数和交叉熵损失函数分别适合什么场景?"></a>问题3: 平方误差损失函数和交叉熵损失函数分别适合什么场景?</h3><p>一般来说, 平方损失更适合输出为连续, 并且最后一层不含Sigmoid或者Softmax激活函数的神经网络; 而交叉熵则更适合二分类或多分类的场景.</p>
+<p><strong>为何平方损失函数不适合最后一层含有Sigmoid或Softmax激活函数的神经网络?</strong></p>
+<p>回顾平方损失函数相对于输出层的导数:</p>
+<script type="math/tex; mode=display">\delta = - (y - a^{(L)})f'(z^{(L)})</script><p>最后一项为激活函数的导数, 当激活函数为Sigmoid或者Softmax时, 其梯度很容易趋于饱和, 使得基于梯度的学习速度非常缓慢. 而交叉熵损失函数相对于输出层的导数是线性的, 因此不会存在学习速度过慢的问题</p>
+<h3 id="扩展问题-多分类为什么选用交叉熵做损失函数-而不用平方损失"><a href="#扩展问题-多分类为什么选用交叉熵做损失函数-而不用平方损失" class="headerlink" title="扩展问题: 多分类为什么选用交叉熵做损失函数, 而不用平方损失?"></a>扩展问题: 多分类为什么选用交叉熵做损失函数, 而不用平方损失?</h3><p>Golik P, Doetsch P, Ney H. Cross-Entropy vs. Squared Error Training: a Theoretical and Experimental Comparison</p>
+<p><a href="https://jamesmccaffrey.wordpress.com/2013/11/05/why-you-should-use-cross-entropy-error-instead-of-classification-error-or-mean-squared-error-for-neural-network-classifier-training/" target="_blank" rel="noopener">https://jamesmccaffrey.wordpress.com/2013/11/05/why-you-should-use-cross-entropy-error-instead-of-classification-error-or-mean-squared-error-for-neural-network-classifier-training/</a></p>
+<p><a href="https://blog.csdn.net/u014313009/article/details/51043064" target="_blank" rel="noopener">https://blog.csdn.net/u014313009/article/details/51043064</a></p>
+<p><a href="https://www.cnblogs.com/daniel-D/p/7931835.html#header-n1247" target="_blank" rel="noopener">https://www.cnblogs.com/daniel-D/p/7931835.html#header-n1247</a></p>
+<h2 id="4-神经网络训练技巧"><a href="#4-神经网络训练技巧" class="headerlink" title="4. 神经网络训练技巧"></a>4. 神经网络训练技巧</h2><p>避免过拟合的办法: 数据增强, 正则化, 模型融合(其中dropout是模型融合方法中最高效和常用的技巧)</p>
+<p>其他更多提升训练效果的还有如: 学习率, 权重衰减系数, dropout比例, 初始化等等</p>
+<h3 id="问题1-神经网络训练时是否可以将全部参数初始化为0"><a href="#问题1-神经网络训练时是否可以将全部参数初始化为0" class="headerlink" title="问题1: 神经网络训练时是否可以将全部参数初始化为0?"></a>问题1: 神经网络训练时是否可以将全部参数初始化为0?</h3><p>首先, 在神经网络中, 每一层中的任意神经元都是同构的, 它们拥有相同的输入, 如果再将参数全部初始化为同样的值(如0), 那么输出也就是相同的,  反过来它们的梯度也都是相同的.  那么无论是前向传播还是反向传播的取值都是完全相同的, 那么每一个神经元都是基于input做相同的事情, 这样一来, 不同的神经元根本无法学到不同的特征, 这样就失去网络学习特征的意义了</p>
+<p>不仅是初始化为0, 只要是初始化为同一个常数, 就会有这样的问题, 如果是常数, 虽然层与层之间的输出不一致 ,但是每一层内部的所有神经元结果一致, 仍然不是我们希望的那样#<br><a href="https://zhuanlan.zhihu.com/p/27190255" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/27190255</a></p>
+<h3 id="问题2-为什么Dropout可以抑制过拟合-它的工作原理和实现"><a href="#问题2-为什么Dropout可以抑制过拟合-它的工作原理和实现" class="headerlink" title="问题2: 为什么Dropout可以抑制过拟合? 它的工作原理和实现?"></a>问题2: 为什么Dropout可以抑制过拟合? 它的工作原理和实现?</h3><p>Dropout是指在深度网络的训练中, 以一定的概率随机的”临时丢弃”一部分神经元节点.  具体来讲, Dropout作用于每份小批量训练数据, 由于其随机丢弃部分神经元的机制, 相当于每次迭代都在训练不同结构的神经网络, 可以被认为是一种实用的大规模深度神经网络的模型继承算法.</p>
+<p>对于包含 $N$ 个神经元节点的网络, 在Dropout的作用下可以看作为 $2^N$ 个模型的集成, 这 $2^N$ 个模型可认为是原始网络的子网络, 它们共享部分权值, 并且拥有相同的网络层数, 而模型整个的参数数目不变, 大大简化了运算.</p>
+<p>对于任意神经元来说, 每次训练中都与一组随机挑选的不同的神经元集合共同进行优化, 这个过程会减弱全体神经元之间的联合适应性, 减少过拟合的风险, 增强泛化能力.</p>
+<p>工作原理和实现:</p>
+<p>应用Dropout包括训练和预测两个阶段, 在训练阶段中, 每个神经元节点需要增加一个概率系数, 在前向传播时, 会以这个概率选择是否丢弃当前的神经元</p>
+<p>在测试阶段的前向传播计算时, 每个神经元的参数都会预先乘以概率系数p, 以恢复在训练中该神经元只有p的概率被用于整个神经网络的前向传播计算</p>
+<h3 id="问题3-批量归一化的基本动机与原理是什么-在卷积网络中如何使用"><a href="#问题3-批量归一化的基本动机与原理是什么-在卷积网络中如何使用" class="headerlink" title="问题3: 批量归一化的基本动机与原理是什么? 在卷积网络中如何使用?"></a>问题3: 批量归一化的基本动机与原理是什么? 在卷积网络中如何使用?</h3><p><strong>动机:</strong></p>
+<p>神经网络训练过程的本质是学习数据分布, 如果训练数据与测试数据的分布不同将大大降低网络的繁华能力, 因此需要在训练开始前对所有输入数据进行归一化处理. 然后随着网络训练的进行, 每个隐层的参数变化使得后一层的输入发生变化, 从而每一批训练数据的分布也随之改变, 致使网络在每次迭代中都需要拟合不同的数据分布, 增大训练的复杂度以及过拟合的风险.</p>
+<p><strong>原理:</strong></p>
+<p>批量归一化方法是针对每一批数据, 在网络的每一层输入之前增加归一化处理(均值为0, 标准差为1), 将所有批数据都强制统一到特定的分布下, 这样可以看作是在每一层输入和上一层输出之间加入了新的计算层, 对数据的分布进行了额外的约束,也就是隐含的增加了正则项,  从而增强模型的泛化能力.</p>
+<p>但如果仅仅是这样, 同时也会降低模型的拟合能力, 归一化后的输入分布被强制为0均值和1标准差, 这在一定程度上掩盖了数据本身具有的一些特征, 因此, 为了恢复这些特征, 对归一化后的数据进行线性变换, 引入了两个新的参数 $\gamma$ 和 $\beta$ ,对于每一个卷积核都具有不同的 $\gamma$ 和 $\beta$, 在一定程度了可以保留原始数据中更多的信息,  从而更加有利于优化的过程,  提高模型的泛化能力</p>
+<p><strong>使用时需要注意的问题:</strong></p>
+<p>在卷积网络中应用时, 需要注意卷积神经网络的参数共享机制, 每一个卷积核的参数在不同的位置的神经元当中是共享的, 因此也应该一起被归一化, 如果有 $f$ 个卷积核, 就对应 $f$ 个特征图和 $f$ 组不同的BN参数.</p>
+<h2 id="5-深度卷积神经网络"><a href="#5-深度卷积神经网络" class="headerlink" title="5. 深度卷积神经网络"></a>5. 深度卷积神经网络</h2><p>卷积神经网络的特点是每层的神经元节点只响应前一层局部区域范围内的神经元(全连接会响应前一层的全部节点). 相较于其他网络模型, 卷积操作的参数共享特性使得需要优化的参数数目大大缩减, 提高了模型的训练效率以及可扩展性.</p>
+<h3 id="问题1-卷积操作的本质特性包括稀疏交互和参数共享-具体解释这两种特性及其作用"><a href="#问题1-卷积操作的本质特性包括稀疏交互和参数共享-具体解释这两种特性及其作用" class="headerlink" title="问题1: 卷积操作的本质特性包括稀疏交互和参数共享, 具体解释这两种特性及其作用"></a>问题1: 卷积操作的本质特性包括稀疏交互和参数共享, 具体解释这两种特性及其作用</h3><p><strong>稀疏交互(Sparse Interaction):</strong></p>
+<p>对于全连接网络来说, 任意一个神经元都会与之前层的所有神经元产生交互, 形成稠密的连接结构, 而在卷积神经网络中, 卷积核尺寸远远小于输入数据的维度, 卷积核会在输入数据上进行类型窗口滑动似的扫描, 然后依次计算出输出神经元的值, 这样每个输出神经元仅仅与前一层特定局部区域内的神经元存在连接, 这种特性就成为稀疏交互.</p>
+<p><strong>稀疏交互的作用:</strong></p>
+<p>首先第一个很直观的作用就是大大降低了需要优化的参数数目, 是模型更加精简. 另外, 稀疏交互的实际意义还在于, 对于普通的图像, 文本, 语音等数据, 它们都具有较为明显的局部特征结构, 这样, 我们可以先让神经网络学习局部的特征, 再将局部的特征组合起来形成更复杂和抽象的特征, 进而达到识别目标的目的.</p>
+<p><strong>参数共享(Parameter Sharing):</strong></p>
+<p>参数共享是指在同一个模型的不同模块中使用相同的参数, 它是卷积运算的固有属性. 在卷积神经网络中, 卷积核中的每一个元素将作用于所有局部输入的特定位置上, 根据参数共享的思想, 我们队每个卷积核, 只需要学习一组参数, 而不需要针对不同的输入对每个局部位置的参数都进行优化, 这大大降低了模型的存储需求.</p>
+<p><strong>参数共享的作用:</strong></p>
+<p>参数共享的实际意义在于可以使得卷积层具有平移不变性. 对于图片来说, 不管图片中的物体出现在图片的哪个位置, 卷积层由于参数共享的作用, 它都会将这个物体看做是同一类, 也就是说, 对图片上的某个物体先进行卷积, 然后在将输出平移, 与先将图片中的物体平移, 再对平移后的物体进行卷积, 其输出结果是相等的</p>
+<h3 id="问题2-常用的池化操作有哪些-池化的作用是什么"><a href="#问题2-常用的池化操作有哪些-池化的作用是什么" class="headerlink" title="问题2: 常用的池化操作有哪些? 池化的作用是什么?"></a>问题2: 常用的池化操作有哪些? 池化的作用是什么?</h3><p>常用的池化操作主要针对非重叠区域(即stride的值设置成大于等于pooling窗口的size), 包括均值池化(mean pooling), 最大池化(max pooling)等.</p>
+<p>均值池化: 能够抑制由于邻域大小受限造成估计值方差增大的现象, 特点是对背景的保留效果更好</p>
+<p>最大池化: 能够抑制网络参数误差造成估计值偏移的现象, 特点是更好地提取纹理信息</p>
+<p>其他特殊的池化方式:</p>
+<ul>
+<li>相邻重叠区域的池化: 采用比窗口宽度更小的步长, 使得窗口在每次滑动时存在重叠区域</li>
+<li>空间金字塔池化: 主要考虑了多尺度信息的描述, 例如同时计算1×1, 2×2, 4×4 的矩阵池化, 并将结果拼接在一起作为一下网络层的输入</li>
+</ul>
+<p>池化的本质是降采样. 除了能显著降低参数数量外, 还能保持对平移, 伸缩, 旋转操作的不变性.</p>
+<ul>
+<li>平移不变性: 输入为(1,3,5) 和(5,1,3)时, 最大池化都将取值5</li>
+<li>伸缩(尺度)不变性: 如果原先神经元在最大池化操作之后输出5, 那么经过伸缩(尺度变换)后, 最大池化操作的输出很大概率仍然是5(主要最大值不变)</li>
+<li>旋转不变性: 对于任意角度的输入, 都会有对应的过滤器与之匹配并最终使神经元的输出引起大的激活, 无论哪个神经元获得了激活, 在经过最大池化操作后, 对于此局部特征, 输出都会具有大的激活</li>
+</ul>
+<p><img src="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fw2rqo4zu0j20k00bcaas.jpg" alt=""></p>
+<p><img src="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fw2rqo4zlbj20k00bfjse.jpg" alt=""></p>
+<p><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw2rqo5t7mj20k00bct9r.jpg" alt=""></p>
+<p><strong>综上, 池化主要有以下作用:</strong></p>
+<ul>
+<li>降维, 减少模型参数, 防止过拟合, 提高模型泛化能力</li>
+<li>实现非线性</li>
+<li>扩大感受野</li>
+<li>实现平移, 伸缩, 旋转不变性</li>
+</ul>
+<p>下面的图与降采样有异曲同工之处, 可以帮助理解(<a href="https://www.zhihu.com/question/36686900" target="_blank" rel="noopener">https://www.zhihu.com/question/36686900</a>):</p>
+<p><img src="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fw2rlw987gj206j085dia.jpg" alt=""></p>
+<p><img src="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fw2rlw9q2gj208u07wn0b.jpg" alt=""></p>
+<p><img src="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fw2rlw8oihj205n06p767.jpg" alt=""></p>
+<h3 id="问题3-卷积神经网络如何用于文本分类任务"><a href="#问题3-卷积神经网络如何用于文本分类任务" class="headerlink" title="问题3: 卷积神经网络如何用于文本分类任务?"></a>问题3: 卷积神经网络如何用于文本分类任务?</h3><p>卷积神经网络的核心思想是捕捉局部特征, 对于文本数据来说, 局部特征就是由若干单词组成的滑动窗口, 类似于 N-gram. 下面分别从输入层, 卷积层, 池化层和输出层来说一下如何将卷积神经网络应用于文本数据.</p>
+<p><strong>输入层:</strong></p>
+<p>输入层通常是一个 $N\times K$ 的矩阵, 其中 $N$ 为单词总数, $K$ 是每个单词对应向量的维度. 每个单词的 $K$ 维向量可以是预先在其他语料库中训练好的, 也可以作为未知的参数由网络训练得到. 这两种方法各有优势.</p>
+<ul>
+<li>预训练的词嵌入: 可以利用其它语料库得到更多的先验知识</li>
+<li>作为未知参数训练: 能够更好的抓住与当前任务相关联的特征</li>
+</ul>
+<p><strong>卷积层:</strong></p>
+<p>在输入的 $N\times K$ 维的矩阵上, 我们定义不同大小的滑动窗口进行卷积操作:</p>
+<script type="math/tex; mode=display">c_i = f(w \cdot x_{i:i+h-1} + b)</script><p>其中 $x_{i:i+h-1}$ 代表由输入矩阵的第 $i$ 行到第 $i+h-1$ 行所组成的一个大小为 $h\times K$ 的滑动窗口, 假设 $h$ 为2, 则每次在 $2\times K$ 的滑动窗口上进行卷积, 并得到 $N-2$ 个结果, 再将这 $N-2$ 个结果拼接起来得到 $N-2$ 维的特征向量, 这样, 通过定义不同的滑动窗口, 就可以提取出不同的特征向量, 构成卷积层的输出.</p>
+<p><strong>池化层:</strong></p>
+<p>池化层阶段从每个不同的特征向量筛选出 $K’$ (为了与上文的 $K$ 区分, 此处用 $K’$)个最大的特征, 成为 K-MAX 池化(也可以使用平均池化, 将每个特征向量平均), 最终达到的效果是将不同长度的句子通过池化得到一个定长的向量表示(长度为滑动窗口的个数)</p>
+<p><strong>输出层:</strong></p>
+<p>得到文本的向量表示后, 根据具体任务定义输出层的网络结构, 对于分类任务, 通常是用全连接层和Softmax激活函数输出每个类别的概率.</p>
+<h2 id="6-深度残差网络"><a href="#6-深度残差网络" class="headerlink" title="6. 深度残差网络"></a>6. 深度残差网络</h2><h3 id="问题-ResNet的提出背景和核心理论是什么"><a href="#问题-ResNet的提出背景和核心理论是什么" class="headerlink" title="问题: ResNet的提出背景和核心理论是什么?"></a>问题: ResNet的提出背景和核心理论是什么?</h3><p><strong>提出背景:</strong></p>
+<p>解决或缓解深层的神经网络训练中的梯度消失问题.</p>
+<p><strong>ResNet中的一个重要假设:</strong></p>
+<p>假设有一个L层的深度神经网络, 如果我们在上面加入一层, 直观来讲得到的L+1层深度神经网络的效果应该至少不会比L层的差. 因为可以简单的设最后一层为前一层的拷贝(相当于恒等映射), 并且其它层参数设置不变.</p>
+<p>但是最终实验发现: 层数更深的神经网络反而会具有更大的训练误差, 因此, 作者认为深层网络效果差的原因很大程度上也许不在于过拟合, 而在于梯度消失问题. ( 关于梯度消失问题的讨论可见<a href="">这里</a>)</p>
+<p><strong>解决办法:</strong></p>
+<p>根据梯度消失问题的根本原因所在(链式法则连乘), ResNet通过调整网络结构来解决上述问题.</p>
+<p>ResNet的结构设计思想为: <strong>既然离输入近的神经网络层较难训练, 那么我们可以将它短接到更靠近输出的层</strong></p>
+<p>首先考虑两层神经网络的简单叠加, 在反向传播时,</p>
+<p>有关ResNet更详细的讨论可以看<a href="">这里</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/读书笔记/" rel="tag"><i class="fa fa-tag"></i> 读书笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/深度学习-Book-深度学习轻松学/" rel="prev" title="《深度学习轻松学》">
+                <i class="fa fa-chevron-left"></i> 《深度学习轻松学》
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/Cpp-函数指针和函数对象/" rel="next" title="C++中的函数指针和函数对象">
+                C++中的函数指针和函数对象 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">242</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">37</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章-特征工程"><span class="nav-text">第一章 特征工程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-特征归一化"><span class="nav-text">1. 特征归一化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-图像数据不足时的处理方法"><span class="nav-text">7. 图像数据不足时的处理方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在图像分类任务中-训练数据不足会带来什么问题-如何缓解数据量不足带来的问题"><span class="nav-text">在图像分类任务中, 训练数据不足会带来什么问题, 如何缓解数据量不足带来的问题?</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三章-经典算法"><span class="nav-text">第三章 经典算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-支持向量机"><span class="nav-text">1. 支持向量机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题1-在空间上线性可分的两类点-分别向SVM分类的超平面上做投降-这些点在超平面上的投影仍然是线性可分的吗"><span class="nav-text">问题1: 在空间上线性可分的两类点, 分别向SVM分类的超平面上做投降, 这些点在超平面上的投影仍然是线性可分的吗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题2-是否存在一组参数使SVM训练误差为0"><span class="nav-text">问题2: 是否存在一组参数使SVM训练误差为0?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题3-训练误差为0的SVM分类器一定存在吗"><span class="nav-text">问题3: 训练误差为0的SVM分类器一定存在吗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题4-加入松弛变量的SVM的训练误差可以为0吗"><span class="nav-text">问题4: 加入松弛变量的SVM的训练误差可以为0吗</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-逻辑回归"><span class="nav-text">2. 逻辑回归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题1-逻辑回归相比于线性回归-有何异同"><span class="nav-text">问题1: 逻辑回归相比于线性回归, 有何异同?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#当使用逻辑回归处理多标签的分类问题时-有哪些常见做法-分别应用于哪些场景-它们之间又有怎样的关系"><span class="nav-text">当使用逻辑回归处理多标签的分类问题时, 有哪些常见做法, 分别应用于哪些场景, 它们之间又有怎样的关系?</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第八章-采样"><span class="nav-text">第八章 采样</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-采样的作用"><span class="nav-text">1. 采样的作用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第九章-前向神经网络"><span class="nav-text">第九章 前向神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-多层感知机与布尔函数"><span class="nav-text">1. 多层感知机与布尔函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题1-多层感知机表示异或逻辑时最少需要几个隐含层-仅考虑二元输入"><span class="nav-text">问题1: 多层感知机表示异或逻辑时最少需要几个隐含层(仅考虑二元输入)?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题2-如果只使用一个隐层-需要多少隐节点能够实现包含n元输入的任意布尔函数"><span class="nav-text">问题2: 如果只使用一个隐层, 需要多少隐节点能够实现包含n元输入的任意布尔函数?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题3-考虑多隐层的情况-实现包含n元输入的任意布尔函数最少需要多少个网络节点和网络层"><span class="nav-text">问题3: 考虑多隐层的情况, 实现包含n元输入的任意布尔函数最少需要多少个网络节点和网络层?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-深度神经网络中的激活函数"><span class="nav-text">2. 深度神经网络中的激活函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题1-写出常用激活函数及其导数"><span class="nav-text">问题1: 写出常用激活函数及其导数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题2-为什么Sigmoid和Tanh激活函数会导致梯度消失的现象"><span class="nav-text">问题2: 为什么Sigmoid和Tanh激活函数会导致梯度消失的现象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题3-ReLU系列的激活函数相对于Sigmoid和Tanh激活函数的有点是什么-它们有什么局限性"><span class="nav-text">问题3: ReLU系列的激活函数相对于Sigmoid和Tanh激活函数的有点是什么,它们有什么局限性?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-多层感知机的反向传播算法"><span class="nav-text">3. 多层感知机的反向传播算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题1-写出多层感知机的平方误差和交叉熵损失函数"><span class="nav-text">问题1: 写出多层感知机的平方误差和交叉熵损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题2-根据问题1中定义的损失函数-推导各层参数更新的梯度计算公式"><span class="nav-text">问题2: 根据问题1中定义的损失函数, 推导各层参数更新的梯度计算公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题3-平方误差损失函数和交叉熵损失函数分别适合什么场景"><span class="nav-text">问题3: 平方误差损失函数和交叉熵损失函数分别适合什么场景?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展问题-多分类为什么选用交叉熵做损失函数-而不用平方损失"><span class="nav-text">扩展问题: 多分类为什么选用交叉熵做损失函数, 而不用平方损失?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-神经网络训练技巧"><span class="nav-text">4. 神经网络训练技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题1-神经网络训练时是否可以将全部参数初始化为0"><span class="nav-text">问题1: 神经网络训练时是否可以将全部参数初始化为0?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题2-为什么Dropout可以抑制过拟合-它的工作原理和实现"><span class="nav-text">问题2: 为什么Dropout可以抑制过拟合? 它的工作原理和实现?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题3-批量归一化的基本动机与原理是什么-在卷积网络中如何使用"><span class="nav-text">问题3: 批量归一化的基本动机与原理是什么? 在卷积网络中如何使用?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-深度卷积神经网络"><span class="nav-text">5. 深度卷积神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题1-卷积操作的本质特性包括稀疏交互和参数共享-具体解释这两种特性及其作用"><span class="nav-text">问题1: 卷积操作的本质特性包括稀疏交互和参数共享, 具体解释这两种特性及其作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题2-常用的池化操作有哪些-池化的作用是什么"><span class="nav-text">问题2: 常用的池化操作有哪些? 池化的作用是什么?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题3-卷积神经网络如何用于文本分类任务"><span class="nav-text">问题3: 卷积神经网络如何用于文本分类任务?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-深度残差网络"><span class="nav-text">6. 深度残差网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题-ResNet的提出背景和核心理论是什么"><span class="nav-text">问题: ResNet的提出背景和核心理论是什么?</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">1.6m</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">24:20</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>
