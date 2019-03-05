@@ -247,7 +247,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">236</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">217</span></a>
   </li>
         
         
@@ -343,7 +343,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
   </li>
         
         
@@ -1049,7 +1049,7 @@ RCNN (CVPR, 2013) $\longri
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/PyTorch-SSD-联合损失函数/">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/PyTorch-SSD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZeroZone">
@@ -1068,8 +1068,8 @@ RCNN (CVPR, 2013) $\longri
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/z_post/PyTorch-SSD-联合损失函数/" itemprop="url">
-                  SSD 源码实现 (PyTorch)-联合损失函数
+                <a class="post-title-link" href="/z_post/PyTorch-SSD/" itemprop="url">
+                  SSD 源码实现 (PyTorch)
                 </a>
               
             
@@ -1096,7 +1096,7 @@ RCNN (CVPR, 2013) $\longri
                 
               
 
-              <time title="创建时间：2018-12-21 11:18:39" itemprop="dateCreated datePublished" datetime="2018-12-21T11:18:39+08:00">2018-12-21</time>
+              <time title="创建时间：2018-12-28 16:57:02" itemprop="dateCreated datePublished" datetime="2018-12-28T16:57:02+08:00">2018-12-28</time>
             
 
             
@@ -1105,8 +1105,8 @@ RCNN (CVPR, 2013) $\longri
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-02-25T19:41:18+08:00" content="2019-02-25">
-      		  2019-02-25
+    		<time itemprop="dateUpdated" datetime="2019-03-05T09:12:52+08:00" content="2019-03-05">
+      		  2019-03-05
     		</time>
   	  </span>
 	  
@@ -1151,7 +1151,7 @@ RCNN (CVPR, 2013) $\longri
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">0</span>
+                <span title="本文字数">44k</span>
               
 
               
@@ -1165,7 +1165,7 @@ RCNN (CVPR, 2013) $\longri
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">40 分钟</span>
               
             </div>
           
@@ -1187,209 +1187,16 @@ RCNN (CVPR, 2013) $\longri
       
         
           
-          
-          
+          概览SSD 和 YOLO 都是非常主流的 one-stage 目标检测模型, 并且相对于 two-stage 的 RCNN 系列来说, SSD 的实现更加的简明易懂, 接下来我将从以下几个方面展开对 SSD 模型的源码实现讲解:
+
+模型结构定义
+DefaultBox 生成候选框
+解析预测结果
+Mul
+          ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/z_post/PyTorch-SSD-联合损失函数/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/PyTorch-SSD-模型训练及推演/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZeroZone">
-      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
-      <meta itemprop="image" content="/images/avatar_zz.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="从零开始的BLOG">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/z_post/PyTorch-SSD-模型训练及推演/" itemprop="url">
-                  SSD 源码实现 (PyTorch)-模型训练及推演
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-	
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-12-21 11:18:24" itemprop="dateCreated datePublished" datetime="2018-12-21T11:18:24+08:00">2018-12-21</time>
-            
-
-            
-          </span>
-
-	  
-  	    <span class="post-updated">
-    		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-02-25T19:41:24+08:00" content="2019-02-25">
-      		  2019-02-25
-    		</time>
-  	  </span>
-	  
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/PyTorch/" itemprop="url" rel="index"><span itemprop="name">PyTorch</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">本文字数：</span>
-                
-                <span title="本文字数">0</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          
-          
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/z_post/PyTorch-SSD-模型训练及推演/#more" rel="contents">
+            <a class="btn" href="/z_post/PyTorch-SSD/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1593,206 +1400,6 @@ augmentations.py 文件概览众多周知, SSD 模型虽然比较简单, 但是�
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/z_post/PyTorch-SSD-数据处理/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/PyTorch-SSD-模型结构/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZeroZone">
-      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
-      <meta itemprop="image" content="/images/avatar_zz.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="从零开始的BLOG">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/z_post/PyTorch-SSD-模型结构/" itemprop="url">
-                  SSD 源码实现 (PyTorch)-模型结构及联合损失函数
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-	
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-12-21 11:11:48" itemprop="dateCreated datePublished" datetime="2018-12-21T11:11:48+08:00">2018-12-21</time>
-            
-
-            
-          </span>
-
-	  
-  	    <span class="post-updated">
-    		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-02-25T19:41:28+08:00" content="2019-02-25">
-      		  2019-02-25
-    		</time>
-  	  </span>
-	  
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/PyTorch/" itemprop="url" rel="index"><span itemprop="name">PyTorch</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">本文字数：</span>
-                
-                <span title="本文字数">19</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          ./layers/
-./ssd.py
-
-          
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/z_post/PyTorch-SSD-模型结构/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2247,205 +1854,6 @@ augmentations.py 文件概览众多周知, SSD 模型虽然比较简单, 但是�
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/面试-位操作算法总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZeroZone">
-      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
-      <meta itemprop="image" content="/images/avatar_zz.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="从零开始的BLOG">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/z_post/面试-位操作算法总结/" itemprop="url">
-                  位操作(Bit Manipulation)算法总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-	
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-12-14 08:47:52" itemprop="dateCreated datePublished" datetime="2018-12-14T08:47:52+08:00">2018-12-14</time>
-            
-
-            
-          </span>
-
-	  
-  	    <span class="post-updated">
-    		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2018-12-14T08:54:00+08:00" content="2018-12-14">
-      		  2018-12-14
-    		</time>
-  	  </span>
-	  
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/面试/" itemprop="url" rel="index"><span itemprop="name">面试</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">本文字数：</span>
-                
-                <span title="本文字数">146</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          https://leetcode.com/problems/sum-of-two-integers/discuss/84278/A-summary%3A-how-to-use-bit-manipulation-to-solve-problems-easily-and-efficiently
-
-          
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/z_post/面试-位操作算法总结/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/PyTorch-MaskrcnnBenchmark-modeling-other/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2590,6 +1998,233 @@ balanced_positive_negative_sampler.py在 rpn/loss.py 文件中的 class RPNLossC
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/z_post/PyTorch-MaskrcnnBenchmark-modeling-other/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/Cpp-STL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/z_post/Cpp-STL/" itemprop="url">
+                  C++ 标准模板库STL完整笔记
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-13 12:35:14" itemprop="dateCreated datePublished" datetime="2018-12-13T12:35:14+08:00">2018-12-13</time>
+            
+
+            
+          </span>
+
+	  
+  	    <span class="post-updated">
+    		&nbsp; | &nbsp; 更新于
+    		<time itemprop="dateUpdated" datetime="2019-03-05T09:20:54+08:00" content="2019-03-05">
+      		  2019-03-05
+    		</time>
+  	  </span>
+	  
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Cpp/" itemprop="url" rel="index"><span itemprop="name">Cpp</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">11k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">10 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          顺序式容器vector, list, deque
+
+
+
+
+容器
+说明
+底层实现
+
+
+
+
+vector
+
+数组
+
+
+list
+
+双向链表
+
+
+deque
+
+中央控制器和多个缓冲区
+
+
+
+
+顺序式容器中元素的位置是按照插入顺序排列的, 也就是容器自身没有排序功能, 顺序式容器都至少具有以下成员函数:12
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/z_post/Cpp-STL/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2843,7 +2478,7 @@ balanced_positive_negative_sampler.py在 rpn/loss.py 文件中的 class RPNLossC
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/PyTorch-MaskrcnnBenchmark-layers/">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/PyTorch-MaskrcnnBenchmark-modeling-backbone/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZeroZone">
@@ -2862,8 +2497,8 @@ balanced_positive_negative_sampler.py在 rpn/loss.py 文件中的 class RPNLossC
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/z_post/PyTorch-MaskrcnnBenchmark-layers/" itemprop="url">
-                  MaskrcnnBenchmark 源码解析-各个网络层的封装实现(layers)
+                <a class="post-title-link" href="/z_post/PyTorch-MaskrcnnBenchmark-modeling-backbone/" itemprop="url">
+                  MaskrcnnBenchmark 源码解析-模型定义(modeling)之骨架网络(backbone)
                 </a>
               
             
@@ -2890,7 +2525,7 @@ balanced_positive_negative_sampler.py在 rpn/loss.py 文件中的 class RPNLossC
                 
               
 
-              <time title="创建时间：2018-12-11 16:32:07" itemprop="dateCreated datePublished" datetime="2018-12-11T16:32:07+08:00">2018-12-11</time>
+              <time title="创建时间：2018-12-11 22:39:55" itemprop="dateCreated datePublished" datetime="2018-12-11T22:39:55+08:00">2018-12-11</time>
             
 
             
@@ -2899,8 +2534,8 @@ balanced_positive_negative_sampler.py在 rpn/loss.py 文件中的 class RPNLossC
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-02-25T19:38:52+08:00" content="2019-02-25">
-      		  2019-02-25
+    		<time itemprop="dateUpdated" datetime="2019-03-05T09:25:57+08:00" content="2019-03-05">
+      		  2019-03-05
     		</time>
   	  </span>
 	  
@@ -2945,7 +2580,7 @@ balanced_positive_negative_sampler.py在 rpn/loss.py 文件中的 class RPNLossC
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">72</span>
+                <span title="本文字数">25k</span>
               
 
               
@@ -2959,7 +2594,7 @@ balanced_positive_negative_sampler.py在 rpn/loss.py 文件中的 class RPNLossC
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">23 分钟</span>
               
             </div>
           
@@ -2981,17 +2616,213 @@ balanced_positive_negative_sampler.py在 rpn/loss.py 文件中的 class RPNLossC
       
         
           
-          
-batch_norm.py
-misc.py
-nms.py
-roi_align.py
-roi_pool.py
-smooth_l1_loss.py
-          
+          源码文件不论是在训练脚本文件 train_net.py 还是在测试脚本文件 test_net.py 中, 都调用了 build_detection_model(cfg) 函数来创建模型, 该函数封装了模型定义的内部细节, 使得我们可以通过配置文件轻松的组合出不同类型的模型, 为了能够更好的了解模型的
+          ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/z_post/PyTorch-MaskrcnnBenchmark-layers/#more" rel="contents">
+            <a class="btn" href="/z_post/PyTorch-MaskrcnnBenchmark-modeling-backbone/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/PyTorch-FasterRCNN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/z_post/PyTorch-FasterRCNN/" itemprop="url">
+                  Faster-RCNN 源码实现 (PyTorch)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-10 21:25:06" itemprop="dateCreated datePublished" datetime="2018-12-10T21:25:06+08:00">2018-12-10</time>
+            
+
+            
+          </span>
+
+	  
+  	    <span class="post-updated">
+    		&nbsp; | &nbsp; 更新于
+    		<time itemprop="dateUpdated" datetime="2019-03-05T09:25:23+08:00" content="2019-03-05">
+      		  2019-03-05
+    		</time>
+  	  </span>
+	  
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/PyTorch/" itemprop="url" rel="index"><span itemprop="name">PyTorch</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">12k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">11 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          我们知道, FasterRCNN 作为目标检测任务的一个标志性的检测模型, 在目标检测领域具有十分广泛的应用, 其模型原理主要包含以下几个重要的组成部分:
+
+BackBone: VGG, ResNet等
+RoIPool: 感兴趣区域池化层
+RPN: 候选框区域推荐网络, FasterRCNN最主要的
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/z_post/PyTorch-FasterRCNN/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -3248,7 +3079,7 @@ box
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/PyTorch-MaskrcnnBenchmark-config/">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/PyTorch-MaskrcnnBenchmark-engine/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZeroZone">
@@ -3267,8 +3098,8 @@ box
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/z_post/PyTorch-MaskrcnnBenchmark-config/" itemprop="url">
-                  PyTorch-MaskrcnnBenchmark-config
+                <a class="post-title-link" href="/z_post/PyTorch-MaskrcnnBenchmark-engine/" itemprop="url">
+                  MaskrcnnBenchmark 源码解析-训练/推演核心代码(engine)
                 </a>
               
             
@@ -3295,7 +3126,7 @@ box
                 
               
 
-              <time title="创建时间：2018-12-07 14:48:54" itemprop="dateCreated datePublished" datetime="2018-12-07T14:48:54+08:00">2018-12-07</time>
+              <time title="创建时间：2018-12-07 14:30:58" itemprop="dateCreated datePublished" datetime="2018-12-07T14:30:58+08:00">2018-12-07</time>
             
 
             
@@ -3304,7 +3135,7 @@ box
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-02-25T19:38:32+08:00" content="2019-02-25">
+    		<time itemprop="dateUpdated" datetime="2019-02-25T19:38:46+08:00" content="2019-02-25">
       		  2019-02-25
     		</time>
   	  </span>
@@ -3350,7 +3181,7 @@ box
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">0</span>
+                <span title="本文字数">11k</span>
               
 
               
@@ -3364,7 +3195,7 @@ box
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">10 分钟</span>
               
             </div>
           
@@ -3386,11 +3217,217 @@ box
       
         
           
-          
-          
+          源码文件./maskrcnn_benchmark/engine/trainer.py./maskrcnn_benchmark/engine/inference.py
+模型测试/推演时, 无需计算每个参数的梯度, 因此会大大减少 GPU 的显存占用空间
+
+trainer.py 文件概览本文件中的代码是
+          ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/z_post/PyTorch-MaskrcnnBenchmark-config/#more" rel="contents">
+            <a class="btn" href="/z_post/PyTorch-MaskrcnnBenchmark-engine/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/PyTorch-MaskrcnnBenchmark-tools/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/z_post/PyTorch-MaskrcnnBenchmark-tools/" itemprop="url">
+                  MaskrcnnBenchmark 源码解析-训练/推演工具脚本(tools)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-06 19:15:39" itemprop="dateCreated datePublished" datetime="2018-12-06T19:15:39+08:00">2018-12-06</time>
+            
+
+            
+          </span>
+
+	  
+  	    <span class="post-updated">
+    		&nbsp; | &nbsp; 更新于
+    		<time itemprop="dateUpdated" datetime="2018-12-09T15:35:14+08:00" content="2018-12-09">
+      		  2018-12-09
+    		</time>
+  	  </span>
+	  
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/PyTorch/" itemprop="url" rel="index"><span itemprop="name">PyTorch</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">15k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">13 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          源码文件
+./tools/train_net.py
+./tools/test_net.py
+
+
+train_net.py 文件概览为了更好的解读 MaskrcnnBenchmark 的源代码, 我们首先来看看执行模型训练代码的脚本文件都使用了哪些类和函数, 该脚本可以训练 MaskrcnnBench
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/z_post/PyTorch-MaskrcnnBenchmark-tools/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -3435,7 +3472,7 @@ box
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -3482,7 +3519,7 @@ box
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">236</span>
+                    <span class="site-state-item-count">217</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3606,9 +3643,7 @@ box
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">37</span>
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="gcc/g++的编译链接原理及注意事项LINUX下默认搜索头文件及库文件的路径 编译连接 多个文件编译在linux下编译，下面有三个文件，分别是1.cpp 和 2.cpp 和myhead.h 文件。 1.cpp 123456789#include &amp;lt;iostream&amp;gt;#include &quot;myhead.h&quot;using namespace std;int main()&amp;#123;    p">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-04T14:14:56.040Z">
+<meta property="og:updated_time" content="2019-03-05T01:21:29.558Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++-踩坑">
 <meta name="twitter:description" content="gcc/g++的编译链接原理及注意事项LINUX下默认搜索头文件及库文件的路径 编译连接 多个文件编译在linux下编译，下面有三个文件，分别是1.cpp 和 2.cpp 和myhead.h 文件。 1.cpp 123456789#include &amp;lt;iostream&amp;gt;#include &quot;myhead.h&quot;using namespace std;int main()&amp;#123;    p">
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">236</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">217</span></a>
   </li>
         
         
@@ -344,7 +344,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
   </li>
         
         
@@ -497,8 +497,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-04T22:14:56+08:00" content="2019-03-04">
-      		  2019-03-04
+    		<time itemprop="dateUpdated" datetime="2019-03-05T09:21:29+08:00" content="2019-03-05">
+      		  2019-03-05
     		</time>
   	  </span>
 	  
@@ -551,7 +551,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">3k</span>
+                <span title="本文字数">3.6k</span>
               
 
               
@@ -628,6 +628,14 @@
 <li>对于<code>std::vector&lt;T*&gt; vec</code>；<code>vec</code>在栈上（stack），而其中的元素<code>T</code>保存在堆上（heap）；和第一种情况类似。</li>
 </ul>
 <p>存储在栈上的元素，往往无需手动管理内存空间，通常会自动释放，而在堆上的空间，则需要手动管理。</p>
+<h1 id="在实现项目ZeroTensor的专属异常类时，需要实现exception类的what方法。"><a href="#在实现项目ZeroTensor的专属异常类时，需要实现exception类的what方法。" class="headerlink" title="在实现项目ZeroTensor的专属异常类时，需要实现exception类的what方法。"></a>在实现项目ZeroTensor的专属异常类时，需要实现<code>exception</code>类的<code>what</code>方法。</h1><h2 id="出现问题及解决办法-1"><a href="#出现问题及解决办法-1" class="headerlink" title="出现问题及解决办法"></a>出现问题及解决办法</h2><p>首先需要看一下<code>exception</code>基类中关于<code>what</code>方法的原始定义：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>下面是正确的重写方式</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">const</span> <span class="keyword">char</span> *<span class="title">what</span><span class="params">()</span> <span class="keyword">const</span> <span class="title">throw</span><span class="params">()</span> override </span>&#123; <span class="keyword">return</span> error_msg_.c_str(); &#125;</span><br></pre></td></tr></table></figure>
+<p>如果去掉throw() ， 则会报错：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">looser <span class="keyword">throw</span> specifier <span class="keyword">for</span> ‘<span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keyword">char</span>* zerotensor::ZerotensorError::what() <span class="keyword">const</span>’</span><br><span class="line">      <span class="keyword">const</span> <span class="keyword">char</span> *what() <span class="keyword">const</span> override &#123; <span class="keyword">return</span> error_msg_.c_str(); &#125;</span><br></pre></td></tr></table></figure>
+<p>如果将char * 改为 string，则会报错：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">error: ‘<span class="keyword">const</span> <span class="built_in">string</span> zerotensor::ZerotensorError::what() <span class="keyword">const</span>’ cannot be overloaded</span><br><span class="line">      <span class="function"><span class="keyword">const</span> <span class="built_in">string</span> <span class="title">what</span><span class="params">()</span> <span class="keyword">const</span> <span class="title">throw</span><span class="params">()</span> override </span>&#123; <span class="keyword">return</span> error_msg_; &#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -753,7 +761,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">236</span>
+                    <span class="site-state-item-count">217</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -877,9 +885,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">37</span>
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -943,7 +949,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#gcc-g-的编译链接原理及注意事项"><span class="nav-text">gcc/g++的编译链接原理及注意事项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重写C-中异常类的what方法"><span class="nav-text">重写C++中异常类的what方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#待补充完善：错误原因以及为什么这么修改"><span class="nav-text">待补充完善：错误原因以及为什么这么修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#坑源"><span class="nav-text">坑源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#出现问题及解决办法"><span class="nav-text">出现问题及解决办法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#声明模板类对象，报错“undefined-reference-to”"><span class="nav-text">声明模板类对象，报错“undefined reference to”</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#坑源-1"><span class="nav-text">坑源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#出现问题和解决办法"><span class="nav-text">出现问题和解决办法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#string-substr"><span class="nav-text">string.substr</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vector数据的内存分配问题"><span class="nav-text">vector数据的内存分配问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#gcc-g-的编译链接原理及注意事项"><span class="nav-text">gcc/g++的编译链接原理及注意事项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重写C-中异常类的what方法"><span class="nav-text">重写C++中异常类的what方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#待补充完善：错误原因以及为什么这么修改"><span class="nav-text">待补充完善：错误原因以及为什么这么修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#坑源"><span class="nav-text">坑源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#出现问题及解决办法"><span class="nav-text">出现问题及解决办法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#声明模板类对象，报错“undefined-reference-to”"><span class="nav-text">声明模板类对象，报错“undefined reference to”</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#坑源-1"><span class="nav-text">坑源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#出现问题和解决办法"><span class="nav-text">出现问题和解决办法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#string-substr"><span class="nav-text">string.substr</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vector数据的内存分配问题"><span class="nav-text">vector数据的内存分配问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在实现项目ZeroTensor的专属异常类时，需要实现exception类的what方法。"><span class="nav-text">在实现项目ZeroTensor的专属异常类时，需要实现exception类的what方法。</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#出现问题及解决办法-1"><span class="nav-text">出现问题及解决办法</span></a></li></ol></li></ol></div>
             
 
           </div>
