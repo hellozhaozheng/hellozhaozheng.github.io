@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="顺序式容器vector, list, deque     容器 说明 底层实现     vector  数组   list  双向链表   deque  中央控制器和多个缓冲区     顺序式容器中元素的位置是按照插入顺序排列的, 也就是容器自身没有排序功能, 顺序式容器都至少具有以下成员函数:123456789101112begin()end()rbegin()rend()front()back">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-05T01:20:54.679Z">
+<meta property="og:updated_time" content="2019-03-17T06:39:52.197Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++ 标准模板库STL完整笔记">
 <meta name="twitter:description" content="顺序式容器vector, list, deque     容器 说明 底层实现     vector  数组   list  双向链表   deque  中央控制器和多个缓冲区     顺序式容器中元素的位置是按照插入顺序排列的, 也就是容器自身没有排序功能, 顺序式容器都至少具有以下成员函数:123456789101112begin()end()rbegin()rend()front()back">
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">217</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">235</span></a>
   </li>
         
         
@@ -326,14 +326,6 @@
         
         
           
-          <li class="menu-item menu-item-面试">
-    <a href="/categories/面试/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
-  </li>
-        
-        
-        
-          
           <li class="menu-item menu-item-其他">
     <a href="/categories/其他/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
@@ -344,7 +336,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
   </li>
         
         
@@ -497,8 +489,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-05T09:20:54+08:00" content="2019-03-05">
-      		  2019-03-05
+    		<time itemprop="dateUpdated" datetime="2019-03-17T14:39:52+08:00" content="2019-03-17">
+      		  2019-03-17
     		</time>
   	  </span>
 	  
@@ -551,7 +543,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">11k</span>
+                <span title="本文字数">12k</span>
               
 
               
@@ -565,7 +557,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">10 分钟</span>
+                <span title="阅读时长">11 分钟</span>
               
             </div>
           
@@ -625,6 +617,8 @@
 <p><strong>vector的数据安排以及操作方式, 与数组模板Array十分相似, 两者唯一的差别在于空间利用的灵活性, Array的空间扩展需要手动实现</strong></p>
 <p><strong>头文件:</strong><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br></pre></td></tr></table></figure></p>
 <p><strong>声明及初始化:</strong><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec; <span class="comment">// 声明一个空的vector</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec(<span class="number">5</span>);</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec(<span class="number">10</span>, <span class="number">1</span>); <span class="comment">// 大小为10, 初始值为1</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec(oldVec);</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec(oldVec.begin(), dolVec.begin()+<span class="number">3</span>);</span><br><span class="line"><span class="keyword">int</span> arr[<span class="number">5</span>] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec(arr, arr+<span class="number">5</span>); <span class="comment">// 用数组初始化vec</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec(&amp;arr[<span class="number">0</span>], &amp;arr[<span class="number">5</span>]); <span class="comment">// 用数组初始化vec, 注意这里是超尾, 与end相对应</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>注意: <code>push_back</code>和<code>emplace_back</code>并不等价, 例如, 如果 vector 中存储的是一个 pair 类型的数据, 那么在添加新元素时, 存在以下区别:</strong><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;&gt; vec;</span><br><span class="line">vec.push_back(<span class="built_in">std</span>::make_pair(<span class="number">1</span>, <span class="number">2</span>)); <span class="comment">// 合法</span></span><br><span class="line">vec.push_back(&#123;<span class="number">1</span>, <span class="number">2</span>&#125;); <span class="comment">// 合法</span></span><br><span class="line">vec.emplace_back(<span class="built_in">std</span>::make_pair(<span class="number">1</span>, <span class="number">2</span>)); <span class="comment">// 合法</span></span><br><span class="line">vec.emplace_back(&#123;<span class="number">1</span>, <span class="number">2</span>&#125;); <span class="comment">// 不合法!!!!</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="vector-的内存分配机制是怎样的"><a href="#vector-的内存分配机制是怎样的" class="headerlink" title="vector 的内存分配机制是怎样的?"></a>vector 的内存分配机制是怎样的?</h3><p>vector 是一个动态数组, 里面由一个指针值指向一片连续的内存空间, 当空间不够装下数据时, 就会自动申请一片更大的空间, 然后把原有数据拷贝过去, 接着释放原来的那片空间. 不同的编译器实现的扩容方式不一样, 有的是 1.5 倍, 有的是 2 倍(GCC). 初始时刻的<code>capacity</code>为 0.</p>
 <h2 id="list"><a href="#list" class="headerlink" title="list"></a>list</h2><p>非连续存储结构, 具有双向链表结构, 每个元素维护一对前向和后向指针, 因此支持前向/后向遍历. 支持高效的随机插入/删除操作, 但是随机访问效率低下, 且由于需要额外维护指针, 开销也比较大. 每一个节点都包括一个信息块info, 一个前驱指针Pre, 一个后驱指针Post.</p>
 <p>优点:</p>
 <ol>
@@ -787,7 +781,13 @@
 </ul>
 <p>可以看出, 基于 Partition 的查找第 $k$ 大/小元素的算法, 与快排的一个明显区别就是: <strong>每一次 Partition 之后, nth_element 算法只需要再对两边中的其中一边调用 Partition 即可, 而快排则需要同时对两边都调用 Partition</strong>.<br>鉴于 Partition 的复杂度为 $O(n)$, 则快排因为要进行 $logn$ 次 Partition, 所以快排的时间复杂度就是 $nlogn$.($T(n) = 2\times T(n/2) + O(n)$)<br>而 nth_element 的时间复杂度为 $T(n) = T(n/2) + O(n) = O(n) + O(n/2) + O(n/4) + …$, 也就是 $O(n)$.</p>
 <p>源码剖析:</p>
-<h2 id="binary-search"><a href="#binary-search" class="headerlink" title="binary_search()"></a>binary_search()</h2><h2 id="upper-bound"><a href="#upper-bound" class="headerlink" title="upper_bound()"></a>upper_bound()</h2><h2 id="lower-bound"><a href="#lower-bound" class="headerlink" title="lower_bound()"></a>lower_bound()</h2><h2 id="next-permutation"><a href="#next-permutation" class="headerlink" title="next_permutation()"></a>next_permutation()</h2><h2 id="prev-permutation"><a href="#prev-permutation" class="headerlink" title="prev_permutation()"></a>prev_permutation()</h2><h2 id="is-permutation"><a href="#is-permutation" class="headerlink" title="is_permutation()"></a>is_permutation()</h2><h2 id="find"><a href="#find" class="headerlink" title="find()"></a>find()</h2>
+<h2 id="binary-search"><a href="#binary-search" class="headerlink" title="binary_search()"></a>binary_search()</h2><h2 id="upper-bound"><a href="#upper-bound" class="headerlink" title="upper_bound()"></a>upper_bound()</h2><h2 id="lower-bound"><a href="#lower-bound" class="headerlink" title="lower_bound()"></a>lower_bound()</h2><h2 id="next-permutation"><a href="#next-permutation" class="headerlink" title="next_permutation()"></a>next_permutation()</h2><h2 id="prev-permutation"><a href="#prev-permutation" class="headerlink" title="prev_permutation()"></a>prev_permutation()</h2><h2 id="is-permutation"><a href="#is-permutation" class="headerlink" title="is_permutation()"></a>is_permutation()</h2><h2 id="find"><a href="#find" class="headerlink" title="find()"></a>find()</h2><h1 id="标准库中各个容器的数据结构是什么"><a href="#标准库中各个容器的数据结构是什么" class="headerlink" title="标准库中各个容器的数据结构是什么?"></a>标准库中各个容器的数据结构是什么?</h1><h1 id="vector-的容量增长机制是怎样的-内存分配机制是怎样的"><a href="#vector-的容量增长机制是怎样的-内存分配机制是怎样的" class="headerlink" title="vector 的容量增长机制是怎样的? 内存分配机制是怎样的?"></a>vector 的容量增长机制是怎样的? 内存分配机制是怎样的?</h1><h1 id="为什么vector-push-back-的复杂度是分摊之后的-O-1"><a href="#为什么vector-push-back-的复杂度是分摊之后的-O-1" class="headerlink" title="为什么vector::push_back()的复杂度是分摊之后的 $O(1)$?"></a>为什么<code>vector::push_back()</code>的复杂度是分摊之后的 $O(1)$?</h1><h1 id="设计一道可以使用low-bound-upper-bound轻松解决的算法题"><a href="#设计一道可以使用low-bound-upper-bound轻松解决的算法题" class="headerlink" title="设计一道可以使用low_bound/upper_bound轻松解决的算法题"></a>设计一道可以使用<code>low_bound/upper_bound</code>轻松解决的算法题</h1><p>对于一个已排序的数组, 统计指定元素的个数</p>
+<h1 id="实现一下set-intersection-set-union-merge"><a href="#实现一下set-intersection-set-union-merge" class="headerlink" title="实现一下set_intersection()/set_union()/merge()"></a>实现一下<code>set_intersection()</code>/<code>set_union()</code>/<code>merge()</code></h1><h1 id="迭代器在什么情况下会失效"><a href="#迭代器在什么情况下会失效" class="headerlink" title="迭代器在什么情况下会失效?"></a>迭代器在什么情况下会失效?</h1><h1 id="标准库的线程安全性"><a href="#标准库的线程安全性" class="headerlink" title="标准库的线程安全性"></a>标准库的线程安全性</h1><h1 id="list-的insert-erase-与-vector-相比哪个快"><a href="#list-的insert-erase-与-vector-相比哪个快" class="headerlink" title="list 的insert()/erase()与 vector 相比哪个快?"></a>list 的<code>insert()/erase()</code>与 vector 相比哪个快?</h1><p>对于百万量级以上的数据, list 的插入和删除比 vector 快很多. 但是对于容器大小为十万量级的数据, 从前端一次删除所有元素, vector 需要 3 s 左右, 而 list 需要 8s, list 更慢.</p>
+<ol>
+<li>这篇博客对比了在list、vector、deque上进行不同操作的效率差别。C++ benchmark作者在文章最后给出了源码：articles/bench.cpp at master · wichtounet/articles · GitHub</li>
+<li>这一篇更是颠覆我的三观（待会儿做个测试）<a href="http://blog.davidecoppola.com/2014/05/20/cpp-benchmarks-vector-vs-list-vs-deque/C++之父动情地抓着记者的手，说：I" target="_blank" rel="noopener">http://blog.davidecoppola.com/2014/05/20/cpp-benchmarks-vector-vs-list-vs-deque/C++之父动情地抓着记者的手，说：I</a> hate linked list。<br>. C++ STL containers: what’s the difference between deque and list?</li>
+</ol>
+
       
     </div>
 
@@ -910,7 +910,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">217</span>
+                    <span class="site-state-item-count">235</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -949,7 +949,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1034,7 +1036,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">36</span>
+                      
+                    
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1098,7 +1102,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#顺序式容器"><span class="nav-text">顺序式容器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#vector"><span class="nav-text">vector</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#list"><span class="nav-text">list</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#list与vector的区别"><span class="nav-text">list与vector的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deque"><span class="nav-text">deque</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关联式容器"><span class="nav-text">关联式容器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#map"><span class="nav-text">map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unordered-map"><span class="nav-text">unordered_map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#multimap"><span class="nav-text">multimap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unordered-multimap"><span class="nav-text">unordered_multimap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set"><span class="nav-text">set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unordered-set"><span class="nav-text">unordered_set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#multiset"><span class="nav-text">multiset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unordered-multiset"><span class="nav-text">unordered_multiset</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#容器适配器"><span class="nav-text">容器适配器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#stack"><span class="nav-text">stack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#queue"><span class="nav-text">queue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#priority-queue"><span class="nav-text">priority_queue</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#大顶堆"><span class="nav-text">大顶堆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小顶堆"><span class="nav-text">小顶堆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义类型和排序方法"><span class="nav-text">自定义类型和排序方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法"><span class="nav-text">算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sort"><span class="nav-text">sort()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#partial-sort"><span class="nav-text">partial_sort()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nth-element"><span class="nav-text">nth_element()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#binary-search"><span class="nav-text">binary_search()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#upper-bound"><span class="nav-text">upper_bound()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lower-bound"><span class="nav-text">lower_bound()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#next-permutation"><span class="nav-text">next_permutation()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#prev-permutation"><span class="nav-text">prev_permutation()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-permutation"><span class="nav-text">is_permutation()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#find"><span class="nav-text">find()</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#顺序式容器"><span class="nav-text">顺序式容器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#vector"><span class="nav-text">vector</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vector-的内存分配机制是怎样的"><span class="nav-text">vector 的内存分配机制是怎样的?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#list"><span class="nav-text">list</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#list与vector的区别"><span class="nav-text">list与vector的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deque"><span class="nav-text">deque</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关联式容器"><span class="nav-text">关联式容器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#map"><span class="nav-text">map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unordered-map"><span class="nav-text">unordered_map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#multimap"><span class="nav-text">multimap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unordered-multimap"><span class="nav-text">unordered_multimap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set"><span class="nav-text">set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unordered-set"><span class="nav-text">unordered_set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#multiset"><span class="nav-text">multiset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unordered-multiset"><span class="nav-text">unordered_multiset</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#容器适配器"><span class="nav-text">容器适配器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#stack"><span class="nav-text">stack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#queue"><span class="nav-text">queue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#priority-queue"><span class="nav-text">priority_queue</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#大顶堆"><span class="nav-text">大顶堆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小顶堆"><span class="nav-text">小顶堆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义类型和排序方法"><span class="nav-text">自定义类型和排序方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法"><span class="nav-text">算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sort"><span class="nav-text">sort()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#partial-sort"><span class="nav-text">partial_sort()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nth-element"><span class="nav-text">nth_element()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#binary-search"><span class="nav-text">binary_search()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#upper-bound"><span class="nav-text">upper_bound()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lower-bound"><span class="nav-text">lower_bound()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#next-permutation"><span class="nav-text">next_permutation()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#prev-permutation"><span class="nav-text">prev_permutation()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-permutation"><span class="nav-text">is_permutation()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#find"><span class="nav-text">find()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#标准库中各个容器的数据结构是什么"><span class="nav-text">标准库中各个容器的数据结构是什么?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vector-的容量增长机制是怎样的-内存分配机制是怎样的"><span class="nav-text">vector 的容量增长机制是怎样的? 内存分配机制是怎样的?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么vector-push-back-的复杂度是分摊之后的-O-1"><span class="nav-text">为什么vector::push_back()的复杂度是分摊之后的 $O(1)$?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设计一道可以使用low-bound-upper-bound轻松解决的算法题"><span class="nav-text">设计一道可以使用low_bound/upper_bound轻松解决的算法题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现一下set-intersection-set-union-merge"><span class="nav-text">实现一下set_intersection()/set_union()/merge()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#迭代器在什么情况下会失效"><span class="nav-text">迭代器在什么情况下会失效?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#标准库的线程安全性"><span class="nav-text">标准库的线程安全性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#list-的insert-erase-与-vector-相比哪个快"><span class="nav-text">list 的insert()/erase()与 vector 相比哪个快?</span></a></li></ol></div>
             
 
           </div>
@@ -1135,7 +1139,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.6m</span>
+    <span title="站点总字数">1.7m</span>
   
 
   
@@ -1144,7 +1148,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">24:21</span>
+    <span title="站点阅读时长">26:18</span>
   
 </div>
 

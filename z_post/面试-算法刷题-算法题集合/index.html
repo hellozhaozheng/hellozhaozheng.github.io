@@ -134,7 +134,7 @@
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fyfv96duh4j20wd095754.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fyfx303ghvj20y107p74w.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fyfx3ex4fbj20zq09u3zb.jpg">
-<meta property="og:updated_time" content="2019-02-25T11:56:55.205Z">
+<meta property="og:updated_time" content="2019-03-06T05:16:50.649Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法题小结">
 <meta name="twitter:description" content="LeetCode 算法题(Easy)LeetCode 算法题(Medium)LeetCode 算法题(Hard)剑指 offer 最长公共子串题目地址 题目描述对于两个字符串, 请设计一个时间复杂度为 $O(mn)$ 的算法(这里的 $m$ 和 $n$ 为两串的长度), 求出两串的最长公共子串的长度。这里的最长公共子串的定义为两个序列 U1,U2,..Un 和 V1,V2,...Vn, 其中 Ui">
@@ -263,7 +263,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">217</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">235</span></a>
   </li>
         
         
@@ -341,14 +341,6 @@
         
         
           
-          <li class="menu-item menu-item-面试">
-    <a href="/categories/面试/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
-  </li>
-        
-        
-        
-          
           <li class="menu-item menu-item-其他">
     <a href="/categories/其他/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
@@ -359,7 +351,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
   </li>
         
         
@@ -512,8 +504,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-02-25T19:56:55+08:00" content="2019-02-25">
-      		  2019-02-25
+    		<time itemprop="dateUpdated" datetime="2019-03-06T13:16:50+08:00" content="2019-03-06">
+      		  2019-03-06
     		</time>
   	  </span>
 	  
@@ -699,7 +691,7 @@
 <p>当得到 <code>next</code> 数组后, 我们就可以很容易的实现 KMP 的完整算法了, 注意这里有一个很容易错的点, <code>.size</code> 是无符号整数, 直接与负值比较或者会产生溢出(但如果参与计算后, 则会自动转换成整形, 因为常数默认是整形), 系统会判断-1比无符号的整数大!! 因此, 我们最好利用 <code>int</code> 型变量来持有其 <code>size</code>, 当需要动态的 <code>size</code> 时, 最好根据需要将其转换成 <code>int</code> 类型. 代码如下所示.<br><span id="KMP"><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">getNext</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;next, <span class="built_in">string</span> &amp;substr)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = substr.size();</span><br><span class="line">        next[<span class="number">0</span>] = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">int</span> k = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">int</span> j=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(j&lt;m<span class="number">-1</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(k==<span class="number">-1</span> || substr[k]==substr[j])</span><br><span class="line">                next[++j]=++k;<span class="comment">// 相当于: j++; k++; next[j] = k;</span></span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                k = next[k];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">strStr</span><span class="params">(<span class="built_in">string</span> str, <span class="built_in">string</span> substr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n=str.size(), m=substr.size();</span><br><span class="line">        <span class="keyword">if</span>(m==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">-1</span>;<span class="comment">//当 m!=0, 而 n=0时, 应该返回-1</span></span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; next(substr.size());</span><br><span class="line">        getNext(next, substr);</span><br><span class="line">        <span class="keyword">int</span> i=<span class="number">0</span>, j=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(i&lt;n &amp;&amp; j&lt;m)&#123;</span><br><span class="line">            <span class="keyword">if</span>(j==<span class="number">-1</span> || str[i]==substr[j])&#123;</span><br><span class="line">                i++; j++;</span><br><span class="line">            &#125;<span class="keyword">else</span></span><br><span class="line">                j = next[j];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(j==m) <span class="keyword">return</span> i-j;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></span></p>
 <p><span id="permutation"></span></p>
 <h1 id="STL-中-next-permutation-和-prev-permutation-的原理及实现"><a href="#STL-中-next-permutation-和-prev-permutation-的原理及实现" class="headerlink" title="STL 中 next_permutation 和 prev_permutation 的原理及实现"></a>STL 中 next_permutation 和 prev_permutation 的原理及实现</h1><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>给定一个排列 P, 求出其后(前)一个排列 P+1(P-1), 关于次知识点的算法题可见<a href="../面试-算法刷题-LeetCode-2/#Permutations">Permutations</a></p>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>首先要知道, 这里的 “上一个” 和 “下一个” 是按照字典序的定义进行排序的, 因此对于 “123” 或者 “abc” 这样的字符串, 正序排列就被认为是 <strong>最小的或者最前面的</strong> 的排列(如 “123”), 而逆序排列被认为 <strong>最大的或者最后面的</strong> 的排列. 从字典序的角度出发, 当用排列 P 求下一个排列 P+1 时, 我们需要找到 <strong>刚好比当前排列大一位</strong> 的下一个排列.<br>因为我们已经知道逆序是最大的排列, 因此, 为了找到比当前排列刚好大一点的排列, 我们首先需要找到一个使排列为 <strong>非逆序</strong> 的元素, 因此, 我们从后往前找, 找到首个构成非逆序排列的元素, 即要满足 <code>nums[i] &lt; nums[i+1]</code> 的元素 <code>nums[i]</code>.<br>找到该元素后, 为了让新的排列只比当前排列大一位, 我们要将 <code>i</code> 之后的元素中大于 <code>nums[i]</code> 的所有元素中 <strong>最小的</strong> 那一个, 假设为 <code>nums[j]</code>, 令 <code>nums[j]</code>与 <code>nums[i]</code> 位置互换, <strong>注意, 如果不是最小的, 那么互换后一定会变得过大, 因为还存在介于二者之后的排列</strong>.<br>当 <code>nums[j]</code> 与 <code>nums[i]</code> 位置互换后, 由于在 <code>i</code> 之后, <code>j</code> 之前(注意此时已经互换), 仍然 <strong>可能</strong> 存在比 <code>nums[j]</code> (因为互换了, 所以此时的 <code>nums[j]</code> 是较小的那个元素) 大的其他元素, 因此, 说明在新排列和旧排列之间还存在有其他的排列. 为了使新排列只比旧排列大一位, 我们需要将 <code>[i+1, end]</code> 之内的元素逆置, 逆置后排列刚好比当前的排列大一位. 因为 <code>j</code> 之后的元素都是比原来的 <code>nums[j]</code> 和 <code>nums[i]</code> 小的, <code>j</code> 之前的元素都不小于原来的 <code>nums[j]</code>, 并且大于原来的 <code>nums[i]</code>, 因此, 逆置后的排列一定是最小的那一种, 故而可以组成只比当前排列大一位的下一个排列, 代码实现可能的版本如下( “321” 的下一个排列是 “123”, 但是会返回 <code>false</code>):</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>首先要知道, 这里的 “上一个” 和 “下一个” 是按照字典序的定义进行排序的, 因此对于 “123” 或者 “abc” 这样的字符串, 正序排列就被认为是 <strong>最小的或者最前面的</strong> 的排列(如 “123”), 而逆序排列被认为 <strong>最大的或者最后面的</strong> 的排列. 从字典序的角度出发, 当用排列 P 求下一个排列 P+1 时, 我们需要找到 <strong>刚好比当前排列大一位</strong> 的下一个排列.<br>因为我们已经知道逆序是最大的排列, 因此, 为了找到比当前排列刚好大一点的排列, 我们首先需要找到一个使排列为 <strong>非逆序</strong> 的元素, 因此, 我们从后往前找, 找到首个构成非逆序排列的元素, 即要满足 <code>nums[i] &lt; nums[i+1]</code> 的元素 <code>nums[i]</code>.<br>找到该元素后, 为了让新的排列只比当前排列大一位, 我们要将 <code>i</code> 之后的元素中大于 <code>nums[i]</code> 的所有元素中 <strong>最小的</strong> 那一个, 假设为 <code>nums[j]</code>, 令 <code>nums[j]</code>与 <code>nums[i]</code> 位置互换, <strong>注意, 如果不是最小的, 那么互换后一定会变得过大, 因为还存在介于二者之间的排列</strong>.<br>当 <code>nums[j]</code> 与 <code>nums[i]</code> 位置互换后, 由于在 <code>i</code> 之后, <code>j</code> 之前(注意此时已经互换), 仍然 <strong>可能</strong> 存在比 <code>nums[j]</code> (因为互换了, 所以此时的 <code>nums[j]</code> 是较小的那个元素) 大的其他元素, 因此, 说明在新排列和旧排列之间还存在有其他的排列. 为了使新排列只比旧排列大一位, 我们需要将 <code>[i+1, end]</code> 之内的元素逆置, 逆置后排列刚好比当前的排列大一位. 因为 <code>j</code> 之后的元素都是比原来的 <code>nums[j]</code> 和 <code>nums[i]</code> 小的, <code>j</code> 之前的元素都不小于原来的 <code>nums[j]</code>, 并且大于原来的 <code>nums[i]</code>, 因此, 逆置后的排列一定是最小的那一种, 故而可以组成只比当前排列大一位的下一个排列, 代码实现可能的版本如下( “321” 的下一个排列是 “123”, 但是会返回 <code>false</code>):</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">nextPermutation</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n=nums.size();</span><br><span class="line">        <span class="keyword">int</span> i = n<span class="number">-2</span>, j = n<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">while</span>(i&gt;=<span class="number">0</span> &amp;&amp; nums[i]&gt;=nums[i+<span class="number">1</span>]) i--;</span><br><span class="line">        <span class="keyword">if</span>(i&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">while</span>(j&gt;=<span class="number">0</span> &amp;&amp; nums[i]&gt;=nums[j]) j--;</span><br><span class="line">            swap(nums[i], nums[j]);</span><br><span class="line">        &#125;</span><br><span class="line">        reverse(nums.begin()+i+<span class="number">1</span>, nums.end());</span><br><span class="line">        <span class="keyword">return</span> i&gt;=<span class="number">0</span> ? <span class="literal">true</span> : <span class="literal">false</span>;</span><br><span class="line">        <span class="comment">// 当 i&gt;= 0 时, 说明可以找到组成非逆序的元素, 所以返回 ture, 当&lt;0时, 说明当前排列已经是逆序, 即最后的排列, 故返回 false</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p><strong>注意: next_permutation() 函数接受的是迭代器参数, 所以下面的实现只是一种参考, 并非是 STL 源码实现</strong></p>
 <p>对于 <code>prev_permutation()</code> 函数的原理原始差不多的, 只不过我们需要找到的是 <strong>只比当前排列小一位的前一个排列</strong>, 代码示例如下:</p>
@@ -827,7 +819,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">217</span>
+                    <span class="site-state-item-count">235</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -866,7 +858,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -951,7 +945,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">36</span>
+                      
+                    
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1052,7 +1048,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.6m</span>
+    <span title="站点总字数">1.7m</span>
   
 
   
@@ -1061,7 +1057,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">24:21</span>
+    <span title="站点阅读时长">26:18</span>
   
 </div>
 

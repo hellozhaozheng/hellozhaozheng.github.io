@@ -112,18 +112,18 @@
 
 
 
-  <meta name="description" content="第一章 预备知识第二章 开始学习C++第三章 处理数据第四章 复合类型第五章 循环和关系表达式第六章 分支语句和逻辑运算符第七章 函数——C++的编程模块第八章 函数探幽第八章 函数探幽第八章 函数探幽第八章 函数探幽第十二章 类和动态内存分配动态内存和类复习示例和静态成员 所有的对象都共用一个静态成员副本。 不能在类声明中初始化静态成员变量 ，这是因为声明描述了如何分配内存，但并不分配内存。p4">
+  <meta name="description" content="第一章 ~ 第八章第九章 ~ 第十一章第十二章 类和动态内存分配动态内存和类复习示例和静态成员 所有的对象都共用一个静态成员副本。 不能在类声明中初始化静态成员变量 ，这是因为声明描述了如何分配内存，但并不分配内存。p428 对于静态类成员，可以在类声明之外使用单独的语句来进行初始化，这是因为静态类成员是单独存储的，而不是对象的组成部分。注意下面的初始化语句，指出了类型，并使用了作用域运算符，但没">
 <meta name="keywords" content="读书笔记,C++">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《C++ PrimerPlus》 第十二章～第十三章">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Cpp-Book-CppPrimerPlusChapter12_13/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="第一章 预备知识第二章 开始学习C++第三章 处理数据第四章 复合类型第五章 循环和关系表达式第六章 分支语句和逻辑运算符第七章 函数——C++的编程模块第八章 函数探幽第八章 函数探幽第八章 函数探幽第八章 函数探幽第十二章 类和动态内存分配动态内存和类复习示例和静态成员 所有的对象都共用一个静态成员副本。 不能在类声明中初始化静态成员变量 ，这是因为声明描述了如何分配内存，但并不分配内存。p4">
+<meta property="og:description" content="第一章 ~ 第八章第九章 ~ 第十一章第十二章 类和动态内存分配动态内存和类复习示例和静态成员 所有的对象都共用一个静态成员副本。 不能在类声明中初始化静态成员变量 ，这是因为声明描述了如何分配内存，但并不分配内存。p428 对于静态类成员，可以在类声明之外使用单独的语句来进行初始化，这是因为静态类成员是单独存储的，而不是对象的组成部分。注意下面的初始化语句，指出了类型，并使用了作用域运算符，但没">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-25T11:26:32.856Z">
+<meta property="og:updated_time" content="2019-03-06T07:57:59.218Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《C++ PrimerPlus》 第十二章～第十三章">
-<meta name="twitter:description" content="第一章 预备知识第二章 开始学习C++第三章 处理数据第四章 复合类型第五章 循环和关系表达式第六章 分支语句和逻辑运算符第七章 函数——C++的编程模块第八章 函数探幽第八章 函数探幽第八章 函数探幽第八章 函数探幽第十二章 类和动态内存分配动态内存和类复习示例和静态成员 所有的对象都共用一个静态成员副本。 不能在类声明中初始化静态成员变量 ，这是因为声明描述了如何分配内存，但并不分配内存。p4">
+<meta name="twitter:description" content="第一章 ~ 第八章第九章 ~ 第十一章第十二章 类和动态内存分配动态内存和类复习示例和静态成员 所有的对象都共用一个静态成员副本。 不能在类声明中初始化静态成员变量 ，这是因为声明描述了如何分配内存，但并不分配内存。p428 对于静态类成员，可以在类声明之外使用单独的语句来进行初始化，这是因为静态类成员是单独存储的，而不是对象的组成部分。注意下面的初始化语句，指出了类型，并使用了作用域运算符，但没">
 
 
 
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">217</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">235</span></a>
   </li>
         
         
@@ -326,14 +326,6 @@
         
         
           
-          <li class="menu-item menu-item-面试">
-    <a href="/categories/面试/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
-  </li>
-        
-        
-        
-          
           <li class="menu-item menu-item-其他">
     <a href="/categories/其他/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
@@ -344,7 +336,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
   </li>
         
         
@@ -497,8 +489,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-02-25T19:26:32+08:00" content="2019-02-25">
-      		  2019-02-25
+    		<time itemprop="dateUpdated" datetime="2019-03-06T15:57:59+08:00" content="2019-03-06">
+      		  2019-03-06
     		</time>
   	  </span>
 	  
@@ -551,7 +543,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">8.3k</span>
+                <span title="本文字数">8.5k</span>
               
 
               
@@ -585,7 +577,7 @@
       
 
       
-        <h1 id="第一章-预备知识"><a href="#第一章-预备知识" class="headerlink" title="第一章 预备知识"></a><a href="https://hellozhaozheng.github.io/z_post/2017-11-08-CppPrimerPlus/#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86">第一章 预备知识</a></h1><h1 id="第二章-开始学习C"><a href="#第二章-开始学习C" class="headerlink" title="第二章 开始学习C++"></a><a href="https://hellozhaozheng.github.io/z_post/2017-11-08-CppPrimerPlus/#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E5%BC%80%E5%A7%8B%E5%AD%A6%E4%B9%A0C">第二章 开始学习C++</a></h1><h1 id="第三章-处理数据"><a href="#第三章-处理数据" class="headerlink" title="第三章 处理数据"></a><a href="https://hellozhaozheng.github.io/z_post/2017-11-08-CppPrimerPlus/#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE">第三章 处理数据</a></h1><h1 id="第四章-复合类型"><a href="#第四章-复合类型" class="headerlink" title="第四章 复合类型"></a><a href="https://hellozhaozheng.github.io/z_post/2017-11-08-CppPrimerPlus/#%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%A4%8D%E5%90%88%E7%B1%BB%E5%9E%8B">第四章 复合类型</a></h1><h1 id="第五章-循环和关系表达式"><a href="#第五章-循环和关系表达式" class="headerlink" title="第五章 循环和关系表达式"></a><a href="https://hellozhaozheng.github.io/z_post/2017-11-08-CppPrimerPlus/#%E7%AC%AC%E4%BA%94%E7%AB%A0-%E5%BE%AA%E7%8E%AF%E5%92%8C%E5%85%B3%E7%B3%BB%E8%A1%A8%E8%BE%BE%E5%BC%8F">第五章 循环和关系表达式</a></h1><h1 id="第六章-分支语句和逻辑运算符"><a href="#第六章-分支语句和逻辑运算符" class="headerlink" title="第六章 分支语句和逻辑运算符"></a><a href="https://hellozhaozheng.github.io/z_post/2017-11-08-CppPrimerPlus/#%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%88%86%E6%94%AF%E8%AF%AD%E5%8F%A5%E5%92%8C%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6">第六章 分支语句和逻辑运算符</a></h1><h1 id="第七章-函数——C-的编程模块"><a href="#第七章-函数——C-的编程模块" class="headerlink" title="第七章 函数——C++的编程模块"></a><a href="https://hellozhaozheng.github.io/z_post/2017-11-08-CppPrimerPlus/#%E7%AC%AC%E4%B8%83%E7%AB%A0-%E5%87%BD%E6%95%B0%E2%80%94%E2%80%94C-%E7%9A%84%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9D%97">第七章 函数——C++的编程模块</a></h1><h1 id="第八章-函数探幽"><a href="#第八章-函数探幽" class="headerlink" title="第八章 函数探幽"></a><a href="https://hellozhaozheng.github.io/z_post/2017-11-08-CppPrimerPlus/#%E7%AC%AC%E5%85%AB%E7%AB%A0-%E5%87%BD%E6%95%B0%E6%8E%A2%E5%B9%BD">第八章 函数探幽</a></h1><h1 id="第八章-函数探幽-1"><a href="#第八章-函数探幽-1" class="headerlink" title="第八章 函数探幽"></a><a href="https://hellozhaozheng.github.io/z_post/2017-11-08-CppPrimerPlus/#%E7%AC%AC%E5%85%AB%E7%AB%A0-%E5%87%BD%E6%95%B0%E6%8E%A2%E5%B9%BD">第八章 函数探幽</a></h1><h1 id="第八章-函数探幽-2"><a href="#第八章-函数探幽-2" class="headerlink" title="第八章 函数探幽"></a><a href="https://hellozhaozheng.github.io/z_post/2017-11-08-CppPrimerPlus/#%E7%AC%AC%E5%85%AB%E7%AB%A0-%E5%87%BD%E6%95%B0%E6%8E%A2%E5%B9%BD">第八章 函数探幽</a></h1><h1 id="第八章-函数探幽-3"><a href="#第八章-函数探幽-3" class="headerlink" title="第八章 函数探幽"></a><a href="https://hellozhaozheng.github.io/z_post/2017-11-08-CppPrimerPlus/#%E7%AC%AC%E5%85%AB%E7%AB%A0-%E5%87%BD%E6%95%B0%E6%8E%A2%E5%B9%BD">第八章 函数探幽</a></h1><h1 id="第十二章-类和动态内存分配"><a href="#第十二章-类和动态内存分配" class="headerlink" title="第十二章 类和动态内存分配"></a>第十二章 类和动态内存分配</h1><h2 id="动态内存和类"><a href="#动态内存和类" class="headerlink" title="动态内存和类"></a>动态内存和类</h2><h3 id="复习示例和静态成员"><a href="#复习示例和静态成员" class="headerlink" title="复习示例和静态成员"></a>复习示例和静态成员</h3><ul>
+        <h1 id="第一章-第八章"><a href="#第一章-第八章" class="headerlink" title="第一章 ~ 第八章"></a><a href="../Cpp-Book-CppPrimerPlusChapter1_8">第一章 ~ 第八章</a></h1><h1 id="第九章-第十一章"><a href="#第九章-第十一章" class="headerlink" title="第九章 ~ 第十一章"></a><a href="../Cpp-Book-CppPrimerPlusChapter9_11">第九章 ~ 第十一章</a></h1><h1 id="第十二章-类和动态内存分配"><a href="#第十二章-类和动态内存分配" class="headerlink" title="第十二章 类和动态内存分配"></a>第十二章 类和动态内存分配</h1><h2 id="动态内存和类"><a href="#动态内存和类" class="headerlink" title="动态内存和类"></a>动态内存和类</h2><h3 id="复习示例和静态成员"><a href="#复习示例和静态成员" class="headerlink" title="复习示例和静态成员"></a>复习示例和静态成员</h3><ul>
 <li>所有的对象都共用一个静态成员副本。 <strong>不能在类声明中初始化静态成员变量</strong> ，这是因为声明描述了如何分配内存，但并不分配内存。p428</li>
 <li><p>对于静态类成员，可以在类声明之外使用单独的语句来进行初始化，这是因为静态类成员是单独存储的，而不是对象的组成部分。注意下面的初始化语句，指出了类型，并使用了作用域运算符，但没有使用关键字static。p428</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int StringBad::num_strings = 0;</span><br></pre></td></tr></table></figure>
@@ -617,6 +609,7 @@
 <li>由于隐式复制构造函数是按值进行复制的。在这成员变量中含有指针时是十分危险的，因为这样依赖两个对象中的成员指针就会指向同一块内存，如果其中一个对象被释放后，其指针指向的内存块可能会导致不确定的错误。另外，程序有可能会因为两次释放同一块内存而导致程序终止。具体的错误取决于系统和相关实现。p435</li>
 <li><strong>深度复制</strong>。深度复制可解决上述的问题。复制时应当复制指针指向内容的副本，并将副本的地址赋给新的对象，这样一来，两个对象就是完全独立的。必须自定义复制构造函数的原因就在于，一些类成员是使用new初始化的、指向数据的指针，而不是数据本身。p435</li>
 </ul>
+<p><strong>警告:</strong> 如果类中包含了使用 new 初始化的指针成员, 应当自定义一个复制构造函数, 以复制指向的数据, 而不是指针, 这被称为 <strong>深度复制</strong>. 复制的另一种形式(成员复制或浅复制)只是复制指针的值. 因此, 浅复制仅仅复制指针本身的值, 而不会深入”挖掘”以复制指针指向的结构.</p>
 <h3 id="赋值运算符容易引起的问题"><a href="#赋值运算符容易引起的问题" class="headerlink" title="赋值运算符容易引起的问题"></a>赋值运算符容易引起的问题</h3><ul>
 <li>赋值运算符的完整函数原型如下：<code>Class_name &amp; Class_name::operator = (const Class_name&amp;);</code>。它接受并返回一个指向类对象的引用。</li>
 <li>赋值运算符的功能以及何时使用：将已有的对象赋给另一个对象时，将使用重载的复制运算符。（注意，初始化赋值时，不会调用赋值运算符重载，而是调用复制构造函数）。p436</li>
@@ -631,7 +624,7 @@
 <li><p>下面两种方式分配的内存量相同，区别在于前者与类析构函数兼容，而后者不兼容。p438</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">str = new char[1];  //与析构函数中的delete []str; 兼容</span><br><span class="line">str = new char;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p><strong>C++11空指针：</strong> 在C++98中，字面值0有两个含义：可以表示数字值零，也可以表示空指针，这使得阅读程序的人和编译器难以区分。C++11提供了更好的解决方案，引入新关键字nullptr，用于表示空指针。原来的表示依然合法，但建议使用nullptr。 p438</p>
+<li><p><strong>C++11空指针：</strong> 在C++98中，字面值0有两个含义：可以表示数字值零，也可以表示空指针，这使得阅读程序的人和编译器难以区分。有些程序员使用<code>(void *) 0</code>来标识空指针(空指针本身的内部表示可能不是零), 还有些程序员使用<code>NULL</code>, 这是一个表示空指针的 C 语言宏定义. C++11提供了更好的解决方案，引入新关键字nullptr，用于表示空指针。原来的表示依然合法，但建议使用nullptr。 p438</p>
 </li>
 <li><strong>静态成员函数：</strong> 不能通过对象调用静态成员函数，也不能使用this指针。如果静态成员函数是在公有部分声明，则可以使用类名和作用域解析符来调用它。 其次，由于静态成员函数不与特定的对象相关联，因此只能使用静态数据成员，不能访问其他成员数据。p441</li>
 <li>较早的<code>get(char *, int)</code>版本在读取空行后，字符串中第一个字符将是一个空字符。较新的C++标准则会返回false。p446</li>
@@ -954,7 +947,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">217</span>
+                    <span class="site-state-item-count">235</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -993,7 +986,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1078,7 +1073,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">36</span>
+                      
+                    
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1142,7 +1139,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章-预备知识"><span class="nav-text">第一章 预备知识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二章-开始学习C"><span class="nav-text">第二章 开始学习C++</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三章-处理数据"><span class="nav-text">第三章 处理数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四章-复合类型"><span class="nav-text">第四章 复合类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第五章-循环和关系表达式"><span class="nav-text">第五章 循环和关系表达式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第六章-分支语句和逻辑运算符"><span class="nav-text">第六章 分支语句和逻辑运算符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第七章-函数——C-的编程模块"><span class="nav-text">第七章 函数——C++的编程模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第八章-函数探幽"><span class="nav-text">第八章 函数探幽</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第八章-函数探幽-1"><span class="nav-text">第八章 函数探幽</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第八章-函数探幽-2"><span class="nav-text">第八章 函数探幽</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第八章-函数探幽-3"><span class="nav-text">第八章 函数探幽</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第十二章-类和动态内存分配"><span class="nav-text">第十二章 类和动态内存分配</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#动态内存和类"><span class="nav-text">动态内存和类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#复习示例和静态成员"><span class="nav-text">复习示例和静态成员</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊成员函数"><span class="nav-text">特殊成员函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复制构造函数容易引起的问题"><span class="nav-text">复制构造函数容易引起的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#赋值运算符容易引起的问题"><span class="nav-text">赋值运算符容易引起的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改进后的新String类"><span class="nav-text">改进后的新String类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在构造函数中使用new时应注意的事项"><span class="nav-text">在构造函数中使用new时应注意的事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有关返回对象的说明"><span class="nav-text">有关返回对象的说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#返回指向const对象的引用"><span class="nav-text">返回指向const对象的引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#返回指向非const对象的引用"><span class="nav-text">返回指向非const对象的引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#返回对象"><span class="nav-text">返回对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#返回const对象"><span class="nav-text">返回const对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用指向对象的指针"><span class="nav-text">使用指向对象的指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复习各种技术"><span class="nav-text">复习各种技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化列表"><span class="nav-text">初始化列表</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第十三章-类继承"><span class="nav-text">第十三章 类继承</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#13-1-一个简单的基类"><span class="nav-text">13.1 一个简单的基类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#13-1-1-派生一个类"><span class="nav-text">13.1.1 派生一个类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-1-2-构造函数：访问权限的考虑"><span class="nav-text">13.1.2 构造函数：访问权限的考虑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#派生类与基类之间的特殊关系"><span class="nav-text">派生类与基类之间的特殊关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继承：is-a关系"><span class="nav-text">继承：is-a关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多态公有继承"><span class="nav-text">多态公有继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态联编和动态联编"><span class="nav-text">静态联编和动态联编</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#指针和引用类型的兼容性"><span class="nav-text">指针和引用类型的兼容性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚成员函数和动态联编"><span class="nav-text">虚成员函数和动态联编</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有关虚函数注意事项"><span class="nav-text">有关虚函数注意事项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问控制：protected"><span class="nav-text">访问控制：protected</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抽象基类"><span class="nav-text">抽象基类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-7-继承和动态内存分配"><span class="nav-text">13.7 继承和动态内存分配</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#13-7-1-派生类不使用new"><span class="nav-text">13.7.1 派生类不使用new</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-7-2-派生类使用new"><span class="nav-text">13.7.2 派生类使用new</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-8-类设计回顾"><span class="nav-text">13.8 类设计回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#13-8-1-编译器生成的成员函数"><span class="nav-text">13.8.1 编译器生成的成员函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-8-2-其他的类方法"><span class="nav-text">13.8.2 其他的类方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-8-3-公有继承的考虑因素"><span class="nav-text">13.8.3 公有继承的考虑因素</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章-第八章"><span class="nav-text">第一章 ~ 第八章</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第九章-第十一章"><span class="nav-text">第九章 ~ 第十一章</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第十二章-类和动态内存分配"><span class="nav-text">第十二章 类和动态内存分配</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#动态内存和类"><span class="nav-text">动态内存和类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#复习示例和静态成员"><span class="nav-text">复习示例和静态成员</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊成员函数"><span class="nav-text">特殊成员函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复制构造函数容易引起的问题"><span class="nav-text">复制构造函数容易引起的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#赋值运算符容易引起的问题"><span class="nav-text">赋值运算符容易引起的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改进后的新String类"><span class="nav-text">改进后的新String类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在构造函数中使用new时应注意的事项"><span class="nav-text">在构造函数中使用new时应注意的事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有关返回对象的说明"><span class="nav-text">有关返回对象的说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#返回指向const对象的引用"><span class="nav-text">返回指向const对象的引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#返回指向非const对象的引用"><span class="nav-text">返回指向非const对象的引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#返回对象"><span class="nav-text">返回对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#返回const对象"><span class="nav-text">返回const对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用指向对象的指针"><span class="nav-text">使用指向对象的指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复习各种技术"><span class="nav-text">复习各种技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化列表"><span class="nav-text">初始化列表</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第十三章-类继承"><span class="nav-text">第十三章 类继承</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#13-1-一个简单的基类"><span class="nav-text">13.1 一个简单的基类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#13-1-1-派生一个类"><span class="nav-text">13.1.1 派生一个类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-1-2-构造函数：访问权限的考虑"><span class="nav-text">13.1.2 构造函数：访问权限的考虑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#派生类与基类之间的特殊关系"><span class="nav-text">派生类与基类之间的特殊关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继承：is-a关系"><span class="nav-text">继承：is-a关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多态公有继承"><span class="nav-text">多态公有继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态联编和动态联编"><span class="nav-text">静态联编和动态联编</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#指针和引用类型的兼容性"><span class="nav-text">指针和引用类型的兼容性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚成员函数和动态联编"><span class="nav-text">虚成员函数和动态联编</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有关虚函数注意事项"><span class="nav-text">有关虚函数注意事项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问控制：protected"><span class="nav-text">访问控制：protected</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抽象基类"><span class="nav-text">抽象基类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-7-继承和动态内存分配"><span class="nav-text">13.7 继承和动态内存分配</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#13-7-1-派生类不使用new"><span class="nav-text">13.7.1 派生类不使用new</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-7-2-派生类使用new"><span class="nav-text">13.7.2 派生类使用new</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-8-类设计回顾"><span class="nav-text">13.8 类设计回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#13-8-1-编译器生成的成员函数"><span class="nav-text">13.8.1 编译器生成的成员函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-8-2-其他的类方法"><span class="nav-text">13.8.2 其他的类方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-8-3-公有继承的考虑因素"><span class="nav-text">13.8.3 公有继承的考虑因素</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -1179,7 +1176,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.6m</span>
+    <span title="站点总字数">1.7m</span>
   
 
   
@@ -1188,7 +1185,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">24:21</span>
+    <span title="站点阅读时长">26:18</span>
   
 </div>
 

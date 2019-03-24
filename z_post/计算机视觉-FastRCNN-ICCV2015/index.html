@@ -133,7 +133,7 @@
 <meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fxq348vetuj20x10cmq58.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fxq34ncol8j20x4097wg4.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fxq353y1txj20xa0jc41o.jpg">
-<meta property="og:updated_time" content="2019-03-01T14:17:27.659Z">
+<meta property="og:updated_time" content="2019-03-05T11:44:18.772Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Fast R-CNN (ICCV, 2015)">
 <meta name="twitter:description" content="文章: Fast R-CNN作者: Ross Girshick 核心亮点摘要本篇文章提出了一个用于解决目标检测问题的 Fast Region-based Convolutional Network (Fast R-CNN). Fast R-CNN 是基于之前的 R-CNN 提出的. 相比于之前的工作, Fast R-CNN 利用一些新颖的方法来提升训练和推演时的速度, 同时还提高了模型的准确率.">
@@ -262,7 +262,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">217</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">235</span></a>
   </li>
         
         
@@ -340,14 +340,6 @@
         
         
           
-          <li class="menu-item menu-item-面试">
-    <a href="/categories/面试/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
-  </li>
-        
-        
-        
-          
           <li class="menu-item menu-item-其他">
     <a href="/categories/其他/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
@@ -358,7 +350,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
   </li>
         
         
@@ -511,8 +503,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-01T22:17:27+08:00" content="2019-03-01">
-      		  2019-03-01
+    		<time itemprop="dateUpdated" datetime="2019-03-05T19:44:18+08:00" content="2019-03-05">
+      		  2019-03-05
     		</time>
   	  </span>
 	  
@@ -646,7 +638,7 @@
 <h1 id="Fast-R-CNN-detection"><a href="#Fast-R-CNN-detection" class="headerlink" title="Fast R-CNN detection"></a>Fast R-CNN detection</h1><p>Fast R-CNN 网络接收一张图片作为输入, 在推演阶段, $R$ 的值大约为 2000, 对于每一个 RoI $r$, 前向传播过程都会输出一个类别概率分布 $p$, 以及 $K$ 个相关的 box-bounding 的偏移量. 我们利用估计概率来为每一个 $r$ 赋予检测置信度 $Pr(class = k | k) \triangleq p_k$. 然后我们对每一类都是单独的使用 NMS 算法.</p>
 <h1 id="Truncated-SVD-截断式奇异矩阵分解"><a href="#Truncated-SVD-截断式奇异矩阵分解" class="headerlink" title="Truncated SVD 截断式奇异矩阵分解"></a>Truncated SVD 截断式奇异矩阵分解</h1><p>对于整张图片的分类问题来说, 花费在全连接上的计算时间相比于在卷积层上的计算时间来说, 要小很多. 但是, 与之相反的, 对于目标检测问题来说, 需要处理的RoI数量很大, 并且前向计算的时间有几乎一半都花费在了全连接层的计算上, 因此, 使用truncated SVD技术来进行加速.</p>
 <p>对于一个权重矩阵为 $u\times v$ 的全连接层来说, 该矩阵可以被近似的因式分解为:</p>
-<script type="math/tex; mode=display">W \approx U \sum_t V^T</script><p>式中, $U$ 是一个 $u\times t$ 的矩阵, $\sum_t$ 是一个 $t\times t$ 的对角矩阵, 包含着矩阵 $W$ 的值最大的 $t$ 个奇异值, $V$ 是一个 $v\times t$ 的矩阵. 可以看到, 奇异值分解将矩阵 $W$ 的参数量从 $uv$ 降低到了 $u+v$, 其最主要的因素是 $t$ 远远小于 $\min(u,v)$. 为了压缩网络, 单个的全连接网络层的权重矩阵 $W$ 会被两层全连接层所替代, 注意在这两层全连接层中间没有非线性激活函数. 第一个全连接层使用的权重矩阵为 $\sum_t V^T$ (没有偏置项), 第二个权重矩阵为 $U$ (带有原始矩阵 $W$ 的偏置项).</p>
+<script type="math/tex; mode=display">W \approx U \Sigma_t V^T</script><p>式中, $U$ 是一个 $u\times t$ 的矩阵, $\Sigma_t$ 是一个 $t\times t$ 的对角矩阵, 包含着矩阵 $W$ 的值最大的 $t$ 个奇异值, $V$ 是一个 $v\times t$ 的矩阵. 可以看到, 奇异值分解将矩阵 $W$ 的参数量从 $uv$ 降低到了 $u+v$, 如果此时 $t$ 远远小于 $\min(u,v)$, 那么就会大大节省总的参数量. 为了压缩网络, 单个的全连接网络层的权重矩阵 $W$ 会被两层全连接层所替代, 注意在这两层全连接层中间没有非线性激活函数. 第一个全连接层使用的权重矩阵为 $\Sigma_t V^T$ (没有偏置项), 第二个权重矩阵为 $U$ (带有原始矩阵 $W$ 的偏置项). 这一压缩步骤在 RoIs 的数量很大时可以起到不错的加速效果. 关于奇异值分解更详细的介绍可以看 <a href="../深度学习-奇异值分解">奇异值分解解析</a></p>
 <h1 id="Main-results"><a href="#Main-results" class="headerlink" title="Main results"></a>Main results</h1><p>本文的实验结果体现出了三点贡献:</p>
 <ol>
 <li>在 VOC07, 2010 和 2012 上取得了 state-of-the-art 的准确率</li>
@@ -720,8 +712,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/计算机视觉-MaskRCNN-ICCV2017/" rel="next" title="Mask R-CNN (ICCV, 2017)">
-                Mask R-CNN (ICCV, 2017) <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/Python-os/" rel="next" title="os模块-系统操作">
+                os模块-系统操作 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -800,7 +792,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">217</span>
+                    <span class="site-state-item-count">235</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -839,7 +831,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -924,7 +918,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">36</span>
+                      
+                    
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1025,7 +1021,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.6m</span>
+    <span title="站点总字数">1.7m</span>
   
 
   
@@ -1034,7 +1030,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">24:21</span>
+    <span title="站点阅读时长">26:18</span>
   
 </div>
 

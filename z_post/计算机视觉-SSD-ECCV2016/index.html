@@ -123,7 +123,7 @@
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw1024/d7b90c85ly1fwb7fnbsu4j20oj09bgq8.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/mw1024/d7b90c85ly1fwbhhr03m4j216z0rtdmo.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw1024/d7b90c85ly1fwbl46szs0j213m0ewag3.jpg">
-<meta property="og:updated_time" content="2019-02-25T11:50:45.774Z">
+<meta property="og:updated_time" content="2019-03-19T12:57:20.075Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SSD-Single Shot MultiBox Detector">
 <meta name="twitter:description" content="文章: SSD: Single Shot MultiBox Detector作者: Wei Liu, Dragomir Anguelov, Dumitru Erhan 核心亮点(1) 在不同层的feature map上使用网格法获取候选区域: 某种程度上SSD可以看做是YOLOv1和FasterRCNN的结合, 在不同layer的输出的不同尺度的feature map上划格子, 在格子上利用anc">
@@ -252,7 +252,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">217</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">235</span></a>
   </li>
         
         
@@ -330,14 +330,6 @@
         
         
           
-          <li class="menu-item menu-item-面试">
-    <a href="/categories/面试/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
-  </li>
-        
-        
-        
-          
           <li class="menu-item menu-item-其他">
     <a href="/categories/其他/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
@@ -348,7 +340,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
   </li>
         
         
@@ -501,8 +493,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-02-25T19:50:45+08:00" content="2019-02-25">
-      		  2019-02-25
+    		<time itemprop="dateUpdated" datetime="2019-03-19T20:57:20+08:00" content="2019-03-19">
+      		  2019-03-19
     		</time>
   	  </span>
 	  
@@ -555,7 +547,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">5.2k</span>
+                <span title="本文字数">6.2k</span>
               
 
               
@@ -569,7 +561,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">5 分钟</span>
+                <span title="阅读时长">6 分钟</span>
               
             </div>
           
@@ -596,7 +588,7 @@
 <p><strong>(3) 相对于那些需要object proposals的两阶段模型, SSD方法全完取消了 proposals generation, pixel resampling 或者 feature resampling 这些阶段</strong></p>
 <h1 id="论文细节"><a href="#论文细节" class="headerlink" title="论文细节"></a>论文细节</h1><h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>目前, 虽然Faster RCNN取得了很好的检测精度, 但是对于普通设备来说, Faster RCNN过于庞大, 计算时间太久, 不足以达到实时监测. YOLO虽然速度很快, 但是精度太低了, 达不到基本要求.</p>
 <p>SSD的出现正是为了解决这些问题, 确定在不丢失过度精度的前提下, 提升检测的速度.</p>
-<h2 id="Single-Shot-Detector-SSD"><a href="#Single-Shot-Detector-SSD" class="headerlink" title="Single Shot Detector(SSD)"></a>Single Shot Detector(SSD)</h2><p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/mw1024/d7b90c85ly1fwb7fnbsu4j20oj09bgq8.jpg" alt=""></div></p>
+<h2 id="Single-Shot-Detector-SSD"><a href="#Single-Shot-Detector-SSD" class="headerlink" title="Single Shot Detector(SSD)"></a>Single Shot Detector(SSD)</h2><p><div style="width: 550px; margin: auto"><img src="https://wx1.sinaimg.cn/mw1024/d7b90c85ly1fwb7fnbsu4j20oj09bgq8.jpg" alt=""></div></p>
 <p>根据上图, 简单说一下SSD的关键要素</p>
 <ul>
 <li>输入: 图像以及每个物体对应的ground truth boxes</li>
@@ -609,7 +601,10 @@
 <p><strong>多尺度feature map:</strong> 在卷积网络的不同卷积层后面添加convolutional feature layers, 并且在每一层中都会进行检测任务.</p>
 <p><strong>Convolutional predictors for detection:</strong> 每一个添加的特征层(或者在基础网络里的特征层), 都可以使用一系列的卷积核产生固定大小的predictions, 如图2所示. 对于一个大小为 $m\times n$, 具有 $p$ 通道的特征层, 使用的卷积核就是 $3\times 3\times p$ , 之后会产生相对于 default box 的预测坐标, 已经每一类的预测置信度. 对于特征图上 $m\times n$个位置, 在对每个位置使用卷积核之后, 都会产生一个输出值. (YOLO架构则是用一个全连接层来代替这里的卷积层)</p>
 <p><strong>Default boxes and aspect ratios:</strong> 每一个feature map的cell都会与一系列 default bounding box 相关联. 对于每一个cell来说, 模型会预测与之关联的 default bounding box 相对于该cell的偏移量, 同时会预测这些boxes对应的每一类的出现概率. 具体来说, 对于一个位置上的 $k$ 个boxes中的每一个box, 都会计算出这个box的4个相对位移值 $c$ 个类别的score. 因此, 对于一个feature map来说, 总共需要 $(c+4)\times k$ 个卷积核, 最终该对于大小为 $m\times n$ 的 feature map来说, 其输出结果数量为: $(c+4)\times k\times m\times n$.</p>
-<p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/mw1024/d7b90c85ly1fwbhhr03m4j216z0rtdmo.jpg" alt=""></div></p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx2.sinaimg.cn/mw1024/d7b90c85ly1fwbhhr03m4j216z0rtdmo.jpg" alt=""></div></p>
+<p><strong>空洞卷积(Dilation Conv)</strong></p>
+<p>采用VGG16做基础模型，首先VGG16是在ILSVRC CLS-LOC数据集预训练。然后借鉴了DeepLab-LargeFOV，分别将VGG16的全连接层fc6和fc7转换成 $3 \times 3$卷积层 conv6和 $1 \times 1$ 卷积层conv7，同时将池化层 pool5 由原来的 stride=2 的 $2\times 2$ 变成 stride=1 的(猜想是不想reduce特征图大小)，为了配合这种变化，采用了一种 Atrous Algorithm，其实就是conv6采用扩展卷积或带孔卷积（Dilation Conv），其在不增加参数与模型复杂度的条件下指数级扩大卷积的视野，其使用扩张率(dilation rate)参数，来表示扩张的大小，如下图所示，(a)是普通的 $3 \times 3$ 卷积，其视野就是 $3\times 3$ ，(b)是扩张率为 1，此时视野变成 $7\times 7$ ，(c)扩张率为3时，视野扩大为 $15 \times 15$ ，但是视野的特征更稀疏了。Conv6采用 $3\times 3$ 大小但dilation rate=6的扩展卷积。</p>
+<p><a href="https://wx4.sinaimg.cn/mw690/d7b90c85ly1g178tkhu8kj20lc07lgq1.jpg" target="_blank" rel="noopener">https://wx4.sinaimg.cn/mw690/d7b90c85ly1g178tkhu8kj20lc07lgq1.jpg</a></p>
 <h2 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h2><p>SSD与二阶段检测方法在训练时的区别: SSD训练图像中的GT信息需要赋予到那些固定输出的boxes上面(也就是说不仅要使用bounding box的坐标, 还有把类别标签也与每一个box绑定, 这种方法在YOLO, FasterRCNN(只分前后景), MultiBOx中都有用到).</p>
 <p><strong>Matching strategy:</strong></p>
 <p>只要预测框与gt box之间的 jaccard overlap(就是交并比) 大于一个阈值(0.5), 就认为是配对成功, 反之, 认为是背景.</p>
@@ -655,8 +650,10 @@
 </ul>
 <p><strong>Inference time:</strong></p>
 <p>SSD会产生大量的bounding boxes, 使用NMS算法只留下top200 (这一步SSD300在VOC20类的每张图像上, 需耗时2.2msec)</p>
-<p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/mw1024/d7b90c85ly1fwbl46szs0j213m0ewag3.jpg" alt=""></div></p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx1.sinaimg.cn/mw1024/d7b90c85ly1fwbl46szs0j213m0ewag3.jpg" alt=""></div></p>
 <p>上图看起来SSD300比YOLO还要快, 但实际上YOLO的网络层数是24层, 而SSD的层数是12层, 这样比起来有点不太公平( 但是层数多居然精度没SSD高, 这也值得吐槽, 但是个人觉得这是因为YOLOv1的设计比较粗糙, 很多trick没有使用导致的, 所以看看YOLOv2, 和YOLOv3的版本, 结果还是挺不错的)</p>
+<h1 id="SSD-使用了哪些数据增广方法"><a href="#SSD-使用了哪些数据增广方法" class="headerlink" title="SSD 使用了哪些数据增广方法?"></a>SSD 使用了哪些数据增广方法?</h1><p>水平翻转, 随机裁剪+颜色扭曲(random crop &amp; color distortion), 随机采集区域块(randomly sample a patch, 目标是为了获取小目标训练样本)</p>
+<h1 id="为什么SSD不直接使用浅层的特征图谱-而非要额外增加卷积层-这样不是增加模型的复杂度了吗"><a href="#为什么SSD不直接使用浅层的特征图谱-而非要额外增加卷积层-这样不是增加模型的复杂度了吗" class="headerlink" title="为什么SSD不直接使用浅层的特征图谱, 而非要额外增加卷积层, 这样不是增加模型的复杂度了吗?"></a>为什么SSD不直接使用浅层的特征图谱, 而非要额外增加卷积层, 这样不是增加模型的复杂度了吗?</h1><p>FPN: 理想情况下, SSD 的特征金字塔是从多个卷积层输出的特征图谱得到的, 因此它的计算成本几乎为零. 但是为了避免使用到那些表征能力不强的低阶特征图谱(浅层), SSD 只使用了深层的特征图谱(conv4_3), 同时在 backbone 网络的后面又添加了几层卷积层来提取高表征能力的特征图谱. 但是这样就是的 SSD 错过了那些低阶特征的信息, 这些低阶特征中往往包含了高阶特征不具有的信息, 如小物体的特征信息, 这也是为什么 SSD 对小物体不敏感的原因之一.</p>
 
       
     </div>
@@ -694,8 +691,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/深度学习-Book-DL500Questions-ch02-ML/" rel="prev" title="《深度学习500问》 第二章 机器学习基础">
-                <i class="fa fa-chevron-left"></i> 《深度学习500问》 第二章 机器学习基础
+              <a href="/z_post/面试-面经汇总/" rel="prev" title="面试-面经汇总">
+                <i class="fa fa-chevron-left"></i> 面试-面经汇总
               </a>
             
           </div>
@@ -784,7 +781,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">217</span>
+                    <span class="site-state-item-count">235</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -823,7 +820,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -908,7 +907,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">36</span>
+                      
+                    
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -972,7 +973,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#核心亮点"><span class="nav-text">核心亮点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#论文细节"><span class="nav-text">论文细节</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景介绍"><span class="nav-text">背景介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Single-Shot-Detector-SSD"><span class="nav-text">Single Shot Detector(SSD)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Model"><span class="nav-text">Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Training"><span class="nav-text">Training</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验"><span class="nav-text">实验</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#核心亮点"><span class="nav-text">核心亮点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#论文细节"><span class="nav-text">论文细节</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景介绍"><span class="nav-text">背景介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Single-Shot-Detector-SSD"><span class="nav-text">Single Shot Detector(SSD)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Model"><span class="nav-text">Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Training"><span class="nav-text">Training</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验"><span class="nav-text">实验</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SSD-使用了哪些数据增广方法"><span class="nav-text">SSD 使用了哪些数据增广方法?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么SSD不直接使用浅层的特征图谱-而非要额外增加卷积层-这样不是增加模型的复杂度了吗"><span class="nav-text">为什么SSD不直接使用浅层的特征图谱, 而非要额外增加卷积层, 这样不是增加模型的复杂度了吗?</span></a></li></ol></div>
             
 
           </div>
@@ -1009,7 +1010,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.6m</span>
+    <span title="站点总字数">1.7m</span>
   
 
   
@@ -1018,7 +1019,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">24:21</span>
+    <span title="站点阅读时长">26:18</span>
   
 </div>
 

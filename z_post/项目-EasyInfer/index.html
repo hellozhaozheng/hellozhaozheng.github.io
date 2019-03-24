@@ -123,7 +123,7 @@
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1g0oqi9rwlyj20v50crgmh.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1g0oqix3d83j20uh0ayaao.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1g0oqi9rwlyj20v50crgmh.jpg">
-<meta property="og:updated_time" content="2019-03-04T12:51:00.567Z">
+<meta property="og:updated_time" content="2019-03-09T12:31:54.825Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【置顶】通用深度学习推理框架-EasyInfer">
 <meta name="twitter:description" content="一. 项目简介在实际生产环境下, 当我们的深度学习模型训练完成后, 我们通常需要将预测模型部署到嵌入式平台上才能正式产生效益, 但是在模型部署过程中, 脱离了训练环境, 就会产生各种依赖问题, 使得部署过程十分麻烦, 另外, 一般的用户对现在流行的神经网络前向计算框架如 TensorRT, NCNN, OpenVINO 等加速引擎的诸多细节都无法清楚理解, 尤其是对于专注于算法提升的算法人员来说,">
@@ -252,7 +252,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">217</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">235</span></a>
   </li>
         
         
@@ -330,14 +330,6 @@
         
         
           
-          <li class="menu-item menu-item-面试">
-    <a href="/categories/面试/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
-  </li>
-        
-        
-        
-          
           <li class="menu-item menu-item-其他">
     <a href="/categories/其他/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
@@ -348,7 +340,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
   </li>
         
         
@@ -505,8 +497,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-04T20:51:00+08:00" content="2019-03-04">
-      		  2019-03-04
+    		<time itemprop="dateUpdated" datetime="2019-03-09T20:31:54+08:00" content="2019-03-09">
+      		  2019-03-09
     		</time>
   	  </span>
 	  
@@ -559,7 +551,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">22k</span>
+                <span title="本文字数">23k</span>
               
 
               
@@ -573,7 +565,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">20 分钟</span>
+                <span title="阅读时长">21 分钟</span>
               
             </div>
           
@@ -598,7 +590,7 @@
 <p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1g0oqlor8e1j20tq0ds0u0.jpg" alt=""></p>
 <h2 id="模型转换"><a href="#模型转换" class="headerlink" title="模型转换"></a>模型转换</h2><p>在 EasyInfer 的工作流程中, 很重要的第一步工作就是将用户提供的模型文件转换成底层引擎使用的模型文件格式, 如下图所示, 目前我们已经支持将 Caffe, Onnx, 和 MXNet 模型全自动的转换到不同的底层引擎模型格式. 其中, 对于 MXNet 模型文件, 起初由于我们是开发了一个将 MXNet 模型文件转换成 Caffe 模型文件的工具, 但是后来我们发现, 有些 MXNet 网络的参数在 Caffe 中不支持, 并且 Caffe 目前已经处于停止维护的状态, 因此, 我们决定重新编写将 MXNet 网络模型直接转换成底层引擎模型格式的代码, 但是对于 TensorRT 来说, 由于它没有提供现成可用的 MXNet 解析类, 因此, 我们必须手动实习对 MXNet 模型文件的解析, 然后将解析后的结果存入 TensorRT 模型中. 这一部分的任务也是我在实习期间的任务之一, 关于这一部分的细节会在后文介绍.</p>
 <p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1g0oqi9rwlyj20v50crgmh.jpg" alt=""></p>
-<h2 id="模型执行"><a href="#模型执行" class="headerlink" title="模型执行"></a>模型执行</h2><p>在完成模型转换后(我们会将模型统一转换成指定的格式, 这里我们用 EasyModel 指代这些转换后的模型). 我们就可以根据我们的模型和需要来编写相应的代码完成模型部署工作. 这里我们为用户提供了极简的引擎开发接口和模型开发接口: <strong>ModelBase</strong>. ModelBase 在整个模型执行流程中扮演了一个非常重要的角色, 它会接受来自用户提供的转换后的模型文件, 同时会调用底层的 EasyEngine 引擎代理, 然后根据用户提供的不同输入, 做出相应的预测结果, 如下图所示.<br><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1g0oqix3d83j20uh0ayaao.jpg" alt=""></p>
+<h2 id="模型运行"><a href="#模型运行" class="headerlink" title="模型运行"></a>模型运行</h2><p>在完成模型转换后(我们会将模型统一转换成指定的格式, 这里我们用 EasyModel 指代这些转换后的模型). 我们就可以根据我们的模型和需要来编写相应的代码完成模型部署工作. 这里我们为用户提供了极简的引擎开发接口和模型开发接口: <strong>ModelBase</strong>. ModelBase 在整个模型执行流程中扮演了一个非常重要的角色, 它会接受来自用户提供的转换后的模型文件, 同时会调用底层的 EasyEngine 引擎代理, 然后根据用户提供的不同输入, 做出相应的预测结果, 如下图所示.<br><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1g0oqix3d83j20uh0ayaao.jpg" alt=""></p>
 <p>上图中的 ModelBase 是所有模型组件的基类, 是模型到引擎的桥梁, 也是整个 EasyInfer 的核心, 它面向算法研发人员封装了引擎操作的细节, 仅暴露极简的接口实现图像数据的输入和输出. 其主要接口(并非所有接口, 这里只介绍最主要的一些接口)有:</p>
 <ul>
 <li><code>LoadModelFromFile</code>: 面向最终用户, 加载 EasyModel 文件, 并提供加密接口(模型文件是由用户提供的, 因为本项目的最终计划是要进行商业部署, 因此, 用户提供的模型必须是经过加密的)</li>
@@ -673,6 +665,8 @@
 <p>cpp 链接or编译错误 调试方法: 学会使用 demangle, ld, ldd, lddtree 等等</p>
 <h2 id="cpp"><a href="#cpp" class="headerlink" title="cpp"></a>cpp</h2><p>g++ -std=c++11 -I/train/results/tensorRT/TensorRT-5.0.2.6/include -L/train/results/tensorRT/TensorRT-5.0.2.6/lib -L/usr/local/cuda/lib64 -L/usr/local/cuda/lib64/stubs main.cpp -lnvinfer_static -lcuda -lcublas -lcudart -lcudnn -lcurand -lnvparsers_static -lprotobuf -o main</p>
 <p>符号表<br>.a: 相当于是一部分, 只要连进来就不会再出去, 会把库中的所有内容都加进来, 链接的时候直接添加.a的文件路径, 无需任何前缀<br>.so: 链接的时候会先链进来到符号表中, 然后根据函数或者变量的使用情况进行剪枝, 如果发现没有使用任何内容, 那么就不会吧.so库中的内容加起来, 链接的时候需要时候 -l 前缀</p>
+<h2 id="TensorRT-没有BN的API"><a href="#TensorRT-没有BN的API" class="headerlink" title="TensorRT 没有BN的API"></a>TensorRT 没有BN的API</h2><p>利用两个 Scale 实现</p>
+<h2 id="TensorRT-的池化层不支持更改-ceil-valid-和-floor-full-模式"><a href="#TensorRT-的池化层不支持更改-ceil-valid-和-floor-full-模式" class="headerlink" title="TensorRT 的池化层不支持更改 ceil(valid) 和 floor(full) 模式"></a>TensorRT 的池化层不支持更改 ceil(valid) 和 floor(full) 模式</h2><p>利用<code>setPoolingOutputDimensionsFormula</code>接口进行全局设置, 如果中途被更改, 则应向用户报错.</p>
 <h2 id="protobuf-内置问题"><a href="#protobuf-内置问题" class="headerlink" title="protobuf 内置问题"></a>protobuf 内置问题</h2><p>需要将封装protobuf到easyinfer中, 但是ncnn本身也要使用protobuf, 因此要先对protobuf进行编译</p>
 <p>直接问题: easyinfer定制版要做到无任何外部依赖, 但是内部继承的ncnn使用了protobuf, 而ei自身也使用了protobuf, 我们在编译自身项目的时候, 会正确的编译子模块的protobuf, 但是在编译子模块ncnn的时候, 他使用的是系统的protobuf, 如果系统没有装protobuf, 那么就会报错. (ncnn作为子模块, 无需任何改动, 可以与官方同步更新, protobuf因为删减了很多东西, 需要重新编写CMakeList, 因此不能同步更新, 事实上,我们也不需要更新protubf, 足够 ncnn 和 easyinfer 的使用需求),</p>
 <p>解决上面的问题的方法之一就是在 CMakeLists.txt 中调用<code>FindNCNN.cmake</code>的时候, 显示的指定其 <code>Module_PATH</code>, 使它指向工程项目的cmake文件夹, 从而可以找到<code>FindNCNN.cmake</code>文件.<br>但是这个问题虽然可以这样解决, 但是又会带来下面的新问题.</p>
@@ -714,8 +708,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/Cpp-编译和链接/" rel="prev" title="C++-编译和链接">
-                <i class="fa fa-chevron-left"></i> C++-编译和链接
+              <a href="/z_post/计算机视觉-BagofFreebies-Arxiv2019/" rel="prev" title="Bag of Freebies (Arxiv, 2019)">
+                <i class="fa fa-chevron-left"></i> Bag of Freebies (Arxiv, 2019)
               </a>
             
           </div>
@@ -724,8 +718,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/PyTorch-SSD/" rel="next" title="SSD 源码实现 (PyTorch)">
-                SSD 源码实现 (PyTorch) <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/计算机视觉-M2Det-AAAI2019/" rel="next" title="M2Det (AAAI, 2019)">
+                M2Det (AAAI, 2019) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -804,7 +798,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">217</span>
+                    <span class="site-state-item-count">235</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -843,7 +837,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -928,7 +924,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">36</span>
+                      
+                    
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -992,7 +990,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一-项目简介"><span class="nav-text">一. 项目简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#源码架构"><span class="nav-text">源码架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型转换"><span class="nav-text">模型转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型执行"><span class="nav-text">模型执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ModelBase-实例"><span class="nav-text">ModelBase 实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#C-接口用法"><span class="nav-text">C++ 接口用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-接口用法"><span class="nav-text">Python 接口用法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二-负责任务"><span class="nav-text">二. 负责任务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-MXNet-模型到-TensorRT-模型的转换"><span class="nav-text">1. MXNet 模型到 TensorRT 模型的转换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-设计能够封装-MXNet-模型文件信息的数据结构"><span class="nav-text">(1). 设计能够封装 MXNet 模型文件信息的数据结构.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-解析-MXNet-模型文件-json-和-params"><span class="nav-text">(2). 解析 MXNet 模型文件(.json 和 .params)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-根据节点的输入输出关系-对网络层节点进行排序"><span class="nav-text">(3). 根据节点的输入输出关系, 对网络层节点进行排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-设计-Mxnet-模型对应的-proto-数据结构-完成对-MxnetNode-和-MxnetParams-的封装"><span class="nav-text">(4). 设计 Mxnet 模型对应的 proto 数据结构, 完成对 MxnetNode 和 MxnetParams 的封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-根据封装好的-protobuf-数据-填充-TensorRT-的-INetworkDefinition-实例对象"><span class="nav-text">(5). 根据封装好的 protobuf 数据, 填充 TensorRT 的 INetworkDefinition 实例对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-将填充好的-INetworkDefinition-返回-完成引擎模型的转换工作"><span class="nav-text">(6). 将填充好的 INetworkDefinition 返回, 完成引擎模型的转换工作.</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-EasyInfer-的-C-接口封装"><span class="nav-text">2. EasyInfer 的 C 接口封装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-添加-OPENVINO-推理引擎底层支持"><span class="nav-text">3. 添加 OPENVINO 推理引擎底层支持</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-模型转换"><span class="nav-text">(1). 模型转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-初始化"><span class="nav-text">(2). 初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-执行计算"><span class="nav-text">(3). 执行计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-获取输出结果"><span class="nav-text">(4). 获取输出结果</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三-遇到的问题"><span class="nav-text">三. 遇到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#experimental-filesystem"><span class="nav-text">experimental/filesystem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CMAKE-相关"><span class="nav-text">CMAKE 相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cpp"><span class="nav-text">cpp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#protobuf-内置问题"><span class="nav-text">protobuf 内置问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定制版-easyinfer-的命名空间问题"><span class="nav-text">定制版 easyinfer 的命名空间问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-text">其他</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一-项目简介"><span class="nav-text">一. 项目简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#源码架构"><span class="nav-text">源码架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型转换"><span class="nav-text">模型转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型运行"><span class="nav-text">模型运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ModelBase-实例"><span class="nav-text">ModelBase 实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#C-接口用法"><span class="nav-text">C++ 接口用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-接口用法"><span class="nav-text">Python 接口用法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二-负责任务"><span class="nav-text">二. 负责任务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-MXNet-模型到-TensorRT-模型的转换"><span class="nav-text">1. MXNet 模型到 TensorRT 模型的转换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-设计能够封装-MXNet-模型文件信息的数据结构"><span class="nav-text">(1). 设计能够封装 MXNet 模型文件信息的数据结构.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-解析-MXNet-模型文件-json-和-params"><span class="nav-text">(2). 解析 MXNet 模型文件(.json 和 .params)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-根据节点的输入输出关系-对网络层节点进行排序"><span class="nav-text">(3). 根据节点的输入输出关系, 对网络层节点进行排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-设计-Mxnet-模型对应的-proto-数据结构-完成对-MxnetNode-和-MxnetParams-的封装"><span class="nav-text">(4). 设计 Mxnet 模型对应的 proto 数据结构, 完成对 MxnetNode 和 MxnetParams 的封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-根据封装好的-protobuf-数据-填充-TensorRT-的-INetworkDefinition-实例对象"><span class="nav-text">(5). 根据封装好的 protobuf 数据, 填充 TensorRT 的 INetworkDefinition 实例对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-将填充好的-INetworkDefinition-返回-完成引擎模型的转换工作"><span class="nav-text">(6). 将填充好的 INetworkDefinition 返回, 完成引擎模型的转换工作.</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-EasyInfer-的-C-接口封装"><span class="nav-text">2. EasyInfer 的 C 接口封装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-添加-OPENVINO-推理引擎底层支持"><span class="nav-text">3. 添加 OPENVINO 推理引擎底层支持</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-模型转换"><span class="nav-text">(1). 模型转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-初始化"><span class="nav-text">(2). 初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-执行计算"><span class="nav-text">(3). 执行计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-获取输出结果"><span class="nav-text">(4). 获取输出结果</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三-遇到的问题"><span class="nav-text">三. 遇到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#experimental-filesystem"><span class="nav-text">experimental/filesystem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CMAKE-相关"><span class="nav-text">CMAKE 相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cpp"><span class="nav-text">cpp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TensorRT-没有BN的API"><span class="nav-text">TensorRT 没有BN的API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TensorRT-的池化层不支持更改-ceil-valid-和-floor-full-模式"><span class="nav-text">TensorRT 的池化层不支持更改 ceil(valid) 和 floor(full) 模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#protobuf-内置问题"><span class="nav-text">protobuf 内置问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定制版-easyinfer-的命名空间问题"><span class="nav-text">定制版 easyinfer 的命名空间问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-text">其他</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1029,7 +1027,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.6m</span>
+    <span title="站点总字数">1.7m</span>
   
 
   
@@ -1038,7 +1036,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">24:21</span>
+    <span title="站点阅读时长">26:18</span>
   
 </div>
 

@@ -112,18 +112,18 @@
 
 
 
-  <meta name="description" content="函数指针函数指针：指向函数地址的指针变量。 在C++编译时，每一个函数都有一个入口地址，该地址是存储函数机器语言代码的内存的开始地址。函数指针主要有两方面的用途：调用函数和用作函数参数。函数指针的声明方法如下所示： 123456789101112double pam(int);double (* pf)(int); //将星号与函数名括起来，表示当前星号修饰的是函数名，而不是类型">
+  <meta name="description" content="两方面用途:  函数调用 作为函数参数进行传递  123const double * (*pf[3])(const double *, int) = &amp;#123;f1, f2, f3&amp;#125;// pf 是一个函数指针数组, 数组中的每一个元素都是一个函数指针,// 指向了形式为 const double * (const double *, int) 的函数 函数指针函数指针：指向函数地址的指">
 <meta name="keywords" content="C++">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++中的函数指针和函数对象">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Cpp-函数指针和函数对象/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="函数指针函数指针：指向函数地址的指针变量。 在C++编译时，每一个函数都有一个入口地址，该地址是存储函数机器语言代码的内存的开始地址。函数指针主要有两方面的用途：调用函数和用作函数参数。函数指针的声明方法如下所示： 123456789101112double pam(int);double (* pf)(int); //将星号与函数名括起来，表示当前星号修饰的是函数名，而不是类型">
+<meta property="og:description" content="两方面用途:  函数调用 作为函数参数进行传递  123const double * (*pf[3])(const double *, int) = &amp;#123;f1, f2, f3&amp;#125;// pf 是一个函数指针数组, 数组中的每一个元素都是一个函数指针,// 指向了形式为 const double * (const double *, int) 的函数 函数指针函数指针：指向函数地址的指">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-26T07:26:54.462Z">
+<meta property="og:updated_time" content="2019-03-17T05:16:55.705Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++中的函数指针和函数对象">
-<meta name="twitter:description" content="函数指针函数指针：指向函数地址的指针变量。 在C++编译时，每一个函数都有一个入口地址，该地址是存储函数机器语言代码的内存的开始地址。函数指针主要有两方面的用途：调用函数和用作函数参数。函数指针的声明方法如下所示： 123456789101112double pam(int);double (* pf)(int); //将星号与函数名括起来，表示当前星号修饰的是函数名，而不是类型">
+<meta name="twitter:description" content="两方面用途:  函数调用 作为函数参数进行传递  123const double * (*pf[3])(const double *, int) = &amp;#123;f1, f2, f3&amp;#125;// pf 是一个函数指针数组, 数组中的每一个元素都是一个函数指针,// 指向了形式为 const double * (const double *, int) 的函数 函数指针函数指针：指向函数地址的指">
 
 
 
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">217</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">235</span></a>
   </li>
         
         
@@ -326,14 +326,6 @@
         
         
           
-          <li class="menu-item menu-item-面试">
-    <a href="/categories/面试/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
-  </li>
-        
-        
-        
-          
           <li class="menu-item menu-item-其他">
     <a href="/categories/其他/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
@@ -344,7 +336,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
   </li>
         
         
@@ -497,8 +489,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-02-26T15:26:54+08:00" content="2019-02-26">
-      		  2019-02-26
+    		<time itemprop="dateUpdated" datetime="2019-03-17T13:16:55+08:00" content="2019-03-17">
+      		  2019-03-17
     		</time>
   	  </span>
 	  
@@ -551,7 +543,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.7k</span>
+                <span title="本文字数">1.9k</span>
               
 
               
@@ -585,15 +577,21 @@
       
 
       
-        <h1 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h1><p>函数指针：指向函数地址的指针变量。 在C++编译时，每一个函数都有一个入口地址，该地址是存储函数机器语言代码的内存的开始地址。函数指针主要有两方面的用途：调用函数和用作函数参数。函数指针的声明方法如下所示：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">pam</span><span class="params">(<span class="keyword">int</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">double</span> (* pf)(<span class="keyword">int</span>); <span class="comment">//将星号与函数名括起来，表示当前星号修饰的是函数名，而不是类型</span></span><br><span class="line">                    <span class="comment">//可以理解为将pam替换成了(*pf)</span></span><br><span class="line"><span class="comment">//通常，要声明指向特定类型的指针，可以首先编写这种函数的原型，然后用(*pf)替换函数名即可</span></span><br><span class="line">pf = pam; <span class="comment">// 函数名pam本身就是函数地址，所以可直接赋值，无需用取址符，但是要求pam的特征标必须与pf相同</span></span><br><span class="line">pf = &amp;pam; <span class="comment">//但实际上，也可以使用取址符，效果与上面 等价（why？）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//以下三种方式都是合法且等价的</span></span><br><span class="line"><span class="keyword">double</span> x = pam(<span class="number">4</span>);</span><br><span class="line"><span class="keyword">double</span> y = (*pf)(<span class="number">5</span>);</span><br><span class="line"><span class="keyword">double</span> z = pf(<span class="number">6</span>);</span><br></pre></td></tr></table></figure>
+        <p>两方面用途:</p>
+<ul>
+<li>函数调用</li>
+<li>作为函数参数进行传递</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const double * (*pf[3])(const double *, int) = &#123;f1, f2, f3&#125;</span><br><span class="line">// pf 是一个函数指针数组, 数组中的每一个元素都是一个函数指针,</span><br><span class="line">// 指向了形式为 const double * (const double *, int) 的函数</span><br></pre></td></tr></table></figure>
+<h1 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h1><p>函数指针：指向函数地址的指针变量。 在C++编译时，每一个函数都有一个入口地址，该地址是存储函数机器语言代码的内存的开始地址。函数指针主要有两方面的用途：调用函数和用作函数参数。函数指针的声明方法如下所示：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">pam</span><span class="params">(<span class="keyword">int</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">double</span> (* pf)(<span class="keyword">int</span>); <span class="comment">//将星号与函数名括起来，表示当前星号修饰的是函数名，而不是类型</span></span><br><span class="line">                    <span class="comment">//可以理解为将pam替换成了(*pf)</span></span><br><span class="line"><span class="comment">//通常，要声明指向特定类型的指针，可以首先编写这种函数的原型，然后用(*pf)替换函数名即可</span></span><br><span class="line">pf = pam; <span class="comment">// 函数名pam本身就是函数地址，所以可直接赋值，无需用取址符，但是要求pam的特征标必须与pf相同</span></span><br><span class="line">pf = &amp;pam; <span class="comment">//但实际上，也可以使用取址符，效果与上面 等价（why？）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//以下三种方式都是合法且等价的</span></span><br><span class="line"><span class="keyword">double</span> x = pam(<span class="number">4</span>);</span><br><span class="line"><span class="keyword">double</span> y = (* pf)(<span class="number">5</span>);</span><br><span class="line"><span class="keyword">double</span> z = pf(<span class="number">6</span>);</span><br></pre></td></tr></table></figure>
 <p>从上面的语句可以看出，C++同时允许使用带星号和不带星号的函数指针，最神奇的是效果居然是等价的（对于给函数指针赋值时，函数名带取址符和不带取址符的效果也是等价的！）！</p>
 <p>导致以上“神奇事情”发生的原因是，在C++指定函数指针标准时，出现了两种不同的声音：一种学派认为，由于<code>pf</code>是函数指针，而<code>*pf</code>是函数，因此应将<code>(*pf)()</code>用作函数调用。另一种学派认为，由于函数名是指向该函数的指针，指向函数的指针的行为应该与函数名相似，因此应将<code>pf()</code>用作函数调用使用。C++进行了折衷——这两种方式都是正确的，虽然看上去它们在逻辑上是相冲突的。</p>
-<p>返回指向函数的指针<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> (*func(<span class="keyword">int</span>))(<span class="keyword">double</span>, <span class="keyword">double</span>);</span><br><span class="line"><span class="comment">// func 具有形参表, 因此它本身是一个参数为 (int) 的函数, 而该函数的返回值则是一个指向 int(double, double) 的函数指针.</span></span><br></pre></td></tr></table></figure></p>
-<p>下面的声明语句指出了一个函数指针数组，其中每个指针都指向这样的函数：将<code>const double*</code>和<code>int</code>作为参数，返回一个<code>const double　*</code><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">double</span>* (*pa[<span class="number">3</span>]) (<span class="keyword">const</span> <span class="keyword">double</span> *, <span class="keyword">int</span> ) = &#123;f1,f2,f3&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>返回指向函数的指针<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> (* func(<span class="keyword">int</span>))(<span class="keyword">double</span>, <span class="keyword">double</span>);</span><br><span class="line"><span class="comment">// func 具有形参表, 因此它本身是一个参数为 (int) 的函数, 而该函数的返回值则是一个指向 int(double, double) 的函数指针.</span></span><br></pre></td></tr></table></figure></p>
+<p>下面的声明语句指出了一个函数指针数组，其中每个指针都指向这样的函数：将<code>const double*</code>和<code>int</code>作为参数，返回一个<code>const double　*</code><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">double</span>* (* pa[<span class="number">3</span>]) (<span class="keyword">const</span> <span class="keyword">double</span> * , <span class="keyword">int</span> ) = &#123;f1,f2,f3&#125;;</span><br></pre></td></tr></table></figure></p>
 <p>这里不能使用<code>auto</code>，因为<code>auto</code>只能用于单值初始化，而不能用于初始化列表，但声明数组<code>pa</code>后，可以使用<code>auto</code>：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> pb = pa; <span class="comment">//</span></span><br></pre></td></tr></table></figure></p>
-<p>pa和pb都是指向函数指针的指针(数组首地址)，使用时可以用下标法，也可以当做指针使用：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> *px = pa[<span class="number">0</span>](av,<span class="number">3</span>);</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> *py = (*pa[<span class="number">0</span>])(av,<span class="number">3</span>);  <span class="comment">//如果带星号，则不能少括号</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//要获得值，可使用运算符</span></span><br><span class="line"><span class="keyword">double</span> x = *pa[<span class="number">0</span>](av,<span class="number">3</span>); <span class="comment">//少了括号以后，会取得返回值地址指向的值</span></span><br><span class="line"><span class="keyword">double</span> y = *(*pb[<span class="number">1</span>])(av,<span class="number">3</span>);</span><br></pre></td></tr></table></figure></p>
-<p>如果继续声明了指向函数指针整个数组的指针，则使用方法又有些不同，见下面：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">auto</span> pc = &amp;pa;  <span class="comment">//pc指向pa的地址</span></span><br><span class="line"></span><br><span class="line">*pd[<span class="number">3</span>];   <span class="comment">// 相当于 pa[3],代表一个包含三个指针的指针数组</span></span><br><span class="line">(*pd)[<span class="number">3</span>];  <span class="comment">// 代表pc是一个函数指针，指向含3个元素的指针数组</span></span><br></pre></td></tr></table></figure></p>
+<p>pa和pb都是指向函数指针的指针(数组首地址)，使用时可以用下标法，也可以当做指针使用：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> *px = pa[<span class="number">0</span>](av,<span class="number">3</span>);</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> *py = (* pa[<span class="number">0</span>])(av,<span class="number">3</span>);  <span class="comment">//如果带星号，则不能少括号</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//要获得值，可使用运算符</span></span><br><span class="line"><span class="keyword">double</span> x = *pa[<span class="number">0</span>](av,<span class="number">3</span>); <span class="comment">//少了括号以后，会取得返回值地址指向的值</span></span><br><span class="line"><span class="keyword">double</span> y = *(* pb[<span class="number">1</span>])(av,<span class="number">3</span>);</span><br></pre></td></tr></table></figure></p>
+<p>如果继续声明了指向函数指针整个数组的指针，则使用方法又有些不同，见下面：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">auto</span> pc = &amp;pa;  <span class="comment">//pc指向pa的地址</span></span><br><span class="line"></span><br><span class="line">*pd[<span class="number">3</span>];   <span class="comment">// 相当于 pa[3],代表一个包含三个指针的指针数组</span></span><br><span class="line">(* pd)[<span class="number">3</span>];  <span class="comment">// 代表pc是一个函数指针，指向含3个元素的指针数组</span></span><br></pre></td></tr></table></figure></p>
 <h1 id="函数对象"><a href="#函数对象" class="headerlink" title="函数对象"></a>函数对象</h1><p>函数对象的实质是对运算符<code>()</code>的重载, 函数对象也叫做仿函数。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;<span class="keyword">return</span> x;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">A a;</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; a(<span class="number">5</span>) <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
 <h2 id="函数对象与函数指针的比较"><a href="#函数对象与函数指针的比较" class="headerlink" title="函数对象与函数指针的比较"></a>函数对象与函数指针的比较</h2><p>函数对象的优势在于，可以把附加对象保存在函数对象中，也可以存储一些其他的额外信息，甚至可以用来封装类成员函数指针。</p>
@@ -631,8 +629,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/面试-Book-百面机器学习/" rel="prev" title="《百面机器学习》">
-                <i class="fa fa-chevron-left"></i> 《百面机器学习》
+              <a href="/z_post/机器学习-逻辑回归/" rel="prev" title="逻辑回归与线性回归">
+                <i class="fa fa-chevron-left"></i> 逻辑回归与线性回归
               </a>
             
           </div>
@@ -721,7 +719,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">217</span>
+                    <span class="site-state-item-count">235</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -760,7 +758,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -845,7 +845,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">36</span>
+                      
+                    
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -946,7 +948,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.6m</span>
+    <span title="站点总字数">1.7m</span>
   
 
   
@@ -955,7 +957,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">24:21</span>
+    <span title="站点阅读时长">26:18</span>
   
 </div>
 

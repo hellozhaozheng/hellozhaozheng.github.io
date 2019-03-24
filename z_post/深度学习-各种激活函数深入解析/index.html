@@ -128,7 +128,7 @@
 <meta property="og:image" content="https://wx3.sinaimg.cn/mw1024/d7b90c85ly1fvogum8mbfj20qw0gagn1.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/mw1024/d7b90c85ly1fvogum93q2j20pt0hfmyl.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/mw1024/d7b90c85ly1fvp2xuesrjj208706v0st.jpg">
-<meta property="og:updated_time" content="2019-03-05T01:29:21.359Z">
+<meta property="og:updated_time" content="2019-03-13T06:43:07.046Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="各种激活函数整理总结">
 <meta name="twitter:description" content="常用激活函数及其导数    激活函数 形式 导数形式     Sigmoid $f(x) =\frac{1}{1+e^{-x}}$ $f’(x) = f(x)(1-f(x))$   Tanh $f(x) = tanh(x)= \frac{e^x-e^{-x}}{e^x+e^{-x}}$ $f’(x) = 1-(f(z))^2$   ReLU $f(x)=max(0,x)=\begin{cases}">
@@ -257,7 +257,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">217</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">235</span></a>
   </li>
         
         
@@ -335,14 +335,6 @@
         
         
           
-          <li class="menu-item menu-item-面试">
-    <a href="/categories/面试/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
-  </li>
-        
-        
-        
-          
           <li class="menu-item menu-item-其他">
     <a href="/categories/其他/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
@@ -353,7 +345,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
   </li>
         
         
@@ -506,8 +498,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-05T09:29:21+08:00" content="2019-03-05">
-      		  2019-03-05
+    		<time itemprop="dateUpdated" datetime="2019-03-13T14:43:07+08:00" content="2019-03-13">
+      		  2019-03-13
     		</time>
   	  </span>
 	  
@@ -560,7 +552,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">5.9k</span>
+                <span title="本文字数">6.2k</span>
               
 
               
@@ -574,7 +566,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">5 分钟</span>
+                <span title="阅读时长">6 分钟</span>
               
             </div>
           
@@ -809,15 +801,23 @@
 </tbody>
 </table>
 </div>
-<h1 id="其他要点"><a href="#其他要点" class="headerlink" title="其他要点"></a>其他要点</h1><h2 id="sigmoid-和softmax区别"><a href="#sigmoid-和softmax区别" class="headerlink" title="sigmoid 和softmax区别"></a>sigmoid 和softmax区别</h2><p>sigmoid是将一个正负无穷区间的值映射到(0,1)区间, 通常用作二分类问题,而softmax把一个k维的实值向量映射成一个$(b_1,b_2,…,b_k)$ ,其中$b_i$为一个0~1的常数, 且它们的和为1, 可以看作是属于每一类的概览,通常用作多分类问题. 在二分类问题中, sigmoid和softmax是差不多的, 都是求交叉熵损失函数, softmax可以看作是sigmoid的扩展, 当类别k为2时, 根据softmax回归参数冗余的特点, 可以将softmax函数推导成sigmoid函数</p>
+<h1 id="sigmoid-和softmax区别"><a href="#sigmoid-和softmax区别" class="headerlink" title="sigmoid 和softmax区别"></a>sigmoid 和softmax区别</h1><p>sigmoid是将一个正负无穷区间的值映射到(0,1)区间, 通常用作二分类问题,而softmax把一个k维的实值向量映射成一个$(b_1,b_2,…,b_k)$ ,其中$b_i$为一个0~1的常数, 且它们的和为1, 可以看作是属于每一类的概览,通常用作多分类问题. 在二分类问题中, sigmoid和softmax是差不多的, 都是求交叉熵损失函数, softmax可以看作是sigmoid的扩展, 当类别k为2时, 根据softmax回归参数冗余的特点, 可以将softmax函数推导成sigmoid函数</p>
 <p><a href="https://www.jianshu.com/p/22d9720dbf1a" target="_blank" rel="noopener">https://www.jianshu.com/p/22d9720dbf1a</a></p>
-<h2 id="其他更多激活函数"><a href="#其他更多激活函数" class="headerlink" title="其他更多激活函数"></a>其他更多激活函数</h2><p><a href="https://www.jiqizhixin.com/articles/2017-10-10-3" target="_blank" rel="noopener">https://www.jiqizhixin.com/articles/2017-10-10-3</a></p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
-<li>优先使用ReLU, 同时要谨慎设置初值和学习率 ( 实际操作中，如果你的learning rate 很大，那么很有可能你网络中的40%的神经元都”dead”了。 当然，如果你设置了一个合适的较小的learning rate，这个问题发生的情况其实也不会太频繁 )</li>
+<h1 id="什么情况下-ReLU-的神经元会死亡-为什么-如何解决"><a href="#什么情况下-ReLU-的神经元会死亡-为什么-如何解决" class="headerlink" title="什么情况下 ReLU 的神经元会死亡? 为什么? 如何解决?"></a>什么情况下 ReLU 的神经元会死亡? 为什么? 如何解决?</h1><p>谈谈由异常输入导致的 ReLU 神经元死亡的问题: <a href="https://liam.page/2018/11/30/vanishing-gradient-of-ReLU-due-to-unusual-input/" target="_blank" rel="noopener">https://liam.page/2018/11/30/vanishing-gradient-of-ReLU-due-to-unusual-input/</a></p>
+<p>深度学习中，使用relu存在梯度过大导致神经元“死亡”，怎么理解？: <a href="https://www.zhihu.com/question/67151971" target="_blank" rel="noopener">https://www.zhihu.com/question/67151971</a></p>
+<p>解决方法:</p>
+<ol>
+<li>把 ReLU 换成 LReLU 或者 PReLU，保证让激活函数在输入小于零的情况下也有非零的输出。</li>
+<li>采用较小的学习率</li>
+<li>采用 momentum based 优化算法，动态调整学习率</li>
+</ol>
+<h1 id="激活函数的使用原则"><a href="#激活函数的使用原则" class="headerlink" title="激活函数的使用原则"></a>激活函数的使用原则</h1><ol>
+<li>优先使用ReLU, 同时要谨慎设置初值和学习率 ( 实际操作中，如果你的learning rate 很大，那么很有可能你网络中的40%的神经元都 “dead” 了。 当然，如果你设置了一个合适的较小的learning rate，这个问题发生的情况其实也不会太频繁 )</li>
 <li>尝试使用LeakyReLU/PReLU/Maxout/ELU等激活函数</li>
 <li>可以试下tanh, 但是一般不会有太好的结果</li>
 <li><strong>不要使用sigmoid</strong></li>
 </ol>
+<h1 id="其他更多激活函数"><a href="#其他更多激活函数" class="headerlink" title="其他更多激活函数"></a>其他更多激活函数</h1><p><a href="https://www.jiqizhixin.com/articles/2017-10-10-3" target="_blank" rel="noopener">https://www.jiqizhixin.com/articles/2017-10-10-3</a></p>
 
       
     </div>
@@ -943,7 +943,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">217</span>
+                    <span class="site-state-item-count">235</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -982,7 +982,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1067,7 +1069,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">36</span>
+                      
+                    
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1131,7 +1135,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#常用激活函数及其导数"><span class="nav-text">常用激活函数及其导数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用激活函数及其导数的图像"><span class="nav-text">常用激活函数及其导数的图像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么需要激活函数"><span class="nav-text">为什么需要激活函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标准说法"><span class="nav-text">标准说法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更形象的解释"><span class="nav-text">更形象的解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用ReLU解决XOR问题"><span class="nav-text">用ReLU解决XOR问题.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于各个激活函数的比较和适用场景"><span class="nav-text">关于各个激活函数的比较和适用场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他要点"><span class="nav-text">其他要点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sigmoid-和softmax区别"><span class="nav-text">sigmoid 和softmax区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他更多激活函数"><span class="nav-text">其他更多激活函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#常用激活函数及其导数"><span class="nav-text">常用激活函数及其导数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用激活函数及其导数的图像"><span class="nav-text">常用激活函数及其导数的图像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么需要激活函数"><span class="nav-text">为什么需要激活函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标准说法"><span class="nav-text">标准说法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更形象的解释"><span class="nav-text">更形象的解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用ReLU解决XOR问题"><span class="nav-text">用ReLU解决XOR问题.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于各个激活函数的比较和适用场景"><span class="nav-text">关于各个激活函数的比较和适用场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sigmoid-和softmax区别"><span class="nav-text">sigmoid 和softmax区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么情况下-ReLU-的神经元会死亡-为什么-如何解决"><span class="nav-text">什么情况下 ReLU 的神经元会死亡? 为什么? 如何解决?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#激活函数的使用原则"><span class="nav-text">激活函数的使用原则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他更多激活函数"><span class="nav-text">其他更多激活函数</span></a></li></ol></div>
             
 
           </div>
@@ -1168,7 +1172,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.6m</span>
+    <span title="站点总字数">1.7m</span>
   
 
   
@@ -1177,7 +1181,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">24:21</span>
+    <span title="站点阅读时长">26:18</span>
   
 </div>
 

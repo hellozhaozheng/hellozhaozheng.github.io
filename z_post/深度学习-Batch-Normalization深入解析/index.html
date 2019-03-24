@@ -123,7 +123,7 @@
 <meta property="og:image" content="https://morvanzhou.github.io/static/results/ML-intro/NB2.png">
 <meta property="og:image" content="https://morvanzhou.github.io/static/results/ML-intro/NB5.png">
 <meta property="og:image" content="https://morvanzhou.github.io/static/results/ML-intro/NB6.png">
-<meta property="og:updated_time" content="2019-03-05T01:28:18.603Z">
+<meta property="og:updated_time" content="2019-03-21T02:18:59.650Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Batch-Normalization深入解析">
 <meta name="twitter:description" content="BN:总的来说，BN通过将每一层网络的输入进行normalization，保证输入分布的均值与方差固定在一定范围内，减少了网络中的Internal Covariate Shift问题，并在一定程度上缓解了梯度消失，加速了模型收敛；并且BN使得网络对参数、激活函数更加具有鲁棒性，降低了神经网络模型训练和调参的复杂度；最后BN训练过程中由于使用mini-batch的mean/variance每次都不同">
@@ -252,7 +252,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">217</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">235</span></a>
   </li>
         
         
@@ -330,14 +330,6 @@
         
         
           
-          <li class="menu-item menu-item-面试">
-    <a href="/categories/面试/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
-  </li>
-        
-        
-        
-          
           <li class="menu-item menu-item-其他">
     <a href="/categories/其他/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
@@ -348,7 +340,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
   </li>
         
         
@@ -501,8 +493,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-05T09:28:18+08:00" content="2019-03-05">
-      		  2019-03-05
+    		<time itemprop="dateUpdated" datetime="2019-03-21T10:18:59+08:00" content="2019-03-21">
+      		  2019-03-21
     		</time>
   	  </span>
 	  
@@ -555,7 +547,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">4k</span>
+                <span title="本文字数">4.5k</span>
               
 
               
@@ -655,6 +647,11 @@
 <li>隐藏层中BN的数据大小</li>
 </ol>
 <p><del>在卷积网络隐藏层中, BN的大小不单单是batch, 而是batch和特征相应图大小的乘积. 也就是说, 在隐藏层, 层的输入是上一层的输出, 也就是上一层的神经元个数, 而对于上一层来说, 如果输出的特征相应图大小为 $w\times h$ , 那么上一层的神经元个数就应该是 $b\times w \times h$, 其中,b是指batch的大小</del></p>
+<ol>
+<li>BN 必须使用较大的 batch size 才能使用<br>BN在多项任务中都起到了很好的实验效果, 但是BN的有效性必须建立在足够大的batch size之上(如32/GPU). 当batch size 比较小时, BN往往无法取得好的效果, 并且还会提升模型的误差.</li>
+</ol>
+<h1 id="BN-的-multi-GPU-sync-问题"><a href="#BN-的-multi-GPU-sync-问题" class="headerlink" title="BN 的 multi-GPU sync 问题"></a>BN 的 multi-GPU sync 问题</h1><p>目前大部分的框架, 包括 Caffe, PyTorch, TF 等, 对于 BatchNorm 的实现都只考虑了 single GPU, <strong>也就是说 BN 使用的均值和标准差是单个 GPU 计算的, 这相当于缩小了 mini-batch size</strong>. 至于为什么这样实现: (1) 因为没有 sync 的需求, 因为对于大多数 vision 问题, 单 GPU 上的 mini-batch 已经够大了, 完全不会影响结果. (2) 影响训练速度, BN layer 通常是在网络结构里面广泛使用的, 这样每次都同步一下 GPUs, 十分影响训练速度.</p>
+<p>bn总结: <a href="https://www.cnblogs.com/makefile/p/batch-norm.html" target="_blank" rel="noopener">https://www.cnblogs.com/makefile/p/batch-norm.html</a></p>
 
       
     </div>
@@ -778,7 +775,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">217</span>
+                    <span class="site-state-item-count">235</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -817,7 +814,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -902,7 +901,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">36</span>
+                      
+                    
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -966,7 +967,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Normalization"><span class="nav-text">Normalization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要进行Normalization"><span class="nav-text">为什么要进行Normalization?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN的提出背景"><span class="nav-text">BN的提出背景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Internal-Covariate-Shift"><span class="nav-text">Internal Covariate Shift</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是Batch-Normalization"><span class="nav-text">什么是Batch Normalization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN的优点"><span class="nav-text">BN的优点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN的具体实现及其反向传播"><span class="nav-text">BN的具体实现及其反向传播</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-BN-时的前一层卷积网络可以不加偏置项-降低模型参数量"><span class="nav-text">使用 BN 时的前一层卷积网络可以不加偏置项(降低模型参数量)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用BN时应注意的问题"><span class="nav-text">使用BN时应注意的问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Normalization"><span class="nav-text">Normalization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要进行Normalization"><span class="nav-text">为什么要进行Normalization?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN的提出背景"><span class="nav-text">BN的提出背景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Internal-Covariate-Shift"><span class="nav-text">Internal Covariate Shift</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是Batch-Normalization"><span class="nav-text">什么是Batch Normalization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN的优点"><span class="nav-text">BN的优点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN的具体实现及其反向传播"><span class="nav-text">BN的具体实现及其反向传播</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-BN-时的前一层卷积网络可以不加偏置项-降低模型参数量"><span class="nav-text">使用 BN 时的前一层卷积网络可以不加偏置项(降低模型参数量)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用BN时应注意的问题"><span class="nav-text">使用BN时应注意的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN-的-multi-GPU-sync-问题"><span class="nav-text">BN 的 multi-GPU sync 问题</span></a></li></ol></div>
             
 
           </div>
@@ -1003,7 +1004,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.6m</span>
+    <span title="站点总字数">1.7m</span>
   
 
   
@@ -1012,7 +1013,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">24:21</span>
+    <span title="站点阅读时长">26:18</span>
   
 </div>
 

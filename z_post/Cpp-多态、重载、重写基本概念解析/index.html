@@ -112,18 +112,18 @@
 
 
 
-  <meta name="description" content="面向对象的三个基本特征封装继承多态实现多态具有两种方法：重载overload（利用参数列表）和覆盖override（利用virtual关键字） C++中的override关键字从C++11起，引入了新的关键字override，主要用于紧随成员函数声明或定义内成员函数的声明器之后使用。 在成员函数声明或定义中，override确保该函数为虚并覆写（overrride）来自基类的虚函数。overrid">
+  <meta name="description" content="面向对象的三个基本特征 封装 继承 多态  简单介绍一下 C++ 的继承机制要注意区分访问权限机制与继承方式机制的区别, 访问机制如下:public: 可以从类内部, 类外部和派生类中直接访问protected: 可以从类内部和派生类中进行访问private: 只能在类的内部进行访问, 注意派生类也不能访问基类的私有成员 继承方式的不同会影响派生类中成员的新的访问权限, 具体影响如下:  公有继承">
 <meta name="keywords" content="C++">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++中的封装、继承、多态、重载、重写基本概念解析">
+<meta property="og:title" content="C++ 中的多态、重载、重写基本概念解析">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Cpp-多态、重载、重写基本概念解析/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="面向对象的三个基本特征封装继承多态实现多态具有两种方法：重载overload（利用参数列表）和覆盖override（利用virtual关键字） C++中的override关键字从C++11起，引入了新的关键字override，主要用于紧随成员函数声明或定义内成员函数的声明器之后使用。 在成员函数声明或定义中，override确保该函数为虚并覆写（overrride）来自基类的虚函数。overrid">
+<meta property="og:description" content="面向对象的三个基本特征 封装 继承 多态  简单介绍一下 C++ 的继承机制要注意区分访问权限机制与继承方式机制的区别, 访问机制如下:public: 可以从类内部, 类外部和派生类中直接访问protected: 可以从类内部和派生类中进行访问private: 只能在类的内部进行访问, 注意派生类也不能访问基类的私有成员 继承方式的不同会影响派生类中成员的新的访问权限, 具体影响如下:  公有继承">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-25T11:29:11.348Z">
+<meta property="og:updated_time" content="2019-03-20T06:26:42.449Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="C++中的封装、继承、多态、重载、重写基本概念解析">
-<meta name="twitter:description" content="面向对象的三个基本特征封装继承多态实现多态具有两种方法：重载overload（利用参数列表）和覆盖override（利用virtual关键字） C++中的override关键字从C++11起，引入了新的关键字override，主要用于紧随成员函数声明或定义内成员函数的声明器之后使用。 在成员函数声明或定义中，override确保该函数为虚并覆写（overrride）来自基类的虚函数。overrid">
+<meta name="twitter:title" content="C++ 中的多态、重载、重写基本概念解析">
+<meta name="twitter:description" content="面向对象的三个基本特征 封装 继承 多态  简单介绍一下 C++ 的继承机制要注意区分访问权限机制与继承方式机制的区别, 访问机制如下:public: 可以从类内部, 类外部和派生类中直接访问protected: 可以从类内部和派生类中进行访问private: 只能在类的内部进行访问, 注意派生类也不能访问基类的私有成员 继承方式的不同会影响派生类中成员的新的访问权限, 具体影响如下:  公有继承">
 
 
 
@@ -140,7 +140,7 @@
   };
 </script>
 
-  <title>C++中的封装、继承、多态、重载、重写基本概念解析 | 从零开始的BLOG</title>
+  <title>C++ 中的多态、重载、重写基本概念解析 | 从零开始的BLOG</title>
   
 
 
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">217</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">235</span></a>
   </li>
         
         
@@ -326,14 +326,6 @@
         
         
           
-          <li class="menu-item menu-item-面试">
-    <a href="/categories/面试/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
-  </li>
-        
-        
-        
-          
           <li class="menu-item menu-item-其他">
     <a href="/categories/其他/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
@@ -344,7 +336,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
   </li>
         
         
@@ -462,7 +454,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">C++中的封装、继承、多态、重载、重写基本概念解析
+          <h1 class="post-title" itemprop="name headline">C++ 中的多态、重载、重写基本概念解析
               
             
           </h1>
@@ -497,8 +489,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-02-25T19:29:11+08:00" content="2019-02-25">
-      		  2019-02-25
+    		<time itemprop="dateUpdated" datetime="2019-03-20T14:26:42+08:00" content="2019-03-20">
+      		  2019-03-20
     		</time>
   	  </span>
 	  
@@ -551,7 +543,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.1k</span>
+                <span title="本文字数">723</span>
               
 
               
@@ -585,15 +577,26 @@
       
 
       
-        <h1 id="面向对象的三个基本特征"><a href="#面向对象的三个基本特征" class="headerlink" title="面向对象的三个基本特征"></a>面向对象的三个基本特征</h1><h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><p>实现多态具有两种方法：重载overload（利用参数列表）和覆盖override（利用virtual关键字）</p>
-<h3 id="C-中的override关键字"><a href="#C-中的override关键字" class="headerlink" title="C++中的override关键字"></a>C++中的override关键字</h3><p>从C++11起，引入了新的关键字<code>override</code>，主要用于紧随成员函数声明或定义内成员函数的声明器之后使用。</p>
-<p>在成员函数声明或定义中，override确保该函数为虚并覆写（overrride）来自基类的虚函数。<code>override</code>是在成员函数声明器后使用时才拥有特殊含义的标识符，其他情况下不是保留的关键字。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">bar</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">B</span> :</span> A</span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span> <span class="keyword">const</span> override</span>; <span class="comment">// 错误： B::foo 不覆写 A::foo（签名不匹配）</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span> override</span>; <span class="comment">// OK ： B::foo 覆写 A::foo</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">bar</span><span class="params">()</span> override</span>; <span class="comment">// 错误： A::bar 非虚</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h3 id="C-中的final关键字"><a href="#C-中的final关键字" class="headerlink" title="C++中的final关键字"></a>C++中的final关键字</h3><p>指定派生类不能覆写虚函数，或类不能被继承。</p>
-<p>在虚函数声明或定义中使用时，final确保函数为虚且不可被派生类覆写，否则程序生成编译时错误。</p>
-<p>在类定义中使用时，final指定此类不可出现于另一类的定义的 base-specifier-list 中（换言之，不能从它派生出其他类），否则程序生成编译时错误。</p>
-<p>final是在用于成员函数声明或类头部时有特殊含义的标识符，其他语境中它非保留关键字，可用于命名对象或函数。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Base</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span> :</span> Base</span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span> final</span>; <span class="comment">// A::foo 被覆写且是最终覆写</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">bar</span><span class="params">()</span> final</span>; <span class="comment">// 错误：非虚函数不能被覆写或是 final</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">B</span> <span class="title">final</span> :</span> A <span class="comment">// struct B 为 final</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span> override</span>; <span class="comment">// 错误： foo 不能被覆写，因为它在 A 中是 final</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">C</span> :</span> B <span class="comment">// 错误： B 为 final</span></span><br><span class="line">&#123;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+        <h1 id="面向对象的三个基本特征"><a href="#面向对象的三个基本特征" class="headerlink" title="面向对象的三个基本特征"></a>面向对象的三个基本特征</h1><ul>
+<li>封装</li>
+<li>继承</li>
+<li>多态</li>
+</ul>
+<h1 id="简单介绍一下-C-的继承机制"><a href="#简单介绍一下-C-的继承机制" class="headerlink" title="简单介绍一下 C++ 的继承机制"></a>简单介绍一下 C++ 的继承机制</h1><p><strong>要注意区分访问权限机制与继承方式机制的区别, 访问机制如下:</strong><br>public: 可以从类内部, 类外部和派生类中直接访问<br>protected: 可以从类内部和派生类中进行访问<br>private: 只能在类的内部进行访问, 注意派生类也不能访问基类的私有成员</p>
+<p><strong>继承方式的不同会影响派生类中成员的新的访问权限, 具体影响如下:</strong></p>
+<ul>
+<li>公有继承: 基类中的访问权限维持不变. 无法访问父类的私有成员.</li>
+<li>保护继承: 会将父类中的公有成员的访问权限变成私有, 其余维持不变. 无法访问父类的私有成员.</li>
+<li>私有继承: 会将父类中的公有和保护成员的访问权限变成私有, 无法访问父类的私有成员.</li>
+<li>虚拟继承: 虚拟继承时多重继承中特有的概念, 虚拟基类是为了解决多重继承而出现的, 如类 D 继承自类 B 和 类 C, 而类 B 和类 C 都继承自类 A, 此时类 D 中会继承两次 A. 为了节省空间, 可以将 B, C 对 A 的继承定义为虚拟继承, 而 A 成了虚拟基类, 此时只需要继承一次.</li>
+</ul>
+<p>friend 可以突破 private 访问权限的限制</p>
+<h1 id="简单介绍一下-C-的多态性"><a href="#简单介绍一下-C-的多态性" class="headerlink" title="简单介绍一下 C++ 的多态性"></a>简单介绍一下 C++ 的多态性</h1><p>多态性是指相同对象收到不同消息或不同对象收到相同消息时产生不同的行为. C++ 支持两种多态性, 分别是编译时多态性和运行时多态性:</p>
+<ul>
+<li>编译时多态性: 通过重载, 模板等实现.</li>
+<li>运行时多态: 通过虚函数的继承实现. 通过声明基类的指针或者引用, 利用该指针或引用指向任意一个子类对象, 调用相应的虚函数, 可以根据指向子类的不同而实现不同的方法.</li>
+</ul>
+<p>关于虚函数的多态实现可看 <a href="../Cpp-virutal关键字">C++ 中的 virutal 关键字</a></p>
 
       
     </div>
@@ -717,7 +720,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">217</span>
+                    <span class="site-state-item-count">235</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -756,7 +759,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -841,7 +846,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">36</span>
+                      
+                    
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -905,7 +912,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#面向对象的三个基本特征"><span class="nav-text">面向对象的三个基本特征</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#封装"><span class="nav-text">封装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继承"><span class="nav-text">继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多态"><span class="nav-text">多态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#C-中的override关键字"><span class="nav-text">C++中的override关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-中的final关键字"><span class="nav-text">C++中的final关键字</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#面向对象的三个基本特征"><span class="nav-text">面向对象的三个基本特征</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简单介绍一下-C-的继承机制"><span class="nav-text">简单介绍一下 C++ 的继承机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简单介绍一下-C-的多态性"><span class="nav-text">简单介绍一下 C++ 的多态性</span></a></li></ol></div>
             
 
           </div>
@@ -942,7 +949,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.6m</span>
+    <span title="站点总字数">1.7m</span>
   
 
   
@@ -951,7 +958,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">24:21</span>
+    <span title="站点阅读时长">26:18</span>
   
 </div>
 

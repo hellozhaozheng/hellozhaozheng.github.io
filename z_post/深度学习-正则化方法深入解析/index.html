@@ -112,21 +112,22 @@
 
 
 
-  <meta name="description" content="为了解决过拟合问题，通常有两种办法，第一是减少样本的特征（即维度），第二就是我们这里要说的”正则化”. 下面是一些可以帮助缓解过拟合现象的正则化技巧 使用正则项(Regularization)L1 RegularizationL1范数为: \|w\|_1 = |w_1| + |w_2| + ... + |w_n|L1正则项如下所示, 其中 $L_0$ 代表原始的不加正则项的损失函数, $L$ 代表">
+  <meta name="description" content="L1 正则L1范数为: \|w\|_1 = |w_1| + |w_2| + ... + |w_n|L1正则项如下所示, 其中 $L_0$ 代表原始的不加正则项的损失函数, $L$ 代表加了正则项以后的损失函数, $m$ 则代表训练batch的样本大小 : L = L_0 + \lambda\|w\|_1 = L_0 + \lambda \sum_{w}|w|将上式对参数 $w$ 求导如下(由于正则">
 <meta name="keywords" content="知识点梳理,深度学习">
 <meta property="og:type" content="article">
-<meta property="og:title" content="正则化技巧总结">
+<meta property="og:title" content="正则化方法深入解析">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/深度学习-正则化方法深入解析/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="为了解决过拟合问题，通常有两种办法，第一是减少样本的特征（即维度），第二就是我们这里要说的”正则化”. 下面是一些可以帮助缓解过拟合现象的正则化技巧 使用正则项(Regularization)L1 RegularizationL1范数为: \|w\|_1 = |w_1| + |w_2| + ... + |w_n|L1正则项如下所示, 其中 $L_0$ 代表原始的不加正则项的损失函数, $L$ 代表">
+<meta property="og:description" content="L1 正则L1范数为: \|w\|_1 = |w_1| + |w_2| + ... + |w_n|L1正则项如下所示, 其中 $L_0$ 代表原始的不加正则项的损失函数, $L$ 代表加了正则项以后的损失函数, $m$ 则代表训练batch的样本大小 : L = L_0 + \lambda\|w\|_1 = L_0 + \lambda \sum_{w}|w|将上式对参数 $w$ 求导如下(由于正则">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1g12m2q505xj20dc0dcmyk.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fvxnikras2j20em0byjsh.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvu4qp7cdwj2067060jri.jpg">
-<meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvxnikras2j20em0byjsh.jpg">
-<meta property="og:updated_time" content="2019-03-05T01:29:33.478Z">
+<meta property="og:updated_time" content="2019-03-15T08:15:11.459Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="正则化技巧总结">
-<meta name="twitter:description" content="为了解决过拟合问题，通常有两种办法，第一是减少样本的特征（即维度），第二就是我们这里要说的”正则化”. 下面是一些可以帮助缓解过拟合现象的正则化技巧 使用正则项(Regularization)L1 RegularizationL1范数为: \|w\|_1 = |w_1| + |w_2| + ... + |w_n|L1正则项如下所示, 其中 $L_0$ 代表原始的不加正则项的损失函数, $L$ 代表">
-<meta name="twitter:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvu4qp7cdwj2067060jri.jpg">
+<meta name="twitter:title" content="正则化方法深入解析">
+<meta name="twitter:description" content="L1 正则L1范数为: \|w\|_1 = |w_1| + |w_2| + ... + |w_n|L1正则项如下所示, 其中 $L_0$ 代表原始的不加正则项的损失函数, $L$ 代表加了正则项以后的损失函数, $m$ 则代表训练batch的样本大小 : L = L_0 + \lambda\|w\|_1 = L_0 + \lambda \sum_{w}|w|将上式对参数 $w$ 求导如下(由于正则">
+<meta name="twitter:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1g12m2q505xj20dc0dcmyk.jpg">
 
 
 
@@ -143,7 +144,7 @@
   };
 </script>
 
-  <title>正则化技巧总结 | 从零开始的BLOG</title>
+  <title>正则化方法深入解析 | 从零开始的BLOG</title>
   
 
 
@@ -251,7 +252,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">217</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">235</span></a>
   </li>
         
         
@@ -329,14 +330,6 @@
         
         
           
-          <li class="menu-item menu-item-面试">
-    <a href="/categories/面试/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
-  </li>
-        
-        
-        
-          
           <li class="menu-item menu-item-其他">
     <a href="/categories/其他/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
@@ -347,7 +340,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
   </li>
         
         
@@ -465,7 +458,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">正则化技巧总结
+          <h1 class="post-title" itemprop="name headline">正则化方法深入解析
               
             
           </h1>
@@ -500,8 +493,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-05T09:29:33+08:00" content="2019-03-05">
-      		  2019-03-05
+    		<time itemprop="dateUpdated" datetime="2019-03-15T16:15:11+08:00" content="2019-03-15">
+      		  2019-03-15
     		</time>
   	  </span>
 	  
@@ -554,7 +547,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">4k</span>
+                <span title="本文字数">3.6k</span>
               
 
               
@@ -568,7 +561,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">4 分钟</span>
+                <span title="阅读时长">3 分钟</span>
               
             </div>
           
@@ -588,52 +581,52 @@
       
 
       
-        <p>为了解决过拟合问题，通常有两种办法，第一是减少样本的特征（即维度），第二就是我们这里要说的”正则化”.</p>
-<p>下面是一些可以帮助缓解过拟合现象的正则化技巧</p>
-<h1 id="使用正则项-Regularization"><a href="#使用正则项-Regularization" class="headerlink" title="使用正则项(Regularization)"></a>使用正则项(Regularization)</h1><h2 id="L1-Regularization"><a href="#L1-Regularization" class="headerlink" title="L1 Regularization"></a>L1 Regularization</h2><p>L1范数为:</p>
+        <h1 id="L1-正则"><a href="#L1-正则" class="headerlink" title="L1 正则"></a>L1 正则</h1><p>L1范数为:</p>
 <script type="math/tex; mode=display">\|w\|_1 = |w_1| + |w_2| + ... + |w_n|</script><p>L1正则项如下所示, 其中 $L_0$ 代表原始的不加正则项的损失函数, $L$ 代表加了正则项以后的损失函数, <del>$m$ 则代表训练batch的样本大小</del> :</p>
 <script type="math/tex; mode=display">L = L_0 + \lambda\|w\|_1 = L_0 + \lambda \sum_{w}|w|</script><p>将上式对参数 $w$ 求导如下(由于正则项与 $b$ 无关, 因此参数 $b$ 的导数不变):</p>
 <script type="math/tex; mode=display">\frac{\partial L}{\partial w} = \frac{\partial L_0}{\partial w} + \lambda sign(w)</script><p>上式中 $sign(w)$ 表示 $w$ 的符号, 当 $w&gt;0$ 时, $sign(w)=1$ , 当 $w&lt;0$ 时, $sign(w)=-1$, 为了实现方便, 我们特意规定, 当 $w=0$ 时,  $sign(w) = 0$ , 相当于去掉了正则项.</p>
 <p>因此, 权重 $w$ 的更新表达式可如下表示:</p>
-<script type="math/tex; mode=display">w \to w' = w - \eta \frac{\partial L_0}{\partial w} - \eta \lambda sign(w)</script><h3 id="L1正则化使模型参数稀疏的原理是什么"><a href="#L1正则化使模型参数稀疏的原理是什么" class="headerlink" title="L1正则化使模型参数稀疏的原理是什么?"></a>L1正则化使模型参数稀疏的原理是什么?</h3><h4 id="角度一-解空间性状"><a href="#角度一-解空间性状" class="headerlink" title="角度一: 解空间性状"></a>角度一: 解空间性状</h4><p>“百面机器学习”</p>
-<h4 id="角度二-函数叠加-梯度下降更新公式"><a href="#角度二-函数叠加-梯度下降更新公式" class="headerlink" title="角度二: 函数叠加(梯度下降更新公式)"></a>角度二: 函数叠加(梯度下降更新公式)</h4><p>从以上的更新表达式我们可以看出, 当 $w$ 为正时, L1正则化会将更新后的 $w$ 变的再小一点, 而当 $w$ 为负时, L1正则化会将其变的更大一点—-<strong>因此L1的正则化效果就是让 $w$ 尽可能的向 $0$ 靠近, 即最终的 $w$ 参数矩阵会变的更加稀疏</strong></p>
-<h4 id="角度三-贝叶斯先验"><a href="#角度三-贝叶斯先验" class="headerlink" title="角度三: 贝叶斯先验"></a>角度三: 贝叶斯先验</h4><p>“百面机器学习”</p>
-<h5 id="补充-为什么-L1-和-L2-分别对应拉普拉斯先验和高斯先验"><a href="#补充-为什么-L1-和-L2-分别对应拉普拉斯先验和高斯先验" class="headerlink" title="补充: 为什么 L1 和 L2 分别对应拉普拉斯先验和高斯先验?"></a>补充: 为什么 L1 和 L2 分别对应拉普拉斯先验和高斯先验?</h5><h3 id="为什么权重矩阵稀疏可以防止过拟合"><a href="#为什么权重矩阵稀疏可以防止过拟合" class="headerlink" title="为什么权重矩阵稀疏可以防止过拟合?"></a>为什么权重矩阵稀疏可以防止过拟合?</h3><p>可以从两个方面来理解:</p>
-<p>1）特征选择(Feature Selection)：</p>
-<p>大家对稀疏规则化趋之若鹜的一个关键原因在于它能实现特征的自动选择。一般来说，$x_i$ 的大部分元素（也就是特征）都是和最终的输出 $y_i$ 没有关系或者不提供任何信息的，在最小化目标函数的时候考虑 $x_i$ 这些额外的特征，虽然可以获得更小的训练误差，但在预测新的样本时，这些没用的信息反而会被考虑，从而干扰了对正确 $y_i$ 的预测。稀疏规则化算子的引入就是为了完成特征自动选择的光荣使命，它会学习地去掉这些没有信息的特征，也就是把这些特征对应的权重置为 0。</p>
-<p>2）可解释性(Interpretability)：</p>
-<p>另一个青睐于稀疏的理由是，模型更容易解释。例如患某种病的概率是y，然后我们收集到的数据x是1000维的，也就是我们需要寻找这1000种因素到底是怎么影响患上这种病的概率的。假设我们这个是个回归模型： $y=w_1 \times x_1+w_2 \times x_2+…+w_{1000} \times x_{1000}+b$ （当然了，为了让 $y$ 限定在 $[0,1]$ 的范围，一般还得加个Logistic函数）。通过学习，如果最后学习到的 $w$ 就只有很少的非零元素，例如只有 5 个非零的 $wi$ ，那么我们就有理由相信，这些对应的特征在患病分析上面提供的信息是巨大的，决策性的。也就是说，患不患这种病只和这5个因素有关，那医生就好分析多了。但如果 1000 个 $w_i$ 都非 0，医生面对这 1000 种因素，累觉不爱.</p>
-<h3 id="L0-范式和-L1-范式都能实现稀疏-为什么不选择用-L0-而要用-L1"><a href="#L0-范式和-L1-范式都能实现稀疏-为什么不选择用-L0-而要用-L1" class="headerlink" title="$L0$ 范式和 $L1$ 范式都能实现稀疏, 为什么不选择用 $L0$ 而要用 $L1$?"></a>$L0$ 范式和 $L1$ 范式都能实现稀疏, 为什么不选择用 $L0$ 而要用 $L1$?</h3><p>L0范数是指向量中非零元素的个数</p>
-<p>一是因为L0范数很难优化求解（NP难问题），二是L1范数是L0范数的最优凸近似，而且它比L0范数要容易优化求解</p>
-<h2 id="L2-Regulation-权重衰减-岭回归"><a href="#L2-Regulation-权重衰减-岭回归" class="headerlink" title="L2 Regulation(权重衰减/岭回归)"></a>L2 Regulation(权重衰减/岭回归)</h2><p>L2范数为:</p>
+<script type="math/tex; mode=display">w \to w' = w - \eta \frac{\partial L_0}{\partial w} - \eta \lambda sign(w)</script><h1 id="L2-正则-权重衰减-岭回归"><a href="#L2-正则-权重衰减-岭回归" class="headerlink" title="L2 正则(权重衰减/岭回归)"></a>L2 正则(权重衰减/岭回归)</h1><p>L2范数为:</p>
 <script type="math/tex; mode=display">\|w\|_1 = \sqrt {w_1^2 + w_2^2 + ... + w_n^2 }</script><p>L2正则项如下所示, 其中 $L_0$ 代表原始的不加正则项的损失函数, $L$ 代表加了正则项以后的损失函数, <del>式中的系数 $\frac{1}{2}$ 主要是为了消去求导后产生的常数 $2$, 方便表示 (因为可以根据 $\lambda$ 的值来替代这些常数)</del>:</p>
 <script type="math/tex; mode=display">L = L_0 + \lambda\|w\|^2_2 =L_0 + \lambda \sum_{w}w^2</script><p>将上式对参数 $w$ 求导如下:</p>
 <script type="math/tex; mode=display">\frac{\partial L}{\partial w} = \frac{\partial L_0}{\partial w} + 2\lambda w</script><p>则, 权重 $w$ 的更新表达式可如下表示:</p>
 <script type="math/tex; mode=display">w \to w' = w - \eta \frac{\partial L_0}{\partial w} - \eta 2\lambda w</script><p>由于, $\eta, \lambda, m$ 三个值都是正的, 因此, 加上 $L2$ 正则化以后, 权重整体减小了, 这也是”权重衰减”的由来.</p>
-<h3 id="为何权重参数-w-减小就可以防止过拟合"><a href="#为何权重参数-w-减小就可以防止过拟合" class="headerlink" title="为何权重参数 $w$ 减小就可以防止过拟合?"></a>为何权重参数 $w$ 减小就可以防止过拟合?</h3><p>直观解释:</p>
+<h1 id="L1-正则和-L2-正则的特点是什么-各有什么优势"><a href="#L1-正则和-L2-正则的特点是什么-各有什么优势" class="headerlink" title="L1 正则和 L2 正则的特点是什么? 各有什么优势?"></a>L1 正则和 L2 正则的特点是什么? 各有什么优势?</h1><p>二者共同的特点都是能够防止过拟合问题.</p>
+<p>L1 的优点: 能够获得更加稀疏的模型.<br>L1 的缺点: 加入 L1 后会使得目标函数在原点不可导, 需要做特殊处理</p>
+<p>L2 的有点: 在任意位置都可导, 优化求解过程比较方便, 而且更加稳定<br>L2 的缺点: 无法获得真正的稀疏模型</p>
+<p><strong>在实际应用过程中, 大部分情况下都是 L2 正则的效果更好, 因此推荐优先使用 L2 正则</strong></p>
+<h1 id="L1-和-L2-的区别"><a href="#L1-和-L2-的区别" class="headerlink" title="L1 和 L2 的区别"></a>L1 和 L2 的区别</h1><ol>
+<li>L1 相对于 L2 能够产生更加稀疏的模型</li>
+<li>L2 相比于 L1 对于离异值更敏感(因为平方的原因, L2 对于大数的乘法比对小数的惩罚大)</li>
+<li>L1 和 L2 梯度下降速度不同: 前者梯度恒定, 并且接接近于 0 的时候会很快将参数更新成0, 后者在接近于0 时, 权重的更新速度放缓, 使得不那么容易更新为0 (这也解释了为什么 L1 具有稀疏性)</li>
+<li>二者解空间性状不同</li>
+</ol>
+<p>下图是 L1 和 L2 对向量中值的分布的先验假设, L1 是蓝色的线, L2 是红色的线, 可以看出, L1 的分布对于极端值更能容忍.<br><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1g12m2q505xj20dc0dcmyk.jpg" alt="L1和L2的先验假设"></p>
+<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fvxnikras2j20em0byjsh.jpg" alt=""></p>
+<h1 id="L1正则化使模型参数稀疏的原理是什么"><a href="#L1正则化使模型参数稀疏的原理是什么" class="headerlink" title="L1正则化使模型参数稀疏的原理是什么?"></a>L1正则化使模型参数稀疏的原理是什么?</h1><p>角度一: 函数图像</p>
+<p>L1 在 0 处迅速下降到 0, L2 在 0 处会变得缓慢, 并不会直接更新为 0.</p>
+<p>角度二: 函数叠加(梯度下降更新公式)</p>
+<script type="math/tex; mode=display">w \to w' = w - \eta \frac{\partial L_0}{\partial w} - \eta \lambda sign(w) \tag{L1}</script><script type="math/tex; mode=display">w \to w' = w - \eta \frac{\partial L_0}{\partial w} - \eta 2\lambda \tag{L2}w</script><p>从以上的更新表达式我们可以看出, 当 $w$ 为正时, L1正则化会将更新后的 $w$ 变的再小一点, 而当 $w$ 为负时, L1正则化会将其变的更大一点—-<strong>因此L1的正则化效果就是让 $w$ 尽可能的向 $0$ 靠近, 即最终的 $w$ 参数矩阵会变的更加稀疏</strong></p>
+<p>角度三: 贝叶斯先验, “百面机器学习”<br>角度四: 解空间性状, “百面机器学习”</p>
+<h1 id="为什么-L1-和-L2-分别对应拉普拉斯先验和高斯先验"><a href="#为什么-L1-和-L2-分别对应拉普拉斯先验和高斯先验" class="headerlink" title="为什么 L1 和 L2 分别对应拉普拉斯先验和高斯先验?"></a>为什么 L1 和 L2 分别对应拉普拉斯先验和高斯先验?</h1><h1 id="为什么权重矩阵稀疏可以防止过拟合"><a href="#为什么权重矩阵稀疏可以防止过拟合" class="headerlink" title="为什么权重矩阵稀疏可以防止过拟合?"></a>为什么权重矩阵稀疏可以防止过拟合?</h1><p>可以从两个方面来理解:</p>
+<p>1）特征选择(Feature Selection)：稀疏性可以实现特征的自动选择, 可以在进行预测时减少无用信息的干扰</p>
+<p>大家对稀疏规则化趋之若鹜的一个关键原因在于它能实现特征的自动选择。一般来说，$x_i$ 的大部分元素（也就是特征）都是和最终的输出 $y_i$ 没有关系或者不提供任何信息的，在最小化目标函数的时候考虑 $x_i$ 这些额外的特征，虽然可以获得更小的训练误差，但在预测新的样本时，这些没用的信息反而会被考虑，从而干扰了对正确 $y_i$ 的预测。稀疏规则化算子的引入就是为了完成特征自动选择的光荣使命，它会学习地去掉这些没有信息的特征，也就是把这些特征对应的权重置为 0。</p>
+<p>2）可解释性(Interpretability)：较稀疏的模型表示最终的预测结果只与个别关键特征有关, 这符合实际生活中的历史经验</p>
+<p>另一个青睐于稀疏的理由是，模型更容易解释。例如患某种病的概率是y，然后我们收集到的数据x是1000维的，也就是我们需要寻找这1000种因素到底是怎么影响患上这种病的概率的。假设我们这个是个回归模型： $y=w_1 \times x_1+w_2 \times x_2+…+w_{1000} \times x_{1000}+b$ （当然了，为了让 $y$ 限定在 $[0,1]$ 的范围，一般还得加个Logistic函数）。通过学习，如果最后学习到的 $w$ 就只有很少的非零元素，例如只有 5 个非零的 $wi$ ，那么我们就有理由相信，这些对应的特征在患病分析上面提供的信息是巨大的，决策性的。也就是说，患不患这种病只和这5个因素有关，那医生就好分析多了。但如果 1000 个 $w_i$ 都非 0，医生面对这 1000 种因素，累觉不爱.</p>
+<h1 id="为何权重参数-w-减小就可以防止过拟合"><a href="#为何权重参数-w-减小就可以防止过拟合" class="headerlink" title="为何权重参数 $w$ 减小就可以防止过拟合?"></a>为何权重参数 $w$ 减小就可以防止过拟合?</h1><p>直观解释:</p>
 <p>更小的权值w，从某种意义上说，表示网络的复杂度更低，对数据的拟合刚刚好（这个法则也叫做奥卡姆剃刀），而在实际应用中，也验证了这一点，L2正则化的效果往往好于未经正则化的效果</p>
 <p>“数学一点”的解释:</p>
 <p>过拟合的时候，拟合函数的系数往往非常大，为什么？如下图所示，过拟合，就是拟合函数需要顾忌每一个点，最终形成的拟合函数波动很大。在某些很小的区间里，函数值的变化很剧烈。这就意味着函数在某些小区间里的导数值（绝对值）非常大，由于自变量值可大可小，所以只有系数足够大，才能保证导数值很大. 而正则化是通过约束参数的范数使其不要太大，所以可以在一定程度上减少过拟合情况。</p>
 <p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvu4qp7cdwj2067060jri.jpg" alt=""></p>
-<h3 id="L2-范式的好处是什么"><a href="#L2-范式的好处是什么" class="headerlink" title="L2 范式的好处是什么?"></a>L2 范式的好处是什么?</h3><p><strong>防止过拟合:</strong></p>
+<h1 id="L0-范式和-L1-范式都能实现稀疏-为什么不选择用-L0-而要用-L1"><a href="#L0-范式和-L1-范式都能实现稀疏-为什么不选择用-L0-而要用-L1" class="headerlink" title="$L0$ 范式和 $L1$ 范式都能实现稀疏, 为什么不选择用 $L0$ 而要用 $L1$?"></a>$L0$ 范式和 $L1$ 范式都能实现稀疏, 为什么不选择用 $L0$ 而要用 $L1$?</h1><p>L0范数是指向量中非零元素的个数</p>
+<p>一是因为L0范数很难优化求解（NP难问题），二是L1范数是L0范数的最优凸近似，而且它比L0范数要容易优化求解</p>
+<h1 id="为什么说-L2-正则可以优化计算"><a href="#为什么说-L2-正则可以优化计算" class="headerlink" title="为什么说 L2 正则可以优化计算?"></a>为什么说 L2 正则可以优化计算?</h1><p><strong>防止过拟合:</strong></p>
 <p>最基本的好处是可以提高模型泛化能力, 防止过拟合</p>
 <p><strong>优化计算:</strong></p>
 <p>从优化或者数值计算的角度来说, L2正则化有利于提高模型训练速度, 加快计算</p>
 <p>原因: <a href="https://www.cnblogs.com/callyblog/p/8094745.html" target="_blank" rel="noopener">https://www.cnblogs.com/callyblog/p/8094745.html</a></p>
-<h2 id="L1-和-L2-的区别"><a href="#L1-和-L2-的区别" class="headerlink" title="L1 和 L2 的区别"></a>L1 和 L2 的区别</h2><h3 id="1-L1相对于L2能够产生更加稀疏的模型"><a href="#1-L1相对于L2能够产生更加稀疏的模型" class="headerlink" title="1. L1相对于L2能够产生更加稀疏的模型:"></a>1. L1相对于L2能够产生更加稀疏的模型:</h3><p>原因见上面L1稀疏性的原理</p>
-<h3 id="2-二者梯度下降速度不同"><a href="#2-二者梯度下降速度不同" class="headerlink" title="2. 二者梯度下降速度不同:"></a>2. 二者梯度下降速度不同:</h3><p>根据L1和L2的函数图像可以看出, L1是按照线性函数进行梯度下降的, 而L2则是按照二次函数, 因此, L1在下降时的速度是恒定的, 在接近于0的时候会很快就将参数更新成0 , 而L2在接近于0 时, 权重的更新速度放缓, 使得不那么容易更新为0 :</p>
-<p><img src="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvxnikras2j20em0byjsh.jpg" alt=""></p>
-<h3 id="3-二者解空间性状不同"><a href="#3-二者解空间性状不同" class="headerlink" title="3. 二者解空间性状不同:"></a>3. 二者解空间性状不同:</h3><p>这一点也可以解释为什么L1相比于L2更加稀疏的原因</p>
-<h1 id="数据增广-Data-Augmentation"><a href="#数据增广-Data-Augmentation" class="headerlink" title="数据增广(Data Augmentation)"></a>数据增广(Data Augmentation)</h1><p>水平或垂直翻转图像、裁剪、色彩变换、扩展和旋转等等, 也可利用GAN辅助生成(不常用)</p>
-<h1 id="Dropout"><a href="#Dropout" class="headerlink" title="Dropout"></a>Dropout</h1><p>Dropout是指在深度网络的训练中, 以一定的概率随机的”临时丢弃”一部分神经元节点.  具体来讲, Dropout作用于每份小批量训练数据, 由于其随机丢弃部分神经元的机制, 相当于每次迭代都在训练不同结构的神经网络, 可以被认为是一种实用的大规模深度神经网络的模型继承算法.</p>
-<p>对于包含 $N$ 个神经元节点的网络, 在Dropout的作用下可以看作为 $2^N$ 个模型的集成, 这 $2^N$ 个模型可认为是原始网络的子网络, 它们共享部分权值, 并且拥有相同的网络层数, 而模型整个的参数数目不变, 大大简化了运算.</p>
-<p>对于任意神经元来说, 每次训练中都与一组随机挑选的不同的神经元集合共同进行优化, 这个过程会减弱全体神经元之间的联合适应性, 减少过拟合的风险, 增强泛化能力.</p>
-<p>工作原理和实现:</p>
-<p>应用Dropout包括训练和预测两个阶段, 在训练阶段中, 每个神经元节点需要增加一个概率系数, 在前向传播时, 会以这个概率选择是否丢弃当前的神经元</p>
-<p>在测试阶段的前向传播计算时, 每个神经元的参数都会预先乘以概率系数p, 以恢复在训练中该神经元只有p的概率被用于整个神经网络的前向传播计算</p>
-<h1 id="Drop-Connect"><a href="#Drop-Connect" class="headerlink" title="Drop Connect"></a>Drop Connect</h1><p>Drop Connect 是另一种减少算法过拟合的正则化策略，是 Dropout 的一般化。在 Drop Connect 的过程中需要将网络架构权重的一个随机选择子集设置为零，取代了在 Dropout 中对每个层随机选择激活函数的子集设置为零的做法。由于每个单元接收来自过去层单元的随机子集的输入，Drop Connect 和 Dropout 都可以获得有限的泛化性能 [22]。Drop Connect 和 Dropout 相似的地方在于它涉及在模型中引入稀疏性，不同之处在于它引入的是权重的稀疏性而不是层的输出向量的稀疏性。</p>
-<h1 id="早停"><a href="#早停" class="headerlink" title="早停"></a>早停</h1><p>早停法可以限制模型最小化代价函数所需的训练迭代次数。早停法通常用于防止训练中过度表达的模型泛化性能差。如果迭代次数太少，算法容易欠拟合（方差较小，偏差较大），而迭代次数太多，算法容易过拟合（方差较大，偏差较小）。早停法通过确定迭代次数解决这个问题，不需要对特定值进行手动设置。</p>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://www.cnblogs.com/callyblog/p/8094745.html" target="_blank" rel="noopener">https://www.cnblogs.com/callyblog/p/8094745.html</a></p>
+<h1 id="正则项前面的系数一般怎么设置"><a href="#正则项前面的系数一般怎么设置" class="headerlink" title="正则项前面的系数一般怎么设置?"></a>正则项前面的系数一般怎么设置?</h1><p>通常做法是一开始将正则项系数 $\lambda$ 设置为 0, 然后先确定出一个比较好的 learning rate, 接着固定该 learning rate, 给 $lambda$ 一个初始值, 如 1.0. 然后根据验证集上的准确率, 将 $\lambda$ 增大或者缩小 10 倍, 这里增减 10 倍是粗调节, 当确定了 $\lambda$ 合适的数量级以后, 再进一步的细调节.</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://www.zhihu.com/question/26485586" target="_blank" rel="noopener">知乎: l1正则与l2正则的特点是什么，各有什么优势</a><br><a href="https://www.zhihu.com/question/20924039" target="_blank" rel="noopener">知乎: 机器学习中常常提到的正则化到底是什么意思</a></p>
 
       
     </div>
@@ -759,7 +752,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">217</span>
+                    <span class="site-state-item-count">235</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -798,7 +791,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -883,7 +878,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">36</span>
+                      
+                    
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -947,7 +944,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用正则项-Regularization"><span class="nav-text">使用正则项(Regularization)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#L1-Regularization"><span class="nav-text">L1 Regularization</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#L1正则化使模型参数稀疏的原理是什么"><span class="nav-text">L1正则化使模型参数稀疏的原理是什么?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#角度一-解空间性状"><span class="nav-text">角度一: 解空间性状</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#角度二-函数叠加-梯度下降更新公式"><span class="nav-text">角度二: 函数叠加(梯度下降更新公式)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#角度三-贝叶斯先验"><span class="nav-text">角度三: 贝叶斯先验</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#补充-为什么-L1-和-L2-分别对应拉普拉斯先验和高斯先验"><span class="nav-text">补充: 为什么 L1 和 L2 分别对应拉普拉斯先验和高斯先验?</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么权重矩阵稀疏可以防止过拟合"><span class="nav-text">为什么权重矩阵稀疏可以防止过拟合?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#L0-范式和-L1-范式都能实现稀疏-为什么不选择用-L0-而要用-L1"><span class="nav-text">$L0$ 范式和 $L1$ 范式都能实现稀疏, 为什么不选择用 $L0$ 而要用 $L1$?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#L2-Regulation-权重衰减-岭回归"><span class="nav-text">L2 Regulation(权重衰减/岭回归)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为何权重参数-w-减小就可以防止过拟合"><span class="nav-text">为何权重参数 $w$ 减小就可以防止过拟合?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#L2-范式的好处是什么"><span class="nav-text">L2 范式的好处是什么?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#L1-和-L2-的区别"><span class="nav-text">L1 和 L2 的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-L1相对于L2能够产生更加稀疏的模型"><span class="nav-text">1. L1相对于L2能够产生更加稀疏的模型:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-二者梯度下降速度不同"><span class="nav-text">2. 二者梯度下降速度不同:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-二者解空间性状不同"><span class="nav-text">3. 二者解空间性状不同:</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据增广-Data-Augmentation"><span class="nav-text">数据增广(Data Augmentation)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dropout"><span class="nav-text">Dropout</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Drop-Connect"><span class="nav-text">Drop Connect</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#早停"><span class="nav-text">早停</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#L1-正则"><span class="nav-text">L1 正则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#L2-正则-权重衰减-岭回归"><span class="nav-text">L2 正则(权重衰减/岭回归)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#L1-正则和-L2-正则的特点是什么-各有什么优势"><span class="nav-text">L1 正则和 L2 正则的特点是什么? 各有什么优势?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#L1-和-L2-的区别"><span class="nav-text">L1 和 L2 的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#L1正则化使模型参数稀疏的原理是什么"><span class="nav-text">L1正则化使模型参数稀疏的原理是什么?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么-L1-和-L2-分别对应拉普拉斯先验和高斯先验"><span class="nav-text">为什么 L1 和 L2 分别对应拉普拉斯先验和高斯先验?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么权重矩阵稀疏可以防止过拟合"><span class="nav-text">为什么权重矩阵稀疏可以防止过拟合?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为何权重参数-w-减小就可以防止过拟合"><span class="nav-text">为何权重参数 $w$ 减小就可以防止过拟合?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#L0-范式和-L1-范式都能实现稀疏-为什么不选择用-L0-而要用-L1"><span class="nav-text">$L0$ 范式和 $L1$ 范式都能实现稀疏, 为什么不选择用 $L0$ 而要用 $L1$?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么说-L2-正则可以优化计算"><span class="nav-text">为什么说 L2 正则可以优化计算?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#正则项前面的系数一般怎么设置"><span class="nav-text">正则项前面的系数一般怎么设置?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>
@@ -984,7 +981,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.6m</span>
+    <span title="站点总字数">1.7m</span>
   
 
   
@@ -993,7 +990,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">24:21</span>
+    <span title="站点阅读时长">26:18</span>
   
 </div>
 

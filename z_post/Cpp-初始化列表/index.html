@@ -112,18 +112,18 @@
 
 
 
-  <meta name="description" content="统一的初始化过程在 C++98/03 中, 我们只能对普通数组和POD( plain old data, 简单来说就是可以用memcpy复制的对象) 类型使用初始化列表, 如下:123456int arr[3] = &amp;#123;1,2,3&amp;#125;;struct A&amp;#123;    int x;    int y;&amp;#125;a = &amp;#123;1,2&amp;#125;; 但是在C++11中, 初始">
+  <meta name="description" content="构造函数与初始化列表初始化列表只能用于构造函数 在类的实现中，构造函数体内“初始化”的实际上是赋值而不是初始化。也就是说，当代码运行到构造函数内部时，初始化列表已经执行完了，因此相当于是先初始化了一遍，然后又赋值了一遍，重复计算，浪费效率，因此应该优先使用初始化列表。同时，当没有默认的无参构造函数时，就一定会使用初始化列表。(即使自己没有在含参构造函数中都是基本数据类型, 不强制显式使用初始化列表">
 <meta name="keywords" content="C++,知识点梳理">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++11新特性-初始化列表">
+<meta property="og:title" content="C++11 新特性-初始化列表">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Cpp-初始化列表/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="统一的初始化过程在 C++98/03 中, 我们只能对普通数组和POD( plain old data, 简单来说就是可以用memcpy复制的对象) 类型使用初始化列表, 如下:123456int arr[3] = &amp;#123;1,2,3&amp;#125;;struct A&amp;#123;    int x;    int y;&amp;#125;a = &amp;#123;1,2&amp;#125;; 但是在C++11中, 初始">
+<meta property="og:description" content="构造函数与初始化列表初始化列表只能用于构造函数 在类的实现中，构造函数体内“初始化”的实际上是赋值而不是初始化。也就是说，当代码运行到构造函数内部时，初始化列表已经执行完了，因此相当于是先初始化了一遍，然后又赋值了一遍，重复计算，浪费效率，因此应该优先使用初始化列表。同时，当没有默认的无参构造函数时，就一定会使用初始化列表。(即使自己没有在含参构造函数中都是基本数据类型, 不强制显式使用初始化列表">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-25T11:28:55.466Z">
+<meta property="og:updated_time" content="2019-03-14T08:08:02.681Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="C++11新特性-初始化列表">
-<meta name="twitter:description" content="统一的初始化过程在 C++98/03 中, 我们只能对普通数组和POD( plain old data, 简单来说就是可以用memcpy复制的对象) 类型使用初始化列表, 如下:123456int arr[3] = &amp;#123;1,2,3&amp;#125;;struct A&amp;#123;    int x;    int y;&amp;#125;a = &amp;#123;1,2&amp;#125;; 但是在C++11中, 初始">
+<meta name="twitter:title" content="C++11 新特性-初始化列表">
+<meta name="twitter:description" content="构造函数与初始化列表初始化列表只能用于构造函数 在类的实现中，构造函数体内“初始化”的实际上是赋值而不是初始化。也就是说，当代码运行到构造函数内部时，初始化列表已经执行完了，因此相当于是先初始化了一遍，然后又赋值了一遍，重复计算，浪费效率，因此应该优先使用初始化列表。同时，当没有默认的无参构造函数时，就一定会使用初始化列表。(即使自己没有在含参构造函数中都是基本数据类型, 不强制显式使用初始化列表">
 
 
 
@@ -140,7 +140,7 @@
   };
 </script>
 
-  <title>C++11新特性-初始化列表 | 从零开始的BLOG</title>
+  <title>C++11 新特性-初始化列表 | 从零开始的BLOG</title>
   
 
 
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">217</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">235</span></a>
   </li>
         
         
@@ -326,14 +326,6 @@
         
         
           
-          <li class="menu-item menu-item-面试">
-    <a href="/categories/面试/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
-  </li>
-        
-        
-        
-          
           <li class="menu-item menu-item-其他">
     <a href="/categories/其他/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
@@ -344,7 +336,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
   </li>
         
         
@@ -462,7 +454,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">C++11新特性-初始化列表
+          <h1 class="post-title" itemprop="name headline">C++11 新特性-初始化列表
               
             
           </h1>
@@ -497,8 +489,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-02-25T19:28:55+08:00" content="2019-02-25">
-      		  2019-02-25
+    		<time itemprop="dateUpdated" datetime="2019-03-14T16:08:02+08:00" content="2019-03-14">
+      		  2019-03-14
     		</time>
   	  </span>
 	  
@@ -551,7 +543,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.7k</span>
+                <span title="本文字数">1.3k</span>
               
 
               
@@ -565,7 +557,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">2 分钟</span>
+                <span title="阅读时长">1 分钟</span>
               
             </div>
           
@@ -585,14 +577,15 @@
       
 
       
-        <h1 id="统一的初始化过程"><a href="#统一的初始化过程" class="headerlink" title="统一的初始化过程"></a>统一的初始化过程</h1><p>在 C++98/03 中, 我们只能对普通数组和POD( plain old data, 简单来说就是可以用memcpy复制的对象) 类型使用初始化列表, 如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int arr[3] = &#123;1,2,3&#125;;</span><br><span class="line"></span><br><span class="line">struct A&#123;</span><br><span class="line">    int x;</span><br><span class="line">    int y;</span><br><span class="line">&#125;a = &#123;1,2&#125;;</span><br></pre></td></tr></table></figure></p>
-<p>但是在C++11中, 初始化列表的适用性被放大, 可以作用于任何类型对象的初始化</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">T test&#123;&#125;;</span><br><span class="line"><span class="comment">//如:</span></span><br><span class="line"><span class="keyword">int</span> a&#123;<span class="number">2</span>&#125;; <span class="comment">// 与 int a=2;  int a(2); 等价</span></span><br><span class="line"><span class="built_in">std</span>:<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; pyments &#123;<span class="number">35.99</span>, <span class="number">129.22</span>&#125;;</span><br><span class="line">Foo fool&#123;<span class="number">123</span>,<span class="number">456</span>,<span class="number">789</span>&#125;; <span class="comment">//Foo为一个类或结构体</span></span><br></pre></td></tr></table></figure>
+        <h1 id="构造函数与初始化列表"><a href="#构造函数与初始化列表" class="headerlink" title="构造函数与初始化列表"></a>构造函数与初始化列表</h1><p><strong>初始化列表只能用于构造函数</strong></p>
+<p>在类的实现中，构造函数体内“初始化”的实际上是赋值而不是初始化。也就是说，当代码运行到构造函数内部时，初始化列表已经执行完了，因此相当于是先初始化了一遍，然后又赋值了一遍，重复计算，浪费效率，因此应该优先使用初始化列表。同时，当没有默认的无参构造函数时，就一定会使用初始化列表。(即使自己没有在含参构造函数中都是基本数据类型, 不强制显式使用初始化列表, 也会自动调用初始化列表, 而在构造函数内部执行的仅仅是赋值)</p>
+<p>创建派生类对象时，程序首先调用基类构造函数，然后再调用派生类构造函数。基类构造函数负责初始化继承的数据成员；派生类构造函数主要用于初始化新增的数据成员。派生类构造函数总是需要调用一个基类构造函数。当基类没有默认的构造函数时，就必须显式指明调用哪一个构造函数。<br>在继承关系中, 必须显式的在初始化列表中对基类初始化, 因为只有基类初始化完成后, 才能进行子类初始化, 而当进入子类构造函数内部时, 子类初始化已经完成.</p>
+<p>注意：除了虚基类以外，类只能将值传递会相邻的基类，但后者可以使用相同的机制将信息传递给上层相邻的基类，以此类推。</p>
 <h1 id="C-的类对象创建过程"><a href="#C-的类对象创建过程" class="headerlink" title="C++的类对象创建过程"></a>C++的类对象创建过程</h1><p>C++ 在创建类时需要经过两个阶段：分配空间（Allocation）和初始化（Initialization）</p>
 <h2 id="分配空间"><a href="#分配空间" class="headerlink" title="分配空间"></a>分配空间</h2><p>创建C++类对象的第一步就是为其分配内存空间。对于全局对象，静态对象以及分配在栈区域内的对象，对它们的内存分配是在编译阶段就完成了，而对于分配在堆区域内的对象，它们的分配是在运行时动态进行的。内存空间的分配过程涉及到两个关键的问题：需要分配空间的大小以及是否有足够的内存空间来满足分配。</p>
 <h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>首先需要区分两个概念：初始化（Initialization）和赋值（Assignment）。初始化早于赋值，它是随着对象的诞生一起进行的。而赋值是在对象诞生以后又给予它一个新的值。</p>
 <p>在C++中，提供了类成员的初始化列表，并且初始化列表是先于构造函数体内的代码执行的。</p>
-<h2 id="关于成员初始化列表"><a href="#关于成员初始化列表" class="headerlink" title="关于成员初始化列表"></a>关于成员初始化列表</h2><p>对于以下三种情况，必须使用成员初始化列表</p>
+<h1 id="哪些情况下只能用初始化列表-initialization-list-而不能用赋值-assignment"><a href="#哪些情况下只能用初始化列表-initialization-list-而不能用赋值-assignment" class="headerlink" title="哪些情况下只能用初始化列表(initialization list) 而不能用赋值 (assignment)"></a>哪些情况下只能用初始化列表(initialization list) 而不能用赋值 (assignment)</h1><p>对于以下三种情况，必须使用成员初始化列表</p>
 <ul>
 <li>需要初始化的数据成员是对象的情况（包含继承情况下，通过显示调用父类的构造函数对父类数据成员进行初始化）</li>
 <li>需要初始化const修饰的类成员</li>
@@ -601,11 +594,7 @@
 </ul>
 <p>类对象是默认使用初始化列表的，当没有无参构造函数时，就必须显式使用初始化列表（所以不论如何，都会使用到初始化列表）。</p>
 <p>当类成员中含有一个const对象时，或者一个引用时，必须经过成员初始化列表进行初始化，因为const对象或者引用在声明的同时必须初始化，<strong>而在构造函数中，做的是对它们的赋值，并不是初始化。</strong></p>
-<h2 id="构造函数与初始化列表"><a href="#构造函数与初始化列表" class="headerlink" title="构造函数与初始化列表"></a>构造函数与初始化列表</h2><p><strong>成员初始化列表只能用于构造函数</strong></p>
-<p>在类的实现中，构造函数体内“初始化”的实际上是赋值而不是初始化。也就是说，当代码运行到构造函数内部时，初始化列表已经执行完了，因此相当于是先初始化了一遍，然后又赋值了一遍，重复计算，浪费效率，因此应该优先使用初始化列表。同时，当没有默认的无参构造函数时，就一定会使用初始化列表。(即使自己没有在含参构造函数中都是基本数据类型, 不强制显式使用初始化列表, 也会自动调用初始化列表, 而在构造函数内部执行的仅仅是赋值)</p>
-<p>创建派生类对象时，程序首先调用基类构造函数，然后再调用派生类构造函数。基类构造函数负责初始化继承的数据成员；派生类构造函数主要用于初始化新增的数据成员。派生类构造函数总是需要调用一个基类构造函数。当基类没有默认的构造函数时，就必须显式指明调用哪一个构造函数。<br>在继承关系中, 必须显式的在初始化列表中对基类初始化, 因为只有基类初始化完成后, 才能进行子类初始化, 而当进入子类构造函数内部时, 子类初始化已经完成.</p>
-<p>注意：除了虚基类以外，类只能将值传递会相邻的基类，但后者可以使用相同的机制将信息传递给上层相邻的基类，以此类推。</p>
-<h2 id="初始化列表的顺序"><a href="#初始化列表的顺序" class="headerlink" title="初始化列表的顺序"></a>初始化列表的顺序</h2><p>构造函数需要初始化的数据成员，不论是否显式的出现在构造函数的成员初始化列表中，都会在该处完成初始化，<strong>并且初始化的顺序和变量声明时的顺序是一致的，与列表中的先后顺序无关</strong></p>
+<h1 id="初始化列表的顺序"><a href="#初始化列表的顺序" class="headerlink" title="初始化列表的顺序"></a>初始化列表的顺序</h1><p>构造函数需要初始化的数据成员，不论是否显式的出现在构造函数的成员初始化列表中，都会在该处完成初始化，<strong>并且初始化的顺序和变量声明时的顺序是一致的，与列表中的先后顺序无关</strong></p>
 
       
     </div>
@@ -731,7 +720,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">217</span>
+                    <span class="site-state-item-count">235</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -770,7 +759,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -855,7 +846,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">36</span>
+                      
+                    
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -919,7 +912,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#统一的初始化过程"><span class="nav-text">统一的初始化过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-的类对象创建过程"><span class="nav-text">C++的类对象创建过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分配空间"><span class="nav-text">分配空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化"><span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于成员初始化列表"><span class="nav-text">关于成员初始化列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造函数与初始化列表"><span class="nav-text">构造函数与初始化列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化列表的顺序"><span class="nav-text">初始化列表的顺序</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#构造函数与初始化列表"><span class="nav-text">构造函数与初始化列表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-的类对象创建过程"><span class="nav-text">C++的类对象创建过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分配空间"><span class="nav-text">分配空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化"><span class="nav-text">初始化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#哪些情况下只能用初始化列表-initialization-list-而不能用赋值-assignment"><span class="nav-text">哪些情况下只能用初始化列表(initialization list) 而不能用赋值 (assignment)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初始化列表的顺序"><span class="nav-text">初始化列表的顺序</span></a></li></ol></div>
             
 
           </div>
@@ -956,7 +949,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.6m</span>
+    <span title="站点总字数">1.7m</span>
   
 
   
@@ -965,7 +958,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">24:21</span>
+    <span title="站点阅读时长">26:18</span>
   
 </div>
 

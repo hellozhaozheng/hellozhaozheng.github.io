@@ -112,13 +112,13 @@
 
 
 
-  <meta name="description" content="基础篇梯度下降优化方法 SGD Momentum Nesterov Adagrad Adadelta RMSprop Adam Adamax  各种优化方法整理总结https://mp.weixin.qq.com/s/lh4jTYJroq6AKb2fYsP-GQ 初始化方法 constant uniform gaussian xavier msra(kaiming) bilinear  深度学习-">
+  <meta name="description" content="总目录篇逻辑回归支持向量机决策树 机器学习篇 逻辑回归逻辑回归与线性回归  逻辑回归和线性回归的定义 逻辑回归和线性回归的联系和区别 对于一个二分类问题, 如果数据集中存在一些离异值, 在不清洗数据的情况下, 选择逻辑回归还是 SVM? 为什么? 逻辑回归与 SVM 的区别是什么? 哪个是参数模型? 各适用于解决什么问题?   支持向量机SVM深入解析  简述 SVM 的基本概念和原理 支持向量机">
 <meta name="keywords" content="知识点梳理,计算机视觉">
 <meta property="og:type" content="article">
 <meta property="og:title" content="计算机视觉面试总结">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/面试-计算机视觉面试总结/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="基础篇梯度下降优化方法 SGD Momentum Nesterov Adagrad Adadelta RMSprop Adam Adamax  各种优化方法整理总结https://mp.weixin.qq.com/s/lh4jTYJroq6AKb2fYsP-GQ 初始化方法 constant uniform gaussian xavier msra(kaiming) bilinear  深度学习-">
+<meta property="og:description" content="总目录篇逻辑回归支持向量机决策树 机器学习篇 逻辑回归逻辑回归与线性回归  逻辑回归和线性回归的定义 逻辑回归和线性回归的联系和区别 对于一个二分类问题, 如果数据集中存在一些离异值, 在不清洗数据的情况下, 选择逻辑回归还是 SVM? 为什么? 逻辑回归与 SVM 的区别是什么? 哪个是参数模型? 各适用于解决什么问题?   支持向量机SVM深入解析  简述 SVM 的基本概念和原理 支持向量机">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1g0ixnfk7w4j20o408q3yr.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fxmo2fpvavj21650u079w.jpg">
@@ -134,11 +134,13 @@
 <meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fxc7ewvfr1j20u00wn0y7.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fxc7gghlzjj21xt0l1n26.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1g0mczrbnkfj20xe0ipdi2.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fxsf9g1udsj21q00s3152.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fx1toyw0xkj20kc0a5wkw.jpg">
 <meta property="og:image" content="https://hellozhaozheng.github.io/z_post/面试-计算机视觉面试总结/Batch-Normalization深入解析">
-<meta property="og:updated_time" content="2019-03-05T01:31:47.181Z">
+<meta property="og:updated_time" content="2019-03-24T05:18:38.546Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机视觉面试总结">
-<meta name="twitter:description" content="基础篇梯度下降优化方法 SGD Momentum Nesterov Adagrad Adadelta RMSprop Adam Adamax  各种优化方法整理总结https://mp.weixin.qq.com/s/lh4jTYJroq6AKb2fYsP-GQ 初始化方法 constant uniform gaussian xavier msra(kaiming) bilinear  深度学习-">
+<meta name="twitter:description" content="总目录篇逻辑回归支持向量机决策树 机器学习篇 逻辑回归逻辑回归与线性回归  逻辑回归和线性回归的定义 逻辑回归和线性回归的联系和区别 对于一个二分类问题, 如果数据集中存在一些离异值, 在不清洗数据的情况下, 选择逻辑回归还是 SVM? 为什么? 逻辑回归与 SVM 的区别是什么? 哪个是参数模型? 各适用于解决什么问题?   支持向量机SVM深入解析  简述 SVM 的基本概念和原理 支持向量机">
 <meta name="twitter:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1g0ixnfk7w4j20o408q3yr.jpg">
 
 
@@ -264,7 +266,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">217</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">235</span></a>
   </li>
         
         
@@ -342,14 +344,6 @@
         
         
           
-          <li class="menu-item menu-item-面试">
-    <a href="/categories/面试/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-address-card"></i> <br />面试</a>
-  </li>
-        
-        
-        
-          
           <li class="menu-item menu-item-其他">
     <a href="/categories/其他/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
@@ -360,7 +354,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">36</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
   </li>
         
         
@@ -513,8 +507,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-05T09:31:47+08:00" content="2019-03-05">
-      		  2019-03-05
+    		<time itemprop="dateUpdated" datetime="2019-03-24T13:18:38+08:00" content="2019-03-24">
+      		  2019-03-24
     		</time>
   	  </span>
 	  
@@ -567,7 +561,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">9.3k</span>
+                <span title="本文字数">5.2k</span>
               
 
               
@@ -581,7 +575,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">8 分钟</span>
+                <span title="阅读时长">5 分钟</span>
               
             </div>
           
@@ -601,51 +595,119 @@
       
 
       
-        <h1 id="基础篇"><a href="#基础篇" class="headerlink" title="基础篇"></a>基础篇</h1><h2 id="梯度下降优化方法"><a href="#梯度下降优化方法" class="headerlink" title="梯度下降优化方法"></a>梯度下降优化方法</h2><ul>
-<li>SGD</li>
-<li>Momentum</li>
-<li>Nesterov</li>
-<li>Adagrad</li>
-<li>Adadelta</li>
-<li>RMSprop</li>
-<li>Adam</li>
-<li>Adamax</li>
+        <h1 id="总目录篇"><a href="#总目录篇" class="headerlink" title="总目录篇"></a>总目录篇</h1><p><a href="#逻辑回归">逻辑回归</a><br><a href="#支持向量机">支持向量机</a><br><a href="#决策树">决策树</a></p>
+<h1 id="机器学习篇"><a href="#机器学习篇" class="headerlink" title="机器学习篇"></a>机器学习篇</h1><p><span id="逻辑回归"></span></p>
+<h2 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h2><p><a href="../机器学习-逻辑回归">逻辑回归与线性回归</a></p>
+<ul>
+<li><a href="../机器学习-逻辑回归/#逻辑回归和线性回归的定义">逻辑回归和线性回归的定义</a></li>
+<li><a href="../机器学习-逻辑回归/#逻辑回归与线性回归的联系和区别">逻辑回归和线性回归的联系和区别</a></li>
+<li><a href="../机器学习-逻辑回归/#对于一个二分类问题">对于一个二分类问题, 如果数据集中存在一些离异值, 在不清洗数据的情况下, 选择逻辑回归还是 SVM? 为什么?</a></li>
+<li><a href="../机器学习-逻辑回归/#逻辑回归和 SVM 的区别是什么">逻辑回归与 SVM 的区别是什么? 哪个是参数模型? 各适用于解决什么问题?</a></li>
 </ul>
-<p><a href="../深度学习-各种优化方法整理总结">各种优化方法整理总结</a><br><a href="https://mp.weixin.qq.com/s/lh4jTYJroq6AKb2fYsP-GQ" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/lh4jTYJroq6AKb2fYsP-GQ</a></p>
-<h2 id="初始化方法"><a href="#初始化方法" class="headerlink" title="初始化方法"></a>初始化方法</h2><ul>
-<li>constant</li>
-<li>uniform</li>
-<li>gaussian</li>
-<li>xavier</li>
-<li>msra(kaiming)</li>
-<li>bilinear</li>
+<p><span id="支持向量机"></span></p>
+<h2 id="支持向量机"><a href="#支持向量机" class="headerlink" title="支持向量机"></a>支持向量机</h2><p><a href="../机器学习-SVM深入解析">SVM深入解析</a></p>
+<ul>
+<li>简述 SVM 的基本概念和原理</li>
+<li>支持向量机推导过程</li>
+<li>SVM 如何解决线性不可分问题?</li>
+<li>为什么SVM的分类结果仅依赖于支持向量?</li>
+<li>如何选取核函数?</li>
+<li>为什么说高斯核函数将原始特征空间映射成了无限维空间?</li>
+<li>核函数中不同参数的影响</li>
+<li>既然深度学习技术性能表现以及全面超越SVM, SVM还有存在的必要吗?</li>
+</ul>
+<p><span id="决策树"></span></p>
+<h2 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h2><p><span id="降维"></span></p>
+<h2 id="降维"><a href="#降维" class="headerlink" title="降维"></a>降维</h2><h1 id="深度学习篇"><a href="#深度学习篇" class="headerlink" title="深度学习篇"></a>深度学习篇</h1><p><span id="优化方法"></span></p>
+<h2 id="优化方法"><a href="#优化方法" class="headerlink" title="优化方法"></a>优化方法</h2><p><strong>梯度下降:</strong> SGD, Momentum, Nesterov, Adagrad, Adadelta, RMSprop, Adam, Adamax<br><strong>牛顿法:</strong><br><strong>拟牛顿法:</strong><br><strong>共轭梯度法:</strong></p>
+<ul>
+<li>各个优化算法的形式, 优点和缺点</li>
+<li>Adam 无法收敛?: <a href="https://www.jiqizhixin.com/articles/2017-12-06" target="_blank" rel="noopener">https://www.jiqizhixin.com/articles/2017-12-06</a></li>
+<li>SGD 的参数设置</li>
+</ul>
+<p><a href="https://www.cnblogs.com/happylion/p/4172632.html" target="_blank" rel="noopener">https://www.cnblogs.com/happylion/p/4172632.html</a></p>
+<p><a href="https://www.cnblogs.com/shixiangwan/p/7532830.html" target="_blank" rel="noopener">https://www.cnblogs.com/shixiangwan/p/7532830.html</a></p>
+<p><a href="https://www.cnblogs.com/hlongch/p/5734105.html" target="_blank" rel="noopener">https://www.cnblogs.com/hlongch/p/5734105.html</a></p>
+<p><a href="https://www.baidu.com/link?url=8EyCqGYnldJzHuqBBGagV9juEA_nhCYvRElM2Tw0lBdewSmc0qshAy_AHAEegO-wT3vLsrcY1xSDdyLOmL09Ltm_UICAFX_C02QdkkSCcWW&amp;wd=&amp;eqid=ce9adcb10004685c000000035b5d4fb6" target="_blank" rel="noopener">https://www.baidu.com/link?url=8EyCqGYnldJzHuqBBGagV9juEA_nhCYvRElM2Tw0lBdewSmc0qshAy_AHAEegO-wT3vLsrcY1xSDdyLOmL09Ltm_UICAFX_C02QdkkSCcWW&amp;wd=&amp;eqid=ce9adcb10004685c000000035b5d4fb6</a></p>
+<p><a href="../深度学习-各种优化方法整理总结">各种优化方法整理总结</a></p>
+<p><a href="https://mp.weixin.qq.com/s/lh4jTYJroq6AKb2fYsP-GQ" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/lh4jTYJroq6AKb2fYsP-GQ</a></p>
+<p><span id="初始化方法"></span></p>
+<h2 id="初始化方法"><a href="#初始化方法" class="headerlink" title="初始化方法"></a>初始化方法</h2><p>constant, uniform, gaussian, xavier, msra(kaiming), bilinear</p>
+<ul>
+<li>各个初始化方法的形式,</li>
+<li>神经网络训练时是否可以将全部参数初始化为 0?</li>
 </ul>
 <p><a href="../深度学习-各种初始化方法深入分析">深度学习-各种初始化方法深入分析</a></p>
-<h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><ul>
-<li>绝对值损失(L1)</li>
-<li>平方损失(L2)</li>
-<li>Binary 交叉熵</li>
-<li>Softmax 交叉熵</li>
-</ul>
+<p><span id="损失函数"></span></p>
+<h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><p>绝对值损失(L1), 平方损失(L2), Binary 交叉熵, Softmax 交叉熵</p>
 <p><a href="../深度学习-各种损失函数深入解析">深度学习-各种损失函数深入解析</a></p>
-<h2 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h2><ul>
-<li>Sigmoid</li>
-<li>Tanh</li>
-<li>ReLU</li>
-<li>Leaky ReLU</li>
-<li>PReLU</li>
-<li>RReLU</li>
-<li>ELU</li>
-<li>Maxout</li>
+<ul>
+<li>写出多层感知机的平方误差和交叉熵误差损失函数</li>
+<li>推导平方误差和交叉熵误差损失函数的各层参数更新的梯度计算公式</li>
+</ul>
+<p><span id="激活函数"></span></p>
+<h2 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h2><p>Sigmoid, Tanh, ReLU, Leaky ReLU, PReLU, RReLU, ELU, Maxout</p>
+<ul>
+<li>写出常用的激活函数的公式及其导数形式</li>
+<li>简单画出常用激活函数的图像</li>
+<li>为什么需要激活函数?</li>
+<li>各个激活函数的优缺点和适用场景</li>
+<li>Sigmoid 激活函数和 Softmax 激活函数的区别</li>
+<li>什么情况下 ReLU 的神经元会死亡? 为什么? 如何解决?</li>
+<li>激活函数的使用原则</li>
 </ul>
 <p><a href="../深度学习-各种激活函数深入解析">深度学习-各种激活函数深入解析</a></p>
-<h2 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h2><ul>
-<li>L1</li>
-<li>L2</li>
-</ul>
+<p><span id="正则化"></span></p>
+<h2 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h2><p>L1, L2</p>
 <p><a href="../深度学习-正则化方法深入解析">深度学习-正则化方法深入解析</a></p>
-<h2 id="感受野"><a href="#感受野" class="headerlink" title="感受野"></a>感受野</h2><p>输入中越靠近感受野中间的元素对特征的贡献越大<br>目标检测中的 anchor 的设置需要匹配感受野的大小<br><a href="https://mp.weixin.qq.com/s/R8rEngNI31w0DQwjjeS6kw" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/R8rEngNI31w0DQwjjeS6kw</a></p>
-<h1 id="网络结构篇"><a href="#网络结构篇" class="headerlink" title="网络结构篇"></a>网络结构篇</h1><div class="table-container">
+<ul>
+<li>L1 正则和 L2 正则的特点是什么? 各有什么优势?</li>
+<li>L1 和 L2 的区别有哪些?</li>
+<li>L1正则化使模型参数稀疏的原理是什么?</li>
+<li>为什么 L1 和 L2 分别对应拉普拉斯先验和高斯先验?</li>
+<li>为什么权重矩阵稀疏可以防止过拟合?</li>
+<li>为何权重参数 $w$ 减小就可以防止过拟合?</li>
+<li>L0 范式和 L1 范式都能实现稀疏, 为什么不选择用 L0 而要用 L1?</li>
+<li>为什么说 L2 范式可以优化计算?</li>
+<li>正则项前面的系数一般怎么设置?</li>
+</ul>
+<p><span id="标准化"></span></p>
+<h2 id="标准化"><a href="#标准化" class="headerlink" title="标准化"></a>标准化</h2><ul>
+<li>Batch Normalization</li>
+<li>Layer Normalization</li>
+<li>Instance Normalization</li>
+<li>Group Normalization</li>
+<li>Switchable Normalization</li>
+</ul>
+<p><span id="感受野"></span></p>
+<h2 id="感受野"><a href="#感受野" class="headerlink" title="感受野"></a>感受野</h2><ul>
+<li>感受野的作用</li>
+<li>理论感受野和有效感受野的区别? <a href="https://mp.weixin.qq.com/s/R8rEngNI31w0DQwjjeS6kw" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/R8rEngNI31w0DQwjjeS6kw</a></li>
+<li>目标检测中的 anchor 的设置和感受野的大小之间有什么关系? <a href="https://mp.weixin.qq.com/s/R8rEngNI31w0DQwjjeS6kw" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/R8rEngNI31w0DQwjjeS6kw</a></li>
+</ul>
+<h2 id="全连接层"><a href="#全连接层" class="headerlink" title="全连接层"></a>全连接层</h2><ul>
+<li>全连接层的作用是什么? <a href="https://www.zhihu.com/question/41037974" target="_blank" rel="noopener">https://www.zhihu.com/question/41037974</a></li>
+<li>为什么要将全连接层转化为卷积层? <a href="https://www.cnblogs.com/liuzhan709/p/9356960.html" target="_blank" rel="noopener">https://www.cnblogs.com/liuzhan709/p/9356960.html</a></li>
+<li>请推导全连接层的反向传播算法. <a href="https://zhuanlan.zhihu.com/p/39195266" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/39195266</a><h2 id="卷积层"><a href="#卷积层" class="headerlink" title="卷积层"></a>卷积层</h2></li>
+</ul>
+<p>卷积层的作用?</p>
+<h2 id="反卷积层"><a href="#反卷积层" class="headerlink" title="反卷积层"></a>反卷积层</h2><p>反卷积与上采样.</p>
+<ul>
+<li>反卷积和双线性插值的区别, 各自的优势</li>
+</ul>
+<h2 id="池化层"><a href="#池化层" class="headerlink" title="池化层"></a>池化层</h2><p>池化层的作用?</p>
+<ul>
+<li>平均池化和最大池化有什么异同?</li>
+<li>为什么用全局平均池化替换全连接层?</li>
+</ul>
+<h2 id="训练问题"><a href="#训练问题" class="headerlink" title="训练问题"></a>训练问题</h2><p><a href="深度学习-训练问题">训练过程中遇到的问题及解决方案</a></p>
+<ul>
+<li>在图像分类任务中, 训练数据不足会带来什么问题, 如何缓解数据量不足带来的问题?</li>
+<li>为什么训练会不收敛? 如何解决?</li>
+<li>过拟合是什么? 如何处理过拟合?</li>
+<li>如何解决数据不均衡问题? <a href="https://www.cnblogs.com/zhaokui/p/5101301.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhaokui/p/5101301.html</a></li>
+</ul>
+<h2 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h2><h1 id="网络结构篇"><a href="#网络结构篇" class="headerlink" title="网络结构篇"></a>网络结构篇</h1><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -653,7 +715,8 @@
 <th style="text-align:center">层数</th>
 <th style="text-align:center">特点</th>
 <th style="text-align:center">参数量</th>
-<th style="text-align:center">备注</th>
+<th style="text-align:center">Top-1 Acc</th>
+<th style="text-align:center">Top-5 Acc</th>
 </tr>
 </thead>
 <tbody>
@@ -661,6 +724,7 @@
 <td style="text-align:center">AlexNet</td>
 <td style="text-align:center">8</td>
 <td style="text-align:center"></td>
+<td style="text-align:center">6000w+</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
@@ -668,50 +732,56 @@
 <td style="text-align:center">VGGNet</td>
 <td style="text-align:center">19</td>
 <td style="text-align:center"></td>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
+<td style="text-align:center">1亿3000w+</td>
+<td style="text-align:center">71.1</td>
+<td style="text-align:center">89.8</td>
 </tr>
 <tr>
 <td style="text-align:center">InceptionV1 (GoogLeNet)</td>
 <td style="text-align:center">22</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
-<td style="text-align:center"></td>
+<td style="text-align:center">69.8</td>
+<td style="text-align:center">89.6</td>
 </tr>
 <tr>
 <td style="text-align:center">InceptionV2</td>
 <td style="text-align:center">22</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
-<td style="text-align:center"></td>
+<td style="text-align:center">73.9</td>
+<td style="text-align:center">91.8</td>
 </tr>
 <tr>
 <td style="text-align:center">InceptionV3</td>
 <td style="text-align:center">22</td>
 <td style="text-align:center"></td>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
+<td style="text-align:center">2000w+</td>
+<td style="text-align:center">78.0</td>
+<td style="text-align:center">93.9</td>
 </tr>
 <tr>
 <td style="text-align:center">InceptionV4</td>
 <td style="text-align:center">22</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
-<td style="text-align:center"></td>
+<td style="text-align:center">80.2</td>
+<td style="text-align:center">95.2</td>
 </tr>
 <tr>
 <td style="text-align:center">ResNet</td>
 <td style="text-align:center">152</td>
 <td style="text-align:center"></td>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
+<td style="text-align:center">200w</td>
+<td style="text-align:center">76.8</td>
+<td style="text-align:center">93.2</td>
 </tr>
 <tr>
 <td style="text-align:center">InceptionResNet</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
+<td style="text-align:center">80.4</td>
+<td style="text-align:center">95.3</td>
 </tr>
 <tr>
 <td style="text-align:center">ResNeXt</td>
@@ -722,45 +792,40 @@
 </tbody>
 </table>
 </div>
-<h2 id="Alex"><a href="#Alex" class="headerlink" title="Alex"></a>Alex</h2><p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1g0ixnfk7w4j20o408q3yr.jpg" alt=""></p>
-<h2 id="VGGNet"><a href="#VGGNet" class="headerlink" title="VGGNet"></a>VGGNet</h2><p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fxmo2fpvavj21650u079w.jpg" alt=""></p>
-<h2 id="InceptionV1"><a href="#InceptionV1" class="headerlink" title="InceptionV1:"></a>InceptionV1:</h2><p>Inception(也叫做 GoogLeNet) 模块基本结构:</p>
-<p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fvn6do3nmnj20un08y75k.jpg" alt=""></p>
+<h2 id="Alex"><a href="#Alex" class="headerlink" title="Alex"></a>Alex</h2><p><div style="width: 550px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1g0ixnfk7w4j20o408q3yr.jpg" alt=""></div></p>
+<h2 id="VGGNet"><a href="#VGGNet" class="headerlink" title="VGGNet"></a>VGGNet</h2><p><div style="width: 550px; margin: auto"><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fxmo2fpvavj21650u079w.jpg" alt=""></div></p>
+<h2 id="InceptionV1"><a href="#InceptionV1" class="headerlink" title="InceptionV1"></a><a href="../计算机视觉-InceptionV1">InceptionV1</a></h2><p>Inception(也叫做 GoogLeNet) 模块基本结构:</p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fvn6do3nmnj20un08y75k.jpg" alt=""></div></p>
 <p>网络结构细节如下图:</p>
-<p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fvn98ano6mj20ps0f5778.jpg" alt=""></p>
-<p><a href="../计算机视觉-InceptionV1">计算机视觉-InceptionV1</a></p>
-<h2 id="InceptionV2"><a href="#InceptionV2" class="headerlink" title="InceptionV2"></a>InceptionV2</h2><p><strong>Inception v2 和 Inception v3 按论文中的说法都是 Rethinking 那篇论文提出来的, 但是 TensorFlow 官网上给的 Inception v2 的文章链接是 Batch Norm, 所以这里有一点混乱</strong></p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fvn98ano6mj20ps0f5778.jpg" alt=""></div></p>
+<h2 id="InceptionV2"><a href="#InceptionV2" class="headerlink" title="InceptionV2"></a><a href="../计算机视觉-InceptionV2">InceptionV2</a></h2><p><strong>Inception v2 和 Inception v3 按论文中的说法都是 Rethinking 那篇论文提出来的, 但是 TensorFlow 官网上给的 Inception v2 的文章链接是 Batch Norm, 所以这里有一点混乱</strong></p>
 <p>InceptionV2 在 V1 的基础上引入了 BN 层, 减少了 Internal Covariate Shift(内部神经元的数据分布差异), 使得每一层的输出都规范化到一个标准高斯分布上.<br>另一方面参考 VGG, 用两个 $3\times 3$ 的卷积核代替了一个 $5\times 5$ 的卷积核, 既降低了参数数量, 也加速的计算速度.</p>
 <p>关于 Batch Normalization 的介绍请看: <a href="../深度学习-Batch-Normalization深入解析">Batch-Normalization深入解析</a></p>
 <p>图4, 图5展示了用两个3×3来替换 5×5 卷积核的示意图.</p>
-<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1g0j0zt2p2yj214z0hnju2.jpg" alt=""></p>
-<p><a href="../计算机视觉-InceptionV2">计算机视觉-InceptionV2</a></p>
-<h2 id="InceptionV3"><a href="#InceptionV3" class="headerlink" title="InceptionV3"></a>InceptionV3</h2><p>InceptionV3 最重要的改进是分解(Factorization), 这样做的好处是既可以加速计算(多余的算力可以用来加深网络), 有可以将一个卷积层拆分成多个卷积层, 进一步加深网络深度, 增加神经网络的非线性拟合能力, 还有值得注意的地方是网络输入从 $224\times 224$ 变成了 $299\times 299$, 更加精细设计了 $35\times 35$, $17\times 17$, $8\times 8$ 的模块</p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1g0k4iw7liaj21e90u0e0c.jpg" alt=""></p>
-<p><a href="../计算机视觉-InceptionV3">计算机视觉-InceptionV3</a></p>
-<h2 id="Inception-v4"><a href="#Inception-v4" class="headerlink" title="Inception v4"></a>Inception v4</h2><p>Inception v4 网络的设计主要沿用了之前在 Inception v2/v3 中提到的几个 CNN 网络的设计原则, 这次谷歌团队将 Inception 网络迁移到了 TensorFlow 上面来执行, 因此降低了系统内存, 算力等条件的限制, 故而可以使用并行性更高的网络设计. 首先在 Inception 网络设计中, 最开始的几层总是不建议使用 Inception 等模块来节省计算以提取信息, 因此它们多是采用普通的卷积层或者相关简单的 Inception 模块, 如图3所示. 剩下的图4~8为 Inception v4 中的各个不同大小的 feature map grid 所使用的 Inception 模型及它们之间的连接. 细看就会发现它们的设计也主要遵循之前在 Inception v3 中所使用的原则, 只是更加复杂了一些. 最终的 Inception v4 网络的结构如下图左侧所示.</p>
-<p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1g0izm5ab4vj21hc0u01kx.jpg" alt="InceptionV4"></p>
-<h2 id="Inception-ResNet-v1"><a href="#Inception-ResNet-v1" class="headerlink" title="Inception ResNet v1"></a>Inception ResNet v1</h2><p>Inception ResNet v1 网络主要被用来与 Inception v3 模型性能进行比较, 因此它所用的 Inception 子网络的计算相对常规模块有所减少, 这是为了保证使得它的整体计算和内存消耗与 Inception v3 近似, 如此才能保证公平性(毕竟谷歌工程师的观点是令 CNN 深度网络在算力与内存受限的情况下性能最优化). Inception v3 的网络结构如下图所示.</p>
-<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1g0izm1fg4kj21hc0u01kx.jpg" alt="InceptionResNetV1"></p>
-<h2 id="Inception-ResNet-v2"><a href="#Inception-ResNet-v2" class="headerlink" title="Inception ResNet v2"></a>Inception ResNet v2</h2><p>Inception ResNet v2 主要被设计来探索残差模块用于 Inception 网络时所尽可能带来的性能提升. 因此它是论文给出的最终性能最高的网络设计方案, 其模型结构如下所示:</p>
-<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1g0izm3b5adj21hc0u04qp.jpg" alt="InceptionResNetV2"></p>
-<p><a href="../计算机视觉-InceptionV4-InceptionResNet">计算机视觉-InceptionV4-InceptionResNet</a></p>
-<h2 id="ResNet"><a href="#ResNet" class="headerlink" title="ResNet"></a>ResNet</h2><p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx8tjak1d4j21ul0nxtgb.jpg" alt=""></p>
-<p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx8tjn73sij21e50iw77t.jpg" alt=""></p>
-<h2 id="ResNeXt"><a href="#ResNeXt" class="headerlink" title="ResNeXt"></a>ResNeXt</h2><p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fxc7ewvfr1j20u00wn0y7.jpg" alt=""></p>
-<p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fxc7gghlzjj21xt0l1n26.jpg" alt=""></p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1g0j0zt2p2yj214z0hnju2.jpg" alt=""></div></p>
+<h2 id="InceptionV3"><a href="#InceptionV3" class="headerlink" title="InceptionV3"></a><a href="../计算机视觉-InceptionV3">InceptionV3</a></h2><p>InceptionV3 最重要的改进是分解(Factorization), 这样做的好处是既可以加速计算(多余的算力可以用来加深网络), 有可以将一个卷积层拆分成多个卷积层, 进一步加深网络深度, 增加神经网络的非线性拟合能力, 还有值得注意的地方是网络输入从 $224\times 224$ 变成了 $299\times 299$, 更加精细设计了 $35\times 35$, $17\times 17$, $8\times 8$ 的模块</p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1g0k4iw7liaj21e90u0e0c.jpg" alt=""></div></p>
+<h2 id="Inception-v4"><a href="#Inception-v4" class="headerlink" title="Inception v4"></a><a href="../InceptionV4 and Inception-ResNet">Inception v4</a></h2><p><div style="width: 550px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1g0izm5ab4vj21hc0u01kx.jpg" alt=""></div></p>
+<p>Inception v4 网络的设计主要沿用了之前在 Inception v2/v3 中提到的几个 CNN 网络的设计原则, 这次谷歌团队将 Inception 网络迁移到了 TensorFlow 上面来执行, 因此降低了系统内存, 算力等条件的限制, 故而可以使用并行性更高的网络设计. 首先在 Inception 网络设计中, 最开始的几层总是不建议使用 Inception 等模块来节省计算以提取信息, 因此它们多是采用普通的卷积层或者相关简单的 Inception 模块, 如图3所示. 剩下的图4~8为 Inception v4 中的各个不同大小的 feature map grid 所使用的 Inception 模型及它们之间的连接. 细看就会发现它们的设计也主要遵循之前在 Inception v3 中所使用的原则, 只是更加复杂了一些. 最终的 Inception v4 网络的结构如下图左侧所示.</p>
+<h2 id="Inception-ResNet-v1"><a href="#Inception-ResNet-v1" class="headerlink" title="Inception ResNet v1"></a><a href="../计算机视觉-InceptionV4-InceptionResNet">Inception ResNet v1</a></h2><p>Inception ResNet v1 网络主要被用来与 Inception v3 模型性能进行比较, 因此它所用的 Inception 子网络的计算相对常规模块有所减少, 这是为了保证使得它的整体计算和内存消耗与 Inception v3 近似, 如此才能保证公平性(毕竟谷歌工程师的观点是令 CNN 深度网络在算力与内存受限的情况下性能最优化). Inception v3 的网络结构如下图所示.</p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1g0izm1fg4kj21hc0u01kx.jpg" alt="InceptionResNetV1"></div></p>
+<h2 id="Inception-ResNet-v2"><a href="#Inception-ResNet-v2" class="headerlink" title="Inception ResNet v2"></a><a href="../计算机视觉-InceptionV4-InceptionResNet">Inception ResNet v2</a></h2><p>Inception ResNet v2 主要被设计来探索残差模块用于 Inception 网络时所尽可能带来的性能提升. 因此它是论文给出的最终性能最高的网络设计方案, 其模型结构如下所示:</p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1g0izm3b5adj21hc0u04qp.jpg" alt="InceptionResNetV2"></div></p>
+<h2 id="ResNet"><a href="#ResNet" class="headerlink" title="ResNet"></a><a href="../计算机视觉-ResNet-CVPR2016">ResNet</a></h2><p><div style="width: 550px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx8tjak1d4j21ul0nxtgb.jpg" alt=""></div></p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx8tjn73sij21e50iw77t.jpg" alt=""></div></p>
+<h2 id="ResNeXt"><a href="#ResNeXt" class="headerlink" title="ResNeXt"></a><a href="../计算机视觉-ResNeXt-CVPR2017">ResNeXt</a></h2><p><div style="width: 550px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fxc7ewvfr1j20u00wn0y7.jpg" alt=""></div></p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fxc7gghlzjj21xt0l1n26.jpg" alt=""></div></p>
 <h1 id="目标检测篇"><a href="#目标检测篇" class="headerlink" title="目标检测篇"></a>目标检测篇</h1><h2 id="NMS"><a href="#NMS" class="headerlink" title="NMS"></a>NMS</h2><h3 id="NMS-1"><a href="#NMS-1" class="headerlink" title="NMS"></a>NMS</h3><p>源码实现: <a href="../计算机视觉-NMS-Implementation">NMS 算法源码实现</a></p>
 <h3 id="SoftNMS"><a href="#SoftNMS" class="headerlink" title="SoftNMS"></a>SoftNMS</h3><p>在 SoftNMS 中, 对于那些重叠度大于一定阈值的 box, 我们并不将其删除, 而仅仅只是根据重叠程度来降低那些 box 的 socre, 这样一来, 这些 box 仍旧处于 box 列表中, 只是 socre 的值变低了. 具体来说, 如果 box 的重叠程度高, 那么 score 的值就会变得很低, 如果重叠程度小, 那么 box 的 score 值就只会降低一点, Soft-NMS 算法伪代码如下图所示:</p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1g0mczrbnkfj20xe0ipdi2.jpg" alt=""></p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1g0mczrbnkfj20xe0ipdi2.jpg" alt=""></div></p>
 <h3 id="SofterNMS"><a href="#SofterNMS" class="headerlink" title="SofterNMS"></a>SofterNMS</h3><p><a href="../计算机视觉-SofterNMS-Arxiv2018">Face++ 论文: SofterNMS-Arxiv2018</a></p>
-<h2 id="R-CNN-系列"><a href="#R-CNN-系列" class="headerlink" title="R-CNN 系列"></a>R-CNN 系列</h2><h3 id="R-CNN"><a href="#R-CNN" class="headerlink" title="R-CNN"></a>R-CNN</h3><ul>
-<li>SS</li>
+<h2 id="R-CNN"><a href="#R-CNN" class="headerlink" title="R-CNN"></a><a href="../计算机视觉-RCNN-CVPR2014">R-CNN</a></h2><ul>
+<li>Selective Search</li>
 <li>AlexNet</li>
 <li>SVM</li>
 <li>Bounding Box Regression</li>
 </ul>
-<script type="math/tex; mode=display">t_x = (G_x - P_x) / P_w, t_y = (G_y - P_y) / P_h</script><script type="math/tex; mode=display">t_w = log(G_w / P_w), t_h = log(G_h / P_h)</script><p><a href="../计算机视觉-RCNN-CVPR2014">计算机视觉-RCNN-CVPR2014</a></p>
-<h3 id="Fast-R-CNN"><a href="#Fast-R-CNN" class="headerlink" title="Fast R-CNN"></a>Fast R-CNN</h3><p><strong>R-CNN 缺点</strong>:</p>
+<script type="math/tex; mode=display">t_x = (G_x - P_x) / P_w, t_y = (G_y - P_y) / P_h</script><script type="math/tex; mode=display">t_w = log(G_w / P_w), t_h = log(G_h / P_h)</script><h2 id="Fast-R-CNN"><a href="#Fast-R-CNN" class="headerlink" title="Fast R-CNN"></a><a href="../计算机视觉-FastRCNN-ICCV2015">Fast R-CNN</a></h2><p><strong>R-CNN 缺点</strong>:</p>
 <ul>
 <li>训练过程是分阶段的(Training is a multi-stage pipeline)</li>
 <li>Training is expensive in space and time</li>
@@ -777,21 +842,117 @@
 <li>整个训练过程更加统一(利用多目标损失函数)</li>
 <li>训练时可以对所有网络层参数进行更新(相比于SPPNet)</li>
 <li>无需在硬盘上额外存储 feature.(相比于 R-CNN, 因为共享卷积计算结果, 使得feature的体积大大降低)</li>
-<li>RoI Pooling Layer (最主要的贡献)</li>
 </ul>
-<p><a href="../计算机视觉-FastRCNN-ICCV2015">计算机视觉-FastRCNN-ICCV2015</a></p>
-<h3 id="Faster-R-CNN"><a href="#Faster-R-CNN" class="headerlink" title="Faster R-CNN"></a>Faster R-CNN</h3><p><a href="../计算机视觉-FasterRCNN-NIPS2015">计算机视觉-FasterRCNN-NIPS2015</a></p>
-<h3 id="Mask-R-CNN"><a href="#Mask-R-CNN" class="headerlink" title="Mask R-CNN"></a>Mask R-CNN</h3><p><a href="../计算机视觉-MaskRCNN-ICCV2017">计算机视觉-MaskRCNN-ICCV2017</a></p>
-<h2 id="FPN"><a href="#FPN" class="headerlink" title="FPN"></a>FPN</h2><p><a href="../计算机视觉-FPN-CVPR2017">计算机视觉-FPN-CVPR2017</a></p>
-<h2 id="RetinaNet"><a href="#RetinaNet" class="headerlink" title="RetinaNet"></a>RetinaNet</h2><p><a href="../计算机视觉-FocalLoss-ICCV2017">计算机视觉-FocalLoss-ICCV2017</a></p>
-<p>FocalLoss</p>
-<h2 id="SSD"><a href="#SSD" class="headerlink" title="SSD"></a>SSD</h2><h3 id="SSD-1"><a href="#SSD-1" class="headerlink" title="SSD"></a>SSD</h3><h3 id="DSSD"><a href="#DSSD" class="headerlink" title="DSSD"></a>DSSD</h3><h2 id="YOLO"><a href="#YOLO" class="headerlink" title="YOLO"></a>YOLO</h2><h3 id="YOLOv1"><a href="#YOLOv1" class="headerlink" title="YOLOv1"></a>YOLOv1</h3><h3 id="YOLOv2"><a href="#YOLOv2" class="headerlink" title="YOLOv2"></a>YOLOv2</h3><p>YOLOv2(也叫做 YOLO9000)</p>
-<h3 id="YOLOv3"><a href="#YOLOv3" class="headerlink" title="YOLOv3"></a>YOLOv3</h3><h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h1 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h1><p>Logistic(Sigmoid) 函数: $g(z) = \frac{1}{1+e^{-z}}$<br>Logistic 表达式: $h_\theta (x) = g(\theta^T x) = \frac{1}{1 + e^{-\theta^Tx}}$<br>线性回归模型: $\theta^T x = \sum^n_{i=1}\theta_i x_i$<br>SGD</p>
+<p><strong>要点</strong>:</p>
+<ul>
+<li>Multi-task loss: 下式中, $L_{cls}(p,u) = - log p_u$, 即对于真实类别 $u$ 的 log 损失.<script type="math/tex; mode=display">L(p, u, t_u, v) = L_{cls}(p,u) + \lambda [u \geq 1] L_{loc}(t^u, v) \tag 1</script><script type="math/tex; mode=display">L_{loc}(t^u, v) = \sum_{i\in {x,y,w,h}} smooth_{L_1}(t_i^u - v_i) \tag 2</script><script type="math/tex; mode=display">smooth_{L_1}(x) = \begin{cases} 0.5x^2 && |x|<1 \\ |x| - 0.5 && otherwise \end{cases} \tag 3</script></li>
+<li>Mini-batch Sampling</li>
+<li>RoI Pooling Layer</li>
+<li><a href="../深度学习-奇异值分解">Truncated SVD 截断式奇异矩阵分解</a></li>
+</ul>
+<h2 id="Faster-R-CNN"><a href="#Faster-R-CNN" class="headerlink" title="Faster R-CNN"></a><a href="../计算机视觉-FasterRCNN-NIPS2015">Faster R-CNN</a></h2><ul>
+<li>RPN (Region Proposals Networks)<br><div style="width: 550px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fxsf9g1udsj21q00s3152.jpg" alt="图2"></div></li>
+<li>损失函数<script type="math/tex; mode=display">L(\{p_i\}, \{t_i\}) = \frac{1}{N_{cls}} \sum_i L_{cls}(p_i, p_i^* ) + \lambda \frac{1}{N_{reg}} \sum_i p_i^* L_{reg}(t_i, t_i^* )</script></li>
+<li>RPN 与 Fast R-CNN 共享卷积参数<ul>
+<li>Alternating training(交叉训练)</li>
+<li>Approximate joint training(近似联合训练)</li>
+<li>Non-approximate joint training(非近似联合训练)</li>
+</ul>
+</li>
+</ul>
+<p><strong>问题:</strong></p>
+<p>(1). 为什么 Fast 和 Faster R-CNN 没有采用像 multi-scale testing (image pyramids)?</p>
+<ul>
+<li>FPN: 但是, 在 image pyramids 的每一层上提取特征具有很明显的缺点, 那就是会使得 Inference time 显著提升. 更进一步的, 会使得在 image pyramid 上训练端到端的深层网络变的不可行, 也因此, 我们仅仅在测试阶段才会使用 image pyramids, 这会在训练和测试阶段之间产生不一致问题. <strong>基于以上原因, Fast 和 Faster R-CNN 选择在默认设置下不使用 featurized image pyramids</strong></li>
+</ul>
+<h2 id="Mask-R-CNN"><a href="#Mask-R-CNN" class="headerlink" title="Mask R-CNN"></a><a href="../计算机视觉-MaskRCNN-ICCV2017">Mask R-CNN</a></h2><ul>
+<li>基于 Faster R-CNN 的基本结构, 替换 backbone 为 ResNet-50/101-C4 和 ResNet-50/101-FPN, ResNeXt-101-FPN.</li>
+<li>除了边框回归和目标分类两个分支外, 新添加了一个全卷积的 Mask Prediction 网络, 该分支在每一个 RoI 上的输出维度为 $K\times m^2$, 代表 $K$ 个类别的二值掩膜.</li>
+<li>在计算 mask 的损失时, 使用的是 sigmoid 的二分类损失, 而不是多分类的 softmax 损失, 这减少了类别之前的竞争, 使得可以生成更好的分割结果.</li>
+<li>RoIAlign 消除了 RoI Pooling 中的两次量化操作, 使得最终提取到的特征可以 RoI 尽可能的对齐. 从而大幅提升在实例分割任务上的性能表现.</li>
+</ul>
+<p><div style="width: 550px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fx1toyw0xkj20kc0a5wkw.jpg" alt="图1"></div></p>
+<h2 id="FPN"><a href="#FPN" class="headerlink" title="FPN"></a><a href="../计算机视觉-FPN-CVPR2017">FPN</a></h2><h2 id="RetinaNet"><a href="#RetinaNet" class="headerlink" title="RetinaNet"></a><a href="../计算机视觉-FocalLoss-ICCV2017">RetinaNet</a></h2><p>FocalLoss</p>
+<h2 id="SSD"><a href="#SSD" class="headerlink" title="SSD"></a>SSD</h2><p>【链接】目标检测|SSD原理与实现<br><a href="https://zhuanlan.zhihu.com/p/33544892" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/33544892</a></p>
+<p><strong>问题:</strong></p>
+<ul>
+<li>为什么SSD不直接使用浅层的特征图谱, 而非要额外增加卷积层, 这样不是增加模型的复杂度了吗?</li>
+<li>SSD 使用了哪些数据增广方法?</li>
+</ul>
+<h2 id="YOLO"><a href="#YOLO" class="headerlink" title="YOLO"></a>YOLO</h2><p><a href="http://caffecn.cn/?/question/1842" target="_blank" rel="noopener">http://caffecn.cn/?/question/1842</a></p>
+<h3 id="YOLOv1"><a href="#YOLOv1" class="headerlink" title="YOLOv1"></a>YOLOv1</h3><h3 id="YOLOv2"><a href="#YOLOv2" class="headerlink" title="YOLOv2"></a>YOLOv2</h3><p>YOLOv2(也叫做 YOLO9000)</p>
+<h3 id="YOLOv3"><a href="#YOLOv3" class="headerlink" title="YOLOv3"></a>YOLOv3</h3><h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h1 id="图像处理篇"><a href="#图像处理篇" class="headerlink" title="图像处理篇"></a>图像处理篇</h1><p>4.1 图像特征提取的算法有哪些，各自优缺点、适用范围<br><a href="https://blog.csdn.net/xiongchao99/article/details/78776629" target="_blank" rel="noopener">https://blog.csdn.net/xiongchao99/article/details/78776629</a></p>
+<h2 id="图像边缘检测算法"><a href="#图像边缘检测算法" class="headerlink" title="图像边缘检测算法"></a>图像边缘检测算法</h2><p><a href="https://www.jianshu.com/p/2334bee37de5" target="_blank" rel="noopener">https://www.jianshu.com/p/2334bee37de5</a></p>
+<p><a href="https://blog.csdn.net/KYJL888/article/details/78253053" target="_blank" rel="noopener">https://blog.csdn.net/KYJL888/article/details/78253053</a></p>
+<p>Roberts算子<br>Sobel算子<br>Prewit算子<br>Canny算子</p>
+<h2 id="霍夫变换"><a href="#霍夫变换" class="headerlink" title="霍夫变换"></a>霍夫变换</h2><p><a href="https://www.cnblogs.com/AndyJee/p/3805594.html" target="_blank" rel="noopener">https://www.cnblogs.com/AndyJee/p/3805594.html</a></p>
+<p><a href="https://blog.csdn.net/m0_37264397/article/details/72729423" target="_blank" rel="noopener">https://blog.csdn.net/m0_37264397/article/details/72729423</a></p>
+<h2 id="图像保边滤波器"><a href="#图像保边滤波器" class="headerlink" title="图像保边滤波器"></a>图像保边滤波器</h2><p><a href="https://blog.csdn.net/Trent1985/article/details/80509232" target="_blank" rel="noopener">https://blog.csdn.net/Trent1985/article/details/80509232</a></p>
+<p><a href="https://blog.csdn.net/eejieyang/article/details/52333112" target="_blank" rel="noopener">https://blog.csdn.net/eejieyang/article/details/52333112</a></p>
+<p><a href="https://blog.csdn.net/LG1259156776/article/details/51816875" target="_blank" rel="noopener">https://blog.csdn.net/LG1259156776/article/details/51816875</a></p>
+<p><a href="https://blog.csdn.net/u012968002/article/details/44463229" target="_blank" rel="noopener">https://blog.csdn.net/u012968002/article/details/44463229</a></p>
+<h2 id="图像平移"><a href="#图像平移" class="headerlink" title="图像平移"></a>图像平移</h2><p><a href="https://blog.csdn.net/qq_25867649/article/details/52131252" target="_blank" rel="noopener">https://blog.csdn.net/qq_25867649/article/details/52131252</a></p>
+<p><a href="https://blog.csdn.net/linqianbi/article/details/78593203" target="_blank" rel="noopener">https://blog.csdn.net/linqianbi/article/details/78593203</a></p>
+<h2 id="图像开操作、闭操作"><a href="#图像开操作、闭操作" class="headerlink" title="图像开操作、闭操作"></a>图像开操作、闭操作</h2><p><a href="https://blog.csdn.net/learning_tortosie/article/details/80030201" target="_blank" rel="noopener">https://blog.csdn.net/learning_tortosie/article/details/80030201</a></p>
+<p><a href="https://blog.csdn.net/water_93/article/details/50859193" target="_blank" rel="noopener">https://blog.csdn.net/water_93/article/details/50859193</a></p>
+<p><a href="https://www.cnblogs.com/daxiongblog/p/6289551.html" target="_blank" rel="noopener">https://www.cnblogs.com/daxiongblog/p/6289551.html</a></p>
+<h2 id="图像旋转"><a href="#图像旋转" class="headerlink" title="图像旋转"></a>图像旋转</h2><p><a href="https://www.cnblogs.com/hustlx/p/5245226.html" target="_blank" rel="noopener">https://www.cnblogs.com/hustlx/p/5245226.html</a></p>
+<p><a href="https://blog.csdn.net/ccblogger/article/details/72918354" target="_blank" rel="noopener">https://blog.csdn.net/ccblogger/article/details/72918354</a></p>
+<h2 id="图像重建质量评价指标"><a href="#图像重建质量评价指标" class="headerlink" title="图像重建质量评价指标"></a>图像重建质量评价指标</h2><p><a href="https://blog.csdn.net/smallstones/article/details/42198049" target="_blank" rel="noopener">https://blog.csdn.net/smallstones/article/details/42198049</a></p>
+<h2 id="光流法"><a href="#光流法" class="headerlink" title="光流法"></a>光流法</h2><p><a href="https://blog.csdn.net/longlovefilm/article/details/79824723" target="_blank" rel="noopener">https://blog.csdn.net/longlovefilm/article/details/79824723</a></p>
+<p><a href="https://www.xuebuyuan.com/3203656.html" target="_blank" rel="noopener">https://www.xuebuyuan.com/3203656.html</a></p>
+<h2 id="图像去噪的方法"><a href="#图像去噪的方法" class="headerlink" title="图像去噪的方法"></a>图像去噪的方法</h2><p><a href="https://blog.csdn.net/eric_e/article/details/79504444" target="_blank" rel="noopener">https://blog.csdn.net/eric_e/article/details/79504444</a></p>
+<h2 id="度量图像patch相似度的方法"><a href="#度量图像patch相似度的方法" class="headerlink" title="度量图像patch相似度的方法"></a>度量图像patch相似度的方法</h2><p><a href="https://blog.csdn.net/lg1259156776/article/details/47037583/" target="_blank" rel="noopener">https://blog.csdn.net/lg1259156776/article/details/47037583/</a></p>
+<p><a href="https://blog.csdn.net/zchang81/article/details/73275155/" target="_blank" rel="noopener">https://blog.csdn.net/zchang81/article/details/73275155/</a></p>
+<p><a href="https://blog.csdn.net/yangyangyang20092010/article/details/8472257" target="_blank" rel="noopener">https://blog.csdn.net/yangyangyang20092010/article/details/8472257</a></p>
+<h2 id="传统图像处理CDC做过吗？"><a href="#传统图像处理CDC做过吗？" class="headerlink" title="传统图像处理CDC做过吗？"></a>传统图像处理CDC做过吗？</h2><h2 id="傅里叶变换"><a href="#傅里叶变换" class="headerlink" title="傅里叶变换"></a>傅里叶变换</h2><h2 id="图像融合算法有哪些？"><a href="#图像融合算法有哪些？" class="headerlink" title="图像融合算法有哪些？"></a>图像融合算法有哪些？</h2><h2 id="图像增强算法有哪些"><a href="#图像增强算法有哪些" class="headerlink" title="图像增强算法有哪些"></a>图像增强算法有哪些</h2><h2 id="图像滤波方法"><a href="#图像滤波方法" class="headerlink" title="图像滤波方法"></a>图像滤波方法</h2><h2 id="直方图均衡化"><a href="#直方图均衡化" class="headerlink" title="直方图均衡化"></a>直方图均衡化</h2><p><a href="https://www.cnblogs.com/hustlx/p/5245461.html" target="_blank" rel="noopener">https://www.cnblogs.com/hustlx/p/5245461.html</a></p>
+<p><a href="https://www.cnblogs.com/tianyalu/p/5687782.html" target="_blank" rel="noopener">https://www.cnblogs.com/tianyalu/p/5687782.html</a></p>
+<h1 id="数学基础篇"><a href="#数学基础篇" class="headerlink" title="数学基础篇"></a>数学基础篇</h1><p>5.1 概率分布<br>5.2 期望、方差、协方差、相关系数<br>5.3 假设检验<br><a href="https://support.minitab.com/zh-cn/minitab/18/help-and-how-to/statistics/basic-statistics/supporting-topics/basics/what-is-a-hypothesis-test/" target="_blank" rel="noopener">https://support.minitab.com/zh-cn/minitab/18/help-and-how-to/statistics/basic-statistics/supporting-topics/basics/what-is-a-hypothesis-test/</a></p>
+<p><a href="https://blog.csdn.net/pipisorry/article/details/51182843" target="_blank" rel="noopener">https://blog.csdn.net/pipisorry/article/details/51182843</a></p>
+<p><a href="https://blog.csdn.net/YtdxYHZ/article/details/51780310" target="_blank" rel="noopener">https://blog.csdn.net/YtdxYHZ/article/details/51780310</a></p>
+<p>5.4 54张牌，分3组，大王小王同在一组的概率<br>分成3份 总的分法 M=(C54，18)(C36，18)(C18，18)</p>
+<p>大小王在同一份N=(C3，1)(C52，16)(C36，18)x(C18，18) P=N /M=17/53 。</p>
+<p>5.5 最大似然估计、贝叶斯估计<br><a href="https://blog.csdn.net/bitcarmanlee/article/details/52201858" target="_blank" rel="noopener">https://blog.csdn.net/bitcarmanlee/article/details/52201858</a></p>
+<p><a href="https://www.cnblogs.com/zjh225901/p/7495505.html" target="_blank" rel="noopener">https://www.cnblogs.com/zjh225901/p/7495505.html</a></p>
+<p><a href="https://blog.csdn.net/feilong_csdn/article/details/61633180" target="_blank" rel="noopener">https://blog.csdn.net/feilong_csdn/article/details/61633180</a></p>
+<p>5.6<br><a href="https://www.nowcoder.com/questionTerminal/836b01b7809248b7b6e9c30495d4680e?from=14pdf" target="_blank" rel="noopener">https://www.nowcoder.com/questionTerminal/836b01b7809248b7b6e9c30495d4680e?from=14pdf</a></p>
+<p>假设一段公路上，1小时内有汽车经过的概率为96%，那么，30分钟内有汽车经过的概率为?</p>
+<p>48%<br>52%<br>80%<br>96%</p>
+<p>一小时有车的概率 = 1 - 一小时没车的概率 = 1 - 两个半小时都没车的概率 = 1 - （1 - 半小时有车的概率）^2<br>1-(1-x)^2=0.96<br>x = 0.8</p>
+<p>5.7 三门问题<br>三个宝箱里有一个宝箱里有宝物，两个是空的，你选了一个，主持人打开剩下2个中的一个发现没有宝物，问你换不换</p>
+<p>假设A无，B无，C有，<br>选A，则主持人只会开B，1/3概率；<br>选B，则主持人只会开A，1/3概率；<br>选C，则主持人会开A\B，1/3概率；</p>
+<p>可见，不换只有1/3的概率中，换的话，有2/3的概率中；</p>
+<p>5.8 概率题：抛一个骰子，直到集齐六面，问抛骰子的期望次数。<br>5.9 概率题：抛色子连续n次正面向上的期望次数。<br>5.10 一个人向北走了一公里，向东走了一公里，又向南走了一公里，最后回到了最开始的起点，为什么？<br>南极点，刚好一个等边三角形；</p>
+<p>或者是一个一圈距离刚好是1公里的那个地方。向北走之后，达到那个地方，饶了一圈回到这个地方，再向南走回去。</p>
+<p><a href="https://blog.csdn.net/Turinglife/article/details/7358061" target="_blank" rel="noopener">https://blog.csdn.net/Turinglife/article/details/7358061</a></p>
+<p>从逻辑上来讲，题目从好像缺少了一次向西的过程，才可以回到原地。有没有可能向东1公里还在原地，答案是肯定的，如果有一个纬度，绕其一圈恰好是1公里即可实现，所以这样的点有无穷多个，只要找到那个纬度即可。</p>
+<p>5.11 一个四位数abcd，满足abcd <em> 4 = dcba，求这个数<br>a9没有进位，且为四位数，a只能为1<br>d9个位数为1，d只能是9<br>b9后为个位数（9加任何数进位），这个数只能是1或0，排除1，b=0<br>c9+8的尾数为0，则c</em>9个位数为2，c=8</p>
+<p>a4没有进位，说明a=1或2，但是d4的个位是a，不可能a=1，所以a=2;</p>
+<p>d=a4=8;而且没有进位，说明b4+它的可能进位不超过10；</p>
+<p>如果b=0：则c*4的个位需要是7，不存在，不符；</p>
+<p>如果b=1：则c*4的个位需要是8，存c=2不符合，c=7符合，所以为2178；</p>
+<p>如果b=2:则c*4的个位需要是9，不符；</p>
+<p>5.12 概率题：一个家庭有两个孩子，已知其中一个是女孩，求另一个也是女孩的概率<br>(1/21/2)/(1-1/21/2)<br>=(1/4)/(3/4)<br>=1/3</p>
+<p>5.13 16个球队中随机选2个，在大量选取后，越强的队越容易被选中<br>5.14 有一个3L、一个5L的桶，请量出4L的水<br>5L桶装满水，倒入3L桶；此时5L中有2L水，3L桶中有3L水；</p>
+<p>3L桶全部倒走，将5L桶的2L水道入3L桶中，此时5L桶中没有水，3L桶中有2L水；</p>
+<p>将5L桶倒满水，然后向3L桶中倒水，此时3L桶水已满，5L桶中还剩4L水。</p>
+<p>5.15 把1~9这9个数填入九格宫里,使每一横、竖、斜相等。<br><a href="https://zhidao.baidu.com/question/329122415632328485.html" target="_blank" rel="noopener">https://zhidao.baidu.com/question/329122415632328485.html</a></p>
+<p>5.16 一个圆上随机三个点组成锐角三角形的概率<br>一个圆周上,随机点三个点,这三个点在同一个半圆上的概率是多少?<br>三个点在同一个半圆时,形成的三角形为直角或钝角三形（自己想为什么）.<br>不在同一个半圆时,为锐角三角形.<br>三点在同一半圆的概率是3/4,所以你这题的答案为1/4.</p>
+<p>设在圆上任取的3点是A、B、C。圆心为 O<br>先假定A、B的位置，设弦AB的圆心角为∠α，且∠α属于[0，π].那么满足锐角三角形的C点就要在AO延长线与BO延长线间，所以C点的取值范围只有圆心为α的弧，即概率为：α/（2π）<br>对任意A、B的位置，C点的概率为对α/（2π）从[0，π]积分，结果是 π/4</p>
+<p>关于为什么C点就要在AO延长线与BO延长线间，因为C点如果不在这之间，则ABC三点就会处于同一个半圆中。而处于同一个半圆中的三个点构成直角或者钝角三角形。</p>
+<h1 id="常见问题篇"><a href="#常见问题篇" class="headerlink" title="常见问题篇"></a>常见问题篇</h1><p><a href="../面试-计算机视觉问题汇总">面试-计算机视觉问题汇总</a></p>
+<ul>
+<li>简述一下现在的 SOTA 目标检测模型</li>
+<li>简要说一下 SSD, FPN, RefineDet, PFPNet, STDN, M2Det 等特征金字塔的区别?</li>
+<li>你知道有哪些常用的训练 Trick?</li>
+<li>知道哪些数据增广方法? 怎么实现的?</li>
+<li>FCN 是如何降低计算量的?</li>
+</ul>
+<h1 id="逻辑回归-1"><a href="#逻辑回归-1" class="headerlink" title="逻辑回归"></a>逻辑回归</h1><p>Logistic(Sigmoid) 函数: $g(z) = \frac{1}{1+e^{-z}}$<br>Logistic 表达式: $h_\theta (x) = g(\theta^T x) = \frac{1}{1 + e^{-\theta^Tx}}$<br>线性回归模型: $\theta^T x = \sum^n_{i=1}\theta_i x_i$<br>SGD</p>
 <p>Logistic 的梯度更新表达式和最小二乘法(LMS)的公式相同, 虽然看上去完全相同, 但实际上 SGD 和 LMS 是两个完全不同的算法, 因为 SGD 中的 $h_\theta (x)$ 表示的是关于 $\theta^T x$ 的一个非线性函数.</p>
 <p>机器学习500问 第二章<br>百面机器学习 第三章</p>
 <h1 id="线性回归和逻辑回归的原理和区别"><a href="#线性回归和逻辑回归的原理和区别" class="headerlink" title="线性回归和逻辑回归的原理和区别"></a>线性回归和逻辑回归的原理和区别</h1><h1 id="在Faster-RCNN中-如果两个物体重合度很高-会怎么样"><a href="#在Faster-RCNN中-如果两个物体重合度很高-会怎么样" class="headerlink" title="在Faster RCNN中, 如果两个物体重合度很高, 会怎么样"></a>在Faster RCNN中, 如果两个物体重合度很高, 会怎么样</h1><p>由于 Faster RCNN 在提取感兴趣区域的时候, 它的类别默认是只有二类, 即是否包含物体, 所以如果两个物体重合度很高的话, 最终可能就只能检测出一个物体.(right?)</p>
 <h1 id="卷积神经网络复杂度分析"><a href="#卷积神经网络复杂度分析" class="headerlink" title="卷积神经网络复杂度分析"></a>卷积神经网络复杂度分析</h1><p><a href="../深度学习-卷积神经网络复杂度分析">卷积神经网络复杂度分析</a></p>
-<h1 id="全连接层的作用是什么？"><a href="#全连接层的作用是什么？" class="headerlink" title="全连接层的作用是什么？"></a>全连接层的作用是什么？</h1><p><a href="https://www.zhihu.com/question/41037974" target="_blank" rel="noopener">https://www.zhihu.com/question/41037974</a></p>
 <h1 id="卷积计算-卷积层特参数个数及征图谱尺寸计算"><a href="#卷积计算-卷积层特参数个数及征图谱尺寸计算" class="headerlink" title="卷积计算,卷积层特参数个数及征图谱尺寸计算"></a>卷积计算,卷积层特参数个数及征图谱尺寸计算</h1><p>卷积层输入图谱大小为 $D_in \times D_{in} \times depth_{in}$ , 卷积核尺寸为 $F \times F \times depth_{in}$, 步长为 $stride$ ,结合padding,输出的图谱size是多少</p>
 <script type="math/tex; mode=display">D_{out} = \frac{D_{in} - F + 2*Padding}{stride} + 1</script><p>输出的特征图谱的深度为卷积核的个数: $depth_{out} = Num_{filters}$</p>
 <p>本层的偏置参数数量: $Num_{bias} = Num_{filters}$, 注意只与卷积核的个数有关, 与输入的特征图谱的深度无关</p>
@@ -812,7 +973,8 @@
 <li>BN是在每一个batch上做标准化的, 并且不仅仅只对输入层数据做标准化, 对网络内部的隐藏层输入也会进行标准话</li>
 <li>第二就是BN并不是在标准的减均值初标准差之后, 还会进行一个线性变换,<strong>其本质就是改变数据分布的方差和均值</strong>. 对应的两个参数是通过学习学出来的. 其主要思想是考虑到数据可能本身就具有一定的不对称性, 并且激活函数也不一定就在面对标准数据时才有最好的表现, 因此</li>
 </ul>
-<p>关于BN的详细解析可以看:<br><img src="Batch-Normalization深入解析" alt=""></p>
+<p>关于BN的详细解析可以看:</p>
+<p><div style="width: 550px; margin: auto"><img src="Batch-Normalization深入解析" alt=""></div></p>
 <h1 id="各种初始化方式，及公式各个参数对训练的影响"><a href="#各种初始化方式，及公式各个参数对训练的影响" class="headerlink" title="各种初始化方式，及公式各个参数对训练的影响"></a>各种初始化方式，及公式各个参数对训练的影响</h1><h1 id="目标检测，数据不平衡问题怎么解决"><a href="#目标检测，数据不平衡问题怎么解决" class="headerlink" title="目标检测，数据不平衡问题怎么解决"></a>目标检测，数据不平衡问题怎么解决</h1><p>对于目标物的不平衡问题, 通过采样方法来缓解.</p>
 <p>对于前后景样本数的不平衡问题, 尝试使用FocalLoss来解决</p>
 <script type="math/tex; mode=display">L = -(1-p_t)^\gamma log(p_t)</script><h1 id="你的zerotensor和TF比性能上有优势吗"><a href="#你的zerotensor和TF比性能上有优势吗" class="headerlink" title="你的zerotensor和TF比性能上有优势吗"></a>你的zerotensor和TF比性能上有优势吗</h1><h1 id="常用的数据增强技术"><a href="#常用的数据增强技术" class="headerlink" title="常用的数据增强技术"></a>常用的数据增强技术</h1><p>水平或垂直翻转图像、裁剪、色彩变换、扩展和旋转</p>
@@ -991,7 +1153,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">217</span>
+                    <span class="site-state-item-count">235</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1030,7 +1192,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1115,7 +1279,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">36</span>
+                      
+                    
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1179,7 +1345,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基础篇"><span class="nav-text">基础篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#梯度下降优化方法"><span class="nav-text">梯度下降优化方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化方法"><span class="nav-text">初始化方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#损失函数"><span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#激活函数"><span class="nav-text">激活函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正则化"><span class="nav-text">正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#感受野"><span class="nav-text">感受野</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网络结构篇"><span class="nav-text">网络结构篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Alex"><span class="nav-text">Alex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VGGNet"><span class="nav-text">VGGNet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#InceptionV1"><span class="nav-text">InceptionV1:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#InceptionV2"><span class="nav-text">InceptionV2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#InceptionV3"><span class="nav-text">InceptionV3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inception-v4"><span class="nav-text">Inception v4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inception-ResNet-v1"><span class="nav-text">Inception ResNet v1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inception-ResNet-v2"><span class="nav-text">Inception ResNet v2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ResNet"><span class="nav-text">ResNet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ResNeXt"><span class="nav-text">ResNeXt</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目标检测篇"><span class="nav-text">目标检测篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#NMS"><span class="nav-text">NMS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NMS-1"><span class="nav-text">NMS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SoftNMS"><span class="nav-text">SoftNMS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SofterNMS"><span class="nav-text">SofterNMS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#R-CNN-系列"><span class="nav-text">R-CNN 系列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#R-CNN"><span class="nav-text">R-CNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fast-R-CNN"><span class="nav-text">Fast R-CNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Faster-R-CNN"><span class="nav-text">Faster R-CNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mask-R-CNN"><span class="nav-text">Mask R-CNN</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FPN"><span class="nav-text">FPN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RetinaNet"><span class="nav-text">RetinaNet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSD"><span class="nav-text">SSD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SSD-1"><span class="nav-text">SSD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DSSD"><span class="nav-text">DSSD</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#YOLO"><span class="nav-text">YOLO</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLOv1"><span class="nav-text">YOLOv1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLOv2"><span class="nav-text">YOLOv2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLOv3"><span class="nav-text">YOLOv3</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#逻辑回归"><span class="nav-text">逻辑回归</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线性回归和逻辑回归的原理和区别"><span class="nav-text">线性回归和逻辑回归的原理和区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在Faster-RCNN中-如果两个物体重合度很高-会怎么样"><span class="nav-text">在Faster RCNN中, 如果两个物体重合度很高, 会怎么样</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#卷积神经网络复杂度分析"><span class="nav-text">卷积神经网络复杂度分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#全连接层的作用是什么？"><span class="nav-text">全连接层的作用是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#卷积计算-卷积层特参数个数及征图谱尺寸计算"><span class="nav-text">卷积计算,卷积层特参数个数及征图谱尺寸计算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#L2正则化和L2规范化-归一化-的不同"><span class="nav-text">L2正则化和L2规范化(归一化)的不同</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#从-rcnn-到-faster"><span class="nav-text">从 rcnn 到 faster</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么fast-rcnn的roi-pooling比spp的-spatial-pooling效果好"><span class="nav-text">为什么fast rcnn的roi pooling比spp的 spatial pooling效果好???</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#神经网络参数初始化"><span class="nav-text">神经网络参数初始化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分类问题为什么用交叉熵"><span class="nav-text">分类问题为什么用交叉熵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Relu和Dropout都具有正则化作用-它们在正则化方面的区别是什么"><span class="nav-text">Relu和Dropout都具有正则化作用, 它们在正则化方面的区别是什么?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#介绍一下-hard-negative-mining-难样例挖掘"><span class="nav-text">介绍一下 hard negative mining(难样例挖掘)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dropout内部是怎么实现的"><span class="nav-text">dropout内部是怎么实现的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简述一下BN"><span class="nav-text">简述一下BN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#各种初始化方式，及公式各个参数对训练的影响"><span class="nav-text">各种初始化方式，及公式各个参数对训练的影响</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目标检测，数据不平衡问题怎么解决"><span class="nav-text">目标检测，数据不平衡问题怎么解决</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#你的zerotensor和TF比性能上有优势吗"><span class="nav-text">你的zerotensor和TF比性能上有优势吗</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用的数据增强技术"><span class="nav-text">常用的数据增强技术</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#有哪些可以避免过拟合的办法"><span class="nav-text">有哪些可以避免过拟合的办法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#正则化L1和L2的区别"><span class="nav-text">正则化L1和L2的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#rcnn。。"><span class="nav-text">rcnn。。</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推导svm"><span class="nav-text">推导svm</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#卷积层的参数个数计算公式是："><span class="nav-text">卷积层的参数个数计算公式是：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#梯度消失和梯度爆炸的概念，引用这两个现象的原因及其解决办法"><span class="nav-text">梯度消失和梯度爆炸的概念，引用这两个现象的原因及其解决办法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于各种激活函数的解析与讨论"><span class="nav-text">关于各种激活函数的解析与讨论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简述ResNet"><span class="nav-text">简述ResNet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#嵌入式开发很底层-一般还是倾向于做一些上层的东西"><span class="nav-text">嵌入式开发很底层   一般还是倾向于做一些上层的东西</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推导SVM"><span class="nav-text">推导SVM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#比较Boosting和Bagging的异同"><span class="nav-text">比较Boosting和Bagging的异同</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#无监督学习中存在过拟合吗"><span class="nav-text">无监督学习中存在过拟合吗?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是K折交叉验证"><span class="nav-text">什么是K折交叉验证?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于k折交叉验证-需要注意什么"><span class="nav-text">关于k折交叉验证, 需要注意什么?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对于一个二分类问题-我们定义超过阈值t的判定为正例-否则判定为负例-现在若将t增大-则准确率和召回率会如何变化"><span class="nav-text">对于一个二分类问题, 我们定义超过阈值t的判定为正例, 否则判定为负例. 现在若将t增大, 则准确率和召回率会如何变化?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#增加网络层数-是否总能减小训练集错误率"><span class="nav-text">增加网络层数, 是否总能减小训练集错误率?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在目标检测问题上-如何做数据增广"><span class="nav-text">在目标检测问题上, 如何做数据增广?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#softmax怎么跟交叉熵损失函数结合"><span class="nav-text">softmax怎么跟交叉熵损失函数结合?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#用梯度下降训练神经网络的参数-为什么参数有时候会被训练为nan值"><span class="nav-text">用梯度下降训练神经网络的参数, 为什么参数有时候会被训练为nan值?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#有没有自己试过更改模型的框架"><span class="nav-text">有没有自己试过更改模型的框架.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#说一下你所有的提高精度的方法-并且说明它们带来了多少的精度提升"><span class="nav-text">说一下你所有的提高精度的方法, 并且说明它们带来了多少的精度提升!</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SSD已经使用了难样例挖掘的技巧-Focal-Loss-相比之下为什么能够提高"><span class="nav-text">SSD已经使用了难样例挖掘的技巧, Focal Loss 相比之下为什么能够提高</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#池化的优点-优化的缺点"><span class="nav-text">池化的优点, 优化的缺点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#待定"><span class="nav-text">待定</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#完善bisai待看"><span class="nav-text">完善bisai待看</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#谈谈你参加的比赛"><span class="nav-text">谈谈你参加的比赛</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对于一个新任务-你一般都会使用那些数据预处理方法"><span class="nav-text">(对于一个新任务,) 你一般都会使用那些数据预处理方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#比赛中用到的模型融合方法"><span class="nav-text">比赛中用到的模型融合方法:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#你的方法与其他人方法的区别是什么-为什么比别人的方法差"><span class="nav-text">你的方法与其他人方法的区别是什么? 为什么比别人的方法差?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对于faster-rcnn-你都调了哪些参数"><span class="nav-text">对于faster rcnn 你都调了哪些参数?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN具体是什么实现的"><span class="nav-text">BN具体是什么实现的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对于平均移动了解吗"><span class="nav-text">对于平均移动了解吗</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#积分图-快速求矩阵的核"><span class="nav-text">积分图, 快速求矩阵的核</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#样本不均衡问题怎么解决"><span class="nav-text">样本不均衡问题怎么解决</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#详细说一下Focal-Loss"><span class="nav-text">详细说一下Focal Loss</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#说一下为什么Faster-比YOLO和SSD更准确"><span class="nav-text">说一下为什么Faster 比YOLO和SSD更准确</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#样本采样的理论化值是"><span class="nav-text">样本采样的理论化值是</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#anchor的参数设值怎么选的？-为什么这么设置"><span class="nav-text">anchor的参数设值怎么选的？  为什么这么设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在调试RPN网络时有没有遇到什么问题？"><span class="nav-text">在调试RPN网络时有没有遇到什么问题？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简述一下faster-rcnn模型"><span class="nav-text">简述一下faster rcnn模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简述一下ResNet模型及它解决的问题"><span class="nav-text">简述一下ResNet模型及它解决的问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#总目录篇"><span class="nav-text">总目录篇</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#机器学习篇"><span class="nav-text">机器学习篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑回归"><span class="nav-text">逻辑回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#支持向量机"><span class="nav-text">支持向量机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#决策树"><span class="nav-text">决策树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#降维"><span class="nav-text">降维</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#深度学习篇"><span class="nav-text">深度学习篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#优化方法"><span class="nav-text">优化方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化方法"><span class="nav-text">初始化方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#损失函数"><span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#激活函数"><span class="nav-text">激活函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正则化"><span class="nav-text">正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标准化"><span class="nav-text">标准化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#感受野"><span class="nav-text">感受野</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全连接层"><span class="nav-text">全连接层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卷积层"><span class="nav-text">卷积层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反卷积层"><span class="nav-text">反卷积层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#池化层"><span class="nav-text">池化层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#训练问题"><span class="nav-text">训练问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他问题"><span class="nav-text">其他问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网络结构篇"><span class="nav-text">网络结构篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Alex"><span class="nav-text">Alex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VGGNet"><span class="nav-text">VGGNet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#InceptionV1"><span class="nav-text">InceptionV1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#InceptionV2"><span class="nav-text">InceptionV2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#InceptionV3"><span class="nav-text">InceptionV3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inception-v4"><span class="nav-text">Inception v4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inception-ResNet-v1"><span class="nav-text">Inception ResNet v1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inception-ResNet-v2"><span class="nav-text">Inception ResNet v2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ResNet"><span class="nav-text">ResNet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ResNeXt"><span class="nav-text">ResNeXt</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目标检测篇"><span class="nav-text">目标检测篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#NMS"><span class="nav-text">NMS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NMS-1"><span class="nav-text">NMS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SoftNMS"><span class="nav-text">SoftNMS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SofterNMS"><span class="nav-text">SofterNMS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#R-CNN"><span class="nav-text">R-CNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fast-R-CNN"><span class="nav-text">Fast R-CNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Faster-R-CNN"><span class="nav-text">Faster R-CNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mask-R-CNN"><span class="nav-text">Mask R-CNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FPN"><span class="nav-text">FPN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RetinaNet"><span class="nav-text">RetinaNet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSD"><span class="nav-text">SSD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#YOLO"><span class="nav-text">YOLO</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLOv1"><span class="nav-text">YOLOv1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLOv2"><span class="nav-text">YOLOv2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLOv3"><span class="nav-text">YOLOv3</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图像处理篇"><span class="nav-text">图像处理篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#图像边缘检测算法"><span class="nav-text">图像边缘检测算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#霍夫变换"><span class="nav-text">霍夫变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像保边滤波器"><span class="nav-text">图像保边滤波器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像平移"><span class="nav-text">图像平移</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像开操作、闭操作"><span class="nav-text">图像开操作、闭操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像旋转"><span class="nav-text">图像旋转</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像重建质量评价指标"><span class="nav-text">图像重建质量评价指标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#光流法"><span class="nav-text">光流法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像去噪的方法"><span class="nav-text">图像去噪的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#度量图像patch相似度的方法"><span class="nav-text">度量图像patch相似度的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传统图像处理CDC做过吗？"><span class="nav-text">传统图像处理CDC做过吗？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#傅里叶变换"><span class="nav-text">傅里叶变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像融合算法有哪些？"><span class="nav-text">图像融合算法有哪些？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像增强算法有哪些"><span class="nav-text">图像增强算法有哪些</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像滤波方法"><span class="nav-text">图像滤波方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#直方图均衡化"><span class="nav-text">直方图均衡化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数学基础篇"><span class="nav-text">数学基础篇</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常见问题篇"><span class="nav-text">常见问题篇</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#逻辑回归-1"><span class="nav-text">逻辑回归</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线性回归和逻辑回归的原理和区别"><span class="nav-text">线性回归和逻辑回归的原理和区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在Faster-RCNN中-如果两个物体重合度很高-会怎么样"><span class="nav-text">在Faster RCNN中, 如果两个物体重合度很高, 会怎么样</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#卷积神经网络复杂度分析"><span class="nav-text">卷积神经网络复杂度分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#卷积计算-卷积层特参数个数及征图谱尺寸计算"><span class="nav-text">卷积计算,卷积层特参数个数及征图谱尺寸计算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#L2正则化和L2规范化-归一化-的不同"><span class="nav-text">L2正则化和L2规范化(归一化)的不同</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#从-rcnn-到-faster"><span class="nav-text">从 rcnn 到 faster</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么fast-rcnn的roi-pooling比spp的-spatial-pooling效果好"><span class="nav-text">为什么fast rcnn的roi pooling比spp的 spatial pooling效果好???</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#神经网络参数初始化"><span class="nav-text">神经网络参数初始化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分类问题为什么用交叉熵"><span class="nav-text">分类问题为什么用交叉熵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Relu和Dropout都具有正则化作用-它们在正则化方面的区别是什么"><span class="nav-text">Relu和Dropout都具有正则化作用, 它们在正则化方面的区别是什么?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#介绍一下-hard-negative-mining-难样例挖掘"><span class="nav-text">介绍一下 hard negative mining(难样例挖掘)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dropout内部是怎么实现的"><span class="nav-text">dropout内部是怎么实现的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简述一下BN"><span class="nav-text">简述一下BN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#各种初始化方式，及公式各个参数对训练的影响"><span class="nav-text">各种初始化方式，及公式各个参数对训练的影响</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目标检测，数据不平衡问题怎么解决"><span class="nav-text">目标检测，数据不平衡问题怎么解决</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#你的zerotensor和TF比性能上有优势吗"><span class="nav-text">你的zerotensor和TF比性能上有优势吗</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用的数据增强技术"><span class="nav-text">常用的数据增强技术</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#有哪些可以避免过拟合的办法"><span class="nav-text">有哪些可以避免过拟合的办法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#正则化L1和L2的区别"><span class="nav-text">正则化L1和L2的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#rcnn。。"><span class="nav-text">rcnn。。</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推导svm"><span class="nav-text">推导svm</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#卷积层的参数个数计算公式是："><span class="nav-text">卷积层的参数个数计算公式是：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#梯度消失和梯度爆炸的概念，引用这两个现象的原因及其解决办法"><span class="nav-text">梯度消失和梯度爆炸的概念，引用这两个现象的原因及其解决办法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于各种激活函数的解析与讨论"><span class="nav-text">关于各种激活函数的解析与讨论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简述ResNet"><span class="nav-text">简述ResNet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#嵌入式开发很底层-一般还是倾向于做一些上层的东西"><span class="nav-text">嵌入式开发很底层   一般还是倾向于做一些上层的东西</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推导SVM"><span class="nav-text">推导SVM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#比较Boosting和Bagging的异同"><span class="nav-text">比较Boosting和Bagging的异同</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#无监督学习中存在过拟合吗"><span class="nav-text">无监督学习中存在过拟合吗?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是K折交叉验证"><span class="nav-text">什么是K折交叉验证?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于k折交叉验证-需要注意什么"><span class="nav-text">关于k折交叉验证, 需要注意什么?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对于一个二分类问题-我们定义超过阈值t的判定为正例-否则判定为负例-现在若将t增大-则准确率和召回率会如何变化"><span class="nav-text">对于一个二分类问题, 我们定义超过阈值t的判定为正例, 否则判定为负例. 现在若将t增大, 则准确率和召回率会如何变化?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#增加网络层数-是否总能减小训练集错误率"><span class="nav-text">增加网络层数, 是否总能减小训练集错误率?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在目标检测问题上-如何做数据增广"><span class="nav-text">在目标检测问题上, 如何做数据增广?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#softmax怎么跟交叉熵损失函数结合"><span class="nav-text">softmax怎么跟交叉熵损失函数结合?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#用梯度下降训练神经网络的参数-为什么参数有时候会被训练为nan值"><span class="nav-text">用梯度下降训练神经网络的参数, 为什么参数有时候会被训练为nan值?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#有没有自己试过更改模型的框架"><span class="nav-text">有没有自己试过更改模型的框架.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#说一下你所有的提高精度的方法-并且说明它们带来了多少的精度提升"><span class="nav-text">说一下你所有的提高精度的方法, 并且说明它们带来了多少的精度提升!</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SSD已经使用了难样例挖掘的技巧-Focal-Loss-相比之下为什么能够提高"><span class="nav-text">SSD已经使用了难样例挖掘的技巧, Focal Loss 相比之下为什么能够提高</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#池化的优点-优化的缺点"><span class="nav-text">池化的优点, 优化的缺点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#待定"><span class="nav-text">待定</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#完善bisai待看"><span class="nav-text">完善bisai待看</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#谈谈你参加的比赛"><span class="nav-text">谈谈你参加的比赛</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对于一个新任务-你一般都会使用那些数据预处理方法"><span class="nav-text">(对于一个新任务,) 你一般都会使用那些数据预处理方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#比赛中用到的模型融合方法"><span class="nav-text">比赛中用到的模型融合方法:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#你的方法与其他人方法的区别是什么-为什么比别人的方法差"><span class="nav-text">你的方法与其他人方法的区别是什么? 为什么比别人的方法差?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对于faster-rcnn-你都调了哪些参数"><span class="nav-text">对于faster rcnn 你都调了哪些参数?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN具体是什么实现的"><span class="nav-text">BN具体是什么实现的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对于平均移动了解吗"><span class="nav-text">对于平均移动了解吗</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#积分图-快速求矩阵的核"><span class="nav-text">积分图, 快速求矩阵的核</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#样本不均衡问题怎么解决"><span class="nav-text">样本不均衡问题怎么解决</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#详细说一下Focal-Loss"><span class="nav-text">详细说一下Focal Loss</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#说一下为什么Faster-比YOLO和SSD更准确"><span class="nav-text">说一下为什么Faster 比YOLO和SSD更准确</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#样本采样的理论化值是"><span class="nav-text">样本采样的理论化值是</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#anchor的参数设值怎么选的？-为什么这么设置"><span class="nav-text">anchor的参数设值怎么选的？  为什么这么设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在调试RPN网络时有没有遇到什么问题？"><span class="nav-text">在调试RPN网络时有没有遇到什么问题？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简述一下faster-rcnn模型"><span class="nav-text">简述一下faster rcnn模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简述一下ResNet模型及它解决的问题"><span class="nav-text">简述一下ResNet模型及它解决的问题</span></a></li></ol></div>
             
 
           </div>
@@ -1216,7 +1382,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.6m</span>
+    <span title="站点总字数">1.7m</span>
   
 
   
@@ -1225,7 +1391,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">24:21</span>
+    <span title="站点阅读时长">26:18</span>
   
 </div>
 
