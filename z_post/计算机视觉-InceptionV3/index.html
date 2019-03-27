@@ -134,13 +134,8 @@
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fxfpyj1ykqj20t90j3adv.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fxfpxiwfcoj20vf0a5q4f.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fxfpzae2exj20v40hvq6n.jpg">
-<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fvna17nohlj209z09ydhb.jpg">
-<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fvna17muznj207c0a70th.jpg">
-<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fvna17piozj20bu1a040a.jpg">
-<meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fvna17my4gj20ep09haah.jpg">
-<meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fvna17n33wj20fh08u759.jpg">
-<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fvna17sdq6j20fh0f1djt.jpg">
-<meta property="og:updated_time" content="2019-02-25T14:18:16.602Z">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1g1g5nupi5fj21c80u0doq.jpg">
+<meta property="og:updated_time" content="2019-03-26T06:27:11.955Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Inception V3">
 <meta name="twitter:description" content="文章: Rethinking the Inception Architecture for Computer Vision作者: Christian Szegedy, Vincent Vanhoucke, Sergey Ioffe, Jonathon Shlens, Zbigniew Wojna备注: Google, Inception V3 核心摘要近年来, 越来越深的网络模型使得各个任务的 b">
@@ -269,7 +264,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">235</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">237</span></a>
   </li>
         
         
@@ -510,8 +505,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-02-25T22:18:16+08:00" content="2019-02-25">
-      		  2019-02-25
+    		<time itemprop="dateUpdated" datetime="2019-03-26T14:27:11+08:00" content="2019-03-26">
+      		  2019-03-26
     		</time>
   	  </span>
 	  
@@ -564,7 +559,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">4.1k</span>
+                <span title="本文字数">4.4k</span>
               
 
               
@@ -611,47 +606,46 @@
 <p>上面的原则不建议直接使用, 更好的办法是在你不确定如何提升模型性能时进行权衡和尝试.</p>
 <h1 id="Factorizing-Convolutions-with-Large-Filter"><a href="#Factorizing-Convolutions-with-Large-Filter" class="headerlink" title="Factorizing Convolutions with Large Filter."></a>Factorizing Convolutions with Large Filter.</h1><p>GooLeNet 的成功原因之一得益于广泛的使用降维. 这可以看做是 <strong>factorizing convolutions</strong>(对卷积进行因式分解) 的一种特殊情况. 在一个视觉网络中, 某点的输出与它相邻的其他点的响应之间有很高的相关性. 因此, 我们可以在聚合之前将这些响应进行降维, 在这理论上, 应该能够产生相同的局部特征表示. 由于 Inception 网络是全卷积的, 每一个权重都会与多处响应相关联, 计算成本的降低会带来参数量的降低. 这意味着 <strong>通过恰当的因式分解, 我们可以得到更多解耦的参数, 从而可以带来更快的训练速度.</strong></p>
 <h2 id="分解成更小的卷积-Factorization-into-smaller-convolutions"><a href="#分解成更小的卷积-Factorization-into-smaller-convolutions" class="headerlink" title="分解成更小的卷积(Factorization into smaller convolutions)"></a>分解成更小的卷积(Factorization into smaller convolutions)</h2><p>较大的卷积核尺寸(如5×5, 7×7)往往意味着很高的计算成本. 例如, 5×5 的计算成本为 3×3 卷积核的 25/9 = 2.78 倍. 但是, 如果直接替换为 3×3 的卷积核, 那么就会在特征表达能力上造成一些损失. 幸运的是, 我们可以通过多层小卷积核添加的方式来替换大卷积核, 如图1所示, 他们的感受野是相当的, 但是前者的参数只有后者的 $\frac{9+9}{25} = 28 %$.</p>
-<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fxfpsaihoej20pa0i2tdo.jpg" alt=""></p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fxfpsaihoej20pa0i2tdo.jpg" alt=""></div></p>
 <p>图4, 图5展示了用两个3×3来替换 5×5 卷积核的示意图.</p>
-<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1g0j0zt2p2yj214z0hnju2.jpg" alt=""></p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1g0j0zt2p2yj214z0hnju2.jpg" alt="图4图5"></div></p>
 <p>但是这种替换会引出两个问题, 其一为是否为造成特征表达能力的降低, 其二是如果我们的主要目标时分解计算的线性部分, 那么是否还应该在第一层保持线性激活? 即是否在第一层使用非线性激活函数? 对此, 通过实验证明, 使用线性激活比使用非线性激活的效果差一些, 如图2所示.</p>
-<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fxfpsmbuv0j21290rhaee.jpg" alt=""></p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fxfpsmbuv0j21290rhaee.jpg" alt=""></div></p>
 <h2 id="空间分解为不对称卷积-Spatial-Factorization-into-Asymmetric-Convolutions"><a href="#空间分解为不对称卷积-Spatial-Factorization-into-Asymmetric-Convolutions" class="headerlink" title="空间分解为不对称卷积(Spatial Factorization into Asymmetric Convolutions)"></a>空间分解为不对称卷积(Spatial Factorization into Asymmetric Convolutions)</h2><p>上面的结果说明大于 3×3 的卷积核通常都可以分解为一系列 3×3 卷积核堆叠. 那么如果继续分解, 我们可以将 3×3 的卷积核分解为 3×1 的卷积核和 1×3 的卷积核, 这样一来, 参数量就变成了6, 降低了 33%, 如图3所示(将 3×3 分解成两个 2×2 的卷积核, 只能降低 11% 的参数量).</p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fxfpt3f686j20sp0ne425.jpg" alt=""></p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fxfpt3f686j20sp0ne425.jpg" alt=""></div></p>
 <p>理论上, 我们可以将任何 $n\times n$ 的卷积核用一个 $n\times 1$ 和一个 $1\times n$ 的卷积核替代, 如图6所示. 在实际使用中, 我们发现这种分解方式在网络的浅层并不能很好的工作, 但是在网络的中层可以取得很好的效果(特征图谱大小在 12~20 之间的网络层).</p>
-<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1g0j145ly6tj21dw0q3dm5.jpg" alt=""></p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1g0j145ly6tj21dw0q3dm5.jpg" alt="图6"></div></p>
 <h1 id="辅助分类器的效用-Utility-of-Auxiliary-Classifiers"><a href="#辅助分类器的效用-Utility-of-Auxiliary-Classifiers" class="headerlink" title="辅助分类器的效用(Utility of Auxiliary Classifiers)"></a>辅助分类器的效用(Utility of Auxiliary Classifiers)</h1><p>Inception V1 首次引入辅助分类器来提升深度网络的收敛性, 其最初动机是为了可以及时利用那些浅层网络中有用的梯度来帮助模型快速收敛, 从而缓解深度神经网络中的梯度消失问题. 有趣的是, 我们发现这个辅助分类器并不会加快训练初期的收敛速度: 对于带有辅助分类器和不带辅助分类器的两个网络, 在模型达到较高精度以前, 他们的性能看起来是差不多的. 但是 <strong>当到了训练后期, 带有辅助分支的网络开始超越没有任何辅助分支的网络, 进而达到更高的精度</strong>.<br>并且, 在 Inception V1 中使用了两个辅助分支, 我们发现, 将浅层的辅助分支去除并不会对最终的模型质量产生任何不利影响.</p>
 <h1 id="有效缩小网格尺寸-Efficient-Grid-Size-Reduction"><a href="#有效缩小网格尺寸-Efficient-Grid-Size-Reduction" class="headerlink" title="有效缩小网格尺寸(Efficient Grid Size Reduction)"></a>有效缩小网格尺寸(Efficient Grid Size Reduction)</h1><p>传统的卷积网络通过池化操作来降低特征图谱的网格尺寸, 但是为了避免降低特征表达能力, 对于一个 $d\times d\times k$ 的特征图谱, 我们通常会先利用一个卷积层使它的通道数增加到 $2k$, 然后再利用池化层来降低它的图谱尺寸到 $\frac{d}{2}$, 因此, 这一步需要的计算量为 $2d^2 k^2$. 我们可以将卷积层和池化层的位置互换, 这样一来, 计算量就会降为 $2(\frac{d}{2})^2 k^2$, 但是, 这样会导致网络的特征表达能力下降, 造成 representational bottlenecks, 如图9所示.</p>
-<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fxfpvtkg0nj21310px78o.jpg" alt=""></p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fxfpvtkg0nj21310px78o.jpg" alt=""></div></p>
 <p>因此, 我们推荐另一种降低计算量的方式, 如图10所示, 我们可以利用两个并行的 block P 和 block C 来达到目的, 其中 P 代表池化, C 代表卷积.</p>
-<p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fxfpwdgzpzj21250t5jwt.jpg" alt=""></p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fxfpwdgzpzj21250t5jwt.jpg" alt=""></div></p>
 <h1 id="Inception-v2"><a href="#Inception-v2" class="headerlink" title="Inception-v2"></a>Inception-v2</h1><p>表1展示了本文网络的整体布局</p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fxfpwzn61yj20sr0x2q9d.jpg" alt=""></p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fxfpwzn61yj20sr0x2q9d.jpg" alt=""></div></p>
 <p>注意到我们将原来的 7×7 卷积转换成了3个 3×3 卷积.</p>
-<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fxfput5ylzj20rz0w9gpr.jpg" alt=""></p>
-<p>图8<br><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fxfpvbtkctj211n0n6gpn.jpg" alt=""></p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fxfput5ylzj20rz0w9gpr.jpg" alt="图7"></div></p>
+<p>图8</p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fxfpvbtkctj211n0n6gpn.jpg" alt=""></div></p>
 <h1 id="Model-Regularization-via-Label-Smoothing"><a href="#Model-Regularization-via-Label-Smoothing" class="headerlink" title="Model Regularization via Label Smoothing"></a>Model Regularization via Label Smoothing</h1><p>表3 展示了 ILSVRC 2012 的测试结果</p>
-<p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fxfpxzneorj20rt0u1grl.jpg" alt=""></p>
-<p>表4<br><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fxfpyj1ykqj20t90j3adv.jpg" alt=""></p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fxfpxzneorj20rt0u1grl.jpg" alt=""></div></p>
+<p>表4</p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fxfpyj1ykqj20t90j3adv.jpg" alt=""></div></p>
 <h1 id="Training-Methodology"><a href="#Training-Methodology" class="headerlink" title="Training Methodology"></a>Training Methodology</h1><h1 id="Performance-on-Lower-Resolution-Input"><a href="#Performance-on-Lower-Resolution-Input" class="headerlink" title="Performance on Lower Resolution Input"></a>Performance on Lower Resolution Input</h1><p>表2</p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fxfpxiwfcoj20vf0a5q4f.jpg" alt=""></p>
-<h1 id="Experimental-Results-and-Comparisons"><a href="#Experimental-Results-and-Comparisons" class="headerlink" title="Experimental Results and Comparisons"></a>Experimental Results and Comparisons</h1><p>表5<br><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fxfpzae2exj20v40hvq6n.jpg" alt=""></p>
-<h1 id="xx"><a href="#xx" class="headerlink" title="xx"></a>xx</h1><h2 id="要点整理"><a href="#要点整理" class="headerlink" title="要点整理"></a>要点整理</h2><p>GoogLeNet设计的初衷就是要又准又快，而如果只是单纯的堆叠网络虽然可以提高准确率，但是会导致计算效率有明显的下降，所以如何在不增加过多计算量的同时提高网络的表达能力就成为了一个问题。</p>
-<p>Inception V2版本的解决方案就是　<strong>修改Inception的内部计算逻辑，提出了比较特殊的“卷积”计算结构</strong>。</p>
-<h3 id="卷积分解（Factorizing-Convolutions）"><a href="#卷积分解（Factorizing-Convolutions）" class="headerlink" title="卷积分解（Factorizing Convolutions）"></a>卷积分解（Factorizing Convolutions）</h3><p>主要受到VGG的启发</p>
-<p>大尺寸的卷积核可以带来更大的感受野，但也意味着会产生更多的参数，比如5×5卷积核的参数就有25个（不算depth和filters的数量）。因此，GoogLeNet团队提出可以用2个连续的3×3卷积层组成的小网络来代替单个的5×5卷积层，即在 <strong>保持感受野范围的同时又减少了参数量</strong>，如下图：</p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fvna17nohlj209z09ydhb.jpg" alt=""></p>
-<p>大量实验表明，这种分解并不会造成表达缺失，那么是否可以进一步分解，GoogLeNet团队尝试了n×1的卷积核，如下图所示，用3个3×1取代3×3卷积：</p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fvna17muznj207c0a70th.jpg" alt=""></p>
-<p>因此，任意nxn的卷积都可以通过1xn卷积后接nx1卷积来替代。GoogLeNet团队发现在网络的前期使用这种分解效果并不好，在中度大小的特征图（feature map）上使用效果才会更好（特征图大小建议在12到20之间）。</p>
-<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fvna17piozj20bu1a040a.jpg" alt=""></p>
-<h3 id="降低特征图大小"><a href="#降低特征图大小" class="headerlink" title="降低特征图大小"></a>降低特征图大小</h3><p>一般情况下，如果想让图像缩小，可以有如下两种方式：</p>
-<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fvna17my4gj20ep09haah.jpg" alt=""></p>
-<p>前者先做pooling会导致在做卷积的时候缺少特征，后者是在卷积计算后，提取完特征以后进行的正常的图像缩小，但是计算量很大（卷积计算比pooling计算复杂）。为了同时保持特征表示且降低计算量，将网络结构改为下图，使用两个并行化的模块来降低计算量（卷积、池化并行执行，最后再进行合并）。</p>
-<p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fvna17n33wj20fh08u759.jpg" alt=""></p>
-<h3 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a>网络结构</h3><p>使用Inception V2作改进版的GoogLeNet，网络结构图如下：</p>
-<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fvna17sdq6j20fh0f1djt.jpg" alt=""></p>
-<p>注：上表中的Figure 5指没有进化的Inception，Figure 6是指小卷积版的Inception（用3x3卷积核代替5x5卷积核），Figure 7是指不对称版的Inception（用1xn、nx1卷积核代替nxn卷积核）。</p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fxfpxiwfcoj20vf0a5q4f.jpg" alt=""></div></p>
+<h1 id="Experimental-Results-and-Comparisons"><a href="#Experimental-Results-and-Comparisons" class="headerlink" title="Experimental Results and Comparisons"></a>Experimental Results and Comparisons</h1><p>表5</p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fxfpzae2exj20v40hvq6n.jpg" alt=""></div></p>
+<p><span id="InceptionV2 相比于 GoogLeNet 有什么区别"></span></p>
+<h1 id="InceptionV2-相比于-GoogLeNet-有什么区别"><a href="#InceptionV2-相比于-GoogLeNet-有什么区别" class="headerlink" title="InceptionV2 相比于 GoogLeNet 有什么区别"></a>InceptionV2 相比于 GoogLeNet 有什么区别</h1><p>InceptionV2 改进的主要有两点. 一方面加入了 BN 层, 减少了 Internal Covariate Shift 问题(内部网络层的数据分布发生变化), 另一方面参考了 VGGNet 用两个 $3\times 3$ 的卷积核替代了原来 Inception 模块中的 $5\times 5$ 卷积核, 可以在降低参数量的同时加速计算.</p>
+<p><span id="InceptionV3 相比于 GoogLeNet 有什么区别"></span></p>
+<h1 id="InceptionV3-相比于-GoogLeNet-有什么区别"><a href="#InceptionV3-相比于-GoogLeNet-有什么区别" class="headerlink" title="InceptionV3 相比于 GoogLeNet 有什么区别"></a>InceptionV3 相比于 GoogLeNet 有什么区别</h1><p><div style="width: 550px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1g1g5nupi5fj21c80u0doq.jpg" alt="Inception"></div></p>
+<p>InceptionV3 最重要的改进是分解(Factorization), 这样做的好处是既可以加速计算(多余的算力可以用来加深网络), 有可以将一个卷积层拆分成多个卷积层, 进一步加深网络深度, 增加神经网络的非线性拟合能力, 还有值得注意的地方是网络输入从 $224\times 224$ 变成了 $299\times 299$, 更加精细设计了 $35\times 35$, $17\times 17$, $8\times 8$ 特征图谱上的 Inception 模块.<br>具体来说, 首先将第一个卷积段的 $7\times 7$ 大小的卷积核分解成了 3 个 $3\times 3$ 大小的卷积核. 在第二个卷积段也由 3 个 $3\times 3$ 大小的卷积核组成. 第三个卷积段使用了 3 个 Inception 模块, 同时将模块中的 $5\times 5$ 卷积分解成了两个 $3\times 3$ 大小的卷积. 在第四个卷积段中, 使用了 5 个分解程度更高的 Inception 模块, 具体来说, 是将 $n\times n$ 大小的卷积核分解成 $1\times n$ 和 $n\times 1$ 大小的卷积核, 在论文中, 对于 $17\times 17$ 大小的特征图谱, 使用了 $n = 7$ 的卷积分解形式. 在第五个卷积段中, 面对 $8\times 8$ 大小的特征图谱, 使用了两个设计更加精细的 Inception 模块. 它将 $3\times 3$ 大小的卷积层分解成 $1\times 3$ 和 $3\times 1$ 的卷积层, 这两个卷积层不是之前的串联关系, 而是并联关系.</p>
+<p><span id="Inception 模块的设计和使用原则是什么"></span></p>
+<h1 id="Inception-模块的设计和使用原则是什么"><a href="#Inception-模块的设计和使用原则是什么" class="headerlink" title="Inception 模块的设计和使用原则是什么"></a>Inception 模块的设计和使用原则是什么</h1><ol>
+<li>在网络的浅层要避免过度的压缩特征信息, 特征图谱的尺寸应该温和的降低;</li>
+<li>高维的特征信息更适合在本地进行处理, 在网络中逐渐增加非线性激活层, 这样可以使得网络参数减少, 训练速度更快;</li>
+<li>低维信息的空间聚合不会导致网络表达能力的降低, 因此, 当进行大尺寸的卷积之前, 可以先对输入进行进行降维处理, 然后再进行空间聚合操作;</li>
+<li>网络的深度和宽度需要反复权衡, 通过平衡网络中每层滤波器的个数和网络的层数使用网络达到最大性能.</li>
+</ol>
 
       
     </div>
@@ -779,7 +773,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">235</span>
+                    <span class="site-state-item-count">237</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -971,7 +965,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#核心"><span class="nav-text">核心</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#General-Design-Principles"><span class="nav-text">General Design Principles</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Factorizing-Convolutions-with-Large-Filter"><span class="nav-text">Factorizing Convolutions with Large Filter.</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分解成更小的卷积-Factorization-into-smaller-convolutions"><span class="nav-text">分解成更小的卷积(Factorization into smaller convolutions)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#空间分解为不对称卷积-Spatial-Factorization-into-Asymmetric-Convolutions"><span class="nav-text">空间分解为不对称卷积(Spatial Factorization into Asymmetric Convolutions)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#辅助分类器的效用-Utility-of-Auxiliary-Classifiers"><span class="nav-text">辅助分类器的效用(Utility of Auxiliary Classifiers)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#有效缩小网格尺寸-Efficient-Grid-Size-Reduction"><span class="nav-text">有效缩小网格尺寸(Efficient Grid Size Reduction)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inception-v2"><span class="nav-text">Inception-v2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Model-Regularization-via-Label-Smoothing"><span class="nav-text">Model Regularization via Label Smoothing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Training-Methodology"><span class="nav-text">Training Methodology</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Performance-on-Lower-Resolution-Input"><span class="nav-text">Performance on Lower Resolution Input</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Experimental-Results-and-Comparisons"><span class="nav-text">Experimental Results and Comparisons</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xx"><span class="nav-text">xx</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#要点整理"><span class="nav-text">要点整理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#卷积分解（Factorizing-Convolutions）"><span class="nav-text">卷积分解（Factorizing Convolutions）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#降低特征图大小"><span class="nav-text">降低特征图大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络结构"><span class="nav-text">网络结构</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#核心"><span class="nav-text">核心</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#General-Design-Principles"><span class="nav-text">General Design Principles</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Factorizing-Convolutions-with-Large-Filter"><span class="nav-text">Factorizing Convolutions with Large Filter.</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分解成更小的卷积-Factorization-into-smaller-convolutions"><span class="nav-text">分解成更小的卷积(Factorization into smaller convolutions)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#空间分解为不对称卷积-Spatial-Factorization-into-Asymmetric-Convolutions"><span class="nav-text">空间分解为不对称卷积(Spatial Factorization into Asymmetric Convolutions)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#辅助分类器的效用-Utility-of-Auxiliary-Classifiers"><span class="nav-text">辅助分类器的效用(Utility of Auxiliary Classifiers)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#有效缩小网格尺寸-Efficient-Grid-Size-Reduction"><span class="nav-text">有效缩小网格尺寸(Efficient Grid Size Reduction)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inception-v2"><span class="nav-text">Inception-v2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Model-Regularization-via-Label-Smoothing"><span class="nav-text">Model Regularization via Label Smoothing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Training-Methodology"><span class="nav-text">Training Methodology</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Performance-on-Lower-Resolution-Input"><span class="nav-text">Performance on Lower Resolution Input</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Experimental-Results-and-Comparisons"><span class="nav-text">Experimental Results and Comparisons</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#InceptionV2-相比于-GoogLeNet-有什么区别"><span class="nav-text">InceptionV2 相比于 GoogLeNet 有什么区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#InceptionV3-相比于-GoogLeNet-有什么区别"><span class="nav-text">InceptionV3 相比于 GoogLeNet 有什么区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inception-模块的设计和使用原则是什么"><span class="nav-text">Inception 模块的设计和使用原则是什么</span></a></li></ol></div>
             
 
           </div>
@@ -1017,7 +1011,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">26:18</span>
+    <span title="站点阅读时长">26:05</span>
   
 </div>
 

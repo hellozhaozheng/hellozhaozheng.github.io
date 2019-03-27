@@ -122,7 +122,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fxlbg7qyk9j21cs0nwq4u.jpg">
 <meta property="og:image" content="http://wx3.sinaimg.cn/large/d7b90c85ly1fxngsjxjyag20cd0a9q6x.gif">
-<meta property="og:updated_time" content="2019-03-24T02:39:51.456Z">
+<meta property="og:updated_time" content="2019-03-25T02:46:46.065Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LeetCode算法题(Easy)">
 <meta name="twitter:description" content="001. Two SumDescription: 求出能组合出目标数的两个元素Given an array of integers, return indices of the two numbers such that they add up to a specific target. You may assume that each input would have exactly one s">
@@ -251,7 +251,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">235</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">237</span></a>
   </li>
         
         
@@ -492,8 +492,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-24T10:39:51+08:00" content="2019-03-24">
-      		  2019-03-24
+    		<time itemprop="dateUpdated" datetime="2019-03-25T10:46:46+08:00" content="2019-03-25">
+      		  2019-03-25
     		</time>
   	  </span>
 	  
@@ -682,7 +682,8 @@
 <p>If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.</p>
 <h2 id="解法-记录当前最大值"><a href="#解法-记录当前最大值" class="headerlink" title="解法: 记录当前最大值"></a>解法: 记录当前最大值</h2><p><strong>时间复杂度:</strong> $O(n)$<br>根据数组性质，设置两个变量，一个记录当前的最大值，一个记录当前的子序列之和。首先，如果当前子序列之和为负，那么就是说，从当前位置开始的子序列，比从之前位置开始的子序列大，那么就可以不考虑从之前位置开始的子序列，之前累计的和也被抛弃</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> max_sum = INT_MIN;  <span class="comment">//数组有可能全负, 所以不能赋值为0</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> num : nums)&#123;</span><br><span class="line">            <span class="keyword">if</span>(num &gt; max_sum) max_sum = num; <span class="comment">//主要是为了预防数组中全是负数的情况</span></span><br><span class="line">            sum += num;</span><br><span class="line">            <span class="keyword">if</span>(sum!=<span class="number">0</span> &amp;&amp; sum&gt;max_sum) max_sum = sum; <span class="comment">// sum!=0 , 为了预防数组全负时, 0一定大于sum, 造成的错解</span></span><br><span class="line">            <span class="keyword">if</span>(sum &lt;<span class="number">0</span>) sum =<span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max_sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p><strong>更简洁的写法:</strong> (貌似用max要比用if语句判断快一点???)<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> max_sum = nums[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> num : nums)&#123;</span><br><span class="line">            max_sum = max(max_sum, num);</span><br><span class="line">            sum += num;</span><br><span class="line">            max_sum = max(max_sum, sum);</span><br><span class="line">            sum = max(sum, <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max_sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p><strong>更简洁的写法:</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (nums.empty()) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> tmpRes = nums[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">int</span> res = nums[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (tmpRes &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                tmpRes = nums[i];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                tmpRes += nums[i];</span><br><span class="line">            &#125;</span><br><span class="line">            res = <span class="built_in">std</span>::max(res, tmpRes);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h1 id="066-Plus-One"><a href="#066-Plus-One" class="headerlink" title="066. Plus One"></a>066. Plus One</h1><p>数组代表一个整数, 模拟整数的加法</p>
 <h2 id="Description-6"><a href="#Description-6" class="headerlink" title="Description"></a>Description</h2><p>Given a non-empty array of digits representing a non-negative integer, plus one to the integer.</p>
 <p>The digits are stored such that the most significant digit is at the head of the list, and each element in the array contain a single digit.</p>
@@ -1221,7 +1222,7 @@ AB -&gt; 28
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">235</span>
+                    <span class="site-state-item-count">237</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1459,7 +1460,7 @@ AB -&gt; 28
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">26:18</span>
+    <span title="站点阅读时长">26:05</span>
   
 </div>
 

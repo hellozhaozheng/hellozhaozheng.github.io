@@ -132,7 +132,7 @@
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1g1cw48pgxwj20r40ivwil.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1g1cw4eo4spj20sk0mfjw7.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1g1cw6ri96mj20sh0qwjvz.jpg">
-<meta property="og:updated_time" content="2019-03-23T11:24:34.766Z">
+<meta property="og:updated_time" content="2019-03-25T05:47:11.401Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FCN-CVPR2015">
 <meta name="twitter:description" content="文章: Fully Convolutional Networks for Semantic Segmentation作者: Jonathan Long, Evan Shelhamer, Trevor Darrell 核心亮点全卷积网络: 只有最后一层是全连接层, 并且在针对 object detection 任务进行 fine-tuning 时, 会将该全连接层移除. (但是分类任务仍然需要这一层">
@@ -261,7 +261,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">235</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">237</span></a>
   </li>
         
         
@@ -502,8 +502,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-23T19:24:34+08:00" content="2019-03-23">
-      		  2019-03-23
+    		<time itemprop="dateUpdated" datetime="2019-03-25T13:47:11+08:00" content="2019-03-25">
+      		  2019-03-25
     		</time>
   	  </span>
 	  
@@ -620,8 +620,7 @@
 <p>下面我们将会解释如何将一个分类网络转换成一个生成粗糙图谱的全卷积网络. 对于像素级的预测任务来说, 我们需要将这些粗糙的图谱与图片中的每个像素对应. OverFeat 为此引入了一个 trick(后文介绍)来完成该任务. 我们将这个 trick 重新以网络的方式解释. 作为另一种有效且高效的替换, 我们引入了反卷积来完成 upsampling 操作.</p>
 <h2 id="Adapting-classifiers-for-dense-prediction"><a href="#Adapting-classifiers-for-dense-prediction" class="headerlink" title="Adapting classifiers for dense prediction"></a>Adapting classifiers for dense prediction</h2><p>大多数经典网络结构中都具有全连接层, 该层接受固定尺寸的输入, 同时会输出 non spatial outputs. 这使得全连接层的维度固定, 同时放弃了空间坐标信息(因为全连接都是一维的). 但是, 这些 <strong>全连接层同样可以被看做是卷积核覆盖整个输入区域的卷积层</strong>. 可以将它们全部强制转换成全卷积网络, 以便可以接受任意尺寸的输入, 同时输出对应的分类图谱(classifization maps). 该转换过程如图2所示</p>
 <p><div style="width: 550px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwjeuyyn17j20s20kgn41.jpg" alt="图2"></div></p>
-<p><strong>FCN 是如何降低计算量的:</strong><br>首先, 对于输入 shape 为 $2\times 2\times 256$ 的特征图谱来说, 使用全连接的参数量为 $4096 \times 1$ (输入维度, 输出维度), 使用全卷积时, 核大小为 $2\times 2\times 256$, 核的数量为 $1$, 因此, 从参数量上看, 二者是相同的. <strong>也就是说, 如果我们输入的特征图谱的大小和卷积核的大小相同时, 实际上当前的卷积层就可以看做是一个全连接层.</strong> 但是, 全连接的输入尺寸是固定的, 因此它只能输出指定维度的结果, 而全卷积层的另一个好处就是不会限制输入的特征图谱的尺寸, 因此, 当输入的特征图谱的尺寸大于当前的核时, 全卷积网络就会输出多个结果, <strong>而实际上, 这些结果对于的输入特征图谱上的区域具有大量的重叠, 因此, 起到了权重共享的作用, 从而可以减少重复计算, 降低模型复杂度.</strong> 另一方面, 即使当输入的特征图谱和卷积核的大小一致时, 全卷积和全连接也不是完全等价的. 因为全连接的结构是固定的, 当我们训练时, 全连接上权重会发生变化, 但是连接关系不会改变. 而卷积层除了会学习权重外, 它还会学习节点之间的关系, 对于无用的关系它会直接弱化或过滤掉.</p>
-<p>面对 $384\times 384$ 的图像, 让含全连接层的初始卷积神经网络以 32 像素的步长独立对图像中的 $224\times 224$ 块进行多次评价, 其效果和使用全卷积网络进行一次评价时相同的. 后者通过权值共享起到了加速计算的作用.</p>
+<p><span id="FCN 是如何降低计算量的?"><br><strong>FCN 是如何降低计算量的:</strong><br>面对 $384\times 384$ 的图像, 让含全连接层的初始卷积神经网络以 32 像素的步长独立对图像中的 $224\times 224$ 块进行多次评价, 其效果和使用全卷积网络进行一次评价时相同的. 后者通过权值共享起到了加速计算的作用.<br>首先, 对于输入 shape 为 $2\times 2\times 256$ 的特征图谱来说, 使用全连接的参数量为 $4096 \times 1$ (输入维度, 输出维度), 使用全卷积时, 核大小为 $2\times 2\times 256$, 核的数量为 $1$, 因此, 从参数量上看, 二者是相同的. <strong>也就是说, 如果我们输入的特征图谱的大小和卷积核的大小相同时, 实际上当前的卷积层就可以看做是一个全连接层.</strong> 但是, 全连接的输入尺寸是固定的, 因此它只能输出指定维度的结果, 而全卷积层的另一个好处就是不会限制输入的特征图谱的尺寸, 因此, 当输入的特征图谱的尺寸大于当前的核时, 全卷积网络就会输出多个结果, <strong>而实际上, 这些结果对于的输入特征图谱上的区域具有大量的重叠, 因此, 起到了权重共享的作用, 从而可以减少重复计算, 降低模型复杂度.</strong> 另一方面, 即使当输入的特征图谱和卷积核的大小一致时, 全卷积和全连接也不是完全等价的. 因为全连接的结构是固定的, 当我们训练时, 全连接上权重会发生变化, 但是连接关系不会改变. 而卷积层除了会学习权重外, 它还会学习节点之间的关系, 对于无用的关系它会直接弱化或过滤掉.</span></p>
 <p>AlexNet 处理一张 227 尺寸的图片需要 1.2ms, FCN 版本的 AlexNet 在 500 尺寸的图片上输出 $10\times 10$ 的结果需要 22ms. 因此快了大约 5 倍.($1.2\times 100 = 120$, 大约是 22 的 5 倍).</p>
 <p>这些卷积模型的空间输出的特征图谱使得它们称为语义分割之类的密集问题的自然选择. 由于每个输出单元都有 ground truth 可用, 因此前向和后向的传递过程都很简单, 并且都利用了卷积固有的计算效率(以及积极的优化).</p>
 <p>AlexNet 反向传播过程需要 2.4 ms, FCN 版本在 $10\times 10$ 的输出上反向传播需要 37ms.</p>
@@ -781,7 +780,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">235</span>
+                    <span class="site-state-item-count">237</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1019,7 +1018,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">26:18</span>
+    <span title="站点阅读时长">26:05</span>
   
 </div>
 

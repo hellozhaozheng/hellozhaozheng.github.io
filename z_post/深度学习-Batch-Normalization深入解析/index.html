@@ -112,22 +112,18 @@
 
 
 
-  <meta name="description" content="BN:总的来说，BN通过将每一层网络的输入进行normalization，保证输入分布的均值与方差固定在一定范围内，减少了网络中的Internal Covariate Shift问题，并在一定程度上缓解了梯度消失，加速了模型收敛；并且BN使得网络对参数、激活函数更加具有鲁棒性，降低了神经网络模型训练和调参的复杂度；最后BN训练过程中由于使用mini-batch的mean/variance每次都不同">
+  <meta name="description" content="InceptionV2 在 V1 的基础上引入了 BN 层, 减少了 Internal Covariate Shift(内部神经元的数据分布差异), 使得每一层的输出都可以规范化到一个标准高斯分布上.  为什么要进行归一化在神经网络中, 数据分布对训练会产生影响. 当数据较大时, 有的激活函数比如 sigmoid 或者 tanh 的输出就会接近于 1, 此时的梯度就会接近于0, 处于激活函数的饱和">
 <meta name="keywords" content="深度学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Batch-Normalization深入解析">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/深度学习-Batch-Normalization深入解析/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="BN:总的来说，BN通过将每一层网络的输入进行normalization，保证输入分布的均值与方差固定在一定范围内，减少了网络中的Internal Covariate Shift问题，并在一定程度上缓解了梯度消失，加速了模型收敛；并且BN使得网络对参数、激活函数更加具有鲁棒性，降低了神经网络模型训练和调参的复杂度；最后BN训练过程中由于使用mini-batch的mean/variance每次都不同">
+<meta property="og:description" content="InceptionV2 在 V1 的基础上引入了 BN 层, 减少了 Internal Covariate Shift(内部神经元的数据分布差异), 使得每一层的输出都可以规范化到一个标准高斯分布上.  为什么要进行归一化在神经网络中, 数据分布对训练会产生影响. 当数据较大时, 有的激活函数比如 sigmoid 或者 tanh 的输出就会接近于 1, 此时的梯度就会接近于0, 处于激活函数的饱和">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://morvanzhou.github.io/static/results/ML-intro/NB2.png">
-<meta property="og:image" content="https://morvanzhou.github.io/static/results/ML-intro/NB5.png">
-<meta property="og:image" content="https://morvanzhou.github.io/static/results/ML-intro/NB6.png">
-<meta property="og:updated_time" content="2019-03-21T02:18:59.650Z">
+<meta property="og:updated_time" content="2019-03-26T05:04:20.651Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Batch-Normalization深入解析">
-<meta name="twitter:description" content="BN:总的来说，BN通过将每一层网络的输入进行normalization，保证输入分布的均值与方差固定在一定范围内，减少了网络中的Internal Covariate Shift问题，并在一定程度上缓解了梯度消失，加速了模型收敛；并且BN使得网络对参数、激活函数更加具有鲁棒性，降低了神经网络模型训练和调参的复杂度；最后BN训练过程中由于使用mini-batch的mean/variance每次都不同">
-<meta name="twitter:image" content="https://morvanzhou.github.io/static/results/ML-intro/NB2.png">
+<meta name="twitter:description" content="InceptionV2 在 V1 的基础上引入了 BN 层, 减少了 Internal Covariate Shift(内部神经元的数据分布差异), 使得每一层的输出都可以规范化到一个标准高斯分布上.  为什么要进行归一化在神经网络中, 数据分布对训练会产生影响. 当数据较大时, 有的激活函数比如 sigmoid 或者 tanh 的输出就会接近于 1, 此时的梯度就会接近于0, 处于激活函数的饱和">
 
 
 
@@ -252,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">235</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">237</span></a>
   </li>
         
         
@@ -493,8 +489,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-21T10:18:59+08:00" content="2019-03-21">
-      		  2019-03-21
+    		<time itemprop="dateUpdated" datetime="2019-03-26T13:04:20+08:00" content="2019-03-26">
+      		  2019-03-26
     		</time>
   	  </span>
 	  
@@ -581,77 +577,46 @@
       
 
       
-        <p>BN:总的来说，BN通过将每一层网络的输入进行normalization，保证输入分布的均值与方差固定在一定范围内，减少了网络中的Internal Covariate Shift问题，并在一定程度上缓解了梯度消失，加速了模型收敛；并且BN使得网络对参数、激活函数更加具有鲁棒性，降低了神经网络模型训练和调参的复杂度；最后BN训练过程中由于使用mini-batch的mean/variance每次都不同，引入了随机噪声，在一定程度上对模型起到了正则化的效果。</p>
-<h1 id="Normalization"><a href="#Normalization" class="headerlink" title="Normalization"></a>Normalization</h1><p>字面上意思就是标准化,也就是对输入的数据做标准化,可以用下面的公式表示(这里 $x_i$ 代表输入数据, n代表训练集大小):</p>
-<script type="math/tex; mode=display">\mu = \frac{1}{n}\sum_{i=1}^{n}{x_i}</script><script type="math/tex; mode=display">\sigma^2 = \frac{1}{n} \sum_{i=1}^{n}{(x_i - \mu)}</script><script type="math/tex; mode=display">\hat x_i = \frac{x_i - \mu}{\sqrt{\sigma^2}+\varepsilon}</script><p>以上可以看出, 标准化以后的数据服从均值为0,方差为1的正态分布</p>
-<h1 id="为什么要进行Normalization"><a href="#为什么要进行Normalization" class="headerlink" title="为什么要进行Normalization?"></a>为什么要进行Normalization?</h1><p>在介绍BN之前,先说说为什么要进行Normalization</p>
-<p><img src="https://morvanzhou.github.io/static/results/ML-intro/NB2.png" alt=""></p>
-<p>在神经网络中, 数据分布对训练会产生影响. 比如某个神经元 x 的值为1, 某个 Weights 的初始值为 0.1, 这样后一层神经元计算结果就是 Wx = 0.1; 又或者 x = 20, 这样 Wx 的结果就为 2. 现在还不能看出什么问题, 但是, 当我们加上一层激励函数, 激活这个 Wx 值的时候, 问题就来了. 如果使用 像 tanh 的激励函数, Wx 的激活值就变成了 ~0.1 和 ~1, 接近于 1 的部已经处在了 激励函数的饱和阶段, 也就是如果 x 无论再怎么扩大, tanh 激励函数输出值也还是接近1. 换句话说, 神经网络在初始阶段已经不对那些比较大的 x 特征范围 敏感了. 这样很糟糕, 想象我轻轻拍自己的感觉和重重打自己的感觉居然没什么差别, 这就证明我的感官系统失效了. 当然我们是可以用之前提到的对数据做 normalization 预处理, 使得输入的 x 变化范围不会太大, 让输入值经过激励函数的敏感部分. 但刚刚这个不敏感问题不仅仅发生在神经网络的输入层, 而且在隐藏层中也经常会发生.</p>
-<p><strong>Normalization的效果:</strong></p>
-<p><img src="https://morvanzhou.github.io/static/results/ML-intro/NB5.png" alt=""><br>如上图,当没有进行normalizatin时,数据的分布是任意的,那么就会有大量的数据处在激活函数的敏感区域外, 对这样的数据分布进行激活后, 大部分的值都会变成1或-1,造成激活后的数据分布不均衡,而如果进行了Normallizatin,  那么相对来说数据的分布比较均衡,如下图所示:</p>
-<p><img src="https://morvanzhou.github.io/static/results/ML-intro/NB6.png" alt=""></p>
-<p><strong>一句话总结就是: 通过Normalization让数据的分布始终处在激活函数敏感的区域</strong></p>
-<h1 id="BN的提出背景"><a href="#BN的提出背景" class="headerlink" title="BN的提出背景"></a>BN的提出背景</h1><p><a href="https://zhuanlan.zhihu.com/p/34879333" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/34879333</a></p>
-<h2 id="Internal-Covariate-Shift"><a href="#Internal-Covariate-Shift" class="headerlink" title="Internal Covariate Shift"></a>Internal Covariate Shift</h2><p>Covariate [kʌ’veərɪrt]</p>
-<p><strong>什么是Internal Covariate Shift:</strong></p>
-<p>在深层网络训练的过程中，由于网络中参数变化而引起内部结点数据分布发生变化的这一过程被称作Internal Covariate Shift。</p>
-<p><strong>带来了什么问题:</strong></p>
+        <p>InceptionV2 在 V1 的基础上引入了 BN 层, 减少了 Internal Covariate Shift(内部神经元的数据分布差异), 使得每一层的输出都可以规范化到一个标准高斯分布上.</p>
+<p><span id="为什么要进行归一化"></span></p>
+<h1 id="为什么要进行归一化"><a href="#为什么要进行归一化" class="headerlink" title="为什么要进行归一化"></a>为什么要进行归一化</h1><p>在神经网络中, 数据分布对训练会产生影响. 当数据较大时, 有的激活函数比如 sigmoid 或者 tanh 的输出就会接近于 1, 此时的梯度就会接近于0, 处于激活函数的饱和阶段, 也就是说无论输入再怎么扩大, sigmoid 或者 tanh 激励函数输出值也还是接近1. 换句话说, 神经网络在初始阶段已经不对那些比较大的 x 特征范围敏感了. 因此我们需要用之前提到的对数据做 normalization 预处理, 使得输入的 x 变化范围不会太大, 让输入值经过激励函数的敏感部分. 需要注意的是, 这个不敏感问题不仅仅发生在神经网络的输入层, 而且在隐藏层中也经常会发生.<br>当没有进行normalizatin时,数据的分布是任意的,那么就会有大量的数据处在激活函数的敏感区域外, 对这样的数据分布进行激活后, 大部分的值都会变成1或-1, 造成激活后的数据分布不均衡, 而如果进行了Normallizatin,  那么相对来说数据的分布比较均衡.<br><strong>一句话总结就是: 通过Normalization让数据的分布始终处在激活函数敏感的区域</strong></p>
+<p><span id="简述 BN 的原理"></span></p>
+<h1 id="简述-BN-的原理"><a href="#简述-BN-的原理" class="headerlink" title="简述 BN 的原理"></a>简述 BN 的原理</h1><p>在训练深度神经网络时, 每个隐藏层的参数变化会使得后一层的输入发生变化, 从而每一批训练数据的分布也随之改变, 导致网络在每次迭代中都需要拟合不同的数据分布, 增大了训练的复杂度以及过拟合的风险. 这使得我们需要非常谨慎的去设定学习率, 初始化权重等参数更新策略. 因此, 为了保证网络层中的每一批数据都处于相同的数据分布下, 我们需要在网络的每一层输入之前增加归一化处理, 具体来说, 就是对当前 batch 中的所有元素减去均值再除以标准差. 这样的归一化操作可以对原始数据添加额外的约束, 从而可以增强模型的泛化能力, 但同时, 由于简单归一化之后的数据分布被强制为 0 均值和 1 标准差, 因此可能会破坏原始数据本身的特征. 为了能够还原原始数据分布, BN 的第二个关键操作就是引入了用于变换重构的线性偏移参数 $\gamma$ 和 $\beta$, 它们分别对简单归一化后的数据执行 scale 和 shift 操作, 可以在一定程度还原数据本身的分布特别. 总体来说, BN 的作用可以简单概括为两步, 第一步是进行归一化, 用于统一不同网络层的数据分布; 第二步变换重构, 用于恢复原始数据的特征信息.</p>
+<script type="math/tex; mode=display">\mu = \frac{1}{m}\sum_{i=1}^{m}{x_i}</script><script type="math/tex; mode=display">\sigma^2 = \frac{1}{m} \sum_{i=1}^{m}{(x_i - \mu)}</script><script type="math/tex; mode=display">\hat x_i = \frac{x_i - \mu}{\sqrt{\sigma^2}+\varepsilon}</script><script type="math/tex; mode=display">\hat y_i = \gamma \hat x_i + \beta</script><h1 id="BN-解决了什么问题"><a href="#BN-解决了什么问题" class="headerlink" title="BN 解决了什么问题"></a>BN 解决了什么问题</h1><p>BN 主要解决的是深层网络中不同网络数据分布不断发生变化的问题, 也就是 Internal Covariate Shift. 该问题是指在深层网络训练的过程中，由于网络中参数变化而引起内部结点数据分布发生变化的这一过程被称作Internal Covariate Shift. ICS 带来了两个问题:</p>
 <ul>
 <li>上层网络需要不停调整来适应输入数据分布的变化，导致网络学习速度的降低</li>
 <li>网络的训练过程容易陷入梯度饱和区,减缓网络收敛速度</li>
 </ul>
-<p><strong>如何减缓Internal Covariate Shift:</strong></p>
-<p>(1)白化(PCA白化和ZCA白化):</p>
-<ul>
-<li>使得输入特征分布具有相同的均值与方差</li>
-<li>取出特征之间的相关性</li>
-<li>通过白化操作，我们可以减缓ICS的问题，进而固定了每一层网络输入分布，加速网络训练过程的收敛</li>
-</ul>
-<p>白化缺点:</p>
-<ul>
-<li><strong>白化过程计算成本太高</strong>，并且在每一轮训练中的每一层我们都需要做如此高成本计算的白化操作；</li>
-<li><strong>白化过程由于改变了网络每一层的分布</strong>，因而改变了网络层中本身数据的表达能力。底层网络学习到的参数信息会被白化操作丢失掉。</li>
-</ul>
-<p>于是就提出了BN</p>
-<h1 id="什么是Batch-Normalization"><a href="#什么是Batch-Normalization" class="headerlink" title="什么是Batch Normalization"></a>什么是Batch Normalization</h1><p>传统的Normalization使用的均值和方差是整个训练集的均值和方差, 并且只对输入层的数据做归一化, 而Batch Normalization按字面意思就是对每一批数据进行归一化, 同时会对每一层输入做归一化, 所以, 首先要将传统的标准化中的n改为m, m表示一个batch的大小,如下所示:</p>
-<script type="math/tex; mode=display">\mu = \frac{1}{m}\sum_{i=1}^{m}{x_i}</script><script type="math/tex; mode=display">\sigma^2 = \frac{1}{m} \sum_{i=1}^{m}{(x_i - \mu)}</script><script type="math/tex; mode=display">\hat x_i = \frac{x_i - \mu}{\sqrt{\sigma^2}+\varepsilon}</script><p>传统的Normalization直接使用了减均值除方差的方式来进行标准化, 但是, 这样一概而全的方法未必对所有数据来说就是最优的, 比如数据本身就不对称, 或者激活函数未必对方差为1的数据有最好的效果, 所以, BN的想法是在传统标准化之后再加上一个线性变换,如下所示:</p>
-<script type="math/tex; mode=display">\hat y_i = \gamma \hat x_i + \beta</script><p>其中,$\gamma$ 和 $\beta$ 是两个需要学习的参数, <strong> 可以看出, BN的本质就是利用参数优化来改变一下数据分布的方差大小和均值的位置. </strong></p>
-<h1 id="BN的优点"><a href="#BN的优点" class="headerlink" title="BN的优点"></a>BN的优点</h1><p>（1）BN使得网络中每层输入数据的分布相对稳定，加速模型学习速度</p>
-<p>（2）BN使得模型对初始化方法和网络中的参数不那么敏感，简化调参过程，使得网络学习更加稳定</p>
-<p>（3）BN允许网络使用饱和性激活函数（例如sigmoid，tanh等），缓解梯度消失问题</p>
-<p>（4）BN具有一定的正则化效果</p>
-<p>原因如下:</p>
-<p><strong>（1）BN使得网络中每层输入数据的分布相对稳定，加速模型学习速度</strong></p>
-<p>BN通过规范化与线性变换使得每一层网络的输入数据的均值与方差都在一定范围内，使得后一层网络不必不断去适应底层网络中输入的变化，从而实现了网络中层与层之间的解耦，更加有利于优化的过程,提高整个神经网络的学习速度。</p>
-<p><strong>（2）BN使得模型对初始化方法和网络中的参数不那么敏感，简化调参过程，使得网络学习更加稳定</strong></p>
-<p>在神经网络中，我们经常会谨慎地采用一些权重初始化方法（例如Xavier）或者合适的学习率来保证网络稳定训练。当学习率设置太高时，会使得参数更新步伐过大，容易出现震荡和不收敛…<br><a href="https://zhuanlan.zhihu.com/p/34879333" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/34879333</a></p>
-<p><strong>（3）BN允许网络使用饱和性激活函数（例如sigmoid，tanh等），缓解梯度消失问题</strong></p>
-<p>在不使用BN层的时候，由于网络的深度与复杂性，很容易使得底层网络变化累积到上层网络中，导致模型的训练很容易进入到激活函数的梯度饱和区；通过normalize操作可以让激活函数的输入数据落在梯度非饱和区，缓解梯度消失的问题；另外通过自适应学习 $\gamma$ 与 $\beta$ 又让数据保留更多的原始信息。</p>
-<p><strong>（4）BN具有一定的正则化效果</strong></p>
-<p>在Batch Normalization中，由于我们使用mini-batch的均值与方差作为对整体训练样本均值与方差的估计，尽管每一个batch中的数据都是从总体样本中抽样得到，但不同mini-batch的均值与方差会有所不同，这就为网络的学习过程中增加了随机噪音，与Dropout通过关闭神经元给网络训练带来噪音类似，在一定程度上对模型起到了正则化的效果。</p>
-<p><strong>另外，原作者也证明了网络加入BN后，可以丢弃Dropout，模型也同样具有很好的泛化效果。</strong></p>
-<h1 id="BN的具体实现及其反向传播"><a href="#BN的具体实现及其反向传播" class="headerlink" title="BN的具体实现及其反向传播"></a>BN的具体实现及其反向传播</h1><p><a href="https://www.jianshu.com/p/4270f5acc066" target="_blank" rel="noopener">https://www.jianshu.com/p/4270f5acc066</a><br><a href="https://zhuanlan.zhihu.com/p/27938792" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/27938792</a></p>
+<p><span id="使用 BN 有什么好处"></span></p>
+<h1 id="使用-BN-有什么好处"><a href="#使用-BN-有什么好处" class="headerlink" title="使用 BN 有什么好处"></a>使用 BN 有什么好处</h1><p>总的来说，BN通过将每一层网络的输入进行归一化, 保证输入分布的均值与方差固定在一定范围内, 减少了网络中的 Internal Covariate Shift问题, 加速了模型收敛; 并且 BN 可以使得网络对参数的设置如学习率, 初始权重等不那么敏感, 简化了调参过程, 使得网络学习更加稳定; 同时 BN 使得网络可以使用饱和性激活函数如 Sigmoid, tahh 等, 从而缓解了梯度消失问题; 最后 BN 在训练过程中由于使用的 mini-batch 的均值和方差每次都不同，因此引入了随机噪声，在一定程度上对模型起到了正则化的效果, 也就是说, BN 可以起到和 Dropout 类似的作用, 因此在使用 BN 时可以去掉 Dropout 层而不会降级模型精度.</p>
+<p>原因如下: <a href="https://zhuanlan.zhihu.com/p/34879333" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/34879333</a><br><strong>(1) BN使得网络中每层输入数据的分布相对稳定，加速模型学习速度</strong><br>BN通过规范化与线性变换使得每一层网络的输入数据的均值与方差都在一定范围内，使得后一层网络不必不断去适应底层网络中输入的变化，从而实现了网络中层与层之间的解耦，更加有利于优化的过程,提高整个神经网络的学习速度。</p>
+<p><strong>(2) BN使得模型对初始化方法和网络中的参数不那么敏感，简化调参过程，使得网络学习更加稳定</strong><br>在神经网络中，我们经常会谨慎地采用一些权重初始化方法（例如Xavier）或者合适的学习率来保证网络稳定训练。当学习率设置太高时，会使得参数更新步伐过大，容易出现震荡和不收敛…</p>
+<p><strong>(3) BN允许网络使用饱和性激活函数（例如sigmoid，tanh等），缓解梯度消失问题</strong><br>在不使用BN层的时候，由于网络的深度与复杂性，很容易使得底层网络变化累积到上层网络中，导致模型的训练很容易进入到激活函数的梯度饱和区；通过normalize操作可以让激活函数的输入数据落在梯度非饱和区，缓解梯度消失的问题；另外通过自适应学习 $\gamma$ 与 $\beta$ 又让数据保留更多的原始信息。</p>
+<p><strong>(4)BN具有一定的正则化效果</strong><br>在Batch Normalization中，由于我们使用mini-batch的均值与方差作为对整体训练样本均值与方差的估计，尽管每一个batch中的数据都是从总体样本中抽样得到，但不同mini-batch的均值与方差会有所不同，这就为网络的学习过程中增加了随机噪音，与Dropout通过关闭神经元给网络训练带来噪音类似，在一定程度上对模型起到了正则化的效果。原作者也证明了网络加入BN后，可以丢弃Dropout，模型也同样具有很好的泛化效果。</p>
+<p><span id="BN 层通常处于网络中的什么位置"></span></p>
+<h1 id="BN-层通常处于网络中的什么位置"><a href="#BN-层通常处于网络中的什么位置" class="headerlink" title="BN 层通常处于网络中的什么位置"></a>BN 层通常处于网络中的什么位置</h1><p>BN 通常应用于网络中的非线性激活层之前, 将卷积层的输出归一化, 使得激活层的输入在 [0, 1] 之间, 避免梯度消失的问题.</p>
+<p><span id="BN 中 batch 的大小对网络性能有什么影响"></span></p>
+<h1 id="BN-中-batch-的大小对网络性能有什么影响"><a href="#BN-中-batch-的大小对网络性能有什么影响" class="headerlink" title="BN 中 batch 的大小对网络性能有什么影响"></a>BN 中 batch 的大小对网络性能有什么影响</h1><p>由于 BN 在计算均值和方差时是在当前的 batch 上进行计算的, 因此, 当 batch 较小时, 求出来的均值和方差就会有较大的随机性, 从而导致效果下降, 具体来说, 当 batch 的大小低于 16 时, 就不建议使用 BN, 当 batch 低于 8 时, 网络的性能就会有非常明显的下降.</p>
+<p><span id="BN 中线性偏移的参数个数怎么计算的"></span></p>
+<h1 id="BN-中线性偏移的参数个数怎么计算的"><a href="#BN-中线性偏移的参数个数怎么计算的" class="headerlink" title="BN 中线性偏移的参数个数怎么计算的"></a>BN 中线性偏移的参数个数怎么计算的</h1><p>对于 BN 层来说, 如果它的输入 shape 均为为 $(N, C, H, W)$, 则其输出 shape 也为 $(N, C, H, W)$, <strong>即保持输入输出 shape 不变.</strong> BN 中的线性偏移参数 $\gamma$ 和 $beta$ 的个数 <strong>与输入 shape 的通道数相同, 均为 $C$</strong>. PyTorch 中 $\gamma$ 和 $\beta$ 参数分别对应着<code>weight</code>和<code>bias</code>, 下面是 BN 的声明.<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.nn.BatchNorm2d(num_features, eps=<span class="number">1e-05</span>, momentum=<span class="number">0.1</span>, affine=<span class="keyword">True</span>, track_running_stats=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure></p>
+<p><span id="Inference 阶段使用的均值和方差是如何求得的"></span></p>
+<h1 id="BN-中使用的均值和方差是如何求得的"><a href="#BN-中使用的均值和方差是如何求得的" class="headerlink" title="BN 中使用的均值和方差是如何求得的"></a>BN 中使用的均值和方差是如何求得的</h1><p>在训练阶段, 就是利用当前 batch 中的均值和方差进行计算.<br>在测试阶段, 采用的是网络中维护的滑动平均值进行计算的, 滑动平均值的维护方式是用当前的滑动平均值乘以一个 $decay$ 系数, 然后再加上 $(1 - decay)$ 倍的当前 batch 的统计值. $decay$ 决定了数值的更新速度, 通常 $decay$ 会设成一个非常接近于 1 的数, 比如, 0.99 或 0.999.</p>
+<p><script type="math/tex">shadow_variable = decay \times shadow_variable + (1 - decay) \times variable</script>.</p>
+<p><span id="在多卡训练使用 BN 时, 需要注意什么问题"></span></p>
+<h1 id="在多卡训练使用-BN-时-需要注意什么问题"><a href="#在多卡训练使用-BN-时-需要注意什么问题" class="headerlink" title="在多卡训练使用 BN 时, 需要注意什么问题"></a>在多卡训练使用 BN 时, 需要注意什么问题</h1><p>需要注意多卡之间的通信同步问题<br>目前大部分的框架, 包括 Caffe, PyTorch, TF 等, 对于 BatchNorm 的实现都只考虑了 single GPU, <strong>也就是说 BN 使用的均值和标准差是单个 GPU 计算的, 这相当于缩小了 mini-batch size</strong>. 至于为什么这样实现: (1) 因为没有 sync 的需求, 因为对于大多数 vision 问题, 单 GPU 上的 mini-batch 已经够大了, 完全不会影响结果. (2) 影响训练速度, BN layer 通常是在网络结构里面广泛使用的, 这样每次都同步一下 GPUs, 十分影响训练速度.</p>
+<p><span id="BN 的具体实现及其反向传播公式是如何计算的"></span></p>
+<h1 id="BN-的具体实现及其反向传播公式是如何计算的"><a href="#BN-的具体实现及其反向传播公式是如何计算的" class="headerlink" title="BN 的具体实现及其反向传播公式是如何计算的"></a>BN 的具体实现及其反向传播公式是如何计算的</h1><p>具体实现: 两个 Scale 层.</p>
+<p>反向</p>
+<p><a href="https://www.jianshu.com/p/4270f5acc066" target="_blank" rel="noopener">https://www.jianshu.com/p/4270f5acc066</a><br><a href="https://zhuanlan.zhihu.com/p/27938792" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/27938792</a></p>
 <p>在Caffe2实现中, BN层需要和Scale层配合使用, 其中, BN专门用于做归一化操作, 而后续的线性变换层, 会交给Scale层去做.</p>
 <p>训练阶段:<br>在训练时利用当前batch的mean和variance来进行BN处理, 同时使用滑动平均的方式不断的更新global 的mean和variance, 并将其存储起来.</p>
 <p>测试阶段:<br>在预测阶段, 直接使用模型存储好的均值和方差进行计算</p>
-<h1 id="使用-BN-时的前一层卷积网络可以不加偏置项-降低模型参数量"><a href="#使用-BN-时的前一层卷积网络可以不加偏置项-降低模型参数量" class="headerlink" title="使用 BN 时的前一层卷积网络可以不加偏置项(降低模型参数量)"></a>使用 BN 时的前一层卷积网络可以不加偏置项(降低模型参数量)</h1><p>当使用 BN 时, 无论加偏置还是不加偏置, 效果都是一样的, 公式证明如下:</p>
+<p><span id="使用 BN 时, 前一层的卷积网络需不需要偏置项, 为什么"></span></p>
+<h1 id="使用-BN-时-前一层的卷积网络需不需要偏置项-为什么"><a href="#使用-BN-时-前一层的卷积网络需不需要偏置项-为什么" class="headerlink" title="使用 BN 时, 前一层的卷积网络需不需要偏置项, 为什么"></a>使用 BN 时, 前一层的卷积网络需不需要偏置项, 为什么</h1><p>使用 BN 时的前一层卷积网络可以不加偏置项(降低模型参数量)<br>当使用 BN 时, 无论加偏置还是不加偏置, 效果都是一样的, 公式证明如下:</p>
 <p>当卷积层后跟batchnormalization层时为什么不要<br><a href="https://blog.csdn.net/u010698086/article/details/78046671" target="_blank" rel="noopener">https://blog.csdn.net/u010698086/article/details/78046671</a></p>
 <p>CC<a href="https://zhuanlan.zhihu.com/p/36222443" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/36222443</a></p>
 <p>另外, 在 BN 中的 $\beta$ 参数也可以起到一定的偏置作用.</p>
-<h1 id="使用BN时应注意的问题"><a href="#使用BN时应注意的问题" class="headerlink" title="使用BN时应注意的问题"></a>使用BN时应注意的问题</h1><ol>
-<li>训练/测试阶段的使用</li>
-</ol>
-<p>在实际应用中, 均值和方差是通过滑动平均方法在训练数据集上得到的, 如果换了其他的任务或数据集, 建议先finetune之后再使用BN层存储的均值和方差.  同时, 注意训练时的均值和方差是来自于当前batch的.</p>
-<p><strong>滑动平均的计算方式:</strong></p>
-<ol>
-<li>隐藏层中BN的数据大小</li>
-</ol>
-<p><del>在卷积网络隐藏层中, BN的大小不单单是batch, 而是batch和特征相应图大小的乘积. 也就是说, 在隐藏层, 层的输入是上一层的输出, 也就是上一层的神经元个数, 而对于上一层来说, 如果输出的特征相应图大小为 $w\times h$ , 那么上一层的神经元个数就应该是 $b\times w \times h$, 其中,b是指batch的大小</del></p>
-<ol>
-<li>BN 必须使用较大的 batch size 才能使用<br>BN在多项任务中都起到了很好的实验效果, 但是BN的有效性必须建立在足够大的batch size之上(如32/GPU). 当batch size 比较小时, BN往往无法取得好的效果, 并且还会提升模型的误差.</li>
-</ol>
-<h1 id="BN-的-multi-GPU-sync-问题"><a href="#BN-的-multi-GPU-sync-问题" class="headerlink" title="BN 的 multi-GPU sync 问题"></a>BN 的 multi-GPU sync 问题</h1><p>目前大部分的框架, 包括 Caffe, PyTorch, TF 等, 对于 BatchNorm 的实现都只考虑了 single GPU, <strong>也就是说 BN 使用的均值和标准差是单个 GPU 计算的, 这相当于缩小了 mini-batch size</strong>. 至于为什么这样实现: (1) 因为没有 sync 的需求, 因为对于大多数 vision 问题, 单 GPU 上的 mini-batch 已经够大了, 完全不会影响结果. (2) 影响训练速度, BN layer 通常是在网络结构里面广泛使用的, 这样每次都同步一下 GPUs, 十分影响训练速度.</p>
-<p>bn总结: <a href="https://www.cnblogs.com/makefile/p/batch-norm.html" target="_blank" rel="noopener">https://www.cnblogs.com/makefile/p/batch-norm.html</a></p>
+<h1 id="使用BN时应注意的问题"><a href="#使用BN时应注意的问题" class="headerlink" title="使用BN时应注意的问题"></a>使用BN时应注意的问题</h1><p>bn总结: <a href="https://www.cnblogs.com/makefile/p/batch-norm.html" target="_blank" rel="noopener">https://www.cnblogs.com/makefile/p/batch-norm.html</a></p>
 
       
     </div>
@@ -775,7 +740,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">235</span>
+                    <span class="site-state-item-count">237</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -967,7 +932,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Normalization"><span class="nav-text">Normalization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要进行Normalization"><span class="nav-text">为什么要进行Normalization?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN的提出背景"><span class="nav-text">BN的提出背景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Internal-Covariate-Shift"><span class="nav-text">Internal Covariate Shift</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是Batch-Normalization"><span class="nav-text">什么是Batch Normalization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN的优点"><span class="nav-text">BN的优点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN的具体实现及其反向传播"><span class="nav-text">BN的具体实现及其反向传播</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-BN-时的前一层卷积网络可以不加偏置项-降低模型参数量"><span class="nav-text">使用 BN 时的前一层卷积网络可以不加偏置项(降低模型参数量)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用BN时应注意的问题"><span class="nav-text">使用BN时应注意的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN-的-multi-GPU-sync-问题"><span class="nav-text">BN 的 multi-GPU sync 问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要进行归一化"><span class="nav-text">为什么要进行归一化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简述-BN-的原理"><span class="nav-text">简述 BN 的原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN-解决了什么问题"><span class="nav-text">BN 解决了什么问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-BN-有什么好处"><span class="nav-text">使用 BN 有什么好处</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN-层通常处于网络中的什么位置"><span class="nav-text">BN 层通常处于网络中的什么位置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN-中-batch-的大小对网络性能有什么影响"><span class="nav-text">BN 中 batch 的大小对网络性能有什么影响</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN-中线性偏移的参数个数怎么计算的"><span class="nav-text">BN 中线性偏移的参数个数怎么计算的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN-中使用的均值和方差是如何求得的"><span class="nav-text">BN 中使用的均值和方差是如何求得的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在多卡训练使用-BN-时-需要注意什么问题"><span class="nav-text">在多卡训练使用 BN 时, 需要注意什么问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BN-的具体实现及其反向传播公式是如何计算的"><span class="nav-text">BN 的具体实现及其反向传播公式是如何计算的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-BN-时-前一层的卷积网络需不需要偏置项-为什么"><span class="nav-text">使用 BN 时, 前一层的卷积网络需不需要偏置项, 为什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用BN时应注意的问题"><span class="nav-text">使用BN时应注意的问题</span></a></li></ol></div>
             
 
           </div>
@@ -1013,7 +978,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">26:18</span>
+    <span title="站点阅读时长">26:05</span>
   
 </div>
 

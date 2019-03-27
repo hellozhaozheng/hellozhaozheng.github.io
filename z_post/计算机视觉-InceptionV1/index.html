@@ -124,7 +124,7 @@
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fvn6q3t8hfj20j01x2qcf.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fvn98ano6mj20ps0f5778.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fvn6do3nmnj20un08y75k.jpg">
-<meta property="og:updated_time" content="2019-02-25T12:28:41.550Z">
+<meta property="og:updated_time" content="2019-03-26T05:15:23.727Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Inception V1 (GoogLeNet)">
 <meta name="twitter:description" content="文章: Going Deeper with Convolutions作者: Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, Andrew Rabinovich备注: Google, Inception">
@@ -253,7 +253,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">235</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">237</span></a>
   </li>
         
         
@@ -494,8 +494,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-02-25T20:28:41+08:00" content="2019-02-25">
-      		  2019-02-25
+    		<time itemprop="dateUpdated" datetime="2019-03-26T13:15:23+08:00" content="2019-03-26">
+      		  2019-03-26
     		</time>
   	  </span>
 	  
@@ -548,7 +548,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">4.5k</span>
+                <span title="本文字数">4.9k</span>
               
 
               
@@ -627,24 +627,30 @@
 <p>（4）pool层，使用3x3的核（padding为1），输出28x28x256，然后进行64个1x1的卷积，输出28x28x64。</p>
 <p>将四个结果进行连接，对这四部分输出结果的第三维并联，即128+192+96+64=480，最终输出输出为28x28x480</p>
 <p>第四层（4a,4b,4c,4d,4e）、第五层（5a,5b）……，与3a、3b类似，在此就不再重复。</p>
-<h1 id="要点整理"><a href="#要点整理" class="headerlink" title="要点整理"></a>要点整理</h1><h1 id="说明一下GoogLeNet采用多个卷积核的动机"><a href="#说明一下GoogLeNet采用多个卷积核的动机" class="headerlink" title="说明一下GoogLeNet采用多个卷积核的动机"></a>说明一下GoogLeNet采用多个卷积核的动机</h1><p>NIN网络和Inception Module这类结构非常看中模型在局部区域的拟合能力。它们认为：一张图像通常具有总体特征和细节特征这两类特征，一般小卷积核能够更好的捕捉一些细节特征，随着深层网络的小卷积不断计算下去，总体特征也会慢慢的被提炼出来，但是这样存在一个问题，那就是在如果只采用小卷积，那么网络结构的前段一般只有细节特征，后段才慢慢有一些总体特征，而我们希望这两方面的特征总是能够一起发挥作用，因此，上面的两种模型考虑采用更多不同尺寸的卷积核来提取特征，并把这些特征连接起来，一起送到后面的网络中去计算，使得网络可以获取到更多的特征信息。</p>
-<p>Inception模块还采用了一个stride为1的max pooling层，它的主要功能是减少空间大小，降低过拟合风险（只选最大值，所以值的范围变少了）。</p>
-<h1 id="Inception中为什么使用1×1卷积？"><a href="#Inception中为什么使用1×1卷积？" class="headerlink" title="Inception中为什么使用1×1卷积？"></a>Inception中为什么使用1×1卷积？</h1><p>关于Inception Module，有一种很直接的做法就是将1×1,3×3,5×5卷积和3×3 max pooling直接连接起来，如下面的左图所示，但是这样的话就有个问题，那就是计算量增长太快了。</p>
+<p><span id="简述 GoogLeNet 的原理"></span></p>
+<h1 id="简述-GoogLeNet-的原理"><a href="#简述-GoogLeNet-的原理" class="headerlink" title="简述 GoogLeNet 的原理"></a>简述 GoogLeNet 的原理</h1><p>GoogLeNet 模型的核心思想是 <strong>卷积神经网络中的最优局部稀疏结构可以被现有的组件逼近和覆盖, 因此, 只要找到这个局部最优结构, 并在网络结构中重复使用它, 就可以进一步提升神经网络的拟合能力.</strong> 于是, InceptionV1 跳出了传统卷积神经网络的简单堆叠结构, 首次提出了 Inception 模块. Inception 模块综合了 1x1, 3x3, 5x5 这三种不同尺度的卷积核进行特征提取, 同时, 考虑到池化层的重要作用, 还综合了 3x3 大小的最大池化层. 并且, 还在 3x3 和 5x5 的卷积层之前, 以及池化层之后, 使用了 1x1 的卷积层来降低特征维度, 从而减少计算量. 以 Inception 模块为基本单元就可以构建出 IncetionV1 模型, 构建时仍然遵循了 5 个卷积段的段落形式, 段之间通过最大池化层分隔, 具体来说, 前两段使用的是传统的卷积层, 其中第一段是单层的 7x7 大小的卷积层, 第二段是两层较小尺寸的卷积层(1x1, 3x3), 后三段卷积段都是由 Inception 模块组成, 每一段使用的 Inception 模块数量分别为 2, 5, 2. 最后的分类层由全局平均池化层, 全连接层, Softmax 激活层组成. 另外, 由于网络结构较深, 因此, 为了防止梯度消失, InceptionV1 分别在 4a 和 4d 的 Inception 模块上添加了辅助侧枝分类器, 该分类器由一层平均池化层, 一层 1x1 卷积层, 两层全连接层和 Softmax 激活层组成.</p>
+<p><span id="简述一下 GoogLeNet 采用多个卷积核的原因"></span></p>
+<h1 id="简述一下-GoogLeNet-采用多个卷积核的原因"><a href="#简述一下-GoogLeNet-采用多个卷积核的原因" class="headerlink" title="简述一下 GoogLeNet 采用多个卷积核的原因"></a>简述一下 GoogLeNet 采用多个卷积核的原因</h1><p>Inception Module这类结构非常看中模型在局部区域的拟合能力。它们认为：一张图像通常具有总体特征和细节特征这两类特征，一般小卷积核能够更好的捕捉一些细节特征，随着深层网络的小卷积不断计算下去，总体特征也会慢慢的被提炼出来，但是这样存在一个问题，那就是在如果只采用小卷积，那么网络结构的前段一般只有细节特征，后段才慢慢有一些总体特征，而我们希望这两方面的特征总是能够一起发挥作用，因此，Inception 模型考虑采用更多不同尺寸的卷积核来提取特征，并把这些特征连接起来，一起送到后面的网络中去计算，使得网络可以获取到更多的特征信息。</p>
+<p><span id="Inception 中为什么使用 1×1 卷积层"></span></p>
+<h1 id="Inception-中为什么使用-1×1-卷积层"><a href="#Inception-中为什么使用-1×1-卷积层" class="headerlink" title="Inception 中为什么使用 1×1 卷积层"></a>Inception 中为什么使用 1×1 卷积层</h1><p>关于Inception Module，有一种很直接的做法就是将1×1,3×3,5×5卷积和3×3 max pooling直接连接起来，如下面的左图所示，但是这样的话就有个问题，那就是计算量增长太快了。</p>
 <p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fvn6do3nmnj20un08y75k.jpg" alt=""></p>
 <p>为了解决这个问题，文章在3×3和5×5的卷积之前，3×3max pooling之后使用了1×1卷积，使其输出的feature map的depth降低了，从而达到了降维的效果，抑制的过快增长的计算量。</p>
-<h1 id="1×1卷积的作用是什么？"><a href="#1×1卷积的作用是什么？" class="headerlink" title="1×1卷积的作用是什么？"></a>1×1卷积的作用是什么？</h1><p>1x1卷积的主要目的是为了减少维度，还用于修正线性激活（ReLU）。比如，上一层的输出为 100x100x128，经过具有256个通道的5x5卷积层之后(stride=1，pad=2)，输出数据为100x100x256，其中，卷积层的参数为128x5x5x256= 819200。而假如上一层输出先经过具有32个通道的1x1卷积层，再经过具有256个输出的5x5卷积层，那么输出数据仍为为100x100x256，但卷积参数量已经减少为128x1x1x32 + 32x5x5x256= 204800，大约减少了4倍</p>
-<p><strong>1×1的卷积核，在一定程度上可以实现全连接层：</strong></p>
-<p>具体的操作是，输入是224x224x3 的图像，假设经过变换之后最后一层是[7x7x512]的，那么传统的方法应该将其展平成为一个7x7x512长度的一层，然后做全连接层，假设全连接层为4096×1000层的（假设有1000个分类结果）。</p>
+<h1 id="1×1卷积的作用是什么？"><a href="#1×1卷积的作用是什么？" class="headerlink" title="1×1卷积的作用是什么？"></a>1×1卷积的作用是什么？</h1><p>1x1卷积的主要目的是为了减少维度，降低计算量.</p>
+<p><strong>1×1的卷积核，在一定程度上可以实现全连接层：</strong><br>具体的操作是，输入是224x224x3 的图像，假设经过变换之后最后一层是[7x7x512]的，那么传统的方法应该将其展平成为一个7x7x512长度的一层，然后做全连接层，假设全连接层为4096×1000层的（假设有1000个分类结果）。</p>
 <p>那么用1×1卷积核怎么做呢，因为1×1卷积核相当于在不同channel之间做线性变换，所以：</p>
 <ul>
 <li>先选择7×7的卷积核，输出层特征层数为4096层，这样得到一个[1×1×4096]层的</li>
 <li>然后再选择用1×1卷积核，输出层数为1000层，这样得到一个[1×1×1000]层的</li>
 </ul>
 <h1 id="用卷积层代替全连接层的好处"><a href="#用卷积层代替全连接层的好处" class="headerlink" title="用卷积层代替全连接层的好处"></a>用卷积层代替全连接层的好处</h1><p>这样做其实有非常多的好处，比如上面的例子中输入是224x224x3 的图像，如果此时图像变得更大了，变成384x384大小的了，那么一开始按照32作为步长来进行卷积操作，最后还按照这个网络结构能得到一个[6×6×1000]层的，那么前面那个[6×6]有什么用呢，这个代表每一个位置上，其属于1000个分类结果中的打分，所以这在图像分割等领域等领域有着非常重要的作用【之前一篇论文就是用的这种方法Fully Convolutional Networks for Semantic Segmentation】。</p>
-<h1 id="Auxiliary-Classifier"><a href="#Auxiliary-Classifier" class="headerlink" title="Auxiliary Classifier"></a>Auxiliary Classifier</h1><p>当时Inception网络还是太深了，不好训练，因此网络中还加了两个侧枝，通过中间层的feature map，来得到预测结果（有了ResNet的shortcut以后，这种侧枝用的比较少了）。</p>
-<h1 id="为什么使用侧枝？"><a href="#为什么使用侧枝？" class="headerlink" title="为什么使用侧枝？"></a>为什么使用侧枝？</h1><p>为了避免梯度消失，网络额外增加了2个辅助的softmax用于向前传导梯度（辅助分类器）。辅助分类器是将中间某一层的输出用作分类，并按一个较小的权重（0.3）加到最终分类结果中，这样相当于做了模型融合，同时给网络增加了反向传播的梯度信号，也提供了额外的正则化，对于整个网络的训练很有裨益。而在实际测试的时候，这两个额外的softmax会被去掉。也就是说在测试的时候，只会用最后的softmax结果作为分类依据。</p>
-<h1 id="Inception-Model有没有使用全连接层？"><a href="#Inception-Model有没有使用全连接层？" class="headerlink" title="Inception Model有没有使用全连接层？"></a>Inception Model有没有使用全连接层？</h1><p>在两个侧枝使用了卷积+FC+FC+SoftmaxActivation的结构，在最后一层使用了全局平均池化+FC+SoftmaxActivation的结构。</p>
-<h1 id="LRN：LocalRespNorm"><a href="#LRN：LocalRespNorm" class="headerlink" title="LRN：LocalRespNorm"></a>LRN：LocalRespNorm</h1>
+<p><span id="Inception 中为什么使用全局平均池化层"></span></p>
+<h1 id="Inception-中为什么使用全局平均池化层"><a href="#Inception-中为什么使用全局平均池化层" class="headerlink" title="Inception 中为什么使用全局平均池化层"></a>Inception 中为什么使用全局平均池化层</h1><p>最主要的作用就是大大降低了特征图谱的维度, 使得模型的参数量大大减少, 参数量的减少从另一方面来说相对于对网络模型的复杂度做了正则化, 从而在一定程度上可以防止网络模型出现过拟合问题.</p>
+<p><span id="为什么使用侧枝"></span></p>
+<h1 id="为什么使用侧枝"><a href="#为什么使用侧枝" class="headerlink" title="为什么使用侧枝"></a>为什么使用侧枝</h1><p>为了避免梯度消失，网络额外增加了2个辅助的softmax用于向前传导梯度（辅助分类器）。辅助分类器是将中间某一层的输出用作分类，并按一个较小的权重（0.3）加到最终分类结果中，这样相当于做了模型融合，同时给网络增加了反向传播的梯度信号，也提供了额外的正则化，对于整个网络的训练很有裨益。而在实际测试的时候，这两个额外的softmax会被去掉。也就是说在测试的时候，只会用最后的softmax结果作为分类依据。</p>
+<p>当时Inception网络还是太深了，不好训练，因此网络中还加了两个侧枝，通过中间层的feature map，来得到预测结果（有了ResNet的shortcut以后，这种侧枝用的比较少了）。</p>
+<p><span id="GoogLeNet 在哪些地方使用了全连接层"></span></p>
+<h1 id="GoogLeNet-在哪些地方使用了全连接层"><a href="#GoogLeNet-在哪些地方使用了全连接层" class="headerlink" title="GoogLeNet 在哪些地方使用了全连接层"></a>GoogLeNet 在哪些地方使用了全连接层</h1><p>在两个侧枝使用了卷积+FC+FC+SoftmaxActivation的结构，在最后一层使用了全局平均池化+FC+SoftmaxActivation的结构。</p>
+
       
     </div>
 
@@ -771,7 +777,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">235</span>
+                    <span class="site-state-item-count">237</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -963,7 +969,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#核心亮点"><span class="nav-text">核心亮点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关工作"><span class="nav-text">相关工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#动机和High-Level的考虑"><span class="nav-text">动机和High Level的考虑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#框架细节"><span class="nav-text">框架细节</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GooLeNet-Inception-V1"><span class="nav-text">GooLeNet(Inception V1)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#要点整理"><span class="nav-text">要点整理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#说明一下GoogLeNet采用多个卷积核的动机"><span class="nav-text">说明一下GoogLeNet采用多个卷积核的动机</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inception中为什么使用1×1卷积？"><span class="nav-text">Inception中为什么使用1×1卷积？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1×1卷积的作用是什么？"><span class="nav-text">1×1卷积的作用是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#用卷积层代替全连接层的好处"><span class="nav-text">用卷积层代替全连接层的好处</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Auxiliary-Classifier"><span class="nav-text">Auxiliary Classifier</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么使用侧枝？"><span class="nav-text">为什么使用侧枝？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inception-Model有没有使用全连接层？"><span class="nav-text">Inception Model有没有使用全连接层？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LRN：LocalRespNorm"><span class="nav-text">LRN：LocalRespNorm</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#核心亮点"><span class="nav-text">核心亮点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关工作"><span class="nav-text">相关工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#动机和High-Level的考虑"><span class="nav-text">动机和High Level的考虑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#框架细节"><span class="nav-text">框架细节</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GooLeNet-Inception-V1"><span class="nav-text">GooLeNet(Inception V1)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简述-GoogLeNet-的原理"><span class="nav-text">简述 GoogLeNet 的原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简述一下-GoogLeNet-采用多个卷积核的原因"><span class="nav-text">简述一下 GoogLeNet 采用多个卷积核的原因</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inception-中为什么使用-1×1-卷积层"><span class="nav-text">Inception 中为什么使用 1×1 卷积层</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1×1卷积的作用是什么？"><span class="nav-text">1×1卷积的作用是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#用卷积层代替全连接层的好处"><span class="nav-text">用卷积层代替全连接层的好处</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inception-中为什么使用全局平均池化层"><span class="nav-text">Inception 中为什么使用全局平均池化层</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么使用侧枝"><span class="nav-text">为什么使用侧枝</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GoogLeNet-在哪些地方使用了全连接层"><span class="nav-text">GoogLeNet 在哪些地方使用了全连接层</span></a></li></ol></div>
             
 
           </div>
@@ -1009,7 +1015,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">26:18</span>
+    <span title="站点阅读时长">26:05</span>
   
 </div>
 

@@ -123,7 +123,7 @@
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvrusa33dkj20hx0dnmxr.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fvsu4x9m5hj20ci0a8wel.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvsu4xaa2nj20ca0ae3yn.jpg">
-<meta property="og:updated_time" content="2019-03-18T11:43:38.637Z">
+<meta property="og:updated_time" content="2019-03-27T07:27:19.352Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SVM深入解析">
 <meta name="twitter:description" content="前言起初让我最头疼的是拉格朗日对偶和SMO，后来逐渐明白拉格朗日对偶的重要作用是将w的计算提前并消除w，使得优化函数变为拉格朗日乘子的单一参数优化问题。而SMO里面迭代公式的推导也着实让我花费了不少时间。 对比这么复杂的推导过程，SVM的思想确实那么简单。它不再像logistic回归一样企图去拟合样本点（中间加了一层sigmoid函数变换），而是就在样本中去找分隔线，为了评判哪条分界线更好，引入了">
@@ -252,7 +252,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">235</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">237</span></a>
   </li>
         
         
@@ -493,8 +493,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-18T19:43:38+08:00" content="2019-03-18">
-      		  2019-03-18
+    		<time itemprop="dateUpdated" datetime="2019-03-27T15:27:19+08:00" content="2019-03-27">
+      		  2019-03-27
     		</time>
   	  </span>
 	  
@@ -584,8 +584,10 @@
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>起初让我最头疼的是拉格朗日对偶和SMO，后来逐渐明白拉格朗日对偶的重要作用是将w的计算提前并消除w，使得优化函数变为拉格朗日乘子的单一参数优化问题。而SMO里面迭代公式的推导也着实让我花费了不少时间。</p>
 <p>对比这么复杂的推导过程，SVM的思想确实那么简单。它不再像logistic回归一样企图去拟合样本点（中间加了一层sigmoid函数变换），而是就在样本中去找分隔线，为了评判哪条分界线更好，引入了几何间隔最大化的目标。</p>
 <p>之后所有的推导都是去解决目标函数的最优化上了。在解决最优化的过程中，发现了w可以由特征向量内积来表示，进而发现了核函数，仅需要调整核函数就可以将特征进行低维到高维的变换，在低维上进行计算，实质结果表现在高维上。由于并不是所有的样本都可分，为了保证SVM的通用性，进行了软间隔的处理，导致的结果就是将优化问题变得更加复杂，然而惊奇的是松弛变量没有出现在最后的目标函数中。最后的优化求解问题，也被拉格朗日对偶和SMO算法化解，使SVM趋向于完美。</p>
+<p><span id="简述 SVM 的基本概念和原理"></span></p>
 <h1 id="简述-SVM-的基本概念和原理"><a href="#简述-SVM-的基本概念和原理" class="headerlink" title="简述 SVM 的基本概念和原理"></a>简述 SVM 的基本概念和原理</h1><p>最简单的 SVM 从线性分类器导出, 根据最大化样本点分类间隔的目标, 我们可以得到线性可分问题的 SVM 目标函数. 然后可以利用拉格朗日乘子法得到其对偶问题, 并根据 KKT 条件和 SMO 算法就可以高效的求出超平面的解. 但是实际任务中, 原始样本空间内也许并不存在一个能正确划分两类样本的超平面. 因此, 我们需要利用核函数将样本从原始空间映射到一个更高为的特征空间, 使得样本在这个特征空间内线性可分. 核函数的选择对于支持向量机的性能至关重要. 但是现实任务中往往很难确定合适的核函数使得训练样本在特征空间内线性可分, 因此, 我们引入了 “软间隔” 的概念, 也就是松弛变量和惩罚因子, 其基本思想就是, 允许支持向量机在一些样本上出错, 并对违反约束条件的训练样本进行惩罚. 所以, 最终的优化目标就是在最大化间隔的同时, 使得不满足约束的样本尽可能地少.</p>
-<h1 id="支持向量机推导过程"><a href="#支持向量机推导过程" class="headerlink" title="支持向量机推导过程"></a>支持向量机推导过程</h1><h2 id="1-1-间隔与支持向量"><a href="#1-1-间隔与支持向量" class="headerlink" title="1.1 间隔与支持向量"></a>1.1 间隔与支持向量</h2><p>给定训练样本集(二分类问题):</p>
+<p><span id="SVM 推导过程"></span></p>
+<h1 id="SVM-推导过程"><a href="#SVM-推导过程" class="headerlink" title="SVM 推导过程"></a>SVM 推导过程</h1><h1 id="1-间隔与支持向量"><a href="#1-间隔与支持向量" class="headerlink" title="1 间隔与支持向量"></a>1 间隔与支持向量</h1><p>给定训练样本集(二分类问题):</p>
 <script type="math/tex; mode=display">D = {(\vec x_1, y_1), (\vec x_2,y_2),..,(\vec x_m,y_m)}</script><script type="math/tex; mode=display">y_i \in \{-1, +1\}</script><script type="math/tex; mode=display">\vec x_i =(x^{(1)}_i;x^{(2)}_i;...;x^{(d)}_i )</script><p>注意,这里用的是分号, 表示这是一个列向量. SVM做的事情就是试图把一根 “木棍” 放在最佳位置, 好让 “木棍” 的两边都有尽可能大的 “间隔”.</p>
 <p>这个 “木棍” 就叫做 “划分超平面”, 可以用下面的线性方程来描述:</p>
 <script type="math/tex; mode=display">\vec w^T\vec x + b = 0</script><p>其中 $\vec w =(w^(1); w^(2);…;  w^(d))$ 为 $d$ 维法向量(注意,这里用的是分号, 表示这是一个列向量), <strong>决定了超平面的方向</strong>,  $\vec x$ 为 “木棍” 上的点的坐标($d$ 维列向量), $b$ 为位移项, <strong>决定了超平面与原点之间的距离</strong>.</p>
@@ -601,7 +603,7 @@
 <script type="math/tex; mode=display">\arg\min_{\vec w,b} \frac{1}{2}\|\vec w\|^2 = \arg\min_{\vec w,b} \frac{1}{2}\vec w^T\vec w  \tag 1</script><script type="math/tex; mode=display">s.t. y_i(\vec w^T \vec x_i +b) \geq 1, i=1,...,m</script><p>下图即为SVM示意图, 注意,图中的1可以被任意常数替换(只要前面乘上对应的系数即可, =0说明在超分类平面上, !=0说明在两侧)</p>
 <p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvrusa33dkj20hx0dnmxr.jpg" alt=""></p>
 <p>以上就是线性可分时的SVM基本型(现实中大多数问题是线性不可分的, 所以线性可分的SVM没有太多实用价值)</p>
-<h2 id="1-2-对偶问题求解-vec-w-和-b"><a href="#1-2-对偶问题求解-vec-w-和-b" class="headerlink" title="1.2 对偶问题求解 $\vec w$ 和 $b$"></a>1.2 对偶问题求解 $\vec w$ 和 $b$</h2><h3 id="问题说明"><a href="#问题说明" class="headerlink" title="问题说明"></a>问题说明</h3><p>对偶问题(dual problem):在求出一个问题解的同时, 也给出了另一个问题的解</p>
+<h1 id="2-对偶问题求解-vec-w-和-b"><a href="#2-对偶问题求解-vec-w-和-b" class="headerlink" title="2 对偶问题求解 $\vec w$ 和 $b$"></a>2 对偶问题求解 $\vec w$ 和 $b$</h1><h2 id="问题说明"><a href="#问题说明" class="headerlink" title="问题说明"></a>问题说明</h2><p>对偶问题(dual problem):在求出一个问题解的同时, 也给出了另一个问题的解</p>
 <p>我们希望通过求解式(1)来得到具有最大间隔的划分超平面的模型参数,由于该式是一个凸二次规划问题(目标函数是变量的二次函数, 约束条件是变量的线性不等式). 因此,对该式使用拉格朗日乘子法得到其 “对偶问题”.</p>
 <p>对于式(1)的 <strong>每个样本点</strong> 约束添加拉格朗日乘子 $\alpha_i \geq 0$, 则该问题的拉格朗日函数为:</p>
 <script type="math/tex; mode=display">L(\vec w,b,\alpha) = \frac{1}{2}\|\vec w\|^2 +\sum_{i=1}^{m}\alpha_i (1-y_i(\vec w^T \vec x_i +b))\tag 2</script><p>其中, $\vec \alpha = (\alpha_1, \alpha_2,…,\alpha_m)$ ,每一个 $\alpha_i$ 均为标量 .接着令 $L(\vec w,b,\vec \alpha)$ 对 $\vec w$ 和 $b$ 求偏导, 并令其为0, 可得:</p>
@@ -610,7 +612,7 @@
 <script type="math/tex; mode=display">\arg\max_{\vec \alpha}  \bigg( \sum_{i=1}^{m} \alpha_i - \frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} \alpha_i \alpha_j y_i  y_j \vec x_i^T \vec x_j \bigg) \tag 5</script><script type="math/tex; mode=display">s.t. \sum_{i=1}^{m} \alpha_i y_i = 0, 其中 \alpha_i \geq 0</script><p>为了满足原始问题(1) 和对偶问题(5)之间的充分必要条件, 上述推导过程还需要满足KKT(Karush-Kuhn-Tucker)条件(其中前两条已经在上述推导过程中满足) , 即要求:</p>
 <script type="math/tex; mode=display">\begin{cases} \alpha_i \geq 0 ; \\ y_i f(\vec x_i) - 1 \geq 0 ; \\ \alpha_i (y_i f(\vec x_i) - 1 ) = 0. \end{cases}</script><p>当我们解出上式得到 $\vec \alpha$ 后, 就可以通过求得 $\vec w$ 和 $b$ 的值,  进而可得到划分超平面对应的模型:</p>
 <script type="math/tex; mode=display">f(\vec x) = \vec w^T \vec x +b = \sum_{i=1}^{m} \alpha_i y_i \vec x_i^T \vec x +b</script><p>根据 KKT 条件我们可以轻易得出, 对任意的训练样本 $(\vec x_i , y_i)$ , 总有 $\alpha_i = 0$ 或 $y_i f(\vec x_i) = 1$ . 若 $\alpha_i = 0$ , 则该项对应的样本不会出现在求和项中 ; <strong>若 $\alpha_i &gt; 0$ , 则必有 $y_i f(\vec x_i) = 1$ , 这说明该样本点出现在最大间隔边界上, 是一个支持向量. 这显示出支持向量机的一个重要性质: 训练完成后, 大部分的训练样本都不需要保留(这些样本对应的系数 $\alpha_i = 0$ ), 最终模型仅与支持向量有关.</strong></p>
-<h3 id="使用SMO算法求对偶问题的解"><a href="#使用SMO算法求对偶问题的解" class="headerlink" title="使用SMO算法求对偶问题的解"></a>使用SMO算法求对偶问题的解</h3><p>从(5)式可以看出, 这仍是一个二次规划问题, 可以使用通用的二次规划法来求解, 但是, 该问题的规模正比于训练样本数量, 在实际任务中使用通用解法会造成很大的开销, 因此, 需要使用更高效的算法—-SMO(Sequential Minimal Optimization, 序列最小算法)</p>
+<h2 id="使用SMO算法求对偶问题的解"><a href="#使用SMO算法求对偶问题的解" class="headerlink" title="使用SMO算法求对偶问题的解"></a>使用SMO算法求对偶问题的解</h2><p>从(5)式可以看出, 这仍是一个二次规划问题, 可以使用通用的二次规划法来求解, 但是, 该问题的规模正比于训练样本数量, 在实际任务中使用通用解法会造成很大的开销, 因此, 需要使用更高效的算法—-SMO(Sequential Minimal Optimization, 序列最小算法)</p>
 <p>SMO的基本思路: 先固定 $\alpha_i$ 之外的所有参数, 然后求 $\alpha_i$ 上的极值.  但是这里由于 $\alpha_i$ 之间不是互相独立的, 需要满足约束 $\sum_{i=1}^{m} \alpha_i y_i = 0$ , 即一个分量改变, 其他的也要随之改变,因此每次在优化变量中选取两个分量 $\alpha_i$ 和 $\alpha_j$ ,并将其他参数固定, 然后在参数初始化后, 不断执行如下两个步骤直至收敛:</p>
 <ul>
 <li>选取一对需要更新的变量 $\alpha_i$ 和 $\alpha_j$</li>
@@ -655,9 +657,9 @@
 <script type="math/tex; mode=display">b_i^{new} = y_i - \sum_{k=1,k\neq i,j}^{m} \alpha^{(k)} y^{(k)}K_{k,i} - \alpha_i^{new}y_iK_{i,i} - \alpha_j^{new}y_jK_{j,i}</script><p>其中前两项可以写成:</p>
 <script type="math/tex; mode=display">y_i - \sum_{k=1,k\neq i,j}^{m} \alpha^{(k)} y^{(k)}K_{k,i} = -E_i + \alpha_i^{old}y_iK_{i,i} + \alpha_j^{old}y_jK_{j,i} + b_{old}</script><p>于是有:</p>
 <script type="math/tex; mode=display">b_i^{new} = -E_i - \big( \alpha_i^{new} - \alpha_i^{old} \big)y_i  K_{i,i} - \big(\alpha_j^{new} - \alpha_j^{old}   \big)y_jK_{j,i} + b_{old}</script><p>同理有:</p>
-<script type="math/tex; mode=display">b_j^{new} = -E_j - \big( \alpha_j^{new} - \alpha_j^{old} \big)y_j  K_{j,j} - \big(\alpha_i^{new} - \alpha_i^{old}   \big)y_jK_{i,j} + b_{old}</script><h3 id="如何恰当的选取需要更新的变量-alpha-i-和-alpha-j"><a href="#如何恰当的选取需要更新的变量-alpha-i-和-alpha-j" class="headerlink" title="如何恰当的选取需要更新的变量 $\alpha_i$ 和 $\alpha_j$"></a>如何恰当的选取需要更新的变量 $\alpha_i$ 和 $\alpha_j$</h3><p>采用启发式的规则来选取, 直觉上我们知道, 我们应该首先优化那些违反KKT条件最严重的样本, 因此我们首先首先遍历所有满足约束条件 $0 &lt; \alpha_i &lt; C$ 的样本点, 即位于间隔边界上的支持向量点(直觉上也能发现这些点最有可能分类错误), 检验它们是否满足KKT条件. 如果这些样本都满足KKT条件，则遍历整个训练样本集，判断它们是否满足KKT条件，直到找到一个违反KKT条件的变量 $\alpha_i$ (即使 $\alpha_i$ 位于边界上,也有可能违反KKT条件).</p>
+<script type="math/tex; mode=display">b_j^{new} = -E_j - \big( \alpha_j^{new} - \alpha_j^{old} \big)y_j  K_{j,j} - \big(\alpha_i^{new} - \alpha_i^{old}   \big)y_jK_{i,j} + b_{old}</script><h2 id="如何恰当的选取需要更新的变量-alpha-i-和-alpha-j"><a href="#如何恰当的选取需要更新的变量-alpha-i-和-alpha-j" class="headerlink" title="如何恰当的选取需要更新的变量 $\alpha_i$ 和 $\alpha_j$"></a>如何恰当的选取需要更新的变量 $\alpha_i$ 和 $\alpha_j$</h2><p>采用启发式的规则来选取, 直觉上我们知道, 我们应该首先优化那些违反KKT条件最严重的样本, 因此我们首先首先遍历所有满足约束条件 $0 &lt; \alpha_i &lt; C$ 的样本点, 即位于间隔边界上的支持向量点(直觉上也能发现这些点最有可能分类错误), 检验它们是否满足KKT条件. 如果这些样本都满足KKT条件，则遍历整个训练样本集，判断它们是否满足KKT条件，直到找到一个违反KKT条件的变量 $\alpha_i$ (即使 $\alpha_i$ 位于边界上,也有可能违反KKT条件).</p>
 <p>当找到了第一个分量 $\alpha_i$ 后, 接下来寻找第二个分类 $\alpha_j$, 而选取的标准是使得它有足够大的变化, 也就是说使选取的两变量所对应的样本之间的间隔最大, 一种直观的解释是, 这样的两个变量有很大的差别, 与对两个相似的变量进行更新相比(相似说明有可能属于同一类, 更新意义不大), 对它们进行更新会带给目标函数值更大的变化. 第二个乘子的迭代步长正比于 $|E_i - E_j|$ , 因此, 我们希望选择的乘子能够具有最大的 $|E_i - E_j|$. 即当 $E_i$ 为正时选择绝对值最大的赋值 $E_j$ , 反之, 选择正值最大的 $E_i$</p>
-<h2 id="1-3-核函数"><a href="#1-3-核函数" class="headerlink" title="1.3 核函数"></a>1.3 核函数</h2><p>在之前的讨论中,我们假设 <strong>训练样本</strong> 是线性可分的, 然而在现实任务中, 原始样本空间内也许并不存在一个能正确划分两类样本的超平面, 对于这样的问题, <strong>可将一样本从原始空间映射到一个更高维的特征空间, 使得样本在这个特征空间内线性可分</strong> .</p>
+<h1 id="3-核函数"><a href="#3-核函数" class="headerlink" title="3 核函数"></a>3 核函数</h1><p>在之前的讨论中,我们假设 <strong>训练样本</strong> 是线性可分的, 然而在现实任务中, 原始样本空间内也许并不存在一个能正确划分两类样本的超平面, 对于这样的问题, <strong>可将一样本从原始空间映射到一个更高维的特征空间, 使得样本在这个特征空间内线性可分</strong> .</p>
 <p><strong>需要知道, 如果原始空间是有限维, 即属性数有限, 那么一定存在一个高维特征空间使样本可分</strong></p>
 <p>令 $\phi(\vec x)$ 表示将 $\vec x$ 映射后的特征向量, 于是, 在特征空间中划分超平面所对应的模型可表示为:</p>
 <script type="math/tex; mode=display">f(\vec x) = \vec w^T \phi(\vec x) + b</script><p>类似式(1), 有:</p>
@@ -708,7 +710,7 @@
 <li>若 $K_1$ 和 $K_2$ 为核函数, 则函数的直积 $K_1 \otimes K_2 (\vec x , \vec z) = K_1(\vec x, \vec z) K_2(\vec x, \vec z)$</li>
 <li>若 $K_1$ 是核函数, 则对任意函数 $g(\vec x)$, $K(\vec x, \vec z) = g(\vec x) K_1(\vec x, \vec z) g(\vec z)$ 也是核函数</li>
 </ul>
-<h2 id="1-4-软间隔与正则化"><a href="#1-4-软间隔与正则化" class="headerlink" title="1.4 软间隔与正则化"></a>1.4 软间隔与正则化</h2><p>在实现任务中, 往往很难确定合适的核函数, 使得训练样本在特征空间中线性可分, 即便是找到了, 也无法断定是否是由于过拟合造成的 , 因此, 我们需要 <strong>允许支持向量机在一些样本上出错</strong> , 以缓解上面的问题.</p>
+<h1 id="4-软间隔与正则化"><a href="#4-软间隔与正则化" class="headerlink" title="4 软间隔与正则化"></a>4 软间隔与正则化</h1><p>在实现任务中, 往往很难确定合适的核函数, 使得训练样本在特征空间中线性可分, 即便是找到了, 也无法断定是否是由于过拟合造成的 , 因此, 我们需要 <strong>允许支持向量机在一些样本上出错</strong> , 以缓解上面的问题.</p>
 <p>硬间隔(hard margin)与软间隔(soft margin)的区分:</p>
 <ul>
 <li>硬间隔: 所有样本都必须分类正确</li>
@@ -725,7 +727,7 @@
 <li>对率损失(logistic loss): $l_{log}(z) = log(1+ exp(-z))$</li>
 </ul>
 <p>假设采用hinge损失损失, 然后可以引入”松弛变量”(slack variables) $\xi_i \geq 0$ ,每一个样本都有一个对应的松弛变量, 用以表征该样本不满足约束(11)的程度 则可将(10)式重写为:</p>
-<script type="math/tex; mode=display">\min_{\vec w, b, \xi_i} \frac{1}{2} \|\vec w\|^2 + C \sum_{i=1}^{m} \xi_i \tag {12}</script><script type="math/tex; mode=display">s.t. y_i (\vec w^T x_i + b) \geq 1- \xi _i</script><script type="math/tex; mode=display">\xi_i \geq , i=1,2,...,m.</script><p>可以看出, 上式是与之前推导相似的二次规划问题,  只不过是约束条件变的宽松了(为了允许一些样本犯错), 因此,同样利用拉格朗日乘子法求解, 首先得到上式的拉格朗日函数:</p>
+<script type="math/tex; mode=display">\min_{\vec w, b, \xi_i} \frac{1}{2} \|\vec w\|^2 + C \sum_{i=1}^{m} \xi_i \tag {12}</script><script type="math/tex; mode=display">s.t. y_i (\vec w^T x_i + b) \geq 1- \xi_i</script><script type="math/tex; mode=display">\xi_i \geq , i=1,2,...,m.</script><p>可以看出, 上式是与之前推导相似的二次规划问题,  只不过是约束条件变的宽松了(为了允许一些样本犯错), 因此,同样利用拉格朗日乘子法求解, 首先得到上式的拉格朗日函数:</p>
 <script type="math/tex; mode=display">L(\vec w, b, \vec \alpha, \vec \xi, \vec \mu) = \frac{1}{2} \|w\|^2 + C \sum_{i=1}^{m} \xi_i + \sum_{i=1}^{m}\alpha_i\big(1- \xi_i - y_i(\vec w^T\vec x_i +b)  \big) - \sum_{i=1}^{m} \mu_i \xi_i</script><p>其中, $\alpha_i \geq 0, \mu_i \geq 0$ 是拉格朗日乘子, 令 $L(\vec w, b, \vec \alpha, \vec \xi, \vec \mu)$ 对 $\vec w, b, \vec \alpha, \vec \xi$ 求偏导, 并令其为0 , 可得:</p>
 <script type="math/tex; mode=display">\vec w =\sum_{i=1}^{m} \alpha_i y_i \vec x_i</script><script type="math/tex; mode=display">0 = \sum_{i=1}^{m} \alpha_i y_i</script><script type="math/tex; mode=display">C = \alpha_i + \mu_i</script><p> 得到(12)式对应的对偶问题如下:</p>
 <script type="math/tex; mode=display">\max_{\alpha} \sum_{i=1}^{m} \alpha_i - \frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} \alpha_i \alpha_j y_i y_j K_{i,j}</script><script type="math/tex; mode=display">s.t. \sum_{i=1}^{m} \alpha_i y_i = 0</script><script type="math/tex; mode=display">0 \leq \alpha_i \leq C , i=1,2,...,m</script><p>可以看到, 此时, $\alpha_i$ 的约束条件变成了 $0 \leq \alpha_i \leq C$ , 上式的KKT条件要求为:</p>
@@ -740,7 +742,10 @@
 <p>以上是对使用hinge损失时讨论的情况, 还可以将其替换成别的损失函数以得到其他学习模型, 这些模型的性质与所用的替代函数直接相关, 但它们具有一个共性: 优化目标中的第一项用来描述划分超平面的”间隔”大小, 另一项用来表示训练集上的误差, 可写为更一般的形式:</p>
 <script type="math/tex; mode=display">\min_{f} \Omega(f) + C\sum_{i=1}^{m} l(f(\vec x_i) , y_i)</script><p>其中, $\Omega(f)$ 称为”结构风险”(structural risk), 用于描述模型 $f$ 自身的性质; 第二项 $C\sum_{i=1}^{m} l(f(\vec x_i)$ 称为”经验风险”(empirical risk), 用于描述模型与训练数据的契合程度. $C$ 用于对二者进行折衷.</p>
 <p>从预测误差的角度来看, 第二项相当于模型误差, 第一项相当于正则化项, 表述了模型本身的性质, 一方面, 这为引入领域知识和用户意图提供了途径, 另一方面, 该信息有助于消减假设空间, 降低过拟合风险</p>
+<p><span id="SVM 如何解决线性不可分问题"></span></p>
+<h1 id="SVM-如何解决线性不可分问题"><a href="#SVM-如何解决线性不可分问题" class="headerlink" title="SVM 如何解决线性不可分问题"></a>SVM 如何解决线性不可分问题</h1><p><span id="为什么SVM的分类结果仅依赖于支持向量?"></span></p>
 <h1 id="为什么SVM的分类结果仅依赖于支持向量"><a href="#为什么SVM的分类结果仅依赖于支持向量" class="headerlink" title="为什么SVM的分类结果仅依赖于支持向量?"></a>为什么SVM的分类结果仅依赖于支持向量?</h1><p>百机p53</p>
+<p><span id="如何选取核函数?"></span></p>
 <h1 id="如何选取核函数"><a href="#如何选取核函数" class="headerlink" title="如何选取核函数?"></a>如何选取核函数?</h1><p>最常用的是线性核与高斯核, 也就是 Linear 核与 RBF 核. 一般情况下 RBF 效果不会差于 Linear, 但是时间上 RBF 会耗费更多.</p>
 <ul>
 <li>Linear 核: 主要用于线性可分的情形. 参数少, 速度快, 对于一般数据, 分类效果已经很理想了.</li>
@@ -752,10 +757,13 @@
 <li>如果 Feature 的数量比较小, 样本数量一般, 不算大也不算小, 就选用 SVM + Gaussian Kernel</li>
 <li>如果 Feature 的数量比较小, 而样本数量比较多, 就需要手工添加一些 feature, 使之变成第一种情况.</li>
 </ol>
-<h1 id="为什么说高斯核函数将原始特征空间映射成了无限维空间"><a href="#为什么说高斯核函数将原始特征空间映射成了无限维空间" class="headerlink" title="为什么说高斯核函数将原始特征空间映射成了无限维空间"></a>为什么说高斯核函数将原始特征空间映射成了无限维空间</h1><p><a href="https://blog.csdn.net/lin_limin/article/details/81135754" target="_blank" rel="noopener">https://blog.csdn.net/lin_limin/article/details/81135754</a></p>
-<h1 id="核函数中不同参数的影响"><a href="#核函数中不同参数的影响" class="headerlink" title="核函数中不同参数的影响?"></a>核函数中不同参数的影响?</h1><p><a href="https://blog.csdn.net/lin_limin/article/details/81135754" target="_blank" rel="noopener">https://blog.csdn.net/lin_limin/article/details/81135754</a></p>
+<p><span id="为什么说高斯核函数将原始特征空间映射成了无限维空间?"></span></p>
+<h1 id="为什么说高斯核函数将原始特征空间映射成了无限维空间"><a href="#为什么说高斯核函数将原始特征空间映射成了无限维空间" class="headerlink" title="为什么说高斯核函数将原始特征空间映射成了无限维空间?"></a>为什么说高斯核函数将原始特征空间映射成了无限维空间?</h1><p><a href="https://blog.csdn.net/lin_limin/article/details/81135754" target="_blank" rel="noopener">https://blog.csdn.net/lin_limin/article/details/81135754</a></p>
+<p><span id="核函数中不同参数的影响"></span></p>
+<h1 id="核函数中不同参数的影响"><a href="#核函数中不同参数的影响" class="headerlink" title="核函数中不同参数的影响"></a>核函数中不同参数的影响</h1><p><a href="https://blog.csdn.net/lin_limin/article/details/81135754" target="_blank" rel="noopener">https://blog.csdn.net/lin_limin/article/details/81135754</a></p>
 <p><a href="https://mp.weixin.qq.com/s?__biz=MzU4MjQ3MDkwNA==&amp;mid=2247484495&amp;idx=1&amp;sn=4f3a6ce21cdd1a048e402ed05c9ead91&amp;chksm=fdb699d8cac110ce53f4fc5e417e107f839059cb76d3cbf640c6f56620f90f8fb4e7f6ee02f9&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">https://mp.weixin.qq.com/s?__biz=MzU4MjQ3MDkwNA==&amp;mid=2247484495&amp;idx=1&amp;sn=4f3a6ce21cdd1a048e402ed05c9ead91&amp;chksm=fdb699d8cac110ce53f4fc5e417e107f839059cb76d3cbf640c6f56620f90f8fb4e7f6ee02f9&amp;scene=21#wechat_redirect</a></p>
-<h1 id="既然深度学习技术性能表现已经全面超越SVM-SVM还有存在的必要吗"><a href="#既然深度学习技术性能表现已经全面超越SVM-SVM还有存在的必要吗" class="headerlink" title="既然深度学习技术性能表现已经全面超越SVM, SVM还有存在的必要吗?"></a>既然深度学习技术性能表现已经全面超越SVM, SVM还有存在的必要吗?</h1><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>[1] <a href="https://mp.weixin.qq.com/s?__biz=MzU4MjQ3MDkwNA==&amp;mid=2247483937&amp;idx=1&amp;sn=84a5acf12e96727b13fd7d456c414c12&amp;chksm=fdb69fb6cac116a02dc68d948958ee731a4ae2b6c3d81196822b665224d9dab21d0f2fccb329&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">https://mp.weixin.qq.com/s?__biz=MzU4MjQ3MDkwNA==&amp;mid=2247483937&amp;idx=1&amp;sn=84a5acf12e96727b13fd7d456c414c12&amp;chksm=fdb69fb6cac116a02dc68d948958ee731a4ae2b6c3d81196822b665224d9dab21d0f2fccb329&amp;scene=21#wechat_redirect</a></p>
+<p><span id="既然深度学习技术性能表现已经全面超越 SVM, SVM 还有存在的必要吗?"></span></p>
+<h1 id="既然深度学习技术性能表现已经全面超越-SVM-SVM-还有存在的必要吗"><a href="#既然深度学习技术性能表现已经全面超越-SVM-SVM-还有存在的必要吗" class="headerlink" title="既然深度学习技术性能表现已经全面超越 SVM, SVM 还有存在的必要吗?"></a>既然深度学习技术性能表现已经全面超越 SVM, SVM 还有存在的必要吗?</h1><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>[1] <a href="https://mp.weixin.qq.com/s?__biz=MzU4MjQ3MDkwNA==&amp;mid=2247483937&amp;idx=1&amp;sn=84a5acf12e96727b13fd7d456c414c12&amp;chksm=fdb69fb6cac116a02dc68d948958ee731a4ae2b6c3d81196822b665224d9dab21d0f2fccb329&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">https://mp.weixin.qq.com/s?__biz=MzU4MjQ3MDkwNA==&amp;mid=2247483937&amp;idx=1&amp;sn=84a5acf12e96727b13fd7d456c414c12&amp;chksm=fdb69fb6cac116a02dc68d948958ee731a4ae2b6c3d81196822b665224d9dab21d0f2fccb329&amp;scene=21#wechat_redirect</a></p>
 <p>[2] 西瓜书</p>
 <p>[3] <a href="http://www.cnblogs.com/jerrylead/archive/2011/03/18/1988419.html" target="_blank" rel="noopener">http://www.cnblogs.com/jerrylead/archive/2011/03/18/1988419.html</a></p>
 <p><a href="https://zhuanlan.zhihu.com/p/29212107" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/29212107</a></p>
@@ -888,7 +896,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">235</span>
+                    <span class="site-state-item-count">237</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1080,7 +1088,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简述-SVM-的基本概念和原理"><span class="nav-text">简述 SVM 的基本概念和原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#支持向量机推导过程"><span class="nav-text">支持向量机推导过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-间隔与支持向量"><span class="nav-text">1.1 间隔与支持向量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-对偶问题求解-vec-w-和-b"><span class="nav-text">1.2 对偶问题求解 $\vec w$ 和 $b$</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题说明"><span class="nav-text">问题说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用SMO算法求对偶问题的解"><span class="nav-text">使用SMO算法求对偶问题的解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何恰当的选取需要更新的变量-alpha-i-和-alpha-j"><span class="nav-text">如何恰当的选取需要更新的变量 $\alpha_i$ 和 $\alpha_j$</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-核函数"><span class="nav-text">1.3 核函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-软间隔与正则化"><span class="nav-text">1.4 软间隔与正则化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么SVM的分类结果仅依赖于支持向量"><span class="nav-text">为什么SVM的分类结果仅依赖于支持向量?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何选取核函数"><span class="nav-text">如何选取核函数?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么说高斯核函数将原始特征空间映射成了无限维空间"><span class="nav-text">为什么说高斯核函数将原始特征空间映射成了无限维空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#核函数中不同参数的影响"><span class="nav-text">核函数中不同参数的影响?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#既然深度学习技术性能表现已经全面超越SVM-SVM还有存在的必要吗"><span class="nav-text">既然深度学习技术性能表现已经全面超越SVM, SVM还有存在的必要吗?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简述-SVM-的基本概念和原理"><span class="nav-text">简述 SVM 的基本概念和原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SVM-推导过程"><span class="nav-text">SVM 推导过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-间隔与支持向量"><span class="nav-text">1 间隔与支持向量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-对偶问题求解-vec-w-和-b"><span class="nav-text">2 对偶问题求解 $\vec w$ 和 $b$</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题说明"><span class="nav-text">问题说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用SMO算法求对偶问题的解"><span class="nav-text">使用SMO算法求对偶问题的解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何恰当的选取需要更新的变量-alpha-i-和-alpha-j"><span class="nav-text">如何恰当的选取需要更新的变量 $\alpha_i$ 和 $\alpha_j$</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-核函数"><span class="nav-text">3 核函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-软间隔与正则化"><span class="nav-text">4 软间隔与正则化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SVM-如何解决线性不可分问题"><span class="nav-text">SVM 如何解决线性不可分问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么SVM的分类结果仅依赖于支持向量"><span class="nav-text">为什么SVM的分类结果仅依赖于支持向量?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何选取核函数"><span class="nav-text">如何选取核函数?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么说高斯核函数将原始特征空间映射成了无限维空间"><span class="nav-text">为什么说高斯核函数将原始特征空间映射成了无限维空间?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#核函数中不同参数的影响"><span class="nav-text">核函数中不同参数的影响</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#既然深度学习技术性能表现已经全面超越-SVM-SVM-还有存在的必要吗"><span class="nav-text">既然深度学习技术性能表现已经全面超越 SVM, SVM 还有存在的必要吗?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>
@@ -1126,7 +1134,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">26:18</span>
+    <span title="站点阅读时长">26:05</span>
   
 </div>
 

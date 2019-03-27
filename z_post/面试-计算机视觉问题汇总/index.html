@@ -112,18 +112,18 @@
 
 
 
-  <meta name="description" content="简述一下现在的 SOTA 模型比较经典的, 17年以前的模型比如 Faster R-CNN, R-FCN, YOLO, 以及 SSD 这些算是很有代表性的一些模型了. 在此基础上, 从 17 年开始, 就有很多新的模型出现. 按照目标检测算法一些可优化的方向来说  在 feature map 的多尺度金字塔特征上进行优化: SSD, FPN, PFPNet, M2Det 在 bbox 回归上进行优">
+  <meta name="description" content="简述一下现在的 SOTA 模型比较经典的, 比如 R-CNN 系列, YOLO, 以及 SSD 等属于比较具有代表性的一些模型. 在此基础上, 从 17 年开始, 又有很多新的模型出现, 按照不同的关注角度来分, 大致有这么几类.首先是对卷积网络的特征金字塔的构建和生成进行优化和改进的模型, 比如 FPN 和 M2Det 等.其次是从感受野的角度进行优化的模型, 比如 Deformable Co">
 <meta name="keywords" content="知识点梳理,计算机视觉">
 <meta property="og:type" content="article">
 <meta property="og:title" content="计算机视觉常见问题解答">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/面试-计算机视觉问题汇总/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="简述一下现在的 SOTA 模型比较经典的, 17年以前的模型比如 Faster R-CNN, R-FCN, YOLO, 以及 SSD 这些算是很有代表性的一些模型了. 在此基础上, 从 17 年开始, 就有很多新的模型出现. 按照目标检测算法一些可优化的方向来说  在 feature map 的多尺度金字塔特征上进行优化: SSD, FPN, PFPNet, M2Det 在 bbox 回归上进行优">
+<meta property="og:description" content="简述一下现在的 SOTA 模型比较经典的, 比如 R-CNN 系列, YOLO, 以及 SSD 等属于比较具有代表性的一些模型. 在此基础上, 从 17 年开始, 又有很多新的模型出现, 按照不同的关注角度来分, 大致有这么几类.首先是对卷积网络的特征金字塔的构建和生成进行优化和改进的模型, 比如 FPN 和 M2Det 等.其次是从感受野的角度进行优化的模型, 比如 Deformable Co">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-23T08:13:06.699Z">
+<meta property="og:updated_time" content="2019-03-27T07:36:45.213Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机视觉常见问题解答">
-<meta name="twitter:description" content="简述一下现在的 SOTA 模型比较经典的, 17年以前的模型比如 Faster R-CNN, R-FCN, YOLO, 以及 SSD 这些算是很有代表性的一些模型了. 在此基础上, 从 17 年开始, 就有很多新的模型出现. 按照目标检测算法一些可优化的方向来说  在 feature map 的多尺度金字塔特征上进行优化: SSD, FPN, PFPNet, M2Det 在 bbox 回归上进行优">
+<meta name="twitter:description" content="简述一下现在的 SOTA 模型比较经典的, 比如 R-CNN 系列, YOLO, 以及 SSD 等属于比较具有代表性的一些模型. 在此基础上, 从 17 年开始, 又有很多新的模型出现, 按照不同的关注角度来分, 大致有这么几类.首先是对卷积网络的特征金字塔的构建和生成进行优化和改进的模型, 比如 FPN 和 M2Det 等.其次是从感受野的角度进行优化的模型, 比如 Deformable Co">
 
 
 
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">235</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">237</span></a>
   </li>
         
         
@@ -489,8 +489,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-23T16:13:06+08:00" content="2019-03-23">
-      		  2019-03-23
+    		<time itemprop="dateUpdated" datetime="2019-03-27T15:36:45+08:00" content="2019-03-27">
+      		  2019-03-27
     		</time>
   	  </span>
 	  
@@ -543,7 +543,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.4k</span>
+                <span title="本文字数">2.8k</span>
               
 
               
@@ -557,7 +557,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">3 分钟</span>
               
             </div>
           
@@ -577,7 +577,8 @@
       
 
       
-        <h1 id="简述一下现在的-SOTA-模型"><a href="#简述一下现在的-SOTA-模型" class="headerlink" title="简述一下现在的 SOTA 模型"></a>简述一下现在的 SOTA 模型</h1><p>比较经典的, 17年以前的模型比如 Faster R-CNN, R-FCN, YOLO, 以及 SSD 这些算是很有代表性的一些模型了. 在此基础上, 从 17 年开始, 就有很多新的模型出现. 按照目标检测算法一些可优化的方向来说</p>
+        <p><span id="简述一下现在的 SOTA 模型"></span></p>
+<h1 id="简述一下现在的-SOTA-模型"><a href="#简述一下现在的-SOTA-模型" class="headerlink" title="简述一下现在的 SOTA 模型"></a>简述一下现在的 SOTA 模型</h1><p>比较经典的, 比如 R-CNN 系列, YOLO, 以及 SSD 等属于比较具有代表性的一些模型. 在此基础上, 从 17 年开始, 又有很多新的模型出现, 按照不同的关注角度来分, 大致有这么几类.<br>首先是对卷积网络的特征金字塔的构建和生成进行优化和改进的模型, 比如 FPN 和 M2Det 等.<br>其次是从感受野的角度进行优化的模型, 比如 Deformable ConvNet, RFBNet.<br>还有从 bounding box 回归角度进行优化的 RefineDet.<br>然后还有从损失函数及样本不均衡角度进行优化, 使用 Focal Loss 的 RetinaNet等.</p>
 <ul>
 <li>在 feature map 的多尺度金字塔特征上进行优化: SSD, FPN, PFPNet, M2Det</li>
 <li>在 bbox 回归上进行优化: RefineDet</li>
@@ -593,8 +594,11 @@
 <li>超大目标检测: HKRM</li>
 </ul>
 <p>FPN,<br>RefineDet, RFBNet<br>STDN</p>
-<h1 id="简要说一下-SSD-FPN-RefineDet-PFPNet-STDN-M2Det-等特征金字塔的区别"><a href="#简要说一下-SSD-FPN-RefineDet-PFPNet-STDN-M2Det-等特征金字塔的区别" class="headerlink" title="简要说一下 SSD, FPN, RefineDet, PFPNet, STDN, M2Det 等特征金字塔的区别?"></a>简要说一下 SSD, FPN, RefineDet, PFPNet, STDN, M2Det 等特征金字塔的区别?</h1><p>SSD 直接使用 backbone(VGG16) 的最后两个卷积段的卷积层和 4 个额外的步长为 2 的卷积层来构建特征金字塔<br>FPN 通过融合深层和浅层的特征图谱来构建特征金字塔. STDN 仅仅使用 DenseNet 的最后一个 dense block 通过 pooling 和 scale-transfer 操作来构建特征金字塔.</p>
-<h1 id="你知道有哪些常用的训练-Trick"><a href="#你知道有哪些常用的训练-Trick" class="headerlink" title="你知道有哪些常用的训练 Trick?"></a>你知道有哪些常用的训练 Trick?</h1><h1 id="知道哪些数据增广方法-怎么实现的"><a href="#知道哪些数据增广方法-怎么实现的" class="headerlink" title="知道哪些数据增广方法? 怎么实现的?"></a>知道哪些数据增广方法? 怎么实现的?</h1><ul>
+<p><span id="简要说一下 SSD, FPN, RefineDet, PFPNet, STDN, M2Det 等特征金字塔的区别"></span></p>
+<h1 id="简要说一下-SSD-FPN-RefineDet-PFPNet-STDN-M2Det-等特征金字塔的区别"><a href="#简要说一下-SSD-FPN-RefineDet-PFPNet-STDN-M2Det-等特征金字塔的区别" class="headerlink" title="简要说一下 SSD, FPN, RefineDet, PFPNet, STDN, M2Det 等特征金字塔的区别"></a>简要说一下 SSD, FPN, RefineDet, PFPNet, STDN, M2Det 等特征金字塔的区别</h1><p>SSD 是通过使用 backbone(VGG16) 的最后两个卷积段的特征图谱和 4 个额外卷积层特征图谱来构建特征金字塔的.<br>FPN 是通过融合深层和浅层的特征图谱来构建特征金字塔. 主要做法是将最后一层特征图谱进行不断的上采样得到 top-down 结构的特征图谱, 然后与原始的 down-top 结构的特征图谱相结合, 从而得到新的表征能力更强的特征金字塔结构.<br>M2Det 主要是从现在特征金字塔的一些缺点出发进行优化, 它认为, 现有金字塔结构中每一个尺度的特征仅仅来自于 backbone 中单一层级(level)的特征. 这样一来, 小尺度的特征图谱往往缺少浅层低级的语义信息, 而大尺度的特征图谱又缺少深层的高级语义信息. 因此, 作者就提出了融合多个层级特征的 Multi-Level FPN (MLFPN). 从而可以让小尺寸的特征图谱上包含有更多的低级语义信息, 让大尺寸的特征图谱包含更多的高级语义信息.</p>
+<p><span id="你知道有哪些常用的训练 Trick"></span></p>
+<h1 id="你知道有哪些常用的训练-Trick"><a href="#你知道有哪些常用的训练-Trick" class="headerlink" title="你知道有哪些常用的训练 Trick"></a>你知道有哪些常用的训练 Trick</h1><p><span id="有哪些数据增广方法? 怎么实现的?"></span></p>
+<h1 id="有哪些数据增广方法-怎么实现的"><a href="#有哪些数据增广方法-怎么实现的" class="headerlink" title="有哪些数据增广方法? 怎么实现的?"></a>有哪些数据增广方法? 怎么实现的?</h1><ul>
 <li>颜色变换(Convert Color): BGR 与 HSV 格式随机切换. HSV 模型的三维表示是从 RGB 立方体以旧换新儿来的, 设想从 RGB 沿立方体对角线的白色顶点向黑色顶点观察, 就可以看到立方体的六边形外形. 六边形边界表示色彩, 水平轴表示纯度, 明度沿垂直测量.</li>
 <li>随机对比度和亮度: 像素最大最小值的差值影响对比度, 像素的整体大小影响亮度, 通过公式 $g(i, j) = a\times f(i,j) + b$ 控制, $a$ 影响的是对比度, $b$ 影响的图像的亮度.</li>
 <li>随机饱和度(Random Saturation): 先将图片转换成 HSV 格式, 然后对 S 通道乘以一个随机值</li>
@@ -602,6 +606,20 @@
 <li>随机交换通道, 增加噪声</li>
 </ul>
 <h1 id="FCN-是如何降低计算量的"><a href="#FCN-是如何降低计算量的" class="headerlink" title="FCN 是如何降低计算量的?"></a>FCN 是如何降低计算量的?</h1><p>面对 $384\times 384$ 的图像, 让含全连接层的初始卷积神经网络以 32 像素的步长独立对图像中的 $224\times 224$ 块进行多次评价, 其效果和使用全卷积网络进行一次评价时相同的. 后者通过权值共享起到了加速计算的作用.</p>
+<p><span id="简单说一下 PyTorch 和 TensorFlow 的区别"></span></p>
+<h1 id="简单说一下-PyTorch-和-TensorFlow-的区别"><a href="#简单说一下-PyTorch-和-TensorFlow-的区别" class="headerlink" title="简单说一下 PyTorch 和 TensorFlow 的区别"></a>简单说一下 PyTorch 和 TensorFlow 的区别</h1><p>两个框架虽然都是在张量上运行, 并且将模型都看做是一个有向非循环图(DAG), 但是二者对于图的定义不同. TensorFlow 是基于静态计算图, 因此是先定义再运行, 一次定义多次运行, 而 PyTorch 是基于动态计算图的, 是在运行过程中被定义的, 在运行的时候进行构建, 可以多次构建多次运行.<br>动态图的还有一个好处就是比较容易调试, 在 PyTorch 中, 代码报错的地方, 往往就是代码错写的地方, 而静态图需要先根据代码生成 Graph 对象, 然后在 session.run() 时报错, 但是这种报错几乎很难直接找到代码中对应的出错段落.</p>
+<p>链接】Variable和Tensor合并后，PyTorch的代码要怎么改<br><a href="https://blog.csdn.net/dQCFKyQDXYm3F8rB0/article/details/80105285" target="_blank" rel="noopener">https://blog.csdn.net/dQCFKyQDXYm3F8rB0/article/details/80105285</a></p>
+<p><span id="你觉得目标检测领域还有哪些可以继续改进或者优化的地方"></span></p>
+<h1 id="你觉得目标检测领域还有哪些可以继续改进或者优化的地方"><a href="#你觉得目标检测领域还有哪些可以继续改进或者优化的地方" class="headerlink" title="你觉得目标检测领域还有哪些可以继续改进或者优化的地方"></a>你觉得目标检测领域还有哪些可以继续改进或者优化的地方</h1><ol>
+<li><p>首先是精确度和速度的考量, 相对于精度较高的 Faster RCNN, RFCN 相关系列模型来说, 个人觉得速度更快的 YOLO 系列和 SSD 系列的模型在实际场景应用中会更加实用, 近年来的主要代表有 RefineDet, RFBNet 等都是基于 SSD 模型的研究.</p>
+</li>
+<li><p>其次是目标的选框步骤, 从最开始的 Region Based , Anchor Based 到现在的基于角点, 甚至基于 segmentation, 包括 semantic segmentation 和 instance segmentation. 今年比较有代表性的就是 CornerNet. 就目前来说, 目标的选框方法很多还是基于 RPN 的 anchor 思想, 所以, 未来的研究中, 新的更好的目标选框方法依旧是研究的一个重要方向.</p>
+</li>
+<li><p>多尺度问题(尺度变换问题), 目标常见的三种思路, 采用专门设计的尺度变换模块, STDN: Scale-Transferrable Object Detection.</p>
+</li>
+</ol>
+<h1 id="one-stage目标检测算法中-浅层特征图检测小目标，为什么不同时也检测大目标？"><a href="#one-stage目标检测算法中-浅层特征图检测小目标，为什么不同时也检测大目标？" class="headerlink" title="one stage目标检测算法中,浅层特征图检测小目标，为什么不同时也检测大目标？"></a>one stage目标检测算法中,浅层特征图检测小目标，为什么不同时也检测大目标？</h1><p>浅层感受野较小, 并且语义信息比较低级<br>深层感受野较大, 包含更多高级语义信息</p>
+<p>【链接】onestage目标检测算法中,浅层特征图检测小目<br><a href="https://www.zhihu.com/question/305729744/answer/555781620" target="_blank" rel="noopener">https://www.zhihu.com/question/305729744/answer/555781620</a></p>
 
       
     </div>
@@ -727,7 +745,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">235</span>
+                    <span class="site-state-item-count">237</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -919,7 +937,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简述一下现在的-SOTA-模型"><span class="nav-text">简述一下现在的 SOTA 模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简要说一下-SSD-FPN-RefineDet-PFPNet-STDN-M2Det-等特征金字塔的区别"><span class="nav-text">简要说一下 SSD, FPN, RefineDet, PFPNet, STDN, M2Det 等特征金字塔的区别?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#你知道有哪些常用的训练-Trick"><span class="nav-text">你知道有哪些常用的训练 Trick?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#知道哪些数据增广方法-怎么实现的"><span class="nav-text">知道哪些数据增广方法? 怎么实现的?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FCN-是如何降低计算量的"><span class="nav-text">FCN 是如何降低计算量的?</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简述一下现在的-SOTA-模型"><span class="nav-text">简述一下现在的 SOTA 模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简要说一下-SSD-FPN-RefineDet-PFPNet-STDN-M2Det-等特征金字塔的区别"><span class="nav-text">简要说一下 SSD, FPN, RefineDet, PFPNet, STDN, M2Det 等特征金字塔的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#你知道有哪些常用的训练-Trick"><span class="nav-text">你知道有哪些常用的训练 Trick</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#有哪些数据增广方法-怎么实现的"><span class="nav-text">有哪些数据增广方法? 怎么实现的?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FCN-是如何降低计算量的"><span class="nav-text">FCN 是如何降低计算量的?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简单说一下-PyTorch-和-TensorFlow-的区别"><span class="nav-text">简单说一下 PyTorch 和 TensorFlow 的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#你觉得目标检测领域还有哪些可以继续改进或者优化的地方"><span class="nav-text">你觉得目标检测领域还有哪些可以继续改进或者优化的地方</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#one-stage目标检测算法中-浅层特征图检测小目标，为什么不同时也检测大目标？"><span class="nav-text">one stage目标检测算法中,浅层特征图检测小目标，为什么不同时也检测大目标？</span></a></li></ol></div>
             
 
           </div>
@@ -965,7 +983,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">26:18</span>
+    <span title="站点阅读时长">26:05</span>
   
 </div>
 

@@ -122,7 +122,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fvna17nohlj209z09ydhb.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1g0j0zt2p2yj214z0hnju2.jpg">
-<meta property="og:updated_time" content="2019-02-25T14:14:03.182Z">
+<meta property="og:updated_time" content="2019-03-26T05:46:05.405Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Inception V2">
 <meta name="twitter:description" content="文章:[1]. Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift[2]. Rethinking the Inception Architecture for Computer Vision作者: Sergey Ioffe, Christian Szegedy备注:">
@@ -251,7 +251,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">235</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">237</span></a>
   </li>
         
         
@@ -492,8 +492,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-02-25T22:14:03+08:00" content="2019-02-25">
-      		  2019-02-25
+    		<time itemprop="dateUpdated" datetime="2019-03-26T13:46:05+08:00" content="2019-03-26">
+      		  2019-03-26
     		</time>
   	  </span>
 	  
@@ -546,7 +546,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">972</span>
+                <span title="本文字数">583</span>
               
 
               
@@ -581,13 +581,9 @@
 
       
         <p><strong>文章:</strong><br>[1]. Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift<br>[2]. Rethinking the Inception Architecture for Computer Vision<br><strong>作者:</strong> Sergey Ioffe, Christian Szegedy<br><strong>备注:</strong> Google, Inception V2</p>
-<h1 id="Inception-V2"><a href="#Inception-V2" class="headerlink" title="Inception V2"></a>Inception V2</h1><p>InceptionV2 网络结构的核心思想主要来自于上面提到的两篇论文. 它根据第一篇论文加入了 BN 层, 根据第二篇论文用一系列更小的卷积核($3\times 3$)替代了原来的大卷积核($5\times 5$, $7\times 7$).</p>
-<h2 id="Batch-Normalizatin"><a href="#Batch-Normalizatin" class="headerlink" title="Batch Normalizatin"></a>Batch Normalizatin</h2><p>Batch Normalization, 批标准化, 和普通的数据标准化类似, 是将分散的数据统一的一种做法, 也是优化神经网络的一种方法.</p>
-<p>详见:<a href="../深度学习-Batch-Normalization深入解析">Batch-Normalization深入解析</a></p>
-<h2 id="更小的卷积核"><a href="#更小的卷积核" class="headerlink" title="更小的卷积核"></a>更小的卷积核</h2><p>大尺寸的卷积核可以带来更大的感受野，但也意味着会产生更多的参数，比如5×5卷积核的参数就有25个（不算depth和filters的数量）。因此，GoogLeNet团队提出可以用2个连续的3×3卷积层组成的小网络来代替单个的5×5卷积层，即在 <strong>保持感受野范围的同时又减少了参数量</strong>，如下图：</p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fvna17nohlj209z09ydhb.jpg" alt=""></p>
+<h1 id="Inception-V2"><a href="#Inception-V2" class="headerlink" title="Inception V2"></a>Inception V2</h1><p><div style="width: 550px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fvna17nohlj209z09ydhb.jpg" alt=""></div></p>
 <p>图4, 图5展示了用两个3×3来替换 5×5 卷积核的示意图.</p>
-<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1g0j0zt2p2yj214z0hnju2.jpg" alt=""></p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1g0j0zt2p2yj214z0hnju2.jpg" alt=""></div></p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>实际上, InceptionV2 更像是一个过渡, 它使用的 Batch Normalization 是对 InceptionV1 的一个补充, 而用小的卷积核替代大的卷积核这一点, 在 InceptionV3 中真正发扬光大, 实际上, 《Rethinking the Inception Architecture for Computer Vision》这篇论文正是 InceptionV3 的核心理论, 论文中将新的网络结构称作 InceptionV2 (而实现的代码却叫 InceptionV3), 这也许是一个称呼上的小失误吧, 关于 InceptionV3 更多的介绍, 请看 <a href="../计算机视觉-InceptionV3">计算机视觉-InceptionV3</a></p>
 
       
@@ -716,7 +712,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">235</span>
+                    <span class="site-state-item-count">237</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -908,7 +904,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Inception-V2"><span class="nav-text">Inception V2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Batch-Normalizatin"><span class="nav-text">Batch Normalizatin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更小的卷积核"><span class="nav-text">更小的卷积核</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Inception-V2"><span class="nav-text">Inception V2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
@@ -954,7 +950,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">26:18</span>
+    <span title="站点阅读时长">26:05</span>
   
 </div>
 

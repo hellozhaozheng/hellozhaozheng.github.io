@@ -126,7 +126,7 @@
 <meta property="og:image" content="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fvxf2u1khnj20ie06b3yh.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fw0kh84zz9j20gh085dg5.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fxnm0ibh7vj20jc0ggadn.jpg">
-<meta property="og:updated_time" content="2019-03-22T02:58:52.045Z">
+<meta property="og:updated_time" content="2019-03-25T02:34:42.987Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LeetCode算法题(Medium)">
 <meta name="twitter:description" content="002. Add Two NumbersDescription: 链表数之和You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single d">
@@ -255,7 +255,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">235</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">237</span></a>
   </li>
         
         
@@ -496,8 +496,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-22T10:58:52+08:00" content="2019-03-22">
-      		  2019-03-22
+    		<time itemprop="dateUpdated" datetime="2019-03-25T10:34:42+08:00" content="2019-03-25">
+      		  2019-03-25
     		</time>
   	  </span>
 	  
@@ -550,7 +550,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">244k</span>
+                <span title="本文字数">246k</span>
               
 
               
@@ -564,7 +564,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">3:42</span>
+                <span title="阅读时长">3:43</span>
               
             </div>
           
@@ -913,6 +913,7 @@
 <h2 id="解法-按层次输出-由外而内"><a href="#解法-按层次输出-由外而内" class="headerlink" title="解法: 按层次输出(由外而内)"></a>解法: 按层次输出(由外而内)</h2><p><strong>时间复杂度:</strong> $O(n)$<br><strong>空间复杂度:</strong> $O(n)$</p>
 <p>输出形式如下(按层次编码, 以4×6的矩阵为例), 需要注意边界控制条件:</p>
 <script type="math/tex; mode=display">\begin{matrix} 1_{top}&1_{top}&1_{top}&1_{top}&1_{top}&1_{top} \\ 1_{left}&2_{top}&2_{top}&2_{top}&2_{top}&1_{right} \\ 1_{left}&2_{bottom}&2_{bottom}&2_{bottom}&2_{bottom}&1_{right} \\ 1_{bottom}&1_{bottom}&1_{bottom}&1_{bottom}&1_{bottom}&1_{bottom}  \end{matrix}</script><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; spiralOrder(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; matrix) &#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">        <span class="keyword">if</span>(matrix.size()==<span class="number">0</span> || matrix[<span class="number">0</span>].size() ==<span class="number">0</span>) <span class="keyword">return</span> res;</span><br><span class="line">        <span class="keyword">int</span> row_layer = (matrix.size()+<span class="number">1</span>)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">int</span> col_layer = (matrix[<span class="number">0</span>].size()+<span class="number">1</span>)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">int</span> layer = min( row_layer, col_layer); <span class="comment">// 计算总共的层数</span></span><br><span class="line">        <span class="keyword">int</span> cur_layer =<span class="number">0</span>; <span class="comment">// 用于记录当前所处哪一层</span></span><br><span class="line">        <span class="keyword">int</span> len_row = matrix.size();</span><br><span class="line">        <span class="keyword">int</span> len_col = matrix[<span class="number">0</span>].size(); <span class="comment">//分别为行和列的size</span></span><br><span class="line">        <span class="keyword">while</span>(cur_layer &lt; layer)&#123;</span><br><span class="line">            <span class="comment">//top 输出上边</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j =cur_layer; j&lt;len_col-cur_layer; j++)</span><br><span class="line">                res.push_back(matrix[cur_layer][j]);</span><br><span class="line">            <span class="comment">//right 输出右边</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = cur_layer+<span class="number">1</span>; i&lt;len_row<span class="number">-1</span>-cur_layer; i++)</span><br><span class="line">                res.push_back(matrix[i][len_col - <span class="number">1</span> - cur_layer]);</span><br><span class="line">            <span class="comment">//bottom  输出下边, 这里注意为了防止重复输出, 需要确保上边和下边的行数不同,即:</span></span><br><span class="line">            <span class="comment">// cur_layer!=len_row-1-cur_layer</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j= len_col - <span class="number">1</span> -cur_layer; cur_layer!=len_row<span class="number">-1</span>-cur_layer &amp;&amp; j &gt;=cur_layer  ;j--)</span><br><span class="line">                res.push_back(matrix[len_row - <span class="number">1</span> -cur_layer][j]);</span><br><span class="line">            <span class="comment">//left 输出左边, 同样, 要确保左边和右边的列数不同, 即: cur_layer!=len_col-1-cur_layer</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = len_row<span class="number">-2</span>-cur_layer; cur_layer!=len_col<span class="number">-1</span>-cur_layer &amp;&amp; i&gt;cur_layer; i--)</span><br><span class="line">                res.push_back(matrix[i][cur_layer]);</span><br><span class="line">            cur_layer++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>另一种写法:</strong><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; spiralOrder(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; matrix) &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">        <span class="keyword">if</span> (matrix.empty() <span class="keyword">or</span> matrix[<span class="number">0</span>].empty()) <span class="keyword">return</span> res;</span><br><span class="line">        <span class="keyword">int</span> n = matrix.size();</span><br><span class="line">        <span class="keyword">int</span> m = matrix[<span class="number">0</span>].size();</span><br><span class="line">        <span class="keyword">int</span> rowUp = <span class="number">-1</span>; <span class="comment">// 记录上边界</span></span><br><span class="line">        <span class="keyword">int</span> rowDown = n; <span class="comment">// 下边界</span></span><br><span class="line">        <span class="keyword">int</span> colLeft = <span class="number">-1</span>; <span class="comment">// 左边界</span></span><br><span class="line">        <span class="keyword">int</span> colRight = m; <span class="comment">// 右边界</span></span><br><span class="line">        <span class="keyword">while</span> (rowUp &lt; rowDown <span class="keyword">and</span> colLeft &lt; colRight) &#123;</span><br><span class="line">            rowUp++;</span><br><span class="line">            rowDown--;</span><br><span class="line">            <span class="keyword">if</span> (rowUp &gt; rowDown) <span class="keyword">break</span>; <span class="comment">// 如果越界, 则直接退出</span></span><br><span class="line">            colLeft++;</span><br><span class="line">            colRight--;</span><br><span class="line">            <span class="keyword">if</span> (colLeft &gt; colRight) <span class="keyword">break</span>; <span class="comment">// 越界则退出</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = colLeft; j &lt;= colRight; j++) &#123;</span><br><span class="line">                res.emplace_back(matrix[rowUp][j]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = rowUp+<span class="number">1</span>; i &lt;= rowDown<span class="number">-1</span>; i++) &#123;</span><br><span class="line">                res.emplace_back(matrix[i][colRight]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = colRight; rowUp != rowDown <span class="keyword">and</span> j &gt;= colLeft; j--) &#123;</span><br><span class="line">                res.emplace_back(matrix[rowDown][j]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = rowDown<span class="number">-1</span>; colLeft != colRight <span class="keyword">and</span> i &gt;= rowUp+<span class="number">1</span>; i--) &#123;</span><br><span class="line">                res.emplace_back(matrix[i][colLeft]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 <h1 id="055-Jump-Game"><a href="#055-Jump-Game" class="headerlink" title="055. Jump Game"></a>055. Jump Game</h1><p>数组的数字为最大的跳跃步数, 根据数组判断是否能跳到最后一位上</p>
 <h2 id="Description-3"><a href="#Description-3" class="headerlink" title="Description"></a>Description</h2><p>Given an array of non-negative integers, you are initially positioned at the first index of the array.</p>
 <p>Each element in the array represents your maximum jump length at that position.</p>
@@ -1843,7 +1844,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">235</span>
+                    <span class="site-state-item-count">237</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2081,7 +2082,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">26:18</span>
+    <span title="站点阅读时长">26:05</span>
   
 </div>
 
