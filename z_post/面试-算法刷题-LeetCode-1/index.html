@@ -122,7 +122,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fxlbg7qyk9j21cs0nwq4u.jpg">
 <meta property="og:image" content="http://wx3.sinaimg.cn/large/d7b90c85ly1fxngsjxjyag20cd0a9q6x.gif">
-<meta property="og:updated_time" content="2019-03-25T02:46:46.065Z">
+<meta property="og:updated_time" content="2019-03-28T02:31:40.695Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LeetCode算法题(Easy)">
 <meta name="twitter:description" content="001. Two SumDescription: 求出能组合出目标数的两个元素Given an array of integers, return indices of the two numbers such that they add up to a specific target. You may assume that each input would have exactly one s">
@@ -251,7 +251,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">237</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">247</span></a>
   </li>
         
         
@@ -492,8 +492,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-25T10:46:46+08:00" content="2019-03-25">
-      		  2019-03-25
+    		<time itemprop="dateUpdated" datetime="2019-03-28T10:31:40+08:00" content="2019-03-28">
+      		  2019-03-28
     		</time>
   	  </span>
 	  
@@ -1015,6 +1015,7 @@ AB -&gt; 28
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">missingNumber</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.size();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i != nums[i] &amp;&amp; nums[i] &lt; n) &#123;</span><br><span class="line">                <span class="built_in">std</span>::swap(nums[i], nums[nums[i]]);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i != nums[i]) &#123;</span><br><span class="line">                <span class="keyword">return</span> i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> n;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="解法三-异或-1"><a href="#解法三-异或-1" class="headerlink" title="解法三: 异或"></a>解法三: 异或</h2><p><strong>时间复杂度:</strong> $O(n)$, 一次遍历<br><strong>空间复杂度:</strong> $O(1)$, 无需额外空间</p>
 <p>因为题目是从 <code>0, 1, 2, ..., n</code> 共 $n+1$ 个数字中选出了 $n$ 个不相同的数字, 因此, 如果将 $n+1$ 大小的数组和 $n$ 大小的数组合并成一个大数组, 那么在大数组中, 除了那个缺失的数字以外, 所有的数字都恰好出现了两次, 因此题目变成了求数组中出现一次的唯一数字, 此时可以利用异或在 $O(n)$ 时间复杂度内解决.</p>
+<p><strong>该解法还可以解决丢失两个数字, 丢失三个数字的情况, 具体可参考用异或解决奇数偶数数字的问题.</strong></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">missingNumber</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.size();</span><br><span class="line">        <span class="keyword">int</span> res = n;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++)&#123;</span><br><span class="line">            res = res ^ i ^ nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="解法四-高斯求和公式"><a href="#解法四-高斯求和公式" class="headerlink" title="解法四: 高斯求和公式"></a>解法四: 高斯求和公式</h2><p><strong>时间复杂度:</strong> $O(n)$, 一次遍历<br><strong>空间复杂度:</strong> $O(1)$, 无需任何额外空间</p>
 <p>前 $n$ 项和的求和公式为: $1+2+3+\cdots+n = \frac{(n+1)n}{2}$<br>因此, 我们只需要计算出当前数组的和, 然后在计算当前和与高斯和之间的差即可.</p>
@@ -1222,7 +1223,7 @@ AB -&gt; 28
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">237</span>
+                    <span class="site-state-item-count">247</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1451,7 +1452,7 @@ AB -&gt; 28
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.7m</span>
+    <span title="站点总字数">1.8m</span>
   
 
   
@@ -1460,7 +1461,7 @@ AB -&gt; 28
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">26:05</span>
+    <span title="站点阅读时长">26:52</span>
   
 </div>
 

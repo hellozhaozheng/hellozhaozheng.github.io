@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="文章: MobileNetV2: Inverted Residuals and Linear Bottlenecks作者: Mark Sandler, Andrew Howard, Menglong Zhu, Andrey Zhmoginov, Liang-Chieh Chen备注: Google 摘要本文中我们介绍了一个新的网络结构, MobileNetV2, 提高了移动模型在多个任务和基准以及">
+<meta name="keywords" content="计算机视觉,网络结构,论文解读">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MobileNetV2">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-MobileNetV2/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="文章: MobileNetV2: Inverted Residuals and Linear Bottlenecks作者: Mark Sandler, Andrew Howard, Menglong Zhu, Andrey Zhmoginov, Liang-Chieh Chen备注: Google 摘要本文中我们介绍了一个新的网络结构, MobileNetV2, 提高了移动模型在多个任务和基准以及">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1g1ksbntd6tj20tn0gswhy.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1g1kshjbeghj20ti0ogjw4.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1g1kshuym7bj20tg0iyq6n.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1g1ksi26jfej20vn0ao40l.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1g1ksigcb7hj20tq0tajx5.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1g1ksiaefupj20tc0ueq8s.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1g1ksj50ekgj20t50ygn31.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1g1ksjfishsj20ub0l1q5t.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1g1ksm39wblj21910rmk1m.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1g1ksmkmm8uj20tu0woah6.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1g1ksjxpih3j20th0e9gnm.jpg">
+<meta property="og:updated_time" content="2019-04-02T08:14:00.557Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MobileNetV2">
+<meta name="twitter:description" content="文章: MobileNetV2: Inverted Residuals and Linear Bottlenecks作者: Mark Sandler, Andrew Howard, Menglong Zhu, Andrey Zhmoginov, Liang-Chieh Chen备注: Google 摘要本文中我们介绍了一个新的网络结构, MobileNetV2, 提高了移动模型在多个任务和基准以及">
+<meta name="twitter:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1g1ksbntd6tj20tn0gswhy.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/计算机视觉-MobileNetV2/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>MobileNetV2 | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">247</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-linux">
+    <a href="/categories/Linux/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-linux"></i> <br />Linux</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其他">
+    <a href="/categories/其他/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/计算机视觉-MobileNetV2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MobileNetV2
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-20 15:05:02" itemprop="dateCreated datePublished" datetime="2018-10-20T15:05:02+08:00">2018-10-20</time>
+            
+
+            
+          </span>
+
+	  
+  	    <span class="post-updated">
+    		&nbsp; | &nbsp; 更新于
+    		<time itemprop="dateUpdated" datetime="2019-04-02T16:14:00+08:00" content="2019-04-02">
+      		  2019-04-02
+    		</time>
+  	  </span>
+	  
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/计算机视觉/" itemprop="url" rel="index"><span itemprop="name">计算机视觉</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">7.7k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">7 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>文章:</strong> MobileNetV2: Inverted Residuals and Linear Bottlenecks<br><strong>作者:</strong> Mark Sandler, Andrew Howard, Menglong Zhu, Andrey Zhmoginov, Liang-Chieh Chen<br><strong>备注:</strong> Google</p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本文中我们介绍了一个新的网络结构, MobileNetV2, 提高了移动模型在多个任务和基准以及不同模型大小的最好性能. 我们还介绍了将这些 Mobile 模型应用的目标检测上的有效方法, 并给出了一个新的框架, SSDLite. 此外, 我们还演示了如何通过一个简化形式的 DeepLabv3 (我们称之为 Mobile DeepLabv3)来构建移动语义分割模型.<br>我们的模型基于逆置残差结构(Inverted Residual Structure), 该结构中的 shortcut 连接位于 bottleneck 的网络层之间. 中间的 expansion layer 使用了轻量级的 Depthwise Conv 来过滤特征, 将结果传给非线性激活层. 此外, 我们发现在 narrow layers 中去除非线性层对于保持表征能力来说是非常重要的. 我们证明了这样做可以提供性能, 同时给出了这种设计的 Intuition.<br>最后, 我们的方法还可以让输入输出和 expressiveness of the transformation 解耦, 这为进一步的分析提供了一个方便的框架. 我们在 ImageNet 分类数据集, COCO 目标检测数据集, VOC 实例分割数据集上测试了模型的性能. 同时还评估了精度, 乘法加法操作次数, 实际延迟和参数数量之间的 trade-offs.</p>
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>本文的主要贡献是一个新型的 layer module: the inverted residual with linear bottleneck. 该模块采用低维压缩表征作为输入, 首先将其扩展至高维, 然后用轻量级的 Depthwise Conv 进行滤波. <strong>特征随后会被一个 linear convolution 投影回低维表征.</strong><br>这些模块可以利用现有的任何框架中的标准操作实现, 并且可以取得 sota 的效果. 此外, 本文提出的卷积模块特征适合用移动设计, 因为它允许通过 “never fully materializing large intermediate tensors” 来显著减少 Inference 过程中所需的内存占用. 这减少了许多嵌入式硬件设计对主存访问的需求, 这些设计提供了非常快的软件控制的高速缓存.</p>
+<h1 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h1><p>Network Pruning</p>
+<p>Connectivity Learning</p>
+<p>ShuffleNet</p>
+<p>Architectural Search: genetic algorithms, reinforcement learning</p>
+<h1 id="Preliminaries-discussion-and-intuition"><a href="#Preliminaries-discussion-and-intuition" class="headerlink" title="Preliminaries, discussion and intuition"></a>Preliminaries, discussion and intuition</h1><h2 id="Depthwise-Separable-Convolutions"><a href="#Depthwise-Separable-Convolutions" class="headerlink" title="Depthwise Separable Convolutions"></a>Depthwise Separable Convolutions</h2><p>Depthwise Separable Convolutions 在 MobileNet 和 Xception 中是非常关键的一个模块, 这里我们也同样在网络中使用. 其基本思想就是将原始的标准卷积操作分解良两个独立的卷积层. 第一个卷积层称为 Depthwise Conv, 它对 <strong>每个输入通道分别应用一个独立的卷积滤波器来进行轻量级的滤波.</strong> 第二个卷积层称为 Pointwise Conv(1x1 Conv), 它负责通过计算输入通道的线性组合来建立新的特征图谱.</p>
+<p>当标准卷积层的输入图谱为 $h_i\times w_i\times d_i$, 卷积核为 $R^{k\times k\times d_i\times d_j}$, 输出图谱为 $h_i\times w_i\times d_j$ 时, 则该卷积的计算成本为: $h_i \cdot w_i \cdot d_i \cdot d_j\cdot k\cdot k$.</p>
+<p>Depthwise Separable Conv 是对标准卷积层的一种替代. 从经验上看, 它们的效果几乎和标准卷积一样好, 只不过成本更低, 如下所示(Depthwise 和 Pointwise 的计算成本之和):</p>
+<script type="math/tex; mode=display">h_i \cdot w_i \cdot d_i (k^2 + d_j)</script><p>可以看出, 与标准卷积层相比, 深度可分离卷积有效的减少了几乎 $k^2$ 被的计算量. 在 MobileNetV2 中, 我们队 $k=3$ 的卷积层使用深度可分离卷积, 因此计算成本可以降低 8~9 倍, 同时精度只降低一点.</p>
+<h2 id="Linear-Bottlenecks"><a href="#Linear-Bottlenecks" class="headerlink" title="Linear Bottlenecks"></a>Linear Bottlenecks</h2><p>对于具有 $n$ 层网络层的深度神经网络来说, 每一个网络层 $L_i$ 都具有 $h_i\times w_i\times d_i$ 维度的 activation tensor. 在本节中, 我们将讨论这些 activation tensors 的基本性质, 并将这些 tensors 看做是具有 $d_i$ 维度的 $h_i\times w_i$ 大小的像素容器. 非正式的说, 对于实际图像的输入集, 我们称网络层的 activations (对于任意的网络层 $L_i$) 集合组成了一个 “manifold of interest”. 长期以来, 人们一直认为神经网络中的 manifolds of interest 可以嵌入到低维的子空间中. 换句话说, 当我们深层的卷积层中所有单独的 $d$ 通道的 <strong>像素</strong> 时, 这些值中编码的信息实际上存在于一些 manifold 中, 而这些 manifold 又可以嵌入到低维的子空间中. (<strong>注意, manifold 的维度不同于通过线性变换嵌入的子空间维度</strong>)</p>
+<p>粗略来看, such a fact 可以通过简单的减少一个层的维度来捕获和利用, 从而减少操作空间的维度. MobileNetV1 成功的利用了这一点, 通过 width multiplier 超参数可以有效的在计算成本和精度之间进行权衡, 并且该方法已经被纳入其他网络的有效模型设计中. 根据这种 Intuition, width multiplier 方法允许降低 activation space 的维度, 直到 manifold of interest 覆盖整个空间. 但是, 当我们回忆起深度卷积神经网络的在每个坐标点上的转换都是非线性的使用, 例如 ReLU, 这种 Intuition 就不成立了. 例如, ReLU 在一维空间中时, 会产生一条射线, 但是在 $R^n$ 维空间中时, 通常会产生一条具有 $n$ 个连接的分段线性曲线.<br>It is easy to see that in general if a result of a layer transformation ReLU($Bx$) has a non-zero volume $S$, the points mapped to <strong>interior</strong> $S$ are obtained via a linear transformation $B$ of the input, thus indicating that the part of the input space corresponding to the full dimensional output, is limited to a linear transformation. 换句话说, 深度网络只有在输出域(output domain)的非零部分(non-zero volume part)才具有线性分类器的能力.<br>另一方面, 当 ReLU collapses the channel 时, 它不可避免的会丢失该通道中的信息. 然而, 如果我们有很多个通道, 并且在 activation manifold 中有一个结构, 那么信息可能仍然保存在其他通道中. 在补充材料中, 我们证明了如果 input manifold 可以嵌入到激活空间的一个显著的低维子空间中, 那么在将所需的复杂度引入到表征函数集合中时, ReLU 变换可以保留一定的信息.<br>综上所示, 我们强调了两个特性, 它们表明了 manifold of the interest 在高维 activation space 中嵌入到低维子空间的要求:</p>
+<ol>
+<li>如果 manifold of interest 在 ReLU 变换后保持非零体积, 则对应线性变换.</li>
+<li>ReLU 能够保存 input manifold 的完整信息, 但前提是 input manifold 位于属于空间的低维子空间当中.</li>
+</ol>
+<p><div style="width: 550px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1g1ksbntd6tj20tn0gswhy.jpg" alt="图1"></div></p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1g1kshjbeghj20ti0ogjw4.jpg" alt="图2"></div></p>
+<p>这两个性质为我们优化现有的神经结构提供了经验性的提示: 假设 manifold of interest 是低维的, 那么我们可以通过在卷积块中插入 linear bottleneck 来捕获它. 实验证据表明, 使用线性层是至关重要的, 因为它可以防止非线性层破坏太多的信息. 在第 6 节, 我们会展示在 bottlenecks 中使用非线性层实际上会损害最终的精度, 进一步验证了我们的假设.<br>在本文的其余部分, 我们将使用 bottleneck , 并且我们将 bottleneck 的输入大小和内部大小的比值称为膨胀比(expansion ratio).</p>
+<h2 id="Inverted-residuals"><a href="#Inverted-residuals" class="headerlink" title="Inverted residuals"></a>Inverted residuals</h2><p>Bottleneck Blocks 和 Residual Blocks 类似, 其中每个块包含一个输入, 然后是若干 bottlenecks, 然后是 expansion. 有一种 Intuition 认为 Bottleneck 包含了所有的必要信息, 而 expansion layer 仅仅作为伴随张量非线性变换的实现细节, 受到该观点的启发, 我们直接在 Bottlenecks 之间使用 shortcut. 图3提供了不同设计的示意图. 插入 shortcut 的动机和传统的残差连接类似: 我们想要提高梯度跨多层传播的能力. 在第5节中显示了 Inverted 的设计大大提高了内存效率, 并且在本文的实验中效果更好一些.</p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1g1kshuym7bj20tg0iyq6n.jpg" alt="图3"></div></p>
+<p><strong>Running time and parameter count for bottleneck convolution</strong> 基本的实现结构如表1所示. 在表3中, 我们比较了 MobileNetV1, MobileNetV2, ShuffleNet 所需的分辨率大小.</p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1g1ksi26jfej20vn0ao40l.jpg" alt="表1"></div></p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1g1ksigcb7hj20tq0tajx5.jpg" alt="表3"></div></p>
+<h2 id="Information-flow-interpretation"><a href="#Information-flow-interpretation" class="headerlink" title="Information flow interpretation"></a>Information flow interpretation</h2><p>我们的网络结构的一个有趣的特性是, 它在 building blocks(bottleneck layers) 的 input/output domains 和层转换之间提供了一种自然的间隔(natural separation). 层转换是一个将输入转换为输出的非线性函数, 前者可以看做是网络在每一层的容量(capacity), 而后者可以看做是表征能力(expressiveness). 这与传统的卷积块形成了鲜明的对比, 传统的卷积是 regular and separable 的, 它的 expressiveness 和 capacity 是纠缠在一起的, 是输出图谱通道数的函数. 特别地, 在我们的例子中, 当内层网络的深度为 0 时, 多亏了 shortcut 的存在, 使得底层卷积变成了一个 indentity function. 当膨胀比(expansion ratio)小于 1 时, 这就是一个经典的残差卷积块. <strong>但是, for our purposes, 我们展示了大于 1 的膨胀比是最有用的.</strong><br>这一解释使得我们能够不考虑 capacity 而独立的研究网络的表征能力, 我们认为, 对这种 separation 的进一步探索有助于更好的理解网络的特性.</p>
+<h1 id="Model-Architecture"><a href="#Model-Architecture" class="headerlink" title="Model Architecture"></a>Model Architecture</h1><p>接下来我们将详细描述我们的网络结构. 正如前一节所讨论的, 基本的 building block 是 bottleneck depth-separable convolution with residuals. 该模块的详细结构如表 1 所示. MobileNetV2 的网络结构如表2 所示, 第一层是一个 filters 数量为 32 的卷积层, 后面 19 个 residual bottleneck 层. 由于 <strong>ReLU6</strong> 在面对低精度计算时具有更高的鲁棒性, 因此我们选它作为非线性激活函数. 我们的卷积核大小通常为 3x3, 并在训练中使用 dropout 和 BN.</p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1g1ksiaefupj20tc0ueq8s.jpg" alt="表2"></div></p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1g1ksj50ekgj20t50ygn31.jpg" alt="图4"></div></p>
+<p>除了第一层以外, 我们在整个网络中都使用了恒定的膨胀率. 在我们的实验中, 我们发现在膨胀率在 5~10 之间时具有几乎相同的性能曲线, 并且在较小的网络中小膨胀率性能更好, 在较大的网络中大膨胀率性能较好.<br>在我们主要的实验中, 均使用大小为 6 的膨胀因子. <strong>例如, 对于一个输入通道数为 64, 输出通道数为 128 的 bottleneck 模块来说, 中间的 expansion layer 的通道数为 $64\times 6 = 384$.</strong></p>
+<p><strong>Trade-off hyper parameters</strong> 和 MobileNetV1 中一样, 我们将输入图像的分辨率和宽度乘子作为可调节的超参数, 根据所需的精度和性能要求权衡我们的体系结构, 以此适应不同的性能. 我们的 primary network(width multiplier 1, 224x224) 的计算成本为 3 亿次 multiply-adds, 并且具有 3.4 million 的参数. 我们探索了从 resolution 才 96 到 224, width multipliers 从 0.35 到 1.4 的性能表现. 网络的计算成本在 7~585 M MAdds, 模型大小在 1.7~6.9M 个参数.<br>MobileNetV2 在实现上与 MobileNetV1 的一个小的差异是, 对于小于 1 的乘数, 我们将 width multiplier 应用于除最后一个卷积层之外的所有层. 这对小模型的性能有所提升.</p>
+<h1 id="Implementation-Notes"><a href="#Implementation-Notes" class="headerlink" title="Implementation Notes"></a>Implementation Notes</h1><h2 id="Memory-efficient-inference"><a href="#Memory-efficient-inference" class="headerlink" title="Memory efficient inference"></a>Memory efficient inference</h2><p>Inverted Residual  Bottleneck 可以实现时具有内存高效的好处, 这对于移动应用来说非常重要.  计算过程会优先使需要在内存中的张量总数最小化来进行安排. 在通常情况下, 深度学习框架(TF, Caffe)会搜索所有可能的计算顺序 $\Sigma (G)$, 并从中选择总计算量最小的一个.</p>
+<script type="math/tex; mode=display">M(G) = \min_{\pi\in\Sigma(G)} \max_{i\in 1..n} \Biggl[ \sum_{A\in R(i, \pi, G) |A|} \Biggr] + size(\pi_i)</script><p>上式中, $R(i, \pi, G)$ 是连接到任意 $\pi_i, …, \pi_n$ 节点的中间张量列表, $|A|$ 代表了张量 $A$ 的大小, $size(i)$ 代表在操作 $i$ 起见内部存储所需要的内存总量.</p>
+<p>对于只有平凡并行结构的图(如残差连接), 只有一个 non-trivial 的计算顺序, 因此可以简化计算图 $G$ 推理所需的总量和内存边界.</p>
+<script type="math/tex; mode=display">M(G) = \max_{op\in G} \Biggl[ \sum_{A\in op_{inp}} |A| + \sum_{B\in op_{out}} |B| + |op| \Biggr]</script><p>重申一下, 内存量就是所有操作中输入和输出的最大总大小. 在下面, 我们表明, 如果我们把一个 bottleneck residual block 作为一个单独的操作(将 inner convolution 作为一次性张量), 总的内存量大小将会由 bottleneck tensors 的大小决定, 而不是由 bottleneck 内部的 tensor 大小决定(much larger).</p>
+<p><strong>Bottleneck Residual Block</strong> 图3(b) 中的操作可以看做三个子操作: Linear transformation, Non-linear per-channel transformation, Linear transformation.<br>在我们的网络中, 我们非线性激活层为: ReLU6+dwise+ReLU6.  Balablabla…(关于具体实现时的计算成本)</p>
+<h1 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h1><h2 id="ImageNet-Classification"><a href="#ImageNet-Classification" class="headerlink" title="ImageNet Classification"></a>ImageNet Classification</h2><p><strong>Training setup:</strong> TensorFlow, RMSPropOptimizer(decay = 0.9, momentum = 0.9), BN (after every layer), weight decay = 0.00004, initial lr = 0.045, lr decay = 0.98 per epoch, 16 GPU asynchronous(异步) workers, batch size = 96.</p>
+<p><strong>Results:</strong> 如表4, 图5所示.</p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1g1ksjfishsj20ub0l1q5t.jpg" alt="图5"></div></p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1g1ksm39wblj21910rmk1m.jpg" alt="表4-6"></div></p>
+<h2 id="Object-Detection"><a href="#Object-Detection" class="headerlink" title="Object Detection"></a>Object Detection</h2><p>SSDLite: 用深度可分离卷积替换标准卷积, 大幅降低 Params 和 MAdds, 如表5所示. 关于 mAP, 参数量, 乘法加法次数的测试和比较如表6所示.</p>
+<h2 id="Semantic-Segmentation"><a href="#Semantic-Segmentation" class="headerlink" title="Semantic Segmentation"></a>Semantic Segmentation</h2><p>DeepLabv3, 结果如表7所示.</p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1g1ksmkmm8uj20tu0woah6.jpg" alt="表7"></div></p>
+<h2 id="Ablation-study"><a href="#Ablation-study" class="headerlink" title="Ablation study"></a>Ablation study</h2><p><strong>Inverted residual connections:</strong> shortcut connecting bottleneck perform better than shortcuts connecting the expanded layers, 如图6(b)所示</p>
+<p><strong>Importance of linear bottlenecks</strong> 线性 bottleneck 模型严格来说没有非线性模型强大, 因为激活总是可以在线性状态下运行, 并对 bias 和 scale 进行适当的改变. 但是我们的实验结果如图6所示, 线性 bottleneck 提高了性能, 为非线性破坏低维空间中的信息提供了补救措施(providing support).</p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1g1ksjxpih3j20th0e9gnm.jpg" alt="图6"></div></p>
+<p><span id="MobileNetV2 做了哪些改进"></span></p>
+<h1 id="MobileNetV2-做了哪些改进"><a href="#MobileNetV2-做了哪些改进" class="headerlink" title="MobileNetV2 做了哪些改进"></a>MobileNetV2 做了哪些改进</h1>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/计算机视觉/" rel="tag"><i class="fa fa-tag"></i> 计算机视觉</a>
+          
+            <a href="/tags/网络结构/" rel="tag"><i class="fa fa-tag"></i> 网络结构</a>
+          
+            <a href="/tags/论文解读/" rel="tag"><i class="fa fa-tag"></i> 论文解读</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/Cpp-智能指针/" rel="prev" title="C++ 中的智能指针">
+                <i class="fa fa-chevron-left"></i> C++ 中的智能指针
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/计算机视觉-FPN-CVPR2017/" rel="next" title="FPN (CVPR, 2017)">
+                FPN (CVPR, 2017) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">247</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">37</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Related-Work"><span class="nav-text">Related Work</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Preliminaries-discussion-and-intuition"><span class="nav-text">Preliminaries, discussion and intuition</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Depthwise-Separable-Convolutions"><span class="nav-text">Depthwise Separable Convolutions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linear-Bottlenecks"><span class="nav-text">Linear Bottlenecks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inverted-residuals"><span class="nav-text">Inverted residuals</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Information-flow-interpretation"><span class="nav-text">Information flow interpretation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Model-Architecture"><span class="nav-text">Model Architecture</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Implementation-Notes"><span class="nav-text">Implementation Notes</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Memory-efficient-inference"><span class="nav-text">Memory efficient inference</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Experiments"><span class="nav-text">Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ImageNet-Classification"><span class="nav-text">ImageNet Classification</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Object-Detection"><span class="nav-text">Object Detection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Semantic-Segmentation"><span class="nav-text">Semantic Segmentation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ablation-study"><span class="nav-text">Ablation study</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MobileNetV2-做了哪些改进"><span class="nav-text">MobileNetV2 做了哪些改进</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">1.8m</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">26:52</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

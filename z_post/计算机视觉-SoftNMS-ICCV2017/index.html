@@ -115,7 +115,7 @@
   <meta name="description" content="作者: Navaneeth Bodla, Bharat Singh, Rama Chellappa, Larry S.Davis发表: ICCV2017机构: Center For Automation Research 核心亮点提出了一种NMS的变体, 通过利用该变体, 基本上可以提升任何模型的检测准确率作者们提出了一种新式的NMS算法, 并且利用该算法, 可以普遍提高当前现有模型的召回率(尤其">
 <meta name="keywords" content="目标检测,计算机视觉,论文解读">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SoftNMS(ICCV, 2017)">
+<meta property="og:title" content="Soft-NMS(ICCV, 2017)">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-SoftNMS-ICCV2017/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="作者: Navaneeth Bodla, Bharat Singh, Rama Chellappa, Larry S.Davis发表: ICCV2017机构: Center For Automation Research 核心亮点提出了一种NMS的变体, 通过利用该变体, 基本上可以提升任何模型的检测准确率作者们提出了一种新式的NMS算法, 并且利用该算法, 可以普遍提高当前现有模型的召回率(尤其">
@@ -123,9 +123,9 @@
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fwskrv3tdtj20rt0p61kx.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1g0mczrbnkfj20xe0ipdi2.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fwsmozvvpsj20oh0omkb4.jpg">
-<meta property="og:updated_time" content="2019-03-01T13:27:53.624Z">
+<meta property="og:updated_time" content="2019-03-31T10:36:58.428Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SoftNMS(ICCV, 2017)">
+<meta name="twitter:title" content="Soft-NMS(ICCV, 2017)">
 <meta name="twitter:description" content="作者: Navaneeth Bodla, Bharat Singh, Rama Chellappa, Larry S.Davis发表: ICCV2017机构: Center For Automation Research 核心亮点提出了一种NMS的变体, 通过利用该变体, 基本上可以提升任何模型的检测准确率作者们提出了一种新式的NMS算法, 并且利用该算法, 可以普遍提高当前现有模型的召回率(尤其">
 <meta name="twitter:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fwskrv3tdtj20rt0p61kx.jpg">
 
@@ -144,7 +144,7 @@
   };
 </script>
 
-  <title>SoftNMS(ICCV, 2017) | 从零开始的BLOG</title>
+  <title>Soft-NMS(ICCV, 2017) | 从零开始的BLOG</title>
   
 
 
@@ -252,7 +252,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">237</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">247</span></a>
   </li>
         
         
@@ -458,7 +458,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">SoftNMS(ICCV, 2017)
+          <h1 class="post-title" itemprop="name headline">Soft-NMS(ICCV, 2017)
               
             
           </h1>
@@ -493,8 +493,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-01T21:27:53+08:00" content="2019-03-01">
-      		  2019-03-01
+    		<time itemprop="dateUpdated" datetime="2019-03-31T18:36:58+08:00" content="2019-03-31">
+      		  2019-03-31
     		</time>
   	  </span>
 	  
@@ -583,15 +583,15 @@
       
         <p><strong>作者:</strong> Navaneeth Bodla, Bharat Singh, Rama Chellappa, Larry S.Davis<br><strong>发表:</strong> ICCV2017<br><strong>机构:</strong> Center For Automation Research</p>
 <h1 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h1><p><strong>提出了一种NMS的变体, 通过利用该变体, 基本上可以提升任何模型的检测准确率</strong><br>作者们提出了一种新式的NMS算法, 并且利用该算法, 可以普遍提高当前现有模型的召回率(尤其是面对重叠程度大的物体), 同时, 由于可以不增加复杂度的情况下直接用该算法替换传统NMS算法,  因此, 在替换SoftNMS时, 无需更改模型的任何参数, 也无需重新训练模型, 就可以达到提升召回率的作用. (对mAP的提升大约为1%左右)</p>
-<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fwskrv3tdtj20rt0p61kx.jpg" alt=""></p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fwskrv3tdtj20rt0p61kx.jpg" alt=""></div></p>
 <h1 id="论文细节"><a href="#论文细节" class="headerlink" title="论文细节"></a>论文细节</h1><p><strong>传统NMS:</strong> 先将score倒序排列, 然后取socres值最大的box并将其置于final box列表中, 计算所有剩余box与该box的重叠度, 大于某一阈值的就将其删除, 然后迭代的使用此方法, 直到final box数量达到要求或者没有多的box了.(在FasterRCNN中, 生成候选框时会使用一次NMS, 预测还会分别对每一个类别都使用一次NMS)</p>
 <p><strong>传统NMS存在的问题:</strong> 由上面的描述可知, 如果两个物体本身的重叠度过大, 那么其中一个物体的框就会被删除(score被置为0), 从而导致漏解.</p>
 <p><strong>Soft-NMS:</strong> 在将具有最大score的box置于 picked box 之后, 计算所有剩余 box 与该 box 的重叠度, 对于那些重叠度大于一定阈值的 box, 我们并不将其删除, 而仅仅只是根据重叠程度来降低那些 box 的 socre, 这样一来, 这些 box 仍旧处于 box 列表中, 只是 socre 的值变低了. 具体来说, 如果 box 的重叠程度高, 那么 score 的值就会变得很低, 如果重叠程度小, 那么 box 的 score 值就只会降低一点, Soft-NMS 算法伪代码如下图所示:</p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1g0mczrbnkfj20xe0ipdi2.jpg" alt=""></p>
-<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwsmozvvpsj20oh0omkb4.jpg" alt=""></p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1g0mczrbnkfj20xe0ipdi2.jpg" alt=""></div></p>
+<p><div style="width: 550px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fwsmozvvpsj20oh0omkb4.jpg" alt=""></div></p>
 <p>设 $s_i$ 为第 $i$ 个 box 的 score, 则在应用 SoftNMS 时各个 box score 的计算公式如下:</p>
-<script type="math/tex; mode=display">s_i = \begin{cases} s_i, & iou(M, b_i) < N_t \\ s_i(1-iou(M, b_i)), & iou(M, b_i) \geq N_t \end{cases}</script><p>上式过于简单直接, 为了函数的连续性, 文章改用了高斯惩罚系数:</p>
-<script type="math/tex; mode=display">s_i = \begin{cases} s_i, & iou(M, b_i) < N_t \\ s_i e^{\frac{iou(M, b_i)^2}{\sigma}} , & iou(M, b_i) \geq N_t \end{cases}</script>
+<script type="math/tex; mode=display">s_i = \begin{cases} s_i, & iou(M, b_i) < N_t \\ s_i(1-iou(M, b_i)), & iou(M, b_i) \geq N_t \end{cases}</script><p>上式过于简单直接, 为了函数的连续性, 文章改用了高斯惩罚系数(与上面的线性截断惩罚不同的是, 高斯惩罚会对其他所有的 box 作用):</p>
+<script type="math/tex; mode=display">s_i = s_i e^{\frac{iou(M, b_i)^2}{\sigma}} \forall b_i\notin D</script>
       
     </div>
 
@@ -718,7 +718,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">237</span>
+                    <span class="site-state-item-count">247</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -947,7 +947,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.7m</span>
+    <span title="站点总字数">1.8m</span>
   
 
   
@@ -956,7 +956,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">26:05</span>
+    <span title="站点阅读时长">26:52</span>
   
 </div>
 

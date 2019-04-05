@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="逻辑回归和线性回归的定义逻辑回归定义逻辑回归通常用来解决二分类问题(也可以解决多分类问题), 用于估计某种事物的可能性. 我通过 Logistic 函数将拟合函数的输出值归一化到 (0, 1) 之间, 我们可以将其认为是分类为 1 类的预测概率. Logistic 函数公式(和 Sigmoid 函数形式形式相同)如下: g(z) = \frac{1}{1+e^{-z}}Logistic(Sigm">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-24T05:12:46.723Z">
+<meta property="og:updated_time" content="2019-04-04T06:45:52.272Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="逻辑回归与线性回归">
 <meta name="twitter:description" content="逻辑回归和线性回归的定义逻辑回归定义逻辑回归通常用来解决二分类问题(也可以解决多分类问题), 用于估计某种事物的可能性. 我通过 Logistic 函数将拟合函数的输出值归一化到 (0, 1) 之间, 我们可以将其认为是分类为 1 类的预测概率. Logistic 函数公式(和 Sigmoid 函数形式形式相同)如下: g(z) = \frac{1}{1+e^{-z}}Logistic(Sigm">
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">237</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">247</span></a>
   </li>
         
         
@@ -489,8 +489,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-24T13:12:46+08:00" content="2019-03-24">
-      		  2019-03-24
+    		<time itemprop="dateUpdated" datetime="2019-04-04T14:45:52+08:00" content="2019-04-04">
+      		  2019-04-04
     		</time>
   	  </span>
 	  
@@ -543,7 +543,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.2k</span>
+                <span title="本文字数">3.4k</span>
               
 
               
@@ -557,7 +557,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">3 分钟</span>
               
             </div>
           
@@ -588,7 +588,47 @@
 <p><span id="对于一个二分类问题"></span></p>
 <h1 id="对于一个二分类问题-如果数据集中存在一些离异值-在不清洗数据的情况下-选择逻辑回归还是-SVM-为什么"><a href="#对于一个二分类问题-如果数据集中存在一些离异值-在不清洗数据的情况下-选择逻辑回归还是-SVM-为什么" class="headerlink" title="对于一个二分类问题, 如果数据集中存在一些离异值, 在不清洗数据的情况下, 选择逻辑回归还是 SVM? 为什么?"></a>对于一个二分类问题, 如果数据集中存在一些离异值, 在不清洗数据的情况下, 选择逻辑回归还是 SVM? 为什么?</h1><p>用 SVM, 因为 SVM 的分类只与支持向量有关, 所以对离异值的忍受能力更强.</p>
 <p><span id="逻辑回归和 SVM 的区别是什么"></span></p>
-<h1 id="逻辑回归和-SVM-的区别是什么-哪个是参数模型-各适用于解决什么问题"><a href="#逻辑回归和-SVM-的区别是什么-哪个是参数模型-各适用于解决什么问题" class="headerlink" title="逻辑回归和 SVM 的区别是什么? 哪个是参数模型? 各适用于解决什么问题?"></a>逻辑回归和 SVM 的区别是什么? 哪个是参数模型? 各适用于解决什么问题?</h1>
+<h1 id="逻辑回归和-SVM-的区别是什么-哪个是参数模型-分别适合在什么情况下使用"><a href="#逻辑回归和-SVM-的区别是什么-哪个是参数模型-分别适合在什么情况下使用" class="headerlink" title="逻辑回归和 SVM 的区别是什么? 哪个是参数模型? 分别适合在什么情况下使用?"></a>逻辑回归和 SVM 的区别是什么? 哪个是参数模型? 分别适合在什么情况下使用?</h1><h2 id="二者区别"><a href="#二者区别" class="headerlink" title="二者区别"></a>二者区别</h2><p>两种方法都是常见的分类算法, 从目标函数上看, 区别在于逻辑回归采用的是 log 损失, 而 SVM 采用的是 hinge 损失. 这两个损失函数的目的都是增加对分类影响较大的数据点的权重, 减少与分类关系较小的数据点的权重. SVM 的处理方法是只考虑支持向量, 也就是和分类最相关的少数点, 去学习分类器. 而逻辑回归通过非线性映射, 大大减小了离分类平面较远的点的权重, 相对提升了与分类最相关的数据点的权重. 两者的根本目的都是一样的. 此外, 根据需要, 两个方法都可以增加不同的正则化项, 如 L1, L2 等. 所以在很多实验中, 两种算法的结果是很接近的.<br>但是逻辑回归相对来说模型更加简单, 并且实现起来, 特别是大规模线性分类时比较方便. 而 SVM 的实现和优化相对来说复杂一些, 但是 SVM 的理论基础更加牢固, 有一套结构化风险最小化的理论基础, 另外, SVM 转化成对偶问题后, 分类只需要计算与少数几个支持向量的距离即可, 这在进行复杂核函数计算时有时很明显, 能够大大简化模型和计算量</p>
+<p>损失函数: 逻辑回归和 SVM 的损失函数分别为:</p>
+<script type="math/tex; mode=display">\text{Logistic: } \frac{1}{n} \sum^n_{i=1} - \log g(y_i [ w_0 + x^T_i w_1]) + \frac{\lambda}{2}\| w_1 \|</script><script type="math/tex; mode=display">\text{SVM: } \frac{1}{n}\sum^n_{i=1}(1 - y_i[w_0 + x^T_i w_1])^{+} + \frac{\lambda}{2}\| w_1 \|</script><p>上式中, $g(z) = \frac{1}{1 + exp^(-z)}$. 可以看出, 逻辑回归采用的是对数损失(log loss), 而 SVM 采用的是铰链损失(hinge loss), 即:</p>
+<ul>
+<li>LR 损失: $Loss(z) = log(1 + exp(-z))$</li>
+<li>SVM 损失: $Loss(z) = (1 - z)^{+}$</li>
+</ul>
+<p>逻辑回归产出的是概率值, 而 SVM 只能产出正负类, 因此 LR 的预估结果更容易解释.<br>SVM 主要关注的是 “支持向量”, 也就是和分类最相关的少数点, 即关注局部关键信息; 而逻辑回归是在全局进行优化的, 这导致 SVM 天然比逻辑回归有更好的泛化能力, 防止过拟合.</p>
+<h2 id="参数模型和非参数模型"><a href="#参数模型和非参数模型" class="headerlink" title="参数模型和非参数模型"></a>参数模型和非参数模型</h2><p><strong>LR 是参数模型, SVM 是非参数模型</strong></p>
+<p>定义: 参数模型通常假设总体随机变量服从某一个分布, 该分布由一些参数确定(比如正态分布的均值和方差), 在此基础上构建的模型称为参数模型; 非参数模型对于总体的分布不做任何假设, 只是知道总体是一个随机变量, 其分布是存在的(分布中也可能存在参数), 但是无法知道其分布的形式, 更不知道分布的相关参数, 只有在给定一些样本的条件下, 能够依据非参数统计的方法进行推断. 因此, <strong>问题中有没有参数, 并不是参数模型和非参数模型的区别. 其主要区别在于总体的分布形式是否已知.</strong> 为何强调 “参数” 与 “非参数”, 主要原因在于参数模型的分布可以由参数直接确定.</p>
+<p>参数算法包括两部分: (1) 选择目标函数的形式; (2) 从训练数据中学习目标函数的系数. LR 会预先假设目标函数(直线或其他), 因此它是参数模型. 其他参数模型还有: 线性成分分析, 感知机.<br>参数模型的优点:</p>
+<ul>
+<li>简单: 理论容易理解, 结果容易解释</li>
+<li>快速: 参数模型的学习和训练速度较快</li>
+<li>数据更少: 通常不需要大量的数据也可以较好的拟合?</li>
+</ul>
+<p>参数模型的缺点:</p>
+<ul>
+<li>约束: 以选定函数形式的方式来学习本身就限制了模型的解空间</li>
+<li>有限的复杂度: 通常只能应对简单的问题</li>
+<li>拟合度小: 实际中通常无法和潜在的目标函数温和.</li>
+</ul>
+<p>非参数算法: 对于目标函数的形式不作过多的假设. 当有用许多数据而先验知识很少时, 非参数学习通常很有用, 因为此时不需要关注参数的选取. 常用的非参数算法包括: K 最近邻, 决策树, SVM, 朴素贝叶斯, 神经网络.<br>非参数算法的优点:</p>
+<ul>
+<li>可变性: 可以拟合许多不同的函数形式</li>
+<li>模型强大: 对于目标函数不作假设或者作微小的假设</li>
+<li>表现良好: 对于预测结果表现通常较好</li>
+</ul>
+<p>非参数算法的局限性:</p>
+<ul>
+<li>需要更多数据: 对于拟合目标函数需要更多的训练数据</li>
+<li>速度慢: 参数更多, 所以训练通常较慢</li>
+</ul>
+<h2 id="分别适合在什么情况下使用"><a href="#分别适合在什么情况下使用" class="headerlink" title="分别适合在什么情况下使用"></a>分别适合在什么情况下使用</h2><p>令 $n = 特征数量$, $m = 训练样本数量$, 则:</p>
+<ul>
+<li>如果 $n &gt; m$, 则使用 LR 或者不带核函数的 SVM, 因为特征数相对于训练样本数已经够大了, 使用线性模型就能取得不错的效果, 不需要过于复杂的模型;</li>
+<li>如果 $n &lt; m$, 则使用 SVM(高斯核函数), 因为在训练样本数量足够大而特征数量较小的情况下, 可以通过复杂核函数的 SVM 来获得更好的预测性能, 而且因为训练样本数量并没有达到百万级, 使用复杂核函数的 SVM 也不会导致运算过慢;</li>
+<li>如果 $n &lt;&lt; m$, 此时因为训练样本数量特别大, 使用复杂核函数的 SVM 会导致训练过慢, 因此应该考虑通过引入更多特征, 然后使用 LR 或者不带核函数的 SVM 来训练更好的模型</li>
+</ul>
+<p>在实际使用中, 通常当数据非常非常大(几个 G, 几万维度特征), 跑不动 SVM 时, 用 LR. 如今数据量大幅增加, 相比来说 LR 反而用的更多了.</p>
+
       
     </div>
 
@@ -711,7 +751,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">237</span>
+                    <span class="site-state-item-count">247</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -903,7 +943,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#逻辑回归和线性回归的定义"><span class="nav-text">逻辑回归和线性回归的定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#逻辑回归与线性回归的联系和区别"><span class="nav-text">逻辑回归与线性回归的联系和区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对于一个二分类问题-如果数据集中存在一些离异值-在不清洗数据的情况下-选择逻辑回归还是-SVM-为什么"><span class="nav-text">对于一个二分类问题, 如果数据集中存在一些离异值, 在不清洗数据的情况下, 选择逻辑回归还是 SVM? 为什么?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#逻辑回归和-SVM-的区别是什么-哪个是参数模型-各适用于解决什么问题"><span class="nav-text">逻辑回归和 SVM 的区别是什么? 哪个是参数模型? 各适用于解决什么问题?</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#逻辑回归和线性回归的定义"><span class="nav-text">逻辑回归和线性回归的定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#逻辑回归与线性回归的联系和区别"><span class="nav-text">逻辑回归与线性回归的联系和区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对于一个二分类问题-如果数据集中存在一些离异值-在不清洗数据的情况下-选择逻辑回归还是-SVM-为什么"><span class="nav-text">对于一个二分类问题, 如果数据集中存在一些离异值, 在不清洗数据的情况下, 选择逻辑回归还是 SVM? 为什么?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#逻辑回归和-SVM-的区别是什么-哪个是参数模型-分别适合在什么情况下使用"><span class="nav-text">逻辑回归和 SVM 的区别是什么? 哪个是参数模型? 分别适合在什么情况下使用?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二者区别"><span class="nav-text">二者区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参数模型和非参数模型"><span class="nav-text">参数模型和非参数模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分别适合在什么情况下使用"><span class="nav-text">分别适合在什么情况下使用</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -940,7 +980,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.7m</span>
+    <span title="站点总字数">1.8m</span>
   
 
   
@@ -949,7 +989,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">26:05</span>
+    <span title="站点阅读时长">26:52</span>
   
 </div>
 

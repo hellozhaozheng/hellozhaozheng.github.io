@@ -112,20 +112,20 @@
 
 
 
-  <meta name="description" content="概览    名称 公式 优化方法简述     SGD(Stochastic) $g_t = \nabla_{\theta_{t-1}} f(\theta_{t-1})$  $\Delta \theta_t = - \eta \times g_t$ 每一次都计算mini-batch的梯度, 然后对参数进行更新. 公式中的 $\eta$ 是学习率, $g_t$ 是当前 batch 的梯度   Mome">
+  <meta name="description" content="简述各种优化方法的概念及其优缺点\theta_t = \theta_{t-1} + \Delta \theta_t    名称 公式 优化方法简述 优点 缺点     SGD $g_t = \nabla_{\theta_{t-1}} f(\theta_{t-1})$  $\Delta \theta_t = - \eta \times g_t$ 每一次都计算mini-batch的梯度, 然后对参数">
 <meta name="keywords" content="深度学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="各种优化方法整理总结">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/深度学习-各种优化方法整理总结/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="概览    名称 公式 优化方法简述     SGD(Stochastic) $g_t = \nabla_{\theta_{t-1}} f(\theta_{t-1})$  $\Delta \theta_t = - \eta \times g_t$ 每一次都计算mini-batch的梯度, 然后对参数进行更新. 公式中的 $\eta$ 是学习率, $g_t$ 是当前 batch 的梯度   Mome">
+<meta property="og:description" content="简述各种优化方法的概念及其优缺点\theta_t = \theta_{t-1} + \Delta \theta_t    名称 公式 优化方法简述 优点 缺点     SGD $g_t = \nabla_{\theta_{t-1}} f(\theta_{t-1})$  $\Delta \theta_t = - \eta \times g_t$ 每一次都计算mini-batch的梯度, 然后对参数">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw1zh9xp8fj20hq0dtjuw.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fw1zh9w3n9j20j90femz6.jpg">
-<meta property="og:updated_time" content="2019-02-25T12:02:39.518Z">
+<meta property="og:updated_time" content="2019-04-01T11:55:00.444Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="各种优化方法整理总结">
-<meta name="twitter:description" content="概览    名称 公式 优化方法简述     SGD(Stochastic) $g_t = \nabla_{\theta_{t-1}} f(\theta_{t-1})$  $\Delta \theta_t = - \eta \times g_t$ 每一次都计算mini-batch的梯度, 然后对参数进行更新. 公式中的 $\eta$ 是学习率, $g_t$ 是当前 batch 的梯度   Mome">
+<meta name="twitter:description" content="简述各种优化方法的概念及其优缺点\theta_t = \theta_{t-1} + \Delta \theta_t    名称 公式 优化方法简述 优点 缺点     SGD $g_t = \nabla_{\theta_{t-1}} f(\theta_{t-1})$  $\Delta \theta_t = - \eta \times g_t$ 每一次都计算mini-batch的梯度, 然后对参数">
 <meta name="twitter:image" content="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw1zh9xp8fj20hq0dtjuw.jpg">
 
 
@@ -251,7 +251,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">237</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">247</span></a>
   </li>
         
         
@@ -492,8 +492,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-02-25T20:02:39+08:00" content="2019-02-25">
-      		  2019-02-25
+    		<time itemprop="dateUpdated" datetime="2019-04-01T19:55:00+08:00" content="2019-04-01">
+      		  2019-04-01
     		</time>
   	  </span>
 	  
@@ -546,7 +546,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">3.3k</span>
+                <span title="本文字数">4.6k</span>
               
 
               
@@ -560,7 +560,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">3 分钟</span>
+                <span title="阅读时长">4 分钟</span>
               
             </div>
           
@@ -580,69 +580,91 @@
       
 
       
-        <h1 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h1><div class="table-container">
+        <p><span id="简述各种优化方法的概念及其优缺点"></span></p>
+<h1 id="简述各种优化方法的概念及其优缺点"><a href="#简述各种优化方法的概念及其优缺点" class="headerlink" title="简述各种优化方法的概念及其优缺点"></a>简述各种优化方法的概念及其优缺点</h1><script type="math/tex; mode=display">\theta_t = \theta_{t-1} + \Delta \theta_t</script><div class="table-container">
 <table>
 <thead>
 <tr>
-<th>名称</th>
-<th>公式</th>
-<th>优化方法简述</th>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">公式</th>
+<th style="text-align:left">优化方法简述</th>
+<th style="text-align:left">优点</th>
+<th style="text-align:left">缺点</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>SGD(Stochastic)</td>
-<td>$g_t = \nabla_{\theta_{t-1}} f(\theta_{t-1})$ <br> $\Delta \theta_t = - \eta \times g_t$</td>
-<td>每一次都计算mini-batch的梯度, 然后对参数进行更新. 公式中的 $\eta$ 是学习率, $g_t$ 是当前 batch 的梯度</td>
+<td style="text-align:center">SGD</td>
+<td style="text-align:center">$g_t = \nabla_{\theta_{t-1}} f(\theta_{t-1})$ <br> $\Delta \theta_t = - \eta \times g_t$</td>
+<td style="text-align:left">每一次都计算mini-batch的梯度, 然后对参数进行更新. 公式中的 $\eta$ 是学习率, $g_t$ 是当前 batch 的梯度</td>
+<td style="text-align:left">收敛速度快</td>
+<td style="text-align:left">(1) 因为要兼顾整个神经网络中所有参数的训练效果, 因此对学习率的选择比较敏感. (2) SGD 容易收敛到局部最优, 并且在某些情况下容易被困在鞍点, 需要使用合适的初始化和步长; (3) 参数的更新仅仅依赖于当前 batch 中的数据, 当数据波动大时, 更新往往不够稳定</td>
 </tr>
 <tr>
-<td>Momentum</td>
-<td>$m_t = \mu \times m_{t-1} + g_t$ <br> $\Delta \theta_t = -\eta \times m_t$</td>
-<td>公式中的 $\mu$ 为动量因子,  借助于物理学里面动量的概念, 通过动量的积累来在相关方向上加速SGD优化速度, 同时有助于跳出局部最优, 进而加快收敛</td>
+<td style="text-align:center">Momentum</td>
+<td style="text-align:center">$g_t = \nabla_{\theta_{t-1}} f(\theta_{t-1})$ <br> $m_t = \mu \times m_{t-1} + g_t$ <br> $\Delta \theta_t = -\eta \times m_t$</td>
+<td style="text-align:left">公式中的 $\mu$ 为动量因子, 通常取值 0.9 或 0.99, 借助于物理学里面动量的概念, 通过动量的积累来在相关方向上加速 SGD 优化速度, 抑制震荡, 同时有助于跳出局部最优, 进而加快收敛</td>
+<td style="text-align:left">(1) 下降初期, 下降方向一致, 有助于加速下降; (2) 下降中后期, 在局部最小值附近, 有助于跳出局部最优; (3) 在梯度改变方向时, 能够降低更新幅度, 减小震荡</td>
+<td style="text-align:left">暂无</td>
 </tr>
 <tr>
-<td>Nesterov</td>
-<td>$g_t=\nabla_{\theta_{t-1}} f(\theta_{t-1} - \eta \times \mu \times m_{t-1})$ <br> $m_t = \mu \times m_{t-1} + g_t$ <br> $\Delta \theta_t = -\eta \times m_t$</td>
-<td>可以看出, Nesterov 与 Momentum 公式的区别在于, 前者不是在当前的位置上求梯度, 而是根据本来计划要走的那一步提前前进一步以后, 再在新的位置上求梯度, 然后对这个新求得的梯度进行 Momentum 梯度下降计算</td>
+<td style="text-align:center">Nesterov</td>
+<td style="text-align:center">$g_t=\nabla_{\theta_{t-1}} f(\theta_{t-1} - \eta \times \mu \times m_{t-1})$ <br> $m_t = \mu \times m_{t-1} + g_t$ <br> $\Delta \theta_t = -\eta \times m_t$</td>
+<td style="text-align:left">可以看出, Nesterov 与 Momentum 公式的区别在于, 前者不是在当前的位置上求梯度, 而是根据本来计划要走的那一步提前前进一步以后, 再在新的位置上求梯度, 然后对这个新求得的梯度进行 Momentum 梯度下降计算</td>
+<td style="text-align:left">(1) 站在下一步的位置看看, 再进行更新, 使得梯度更新方向更具前瞻性</td>
+<td style="text-align:left">(1) 增加了计算量</td>
 </tr>
 <tr>
-<td>Adagrad</td>
-<td>$n_t = n_{t-1} + g^2_t$ <br> $\Delta \theta_t = -\frac{\eta}{\sqrt{n_t + \epsilon}} \times g_t$</td>
-<td>Adagrad相当于在学习率前面乘了一个约束项 $\frac{\eta}{n_t + \epsilon}$, 使得 $g_t$ 较小的时候, 能够放大梯度, 反之, 在 $g_t$ 较大的时候, 能够约束梯度, $\epsilon$ 用来保证分母非0</td>
+<td style="text-align:center">Adagrad</td>
+<td style="text-align:center">$n_t = n_{t-1} + g^2_t$ <br> $\Delta \theta_t = -\frac{\eta}{\sqrt{n_t + \epsilon}} \times g_t$</td>
+<td style="text-align:left">Adagrad相当于在学习率前面乘了一个约束项 $\frac{1}{\sqrt {n_t + \epsilon}}$, 该约束项会随着算法的不断迭代而越来越大, 那么对应学习率就会越来越小, 也就是说 Adagrad 算法在开始时是大步前进的, 而在后面则会减小步伐, 缓慢收敛</td>
+<td style="text-align:left">(1) 在整个更新期间学习率不是固定的, 会随着训练过程变化; (2) 适合面对稀疏梯度</td>
+<td style="text-align:left">(1) 仍然依赖于一个人工设置的全局学习率; (2) 中后期, 分母上的梯度放平累加和会越来越大, 使得更新提早停滞, 训练提前结束</td>
 </tr>
 <tr>
-<td>AdaDelta</td>
-<td>$Eg^2_t = \rho\times Eg^2_{t-1} + (1-\rho)\times g^2_t$ <br> $\Delta \theta_t = -\frac{\eta}{\sqrt{Eg^2_t + \epsilon}} g_t$ <br> $= -\frac{\eta}{RMS[g]_t} g_t$ <br> $= -\frac{RMS[\Delta\theta]_{t-1}}{RMS[g]_t} g_t$</td>
-<td>Adadelta是对Adagrad的扩展, 和 Adagrad 相比, 其改进是将分母约束项换成了过去的梯度平方的衰减平均值, 相当于梯度的均方根(root mean squared, RMS), 此外, 如果将学习率也换成 $RMS[\Delta \theta]$ 的话, 甚至可以不用设置学习率了</td>
+<td style="text-align:center">AdaDelta</td>
+<td style="text-align:center">$Eg^2_t = \rho\times Eg^2_{t-1} + (1-\rho)\times g^2_t$ <br> $\Delta \theta_t = -\frac{\eta}{\sqrt{Eg^2_t + \epsilon}} g_t$ <br> $= -\frac{\eta}{RMS[g]_t} g_t$ <br> $= -\frac{RMS[\Delta\theta]_{t-1}}{RMS[g]_t} g_t$</td>
+<td style="text-align:left">Adadelta是对Adagrad的扩展, 和 Adagrad 相比, 其改进是将分母约束项换成了过去的梯度平方的衰减平均值, 相当于梯度的均方根(root mean squared, RMS), 此外, 如果将学习率也换成 $RMS[\Delta \theta]$ 的话, 甚至可以不用设置学习率了</td>
+<td style="text-align:left">(1) 对 Adagrad 的扩展, 约束项不容易产生太大值而使得更新提早结束; (2) 无需人工设置学习率</td>
+<td style="text-align:left">(1) 训练后期会反复在局部最小值附近抖动(why?)</td>
 </tr>
 <tr>
-<td>RMSprop</td>
-<td>$Eg^2_t = \rho\times Eg^2_{t-1} + (1-\rho)\times g^2_t$ <br> $\Delta \theta_t = -\frac{\eta}{\sqrt{Eg^2_t + \epsilon}} g_t$</td>
-<td>RMSprop可以算作是Adadelta的一个特例, 可以看出 RMSprop 仍然需要设置全局学习率</td>
+<td style="text-align:center">RMSprop</td>
+<td style="text-align:center">$Eg^2_t = \rho\times Eg^2_{t-1} + (1-\rho)\times g^2_t$ <br> $\Delta \theta_t = -\frac{\eta}{\sqrt{Eg^2_t + \epsilon}} g_t$</td>
+<td style="text-align:left">RMSprop可以算作是Adadelta的一个特例, 可以看出 RMSprop 仍然需要设置全局学习率</td>
+<td style="text-align:left">(1) Adadelta 的特例, 也是对学习率添加约束, 适合处理非平稳目标, 对 RNN 效果较好</td>
+<td style="text-align:left">(1) 依然需要依赖于全局学习率</td>
 </tr>
 <tr>
-<td>Adam</td>
-<td>$m_t = \mu \times m_{t-1} + (1-\mu) \times g_t$ <br> $n_t = \nu \times n_{t-1} + (1 - \nu) \times g^2_t$ <br> $\hat m_t = \frac{m_t}{1-\mu_t}$ <br> $\hat n_t = \frac{n_t}{1- \nu_t}$ <br> $\Delta \theta_t = -\frac{\hat m_t}{\sqrt{\hat n_t} + \epsilon} \times \eta$</td>
-<td>Adam本质上是带有动量项的RMSprop, 它利用梯度的一阶矩估计和二阶矩估计动态调整每个参数的学习率. 公式中, $m_t, n_t$ 分别是对梯度的一阶矩估计和二阶矩估计, 可以看做是对期望 $E g_t$, $E g^2_t$ 的估计, $\hat m_t$, $\hat n_t$ 是对 $m_t$, $n_t$ 的校正, 这样可以近似为对期望的无偏估计</td>
+<td style="text-align:center">Adam</td>
+<td style="text-align:center">$m_t = \mu \times m_{t-1} + (1-\mu) \times g_t$ <br> $n_t = \nu \times n_{t-1} + (1 - \nu) \times g^2_t$ <br> $\hat m_t = \frac{m_t}{1-\mu_t}$ <br> $\hat n_t = \frac{n_t}{1- \nu_t}$ <br> $\Delta \theta_t = -\frac{\hat m_t}{\sqrt{\hat n_t} + \epsilon} \times \eta$</td>
+<td style="text-align:left">Adam本质上是带有动量项的 RMSprop, 它利用 <strong>修正后的</strong> 梯度的一阶矩估计和二阶矩估计动态调整每个参数的学习率. 公式中, $m_t, n_t$ 分别是对梯度的一阶矩估计和二阶矩估计, 可以看做是对期望 $E g_t$, $E g^2_t$ 的估计, $\hat m_t$, $\hat n_t$ 是对 $m_t$, $n_t$ 的校正, 这样可以近似为对期望的无偏估计</td>
+<td style="text-align:left">(1) 经过偏置校正后, 每一次迭代学习率都有一个确定的范围, 使得参数更新比较平稳; (2) 结合了 Adagrad 善于处理稀疏梯度和 RMSprop 善于处理非平稳目标的有点; (3) 对内存需求较小; (4) 适用于大多非凸优化, 适用于大数据集和高维空间</td>
+<td style="text-align:left"></td>
 </tr>
 <tr>
-<td>Adamax</td>
-<td>$n_t = max(\nu \times, abs(g_t))$ <br> $\Delta x = -\frac{\hat m_t}{n_t + \epsilon}\times\eta</td>
-<td>Adamax 是 Adam 的一种变体, 此方法对学习率的上限提供了一个更简单的范围, 可以看出, 学习率的边界范围更加简单</td>
+<td style="text-align:center">Adamax</td>
+<td style="text-align:center">$n_t = max(\nu \times, abs(g_t))$ <br> $\Delta x = -\frac{\hat m_t}{n_t + \epsilon}\times\eta$</td>
+<td style="text-align:left">Adamax 是 Adam 的一种变体, 此方法对学习率的上限提供了一个更简单的范围, 可以看出, 学习率的边界范围更加简单</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
 </tr>
 <tr>
-<td>Nadam</td>
-<td>…</td>
-<td>…</td>
+<td style="text-align:center">Nadam</td>
+<td style="text-align:center">…</td>
+<td style="text-align:left">…</td>
+<td style="text-align:left"></td>
 </tr>
 </tbody>
 </table>
 </div>
-<h1 id="深入解析各个损失函数的优缺点"><a href="#深入解析各个损失函数的优缺点" class="headerlink" title="深入解析各个损失函数的优缺点"></a>深入解析各个损失函数的优缺点</h1><h2 id="SGD"><a href="#SGD" class="headerlink" title="SGD"></a>SGD</h2><p><strong>缺点:</strong></p>
-<ol>
-<li>因为要兼顾整个神经网络中所有参数的训练效果, 因此通常学习率的选择比较困难. 并且训练过程中, 无法调节学习率.</li>
-<li>SGD 容易收敛到局部最优, 并且在某些情况下容易被困在鞍点, 需要使用合适的初始化和步长, 才能跳出鞍点.</li>
-</ol>
+<p><span id="简述 Adam 中使用的指数加权滑动平均法"></span></p>
+<h1 id="简述-Adam-中使用的指数加权滑动平均法"><a href="#简述-Adam-中使用的指数加权滑动平均法" class="headerlink" title="简述 Adam 中使用的指数加权滑动平均法"></a>简述 Adam 中使用的指数加权滑动平均法</h1><p>加权滑动平均法, 就是对观察值分别属于不同的权重, 按不同的权重来求最终的滑动平均值.  而指数加权滑动平均法就是指各个观察值的加权系数随着时间呈指数递减, 越靠近当前时刻的观察值权重越大. 公式如下:</p>
+<script type="math/tex; mode=display">v_t = \beta v_{t-1} + (1 - \beta) \theta_t</script><p>上式中, $\theta_t$ 代表当前时刻的观察值, 系数 $\beta$ 代表加权下降的速率, 其值越小下降的越快, $v_t$ 代表当前时刻的指数加权滑动平均值.</p>
+<p>PS: 在数学中一般会以 $\frac{1}{e}$ 来作为一个临界值, 小于该值的加权系数对应的值不作考虑. 因此, 当 $\beta = 0.9$ 时, $0.9^{10}$ 约等于 $\frac{1}{e}$, 认为此时是约 10 个数值的加权平均.</p>
+<p><strong>偏差修正:</strong> 当初始化 $v_0 = 0$ 时, 由于初始化的值太小, 导致初期的滑动平均值偏小, 随着时间的增长, 初期的值影响减小, 滑动平均值才逐渐正常. 为了让初期的滑动平均值也相对正常, 我们利用下面的式子进行修正:</p>
+<script type="math/tex; mode=display">v_t = \frac{\beta v_{t-1} + (1 - \beta)\theta_t}{1 - \beta^t}</script><p><span id="各种优化方法的源码实现"></span></p>
+<h1 id="各种优化方法的源码实现"><a href="#各种优化方法的源码实现" class="headerlink" title="各种优化方法的源码实现"></a>各种优化方法的源码实现</h1><h1 id="深入解析各个损失函数的优缺点"><a href="#深入解析各个损失函数的优缺点" class="headerlink" title="深入解析各个损失函数的优缺点"></a>深入解析各个损失函数的优缺点</h1><h2 id="SGD"><a href="#SGD" class="headerlink" title="SGD"></a>SGD</h2><p><strong>缺点:</strong></p>
 <h2 id="Momentum"><a href="#Momentum" class="headerlink" title="Momentum"></a>Momentum</h2><p><strong>特点:</strong></p>
 <ol>
 <li>下降初期时, 由于动量因子的存在使得可以加速网络的训练速度</li>
@@ -815,7 +837,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">237</span>
+                    <span class="site-state-item-count">247</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1007,7 +1029,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概览"><span class="nav-text">概览</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#深入解析各个损失函数的优缺点"><span class="nav-text">深入解析各个损失函数的优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SGD"><span class="nav-text">SGD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Momentum"><span class="nav-text">Momentum</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nesterov"><span class="nav-text">Nesterov</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Adagrad"><span class="nav-text">Adagrad</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Adadelta"><span class="nav-text">Adadelta</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RMSprop"><span class="nav-text">RMSprop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Adam-Adaptive-Moment-Estimation"><span class="nav-text">Adam(Adaptive Moment Estimation)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#损失函数选择经验"><span class="nav-text">损失函数选择经验</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#区别与联系"><span class="nav-text">区别与联系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#超参数"><span class="nav-text">超参数</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简述各种优化方法的概念及其优缺点"><span class="nav-text">简述各种优化方法的概念及其优缺点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简述-Adam-中使用的指数加权滑动平均法"><span class="nav-text">简述 Adam 中使用的指数加权滑动平均法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#各种优化方法的源码实现"><span class="nav-text">各种优化方法的源码实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#深入解析各个损失函数的优缺点"><span class="nav-text">深入解析各个损失函数的优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SGD"><span class="nav-text">SGD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Momentum"><span class="nav-text">Momentum</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nesterov"><span class="nav-text">Nesterov</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Adagrad"><span class="nav-text">Adagrad</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Adadelta"><span class="nav-text">Adadelta</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RMSprop"><span class="nav-text">RMSprop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Adam-Adaptive-Moment-Estimation"><span class="nav-text">Adam(Adaptive Moment Estimation)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#损失函数选择经验"><span class="nav-text">损失函数选择经验</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#区别与联系"><span class="nav-text">区别与联系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#超参数"><span class="nav-text">超参数</span></a></li></ol></div>
             
 
           </div>
@@ -1044,7 +1066,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.7m</span>
+    <span title="站点总字数">1.8m</span>
   
 
   
@@ -1053,7 +1075,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">26:05</span>
+    <span title="站点阅读时长">26:52</span>
   
 </div>
 

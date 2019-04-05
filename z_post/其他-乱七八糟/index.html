@@ -120,7 +120,8 @@
 <meta property="og:description" content="gcc/g++ 降级升级【链接】ubuntu16.04LTS降级安装gcc4.8https://www.cnblogs.com/in4ight/p/6626708.html JupyterImportError: cannot import name ‘create_prompt_application’原因:https://github.com/jupyter/jupyter_console/i">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1g15kd4bi01j20z10l9q50.jpg">
-<meta property="og:updated_time" content="2019-03-17T02:07:33.646Z">
+<meta property="og:image" content="http://img.blog.csdn.net/20180310204357838?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQva3N3czAyOTI3NTY=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:updated_time" content="2019-04-04T12:04:02.326Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="乱七八糟">
 <meta name="twitter:description" content="gcc/g++ 降级升级【链接】ubuntu16.04LTS降级安装gcc4.8https://www.cnblogs.com/in4ight/p/6626708.html JupyterImportError: cannot import name ‘create_prompt_application’原因:https://github.com/jupyter/jupyter_console/i">
@@ -249,7 +250,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">237</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">247</span></a>
   </li>
         
         
@@ -490,8 +491,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-17T10:07:33+08:00" content="2019-03-17">
-      		  2019-03-17
+    		<time itemprop="dateUpdated" datetime="2019-04-04T20:04:02+08:00" content="2019-04-04">
+      		  2019-04-04
     		</time>
   	  </span>
 	  
@@ -544,7 +545,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.8k</span>
+                <span title="本文字数">5.2k</span>
               
 
               
@@ -558,7 +559,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">2 分钟</span>
+                <span title="阅读时长">5 分钟</span>
               
             </div>
           
@@ -591,7 +592,28 @@
 <p>双击运行, 然后查看是否修改完成</p>
 <p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1g15kd4bi01j20z10l9q50.jpg" alt=""></p>
 <p>若成功修改, 重启即可.</p>
-
+<h1 id="双系统-windows-方法-ubuntu-文件"><a href="#双系统-windows-方法-ubuntu-文件" class="headerlink" title="双系统 windows 方法 ubuntu 文件"></a>双系统 windows 方法 ubuntu 文件</h1><p>下载 ext2explore工具     </p>
+<p>地址：<a href="https://sourceforge.net/projects/ext2read/files/latest/download" target="_blank" rel="noopener">https://sourceforge.net/projects/ext2read/files/latest/download</a></p>
+<h1 id="更改windows分区导致出现-grub-error-unknown-filesystem"><a href="#更改windows分区导致出现-grub-error-unknown-filesystem" class="headerlink" title="更改windows分区导致出现 grub error: unknown filesystem"></a>更改windows分区导致出现 grub error: unknown filesystem</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">ls</span><br><span class="line">set</span><br><span class="line"><span class="comment">#以(hd0,msdos1)为例，分别输入：</span></span><br><span class="line">set root=hd0,msdos1</span><br><span class="line">set prefix=(hd0,msdos1)/boot/grub</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查是否正确, 如果出现unknown filesystem则错误, 如果没有返回则正确</span></span><br><span class="line">insmod normal</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输入 normal, 引导界面正确呈现</span></span><br><span class="line">normal</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 选择ubuntu，进入之后启动终端，输入如下命令</span></span><br><span class="line">sudo  update-grub</span><br><span class="line">sudo grub-install /dev/sda</span><br></pre></td></tr></table></figure>
+<h1 id="修复引导"><a href="#修复引导" class="headerlink" title="修复引导"></a>修复引导</h1><p>Boot Repair</p>
+<h1 id="Ubuntu-无损扩容"><a href="#Ubuntu-无损扩容" class="headerlink" title="Ubuntu 无损扩容"></a>Ubuntu 无损扩容</h1><p>1。先在windows里面划分出一个未分配的空间<br>2。用linux live creater或者其他linux livecd制作软件  制作带有ubuntu镜像的u盘<br>3。在bios里面用u盘启动ubuntu（选择 try ubuntu without installing）<br>4。在u盘启动的ubuntu里打开GParted<br>5。在GParted中，将未分配的空间移动到你想要合并的分区的附近（遇到swap要swapoff，遇到/ /home等要进行unmount，不过貌似u盘启动的ubuntu默认就是unmunt的）<br>6。提交移动/调整大小操作，根据操作涉及的空间大小需要等待一段时间<br>7。操作完成后，重启机器，无损扩容完成！</p>
+<h1 id="Ubuntu-互换-ctrl-和-caps-键位"><a href="#Ubuntu-互换-ctrl-和-caps-键位" class="headerlink" title="Ubuntu 互换 ctrl 和 caps 键位"></a>Ubuntu 互换 ctrl 和 caps 键位</h1><p>即刻生效<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setxkbmap -option <span class="string">"ctrl:swapcaps"</span></span><br></pre></td></tr></table></figure></p>
+<p>重启生效<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在/etc/default/keyboard文件中添加</span></span><br><span class="line">XKBOPTIONS=<span class="string">"ctrl:nocaps"</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="pip-安装速度慢"><a href="#pip-安装速度慢" class="headerlink" title="pip 安装速度慢"></a>pip 安装速度慢</h1><p><strong>Linux系统pip、conda等包管理程序下载速度慢的主要原因是默认的下载镜像源是国外的，而解决方法是修改镜像源到国内即可，具体如下</strong>：</p>
+<h2 id="pip"><a href="#pip" class="headerlink" title="pip"></a>pip</h2><p><strong>目前可用源：</strong><br><a href="http://pypi.douban.com/" target="_blank" rel="noopener">http://pypi.douban.com/</a> 豆瓣<br><a href="http://pypi.hustunique.com/" target="_blank" rel="noopener">http://pypi.hustunique.com/</a> 华中理工大学<br><a href="http://pypi.sdutlinux.org/" target="_blank" rel="noopener">http://pypi.sdutlinux.org/</a> 山东理工大学<br><a href="http://pypi.mirrors.ustc.edu.cn/" target="_blank" rel="noopener">http://pypi.mirrors.ustc.edu.cn/</a> 中国科学技术大学<br><a href="http://mirrors.aliyun.com/pypi/simple/" target="_blank" rel="noopener">http://mirrors.aliyun.com/pypi/simple/</a> 阿里云<br><a href="https://pypi.tuna.tsinghua.edu.cn/simple/" target="_blank" rel="noopener">https://pypi.tuna.tsinghua.edu.cn/simple/</a> 清华大学</p>
+<h3 id="1-临时使用："><a href="#1-临时使用：" class="headerlink" title="1.临时使用："></a>1.临时使用：</h3><p>可以使用pip时添加参数 -i[url]，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i http://pypi.douban.com/simple/ gevent</span><br></pre></td></tr></table></figure>
+<h3 id="2-永久生效："><a href="#2-永久生效：" class="headerlink" title="2.永久生效："></a>2.永久生效：</h3><p>修改<code>~/.pip/pip.conf</code>，修改index-url至相应源<br>（如果没有该文件或文件夹，就先在home下创建<code>.pip</code>文件夹，再在<code>.pip</code>文件夹里面创建<code>.pip.conf</code>文件）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">index-url = http://mirrors.aliyun.com/pypi/simple</span><br><span class="line">trusted-host =  mirrors.aliyun.com #对应阿里云的host，其他的可以自己查一下，也可以不写这一句</span><br></pre></td></tr></table></figure></p>
+<h2 id="conda"><a href="#conda" class="headerlink" title="conda"></a>conda</h2><p><strong>可用源</strong><br>清华<br><a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/" target="_blank" rel="noopener">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</a><br><a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/" target="_blank" rel="noopener">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</a><br>中科大<br><a href="http://mirrors.ustc.edu.cn/anaconda/pkgs/free/" target="_blank" rel="noopener">http://mirrors.ustc.edu.cn/anaconda/pkgs/free/</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</span><br></pre></td></tr></table></figure>
+<p>然后可以输入下面的指令查看当前的源：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ conda config --show</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://img.blog.csdn.net/20180310204357838?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQva3N3czAyOTI3NTY=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>或者修改成.condarc文件，在文件中输入下面的指令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">channels:</span><br><span class="line">  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</span><br><span class="line">  - defaults</span><br><span class="line">show_channel_urls: true</span><br></pre></td></tr></table></figure>
+<h1 id="apt-安装速度慢"><a href="#apt-安装速度慢" class="headerlink" title="apt 安装速度慢"></a>apt 安装速度慢</h1><p>备份系统自带源<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv /etc/apt/sources.list /etc/apt/sources.list.bak</span><br></pre></td></tr></table></figure></p>
+<p>修改/etc/apt/sources.list文件<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/apt/sources.list</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">deb-src http://archive.ubuntu.com/ubuntu xenial main restricted #Added by software-properties</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ xenial main restricted</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ xenial main restricted multiverse universe #Added by software-properties</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted multiverse universe #Added by software-properties</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ xenial universe</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ xenial-updates universe</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ xenial multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ xenial-updates multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted universe multiverse #Added by software-properties</span><br><span class="line">deb http://archive.canonical.com/ubuntu xenial partner</span><br><span class="line">deb-src http://archive.canonical.com/ubuntu xenial partner</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted multiverse universe #Added by software-properties</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ xenial-security universe</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ xenial-security multiverse</span><br></pre></td></tr></table></figure>
+<h1 id="pyenv-安装速度慢"><a href="#pyenv-安装速度慢" class="headerlink" title="pyenv 安装速度慢"></a>pyenv 安装速度慢</h1>
       
     </div>
 
@@ -628,8 +650,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/PyTorch-官方教程2-Data-Loading-and-Processing/" rel="next" title="PyTorch官方教程(二)-DataLoadingAndProcessing">
-                PyTorch官方教程(二)-DataLoadingAndProcessing <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/Ubuntu系统下安装NVIDIA驱动/" rel="next" title="Ubuntu 系统下安装 NVIDIA 驱动">
+                Ubuntu 系统下安装 NVIDIA 驱动 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -708,7 +730,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">237</span>
+                    <span class="site-state-item-count">247</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -900,7 +922,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#gcc-g-降级升级"><span class="nav-text">gcc/g++ 降级升级</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Jupyter"><span class="nav-text">Jupyter</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ImportError-cannot-import-name-‘create-prompt-application’"><span class="nav-text">ImportError: cannot import name ‘create_prompt_application’</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#无法挂载-D-盘-windows-未完全关闭导致"><span class="nav-text">无法挂载 D 盘 (windows 未完全关闭导致)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#谷歌浏览器不能手势双击"><span class="nav-text">谷歌浏览器不能手势双击</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何在英文版-Chrome-登录印象笔记剪藏插件？"><span class="nav-text">如何在英文版 Chrome 登录印象笔记剪藏插件？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#windows-将-ctrl-和-caps-clock-键互换"><span class="nav-text">windows 将 ctrl 和 caps clock 键互换</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#gcc-g-降级升级"><span class="nav-text">gcc/g++ 降级升级</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Jupyter"><span class="nav-text">Jupyter</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ImportError-cannot-import-name-‘create-prompt-application’"><span class="nav-text">ImportError: cannot import name ‘create_prompt_application’</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#无法挂载-D-盘-windows-未完全关闭导致"><span class="nav-text">无法挂载 D 盘 (windows 未完全关闭导致)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#谷歌浏览器不能手势双击"><span class="nav-text">谷歌浏览器不能手势双击</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何在英文版-Chrome-登录印象笔记剪藏插件？"><span class="nav-text">如何在英文版 Chrome 登录印象笔记剪藏插件？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#windows-将-ctrl-和-caps-clock-键互换"><span class="nav-text">windows 将 ctrl 和 caps clock 键互换</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#双系统-windows-方法-ubuntu-文件"><span class="nav-text">双系统 windows 方法 ubuntu 文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更改windows分区导致出现-grub-error-unknown-filesystem"><span class="nav-text">更改windows分区导致出现 grub error: unknown filesystem</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修复引导"><span class="nav-text">修复引导</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ubuntu-无损扩容"><span class="nav-text">Ubuntu 无损扩容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ubuntu-互换-ctrl-和-caps-键位"><span class="nav-text">Ubuntu 互换 ctrl 和 caps 键位</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pip-安装速度慢"><span class="nav-text">pip 安装速度慢</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pip"><span class="nav-text">pip</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-临时使用："><span class="nav-text">1.临时使用：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-永久生效："><span class="nav-text">2.永久生效：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conda"><span class="nav-text">conda</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#apt-安装速度慢"><span class="nav-text">apt 安装速度慢</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pyenv-安装速度慢"><span class="nav-text">pyenv 安装速度慢</span></a></li></ol></div>
             
 
           </div>
@@ -937,7 +959,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.7m</span>
+    <span title="站点总字数">1.8m</span>
   
 
   
@@ -946,7 +968,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">26:05</span>
+    <span title="站点阅读时长">26:52</span>
   
 </div>
 
