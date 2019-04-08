@@ -112,13 +112,13 @@
 
 
 
-  <meta name="description" content="文章: ShuffleNet: An Extremely Efficient Convolutional Neural Network for Mobile Devices作者: Xiangyu Zhang, Xinyu Zhou, Mengxiao Lin, Jian Sun备注: Megvii Inc 摘要我们介绍了一种计算效率极高的 CNN 结构, 名为 ShuffleNet, 它是专门">
+  <meta name="description" content="文章: ShuffleNet: An Extremely Efficient Convolutional Neural Network for Mobile Devices作者: Xiangyu Zhang, Xinyu Zhou, Mengxiao Lin, Jian Sun备注: Megvii Inc 摘要我们介绍了一种计算效率极高的 CNN 结构, 名为 ShuffleNet, 它是专门为计">
 <meta name="keywords" content="计算机视觉,网络结构,论文解读">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ShuffleNet">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-ShuffleNet/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="文章: ShuffleNet: An Extremely Efficient Convolutional Neural Network for Mobile Devices作者: Xiangyu Zhang, Xinyu Zhou, Mengxiao Lin, Jian Sun备注: Megvii Inc 摘要我们介绍了一种计算效率极高的 CNN 结构, 名为 ShuffleNet, 它是专门">
+<meta property="og:description" content="文章: ShuffleNet: An Extremely Efficient Convolutional Neural Network for Mobile Devices作者: Xiangyu Zhang, Xinyu Zhou, Mengxiao Lin, Jian Sun备注: Megvii Inc 摘要我们介绍了一种计算效率极高的 CNN 结构, 名为 ShuffleNet, 它是专门为计">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1g1jpz4z41nj217i0ijn0e.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1g1jpzhxydej217o0jvgoi.jpg">
@@ -126,10 +126,10 @@
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1g1jq09fei8j20xf0atacn.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1g1jq0lbp91j21790m3q97.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1g1jq0xl5qrj21810u07e3.jpg">
-<meta property="og:updated_time" content="2019-03-29T12:15:51.878Z">
+<meta property="og:updated_time" content="2019-04-08T09:24:04.268Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ShuffleNet">
-<meta name="twitter:description" content="文章: ShuffleNet: An Extremely Efficient Convolutional Neural Network for Mobile Devices作者: Xiangyu Zhang, Xinyu Zhou, Mengxiao Lin, Jian Sun备注: Megvii Inc 摘要我们介绍了一种计算效率极高的 CNN 结构, 名为 ShuffleNet, 它是专门">
+<meta name="twitter:description" content="文章: ShuffleNet: An Extremely Efficient Convolutional Neural Network for Mobile Devices作者: Xiangyu Zhang, Xinyu Zhou, Mengxiao Lin, Jian Sun备注: Megvii Inc 摘要我们介绍了一种计算效率极高的 CNN 结构, 名为 ShuffleNet, 它是专门为计">
 <meta name="twitter:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1g1jpz4z41nj217i0ijn0e.jpg">
 
 
@@ -488,8 +488,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-29T20:15:51+08:00" content="2019-03-29">
-      		  2019-03-29
+    		<time itemprop="dateUpdated" datetime="2019-04-08T17:24:04+08:00" content="2019-04-08">
+      		  2019-04-08
     		</time>
   	  </span>
 	  
@@ -576,7 +576,7 @@
       
 
       
-        <p><strong>文章:</strong> ShuffleNet: An Extremely Efficient Convolutional Neural Network for Mobile Devices<br><strong>作者:</strong> Xiangyu Zhang, Xinyu Zhou, Mengxiao Lin, Jian Sun<br><strong>备注:</strong> Megvii Inc</p>
+        <p><strong>文章:</strong> ShuffleNet: An Extremely Efficient Convolutional Neural Network for Mobile Devices<br><strong>作者:</strong> Xiangyu Zhang, Xinyu Zhou, Mengxiao Lin, Jian Sun<br><strong>备注:</strong> Megvii Inc</p>
 <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>我们介绍了一种计算效率极高的 CNN 结构, 名为 ShuffleNet, 它是专门为计算能力非常有限的移动设备设计的. 这个新的网络结构采用了两种新的计算操作: 点态组卷积(pointwise group convolution) 和 通道洗牌(channel shuffle). 实验显示, 效果很好.</p>
 <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>我们注意到, 最先进的架构, 如 Xception 和 ResNeXt, 在非常小的网络中, 由于成本较高的密集 1x1 卷积, 使得计算效率变的较低. 因此, 本文提出使用点态组卷积(pointwise group convolution)来降低 1x1 卷积的计算复杂度. 为了克服 group convolution 带来的副作用, 我们提出了一种新的 channel shuffle 操作来帮助信息在特征信道间流动. 基于这两种技术, 我们构建了一个名为 ShuffleNet 的高效结构.</p>
 <h1 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h1><p><strong>Efficient Model Designs:</strong> GoogLeNet, SqueezeNet, ResNet, SENet, NASNet</p>
