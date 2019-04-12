@@ -121,7 +121,7 @@
 <meta property="og:description" content="概览SSD 和 YOLO 都是非常主流的 one-stage 目标检测模型, 并且相对于 two-stage 的 RCNN 系列来说, SSD 的实现更加的简明易懂, 接下来我将从以下几个方面展开对 SSD 模型的源码实现讲解:  模型结构定义 DefaultBox 生成候选框 解析预测结果 MultiBox 损失函数 Augmentations Trick 模型训练 模型预测 模型验证 其他辅助">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fx6o47y0w0j215y0r2jz0.jpg">
-<meta property="og:updated_time" content="2019-03-05T01:12:52.589Z">
+<meta property="og:updated_time" content="2019-04-09T08:46:03.427Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SSD 源码实现 (PyTorch)">
 <meta name="twitter:description" content="概览SSD 和 YOLO 都是非常主流的 one-stage 目标检测模型, 并且相对于 two-stage 的 RCNN 系列来说, SSD 的实现更加的简明易懂, 接下来我将从以下几个方面展开对 SSD 模型的源码实现讲解:  模型结构定义 DefaultBox 生成候选框 解析预测结果 MultiBox 损失函数 Augmentations Trick 模型训练 模型预测 模型验证 其他辅助">
@@ -250,7 +250,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">246</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">244</span></a>
   </li>
         
         
@@ -483,8 +483,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-05T09:12:52+08:00" content="2019-03-05">
-      		  2019-03-05
+    		<time itemprop="dateUpdated" datetime="2019-04-09T16:46:03+08:00" content="2019-04-09">
+      		  2019-04-09
     		</time>
   	  </span>
 	  
@@ -537,7 +537,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">44k</span>
+                <span title="本文字数">45k</span>
               
 
               
@@ -551,7 +551,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">40 分钟</span>
+                <span title="阅读时长">41 分钟</span>
               
             </div>
           
@@ -605,6 +605,7 @@
 <p>上面的写法是 <code>ssd.pytorch</code> 代码中的原始写法, 代码风格体现了 PyTorch 灵活的编程特性, 但是这种写法不是那么直观, 需要很详细的解读才能看出来这个网络的整个结构是什么样的. 建议大家结合 VGG 网络的整个结构来解读这部分代码, 核心思想就是通过预定义的 <code>cfg=base={...}</code> 里面的参数来设置 vgg 网络卷积层和池化层的参数设置, 由于 vgg 网络的模型结构很经典, 有很多文章都写的很详细, 这里就不再啰嗦了, 我们主要来看一下 SSD 网络中比较重要的点, 也就是下面的 <code>extras_layers</code>.</p>
 <p><span id="add_extras"></span></p>
 <h2 id="add-extras-…-函数"><a href="#add-extras-…-函数" class="headerlink" title="add_extras(…) 函数"></a>add_extras(…) 函数</h2><p>想必了解 SSD 模型的朋友都知道, SSD 模型中是利用多个不同层级上的 feature map 来进行同时进行边框回归和物体分类任务的, 除了使用 vgg 最深层的卷积层以外, SSD 还添加了几个卷积层, 专门用于执行回归和分类任务(如文章开头图2所示), 因此, 我们在定义完 VGG 网络以后, 需要额外定义这些新添加的卷积层. 接下来, 我们根据论文中的参数设置, 来看一下 <code>add_extras(...)</code> 的内部实现, 根据调用语句<code>add_extras(extras[str(size)], 1024)</code> 可知, 该函数中参数<code>cfg = extras[&#39;300&#39;]</code>, <code>i=1024</code>.<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ssd.py</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_extras</span><span class="params">(cfg, i, batch_norm=False)</span>:</span></span><br><span class="line">    <span class="comment"># cfg = [256, 'S', 512, 128, 'S', 256, 128, 256, 128, 256]</span></span><br><span class="line">    <span class="comment"># i = 1024</span></span><br><span class="line">    layers = []</span><br><span class="line">    in_channels = i</span><br><span class="line">    flag = <span class="keyword">False</span></span><br><span class="line">    <span class="keyword">for</span> k, v <span class="keyword">in</span> enumerate(cfg):</span><br><span class="line">        <span class="keyword">if</span> in_channels != <span class="string">'S'</span>:</span><br><span class="line">            <span class="keyword">if</span> v == <span class="string">'S'</span>: <span class="comment"># (1,3)[True] = 3, (1,3)[False] = 1</span></span><br><span class="line">                layers += [nn.Conv2d(in_channels=in_channels, out_channels=cfg[k+<span class="number">1</span>],</span><br><span class="line">                                    kernel_size=(<span class="number">1</span>, <span class="number">3</span>)[flag], stride=<span class="number">2</span>, padding=<span class="number">1</span>)]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                layers += [nn.Conv2d(in_channels=in_channels, out_channels=v,</span><br><span class="line">                                    kernel_size=(<span class="number">1</span>, <span class="number">3</span>)[flag])]</span><br><span class="line">            flag = <span class="keyword">not</span> flag</span><br><span class="line">        in_channels = v</span><br><span class="line">    <span class="keyword">return</span> layers</span><br></pre></td></tr></table></figure></p>
+<p><strong>注意, 在<code>extras</code>中, 卷积层之间并没有使用 BatchNorm 和 ReLU, 实际上, ReLU 的使用放在了<code>forward</code>函数中</strong></p>
 <p>同样的问题, 上面的定义不是很直观, 因此我将上面的代码用 PyTorch 重写了, 重写后的代码更容易看出网络的结构信息, 同时可读性也较强, 代码如下所示(与上面的代码完全等价):</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_extras</span><span class="params">()</span>:</span></span><br><span class="line">    exts1_1 = nn.Conv2d(in_channels=<span class="number">1024</span>, out_channels=<span class="number">256</span>, kernel_size=<span class="number">1</span>)</span><br><span class="line">    exts1_2 = nn.Conv2d(in_channels=<span class="number">256</span>, out_channels=<span class="number">512</span>, kernel_size=<span class="number">3</span>, stride=<span class="number">2</span>, padding=<span class="number">1</span>)</span><br><span class="line">    exts2_1 = nn.Conv2d(<span class="number">512</span>, <span class="number">128</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line">    exts2_2 = nn.Conv2d(<span class="number">128</span>, <span class="number">256</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>)</span><br><span class="line">    exts3_1 = nn.Conv2d(<span class="number">256</span>, <span class="number">128</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line">    exts3_2 = nn.Conv2d(<span class="number">128</span>, <span class="number">256</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line">    exts4_1 = nn.Conv2d(<span class="number">256</span>, <span class="number">128</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line">    exts4_2 = nn.Conv2d(<span class="number">128</span>, <span class="number">256</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> [exts1_1, exts1_2, exts2_1, exts2_2, exts3_1, exts3_2, exts4_1, exts4_2]</span><br></pre></td></tr></table></figure>
 <p>在定义完整个的网络结构以后, 我们就需要定义最后的 head 层, 也就是特定的任务层, 因为 SSD 是 one-stage 模型, 因此它是同时在特征图谱上产生预测边框和预测分类的, 我们根据类别的数量来设置相应的网络预测层参数, 注意需要用到多个特征图谱, 也就是说要有多个预测层(原文中用了6个卷积特征图谱, 其中2个来自于 vgg 网络, 4个来自于 extras 层), 代码实现如下:</p>
@@ -790,7 +791,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">246</span>
+                    <span class="site-state-item-count">244</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1026,7 +1027,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">26:53</span>
+    <span title="站点阅读时长">28:02</span>
   
 </div>
 

@@ -112,18 +112,18 @@
 
 
 
-  <meta name="description" content="一. 基础篇基础问题 C++ 在 C 的基础上加了什么 define 宏定义 C++ 的编译和链接过程 结构体和联合体有什么区别? 封装, 继承, 多态, 重载, 重写/覆盖概念解析 子类不能从父类继承的函数 重载(overload)和重写/覆盖(override)的区别? 友元类和友元函数 嵌套类 范围解析运算符 避免文件被多次编译 float与0比较时需要注意什么? 什么情况下会发生运行时错误">
+  <meta name="description" content="一. 基础篇基础问题 C++ 在 C 的基础上加了什么 define 宏定义 C++ 的编译和链接过程 结构体和联合体有什么区别 封装, 继承, 多态, 重载, 重写/覆盖概念解析 简单介绍一下 C++ 的继承机制 子类不能从父类继承的函数 重载, 隐藏和重写/覆盖的区别 友元类和友元函数 嵌套类 范围解析运算符 避免文件被多次编译 float 与 0 比较时需要注意什么 什么情况下会发生运行时错">
 <meta name="keywords" content="C++,知识点梳理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++ 面试总结">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/面试-Cpp面试总结/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="一. 基础篇基础问题 C++ 在 C 的基础上加了什么 define 宏定义 C++ 的编译和链接过程 结构体和联合体有什么区别? 封装, 继承, 多态, 重载, 重写/覆盖概念解析 子类不能从父类继承的函数 重载(overload)和重写/覆盖(override)的区别? 友元类和友元函数 嵌套类 范围解析运算符 避免文件被多次编译 float与0比较时需要注意什么? 什么情况下会发生运行时错误">
+<meta property="og:description" content="一. 基础篇基础问题 C++ 在 C 的基础上加了什么 define 宏定义 C++ 的编译和链接过程 结构体和联合体有什么区别 封装, 继承, 多态, 重载, 重写/覆盖概念解析 简单介绍一下 C++ 的继承机制 子类不能从父类继承的函数 重载, 隐藏和重写/覆盖的区别 友元类和友元函数 嵌套类 范围解析运算符 避免文件被多次编译 float 与 0 比较时需要注意什么 什么情况下会发生运行时错">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-21T05:25:23.719Z">
+<meta property="og:updated_time" content="2019-04-10T13:06:30.545Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++ 面试总结">
-<meta name="twitter:description" content="一. 基础篇基础问题 C++ 在 C 的基础上加了什么 define 宏定义 C++ 的编译和链接过程 结构体和联合体有什么区别? 封装, 继承, 多态, 重载, 重写/覆盖概念解析 子类不能从父类继承的函数 重载(overload)和重写/覆盖(override)的区别? 友元类和友元函数 嵌套类 范围解析运算符 避免文件被多次编译 float与0比较时需要注意什么? 什么情况下会发生运行时错误">
+<meta name="twitter:description" content="一. 基础篇基础问题 C++ 在 C 的基础上加了什么 define 宏定义 C++ 的编译和链接过程 结构体和联合体有什么区别 封装, 继承, 多态, 重载, 重写/覆盖概念解析 简单介绍一下 C++ 的继承机制 子类不能从父类继承的函数 重载, 隐藏和重写/覆盖的区别 友元类和友元函数 嵌套类 范围解析运算符 避免文件被多次编译 float 与 0 比较时需要注意什么 什么情况下会发生运行时错">
 
 
 
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">246</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">244</span></a>
   </li>
         
         
@@ -481,8 +481,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-21T13:25:23+08:00" content="2019-03-21">
-      		  2019-03-21
+    		<time itemprop="dateUpdated" datetime="2019-04-10T21:06:30+08:00" content="2019-04-10">
+      		  2019-04-10
     		</time>
   	  </span>
 	  
@@ -570,35 +570,38 @@
 
       
         <h1 id="一-基础篇"><a href="#一-基础篇" class="headerlink" title="一. 基础篇"></a>一. 基础篇</h1><h2 id="基础问题"><a href="#基础问题" class="headerlink" title="基础问题"></a>基础问题</h2><ul>
-<li>C++ 在 C 的基础上加了什么</li>
-<li>define 宏定义</li>
-<li>C++ 的编译和链接过程</li>
-<li>结构体和联合体有什么区别?</li>
-<li>封装, 继承, 多态, 重载, 重写/覆盖概念解析</li>
-<li>子类不能从父类继承的函数</li>
-<li>重载(overload)和重写/覆盖(override)的区别?</li>
-<li>友元类和友元函数</li>
-<li>嵌套类</li>
-<li>范围解析运算符</li>
-<li>避免文件被多次编译</li>
-<li>float与0比较时需要注意什么?</li>
-<li>什么情况下会发生运行时错误(runtime error)?</li>
-<li>数组和指向数组名的指针有什么区别?</li>
-<li>初始化列表(initialization list)</li>
-<li>C++是不是类型安全的?</li>
-<li>函数参数的入栈顺序</li>
+<li><a href="../面试-Cpp基础问题/#">C++ 在 C 的基础上加了什么</a></li>
+<li><a href="../面试-Cpp基础问题/#">define 宏定义</a></li>
+<li><a href="../面试-Cpp基础问题/#">C++ 的编译和链接过程</a></li>
+<li><a href="../面试-Cpp基础问题/#">结构体和联合体有什么区别</a></li>
+<li><a href="../面试-Cpp基础问题/#">封装, 继承, 多态, 重载, 重写/覆盖概念解析</a></li>
+<li><a href="../面试-Cpp基础问题/#简单介绍一下 C++ 的继承机制">简单介绍一下 C++ 的继承机制</a></li>
+<li><a href="../面试-Cpp基础问题/#子类不能从父类继承的函数">子类不能从父类继承的函数</a></li>
+<li><a href="../面试-Cpp基础问题/#重载, 隐藏和重写/覆盖的区别">重载, 隐藏和重写/覆盖的区别</a></li>
+<li><a href="../面试-Cpp基础问题/#友元类和友元函数">友元类和友元函数</a></li>
+<li><a href="../面试-Cpp基础问题/#嵌套类">嵌套类</a></li>
+<li><a href="../面试-Cpp基础问题/#范围解析运算符">范围解析运算符</a></li>
+<li><a href="../面试-Cpp基础问题/#避免文件被多次编译">避免文件被多次编译</a></li>
+<li><a href="../面试-Cpp基础问题/#float 与 0 比较时需要注意什么">float 与 0 比较时需要注意什么</a></li>
+<li><a href="../面试-Cpp基础问题/#什么情况下会发生运行时错误 Runtime Error">什么情况下会发生运行时错误 Runtime Error</a></li>
+<li><a href="../面试-Cpp基础问题/#数组和指向数组名的指针有什么区别">数组和指向数组名的指针有什么区别</a></li>
+<li><a href="../面试-Cpp基础问题/#初始化列表 initialization list">初始化列表 initialization list</a></li>
+<li><a href="../面试-Cpp基础问题/#C++ 是不是类型安全的">C++ 是不是类型安全的</a></li>
+<li><a href="../面试-Cpp基础问题/#函数参数的入栈顺序">函数参数的入栈顺序</a></li>
 </ul>
 <p><strong>todo:</strong></p>
 <ul>
 <li>结构体和共用体的 size 是如何计算的</li>
 <li>类的 size 是如何计算的</li>
 </ul>
-<h2 id="多态性"><a href="#多态性" class="headerlink" title="多态性"></a>多态性</h2><p><a href="../Cpp-多态、重载、重写基本概念解析">C++ 中的多态、重载、重写基本概念解析</a></p>
-<ul>
-<li>简单介绍一下 C++ 的继承机制</li>
-<li>简单介绍一下 C++ 的多态性</li>
-<li>虚函数对类 size 的影响</li>
+<h2 id="友元类和友元函数"><a href="#友元类和友元函数" class="headerlink" title="友元类和友元函数"></a>友元类和友元函数</h2><ul>
+<li>能访问私有成员</li>
+<li>破坏封装性</li>
+<li>友元关系不可传递</li>
+<li>友元关系的单向性</li>
+<li>友元声明的形式及数量不受限制</li>
 </ul>
+<p><a href="../Cpp-友元">C++ 中的友元</a></p>
 <h2 id="virtual-关键字"><a href="#virtual-关键字" class="headerlink" title="virtual 关键字"></a>virtual 关键字</h2><p><a href="../Cpp-virutal关键字">C++ 中的 virtual 关键字</a></p>
 <ul>
 <li>简单介绍一下虚函数表与虚函数指针</li>
@@ -1173,7 +1176,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">246</span>
+                    <span class="site-state-item-count">244</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1363,7 +1366,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一-基础篇"><span class="nav-text">一. 基础篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础问题"><span class="nav-text">基础问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多态性"><span class="nav-text">多态性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#virtual-关键字"><span class="nav-text">virtual 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#override-关键字"><span class="nav-text">override 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#final-关键字"><span class="nav-text">final 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#explicit-关键字"><span class="nav-text">explicit 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extern-关键字"><span class="nav-text">extern 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#const-关键字"><span class="nav-text">const 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#static-关键字"><span class="nav-text">static 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引用"><span class="nav-text">引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#this指针"><span class="nav-text">this指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数指针和函数对象-仿函数"><span class="nav-text">函数指针和函数对象(仿函数)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造函数"><span class="nav-text">构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内联函数"><span class="nav-text">内联函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存分配和动态内存"><span class="nav-text">内存分配和动态内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-浮点数"><span class="nav-text">C++ 浮点数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计模式"><span class="nav-text">设计模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二-字符串及模板篇"><span class="nav-text">二. 字符串及模板篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串"><span class="nav-text">字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#basic-string-模板类"><span class="nav-text">basic_string 模板类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stringstream-字符串流"><span class="nav-text">stringstream 字符串流</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模板"><span class="nav-text">模板</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#容器"><span class="nav-text">容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法"><span class="nav-text">算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#排序"><span class="nav-text">排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查找-搜索"><span class="nav-text">查找/搜索</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最值"><span class="nav-text">最值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#划分"><span class="nav-text">划分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#排列"><span class="nav-text">排列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#比较"><span class="nav-text">比较</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集合"><span class="nav-text">集合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#堆"><span class="nav-text">堆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他"><span class="nav-text">其他</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三-高级篇"><span class="nav-text">三. 高级篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#lambda-表达式"><span class="nav-text">lambda 表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-中的协变与逆变"><span class="nav-text">C++中的协变与逆变</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#智能指针"><span class="nav-text">智能指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈内存与文字常量区"><span class="nav-text">栈内存与文字常量区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-多进程-多线程并发"><span class="nav-text">Linux 多进程, 多线程并发</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一-基础篇"><span class="nav-text">一. 基础篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础问题"><span class="nav-text">基础问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#友元类和友元函数"><span class="nav-text">友元类和友元函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#virtual-关键字"><span class="nav-text">virtual 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#override-关键字"><span class="nav-text">override 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#final-关键字"><span class="nav-text">final 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#explicit-关键字"><span class="nav-text">explicit 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extern-关键字"><span class="nav-text">extern 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#const-关键字"><span class="nav-text">const 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#static-关键字"><span class="nav-text">static 关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引用"><span class="nav-text">引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#this指针"><span class="nav-text">this指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数指针和函数对象-仿函数"><span class="nav-text">函数指针和函数对象(仿函数)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造函数"><span class="nav-text">构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内联函数"><span class="nav-text">内联函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存分配和动态内存"><span class="nav-text">内存分配和动态内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-浮点数"><span class="nav-text">C++ 浮点数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计模式"><span class="nav-text">设计模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二-字符串及模板篇"><span class="nav-text">二. 字符串及模板篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串"><span class="nav-text">字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#basic-string-模板类"><span class="nav-text">basic_string 模板类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stringstream-字符串流"><span class="nav-text">stringstream 字符串流</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模板"><span class="nav-text">模板</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#容器"><span class="nav-text">容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法"><span class="nav-text">算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#排序"><span class="nav-text">排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查找-搜索"><span class="nav-text">查找/搜索</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最值"><span class="nav-text">最值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#划分"><span class="nav-text">划分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#排列"><span class="nav-text">排列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#比较"><span class="nav-text">比较</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集合"><span class="nav-text">集合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#堆"><span class="nav-text">堆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他"><span class="nav-text">其他</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三-高级篇"><span class="nav-text">三. 高级篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#lambda-表达式"><span class="nav-text">lambda 表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-中的协变与逆变"><span class="nav-text">C++中的协变与逆变</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#智能指针"><span class="nav-text">智能指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈内存与文字常量区"><span class="nav-text">栈内存与文字常量区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-多进程-多线程并发"><span class="nav-text">Linux 多进程, 多线程并发</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1409,7 +1412,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">26:53</span>
+    <span title="站点阅读时长">28:02</span>
   
 </div>
 

@@ -115,14 +115,14 @@
   <meta name="description" content="模型与参数的类型不符Input type (torch.cuda.FloatTensor) and weight type (torch.FloatTensor) should be the same TensorIterator expected type torch.cuda.FloatTensor but got torch.FloatTensor 要么需要在每一处新建立的tensor上将其">
 <meta name="keywords" content="踩坑记录,PyTorch">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PyTorch-踩坑">
+<meta property="og:title" content="PyTorch 踩坑">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/PyTorch-踩坑/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="模型与参数的类型不符Input type (torch.cuda.FloatTensor) and weight type (torch.FloatTensor) should be the same TensorIterator expected type torch.cuda.FloatTensor but got torch.FloatTensor 要么需要在每一处新建立的tensor上将其">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-05T01:27:18.209Z">
+<meta property="og:updated_time" content="2019-04-09T12:45:55.892Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PyTorch-踩坑">
+<meta name="twitter:title" content="PyTorch 踩坑">
 <meta name="twitter:description" content="模型与参数的类型不符Input type (torch.cuda.FloatTensor) and weight type (torch.FloatTensor) should be the same TensorIterator expected type torch.cuda.FloatTensor but got torch.FloatTensor 要么需要在每一处新建立的tensor上将其">
 
 
@@ -140,7 +140,7 @@
   };
 </script>
 
-  <title>PyTorch-踩坑 | 从零开始的BLOG</title>
+  <title>PyTorch 踩坑 | 从零开始的BLOG</title>
   
 
 
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">246</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">244</span></a>
   </li>
         
         
@@ -446,7 +446,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">PyTorch-踩坑
+          <h1 class="post-title" itemprop="name headline">PyTorch 踩坑
               
             
           </h1>
@@ -481,8 +481,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-05T09:27:18+08:00" content="2019-03-05">
-      		  2019-03-05
+    		<time itemprop="dateUpdated" datetime="2019-04-09T20:45:55+08:00" content="2019-04-09">
+      		  2019-04-09
     		</time>
   	  </span>
 	  
@@ -535,7 +535,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">2.2k</span>
+                <span title="本文字数">2.3k</span>
               
 
               
@@ -573,7 +573,7 @@
 <p>TensorIterator expected type torch.cuda.FloatTensor but got torch.FloatTensor</p>
 <p>要么需要在每一处新建立的tensor上将其手动移动到 cuda 或者 cpu 上, 要么利用下面的语句设置默认设备和类型<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">    torch.set_default_tensor_type(<span class="string">'torch.cuda.FloatTensor'</span>)</span><br></pre></td></tr></table></figure></p>
 <p><a href="https://www.zhihu.com/question/67209417/answer/250909765" target="_blank" rel="noopener">https://www.zhihu.com/question/67209417/answer/250909765</a></p>
-<h2 id="reshape-和-view-的不同"><a href="#reshape-和-view-的不同" class="headerlink" title="reshape 和 view 的不同"></a>reshape 和 view 的不同</h2><p>view 只能作用在连续的内存空间上. 并且不会对 tensor 进行复制. 当它作用在非连续内存空间的 tensor 上时, 会产生报错.<br>reshape 可以作用在任何空间上, 并且会在需要的时候创建 tenosr 的副本.</p>
+<h1 id="reshape-和-view-的不同"><a href="#reshape-和-view-的不同" class="headerlink" title="reshape 和 view 的不同"></a>reshape 和 view 的不同</h1><p>view 只能作用在连续的内存空间上. 并且不会对 tensor 进行复制. 当它作用在非连续内存空间的 tensor 上时, 会产生报错.<br>reshape 可以作用在任何空间上, 并且会在需要的时候创建 tenosr 的副本.</p>
 <h1 id="module-‘torchvision-datasets’-has-no-attribute-‘VOCDetection’"><a href="#module-‘torchvision-datasets’-has-no-attribute-‘VOCDetection’" class="headerlink" title="module ‘torchvision.datasets’ has no attribute ‘VOCDetection’"></a>module ‘torchvision.datasets’ has no attribute ‘VOCDetection’</h1><p>这是因为 <code>VOCDetection</code> 还没有添加到最新的 release 版本的导致的错误, 我们可以通过源码的方式重新安装 <code>torchvision</code>. 方法如下:</p>
 <p>首先查看当前虚拟环境的 <code>torchvision</code> 的安装位置:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torchvision <span class="keyword">as</span> tv</span><br><span class="line"></span><br><span class="line">print(tv.__file__)</span><br><span class="line"></span><br><span class="line"><span class="comment"># /home/zerozone/.pyenv/versions/a3py3.5/lib/python3.5/site-packages/torchvision/__init__.py</span></span><br></pre></td></tr></table></figure></p>
 <p>然后进入上面的文件夹, 删除旧的 <code>torchvision</code><br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /home/zerozone/.pyenv/versions/a3py3<span class="number">.5</span>/lib/python3<span class="number">.5</span>/site-packages/</span><br><span class="line"></span><br><span class="line">rm -rf torchvision*</span><br></pre></td></tr></table></figure></p>
@@ -585,6 +585,7 @@
 <h1 id="CUDA-driver-version-is-insufficient-for-CUDA-runtime-version"><a href="#CUDA-driver-version-is-insufficient-for-CUDA-runtime-version" class="headerlink" title="CUDA driver version is insufficient for CUDA runtime version"></a>CUDA driver version is insufficient for CUDA runtime version</h1><p>考虑可能是 cuda 或者 显卡驱动的版本不匹配, 也可能是 PyTorch 的版本过低导致的, 建议提升 PyTorch 版本至最新的稳定版.</p>
 <h1 id="Differences-between-data-and-detach"><a href="#Differences-between-data-and-detach" class="headerlink" title="Differences between .data and .detach"></a>Differences between .data and .detach</h1><p>【链接】PyTorch中tensor.detach()和tensor.data的区别<br><a href="https://blog.csdn.net/DreamHome_S/article/details/85259533" target="_blank" rel="noopener">https://blog.csdn.net/DreamHome_S/article/details/85259533</a></p>
 <p><a href="https://github.com/pytorch/pytorch/issues/6990" target="_blank" rel="noopener">https://github.com/pytorch/pytorch/issues/6990</a></p>
+<h1 id="Variable-在-PyTorch-1-0-中如何替换"><a href="#Variable-在-PyTorch-1-0-中如何替换" class="headerlink" title="Variable 在 PyTorch 1.0 中如何替换"></a>Variable 在 PyTorch 1.0 中如何替换</h1><h1 id="将-PyTorch-模型转换成-Caffe-模型"><a href="#将-PyTorch-模型转换成-Caffe-模型" class="headerlink" title="将 PyTorch 模型转换成 Caffe 模型"></a>将 PyTorch 模型转换成 Caffe 模型</h1><p><a href="https://github.com/longcw/pytorch2caffe" target="_blank" rel="noopener">https://github.com/longcw/pytorch2caffe</a></p>
 
       
     </div>
@@ -710,7 +711,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">246</span>
+                    <span class="site-state-item-count">244</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -900,7 +901,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#模型与参数的类型不符"><span class="nav-text">模型与参数的类型不符</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#reshape-和-view-的不同"><span class="nav-text">reshape 和 view 的不同</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#module-‘torchvision-datasets’-has-no-attribute-‘VOCDetection’"><span class="nav-text">module ‘torchvision.datasets’ has no attribute ‘VOCDetection’</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CUDA-driver-version-is-insufficient-for-CUDA-runtime-version"><span class="nav-text">CUDA driver version is insufficient for CUDA runtime version</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Differences-between-data-and-detach"><span class="nav-text">Differences between .data and .detach</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#模型与参数的类型不符"><span class="nav-text">模型与参数的类型不符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reshape-和-view-的不同"><span class="nav-text">reshape 和 view 的不同</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#module-‘torchvision-datasets’-has-no-attribute-‘VOCDetection’"><span class="nav-text">module ‘torchvision.datasets’ has no attribute ‘VOCDetection’</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CUDA-driver-version-is-insufficient-for-CUDA-runtime-version"><span class="nav-text">CUDA driver version is insufficient for CUDA runtime version</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Differences-between-data-and-detach"><span class="nav-text">Differences between .data and .detach</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Variable-在-PyTorch-1-0-中如何替换"><span class="nav-text">Variable 在 PyTorch 1.0 中如何替换</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#将-PyTorch-模型转换成-Caffe-模型"><span class="nav-text">将 PyTorch 模型转换成 Caffe 模型</span></a></li></ol></div>
             
 
           </div>
@@ -946,7 +947,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">26:53</span>
+    <span title="站点阅读时长">28:02</span>
   
 </div>
 

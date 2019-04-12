@@ -123,7 +123,7 @@
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fxgtstlxd5j20y70u0age.jpg">
 <meta property="og:image" content="https://cdncontribute.geeksforgeeks.org/wp-content/uploads/VirtualFunction.png">
 <meta property="og:image" content="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fxgufsx847j20js09s0t1.jpg">
-<meta property="og:updated_time" content="2019-02-25T11:28:35.528Z">
+<meta property="og:updated_time" content="2019-04-10T14:19:16.793Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++中的virtual关键字">
 <meta name="twitter:description" content="虚函数与运行多态多态：多态按字面的意思就是多种形态。当类之间存在层次结构，并且类之间是通过继承关联时，就会用到多态。C++ 多态意味着调用成员函数时，会根据调用函数的对象的类型来执行不同的函数。 先看最简单的情况，也就是最普通形式的继承，且父类和子类的方法都是一般成员方法： 12345678910111213141516171819202122232425262728293031323334353">
@@ -252,7 +252,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">246</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">244</span></a>
   </li>
         
         
@@ -485,8 +485,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-02-25T19:28:35+08:00" content="2019-02-25">
-      		  2019-02-25
+    		<time itemprop="dateUpdated" datetime="2019-04-10T22:19:16+08:00" content="2019-04-10">
+      		  2019-04-10
     		</time>
   	  </span>
 	  
@@ -578,12 +578,22 @@
 <li>对C++ 了解的人都应该知道虚函数（Virtual Function）是通过一张虚函数表（Virtual Table）来实现的。简称为V-Table。在这个表中，主是要一个类的虚函数的地址表，这张表解决了继承、覆盖的问题，保证其容真实反应实际的函数。这样，在有虚函数的类的实例中这个表被分配在了这个实例的内存中，所以，当我们用父类的指针来操作一个子类的时候，这张虚函数表就显得由为重要了，它就像一个地图一样，指明了实际所应该调用的函数</li>
 <li>带有虚函数的对象自身确实插入了一些指针信息，而且这个指针信息并不随着虚函数的增加而增大,这也就是为什么上述增加了虚函数后,出现了 size 变大的现象</li>
 </ol>
-<h1 id="虚函数表与虚函数表指针"><a href="#虚函数表与虚函数表指针" class="headerlink" title="虚函数表与虚函数表指针"></a>虚函数表与虚函数表指针</h1><p>C++中虚函数这种多态的性质是通过虚函数表指针和一张虚函数表来实现的：</p>
+<h1 id="虚函数表与虚函数表指针"><a href="#虚函数表与虚函数表指针" class="headerlink" title="虚函数表与虚函数表指针"></a>虚函数表与虚函数表指针</h1><p>“多态” 的关键在于通过基类指针或者引用调用一个虚函数时, 无法在编译过程中确定到底调用的是基类还是派生类的函数, 只有在运行阶段才能确定, 这种机制是如何实现的呢?</p>
+<p>C++ 中虚函数这种多态的性质是通过虚函数表指针和一张虚函数表来实现的：</p>
 <ul>
-<li>vtable（虚函数表）：每一个含有虚函数的类都会维护一个虚函数表，里面按照声明顺序记录了虚函数的地址</li>
-<li>vptr（虚函数表指针）：一个指向虚函数表的指针，每个对象都会拥有这样的一个指针</li>
+<li>vptr(虚函数表指针, 占 4 个字节): 一个指向虚函数表的指针，<strong>每个对象</strong> 都会拥有这样的一个指针. C++ 的编译器将虚函数表指针存放在对象实例中最前面的位置, 这是为了保证取得虚函数表时具有最高的性能.</li>
+<li>vtable(虚函数表): 每一个含有虚函数的类都会维护一个虚函数表，里面按照声明顺序记录了该类的全部虚函数的地址</li>
 </ul>
-<p>上面简单介绍了虚函数表的作用, 下面我们详细讨论一下虚函数表的注意事项.<br>每个包含了虚函数的类都包含一个虚函数表.<br>当一个类(A)继承另一个类(B)时, 类A会继承类B的函数的调用权, 所有如果一个基类包含了虚函数, 那么其继承类也可调用这些虚函数, 换句话说, 如果一个类继承了包含虚函数的基类, 那么这个类也拥有自己的虚表.<br>虚表是一个指针数组, 其元素是指向虚函数的指针.<br>虚表是对应类而言的, 而不是对应某个具体的对象, 一个类只需要一个虚表即可, 同一个类的所有对象都是用同一个小标.<br>为了使用虚表, 类或对象内部都会包含一个虚表指针, 用来指向自己所使用的虚表. 为了让每个包含虚表的类的对象都拥有一个虚表指针, 编译器会在类中添加一个指针<code>*__vptr</code>来指向自己的虚表, 这样, 类的对象在创建时便拥有了这个指针, 且这个指针的值会自动被设置为指向类的虚表.<br>假设类A是虚基类, 类B继承类A, 类C有继承类B, 则它们的虚表关系如下图所示:</p>
+<p>在进行虚函数的调用时, 编译器会根据基类指针所指向(或者基类引用所引用)的对象中的虚函数表指针找到该类的虚函数表, 然后在虚函数表中查找要调用的虚函数的地址, 可以简单的认为虚函数表是以函数名作为索引来查找的, 不过实际上会使用更高效的查找方法. 最后, 根据找到的虚函数的地址进行函数调用.</p>
+<p>上面简单介绍了虚函数表的作用, 下面我们详细讨论一下虚函数表的注意事项.</p>
+<ol>
+<li>每个包含了虚函数的类都包含一个虚函数表.</li>
+<li>当基类包含虚函数时, 继承它的派生类也会自动维护一张虚函数表. 当一个类(A)继承另一个类(B)时, 类A会继承类B的函数的调用权, 所以如果一个基类包含了虚函数, 那么其继承类也可调用这些虚函数, 换句话说, 如果一个类继承了包含虚函数的基类, 那么这个类也拥有自己的虚表.</li>
+<li>虚表是一个指针数组, 其元素是指向虚函数的指针.</li>
+<li>虚表是对应类而言的, 而不是对应某个具体的对象, 一个类只需要一个虚表即可, 同一个类的所有对象都共享同一张虚函数表.</li>
+<li>虚表指针时对应与对象而言的, 每个具体的对象都会持有一个虚表指针, 它们都指向了该类的虚函数表. 为了使用虚表, 类或对象内部都会包含一个虚表指针, 用来指向自己所使用的虚表. 为了让每个包含虚表的类的对象都拥有一个虚表指针, 编译器会在类中添加一个指针<code>*__vptr</code>来指向自己的虚表, 这样, 类的对象在创建时便拥有了这个指针, 且这个指针的值会自动被设置为指向类的虚表.</li>
+</ol>
+<p>假设类A是虚基类, 类B继承类A, 类C又继承类B, 则它们的虚表关系如下图所示:</p>
 <p><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fxgtstlxd5j20y70u0age.jpg" alt=""></p>
 <p>可以看到, 类A, B, C 中都会有一个专门的指针来指向虚表(一般都处于类或对象实例的最前面, 主要是为了提高取得函数表的速度), 并且指向的不是同一个虚表, 而是每个类都有自己的虚表, 只不过这些虚表最终指向的虚函数有可能相同(也有可能不同).</p>
 <p>接下来看看下面这个简单的例子：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"> size of(A) &gt;  size of(B) // true，因为A比B多了一个虚函数表指针</span><br></pre></td></tr></table></figure></p>
@@ -599,8 +609,8 @@
 <h1 id="多重继承时的虚函数表"><a href="#多重继承时的虚函数表" class="headerlink" title="多重继承时的虚函数表"></a>多重继承时的虚函数表</h1><p><strong>多重继承会有多个虚函数表, 几重继承, 就会有几个虚函数表. 这些表按照派生的顺序依次排列, 如果子类改写了父类的虚函数, 那么就会用子类自己的虚函数覆盖虚函数表的相应位置, 如果子类有新的虚函数, 那么就会添加到第一个函数表的末尾.</strong></p>
 <p>假设类B继承了包含虚函数的类A1和类A2, 则其虚函数表的情况如下所示:</p>
 <p><img src="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fxgufsx847j20js09s0t1.jpg" alt=""></p>
-<p><strong>无虚函数覆盖:</strong><br>继承类几个基类, 就会维护几张虚函数表(按照继承顺序在实例最开始排列), 并且表中函数指针会指向其基类的各个虚函数, <strong>子类中新添加的虚函数会放到第一个虚函数表的后面</strong></p>
-<p><strong>虚函数覆盖:</strong><br>会用子类中的同签名虚函数同时覆盖两个基类. 其余与无覆盖时的情况相同.</p>
+<p><strong>无虚函数覆盖:</strong><br>继承了几个基类, 就会维护几张虚函数表(按照继承顺序在实例最开始排列), 并且表中函数指针会指向其基类的各个虚函数, <strong>子类中新添加的虚函数会放到第一个虚函数表的后面</strong></p>
+<p><strong>虚函数覆盖:</strong><br>会用子类中的同签名虚函数同时覆盖多个基类中的同签名虚函数. 其余与无覆盖时的情况相同.</p>
 <h1 id="为什么虚函数表指针的类型为void"><a href="#为什么虚函数表指针的类型为void" class="headerlink" title="为什么虚函数表指针的类型为void *"></a>为什么虚函数表指针的类型为<code>void *</code></h1><p>因为对于虚函数表来说, 一个类中的所有虚函数都会放到这个表中, 但是不同的虚函数对应的函数指针类型各不相同, 所以这个表的类型也就无法确定.</p>
 <h1 id="为什么虚函数表前要加const"><a href="#为什么虚函数表前要加const" class="headerlink" title="为什么虚函数表前要加const"></a>为什么虚函数表前要加<code>const</code></h1><p>因为虚函数表是在编译时, 由编译器自动生成的, 并且不会发生改变, 当有多个B类的实例时, 每个实例都会维护一个虚函数表指针, 但是这些指针指向的都是同一个虚函数表, 该表是一个常量表.</p>
 <h1 id="类的-size-与虚函数"><a href="#类的-size-与虚函数" class="headerlink" title="类的 size 与虚函数"></a>类的 size 与虚函数</h1><p>从上面一节的代码示例中我们已经发现, 在 C++ 中, 普通函数只是一种表示, 其本身并不会占有任何内存, 而如果类中没有任何变量或者虚函数时, 类的 size 不会为1, 而是会自动插入一个字节, 并且在类的 size 大于1的时候, 该字节会被覆盖掉. 下面我们就从头开始讨论一下在 C++ 中是如何计算类的 size 的.</p>
@@ -708,8 +718,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/Cpp-extern关键字/" rel="prev" title="C++中的 extern 关键字">
-                <i class="fa fa-chevron-left"></i> C++中的 extern 关键字
+              <a href="/z_post/Cpp-const关键字/" rel="prev" title="C++中的const关键字">
+                <i class="fa fa-chevron-left"></i> C++中的const关键字
               </a>
             
           </div>
@@ -718,8 +728,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/Cpp-static关键字/" rel="next" title="C++中的static关键字">
-                C++中的static关键字 <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/Cpp-extern关键字/" rel="next" title="C++中的 extern 关键字">
+                C++中的 extern 关键字 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -798,7 +808,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">246</span>
+                    <span class="site-state-item-count">244</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1034,7 +1044,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">26:53</span>
+    <span title="站点阅读时长">28:02</span>
   
 </div>
 

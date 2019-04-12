@@ -119,7 +119,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="数学公式渲染异常https://www.once4623.site/2017/10/03/2017-10-04--Use-MathJax-In-Hexo-Next/ hexo 实现置顶功能hexo 站内搜索https://www.jianshu.com/p/519b45730824 https://blog.csdn.net/ksws0292756/article/details/82714984">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-08T09:12:10.367Z">
+<meta property="og:updated_time" content="2019-04-08T09:29:05.661Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo博客相关问题及解决方案汇总">
 <meta name="twitter:description" content="数学公式渲染异常https://www.once4623.site/2017/10/03/2017-10-04--Use-MathJax-In-Hexo-Next/ hexo 实现置顶功能hexo 站内搜索https://www.jianshu.com/p/519b45730824 https://blog.csdn.net/ksws0292756/article/details/82714984">
@@ -247,7 +247,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">246</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">244</span></a>
   </li>
         
         
@@ -480,7 +480,7 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-04-08T17:12:10+08:00" content="2019-04-08">
+    		<time itemprop="dateUpdated" datetime="2019-04-08T17:29:05+08:00" content="2019-04-08">
       		  2019-04-08
     		</time>
   	  </span>
@@ -534,7 +534,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.1k</span>
+                <span title="本文字数">1.3k</span>
               
 
               
@@ -580,7 +580,14 @@
 <p>方法二: 更新searchdb插件: <code>npm install hexo-generator-searchdb --save</code></p>
 <p>方法三: 文章太多时, 尝试将<code>_comfig.yml</code>中<code>Local Search</code>下的<code>limits</code>设置的更高一些</p>
 <p>方法四: 查看 <code>search.xml</code> 文件: 根据报错信息确定哪一篇文章有问题. 有时候, 报错的行数并不是真的问题所在, 需要不断用排除法才能确定具体的行数, 并且, 有可能该行本身并无错误, 而只有重新敲一遍之后才能正常搜索. <a href="https://www.itfanr.cc/2017/11/24/resolve-hexo-blog-search-exception/" target="_blank" rel="noopener">https://www.itfanr.cc/2017/11/24/resolve-hexo-blog-search-exception/</a></p>
-<p>如果<code>public/search.xml</code>文件报错(用谷歌浏览器打开), 则根据错误进行排查., 通过 “更多工具-&gt;开发者工具”, 确定是哪一篇文章出错, 然后将其修正</p>
+<p>如果<code>public/search.xml</code>文件报错(用谷歌浏览器打开), 则根据错误进行排查., 通过 “更多工具-&gt;开发者工具”, 确定是哪一篇文章出错, 然后将其修正, 具体步骤如下</p>
+<ol>
+<li>用chrome浏览器打开atom.xml</li>
+<li>一般会提示和上述相同错误，并提示Bytes: 0x10 0xEF 0xBC 0x8C</li>
+<li>用 atom 或者任意一款拥有正则匹配搜索功能的编辑器打开atom.xml</li>
+<li>用正则匹配模式搜索<code>\x10</code>字符,留意搜索的结果, 并在<code>source/_posts</code>路径中找到<code>*.md</code>文章源文件, 用正则匹配替换掉搜索到的所有<code>\x10</code>字符为空. 可能存在多个文件有特殊字符。(修改完成后记得保存)</li>
+<li>刷新chrome中的atom.xml此时应该已经不会报错了.(无需重新<code>hexo g</code>, 只需刷新页面即可)</li>
+</ol>
 <h1 id="显示更新时间"><a href="#显示更新时间" class="headerlink" title="显示更新时间"></a>显示更新时间</h1><p><a href="https://www.itfanr.cc/2017/12/06/hexo-blog-optimization/" target="_blank" rel="noopener">https://www.itfanr.cc/2017/12/06/hexo-blog-optimization/</a></p>
 <p>默认的更新时间是最后的修改时间, 也可以手动添加 <code>updated</code> 参数强制设置更新时间.</p>
 <p>修改完成后, 需要重新启动 <code>hexo server</code> 才能正确显示.</p>
@@ -703,7 +710,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">246</span>
+                    <span class="site-state-item-count">244</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -939,7 +946,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">26:53</span>
+    <span title="站点阅读时长">28:02</span>
   
 </div>
 
