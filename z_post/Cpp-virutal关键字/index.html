@@ -123,7 +123,7 @@
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fxgtstlxd5j20y70u0age.jpg">
 <meta property="og:image" content="https://cdncontribute.geeksforgeeks.org/wp-content/uploads/VirtualFunction.png">
 <meta property="og:image" content="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fxgufsx847j20js09s0t1.jpg">
-<meta property="og:updated_time" content="2019-04-10T14:19:16.793Z">
+<meta property="og:updated_time" content="2019-04-13T05:28:07.472Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++中的virtual关键字">
 <meta name="twitter:description" content="虚函数与运行多态多态：多态按字面的意思就是多种形态。当类之间存在层次结构，并且类之间是通过继承关联时，就会用到多态。C++ 多态意味着调用成员函数时，会根据调用函数的对象的类型来执行不同的函数。 先看最简单的情况，也就是最普通形式的继承，且父类和子类的方法都是一般成员方法： 12345678910111213141516171819202122232425262728293031323334353">
@@ -485,8 +485,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-04-10T22:19:16+08:00" content="2019-04-10">
-      		  2019-04-10
+    		<time itemprop="dateUpdated" datetime="2019-04-13T13:28:07+08:00" content="2019-04-13">
+      		  2019-04-13
     		</time>
   	  </span>
 	  
@@ -611,6 +611,7 @@
 <p><img src="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fxgufsx847j20js09s0t1.jpg" alt=""></p>
 <p><strong>无虚函数覆盖:</strong><br>继承了几个基类, 就会维护几张虚函数表(按照继承顺序在实例最开始排列), 并且表中函数指针会指向其基类的各个虚函数, <strong>子类中新添加的虚函数会放到第一个虚函数表的后面</strong></p>
 <p><strong>虚函数覆盖:</strong><br>会用子类中的同签名虚函数同时覆盖多个基类中的同签名虚函数. 其余与无覆盖时的情况相同.</p>
+<p><strong>多重继承时的类型转换:</strong><br>在多重继承时, 用基类指针指向派生类对象, 派生类对象中新添加的虚函数会被添加到 <strong>第一个虚函数表的后面</strong>, 因此, </p>
 <h1 id="为什么虚函数表指针的类型为void"><a href="#为什么虚函数表指针的类型为void" class="headerlink" title="为什么虚函数表指针的类型为void *"></a>为什么虚函数表指针的类型为<code>void *</code></h1><p>因为对于虚函数表来说, 一个类中的所有虚函数都会放到这个表中, 但是不同的虚函数对应的函数指针类型各不相同, 所以这个表的类型也就无法确定.</p>
 <h1 id="为什么虚函数表前要加const"><a href="#为什么虚函数表前要加const" class="headerlink" title="为什么虚函数表前要加const"></a>为什么虚函数表前要加<code>const</code></h1><p>因为虚函数表是在编译时, 由编译器自动生成的, 并且不会发生改变, 当有多个B类的实例时, 每个实例都会维护一个虚函数表指针, 但是这些指针指向的都是同一个虚函数表, 该表是一个常量表.</p>
 <h1 id="类的-size-与虚函数"><a href="#类的-size-与虚函数" class="headerlink" title="类的 size 与虚函数"></a>类的 size 与虚函数</h1><p>从上面一节的代码示例中我们已经发现, 在 C++ 中, 普通函数只是一种表示, 其本身并不会占有任何内存, 而如果类中没有任何变量或者虚函数时, 类的 size 不会为1, 而是会自动插入一个字节, 并且在类的 size 大于1的时候, 该字节会被覆盖掉. 下面我们就从头开始讨论一下在 C++ 中是如何计算类的 size 的.</p>
@@ -1035,7 +1036,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.8m</span>
+    <span title="站点总字数">1.9m</span>
   
 
   
@@ -1044,7 +1045,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">28:02</span>
+    <span title="站点阅读时长">28:10</span>
   
 </div>
 

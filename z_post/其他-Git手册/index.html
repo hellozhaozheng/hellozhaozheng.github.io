@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="配置用户密码不用每次输入显式配置(不安全)123git config --global user.name &quot;xxxx&quot;git config --global user.email &quot;xxxx@foxmail.com&quot;git config --global credential.helper store 上述指令输完后, 会生成~/.gitconfig文件, 内容如下:12345[user]	na">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-06T03:18:49.752Z">
+<meta property="og:updated_time" content="2019-04-12T03:04:02.350Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git 手册">
 <meta name="twitter:description" content="配置用户密码不用每次输入显式配置(不安全)123git config --global user.name &quot;xxxx&quot;git config --global user.email &quot;xxxx@foxmail.com&quot;git config --global credential.helper store 上述指令输完后, 会生成~/.gitconfig文件, 内容如下:12345[user]	na">
@@ -481,8 +481,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-04-06T11:18:49+08:00" content="2019-04-06">
-      		  2019-04-06
+    		<time itemprop="dateUpdated" datetime="2019-04-12T11:04:02+08:00" content="2019-04-12">
+      		  2019-04-12
     		</time>
   	  </span>
 	  
@@ -572,7 +572,7 @@
         <h1 id="配置用户密码不用每次输入"><a href="#配置用户密码不用每次输入" class="headerlink" title="配置用户密码不用每次输入"></a>配置用户密码不用每次输入</h1><h2 id="显式配置-不安全"><a href="#显式配置-不安全" class="headerlink" title="显式配置(不安全)"></a>显式配置(不安全)</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">"xxxx"</span></span><br><span class="line">git config --global user.email <span class="string">"xxxx@foxmail.com"</span></span><br><span class="line">git config --global credential.helper store</span><br></pre></td></tr></table></figure>
 <p>上述指令输完后, 会生成<code>~/.gitconfig</code>文件, 内容如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[user]</span><br><span class="line">	name = hellozhaozheng</span><br><span class="line">	email = hellozhaozheng@foxmail.com</span><br><span class="line">[credential]</span><br><span class="line">	helper = store</span><br></pre></td></tr></table></figure></p>
 <p>之后, 再次输入密码, 密码和账号会显式存储在<code>~/.git-credentials</code>文件中.(显式存储, 不安全)</p>
-<h2 id="秘钥配置-ssh"><a href="#秘钥配置-ssh" class="headerlink" title="秘钥配置 ssh"></a>秘钥配置 ssh</h2><p>step 1: 生成公钥<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;xxxxx@xxxxx.com&quot;  </span><br><span class="line"># Generating public/private rsa key pair...</span><br><span class="line"># 三次回车即可生成 ssh key</span><br></pre></td></tr></table></figure></p>
+<h2 id="秘钥配置-ssh"><a href="#秘钥配置-ssh" class="headerlink" title="秘钥配置 ssh"></a>秘钥配置 ssh</h2><p>step 1: 生成公钥<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;hellozhaozheng@foxmail.com&quot;</span><br><span class="line"># Generating public/private rsa key pair...</span><br><span class="line"># 三次回车即可生成 ssh key</span><br></pre></td></tr></table></figure></p>
 <p>step 2: 查看已生成的公钥<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br><span class="line"># ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6eNtGpNGwstc....</span><br></pre></td></tr></table></figure></p>
 <p>step3: 复制已生成的公钥添加到git服务器<br>step4: 使用ssh协议clone远程仓库 or 如果已经用https协议clone到本地了，那么就重新设置远程仓库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote set-url origin git@xxx.com:xxx/xxx.git</span><br></pre></td></tr></table></figure></p>
 <h1 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h1><p>初始化当前本地文件夹为仓库</p>
@@ -961,7 +961,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.8m</span>
+    <span title="站点总字数">1.9m</span>
   
 
   
@@ -970,7 +970,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">28:02</span>
+    <span title="站点阅读时长">28:10</span>
   
 </div>
 

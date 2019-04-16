@@ -112,18 +112,18 @@
 
 
 
-  <meta name="description" content="http://www.cnblogs.com/lovemyspring/p/3214598.html 最常用法示例1234567891011121314import argparseparser = argparse.ArgumentParser(description=&quot;PyTorch Detection&quot;)parser.add_argument(    &quot;--config-file&quot;, # 这">
+  <meta name="description" content="官方文档 https://docs.python.org/3/library/argparse.html http://www.cnblogs.com/lovemyspring/p/3214598.html ArgumentParserArgumentParser objectshttps://docs.python.org/3/library/argparse.html#argparse.Arg">
 <meta name="keywords" content="Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="argparse-命令行解析模块">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Python-argparse/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="http://www.cnblogs.com/lovemyspring/p/3214598.html 最常用法示例1234567891011121314import argparseparser = argparse.ArgumentParser(description=&quot;PyTorch Detection&quot;)parser.add_argument(    &quot;--config-file&quot;, # 这">
+<meta property="og:description" content="官方文档 https://docs.python.org/3/library/argparse.html http://www.cnblogs.com/lovemyspring/p/3214598.html ArgumentParserArgumentParser objectshttps://docs.python.org/3/library/argparse.html#argparse.Arg">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-05T01:22:07.258Z">
+<meta property="og:updated_time" content="2019-04-14T13:46:48.048Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="argparse-命令行解析模块">
-<meta name="twitter:description" content="http://www.cnblogs.com/lovemyspring/p/3214598.html 最常用法示例1234567891011121314import argparseparser = argparse.ArgumentParser(description=&quot;PyTorch Detection&quot;)parser.add_argument(    &quot;--config-file&quot;, # 这">
+<meta name="twitter:description" content="官方文档 https://docs.python.org/3/library/argparse.html http://www.cnblogs.com/lovemyspring/p/3214598.html ArgumentParserArgumentParser objectshttps://docs.python.org/3/library/argparse.html#argparse.Arg">
 
 
 
@@ -481,8 +481,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-05T09:22:07+08:00" content="2019-03-05">
-      		  2019-03-05
+    		<time itemprop="dateUpdated" datetime="2019-04-14T21:46:48+08:00" content="2019-04-14">
+      		  2019-04-14
     		</time>
   	  </span>
 	  
@@ -535,7 +535,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">604</span>
+                <span title="本文字数">3.4k</span>
               
 
               
@@ -549,7 +549,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">3 分钟</span>
               
             </div>
           
@@ -569,8 +569,39 @@
       
 
       
-        <p><a href="http://www.cnblogs.com/lovemyspring/p/3214598.html" target="_blank" rel="noopener">http://www.cnblogs.com/lovemyspring/p/3214598.html</a></p>
-<h1 id="最常用法示例"><a href="#最常用法示例" class="headerlink" title="最常用法示例"></a>最常用法示例</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line">parser = argparse.ArgumentParser(description=<span class="string">"PyTorch Detection"</span>)</span><br><span class="line"></span><br><span class="line">parser.add_argument(</span><br><span class="line">    <span class="string">"--config-file"</span>, <span class="comment"># 这里虽然是 config-file, 但仍然可以用 args.config_file来访问, 但是不能用 args.config-file 访问.</span></span><br><span class="line">    dest=<span class="string">"cfg_file"</span>, <span class="comment"># 可以用 args.cfg_file 来访问该参数,  比 args.confi-file简洁</span></span><br><span class="line">    default=<span class="string">""</span>, <span class="comment"># 参数的默认值</span></span><br><span class="line">    metavar=<span class="string">"FILE"</span>, <span class="comment"># 可以在命令行中替代 --config-file</span></span><br><span class="line">    help=<span class="string">"path to config file"</span>, <span class="comment"># 帮助信息</span></span><br><span class="line">    type=srt, <span class="comment"># 类型</span></span><br><span class="line">    nargs=<span class="number">1</span>, <span class="comment"># 参数的个数, 默认为1</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+        <p>官方文档 <a href="https://docs.python.org/3/library/argparse.html" target="_blank" rel="noopener">https://docs.python.org/3/library/argparse.html</a></p>
+<p><a href="http://www.cnblogs.com/lovemyspring/p/3214598.html" target="_blank" rel="noopener">http://www.cnblogs.com/lovemyspring/p/3214598.html</a></p>
+<h1 id="ArgumentParser"><a href="#ArgumentParser" class="headerlink" title="ArgumentParser"></a>ArgumentParser</h1><p>ArgumentParser objects<br><a href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" target="_blank" rel="noopener">https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser</a><br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">argparse</span>.<span class="title">ArgumentParser</span><span class="params">(prog=None, usage=None, description=None, epilog=None, parents=[], formatter_class=argparse.HelpFormatter, prefix_chars=<span class="string">'-'</span>, fromfile_prefix_chars=None, argument_default=None, conflict_handler=<span class="string">'error'</span>, add_help=True, allow_abbrev=True)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>Create a new ArgumentParser object. All parameters should be passed as keyword arguments. Each parameter has its own more detailed description below, but in short they are:</p>
+<ul>
+<li>prog - The name of the program (default: sys.argv[0])</li>
+<li>usage - The string describing the program usage (default: generated from arguments added to parser)</li>
+<li>description - Text to display before the argument help (default: none)</li>
+<li>epilog - Text to display after the argument help (default: none)</li>
+<li>parents - A list of ArgumentParser objects whose arguments should also be included</li>
+<li>formatter_class - A class for customizing the help output</li>
+<li>prefix_chars - The set of characters that prefix optional arguments (default: ‘-‘)</li>
+<li>fromfile_prefix_chars - The set of characters that prefix files from which additional arguments should be read (default: None)</li>
+<li>argument_default - The global default value for arguments (default: None)</li>
+<li>conflict_handler - The strategy for resolving conflicting optionals (usually unnecessary)</li>
+<li>add_help - Add a -h/—help option to the parser (default: True)</li>
+<li>allow_abbrev - Allows long options to be abbreviated if the abbreviation is unambiguous. (default: True)</li>
+</ul>
+<h1 id="add-argument"><a href="#add-argument" class="headerlink" title="add_argument"></a>add_argument</h1><p><a href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser.add_argument" target="_blank" rel="noopener">https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser.add_argument</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ArgumentParser.add_argument(name or flags...[, action][, nargs][, const][, default][, type][, choices][, required][, help][, metavar][, dest])</span><br><span class="line">Define how a single command-line argument should be parsed. Each parameter has its own more detailed description below, but in short they are:</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>name or flags - Either a name or a list of option strings, e.g. foo or -f, —foo.</li>
+<li>action - The basic type of action to be taken when this argument is encountered at the command line.</li>
+<li>nargs - The number of command-line arguments that should be consumed.</li>
+<li>const - A constant value required by some action and nargs selections.</li>
+<li>default - The value produced if the argument is absent from the command line.</li>
+<li>type - The type to which the command-line argument should be converted.</li>
+<li>choices - A container of the allowable values for the argument.</li>
+<li>required - Whether or not the command-line option may be omitted (optionals only).</li>
+<li>help - A brief description of what the argument does.</li>
+<li>metavar - A name for the argument in usage messages.</li>
+<li>dest - The name of the attribute to be added to the object returned by parse_args().</li>
+</ul>
+<h1 id="最常用法示例"><a href="#最常用法示例" class="headerlink" title="最常用法示例"></a>最常用法示例</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line">parser = argparse.ArgumentParser(description=<span class="string">"PyTorch Detection"</span>)</span><br><span class="line"></span><br><span class="line">parser.add_argument(</span><br><span class="line">    <span class="string">"--config-file"</span>, <span class="comment"># 这里虽然是 config-file, 但需要用 args.config_file来访问, 但是不能用 args.config-file 访问.</span></span><br><span class="line">    dest=<span class="string">"cfg_file"</span>, <span class="comment"># 可以用 args.cfg_file 来访问该参数,  比 args.confi-file简洁</span></span><br><span class="line">    type=str, <span class="comment"># 类型</span></span><br><span class="line">    default=<span class="string">""</span>, <span class="comment"># 参数的默认值</span></span><br><span class="line">    choices=[<span class="string">"option1"</span>, <span class="string">"option2"</span>] <span class="comment"># 只能选择其一</span></span><br><span class="line">    metavar=<span class="string">"FILE"</span>, <span class="comment"># 可以在命令行中替代 --config-file</span></span><br><span class="line">    help=<span class="string">"path to config file"</span>, <span class="comment"># 帮助信息</span></span><br><span class="line">    nargs=<span class="number">1</span>, <span class="comment"># 参数的个数, 默认为1</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">parser.add_argument(</span><br><span class="line">    <span class="string">"opts"</span>, <span class="comment"># 前面没有'--'</span></span><br><span class="line">    default=<span class="keyword">None</span>,</span><br><span class="line">    nargs=argparse.REMAINDER <span class="comment"># 这一行不能少, 否则会报错</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 
       
@@ -885,7 +916,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#最常用法示例"><span class="nav-text">最常用法示例</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ArgumentParser"><span class="nav-text">ArgumentParser</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#add-argument"><span class="nav-text">add_argument</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最常用法示例"><span class="nav-text">最常用法示例</span></a></li></ol></div>
             
 
           </div>
@@ -922,7 +953,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.8m</span>
+    <span title="站点总字数">1.9m</span>
   
 
   
@@ -931,7 +962,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">28:02</span>
+    <span title="站点阅读时长">28:10</span>
   
 </div>
 
