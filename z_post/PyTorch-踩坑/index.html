@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="模型与参数的类型不符Input type (torch.cuda.FloatTensor) and weight type (torch.FloatTensor) should be the same TensorIterator expected type torch.cuda.FloatTensor but got torch.FloatTensor 要么需要在每一处新建立的tensor上将其">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-09T12:45:55.892Z">
+<meta property="og:updated_time" content="2019-04-20T08:47:00.707Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PyTorch 踩坑">
 <meta name="twitter:description" content="模型与参数的类型不符Input type (torch.cuda.FloatTensor) and weight type (torch.FloatTensor) should be the same TensorIterator expected type torch.cuda.FloatTensor but got torch.FloatTensor 要么需要在每一处新建立的tensor上将其">
@@ -481,8 +481,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-04-09T20:45:55+08:00" content="2019-04-09">
-      		  2019-04-09
+    		<time itemprop="dateUpdated" datetime="2019-04-20T16:47:00+08:00" content="2019-04-20">
+      		  2019-04-20
     		</time>
   	  </span>
 	  
@@ -535,7 +535,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">2.3k</span>
+                <span title="本文字数">3.5k</span>
               
 
               
@@ -549,7 +549,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">2 分钟</span>
+                <span title="阅读时长">3 分钟</span>
               
             </div>
           
@@ -585,7 +585,12 @@
 <h1 id="CUDA-driver-version-is-insufficient-for-CUDA-runtime-version"><a href="#CUDA-driver-version-is-insufficient-for-CUDA-runtime-version" class="headerlink" title="CUDA driver version is insufficient for CUDA runtime version"></a>CUDA driver version is insufficient for CUDA runtime version</h1><p>考虑可能是 cuda 或者 显卡驱动的版本不匹配, 也可能是 PyTorch 的版本过低导致的, 建议提升 PyTorch 版本至最新的稳定版.</p>
 <h1 id="Differences-between-data-and-detach"><a href="#Differences-between-data-and-detach" class="headerlink" title="Differences between .data and .detach"></a>Differences between .data and .detach</h1><p>【链接】PyTorch中tensor.detach()和tensor.data的区别<br><a href="https://blog.csdn.net/DreamHome_S/article/details/85259533" target="_blank" rel="noopener">https://blog.csdn.net/DreamHome_S/article/details/85259533</a></p>
 <p><a href="https://github.com/pytorch/pytorch/issues/6990" target="_blank" rel="noopener">https://github.com/pytorch/pytorch/issues/6990</a></p>
+<p>detach 的作用: <a href="https://blog.csdn.net/qq_39709535/article/details/80804003" target="_blank" rel="noopener">https://blog.csdn.net/qq_39709535/article/details/80804003</a></p>
 <h1 id="Variable-在-PyTorch-1-0-中如何替换"><a href="#Variable-在-PyTorch-1-0-中如何替换" class="headerlink" title="Variable 在 PyTorch 1.0 中如何替换"></a>Variable 在 PyTorch 1.0 中如何替换</h1><h1 id="将-PyTorch-模型转换成-Caffe-模型"><a href="#将-PyTorch-模型转换成-Caffe-模型" class="headerlink" title="将 PyTorch 模型转换成 Caffe 模型"></a>将 PyTorch 模型转换成 Caffe 模型</h1><p><a href="https://github.com/longcw/pytorch2caffe" target="_blank" rel="noopener">https://github.com/longcw/pytorch2caffe</a></p>
+<h1 id="DataLoader"><a href="#DataLoader" class="headerlink" title="DataLoader"></a>DataLoader</h1><p><strong>挂起:</strong><br>当<code>num_worker</code>参数大于1时, 会出现一些奇怪的现象, 表现为无法迭代(挂起, 死锁), 进而无法使用上面的进度条模块.</p>
+<p><a href="https://github.com/pytorch/pytorch/issues/1355" target="_blank" rel="noopener">https://github.com/pytorch/pytorch/issues/1355</a><br>(仍然没有完全解决)</p>
+<p>现在这种情况多出现在用户手动终止程序后, 再次启动程序时发生, 目前的解决方法是要在<code>dataloader</code>处使用异常捕获, 来避免进程之间的资源死锁</p>
+<h1 id="RuntimeError-invalid-argument-0-Sizes-of-tensors-must-match-except-in-dimension-0-Got-37-and-1-in-dimension-1"><a href="#RuntimeError-invalid-argument-0-Sizes-of-tensors-must-match-except-in-dimension-0-Got-37-and-1-in-dimension-1" class="headerlink" title="RuntimeError: invalid argument 0: Sizes of tensors must match except in dimension 0. Got 37 and 1 in dimension 1"></a>RuntimeError: invalid argument 0: Sizes of tensors must match except in dimension 0. Got 37 and 1 in dimension 1</h1><p>在 pytorch 中, dataloader 会自动将 datasets 中的数据组织成 tensor 的形式, 因此, 这就要求 batch 中的每一项元素的 shape 都要相同. 但是在目标检测中, 每一张图片所具有的 box 的数量是不同的, 因此, 需要自己实现<code>collate_fn</code>来构建 mini-batch 中每一个 samples. 如下所示(ssd代码):<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">def detection_collate(batch):</span><br><span class="line">    &quot;&quot;&quot;Custom collate fn for dealing with batches of images that have a different</span><br><span class="line">    number of associated object annotations (bounding boxes).</span><br><span class="line"></span><br><span class="line">    Arguments:</span><br><span class="line">        batch: (tuple) A tuple of tensor images and lists of annotations</span><br><span class="line"></span><br><span class="line">    Return:</span><br><span class="line">        A tuple containing:</span><br><span class="line">            1) (tensor) batch of images stacked on their 0 dim</span><br><span class="line">            2) (list of tensors) annotations for a given image are stacked on</span><br><span class="line">                                 0 dim</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    targets = []</span><br><span class="line">    imgs = []</span><br><span class="line">    for sample in batch:</span><br><span class="line">        imgs.append(sample[0])</span><br><span class="line">        targets.append(torch.FloatTensor(sample[1]))</span><br><span class="line">    return torch.stack(imgs, 0), targets</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -876,7 +881,11 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                    <a href="https://blog.csdn.net/ksws0292756" title="零域CSDN博客" target="_blank">零域CSDN博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xinghanzzy.github.io/" title="BoXiao的博客" target="_blank">BoXiao的博客</a>
                   </li>
                 
               </ul>
@@ -901,7 +910,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#模型与参数的类型不符"><span class="nav-text">模型与参数的类型不符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reshape-和-view-的不同"><span class="nav-text">reshape 和 view 的不同</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#module-‘torchvision-datasets’-has-no-attribute-‘VOCDetection’"><span class="nav-text">module ‘torchvision.datasets’ has no attribute ‘VOCDetection’</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CUDA-driver-version-is-insufficient-for-CUDA-runtime-version"><span class="nav-text">CUDA driver version is insufficient for CUDA runtime version</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Differences-between-data-and-detach"><span class="nav-text">Differences between .data and .detach</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Variable-在-PyTorch-1-0-中如何替换"><span class="nav-text">Variable 在 PyTorch 1.0 中如何替换</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#将-PyTorch-模型转换成-Caffe-模型"><span class="nav-text">将 PyTorch 模型转换成 Caffe 模型</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#模型与参数的类型不符"><span class="nav-text">模型与参数的类型不符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reshape-和-view-的不同"><span class="nav-text">reshape 和 view 的不同</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#module-‘torchvision-datasets’-has-no-attribute-‘VOCDetection’"><span class="nav-text">module ‘torchvision.datasets’ has no attribute ‘VOCDetection’</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CUDA-driver-version-is-insufficient-for-CUDA-runtime-version"><span class="nav-text">CUDA driver version is insufficient for CUDA runtime version</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Differences-between-data-and-detach"><span class="nav-text">Differences between .data and .detach</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Variable-在-PyTorch-1-0-中如何替换"><span class="nav-text">Variable 在 PyTorch 1.0 中如何替换</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#将-PyTorch-模型转换成-Caffe-模型"><span class="nav-text">将 PyTorch 模型转换成 Caffe 模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DataLoader"><span class="nav-text">DataLoader</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RuntimeError-invalid-argument-0-Sizes-of-tensors-must-match-except-in-dimension-0-Got-37-and-1-in-dimension-1"><span class="nav-text">RuntimeError: invalid argument 0: Sizes of tensors must match except in dimension 0. Got 37 and 1 in dimension 1</span></a></li></ol></div>
             
 
           </div>
@@ -947,7 +956,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">28:10</span>
+    <span title="站点阅读时长">28:14</span>
   
 </div>
 

@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="12345from tqdm import tqdmimport timefor i in tqdm(range(1000)):    time.sleep(0.01) 效果如下:137%|█████████                     | 370/1000 [00:03&amp;lt;00:06, 98.89it/s] 只要是可迭代的对象都可以使用 tqdm, 例如 PyTorch 的 Da">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-05T01:23:48.564Z">
+<meta property="og:updated_time" content="2019-04-19T13:44:51.797Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tqdm模块-进度条">
 <meta name="twitter:description" content="12345from tqdm import tqdmimport timefor i in tqdm(range(1000)):    time.sleep(0.01) 效果如下:137%|█████████                     | 370/1000 [00:03&amp;lt;00:06, 98.89it/s] 只要是可迭代的对象都可以使用 tqdm, 例如 PyTorch 的 Da">
@@ -481,8 +481,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-05T09:23:48+08:00" content="2019-03-05">
-      		  2019-03-05
+    		<time itemprop="dateUpdated" datetime="2019-04-19T21:44:51+08:00" content="2019-04-19">
+      		  2019-04-19
     		</time>
   	  </span>
 	  
@@ -535,7 +535,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">515</span>
+                <span title="本文字数">849</span>
               
 
               
@@ -575,6 +575,7 @@
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> inputs, labels <span class="keyword">in</span> tqdm(dataloader):</span><br><span class="line">    <span class="comment"># ... 输出形式和上面相同</span></span><br></pre></td></tr></table></figure>
 <h1 id="tqdm-不能单行显示的问题"><a href="#tqdm-不能单行显示的问题" class="headerlink" title="tqdm 不能单行显示的问题"></a>tqdm 不能单行显示的问题</h1><p>原因: 有些 IDE 不支持回车(CR), 导致每次新的进度条不能覆盖旧的进度条, 出现原因的问题也可能是手动终止进程导致 tqdm 没有完全退出导致的, 应使用 <code>t.close()</code> 使其正确关闭:</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">with</span> tqdm(...) <span class="keyword">as</span> t:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> t:</span><br><span class="line">            ...</span><br><span class="line"><span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">    t.close()</span><br><span class="line">    <span class="keyword">raise</span></span><br><span class="line">t.close()</span><br></pre></td></tr></table></figure>
+<h1 id="progressbar"><a href="#progressbar" class="headerlink" title="progressbar"></a>progressbar</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> progressbar <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">widgets = [<span class="string">'bar name:'</span>, Percentage(), <span class="string">' '</span>, Bar(<span class="string">'#'</span>), <span class="string">' '</span>, Timer(),</span><br><span class="line">        <span class="string">' '</span>, EAT(), <span class="string">' '</span>, FileTransferSpeed()]</span><br><span class="line">pbar = ProgressBar(widgets=widgets)</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> pbar(range(<span class="number">1000</span>)):</span><br><span class="line">        time.sleep(<span class="number">0.01</span>)</span><br><span class="line"><span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">    pbar.finish()</span><br><span class="line">    <span class="keyword">raise</span></span><br><span class="line">pbar.finish()</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -863,7 +864,11 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                    <a href="https://blog.csdn.net/ksws0292756" title="零域CSDN博客" target="_blank">零域CSDN博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xinghanzzy.github.io/" title="BoXiao的博客" target="_blank">BoXiao的博客</a>
                   </li>
                 
               </ul>
@@ -888,7 +893,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tqdm-不能单行显示的问题"><span class="nav-text">tqdm 不能单行显示的问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tqdm-不能单行显示的问题"><span class="nav-text">tqdm 不能单行显示的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#progressbar"><span class="nav-text">progressbar</span></a></li></ol></div>
             
 
           </div>
@@ -934,7 +939,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">28:10</span>
+    <span title="站点阅读时长">28:14</span>
   
 </div>
 

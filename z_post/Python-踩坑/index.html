@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="plt.title: ‘str’ object is not callable在交互式对话框中(如 jupyter notebook), 如果之前输入了 plt.title = &amp;quot;image&amp;quot;, 那么 plt.title 就不再是一个函数了, 所以会报错. 解决方法是重启 kernel no module named ‘torch.utils.data.DataLoader’导">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-15T06:12:41.433Z">
+<meta property="og:updated_time" content="2019-04-17T11:18:02.551Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python 踩坑记录">
 <meta name="twitter:description" content="plt.title: ‘str’ object is not callable在交互式对话框中(如 jupyter notebook), 如果之前输入了 plt.title = &amp;quot;image&amp;quot;, 那么 plt.title 就不再是一个函数了, 所以会报错. 解决方法是重启 kernel no module named ‘torch.utils.data.DataLoader’导">
@@ -481,8 +481,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-04-15T14:12:41+08:00" content="2019-04-15">
-      		  2019-04-15
+    		<time itemprop="dateUpdated" datetime="2019-04-17T19:18:02+08:00" content="2019-04-17">
+      		  2019-04-17
     		</time>
   	  </span>
 	  
@@ -535,7 +535,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">806</span>
+                <span title="本文字数">2.3k</span>
               
 
               
@@ -549,7 +549,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">2 分钟</span>
               
             </div>
           
@@ -575,6 +575,13 @@
 <h1 id="takes-0-positional-arguments-but-1-was-given"><a href="#takes-0-positional-arguments-but-1-was-given" class="headerlink" title="takes 0 positional arguments but 1 was given"></a>takes 0 positional arguments but 1 was given</h1><p>在类中的函数, 会自动传递<code>self</code>参数, 因此在定义函数的时候不要忘了加上该参数, 否则会在调用时显示参数数量不匹配的错误.</p>
 <h1 id="python-的赋值运算符"><a href="#python-的赋值运算符" class="headerlink" title="python 的赋值运算符"></a>python 的赋值运算符</h1><p>python 对于基本类型的数据, 使用<code>=</code>不会对原来的变量造成影响, 拷贝后的变量无关联:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">10</span></span><br><span class="line">b = a</span><br><span class="line">b = <span class="number">20</span></span><br><span class="line">print(a) <span class="comment"># 10</span></span><br><span class="line">print(b) <span class="comment"># 20</span></span><br></pre></td></tr></table></figure></p>
 <p>python 对于对象类型的数据, 使用<code>=</code>是浅拷贝, 拷贝后的对象指向同一个实例:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, item)</span>:</span></span><br><span class="line">        super(A, self).__init__()</span><br><span class="line">        self.item = item</span><br><span class="line"></span><br><span class="line">a = A(<span class="number">10</span>)</span><br><span class="line">b = a</span><br><span class="line">b.item = <span class="number">20</span></span><br><span class="line">print(a.item) <span class="comment"># 20</span></span><br><span class="line">print(b.item) <span class="comment"># 20</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="TypeError-list-indices-must-be-integers-or-slices-not-tuple"><a href="#TypeError-list-indices-must-be-integers-or-slices-not-tuple" class="headerlink" title="TypeError: list indices must be integers or slices, not tuple"></a>TypeError: list indices must be integers or slices, not tuple</h1><p>列表类型的数据无法进行超过一维以上的划分, 如下所示:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a[:<span class="number">5</span>] <span class="comment"># 正确</span></span><br><span class="line">a[:, :<span class="number">5</span>] <span class="comment"># 报错</span></span><br></pre></td></tr></table></figure></p>
+<p>因此, 在因此二维以上的操作时, 应该现将其转换成<code>numpy</code>数组, 在进行划分, 如下所示:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = np.array(a)</span><br><span class="line">a[:, :<span class="number">5</span>] <span class="comment"># 正确</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="TypeError-Cannot-cast-ufunc-subtract-output-from-dtype-‘int64’-to-dtype-‘uint8’-with-casting-rule-‘same-kind’"><a href="#TypeError-Cannot-cast-ufunc-subtract-output-from-dtype-‘int64’-to-dtype-‘uint8’-with-casting-rule-‘same-kind’" class="headerlink" title="TypeError: Cannot cast ufunc subtract output from dtype(‘int64’) to dtype(‘uint8’) with casting rule ‘same_kind’"></a>TypeError: Cannot cast ufunc subtract output from dtype(‘int64’) to dtype(‘uint8’) with casting rule ‘same_kind’</h1><p>在进行强制类型转换时, <strong>不能向上转, 只能向下转</strong></p>
+<h1 id="detach-和-data-的区别"><a href="#detach-和-data-的区别" class="headerlink" title="detach() 和 data 的区别"></a>detach() 和 data 的区别</h1><p><a href="https://blog.csdn.net/dss_dssssd/article/details/83818181" target="_blank" rel="noopener">https://blog.csdn.net/dss_dssssd/article/details/83818181</a></p>
+<p><code>tensor.data</code>和<code>tensor.detach()</code>的功能都是获取和<code>tensor</code>相同的数据, <strong>并且当对获取到的值进行修改时, 原来的<code>tensor</code>也会被修改</strong>. 它们之间的区别在于<code>data</code>并不会将修改记录到<code>tensor</code>的加入到历史中, 而<code>.detach()</code>会将修改记录到历史中, 这样, 当在进行反向传播时, 如果通过<code>.detach()</code>对原始数据进行了修改, 程序就会报错, 而<code>data</code>不会提示任何错误, <strong>这样存在很大的风险, 具体看下面代码示例.</strong></p>
+<p>torch.data<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = torch.tensor([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3.</span>], requires_grad =<span class="keyword">True</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>out = a.sigmoid()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c = out.data</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c.zero_()</span><br><span class="line">tensor([ <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>])</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>out                   <span class="comment">#  out的数值被c.zero_()修改</span></span><br><span class="line">tensor([ <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>])</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>out.sum().backward()  <span class="comment">#  反向传播</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a.grad <span class="comment">#  这个结果很严重的错误，因为out已经改变了, 但是程序没有报错, 存在隐患</span></span><br><span class="line">tensor([ <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>])</span><br></pre></td></tr></table></figure></p>
+<p>torch.detach()<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = torch.tensor([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3.</span>], requires_grad =<span class="keyword">True</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>out = a.sigmoid()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c = out.detach()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c.zero_()</span><br><span class="line">tensor([ <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>])</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>out                   <span class="comment">#  out的值被c.zero_()修改 !!</span></span><br><span class="line">tensor([ <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编译错误, 避免了安全隐患</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>out.sum().backward()  <span class="comment">#  需要原来out得值，但是已经被c.zero_()覆盖了，结果报错</span></span><br><span class="line">RuntimeError: one of the variables needed <span class="keyword">for</span> gradient</span><br><span class="line">computation has been modified by an</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -865,7 +872,11 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                    <a href="https://blog.csdn.net/ksws0292756" title="零域CSDN博客" target="_blank">零域CSDN博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xinghanzzy.github.io/" title="BoXiao的博客" target="_blank">BoXiao的博客</a>
                   </li>
                 
               </ul>
@@ -890,7 +901,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#plt-title-‘str’-object-is-not-callable"><span class="nav-text">plt.title: ‘str’ object is not callable</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#no-module-named-‘torch-utils-data-DataLoader’"><span class="nav-text">no module named ‘torch.utils.data.DataLoader’</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#takes-0-positional-arguments-but-1-was-given"><span class="nav-text">takes 0 positional arguments but 1 was given</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#python-的赋值运算符"><span class="nav-text">python 的赋值运算符</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#plt-title-‘str’-object-is-not-callable"><span class="nav-text">plt.title: ‘str’ object is not callable</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#no-module-named-‘torch-utils-data-DataLoader’"><span class="nav-text">no module named ‘torch.utils.data.DataLoader’</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#takes-0-positional-arguments-but-1-was-given"><span class="nav-text">takes 0 positional arguments but 1 was given</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#python-的赋值运算符"><span class="nav-text">python 的赋值运算符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TypeError-list-indices-must-be-integers-or-slices-not-tuple"><span class="nav-text">TypeError: list indices must be integers or slices, not tuple</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TypeError-Cannot-cast-ufunc-subtract-output-from-dtype-‘int64’-to-dtype-‘uint8’-with-casting-rule-‘same-kind’"><span class="nav-text">TypeError: Cannot cast ufunc subtract output from dtype(‘int64’) to dtype(‘uint8’) with casting rule ‘same_kind’</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#detach-和-data-的区别"><span class="nav-text">detach() 和 data 的区别</span></a></li></ol></div>
             
 
           </div>
@@ -936,7 +947,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">28:10</span>
+    <span title="站点阅读时长">28:14</span>
   
 </div>
 

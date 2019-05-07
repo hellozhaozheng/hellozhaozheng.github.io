@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="1.查看磁盘空间  df -hl 查看磁盘剩余空间 df -h 查看每个根路径的分区大小 2.查看文件/文件夹大小 查看指定文件/文件夹大小：du -hs &amp;lt;文件名或文件夹名&amp;gt; 查看当前文件夹下所有文件大小（包括子文件夹）：du -sh  3.查看文件数量 统计当前目录下文件的个数（不包括目录） ls -l | grep “^-“ | wc -l作者：spectre7来源：CSDN原文">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-16T08:16:16.314Z">
+<meta property="og:updated_time" content="2019-04-24T12:57:47.025Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux-常用指令助记">
 <meta name="twitter:description" content="1.查看磁盘空间  df -hl 查看磁盘剩余空间 df -h 查看每个根路径的分区大小 2.查看文件/文件夹大小 查看指定文件/文件夹大小：du -hs &amp;lt;文件名或文件夹名&amp;gt; 查看当前文件夹下所有文件大小（包括子文件夹）：du -sh  3.查看文件数量 统计当前目录下文件的个数（不包括目录） ls -l | grep “^-“ | wc -l作者：spectre7来源：CSDN原文">
@@ -481,8 +481,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-04-16T16:16:16+08:00" content="2019-04-16">
-      		  2019-04-16
+    		<time itemprop="dateUpdated" datetime="2019-04-24T20:57:47+08:00" content="2019-04-24">
+      		  2019-04-24
     		</time>
   	  </span>
 	  
@@ -535,7 +535,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.8k</span>
+                <span title="本文字数">2.2k</span>
               
 
               
@@ -588,12 +588,15 @@
 <p>sudo docker pull registry.cn-hangzhou.aliyuncs.com/zerozone/non-target-baseline-local:[镜像版本号]<br>sudo docker pull registry.cn-hangzhou.aliyuncs.com/zerozone/non-target-baseline-local:[镜像版本号]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">将镜像推送到Registry</span><br></pre></td></tr></table></figure></p>
 <p>$ sudo docker login —username=ksws840662044 registry.cn-hangzhou.aliyuncs.com<br>$ sudo docker tag [ImageId] registry.cn-hangzhou.aliyuncs.com/zerozone/non-target-baseline-local:[镜像版本号]<br>$ sudo docker push registry.cn-hangzhou.aliyuncs.com/zerozone/non-target-baseline-local:[镜像版本号]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">把容器打包成镜像</span><br></pre></td></tr></table></figure></p>
 <p>docker commit -m  “”   -a  “”   [CONTAINER ID]  [给新的镜像命名]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">查看镜像</span><br></pre></td></tr></table></figure></p>
-<p>docker images<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">将制定imageid的镜像重命名</span><br></pre></td></tr></table></figure></p>
+<p>docker images<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">将指定的imageid的镜像重命名</span><br></pre></td></tr></table></figure></p>
 <p>$ sudo docker tag [ImageId] registry.cn-hangzhou.aliyuncs.com/zerozone/non-target-baseline-local:[镜像版本号]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">推送</span><br></pre></td></tr></table></figure></p>
 <p>sudo docker push registry.cn-hangzhou.aliyuncs.com/zerozone/non-target-baseline-local:1.0.2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">从本地push到镜像</span><br></pre></td></tr></table></figure></p>
 <p>sudo docker login —username=${uname} registry.cn-shanghai.aliyuncs.com<br>cd ${code_path} # where there is a Dockerfile for build this docker image<br>docker build -t ${docker_image_path}:${tag_version} .<br>docker push ${docker_image_path}:${tag_version}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">查看容器:</span><br></pre></td></tr></table></figure></p>
 <p>docker ps -a<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">启动容器</span><br></pre></td></tr></table></figure></p>
-<h1 id="CONTAINER-ID-a364c4f5ab8a"><a href="#CONTAINER-ID-a364c4f5ab8a" class="headerlink" title="CONTAINER ID = a364c4f5ab8a"></a>CONTAINER ID = a364c4f5ab8a</h1><p>sudo nvidia-docker start a364c4f5ab8a<br>sudo nvidia-docker attach a364c4f5ab8a<br>```</p>
+<h1 id="CONTAINER-ID-a364c4f5ab8a"><a href="#CONTAINER-ID-a364c4f5ab8a" class="headerlink" title="CONTAINER ID = a364c4f5ab8a"></a>CONTAINER ID = a364c4f5ab8a</h1><p>sudo nvidia-docker start a364c4f5ab8a<br>sudo nvidia-docker attach a364c4f5ab8a<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">容器和本地之间的文件拷贝:</span><br><span class="line">将主机`/www/runoob`目录拷贝到容器 96f7f14e99ab(Container ID) 中 `/www` 目录下</span><br></pre></td></tr></table></figure></p>
+<p>docker cp /www/runoob 96f7f14e99ab:/www/<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">反之:</span><br></pre></td></tr></table></figure></p>
+<p>docker cp 96f7f14e99ab:/www/ /www/runoob<br>```</p>
+<h1 id="命令行光标移动快捷键"><a href="#命令行光标移动快捷键" class="headerlink" title="命令行光标移动快捷键"></a>命令行光标移动快捷键</h1><p>ctrl+a/e: 跳至行首/尾<br>ctrl+f/b: 左/右移一个字符<br>alt+f/b: 左/右一个单词<br>ctrl+h/d: 左/右删除<br>ctrl+u/k: 删除剩余(u不好使? 会删除所有), 带有剪切功能<br>ctrl+y: 复制<br>ctrl + p/n: 上一条/下一条历史记录<br>alt + p/n: 上一条/下一条最相近的历史记录</p>
 
       
     </div>
@@ -882,7 +885,11 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                    <a href="https://blog.csdn.net/ksws0292756" title="零域CSDN博客" target="_blank">零域CSDN博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xinghanzzy.github.io/" title="BoXiao的博客" target="_blank">BoXiao的博客</a>
                   </li>
                 
               </ul>
@@ -907,7 +914,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ls-l-grep-“-“-wc-l"><span class="nav-text">ls -l | grep “^-“ | wc -l</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tar"><span class="nav-text">tar</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cat"><span class="nav-text">cat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#grep"><span class="nav-text">grep</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ls"><span class="nav-text">ls</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#统计文件个数"><span class="nav-text">统计文件个数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更换国内镜像源"><span class="nav-text">更换国内镜像源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CONTAINER-ID-a364c4f5ab8a"><span class="nav-text">CONTAINER ID = a364c4f5ab8a</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ls-l-grep-“-“-wc-l"><span class="nav-text">ls -l | grep “^-“ | wc -l</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tar"><span class="nav-text">tar</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cat"><span class="nav-text">cat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#grep"><span class="nav-text">grep</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ls"><span class="nav-text">ls</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#统计文件个数"><span class="nav-text">统计文件个数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更换国内镜像源"><span class="nav-text">更换国内镜像源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CONTAINER-ID-a364c4f5ab8a"><span class="nav-text">CONTAINER ID = a364c4f5ab8a</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#命令行光标移动快捷键"><span class="nav-text">命令行光标移动快捷键</span></a></div>
             
 
           </div>
@@ -953,7 +960,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">28:10</span>
+    <span title="站点阅读时长">28:14</span>
   
 </div>
 

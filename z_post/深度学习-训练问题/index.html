@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="在图像分类任务中, 训练数据不足会带来什么问题, 如何缓解数据量不足带来的问题?(百面: 1.07.1)带来的问题: 过拟合处理方法  基于模型的方法: 采用降低过拟合风险的措施,包括简化模型(如将非线性简化成线性), 添加约束项以缩小假设空间(如L1和L2正则化), 集成学习, Dropout超参数等. 基于数据的方法, 主要通过数据扩充(Data Augmentation), 即根据一些先验">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-31T14:04:22.946Z">
+<meta property="og:updated_time" content="2019-05-06T13:27:05.039Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="训练过程中遇到的问题及解决方案">
 <meta name="twitter:description" content="在图像分类任务中, 训练数据不足会带来什么问题, 如何缓解数据量不足带来的问题?(百面: 1.07.1)带来的问题: 过拟合处理方法  基于模型的方法: 采用降低过拟合风险的措施,包括简化模型(如将非线性简化成线性), 添加约束项以缩小假设空间(如L1和L2正则化), 集成学习, Dropout超参数等. 基于数据的方法, 主要通过数据扩充(Data Augmentation), 即根据一些先验">
@@ -481,8 +481,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-31T22:04:22+08:00" content="2019-03-31">
-      		  2019-03-31
+    		<time itemprop="dateUpdated" datetime="2019-05-06T21:27:05+08:00" content="2019-05-06">
+      		  2019-05-06
     		</time>
   	  </span>
 	  
@@ -535,7 +535,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">3.2k</span>
+                <span title="本文字数">3.9k</span>
               
 
               
@@ -549,7 +549,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">3 分钟</span>
+                <span title="阅读时长">4 分钟</span>
               
             </div>
           
@@ -613,6 +613,7 @@
 </ul>
 <p>解决梯度爆炸的方法通常是对数据进行归一化(BN, GN 等), 减小学习率, 加入 gradient clipping, 更换参数初始化方法(待商榷).</p>
 <p>对于 $log$ 项出现负值或者 0 的情况(Softmax 激活函数的取值范围是 [0,1], 因此有可能输出 0), 首先确保网络使用了正确的初始化方法(若参数全为 0, 则输出也为 0), 其次, 检查数据本身是否存在问题, 因为实际业务上的真实数据通常还有大量的脏数据, 有时候数据本身就还有 Nan 值, 因此, 在训练网络之前 先要确保数据是正确的. 可以设计一个简单的小网络, 然后将所有数据跑一遍, 再根据日志信息去除其中的脏数据.</p>
+<p>loss 的计算问题, 当我们采用先求取<code>loss</code>的和, 再做归一化除法时, 如果<code>batch_size</code>过大, 那么<code>loss</code>之和可能会超过数据类型的表示上限, 此时, 有两种解决方法, 一种是将数据类型的表示范围提高, 例如将<code>float</code>变成<code>double</code>, 但是这样也不保险, 较好的做法是在计算<code>loss</code>时, 避免添加操作, 或者预先估计loss的大小<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 提升 loss 的表示范围, 修改自 ssd.pytorch 代码</span></span><br><span class="line">N = num_pos.data.sum().double()</span><br><span class="line">loss_l = loss_l.double()</span><br><span class="line">loss_c = loss_c.double()</span><br></pre></td></tr></table></figure></p>
 <p>如果以上方法都不能解决问题的话, 那应该就是网络结构本身或者损失函数可能存在 Bug, 需要进一步更细致的分析. 如将网络拆解开来, 减少层数, 对不同层进行测试等等.</p>
 <p><span id="过拟合是什么? 如何处理过拟合?"></span></p>
 <h1 id="过拟合是什么-如何处理过拟合"><a href="#过拟合是什么-如何处理过拟合" class="headerlink" title="过拟合是什么? 如何处理过拟合?"></a>过拟合是什么? 如何处理过拟合?</h1><p><strong>过拟合定义:</strong> 当模型在训练数据上拟合的非常好, 但是在训练数据意外的测试集上却不能很好的拟合数据, 此时就说明这个模型出现的过拟合现象.</p>
@@ -632,7 +633,14 @@
 <li>首先看看是否是神经网络本身的拟合能力不足导致的, 具体方法是让神经网络在每次训练时, 只迭代 <strong>同样的数据</strong>, 甚至每一个 batch 里面也是完全相同一模一样的数据, 再来看看 loss 值和 accurancy 值的变化. 如果这时候 loss 开始下降, accurancy 也开始上升了, 并且在训练了一段时间后神经网络能够正确地计算出所训练样本的输出值, 那么这种情况属于神经网络拟合能力不足. 因为对于大量的数据样本, 神经网络由于自身能力的原因无法去拟合全部数据, 只能拟合大量样本的整体特征, 或者少数样本的具体特征. 对于拟合能力不足问题, 通常可以增加网络层数, 增加神经元个数, 增大卷积核通道数等方法.</li>
 <li>如果不是拟合能力不足导致的欠拟合, 就需要尝试其他方法, 更改网络初始化方法(Xavier, MSRA), 更改优化器, 降低学习率</li>
 </ol>
-<p><span id="如何选取 Batch Size 的值? 显存中通常会存储哪些东西?"></span></p>
+<p><span id=" 的实现方式在训练阶段和测试阶段有什么不同? 如何保持训练和测试阶段的一致性?"></span></p>
+<h1 id="Dropout-的实现方式在训练阶段和测试阶段有什么不同-如何保持训练和测试阶段的一致性"><a href="#Dropout-的实现方式在训练阶段和测试阶段有什么不同-如何保持训练和测试阶段的一致性" class="headerlink" title="Dropout 的实现方式在训练阶段和测试阶段有什么不同? 如何保持训练和测试阶段的一致性?"></a>Dropout 的实现方式在训练阶段和测试阶段有什么不同? 如何保持训练和测试阶段的一致性?</h1><p>Dropout 的实现方式有两种:</p>
+<ul>
+<li>直接 Dropout: 使用较少, AlexNet 使用的是这种Dropout. 该方法在训练阶段会按照保留概率来决定是否将神经元的激活值置为0. <strong>同时, 为了保持训练阶段和测试阶段数值的一致性, 会在测试阶段对所有的计算结果乘以保留概率.</strong></li>
+<li>Inverted Dropout: 这是目前常用的方法. 该方法在训练阶段会按照保留概率来决定是否将神经元的激活值置为0, <strong>并且, 在训练阶段会令输出值都会乘以 $\frac{1}{\alpha_{dropout}}$, 这样一来, 在训练阶段可以随时更改 dropout 的参数值, 而对于测试阶段来说, 无需对神经元进行任何额外处理, 所有的神经元都相当于适配了训练过程中 dropout 对参数数值大小带来的影响.</strong></li>
+</ul>
+<p><span id="Dropout 为什么可以起到防止过拟合的作用?"></span></p>
+<h1 id="Dropout-为什么可以起到防止过拟合的作用"><a href="#Dropout-为什么可以起到防止过拟合的作用" class="headerlink" title="Dropout 为什么可以起到防止过拟合的作用?"></a>Dropout 为什么可以起到防止过拟合的作用?</h1><p><span id="如何选取 Batch Size 的值? 显存中通常会存储哪些东西?"></span></p>
 <h1 id="如何选取-Batch-Size-的值-显存中通常会存储哪些东西"><a href="#如何选取-Batch-Size-的值-显存中通常会存储哪些东西" class="headerlink" title="如何选取 Batch Size 的值? 显存中通常会存储哪些东西?"></a>如何选取 Batch Size 的值? 显存中通常会存储哪些东西?</h1>
       
     </div>
@@ -923,7 +931,11 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://blog.csdn.net/ksws0292756" title="CSDN博客" target="_blank">CSDN博客</a>
+                    <a href="https://blog.csdn.net/ksws0292756" title="零域CSDN博客" target="_blank">零域CSDN博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xinghanzzy.github.io/" title="BoXiao的博客" target="_blank">BoXiao的博客</a>
                   </li>
                 
               </ul>
@@ -948,7 +960,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#在图像分类任务中-训练数据不足会带来什么问题-如何缓解数据量不足带来的问题"><span class="nav-text">在图像分类任务中, 训练数据不足会带来什么问题, 如何缓解数据量不足带来的问题?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何解决数据不均衡问题"><span class="nav-text">如何解决数据不均衡问题?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#训练不收敛的具体表现是什么-可能的原因是什么-如何解决"><span class="nav-text">训练不收敛的具体表现是什么? 可能的原因是什么? 如何解决?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#训练过程中出现-Nan-值是什么原因-如何解决"><span class="nav-text">训练过程中出现 Nan 值是什么原因? 如何解决?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#过拟合是什么-如何处理过拟合"><span class="nav-text">过拟合是什么? 如何处理过拟合?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#欠拟合是什么-如何处理欠拟合"><span class="nav-text">欠拟合是什么? 如何处理欠拟合?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何选取-Batch-Size-的值-显存中通常会存储哪些东西"><span class="nav-text">如何选取 Batch Size 的值? 显存中通常会存储哪些东西?</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#在图像分类任务中-训练数据不足会带来什么问题-如何缓解数据量不足带来的问题"><span class="nav-text">在图像分类任务中, 训练数据不足会带来什么问题, 如何缓解数据量不足带来的问题?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何解决数据不均衡问题"><span class="nav-text">如何解决数据不均衡问题?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#训练不收敛的具体表现是什么-可能的原因是什么-如何解决"><span class="nav-text">训练不收敛的具体表现是什么? 可能的原因是什么? 如何解决?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#训练过程中出现-Nan-值是什么原因-如何解决"><span class="nav-text">训练过程中出现 Nan 值是什么原因? 如何解决?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#过拟合是什么-如何处理过拟合"><span class="nav-text">过拟合是什么? 如何处理过拟合?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#欠拟合是什么-如何处理欠拟合"><span class="nav-text">欠拟合是什么? 如何处理欠拟合?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dropout-的实现方式在训练阶段和测试阶段有什么不同-如何保持训练和测试阶段的一致性"><span class="nav-text">Dropout 的实现方式在训练阶段和测试阶段有什么不同? 如何保持训练和测试阶段的一致性?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dropout-为什么可以起到防止过拟合的作用"><span class="nav-text">Dropout 为什么可以起到防止过拟合的作用?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何选取-Batch-Size-的值-显存中通常会存储哪些东西"><span class="nav-text">如何选取 Batch Size 的值? 显存中通常会存储哪些东西?</span></a></li></ol></div>
             
 
           </div>
@@ -994,7 +1006,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">28:10</span>
+    <span title="站点阅读时长">28:14</span>
   
 </div>
 
