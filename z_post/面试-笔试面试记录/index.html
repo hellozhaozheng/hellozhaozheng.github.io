@@ -112,17 +112,17 @@
 
 
 
-  <meta name="description" content="03.07 360 提前批笔试数星星时间限制：C/C++语言 1000MS；其他语言 3000MS内存限制：C/C++语言 65536KB；其他语言 589824KB题目描述：给出一个m*n的只由01组成的矩阵，我们称包含：123 1111 1 这样的形状为星星（矩阵的四角为0、1均可），现在要从这个矩阵中选出一个矩形区域，要求这个矩形区域中至少有k个星星，问有多少个这样的矩形区域。（矩形区域即选">
+  <meta name="description" content="商汤科技实习二面FLOPs的计算nxn 的矩阵乘法的 FLOPs卷积的 FLOPs 的计算模型在inference时除了 FLOPs 还有哪些影响速度的因素? BN 在 Inference 阶段可以放到其他操作理做吗? Conv + BN 可以吗Conv + relu + BN 可以吗Depthwise + BN 可以吗Depthwise + relu + BN 可以吗 CNN 具有平移不变性吗?">
 <meta property="og:type" content="article">
 <meta property="og:title" content="笔试及面试记录">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/面试-笔试面试记录/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="03.07 360 提前批笔试数星星时间限制：C/C++语言 1000MS；其他语言 3000MS内存限制：C/C++语言 65536KB；其他语言 589824KB题目描述：给出一个m*n的只由01组成的矩阵，我们称包含：123 1111 1 这样的形状为星星（矩阵的四角为0、1均可），现在要从这个矩阵中选出一个矩形区域，要求这个矩形区域中至少有k个星星，问有多少个这样的矩形区域。（矩形区域即选">
+<meta property="og:description" content="商汤科技实习二面FLOPs的计算nxn 的矩阵乘法的 FLOPs卷积的 FLOPs 的计算模型在inference时除了 FLOPs 还有哪些影响速度的因素? BN 在 Inference 阶段可以放到其他操作理做吗? Conv + BN 可以吗Conv + relu + BN 可以吗Depthwise + BN 可以吗Depthwise + relu + BN 可以吗 CNN 具有平移不变性吗?">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-24T10:33:48.177Z">
+<meta property="og:updated_time" content="2019-05-09T09:07:49.086Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="笔试及面试记录">
-<meta name="twitter:description" content="03.07 360 提前批笔试数星星时间限制：C/C++语言 1000MS；其他语言 3000MS内存限制：C/C++语言 65536KB；其他语言 589824KB题目描述：给出一个m*n的只由01组成的矩阵，我们称包含：123 1111 1 这样的形状为星星（矩阵的四角为0、1均可），现在要从这个矩阵中选出一个矩形区域，要求这个矩形区域中至少有k个星星，问有多少个这样的矩形区域。（矩形区域即选">
+<meta name="twitter:description" content="商汤科技实习二面FLOPs的计算nxn 的矩阵乘法的 FLOPs卷积的 FLOPs 的计算模型在inference时除了 FLOPs 还有哪些影响速度的因素? BN 在 Inference 阶段可以放到其他操作理做吗? Conv + BN 可以吗Conv + relu + BN 可以吗Depthwise + BN 可以吗Depthwise + relu + BN 可以吗 CNN 具有平移不变性吗?">
 
 
 
@@ -480,8 +480,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-24T18:33:48+08:00" content="2019-03-24">
-      		  2019-03-24
+    		<time itemprop="dateUpdated" datetime="2019-05-09T17:07:49+08:00" content="2019-05-09">
+      		  2019-05-09
     		</time>
   	  </span>
 	  
@@ -534,7 +534,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">2.4k</span>
+                <span title="本文字数">2.9k</span>
               
 
               
@@ -548,7 +548,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">2 分钟</span>
+                <span title="阅读时长">3 分钟</span>
               
             </div>
           
@@ -568,7 +568,17 @@
       
 
       
-        <h1 id="03-07-360-提前批笔试"><a href="#03-07-360-提前批笔试" class="headerlink" title="03.07 360 提前批笔试"></a>03.07 360 提前批笔试</h1><h2 id="数星星"><a href="#数星星" class="headerlink" title="数星星"></a>数星星</h2><p>时间限制：C/C++语言 1000MS；其他语言 3000MS<br>内存限制：C/C++语言 65536KB；其他语言 589824KB<br>题目描述：<br>给出一个m*n的只由01组成的矩阵，我们称包含：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> 1</span><br><span class="line">111</span><br><span class="line"> 1</span><br></pre></td></tr></table></figure></p>
+        <h1 id="商汤科技实习二面"><a href="#商汤科技实习二面" class="headerlink" title="商汤科技实习二面"></a>商汤科技实习二面</h1><p>FLOPs的计算<br>nxn 的矩阵乘法的 FLOPs<br>卷积的 FLOPs 的计算<br>模型在inference时除了 FLOPs 还有哪些影响速度的因素?</p>
+<p>BN 在 Inference 阶段可以放到其他操作理做吗?</p>
+<p>Conv + BN 可以吗<br>Conv + relu + BN 可以吗<br>Depthwise + BN 可以吗<br>Depthwise + relu + BN 可以吗</p>
+<p>CNN 具有平移不变性吗?</p>
+<p>anchor 是越多越好吗? 除了速度降低外, anchor 多了还会有其他什么缺点吗?</p>
+<p>anchor 的作用是什么?</p>
+<p>anchor free 方法有什么优势或者好处?</p>
+<p>yolo 的anchor free 方法有什么优势?</p>
+<p>虚函数的作用<br>虚函数的实现<br>c++11 的特点<br>什么时候用智能指针, 什么时候不用? 智能指针有什么缺点?<br>vector 的内存扩增机制, 成倍增长相对于线性增长有什么优势? 1.5倍和2.0倍有什么区别?<br>struct 为什么要字节对齐? 为什么是4字节? 为什么是8字节?<br>map 和 unorderd_map 的区别? map 的排序依据是什么?</p>
+<p>物体检测还有什么可以继续完善的地方? 如果让你去做, 你会怎么改进?</p>
+<h1 id="03-07-360-提前批笔试"><a href="#03-07-360-提前批笔试" class="headerlink" title="03.07 360 提前批笔试"></a>03.07 360 提前批笔试</h1><h2 id="数星星"><a href="#数星星" class="headerlink" title="数星星"></a>数星星</h2><p>时间限制：C/C++语言 1000MS；其他语言 3000MS<br>内存限制：C/C++语言 65536KB；其他语言 589824KB<br>题目描述：<br>给出一个m*n的只由01组成的矩阵，我们称包含：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> 1</span><br><span class="line">111</span><br><span class="line"> 1</span><br></pre></td></tr></table></figure></p>
 <p>这样的形状为星星（矩阵的四角为0、1均可），现在要从这个矩阵中选出一个矩形区域，要求这个矩形区域中至少有k个星星，问有多少个这样的矩形区域。（矩形区域即选取连续的若干行和连续的若干列所构成的交集区域）</p>
 <p>输入<br>输入第一行包含三个整数n,m,k(1&lt;=n,m&lt;=500,1&lt;=k&lt;=m*n), n和m分别表示矩阵的行数和列数。<br>接下来有n行，每行包含一个长度为m的仅含01的字符串，描述这个矩阵。</p>
 <p>输出<br>输出仅包含一个正整数，表示符合要求的矩形区域的数量。</p>
@@ -942,7 +952,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#03-07-360-提前批笔试"><span class="nav-text">03.07 360 提前批笔试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数星星"><span class="nav-text">数星星</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#座位安排"><span class="nav-text">座位安排</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#03-13-阿里一面"><span class="nav-text">03.13 阿里一面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-15-海康"><span class="nav-text">3.15 海康</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-18-360"><span class="nav-text">3.18 360</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-19-360-一面"><span class="nav-text">3.19 360 一面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#杂记"><span class="nav-text">杂记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#10-项目和比赛的某些细节"><span class="nav-text">10.项目和比赛的某些细节</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#商汤科技实习二面"><span class="nav-text">商汤科技实习二面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#03-07-360-提前批笔试"><span class="nav-text">03.07 360 提前批笔试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数星星"><span class="nav-text">数星星</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#座位安排"><span class="nav-text">座位安排</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#03-13-阿里一面"><span class="nav-text">03.13 阿里一面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-15-海康"><span class="nav-text">3.15 海康</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-18-360"><span class="nav-text">3.18 360</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-19-360-一面"><span class="nav-text">3.19 360 一面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#杂记"><span class="nav-text">杂记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#10-项目和比赛的某些细节"><span class="nav-text">10.项目和比赛的某些细节</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -988,7 +998,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">28:14</span>
+    <span title="站点阅读时长">28:15</span>
   
 </div>
 
