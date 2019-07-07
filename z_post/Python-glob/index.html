@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="glob模块是Python最简单的模块之一, 内容非常少, 用它可以查找符合特定规则的文件路径名, 查找文件时只会用到三个匹配符:  * : 匹配0个或多个字符 ? : 匹配单个字符 [] : 匹配指定范围内的字符, 如[0-9]匹配数字  glob.glob()参数:_(str): 文件路径的正则表达式 返回值:_(list): 符合正则表达式的文件路径列表 备注:返回所有匹配的文件路径列表,">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-05T01:22:19.730Z">
+<meta property="og:updated_time" content="2019-06-26T02:59:16.986Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="glob模块-文件路径查找">
 <meta name="twitter:description" content="glob模块是Python最简单的模块之一, 内容非常少, 用它可以查找符合特定规则的文件路径名, 查找文件时只会用到三个匹配符:  * : 匹配0个或多个字符 ? : 匹配单个字符 [] : 匹配指定范围内的字符, 如[0-9]匹配数字  glob.glob()参数:_(str): 文件路径的正则表达式 返回值:_(list): 符合正则表达式的文件路径列表 备注:返回所有匹配的文件路径列表,">
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">244</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">263</span></a>
   </li>
         
         
@@ -328,7 +328,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">40</span></a>
   </li>
         
         
@@ -481,8 +481,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-05T09:22:19+08:00" content="2019-03-05">
-      		  2019-03-05
+    		<time itemprop="dateUpdated" datetime="2019-06-26T10:59:16+08:00" content="2019-06-26">
+      		  2019-06-26
     		</time>
   	  </span>
 	  
@@ -535,7 +535,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">605</span>
+                <span title="本文字数">853</span>
               
 
               
@@ -578,6 +578,8 @@
 <h1 id="glob-glob"><a href="#glob-glob" class="headerlink" title="glob.glob()"></a>glob.glob()</h1><p><strong>参数:</strong><br><code>_(str)</code>: 文件路径的正则表达式</p>
 <p><strong>返回值:</strong><br><code>_(list)</code>: 符合正则表达式的文件路径列表</p>
 <p><strong>备注:</strong><br>返回所有匹配的文件路径列表, 它只有一个参数pathname, 定义了文件路径匹配的规则, 这里可以是绝对路径或者相对路径:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> glob</span><br><span class="line">pathes_list = glob.glob(<span class="string">"~/Pictures/*.jpg"</span>)</span><br><span class="line"><span class="comment"># 获取Pictures下的所有图片</span></span><br><span class="line"></span><br><span class="line">relative_pathes_list = glob.glob(<span class="string">"../*.py"</span>)</span><br><span class="line"><span class="comment"># 获取上级目录中的所有.py文件</span></span><br></pre></td></tr></table></figure></p>
+<p>在 linux, osx 系统中, 通配符的匹配是大小写区分的, 也就是需要特别指定大小写:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">extensions = [&apos;jpg&apos;, &apos;JPG&apos;, &apos;jpeg&apos;, &apos;JPEG&apos;]</span><br></pre></td></tr></table></figure></p>
+<p>但是在 windows 当中, 通配符的匹配是不区分大小写的, 因此只需要指定大小写中的一个即可, 两个都指定的话, 会出现重复的情况<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">extensions = [&apos;jpg&apos;, &apos;jpeg&apos;]</span><br></pre></td></tr></table></figure></p>
 <h1 id="glob-iglob"><a href="#glob-iglob" class="headerlink" title="glob.iglob"></a>glob.iglob</h1><p>获取一个可遍历的对象, 使用它可以逐个获取匹配的文件路径名. 与<code>glob.glob()</code>的区别是: <code>glob.glob()</code>会同时获取到所有的匹配路径, 而<code>glob.iglob()</code>一次只获取一个匹配路径.<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f = glob.iglob(<span class="string">"../*.py"</span>)</span><br><span class="line"><span class="keyword">print</span> f <span class="comment"># &lt;generator object iglob at 0x00B9FF80&gt;</span></span><br><span class="line"><span class="keyword">for</span> py <span class="keyword">in</span> f:</span><br><span class="line">    print(py)</span><br></pre></td></tr></table></figure></p>
 
       
@@ -702,7 +704,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">244</span>
+                    <span class="site-state-item-count">263</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -828,7 +830,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">37</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -933,7 +941,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.9m</span>
+    <span title="站点总字数">2.3m</span>
   
 
   
@@ -942,7 +950,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">28:15</span>
+    <span title="站点阅读时长">34:29</span>
   
 </div>
 

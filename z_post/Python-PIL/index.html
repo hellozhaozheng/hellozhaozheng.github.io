@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="导入1from PIL import Image 读取1img = Image.open(filepath) 显示1img.show() 与 numpy 数组的互相转换PIL Image 转 numpy 数组 1img_to_array = np.array(img) numpy 数组转 PIL Image (注意要确保数组内的值符合 PIL 的要求)1array_to_img = Image.f">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-05T01:23:01.802Z">
+<meta property="og:updated_time" content="2019-07-02T10:23:15.334Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python-PIL">
 <meta name="twitter:description" content="导入1from PIL import Image 读取1img = Image.open(filepath) 显示1img.show() 与 numpy 数组的互相转换PIL Image 转 numpy 数组 1img_to_array = np.array(img) numpy 数组转 PIL Image (注意要确保数组内的值符合 PIL 的要求)1array_to_img = Image.f">
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">244</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">263</span></a>
   </li>
         
         
@@ -328,7 +328,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">40</span></a>
   </li>
         
         
@@ -481,8 +481,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-05T09:23:01+08:00" content="2019-03-05">
-      		  2019-03-05
+    		<time itemprop="dateUpdated" datetime="2019-07-02T18:23:15+08:00" content="2019-07-02">
+      		  2019-07-02
     		</time>
   	  </span>
 	  
@@ -535,7 +535,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">223</span>
+                <span title="本文字数">573</span>
               
 
               
@@ -575,6 +575,8 @@
 <h1 id="与-numpy-数组的互相转换"><a href="#与-numpy-数组的互相转换" class="headerlink" title="与 numpy 数组的互相转换"></a>与 numpy 数组的互相转换</h1><p>PIL Image 转 numpy 数组</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img_to_array = np.array(img)</span><br></pre></td></tr></table></figure>
 <p>numpy 数组转 PIL Image (注意要确保数组内的值符合 PIL 的要求)<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">array_to_img = Image.fromarray(img_to_array)</span><br></pre></td></tr></table></figure></p>
+<h1 id="PIL-与-cv2-格式互相转换"><a href="#PIL-与-cv2-格式互相转换" class="headerlink" title="PIL 与 cv2 格式互相转换"></a>PIL 与 cv2 格式互相转换</h1><p><code>PIL.Image</code>读入的图片数据类型不是 numpy 数组, 它的<code>size</code>属性为 <code>(w, h)</code>, 利用<code>np.array</code>转换成 numpy 数组后, 它的通道顺序为 <code>(r, g, b)</code></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># PIL to cv2</span></span><br><span class="line">pil_img = Image.open(img_path)</span><br><span class="line">print(pil_img.size) <span class="comment"># (w, h)</span></span><br><span class="line">np_img = np.array(pil_img)</span><br><span class="line">cv2_img = np_img[:, :, ::<span class="number">-1</span>] <span class="comment"># 交换通道</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># cv2 to PIL</span></span><br><span class="line">pil_img = Image.fromarray(cv2_img[:, :, ::<span class="number">-1</span>])</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -698,7 +700,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">244</span>
+                    <span class="site-state-item-count">263</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -824,7 +826,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">37</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -892,7 +900,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#导入"><span class="nav-text">导入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#读取"><span class="nav-text">读取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#显示"><span class="nav-text">显示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#与-numpy-数组的互相转换"><span class="nav-text">与 numpy 数组的互相转换</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#导入"><span class="nav-text">导入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#读取"><span class="nav-text">读取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#显示"><span class="nav-text">显示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#与-numpy-数组的互相转换"><span class="nav-text">与 numpy 数组的互相转换</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PIL-与-cv2-格式互相转换"><span class="nav-text">PIL 与 cv2 格式互相转换</span></a></li></ol></div>
             
 
           </div>
@@ -929,7 +937,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.9m</span>
+    <span title="站点总字数">2.3m</span>
   
 
   
@@ -938,7 +946,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">28:15</span>
+    <span title="站点阅读时长">34:29</span>
   
 </div>
 

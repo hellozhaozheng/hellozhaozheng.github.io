@@ -112,18 +112,18 @@
 
 
 
-  <meta name="description" content="JSON(JavaScript Object Notation) 是一种轻量级的数据交换格式, 易于阅读和编辑. 使用JSON函数之前需要导入json库: import json json.dumps该函数用于将Python对象编码成JSON字符串, 语法如下: 123json.dumps(obj, skipkeys=False, ensure_ascii=True, check_circular">
+  <meta name="description" content="JSON(JavaScript Object Notation) 是一种轻量级的数据交换格式, 易于阅读和编辑. 使用JSON函数之前需要导入json库: import json json.dumps该函数用于将dict类型的数据转换成str, 这是因为我们不能直接将字典类型的数据写入到文件中, 因此需要先将其转换成字符串才能进行写入 函数原型:123json.dumps(obj, skipkey">
 <meta name="keywords" content="Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="json模块">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/Python-json/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="JSON(JavaScript Object Notation) 是一种轻量级的数据交换格式, 易于阅读和编辑. 使用JSON函数之前需要导入json库: import json json.dumps该函数用于将Python对象编码成JSON字符串, 语法如下: 123json.dumps(obj, skipkeys=False, ensure_ascii=True, check_circular">
+<meta property="og:description" content="JSON(JavaScript Object Notation) 是一种轻量级的数据交换格式, 易于阅读和编辑. 使用JSON函数之前需要导入json库: import json json.dumps该函数用于将dict类型的数据转换成str, 这是因为我们不能直接将字典类型的数据写入到文件中, 因此需要先将其转换成字符串才能进行写入 函数原型:123json.dumps(obj, skipkey">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-05T01:22:30.563Z">
+<meta property="og:updated_time" content="2019-06-25T11:24:22.131Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="json模块">
-<meta name="twitter:description" content="JSON(JavaScript Object Notation) 是一种轻量级的数据交换格式, 易于阅读和编辑. 使用JSON函数之前需要导入json库: import json json.dumps该函数用于将Python对象编码成JSON字符串, 语法如下: 123json.dumps(obj, skipkeys=False, ensure_ascii=True, check_circular">
+<meta name="twitter:description" content="JSON(JavaScript Object Notation) 是一种轻量级的数据交换格式, 易于阅读和编辑. 使用JSON函数之前需要导入json库: import json json.dumps该函数用于将dict类型的数据转换成str, 这是因为我们不能直接将字典类型的数据写入到文件中, 因此需要先将其转换成字符串才能进行写入 函数原型:123json.dumps(obj, skipkey">
 
 
 
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">244</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">263</span></a>
   </li>
         
         
@@ -328,7 +328,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">40</span></a>
   </li>
         
         
@@ -481,8 +481,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-05T09:22:30+08:00" content="2019-03-05">
-      		  2019-03-05
+    		<time itemprop="dateUpdated" datetime="2019-06-25T19:24:22+08:00" content="2019-06-25">
+      		  2019-06-25
     		</time>
   	  </span>
 	  
@@ -535,7 +535,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">400</span>
+                <span title="本文字数">1.9k</span>
               
 
               
@@ -549,7 +549,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">2 分钟</span>
               
             </div>
           
@@ -571,10 +571,15 @@
       
         <p>JSON(JavaScript Object Notation) 是一种轻量级的数据交换格式, 易于阅读和编辑.</p>
 <p>使用JSON函数之前需要导入<code>json</code>库: <code>import json</code></p>
-<h1 id="json-dumps"><a href="#json-dumps" class="headerlink" title="json.dumps"></a>json.dumps</h1><p>该函数用于将Python对象编码成JSON字符串, 语法如下:</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">json.dumps(obj, skipkeys=<span class="keyword">False</span>, ensure_ascii=<span class="keyword">True</span>, check_circular=<span class="keyword">True</span>,</span><br><span class="line">            allow_nan=<span class="keyword">True</span>, cls=<span class="keyword">None</span>, indent=<span class="keyword">None</span>, separators=<span class="keyword">None</span>,</span><br><span class="line">            encoding=<span class="string">"utf-8"</span>, default=<span class="keyword">None</span>, sort_keys=<span class="keyword">False</span>, **kw)</span><br></pre></td></tr></table></figure>
-<h1 id="json-loads"><a href="#json-loads" class="headerlink" title="json.loads"></a>json.loads</h1><p>可以解析json文件, 之后可以像使用字典一样进行操作.</p>
-<p>json解码为Python类型转换对应表</p>
+<h1 id="json-dumps"><a href="#json-dumps" class="headerlink" title="json.dumps"></a>json.dumps</h1><p>该函数用于将<code>dict</code>类型的数据转换成<code>str</code>, 这是因为我们不能直接将字典类型的数据写入到文件中, 因此需要先将其转换成字符串才能进行写入</p>
+<p>函数原型:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">json.dumps(obj, skipkeys=<span class="keyword">False</span>, ensure_ascii=<span class="keyword">True</span>, check_circular=<span class="keyword">True</span>,</span><br><span class="line">            allow_nan=<span class="keyword">True</span>, cls=<span class="keyword">None</span>, indent=<span class="keyword">None</span>, separators=<span class="keyword">None</span>,</span><br><span class="line">            encoding=<span class="string">"utf-8"</span>, default=<span class="keyword">None</span>, sort_keys=<span class="keyword">False</span>, **kw)</span><br></pre></td></tr></table></figure></p>
+<p>示例:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">json_dict = &#123;</span><br><span class="line">    <span class="string">"info"</span>: &#123;</span><br><span class="line">        <span class="string">"contributor"</span>: <span class="string">'xxx'</span>,</span><br><span class="line">        <span class="string">'year'</span>: <span class="number">2019</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">'license'</span>: <span class="string">'xxx'</span>,</span><br><span class="line">    <span class="string">'images'</span>: [&#123;&#125;, &#123;&#125;, &#123;&#125;],</span><br><span class="line">    <span class="string">'anotations'</span>: [&#123;&#125;, &#123;&#125;, &#123;&#125;],</span><br><span class="line">    <span class="string">'categories'</span>: [&#123;&#125;, &#123;&#125;],</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">json_str = json.dumps(json_dict)</span><br><span class="line">json_save_path = <span class="string">'test.json'</span></span><br><span class="line"><span class="keyword">with</span> open(json_save_path, <span class="string">'w'</span>) <span class="keyword">as</span> json_file:</span><br><span class="line">    json_file.write(json_str)</span><br></pre></td></tr></table></figure></p>
+<h1 id="json-loads"><a href="#json-loads" class="headerlink" title="json.loads"></a>json.loads</h1><p><code>json.loads()</code>用于将<code>str</code>类型的数据转换成<code>dict</code>, <strong>注意是字符串数据, 而不是文件</strong></p>
+<h1 id="json-dump"><a href="#json-dump" class="headerlink" title="json.dump"></a>json.dump</h1><p><code>json.dump()</code> 用于将 <code>dict</code> 类型的数据之间转换成<code>str</code>并写入到 json 文件中, 例如, 下面两种写入方式是等价的</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">json_dict = &#123;<span class="string">'a'</span>: <span class="number">123</span>, <span class="string">'b'</span>: <span class="number">456</span>&#125;</span><br><span class="line">json_save_file = <span class="string">'save_test.json'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方式一</span></span><br><span class="line">json_str = json.dumps(json_dict)</span><br><span class="line"><span class="keyword">with</span> open(json_save_file, <span class="string">'w'</span>) <span class="keyword">as</span> json_file:</span><br><span class="line">    json_file.write(json_str)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方式二</span></span><br><span class="line">json.dump(json_dict, open(json_save_file, <span class="string">'w'</span>))</span><br></pre></td></tr></table></figure>
+<h1 id="json-load"><a href="#json-load" class="headerlink" title="json.load"></a>json.load</h1><p>可以解析json文件, 之后可以像使用字典一样进行操作.</p>
+<p>假如 json file 内容如下所示:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;info&quot;: &#123;</span><br><span class="line">        &quot;contributor&quot;: &apos;xxx&apos;,</span><br><span class="line">        &apos;year&apos;: 2019</span><br><span class="line">    &#125;,</span><br><span class="line">    &apos;license&apos;: &#123;&#125;,</span><br><span class="line">    &apos;images&apos;: [&#123;&#125;, &#123;&#125;, &#123;&#125;, ...],</span><br><span class="line">    &apos;anotations&apos;: [&#123;&#125;, &#123;&#125;, &#123;&#125;, ...],</span><br><span class="line">    &apos;categories&apos;: [&#123;&#125;, &#123;&#125;, ...],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">json_file_path = os.path.abspath(<span class="string">'test.json'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> open(json_file_path, <span class="string">'r'</span>) <span class="keyword">as</span> json_file:</span><br><span class="line">    json_dict = json.load(json_file)</span><br><span class="line">    print(json_dict.keys()) <span class="comment"># 'info', 'license', 'images', 'annotations', 'categories'</span></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -698,7 +703,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">244</span>
+                    <span class="site-state-item-count">263</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -824,7 +829,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">37</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -892,7 +903,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#json-dumps"><span class="nav-text">json.dumps</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#json-loads"><span class="nav-text">json.loads</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#json-dumps"><span class="nav-text">json.dumps</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#json-loads"><span class="nav-text">json.loads</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#json-dump"><span class="nav-text">json.dump</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#json-load"><span class="nav-text">json.load</span></a></li></ol></div>
             
 
           </div>
@@ -929,7 +940,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.9m</span>
+    <span title="站点总字数">2.3m</span>
   
 
   
@@ -938,7 +949,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">28:15</span>
+    <span title="站点阅读时长">34:29</span>
   
 </div>
 

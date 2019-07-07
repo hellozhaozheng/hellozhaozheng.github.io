@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="LeetCode 算法题(Easy)LeetCode 算法题(Medium)LeetCode 算法题(Hard)剑指 offer 背包问题01 背包完全背包多重背包最长公共子串题目地址 题目描述对于两个字符串, 请设计一个时间复杂度为 $O(mn)$ 的算法(这里的 $m$ 和 $n$ 为两串的长度), 求出两串的最长公共子串的长度。这里的最长公共子串的定义为两个序列 U1,U2,..Un 和 V">
+<meta name="keywords" content="算法刷题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法经典题型整理">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/面试-算法刷题-算法经典题型整理/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="LeetCode 算法题(Easy)LeetCode 算法题(Medium)LeetCode 算法题(Hard)剑指 offer 背包问题01 背包完全背包多重背包最长公共子串题目地址 题目描述对于两个字符串, 请设计一个时间复杂度为 $O(mn)$ 的算法(这里的 $m$ 和 $n$ 为两串的长度), 求出两串的最长公共子串的长度。这里的最长公共子串的定义为两个序列 U1,U2,..Un 和 V">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fydj3xn9gij20ps0jytzj.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fydj4kbwsej20pt0jxhdc.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fyfv2epmuvj20oy0a10t3.jpg">
+<meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fyfv2o4esnj20oe0a2q3b.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fyfv2za9mkj20nt09nq39.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fyfv5my8u4j20oa0a13yv.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fyfv61wbndj20oe09qjrr.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fyfv7iksmej20o409tjrs.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fyfv7tden4j20nk09s0t5.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fyfv8akg3ej20s50a43zd.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fyfv8xj7sej20tp08st9f.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fyfv96duh4j20wd095754.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fyfx303ghvj20y107p74w.jpg">
+<meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fyfx3ex4fbj20zq09u3zb.jpg">
+<meta property="og:updated_time" content="2019-06-27T02:20:20.561Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法经典题型整理">
+<meta name="twitter:description" content="LeetCode 算法题(Easy)LeetCode 算法题(Medium)LeetCode 算法题(Hard)剑指 offer 背包问题01 背包完全背包多重背包最长公共子串题目地址 题目描述对于两个字符串, 请设计一个时间复杂度为 $O(mn)$ 的算法(这里的 $m$ 和 $n$ 为两串的长度), 求出两串的最长公共子串的长度。这里的最长公共子串的定义为两个序列 U1,U2,..Un 和 V">
+<meta name="twitter:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fydj3xn9gij20ps0jytzj.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/面试-算法刷题-算法经典题型整理/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>算法经典题型整理 | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">263</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其他">
+    <a href="/categories/其他/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">40</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/面试-算法刷题-算法经典题型整理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">算法经典题型整理
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-19 22:51:08" itemprop="dateCreated datePublished" datetime="2018-12-19T22:51:08+08:00">2018-12-19</time>
+            
+
+            
+          </span>
+
+	  
+  	    <span class="post-updated">
+    		&nbsp; | &nbsp; 更新于
+    		<time itemprop="dateUpdated" datetime="2019-06-27T10:20:20+08:00" content="2019-06-27">
+      		  2019-06-27
+    		</time>
+  	  </span>
+	  
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/面试/" itemprop="url" rel="index"><span itemprop="name">面试</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">22k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">20 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="../面试-算法刷题-LeetCode-1">LeetCode 算法题(Easy)</a><br><a href="../面试-算法刷题-LeetCode-2">LeetCode 算法题(Medium)</a><br><a href="../面试-算法刷题-LeetCode-3">LeetCode 算法题(Hard)</a><br><a href="../面试-算法刷题-LeetCode-3">剑指 offer</a></p>
+<h1 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h1><h2 id="01-背包"><a href="#01-背包" class="headerlink" title="01 背包"></a>01 背包</h2><h2 id="完全背包"><a href="#完全背包" class="headerlink" title="完全背包"></a>完全背包</h2><h2 id="多重背包"><a href="#多重背包" class="headerlink" title="多重背包"></a>多重背包</h2><h1 id="最长公共子串"><a href="#最长公共子串" class="headerlink" title="最长公共子串"></a>最长公共子串</h1><p><a href="https://www.nowcoder.com/practice/02e7cc263f8a49e8b1e1dc9c116f7602?tpId=49&amp;&amp;tqId=29349&amp;rp=1&amp;ru=/activity/oj&amp;qru=/ta/2016test/question-ranking" target="_blank" rel="noopener">题目地址</a></p>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>对于两个字符串, 请设计一个时间复杂度为 $O(mn)$ 的算法(这里的 $m$ 和 $n$ 为两串的长度), 求出两串的最长公共子串的长度。这里的最长公共子串的定义为两个序列 <code>U1,U2,..Un</code> 和 <code>V1,V2,...Vn</code>, 其中 <code>Ui + 1 == Ui+1</code> , <code>Vi + 1 == Vi+1</code>, 同时 <code>Ui == Vi</code>.</p>
+<p>给定两个字符串 A 和 B, 同时给定两串的长度 $n$ 和 $m$.</p>
+<h2 id="解法一-暴力"><a href="#解法一-暴力" class="headerlink" title="解法一: 暴力"></a>解法一: 暴力</h2><p><strong>时间复杂度:</strong> $O(mnl)$, $l$ 为公共子串的长度<br><strong>空间复杂度:</strong> $O(1)$</p>
+<p>以一个字符串中的每一个字符作为公共子串的起始字符, 在另一个字符串中查找以该字符为起始的公共子串, 每一个字符的查找复杂度为 $O(nl)$, 共有 $m$ 个字符, 因此总的时间复杂度为 $O(mnl)$</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LongestSubstring</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findLongest</span><span class="params">(<span class="built_in">string</span> A, <span class="keyword">int</span> n, <span class="built_in">string</span> B, <span class="keyword">int</span> m)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> longest = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;m; j++)&#123;</span><br><span class="line">                <span class="keyword">int</span> ii = i;</span><br><span class="line">                <span class="keyword">int</span> jj = j;</span><br><span class="line">                <span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">while</span>(ii&lt;n &amp;&amp; jj&lt;m &amp;&amp; A[ii] == B[jj])&#123;</span><br><span class="line">                    len++;</span><br><span class="line">                    ii++;</span><br><span class="line">                    jj++;</span><br><span class="line">                &#125;</span><br><span class="line">                longest = max(longest, len);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> longest;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="解法二-动态规划"><a href="#解法二-动态规划" class="headerlink" title="解法二: 动态规划"></a>解法二: 动态规划</h2><p><strong>时间复杂度:</strong> $O(mn)$, 两个 <code>for</code> 循环, 内部复杂度为 $O(1)$.<br><strong>空间复杂度:</strong> $O(mn)$, 需要额外申请 $O(mn)$ 大小的矩阵空间</p>
+<p>我们申请一个 dp 矩阵, <code>dp[i][j]</code> 代表以 <code>A[i]</code> 和 <code>B[j]</code> 字符为结尾的公共子串的长度, 那么, 就可以分为如下几种情况:</p>
+<ul>
+<li><code>s[i]!=s[j]</code>: 将 <code>dp[i][j]</code> 置为 0</li>
+<li><code>s[i]=s[j]</code>: 令 <code>dp[i][j] = dp[i-1][j-1]+1</code>, 要注意越界保护, 即如果 <code>i=0</code>, 或者<code>j=0</code>, 我们就直接令 <code>dp[i][j]=1</code></li>
+</ul>
+<p>在进行上面判断的同时, 每更新一次 <code>dp[i][j]</code>, 就更新 <code>longest</code> 的值.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LongestSubstring</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findLongest</span><span class="params">(<span class="built_in">string</span> A, <span class="keyword">int</span> n, <span class="built_in">string</span> B, <span class="keyword">int</span> m)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> longest = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; dp(n, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(m, <span class="number">0</span>));</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;m; j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(A[i] == B[j])&#123;</span><br><span class="line">                    <span class="keyword">if</span>(i&gt;<span class="number">0</span> &amp;&amp; j&gt;<span class="number">0</span>)</span><br><span class="line">                        dp[i][j] = dp[i<span class="number">-1</span>][j<span class="number">-1</span>]+<span class="number">1</span>;</span><br><span class="line">                    <span class="keyword">else</span></span><br><span class="line">                        dp[i][j] = <span class="number">1</span>;</span><br><span class="line">                    longest = max(longest, dp[i][j]);</span><br><span class="line">                &#125;<span class="comment">// dp 数组默认元素为0, 因此不用显式在 else 中赋值0</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> longest;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="解法三-优化的动态规划"><a href="#解法三-优化的动态规划" class="headerlink" title="解法三: 优化的动态规划"></a>解法三: 优化的动态规划</h2><p><strong>时间复杂度:</strong> $O(mn)$, 两个 <code>for</code> 循环, 内部复杂度为 $O(1)$.<br><strong>空间复杂度:</strong> $O(2m)$ 或者 $O(2n)$, 选择短的申请 dp 数组.</p>
+<p>在解法二的 <code>dp</code> 数组更新公式中, 我们发现, <code>dp[i][j]</code> 只与它左上角的元素 <code>dp[i-1][j-1]</code> 有关, 因此, 我们可以只申请大小为 $2\times m$ 的动态数组即可, 只需每次将上一个数组的值更新为当前数组值, 而当前的数组可以作为未使用的数组来更新公共子串长度.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LongestSubstring</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findLongest</span><span class="params">(<span class="built_in">string</span> A, <span class="keyword">int</span> n, <span class="built_in">string</span> B, <span class="keyword">int</span> m)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> longest = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; dp(<span class="number">2</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(m, <span class="number">0</span>));</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;m; j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(A[i] == B[j])&#123;</span><br><span class="line">                    <span class="keyword">if</span>(j&gt;<span class="number">0</span>)</span><br><span class="line">                        dp[<span class="number">1</span>][j] = dp[<span class="number">0</span>][j<span class="number">-1</span>]+<span class="number">1</span>;</span><br><span class="line">                    <span class="keyword">else</span></span><br><span class="line">                        dp[<span class="number">1</span>][j] = <span class="number">1</span>;</span><br><span class="line">                    longest = max(longest, dp[<span class="number">1</span>][j]);</span><br><span class="line">                &#125;<span class="keyword">else</span></span><br><span class="line">                    dp[<span class="number">1</span>][j]=<span class="number">0</span>;<span class="comment">// 此时需要显式在 else 中赋值0, 确保不相等时长度为0</span></span><br><span class="line">            &#125;</span><br><span class="line">            dp[<span class="number">0</span>] = dp[<span class="number">1</span>]; <span class="comment">// 更新上一个数组的值为当前数组值</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> longest;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="解法四-再优化的动态规划"><a href="#解法四-再优化的动态规划" class="headerlink" title="解法四: 再优化的动态规划"></a>解法四: 再优化的动态规划</h2><p><strong>时间复杂度:</strong> $O(mn)$, 填充 “dp数组”, 复杂度不变<br><strong>空间复杂度:</strong> $O(1)$, 利用一个变量就可以维护我们的 “dp数组”</p>
+<p>从解法三中我们已经知道, <code>dp[i][j]</code> 的值只与 <code>dp[i-1][j-1]</code> 的值有关, 在解法二中, 我们是从左到右, 左上到下的维护 “dp数组”, 因此最少需要两行数据空间才能够维护, 如下图所示:</p>
+<p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fydj3xn9gij20ps0jytzj.jpg" alt=""></p>
+<p>但是实际上, 我们 <strong>仅仅只需要当前元素的左上角元素就够了</strong>, 也就是说, 如果我们沿着对角线的顺序来填充 “dp数组”, 那么我们 <strong>只需要一个变量</strong> 就可以完成对整个数组的填充, 如下图所示:</p>
+<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fydj4kbwsej20pt0jxhdc.jpg" alt=""></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LongestSubstring</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findLongest</span><span class="params">(<span class="built_in">string</span> A, <span class="keyword">int</span> n, <span class="built_in">string</span> B, <span class="keyword">int</span> m)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> longest = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> dp = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> i=<span class="number">0</span>, j=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">            <span class="keyword">int</span> ii, jj;</span><br><span class="line">            <span class="keyword">if</span>(i&lt;n)&#123; <span class="comment">//先计算以第一列的开头</span></span><br><span class="line">                ii=i++;</span><br><span class="line">                jj=<span class="number">0</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123; <span class="comment">// 再计算第一行的</span></span><br><span class="line">                ii=<span class="number">0</span>;</span><br><span class="line">                jj=++j;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(jj==m) <span class="keyword">break</span>; <span class="comment">// 当jj=m时, 说明已经遍历完, 程序终止</span></span><br><span class="line"></span><br><span class="line">            dp = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">while</span>(ii&lt;n &amp;&amp; jj&lt;m)&#123; <span class="comment">// 沿着对角线填充"dp数组"</span></span><br><span class="line">                <span class="keyword">if</span>(A[ii] == B[jj])&#123;</span><br><span class="line">                    dp = dp+<span class="number">1</span>;</span><br><span class="line">                &#125;<span class="keyword">else</span></span><br><span class="line">                    dp = <span class="number">0</span>;</span><br><span class="line">                longest = max(longest, dp);</span><br><span class="line">                ii++;</span><br><span class="line">                jj++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> longest;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># python 实现</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LongestSubstring</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findLongest</span><span class="params">(self, A, n, B, m)</span>:</span></span><br><span class="line">        <span class="comment"># write code here</span></span><br><span class="line">        i = <span class="number">0</span></span><br><span class="line">        j = <span class="number">0</span></span><br><span class="line">        res = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> (i &lt; n <span class="keyword">or</span> j &lt; m):</span><br><span class="line">            dp = <span class="number">0</span></span><br><span class="line">            <span class="keyword">if</span> i &lt; n:</span><br><span class="line">                ii = i</span><br><span class="line">                jj = <span class="number">0</span></span><br><span class="line">                i += <span class="number">1</span></span><br><span class="line">            <span class="keyword">elif</span> j &lt; m:</span><br><span class="line">                ii = <span class="number">0</span></span><br><span class="line">                jj = j</span><br><span class="line">                j += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">while</span>(ii &lt; n <span class="keyword">and</span> jj &lt; m):</span><br><span class="line">                <span class="keyword">if</span> (A[ii] == B[jj]):</span><br><span class="line">                    dp = dp + <span class="number">1</span></span><br><span class="line">                    ii += <span class="number">1</span></span><br><span class="line">                    jj += <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    dp = <span class="number">0</span></span><br><span class="line">                    ii += <span class="number">1</span></span><br><span class="line">                    jj += <span class="number">1</span></span><br><span class="line">                res = max(res, dp)</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<h2 id="解法五-后缀自动机"><a href="#解法五-后缀自动机" class="headerlink" title="解法五: 后缀自动机"></a>解法五: 后缀自动机</h2><p>利用后缀自动机可以实现 $O(n)$ 的空间和时间复杂度, 但是考虑到时间成本问题, 并没有对该解法进行详细解析.<br>因为要彻底搞懂后缀自动机, 不仅仅要会解最长公共子串, 还应该熟悉其他的字符串题型如: 最小循环串.</p>
+<h1 id="最长公共子序列"><a href="#最长公共子序列" class="headerlink" title="最长公共子序列"></a>最长公共子序列</h1><p>最长公共子串与最长公共子序列的区别: 前者要求字符连续, 后者字符只需保持相对位置一致即可.</p>
+<p><a href="https://www.nowcoder.com/practice/c996bbb77dd447d681ec6907ccfb488a?tpId=49&amp;tqId=29348&amp;rp=1&amp;ru=%2Factivity%2Foj&amp;qru=%2Fta%2F2016test%2Fquestion-ranking&amp;tPage=4" target="_blank" rel="noopener">题目链接</a></p>
+<h2 id="解法一-动态规划"><a href="#解法一-动态规划" class="headerlink" title="解法一: 动态规划"></a>解法一: 动态规划</h2><p><strong>时间复杂度:</strong> $O(mn)$<br><strong>空间复杂度:</strong> $O(mn)$</p>
+<p>我们令 <code>dp[i][j]</code> 代表字符串中 <code>i</code> 和 <code>j</code> 之前的最长公共子序列的长度(不包含 <code>A[i]</code> 和 <code>B[j]</code>), 则最终的结果会存在与 <code>dp[n][m]</code> 中.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LCS</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findLCS</span><span class="params">(<span class="built_in">string</span> A, <span class="keyword">int</span> n, <span class="built_in">string</span> B, <span class="keyword">int</span> m)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// write code here</span></span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; dp(n+<span class="number">1</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(m+<span class="number">1</span>, <span class="number">0</span>));</span><br><span class="line">        <span class="comment">// dp[i][j] 代表的是i,j之前(不包括ij)的字符的最长公共子序列的长度</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;m; j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(A[i] == B[j])</span><br><span class="line">                    dp[i+<span class="number">1</span>][j+<span class="number">1</span>] = dp[i][j]+<span class="number">1</span>;</span><br><span class="line">                <span class="keyword">else</span><span class="comment">// 如果不相等, 则dp[i+1][j+1]的值取上边和左边的较大者</span></span><br><span class="line">                    dp[i+<span class="number">1</span>][j+<span class="number">1</span>] = max(dp[i][j+<span class="number">1</span>], dp[i+<span class="number">1</span>][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[n][m];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="解法二-优化的动态规划"><a href="#解法二-优化的动态规划" class="headerlink" title="解法二: 优化的动态规划"></a>解法二: 优化的动态规划</h2><p><strong>时间复杂度:</strong> $O(mn)$<br><strong>空间复杂度:</strong> $O(2m)$, 或$O(2n)$, 与最长公共子串思路一致</p>
+<p>该解法与最长公共子串解法三思路一致, 代码如下:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LCS</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findLCS</span><span class="params">(<span class="built_in">string</span> A, <span class="keyword">int</span> n, <span class="built_in">string</span> B, <span class="keyword">int</span> m)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; dp(<span class="number">2</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(m+<span class="number">1</span>, <span class="number">0</span>));</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;m; j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(A[i] == B[j])</span><br><span class="line">                    dp[<span class="number">1</span>][j+<span class="number">1</span>] = dp[<span class="number">0</span>][j]+<span class="number">1</span>;</span><br><span class="line">                <span class="keyword">else</span><span class="comment">// 如果不相等, 则dp[i+1][j+1]的值取上边和左边的较大者</span></span><br><span class="line">                    dp[<span class="number">1</span>][j+<span class="number">1</span>] = max(dp[<span class="number">0</span>][j+<span class="number">1</span>], dp[<span class="number">1</span>][j]);</span><br><span class="line">            &#125;</span><br><span class="line">            dp[<span class="number">0</span>] = dp[<span class="number">1</span>]; <span class="comment">//将前一行数组的值更新为当前数组的值</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[<span class="number">1</span>][m];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># python 实现</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LCS</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findLCS</span><span class="params">(self, A, n, B, m)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> m &gt; n: <span class="comment"># 令申请的空间大小为 n, m 中的较小者</span></span><br><span class="line">            A, B = B, A</span><br><span class="line">            n, m = m, n</span><br><span class="line">        dp = [[<span class="number">0</span>] * (m+<span class="number">1</span>), [<span class="number">0</span>] * (m+<span class="number">1</span>)]</span><br><span class="line">        res = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(m):</span><br><span class="line">                tmp_len = max([dp[<span class="number">0</span>][j<span class="number">-1</span>], dp[<span class="number">1</span>][j<span class="number">-1</span>], dp[<span class="number">0</span>][j]])</span><br><span class="line">                <span class="keyword">if</span> A[i] == B[j]:</span><br><span class="line">                    dp[<span class="number">1</span>][j] = dp[<span class="number">0</span>][j<span class="number">-1</span>] + <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:<span class="comment"># 取左方和上方的较大者</span></span><br><span class="line">                    dp[<span class="number">1</span>][j] = max(dp[<span class="number">1</span>][j<span class="number">-1</span>], dp[<span class="number">0</span>][j])</span><br><span class="line">                res = max(res, dp[<span class="number">1</span>][j])</span><br><span class="line">            dp[<span class="number">0</span>] = dp[<span class="number">1</span>][:]</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<p><strong>由于最长子序列需要同时用到左上角, 左边, 上边三个元素的值, 因此无法用常数变量来维护, 最少需要两行元素才能维护, 故无法做到常数空间复杂度</strong></p>
+<p><span id="字符串匹配算法"></span></p>
+<h1 id="字符串匹配算法"><a href="#字符串匹配算法" class="headerlink" title="字符串匹配算法"></a>字符串匹配算法</h1><p><a href="https://leetcode.com/problems/implement-strstr/" target="_blank" rel="noopener">题目链接</a><br>找到子串在字符串中出现的位置</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">算法</th>
+<th style="text-align:center">预处理时间</th>
+<th style="text-align:center">匹配时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">暴力匹配法(朴素字符串匹配)</td>
+<td style="text-align:center">无预处理过程</td>
+<td style="text-align:center">$O((n-m+1)m)$</td>
+</tr>
+<tr>
+<td style="text-align:center">Rabin-Karp</td>
+<td style="text-align:center">$O(m)$</td>
+<td style="text-align:center">$O((n-m+1)m$</td>
+</tr>
+<tr>
+<td style="text-align:center">Finite automaton(优先自动机)</td>
+<td style="text-align:center">$O(mk)$</td>
+<td style="text-align:center">$O(n)$</td>
+</tr>
+<tr>
+<td style="text-align:center">Knuth-Morris-Pratt(KMP)</td>
+<td style="text-align:center">$O(m)$</td>
+<td style="text-align:center">$O(n)$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>上表中, $n$ 是原始串(文本)的长度, $m$ 是子串的长度, $k$ 是字符集的大小.</p>
+<h2 id="暴力匹配法-朴素字符串匹配"><a href="#暴力匹配法-朴素字符串匹配" class="headerlink" title="暴力匹配法(朴素字符串匹配)"></a>暴力匹配法(朴素字符串匹配)</h2><p><strong>时间复杂度:</strong> $O((n-m+1)\times m)$<br><strong>空间复杂度:</strong> $O(1)$</p>
+<p>子串在原始串中的可能起始位置为: 0, 1, 2, …, n-m, 因此共有 $n-m+1$ 种可能性, 我们对每种可能性都进行遍历判断是否为子串, 每次遍历的复杂度为子串的长度 $m$, 因此, 最终的时间复杂度为: $O((n-m+1)\times m$. 该解法没有使用额外的空间.</p>
+<p>下图是朴素字符串匹配的下标改变过程:</p>
+<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fyfv2epmuvj20oy0a10t3.jpg" alt=""></p>
+<p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fyfv2o4esnj20oe0a2q3b.jpg" alt=""></p>
+<p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fyfv2za9mkj20nt09nq39.jpg" alt=""></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">strStr</span><span class="params">(<span class="built_in">string</span> str, <span class="built_in">string</span> substr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(str.empty() &amp;&amp; substr.empty()) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> n = str.size();</span><br><span class="line">        <span class="keyword">int</span> m = substr.size();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n-m+<span class="number">1</span>; i++)&#123; <span class="comment">// 起始位置为 0, 1, ..., n-m 供 n-m+1 种可能性</span></span><br><span class="line">            <span class="keyword">int</span> p=i, q=<span class="number">0</span>;</span><br><span class="line">            <span class="keyword">while</span>(str[p] == substr[q])&#123; <span class="comment">// 对于每种可能性都一一判断</span></span><br><span class="line">                p++; q++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(q==m) <span class="keyword">return</span> i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="Rabin-Karp"><a href="#Rabin-Karp" class="headerlink" title="Rabin-Karp"></a>Rabin-Karp</h2><h2 id="Finite-automaton-优先自动机"><a href="#Finite-automaton-优先自动机" class="headerlink" title="Finite automaton(优先自动机)"></a>Finite automaton(优先自动机)</h2><h2 id="Knuth-Morris-Pratt-KMP"><a href="#Knuth-Morris-Pratt-KMP" class="headerlink" title="Knuth-Morris-Pratt(KMP)"></a>Knuth-Morris-Pratt(KMP)</h2><p><strong>时间复杂度:</strong> $O(m+n)$, $m$ 为求 <code>next</code> 数组的复杂度, $n$ 为遍历原始串的复杂度<br><strong>空间复杂度:</strong> $O(m)$, <code>next</code> 数组所占空间为子串的长度.</p>
+<p>若只想看代码实现, 可以直接跳转到<a href="#KMP">代码部分</a></p>
+<p>在解法一当中, 每次失配时, 我们都是改变原始串(T)的下标 <code>i</code>, 这样复杂度肯定是最高的, 在 KMP 算法中, 我们通过改变子串(P)的下标 <code>j</code> 来降低复杂度, 首先来看两组 KMP 算法的下标 <code>j</code> 的跳跃示意图:</p>
+<p>第一组:<br><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fyfv5my8u4j20oa0a13yv.jpg" alt=""></p>
+<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fyfv61wbndj20oe09qjrr.jpg" alt=""></p>
+<p>第二组:<br><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fyfv7iksmej20o409tjrs.jpg" alt=""></p>
+<p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fyfv7tden4j20nk09s0t5.jpg" alt=""></p>
+<p>根据上面的示意图, 我们可以大致体会出 KMP 算法的思想所在, 具体来说就是, 当 <code>T[i]</code> 与 <code>P[j]</code> 失配时, 我们不改变 <code>i</code> 的指向, 而是令 <code>j</code> 指向之前的某一个位置 <code>k</code>, 继续判断 <code>T[i]</code> 与 <code>P[k]</code> 的值, 而这个位置 <code>k</code>, 必须满足性质: <strong>字符串 P 中前面的 k 个字符(0~k-1)和后面的 k 个字符(j-k~j-1)必须相等</strong>, 也就是要满足下面的公式:</p>
+<script type="math/tex; mode=display">P[0\sim k-1] == P[j-k\sim j-1]</script><p>图片表示如下:<br><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fyfv8akg3ej20s50a43zd.jpg" alt=""></p>
+<p><strong>为什么可以直接移动到 <code>k</code> 位置而不需要检查 <code>0~k-1</code> 处的字符? 证明如下:</strong></p>
+<blockquote>
+<p>当 <code>T[i]!=P[j]</code> 时, 一定有 <code>T[0~i-1]=P[0~j-1]</code><br>又因为 <code>P[0~k-1]=P[j-k~j-1]</code>, 故而一定有 <code>P[0~k-1]=P[j-k~j-1]=T[j-k~j-1]</code>.</p>
+</blockquote>
+<p>下面, 我们就需要求得这些 k 的值, 并将其存储在 <code>next</code> 数组中, <code>next</code> 数组和长度和 <code>P</code> 相同, 并且其中的值只有 <code>P</code> 有关, 与 <code>T</code> 无关. 当我们求得 <code>next</code> 数组的值以后, 一旦 <code>T[i]</code> 与 <code>P[j]</code> 发生失配, 我们只需要令 <code>j</code> 跳到 <code>k</code> 处即可, 也就是 <code>j=next[j]</code>. 求取 <code>next</code> 数组的代码如下所示:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">getNext</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;next, <span class="built_in">string</span> P)</span></span>&#123;</span><br><span class="line">        next[<span class="number">0</span>] = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">int</span> k = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">int</span> j=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(j&lt;next.size()<span class="number">-1</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(k==<span class="number">-1</span> || P[j]==P[k])&#123;</span><br><span class="line">                k++; j++;</span><br><span class="line">                next[j] = k; <span class="comment">// next[j+1] = next[j]+1 = k+1;</span></span><br><span class="line">                <span class="comment">//以上可省略成一句: next[++j]=++k;</span></span><br><span class="line">            &#125;<span class="keyword">else</span></span><br><span class="line">                k = next[k];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>我们来仔细分析一下改代码的含义, 首先, 当 <code>j=0</code> 时发生失配, 由于 <code>j</code> 之前再没有可使用的字符的, 因此我们令 <code>next[j]=-1</code>, 此时, 我们不应该挪动 <code>j</code>, 而是应该将 <code>i</code> 指向下一个字符.<br>其次, 对于 <code>j=1</code> 时的情况, 我们只能将 <code>j</code> 跳到子串的最开始字符处, 因此, 当 <code>j=1</code> 时, 我们令 <code>next[j]=0</code>, 在代码中, 我们使用 <code>k=-1</code> 来代表 <code>j=1</code> 的, 这里 <code>k</code> 的值代表 <code>next[j]</code> 的值.<br>首先, 假设我们已经得到了 <code>next[0~j]</code> 的值, 我们该如何求 <code>next[j+1]</code> 呢? 有下面两个情况:<br><strong>情况一: <code>P[k]=P[j]</code></strong>, 注意, 这里的 <code>k=next[j]</code>, 因此就有 <code>P[0~k-1] = P[j-k~j-1]</code>, 又因为 <code>P[k]=P[j]</code>, 所以可以得到: <code>P[0~k]=P[0~j]</code>, 所以我们可以得到 <code>next[j+1] = k + 1</code>, 在代码中, 我们令 <code>k++; j++</code>, 目的是为了满足 <code>k=next[j]</code>. 图示过程如下所示:</p>
+<p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fyfv8xj7sej20tp08st9f.jpg" alt=""></p>
+<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fyfv96duh4j20wd095754.jpg" alt=""></p>
+<p><strong>情况二: <code>P[k]!=P[j]</code></strong> 此时我们无法得到 <code>P[0~k]=P[0~j]</code>, 因此, 我们必须寻找 <strong>更短的</strong> 符合条件的 k 值, 因此, 我们令 <code>k=next[k]</code>, 注意, 由于 <code>k=next[j]</code>, 因此, 这里的赋值语句相当于 <code>k=next[next[j]]</code>, 也就是说, 这里相当于是一个自我匹配的过程(令前缀和后缀匹配), 我们用已得到的 <code>next</code> 数组的部分值, 来得到最短的符合条件的 <code>k</code> 值. 如下图所示:</p>
+<p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fyfx303ghvj20y107p74w.jpg" alt=""></p>
+<p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fyfx3ex4fbj20zq09u3zb.jpg" alt=""></p>
+<p>当得到 <code>next</code> 数组后, 我们就可以很容易的实现 KMP 的完整算法了, 注意这里有一个很容易错的点, <code>.size</code> 是无符号整数, 直接与负值比较或者会产生溢出(但如果参与计算后, 则会自动转换成整形, 因为常数默认是整形), 系统会判断-1比无符号的整数大!! 因此, 我们最好利用 <code>int</code> 型变量来持有其 <code>size</code>, 当需要动态的 <code>size</code> 时, 最好根据需要将其转换成 <code>int</code> 类型. 代码如下所示.<br><span id="KMP"><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">getNext</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;next, <span class="built_in">string</span> &amp;substr)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = substr.size();</span><br><span class="line">        next[<span class="number">0</span>] = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">int</span> k = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">int</span> j=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(j&lt;m<span class="number">-1</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(k==<span class="number">-1</span> || substr[k]==substr[j])</span><br><span class="line">                next[++j]=++k;<span class="comment">// 相当于: j++; k++; next[j] = k;</span></span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                k = next[k];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">strStr</span><span class="params">(<span class="built_in">string</span> str, <span class="built_in">string</span> substr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n=str.size(), m=substr.size();</span><br><span class="line">        <span class="keyword">if</span>(m==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">-1</span>;<span class="comment">//当 m!=0, 而 n=0时, 应该返回-1</span></span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; next(substr.size());</span><br><span class="line">        getNext(next, substr);</span><br><span class="line">        <span class="keyword">int</span> i=<span class="number">0</span>, j=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(i&lt;n &amp;&amp; j&lt;m)&#123;</span><br><span class="line">            <span class="keyword">if</span>(j==<span class="number">-1</span> || str[i]==substr[j])&#123;</span><br><span class="line">                i++; j++;</span><br><span class="line">            &#125;<span class="keyword">else</span></span><br><span class="line">                j = next[j];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(j==m) <span class="keyword">return</span> i-j;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></span></p>
+<p>下面是 KMP 算法的 python</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># python 实现</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">strStr</span><span class="params">(self, prostr: str, substr: str)</span> -&gt; int:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">get_next</span><span class="params">(substr)</span>:</span></span><br><span class="line">            next_arr = [<span class="number">-1</span>] * len(substr)</span><br><span class="line">            k = <span class="number">-1</span></span><br><span class="line">            j = <span class="number">0</span></span><br><span class="line">            <span class="keyword">while</span> j &lt; len(substr) - <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">if</span> k == <span class="number">-1</span> <span class="keyword">or</span> substr[j] == substr[k]:</span><br><span class="line">                    j += <span class="number">1</span></span><br><span class="line">                    k += <span class="number">1</span></span><br><span class="line">                    next_arr[j] = k</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    k = next_arr[k]</span><br><span class="line">            <span class="keyword">return</span> next_arr</span><br><span class="line">        next_arr = get_next(substr)</span><br><span class="line">        i = <span class="number">0</span></span><br><span class="line">        j = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span>(i &lt; len(prostr) <span class="keyword">and</span> j &lt; len(substr)):</span><br><span class="line">            <span class="keyword">if</span> (j == <span class="number">-1</span> <span class="keyword">or</span> prostr[i] == substr[j]):</span><br><span class="line">                i += <span class="number">1</span></span><br><span class="line">                j += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                j = next_arr[j]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span> <span class="keyword">if</span> j &lt; len(substr) <span class="keyword">else</span> i - j</span><br></pre></td></tr></table></figure>
+<p><span id="permutation"></span></p>
+<h1 id="排列算法"><a href="#排列算法" class="headerlink" title="排列算法"></a>排列算法</h1><p>题目连接: <a href="">next_permutation</a>, <a href="">prev_permutation</a></p>
+<p><a href="https://leetcode.com/problems/next-permutation/" target="_blank" rel="noopener">next_permutation</a><br><a href="https://leetcode.com/problems/permutations/" target="_blank" rel="noopener">permutations</a>: 不含有重复元素<br><a href="https://leetcode.com/problems/permutations-ii/" target="_blank" rel="noopener">permutations II</a>: 含有重复元素, 用 next_permutation 可以直接解决<br><a href="https://leetcode.com/problems/permutation-sequence/" target="_blank" rel="noopener">permutations sequence</a> 快速找到第 $k$ 个排列</p>
+<p>python 的排列函数:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line"><span class="keyword">return</span> list(itertools.permutations(nums)) <span class="comment"># itertools 返回的是迭代对象, 因此需要将其转换成list</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>给定一个排列 P, 求出其后(前)一个排列 P+1(P-1), 关于次知识点的算法题可见<a href="../面试-算法刷题-LeetCode-2/#Permutations">Permutations</a></p>
+<h2 id="next-permutation"><a href="#next-permutation" class="headerlink" title="next_permutation"></a>next_permutation</h2><p>首先要知道, 这里的 “上一个” 和 “下一个” 是按照字典序的定义进行排序的, 因此对于 “123” 或者 “abc” 这样的字符串, 正序排列就被认为是 <strong>最小的或者最前面的</strong> 的排列(如 “123”), 而逆序排列被认为 <strong>最大的或者最后面的</strong> 的排列. 从字典序的角度出发, 当用排列 P 求下一个排列 P+1 时, 我们需要找到 <strong>刚好比当前排列大一位</strong> 的下一个排列.<br>因为我们已经知道逆序是最大的排列, 因此, 为了找到比当前排列刚好大一点的排列, 我们首先需要找到一个使排列为 <strong>非逆序</strong> 的元素, 因此, 我们从后往前找, 找到首个构成非逆序排列的元素, 即要满足 <code>nums[i] &lt; nums[i+1]</code> 的元素 <code>nums[i]</code>.<br>找到该元素后, 为了让新的排列只比当前排列大一位, 我们要将 <code>i</code> 之后的元素中大于 <code>nums[i]</code> 的所有元素中 <strong>最小的</strong> 那一个, 假设为 <code>nums[j]</code>, 令 <code>nums[j]</code>与 <code>nums[i]</code> 位置互换, <strong>注意, 如果不是最小的, 那么互换后一定会变得过大, 因为还存在介于二者之间的排列</strong>.<br>当 <code>nums[j]</code> 与 <code>nums[i]</code> 位置互换后, 由于在 <code>i</code> 之后, <code>j</code> 之前(注意此时已经互换), 仍然 <strong>可能</strong> 存在比 <code>nums[j]</code> (因为互换了, 所以此时的 <code>nums[j]</code> 是较小的那个元素) 大的其他元素, 因此, 说明在新排列和旧排列之间还存在有其他的排列. 为了使新排列只比旧排列大一位, 我们需要将 <code>[i+1, end]</code> 之内的元素逆置, 逆置后排列刚好比当前的排列大一位. 因为 <code>j</code> 之后的元素都是比原来的 <code>nums[j]</code> 和 <code>nums[i]</code> 小的, <code>j</code> 之前的元素都不小于原来的 <code>nums[j]</code>, 并且大于原来的 <code>nums[i]</code>, 因此, 逆置后的排列一定是最小的那一种, 故而可以组成只比当前排列大一位的下一个排列, 代码实现可能的版本如下( “321” 的下一个排列是 “123”, 但是会返回 <code>false</code>):</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">nextPermutation</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n=nums.size();</span><br><span class="line">        <span class="keyword">int</span> i = n<span class="number">-2</span>, j = n<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">while</span>(i&gt;=<span class="number">0</span> &amp;&amp; nums[i]&gt;=nums[i+<span class="number">1</span>]) i--;</span><br><span class="line">        <span class="keyword">if</span>(i&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">while</span>(j&gt;=<span class="number">0</span> &amp;&amp; nums[i]&gt;=nums[j]) j--;</span><br><span class="line">            swap(nums[i], nums[j]);</span><br><span class="line">        &#125;</span><br><span class="line">        reverse(nums.begin()+i+<span class="number">1</span>, nums.end());</span><br><span class="line">        <span class="keyword">return</span> i&gt;=<span class="number">0</span> ? <span class="literal">true</span> : <span class="literal">false</span>;</span><br><span class="line">        <span class="comment">// 当 i&gt;= 0 时, 说明可以找到组成非逆序的元素, 所以返回 ture, 当&lt;0时, 说明当前排列已经是逆序, 即最后的排列, 故返回 false</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>注意: next_permutation() 函数接受的是迭代器参数, 所以上面的实现只是一种参考, 并非是 STL 源码实现</strong></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># python 实现</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">nextPermutation</span><span class="params">(self, nums: List[int])</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Do not return anything, modify nums in-place instead.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        n = len(nums)</span><br><span class="line">        i = n - <span class="number">2</span></span><br><span class="line">        j = n - <span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> (i &gt;= <span class="number">0</span> <span class="keyword">and</span> nums[i] &gt;= nums[i+<span class="number">1</span>]): i -= <span class="number">1</span> <span class="comment"># 找到i</span></span><br><span class="line">        <span class="keyword">if</span> (i &gt;= <span class="number">0</span>):</span><br><span class="line">            <span class="keyword">while</span> (j &gt; i <span class="keyword">and</span> nums[i] &gt;= nums[j]): j -= <span class="number">1</span> <span class="comment"># 找到 j</span></span><br><span class="line">            nums[i], nums[j] = nums[j], nums[i] <span class="comment"># 交换</span></span><br><span class="line">        nums[i+<span class="number">1</span>:] = nums[i+<span class="number">1</span>:][::<span class="number">-1</span>] <span class="comment"># 将 i 之后元素的进行逆置</span></span><br><span class="line">        <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+<h2 id="prev-permutation"><a href="#prev-permutation" class="headerlink" title="prev_permutation"></a>prev_permutation</h2><p>对于 <code>prev_permutation()</code> 函数的原理原始差不多的, 只不过我们需要找到的是 <strong>只比当前排列小一位的前一个排列</strong>, 代码示例如下:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">bool prevPermutation(vector&lt;int&gt;&amp; nums) &#123;</span><br><span class="line">    int n=nums.size();</span><br><span class="line">    int i = n<span class="number">-2</span>, j = n<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">while</span>(i&gt;=<span class="number">0</span> &amp;&amp; nums[i]&lt;=nums[i+<span class="number">1</span>]) i--;</span><br><span class="line">    <span class="keyword">if</span>(i&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">while</span>(j&gt;=<span class="number">0</span> &amp;&amp; nums[i]&lt;=nums[j]) j--;</span><br><span class="line">        swap(nums[i], nums[j]);</span><br><span class="line">    &#125;</span><br><span class="line">    reverse(nums.begin()+i+<span class="number">1</span>, nums.end());</span><br><span class="line">    return i&gt;=0 ? true : false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># python 实现</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">prevPermutation</span><span class="params">(self, nums: List[int])</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Do not return anything, modify nums in-place instead.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        n = len(nums)</span><br><span class="line">        i = n - <span class="number">2</span></span><br><span class="line">        j = n - <span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> (i &gt;= <span class="number">0</span> <span class="keyword">and</span> nums[i] &lt;= nums[i+<span class="number">1</span>]): i -= <span class="number">1</span> <span class="comment"># 找到i</span></span><br><span class="line">        <span class="keyword">if</span> (i &gt;= <span class="number">0</span>):</span><br><span class="line">            <span class="keyword">while</span> (j &gt; i <span class="keyword">and</span> nums[i] &lt;= nums[j]): j -= <span class="number">1</span> <span class="comment"># 找到 j</span></span><br><span class="line">            nums[i], nums[j] = nums[j], nums[i] <span class="comment"># 交换</span></span><br><span class="line">        nums[i+<span class="number">1</span>:] = nums[i+<span class="number">1</span>:][::<span class="number">-1</span>] <span class="comment"># 将 i 之后元素的进行逆置</span></span><br><span class="line">        <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+<h2 id="permutation-sequence"><a href="#permutation-sequence" class="headerlink" title="permutation sequence"></a>permutation sequence</h2><p>给定 $n$, 则 <code>[1, 2, ..., n]</code> 可能的排列有 $n!$ 种, 要求你快速找到第 $k$ 个排列. 该题目用 <code>next_permutatioin</code> 或者 <code>prev_permutation</code> 求解时会严重超时. 下面给出正确思路</p>
+<p>对于 <code>[1,2,3,4]</code>来说, 所有的排列可以分为下面 4 种情况:</p>
+<ul>
+<li>1 + [2,3,4]</li>
+<li>2 + [1,3,4]</li>
+<li>3 + [1,2,4]</li>
+<li>4 + [1,2,3]</li>
+</ul>
+<p>因为, 我们可以利用 $k / (n-1)!$, 确定第一个数字的取值, 然后对于剩下的数字, 迭代的使用该方法确定, 知道确定了所有的 $n$ 个数字为止, 代码实现如下所示:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getPermutation</span><span class="params">(self, n: int, k: int)</span> -&gt; str:</span></span><br><span class="line">        nums = list(range(<span class="number">1</span>, n+<span class="number">1</span>))</span><br><span class="line">        res = <span class="string">''</span></span><br><span class="line">        k  = k - <span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> n &gt; <span class="number">0</span>:</span><br><span class="line">            f = math.factorial(n - <span class="number">1</span>)</span><br><span class="line">            index = k // f</span><br><span class="line">            res += str(nums[index])</span><br><span class="line">            nums.pop(index)</span><br><span class="line">            k = k - index * f</span><br><span class="line">            n -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<h1 id="组合算法"><a href="#组合算法" class="headerlink" title="组合算法"></a>组合算法</h1><p>题目链接:<br><a href="https://leetcode.com/problems/combinations/" target="_blank" rel="noopener">Combinations</a>: 给定 $n$ 和 $k$, 返回所有可能的 $k$ 元组<br><a href="https://leetcode.com/problems/combination-sum/" target="_blank" rel="noopener">Combinations Sum I</a>:返回和为 target 的组合, 数列中的元素可以使用无限次<br><a href="https://leetcode.com/problems/combination-sum-ii/" target="_blank" rel="noopener">Combinations Sum II</a>: 返回和为 target 的组合, 数列中的元素可以只可以使用一次<br><a href="https://leetcode.com/problems/combination-sum-iii/" target="_blank" rel="noopener">Combinations Sum III</a>: 返回和为 target 的 k 元组, 只可以使用 1~9 的数字<br><a href="https://leetcode.com/problems/combination-sum-iv/" target="_blank" rel="noopener">Combinations Sum IV</a>: 返回和为 target 的所有可能情况的个数, 数列中的元素可以使用无限次</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line">itertools.combinations(nums, <span class="number">2</span>) <span class="comment"># 从中选2个进行组合</span></span><br></pre></td></tr></table></figure>
+<h2 id="Combinations"><a href="#Combinations" class="headerlink" title="Combinations"></a>Combinations</h2><p><a href="https://leetcode.com/problems/combinations/" target="_blank" rel="noopener">Combinations</a>: 给定 $n$ 和 $k$, 返回所有可能的 $k$ 元组</p>
+<h3 id="解法一-递归"><a href="#解法一-递归" class="headerlink" title="解法一: 递归"></a>解法一: 递归</h3><p>对于给定的 $n$ 和 $k$, 我们可以先确定一个数字, 该数字一定处于当前数列中的第 $k$ 个到最后一个中, 然后, 对于剩下的 $k-1$ 个数字, 我们可以在选定的数字前面的数列中进行选取, 此时就形成了一个新的给定 $i-1$, $k-1$ 的组合问题.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">combine</span><span class="params">(self, n: int, k: int)</span> -&gt; List[List[int]]:</span></span><br><span class="line">        <span class="keyword">if</span> k == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> [[]]</span><br><span class="line">        <span class="keyword">return</span> [pre+[i] <span class="keyword">for</span> i <span class="keyword">in</span> range(k, n+<span class="number">1</span>) <span class="keyword">for</span> pre <span class="keyword">in</span> self.combine(i<span class="number">-1</span>, k<span class="number">-1</span>)]</span><br></pre></td></tr></table></figure>
+<h3 id="解法二-迭代"><a href="#解法二-迭代" class="headerlink" title="解法二: 迭代"></a>解法二: 迭代</h3><p>迭代的核心思想就是要控制 i 的范围, 使其刚好处在可以与现有 res 中元素形成组合, 有两种不同的实现角度(思路一致, 只不过一个是从前往后组合, 一个是从后往前组合)</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 从前往后组合</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">combine</span><span class="params">(self, n: int, k: int)</span> -&gt; List[List[int]]:</span></span><br><span class="line">        res = [[]]</span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> range(k):</span><br><span class="line">            res = [c + [i] <span class="keyword">for</span> c <span class="keyword">in</span> res <span class="keyword">for</span> i  <span class="keyword">in</span> range(c[<span class="number">-1</span>]+<span class="number">1</span> <span class="keyword">if</span> c <span class="keyword">else</span> <span class="number">1</span>, n+<span class="number">1</span>)]</span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line"><span class="comment"># [[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 从后往前组合</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">combine</span><span class="params">(self, n: int, k: int)</span> -&gt; List[List[int]]:</span></span><br><span class="line">        res = [[]]</span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> range(k):</span><br><span class="line">            res = [[i] +c <span class="keyword">for</span> c <span class="keyword">in</span> res <span class="keyword">for</span> i  <span class="keyword">in</span> range(<span class="number">1</span>, c[<span class="number">0</span>] <span class="keyword">if</span> c <span class="keyword">else</span> n+<span class="number">1</span>)]</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<h3 id="解法三-回溯"><a href="#解法三-回溯" class="headerlink" title="解法三: 回溯"></a>解法三: 回溯</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">combine</span><span class="params">(self, n: int, k: int)</span> -&gt; List[List[int]]:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">backtrack</span><span class="params">(nums, index, path, res, k)</span>:</span></span><br><span class="line">            <span class="keyword">if</span> len(path) == k:</span><br><span class="line">                res.append(path)</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(index, len(nums)):</span><br><span class="line">                backtrack(nums, i+<span class="number">1</span>, path+[nums[i]], res, k)</span><br><span class="line"></span><br><span class="line">        nums = range(<span class="number">1</span>, n+<span class="number">1</span>)</span><br><span class="line">        res = []</span><br><span class="line">        backtrack(nums, <span class="number">0</span>, [], res, k)</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<h2 id="Combinations-Sum-I"><a href="#Combinations-Sum-I" class="headerlink" title="Combinations Sum I"></a>Combinations Sum I</h2><p><a href="https://leetcode.com/problems/combination-sum/" target="_blank" rel="noopener">Combinations Sum I</a>:返回和为 target 的组合, 数列中的元素可以使用无限次, 数列中的数 <strong>全部是正数</strong></p>
+<p>如果有负数存在, 会有什么问题? 答: 会出现无限长的解, 例如: [-1, 1, -1, 1, …]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Input: candidates = [2,3,5], target = 8,</span><br><span class="line">A solution set is:</span><br><span class="line">[</span><br><span class="line">  [2,2,2,2],</span><br><span class="line">  [2,3,3],</span><br><span class="line">  [3,5]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h3 id="解法一-回溯"><a href="#解法一-回溯" class="headerlink" title="解法一: 回溯"></a>解法一: 回溯</h3><p>下面使用了 <code>sort()</code> 进行排序</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">combinationSum</span><span class="params">(self, candidates: List[int], target: int)</span> -&gt; List[List[int]]:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">backtrack</span><span class="params">(nums, target, index, path, res)</span>:</span></span><br><span class="line">            <span class="keyword">if</span> (target == <span class="number">0</span>):</span><br><span class="line">                res.append(path)</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(index, len(nums)):</span><br><span class="line">                <span class="keyword">if</span> (nums[i] &gt; target):</span><br><span class="line">                    <span class="keyword">break</span> <span class="comment"># 在这里就break的好处是后面的for循环可以不用再执行, 起到剪枝的效果</span></span><br><span class="line">                backtrack(nums, target - nums[i], i, path+[nums[i]], res)</span><br><span class="line"></span><br><span class="line">        res = []</span><br><span class="line">        candidates.sort()</span><br><span class="line">        backtrack(candidates, target, <span class="number">0</span>, [], res)</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<p>实际上可以不使用 sort, 此时注意当<code>nums[i] &gt; target</code>时, 我们不能直接<code>break</code>, 因为后面还存在其他可能的解, 因此, 需要用<code>continue</code><br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">combinationSum</span><span class="params">(self, candidates: List[int], target: int)</span> -&gt; List[List[int]]:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">backtrack</span><span class="params">(nums, target, index, path, res)</span>:</span></span><br><span class="line">            <span class="keyword">if</span> (target == <span class="number">0</span>):</span><br><span class="line">                res.append(path)</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(index, len(nums)):</span><br><span class="line">                <span class="keyword">if</span> (nums[i] &gt; target):</span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line">                backtrack(nums, target - nums[i], i, path+[nums[i]], res)</span><br><span class="line"></span><br><span class="line">        res = []</span><br><span class="line">        backtrack(candidates, target, <span class="number">0</span>, [], res)</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure></p>
+<h2 id="Combination-Sum-II"><a href="#Combination-Sum-II" class="headerlink" title="Combination Sum II"></a>Combination Sum II</h2><p><a href="https://leetcode.com/problems/combination-sum-ii/" target="_blank" rel="noopener">Combinations Sum II</a>: 返回和为 target 的组合, 数列中的元素可以只可以使用一次</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Input: candidates = [10,1,2,7,6,1,5], target = 8,</span><br><span class="line">A solution set is:</span><br><span class="line">[</span><br><span class="line">  [1, 7],</span><br><span class="line">  [1, 2, 5],</span><br><span class="line">  [2, 6],</span><br><span class="line">  [1, 1, 6]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h3 id="解法一-回溯-1"><a href="#解法一-回溯-1" class="headerlink" title="解法一: 回溯"></a>解法一: 回溯</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">combinationSum2</span><span class="params">(self, candidates: List[int], target: int)</span> -&gt; List[List[int]]:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">back_track</span><span class="params">(nums, res, index, path, target)</span>:</span></span><br><span class="line">            <span class="keyword">if</span> (target == <span class="number">0</span>):</span><br><span class="line">                <span class="comment">#if len(res) == 0 or path not in res:</span></span><br><span class="line">                res.append(path)</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(index, len(nums)):</span><br><span class="line">                <span class="keyword">if</span> i != index <span class="keyword">and</span> nums[i<span class="number">-1</span>] == nums[i]:</span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line">                <span class="keyword">if</span> nums[i] &gt; target:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                back_track(nums, res, i+<span class="number">1</span>, path+[nums[i]], target-nums[i])</span><br><span class="line">        res = []</span><br><span class="line">        back_track(sorted(candidates), res, <span class="number">0</span>, [], target) <span class="comment"># 注意, 为了方便我们判断重复, 这里需要用排序的序列</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<h2 id="Combination-Sum-III"><a href="#Combination-Sum-III" class="headerlink" title="Combination Sum III"></a>Combination Sum III</h2><p><a href="https://leetcode.com/problems/combination-sum-iii/" target="_blank" rel="noopener">Combinations Sum III</a>: 返回和为 target 的 k 元组, 只可以使用 1~9 的数字</p>
+<h3 id="解法一-回溯-2"><a href="#解法一-回溯-2" class="headerlink" title="解法一: 回溯"></a>解法一: 回溯</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">combinationSum3</span><span class="params">(self, k: int, n: int)</span> -&gt; List[List[int]]:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">back_track</span><span class="params">(nums, res, index, path, k, target)</span>:</span></span><br><span class="line">            <span class="keyword">if</span> (k == <span class="number">0</span>):</span><br><span class="line">                <span class="keyword">if</span> (target == <span class="number">0</span>):</span><br><span class="line">                    res.append(path)</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(index, len(nums)):</span><br><span class="line">                back_track(nums, res, i+<span class="number">1</span>, path+[nums[i]], k<span class="number">-1</span>, target-nums[i])</span><br><span class="line"></span><br><span class="line">        nums = range(<span class="number">1</span>, <span class="number">10</span>)</span><br><span class="line">        res = []</span><br><span class="line">        back_track(nums, res, <span class="number">0</span>, [], k, n)</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<h2 id="Combinations-Sum-IV"><a href="#Combinations-Sum-IV" class="headerlink" title="Combinations Sum IV"></a>Combinations Sum IV</h2><p><a href="https://leetcode.com/problems/combination-sum-iv/" target="_blank" rel="noopener">Combinations Sum IV</a>: 返回和为 target 的所有可能情况的个数(需要用到排列, 该题认为 [1, 1, 2] 和 [2, 1, 1] 是不同的情况), 数列中的元素可以使用无限次</p>
+<h3 id="解法一-回溯-3"><a href="#解法一-回溯-3" class="headerlink" title="解法一: 回溯"></a>解法一: 回溯</h3><p>由于该题将 [1, 1, 2] 和 [2, 1, 1] 看做是不同的情况, 因此, 在组合之后, 还要对每种组合进行排列, 但是这样的复杂度非常高, 例如 [1,1,1,1,1,1,1,1,1,,1,1…, 5], 所以该方法会超时</p>
+<h3 id="解法二-动态规划-1"><a href="#解法二-动态规划-1" class="headerlink" title="解法二: 动态规划"></a>解法二: 动态规划</h3><p>当我们求取某个值的可能组合数时, 我们可以利用前面已经求得的情况来简化. 如下所示</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">combinationSum4</span><span class="params">(self, nums: List[int], target: int)</span> -&gt; int:</span></span><br><span class="line">        <span class="comment"># dp[i] 代表, target 为 i 的组合数目</span></span><br><span class="line">        nums, dp = sorted(nums), [<span class="number">0</span>] + [<span class="number">0</span>] * target</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, target+<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">                <span class="keyword">if</span> num &gt; i: <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">if</span> num == i: dp[i] += <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span> num &lt; i : dp[i] += dp[i - num]</span><br><span class="line">        <span class="keyword">return</span> dp[target]</span><br></pre></td></tr></table></figure>
+<h1 id="回溯"><a href="#回溯" class="headerlink" title="回溯"></a>回溯</h1><p>用回溯解决一系列问题: <a href="https://leetcode.com/problems/combination-sum/discuss/16502/A-general-approach-to-backtracking-questions-in-Java-(Subsets-Permutations-Combination-Sum-Palindrome-Partitioning" target="_blank" rel="noopener">https://leetcode.com/problems/combination-sum/discuss/16502/A-general-approach-to-backtracking-questions-in-Java-(Subsets-Permutations-Combination-Sum-Palindrome-Partitioning</a>)</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法刷题/" rel="tag"><i class="fa fa-tag"></i> 算法刷题</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/PyTorch-SSD-数据处理/" rel="prev" title="SSD 源码实现 (PyTorch)-数据处理">
+                <i class="fa fa-chevron-left"></i> SSD 源码实现 (PyTorch)-数据处理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/面试-KnuthShuffle算法/" rel="next" title="洗牌的正确姿势-Knuth shuffle算法">
+                洗牌的正确姿势-Knuth shuffle算法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">263</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="零域CSDN博客" target="_blank">零域CSDN博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xinghanzzy.github.io/" title="BoXiao的博客" target="_blank">BoXiao的博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背包问题"><span class="nav-text">背包问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#01-背包"><span class="nav-text">01 背包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完全背包"><span class="nav-text">完全背包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多重背包"><span class="nav-text">多重背包</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最长公共子串"><span class="nav-text">最长公共子串</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目描述"><span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法一-暴力"><span class="nav-text">解法一: 暴力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法二-动态规划"><span class="nav-text">解法二: 动态规划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法三-优化的动态规划"><span class="nav-text">解法三: 优化的动态规划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法四-再优化的动态规划"><span class="nav-text">解法四: 再优化的动态规划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法五-后缀自动机"><span class="nav-text">解法五: 后缀自动机</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最长公共子序列"><span class="nav-text">最长公共子序列</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解法一-动态规划"><span class="nav-text">解法一: 动态规划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法二-优化的动态规划"><span class="nav-text">解法二: 优化的动态规划</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字符串匹配算法"><span class="nav-text">字符串匹配算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#暴力匹配法-朴素字符串匹配"><span class="nav-text">暴力匹配法(朴素字符串匹配)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rabin-Karp"><span class="nav-text">Rabin-Karp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Finite-automaton-优先自动机"><span class="nav-text">Finite automaton(优先自动机)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Knuth-Morris-Pratt-KMP"><span class="nav-text">Knuth-Morris-Pratt(KMP)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#排列算法"><span class="nav-text">排列算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#next-permutation"><span class="nav-text">next_permutation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#prev-permutation"><span class="nav-text">prev_permutation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#permutation-sequence"><span class="nav-text">permutation sequence</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#组合算法"><span class="nav-text">组合算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Combinations"><span class="nav-text">Combinations</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解法一-递归"><span class="nav-text">解法一: 递归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解法二-迭代"><span class="nav-text">解法二: 迭代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解法三-回溯"><span class="nav-text">解法三: 回溯</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Combinations-Sum-I"><span class="nav-text">Combinations Sum I</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解法一-回溯"><span class="nav-text">解法一: 回溯</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Combination-Sum-II"><span class="nav-text">Combination Sum II</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解法一-回溯-1"><span class="nav-text">解法一: 回溯</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Combination-Sum-III"><span class="nav-text">Combination Sum III</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解法一-回溯-2"><span class="nav-text">解法一: 回溯</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Combinations-Sum-IV"><span class="nav-text">Combinations Sum IV</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解法一-回溯-3"><span class="nav-text">解法一: 回溯</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解法二-动态规划-1"><span class="nav-text">解法二: 动态规划</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#回溯"><span class="nav-text">回溯</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">2.3m</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">34:29</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

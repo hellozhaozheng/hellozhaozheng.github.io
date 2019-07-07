@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="在 C++ 中, 用于处理字符串的类 string 虽然有用很多和 STL 相似的性质和用法, 但是一般来说, 我们不认为它是 STL 的一份子, 因为实际上,  string 并不是模板, 它其实是某个模板的实例, 即 basic_string&amp;lt;char&amp;gt;. 因此, 这里我们单独讨论关于 string 类的一系列方法和属性, 但是需要知道, string 类在很多地方都与模板的函数或">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-28T07:44:49.594Z">
+<meta property="og:updated_time" content="2019-06-17T06:08:55.967Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++ string 完整笔记">
 <meta name="twitter:description" content="在 C++ 中, 用于处理字符串的类 string 虽然有用很多和 STL 相似的性质和用法, 但是一般来说, 我们不认为它是 STL 的一份子, 因为实际上,  string 并不是模板, 它其实是某个模板的实例, 即 basic_string&amp;lt;char&amp;gt;. 因此, 这里我们单独讨论关于 string 类的一系列方法和属性, 但是需要知道, string 类在很多地方都与模板的函数或">
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">244</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">263</span></a>
   </li>
         
         
@@ -328,7 +328,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">40</span></a>
   </li>
         
         
@@ -481,8 +481,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-02-28T15:44:49+08:00" content="2019-02-28">
-      		  2019-02-28
+    		<time itemprop="dateUpdated" datetime="2019-06-17T14:08:55+08:00" content="2019-06-17">
+      		  2019-06-17
     		</time>
   	  </span>
 	  
@@ -535,7 +535,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">940</span>
+                <span title="本文字数">1.4k</span>
               
 
               
@@ -584,6 +584,8 @@
 <h2 id="stringstream"><a href="#stringstream" class="headerlink" title="stringstream"></a>stringstream</h2><p>控制流的输入输出操作</p>
 <h2 id="istringstream"><a href="#istringstream" class="headerlink" title="istringstream"></a>istringstream</h2><p>控制流的输入</p>
 <h2 id="ostringstream"><a href="#ostringstream" class="headerlink" title="ostringstream"></a>ostringstream</h2><p>控制流的输出</p>
+<h1 id="不确定数目的整数输入"><a href="#不确定数目的整数输入" class="headerlink" title="不确定数目的整数输入"></a>不确定数目的整数输入</h1><p>持续输入, 自动忽略输入中的空白符(空格, 回车, 制表符), 下面的程序当遇到 99 时终止输入<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> a; <span class="built_in">std</span>::<span class="built_in">cin</span> &gt;&gt; a <span class="keyword">and</span> a != <span class="number">99</span>; vec.emplace_back(a));</span><br></pre></td></tr></table></figure></p>
+<p>仅仅输入一行, 自动忽略输入中的空白符, 注意, 如果输入中存在其他字符, 例如分号, 逗号等, 那么 <code>istringstream</code> 的输出会在其他字符之前停止<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sstream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; vec;</span><br><span class="line"><span class="built_in">string</span> line;</span><br><span class="line"><span class="built_in">std</span>::getline(<span class="built_in">std</span>::<span class="built_in">cin</span>, line);</span><br><span class="line"><span class="built_in">std</span>::<span class="function"><span class="built_in">istringstream</span> <span class="title">iss</span><span class="params">(line)</span></span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">double</span> v; iss &gt; v; vec.emplace_back(v));</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -707,7 +709,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">244</span>
+                    <span class="site-state-item-count">263</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -833,7 +835,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">37</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -901,7 +909,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#成员函数"><span class="nav-text">成员函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#元素访问"><span class="nav-text">元素访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作"><span class="nav-text">操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类型转换"><span class="nav-text">类型转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#string-转换到其他类型"><span class="nav-text">string 转换到其他类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#char-转换到其他类型"><span class="nav-text">char 转换到其他类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他类型转换到-string"><span class="nav-text">其他类型转换到 string</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最简单的将int转换成string的方法"><span class="nav-text">最简单的将int转换成string的方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字符串流"><span class="nav-text">字符串流</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#stringstream"><span class="nav-text">stringstream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#istringstream"><span class="nav-text">istringstream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ostringstream"><span class="nav-text">ostringstream</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#成员函数"><span class="nav-text">成员函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#元素访问"><span class="nav-text">元素访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作"><span class="nav-text">操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类型转换"><span class="nav-text">类型转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#string-转换到其他类型"><span class="nav-text">string 转换到其他类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#char-转换到其他类型"><span class="nav-text">char 转换到其他类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他类型转换到-string"><span class="nav-text">其他类型转换到 string</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最简单的将int转换成string的方法"><span class="nav-text">最简单的将int转换成string的方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字符串流"><span class="nav-text">字符串流</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#stringstream"><span class="nav-text">stringstream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#istringstream"><span class="nav-text">istringstream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ostringstream"><span class="nav-text">ostringstream</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#不确定数目的整数输入"><span class="nav-text">不确定数目的整数输入</span></a></li></ol></div>
             
 
           </div>
@@ -938,7 +946,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.9m</span>
+    <span title="站点总字数">2.3m</span>
   
 
   
@@ -947,7 +955,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">28:15</span>
+    <span title="站点阅读时长">34:29</span>
   
 </div>
 

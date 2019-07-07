@@ -112,17 +112,17 @@
 
 
 
-  <meta name="description" content="商汤科技实习二面FLOPs的计算nxn 的矩阵乘法的 FLOPs卷积的 FLOPs 的计算模型在inference时除了 FLOPs 还有哪些影响速度的因素? BN 在 Inference 阶段可以放到其他操作理做吗? Conv + BN 可以吗Conv + relu + BN 可以吗Depthwise + BN 可以吗Depthwise + relu + BN 可以吗 CNN 具有平移不变性吗?">
+  <meta name="description" content="笔试常见坑数字相乘后超出 int 范围, 能用 long long 就用 long longpython 的 sys.stdin.readline()split() 读入的都是字符串, 因此在进行比较时需要注意字符串的比较和数字类型的比较的区别. python 的 append 方法是对列表直接操作, 不会返回任何结果(返回 None) python 的for i in range语法的每一次迭代">
 <meta property="og:type" content="article">
 <meta property="og:title" content="笔试及面试记录">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/面试-笔试面试记录/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="商汤科技实习二面FLOPs的计算nxn 的矩阵乘法的 FLOPs卷积的 FLOPs 的计算模型在inference时除了 FLOPs 还有哪些影响速度的因素? BN 在 Inference 阶段可以放到其他操作理做吗? Conv + BN 可以吗Conv + relu + BN 可以吗Depthwise + BN 可以吗Depthwise + relu + BN 可以吗 CNN 具有平移不变性吗?">
+<meta property="og:description" content="笔试常见坑数字相乘后超出 int 范围, 能用 long long 就用 long longpython 的 sys.stdin.readline()split() 读入的都是字符串, 因此在进行比较时需要注意字符串的比较和数字类型的比较的区别. python 的 append 方法是对列表直接操作, 不会返回任何结果(返回 None) python 的for i in range语法的每一次迭代">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-09T09:07:49.086Z">
+<meta property="og:updated_time" content="2019-06-27T06:05:10.931Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="笔试及面试记录">
-<meta name="twitter:description" content="商汤科技实习二面FLOPs的计算nxn 的矩阵乘法的 FLOPs卷积的 FLOPs 的计算模型在inference时除了 FLOPs 还有哪些影响速度的因素? BN 在 Inference 阶段可以放到其他操作理做吗? Conv + BN 可以吗Conv + relu + BN 可以吗Depthwise + BN 可以吗Depthwise + relu + BN 可以吗 CNN 具有平移不变性吗?">
+<meta name="twitter:description" content="笔试常见坑数字相乘后超出 int 范围, 能用 long long 就用 long longpython 的 sys.stdin.readline()split() 读入的都是字符串, 因此在进行比较时需要注意字符串的比较和数字类型的比较的区别. python 的 append 方法是对列表直接操作, 不会返回任何结果(返回 None) python 的for i in range语法的每一次迭代">
 
 
 
@@ -247,7 +247,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">244</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">263</span></a>
   </li>
         
         
@@ -327,7 +327,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">40</span></a>
   </li>
         
         
@@ -480,8 +480,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-05-09T17:07:49+08:00" content="2019-05-09">
-      		  2019-05-09
+    		<time itemprop="dateUpdated" datetime="2019-06-27T14:05:10+08:00" content="2019-06-27">
+      		  2019-06-27
     		</time>
   	  </span>
 	  
@@ -534,7 +534,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">2.9k</span>
+                <span title="本文字数">3.4k</span>
               
 
               
@@ -568,7 +568,10 @@
       
 
       
-        <h1 id="商汤科技实习二面"><a href="#商汤科技实习二面" class="headerlink" title="商汤科技实习二面"></a>商汤科技实习二面</h1><p>FLOPs的计算<br>nxn 的矩阵乘法的 FLOPs<br>卷积的 FLOPs 的计算<br>模型在inference时除了 FLOPs 还有哪些影响速度的因素?</p>
+        <h1 id="笔试常见坑"><a href="#笔试常见坑" class="headerlink" title="笔试常见坑"></a>笔试常见坑</h1><p>数字相乘后超出 <code>int</code> 范围, 能用 <code>long long</code> 就用 <code>long long</code><br>python 的 sys.stdin.readline()split() 读入的都是字符串, 因此在进行比较时需要注意字符串的比较和数字类型的比较的区别.</p>
+<p>python 的 append 方法是对列表直接操作, 不会返回任何结果(返回 None)</p>
+<p>python 的<code>for i in range</code>语法的每一次迭代都是基于 range 的, 不会被内部改变, 如下所示, 下面三段程序的输出是一模一样的.<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">        <span class="keyword">if</span> i % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        print(i)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    <span class="keyword">if</span> i % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    print(i)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    <span class="keyword">if</span> i % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        i = <span class="number">3</span></span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    print(i)</span><br></pre></td></tr></table></figure></p>
+<h1 id="商汤科技实习二面"><a href="#商汤科技实习二面" class="headerlink" title="商汤科技实习二面"></a>商汤科技实习二面</h1><p>FLOPs的计算<br>nxn 的矩阵乘法的 FLOPs<br>卷积的 FLOPs 的计算<br>模型在inference时除了 FLOPs 还有哪些影响速度的因素?</p>
 <p>BN 在 Inference 阶段可以放到其他操作理做吗?</p>
 <p>Conv + BN 可以吗<br>Conv + relu + BN 可以吗<br>Depthwise + BN 可以吗<br>Depthwise + relu + BN 可以吗</p>
 <p>CNN 具有平移不变性吗?</p>
@@ -758,7 +761,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">244</span>
+                    <span class="site-state-item-count">263</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -884,7 +887,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">37</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -952,7 +961,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#商汤科技实习二面"><span class="nav-text">商汤科技实习二面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#03-07-360-提前批笔试"><span class="nav-text">03.07 360 提前批笔试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数星星"><span class="nav-text">数星星</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#座位安排"><span class="nav-text">座位安排</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#03-13-阿里一面"><span class="nav-text">03.13 阿里一面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-15-海康"><span class="nav-text">3.15 海康</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-18-360"><span class="nav-text">3.18 360</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-19-360-一面"><span class="nav-text">3.19 360 一面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#杂记"><span class="nav-text">杂记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#10-项目和比赛的某些细节"><span class="nav-text">10.项目和比赛的某些细节</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#笔试常见坑"><span class="nav-text">笔试常见坑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#商汤科技实习二面"><span class="nav-text">商汤科技实习二面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#03-07-360-提前批笔试"><span class="nav-text">03.07 360 提前批笔试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数星星"><span class="nav-text">数星星</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#座位安排"><span class="nav-text">座位安排</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#03-13-阿里一面"><span class="nav-text">03.13 阿里一面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-15-海康"><span class="nav-text">3.15 海康</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-18-360"><span class="nav-text">3.18 360</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-19-360-一面"><span class="nav-text">3.19 360 一面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#杂记"><span class="nav-text">杂记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#10-项目和比赛的某些细节"><span class="nav-text">10.项目和比赛的某些细节</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -989,7 +998,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.9m</span>
+    <span title="站点总字数">2.3m</span>
   
 
   
@@ -998,7 +1007,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">28:15</span>
+    <span title="站点阅读时长">34:29</span>
   
 </div>
 

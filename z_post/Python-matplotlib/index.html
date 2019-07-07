@@ -124,7 +124,7 @@
 <meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fw1qdgondtj20e40fqjrz.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fw1t1nzajlj20ra0a8my0.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw1t1o08knj20r40gpgmh.jpg">
-<meta property="og:updated_time" content="2019-03-05T01:22:42.957Z">
+<meta property="og:updated_time" content="2019-06-26T06:17:14.104Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="matplotlib模块-数据绘图">
 <meta name="twitter:description" content="基础知识Matplotlib是一个Python 2D绘图库，可以在各种平台上以各种硬拷贝格式和交互式环境生成出版质量数据。Matplotlib可用于Python脚本，Python和IPython shell，jupyter笔记本，Web应用程序服务器和四个图形用户界面工具。 matplotlib画板一般由以下部分组成  创建了subplot后, 如果发出绘图指令，matplotlib这时就会在你最">
@@ -253,7 +253,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">244</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">263</span></a>
   </li>
         
         
@@ -333,7 +333,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">40</span></a>
   </li>
         
         
@@ -486,8 +486,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-05T09:22:42+08:00" content="2019-03-05">
-      		  2019-03-05
+    		<time itemprop="dateUpdated" datetime="2019-06-26T14:17:14+08:00" content="2019-06-26">
+      		  2019-06-26
     		</time>
   	  </span>
 	  
@@ -540,7 +540,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">2k</span>
+                <span title="本文字数">2.4k</span>
               
 
               
@@ -581,6 +581,7 @@
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 多个figure</span></span><br><span class="line">x = np.linspace(<span class="number">-1</span>, <span class="number">1</span>, <span class="number">50</span>)</span><br><span class="line">y1 = <span class="number">2</span>*x + <span class="number">1</span></span><br><span class="line">y2 = <span class="number">2</span>**x + <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用figure()函数重新申请一个figure对象</span></span><br><span class="line"><span class="comment"># 注意，每次调用figure的时候都会重新申请一个figure对象</span></span><br><span class="line">plt.figure()</span><br><span class="line"><span class="comment"># 第一个是横坐标的值，第二个是纵坐标的值</span></span><br><span class="line">plt.plot(x, y1)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第一个参数表示的是编号，第二个表示的是图表的长宽</span></span><br><span class="line">plt.figure(num = <span class="number">3</span>, figsize=(<span class="number">8</span>, <span class="number">5</span>))</span><br><span class="line"><span class="comment"># 当我们需要在画板中绘制两条线的时候，可以使用下面的方法：</span></span><br><span class="line">plt.plot(x, y2)</span><br><span class="line">plt.plot(x, y1,</span><br><span class="line">         color=<span class="string">'red'</span>,   <span class="comment"># 线颜色</span></span><br><span class="line">         linewidth=<span class="number">1.0</span>,  <span class="comment"># 线宽</span></span><br><span class="line">         linestyle=<span class="string">'--'</span>  <span class="comment"># 线样式</span></span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">plt.show()  <span class="comment"># 会将所有的figure对象显示出来, 这里有2个</span></span><br></pre></td></tr></table></figure>
 <p><img src="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fw1qdgondtj20e40fqjrz.jpg" alt=""></p>
 <h1 id="用matplotlib显示图片"><a href="#用matplotlib显示图片" class="headerlink" title="用matplotlib显示图片"></a>用matplotlib显示图片</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt <span class="comment"># plt 用于显示图片</span></span><br><span class="line"></span><br><span class="line">img = Image.open(image_file_path)</span><br><span class="line"></span><br><span class="line">plt.figure(<span class="string">"Image"</span>)</span><br><span class="line">plt.title(<span class="string">"title"</span>)</span><br><span class="line">plt.axis(<span class="string">"on"</span>) <span class="comment"># 默认就是on</span></span><br><span class="line">plt.imshow(img)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>显示多张图片:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># plt.subplot(nrows, ncols, index, **kwargs), 行, 列, 编号, 从1开始, 直接行x列</span></span><br><span class="line"></span><br><span class="line">img = cv2.imread(<span class="string">'cat.jpg'</span>)</span><br><span class="line">img = img[:, :, ::<span class="number">-1</span>]</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>)</span><br><span class="line">plt.title(<span class="string">'origin'</span>)</span><br><span class="line">plt.imshow(img)</span><br><span class="line">plt.subplot(<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>)</span><br><span class="line">plt.title(<span class="string">'origin'</span>)</span><br><span class="line">plt.imshow(img)</span><br><span class="line">plt.subplot(<span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">plt.title(<span class="string">'origin'</span>)</span><br><span class="line">plt.imshow(img)</span><br><span class="line">plt.subplot(<span class="number">2</span>, <span class="number">2</span>, <span class="number">4</span>)</span><br><span class="line">plt.title(<span class="string">'origin'</span>)</span><br><span class="line">plt.imshow(img)</span><br></pre></td></tr></table></figure></p>
 <h1 id="2D图表风格"><a href="#2D图表风格" class="headerlink" title="2D图表风格"></a>2D图表风格</h1><h2 id="散点图"><a href="#散点图" class="headerlink" title="散点图"></a>散点图</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">matplotlib.pyplot.scatter(x, y, s=<span class="keyword">None</span>, c=<span class="keyword">None</span>, marker=<span class="keyword">None</span>, cmap=<span class="keyword">None</span>, norm=<span class="keyword">None</span>, vmin=<span class="keyword">None</span>, vmax=<span class="keyword">None</span>,</span><br><span class="line">alpha=<span class="keyword">None</span>, linewidths=<span class="keyword">None</span>, verts=<span class="keyword">None</span>, edgecolors=<span class="keyword">None</span>, hold=<span class="keyword">None</span>, data=<span class="keyword">None</span>, ** kwargs)</span><br></pre></td></tr></table></figure>
 <p>参数说明:</p>
 <ul>
@@ -736,7 +737,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">244</span>
+                    <span class="site-state-item-count">263</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -862,7 +863,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">37</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -967,7 +974,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.9m</span>
+    <span title="站点总字数">2.3m</span>
   
 
   
@@ -976,7 +983,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">28:15</span>
+    <span title="站点阅读时长">34:29</span>
   
 </div>
 

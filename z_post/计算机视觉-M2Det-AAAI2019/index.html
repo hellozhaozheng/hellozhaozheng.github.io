@@ -129,7 +129,7 @@
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1g14s4p71w4j20tf0f9go1.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1g14s5kn8h2j20u20ghtb2.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1g14s5v8vtpj20um0nrwxa.jpg">
-<meta property="og:updated_time" content="2019-03-17T07:40:58.721Z">
+<meta property="og:updated_time" content="2019-06-08T08:22:51.141Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="M2Det (AAAI, 2019)">
 <meta name="twitter:description" content="文章: M2Det: A Single-Shot Object Detector based on Multi-Level Feature PyramidNetwork作者: Qijie Zhao, Tao Sheng, Yongtao Wang机构: 北京大学, 阿里达摩院 摘要Feature pyramids 在现阶段 SOTA 的 one-stage (DSSD, RetinaNet, Re">
@@ -258,7 +258,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">244</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">263</span></a>
   </li>
         
         
@@ -338,7 +338,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">37</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">40</span></a>
   </li>
         
         
@@ -491,8 +491,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-17T15:40:58+08:00" content="2019-03-17">
-      		  2019-03-17
+    		<time itemprop="dateUpdated" datetime="2019-06-08T16:22:51+08:00" content="2019-06-08">
+      		  2019-06-08
     		</time>
   	  </span>
 	  
@@ -593,7 +593,7 @@
 <script type="math/tex; mode=display">[x_1^l, x_2^l, ..., x_i^l] = \begin{cases} T_l(X_{base}), && l = 1 \\ T_l(F(X_{base}, x_i^l-1)), && l = 2, ..., L \end{cases} \tag 1</script><p>上式中, $X_{base}$ 表示 base feature, $x_i^l$ 表示第 $l$ 个 TUM 中的 第 $i$ 个尺寸(scale)的 feature, $L$ 代表 TUMs 的数量, $T_l$ 代表第 $l$ 个 TUM 的处理过程, $F$ 代表 FFMv1 的处理过程. <strong>最终</strong>, SFAM 会通过按照尺度的特征连接操作(scale-wise feature concatenation operation)和按照深度的注意力机制(channel-wise attention mechanism)来聚集 multi-level multi-scale features.</p>
 <p><strong>FFMs:</strong> FFMs 会从 M2Det 网络中的不同层级(different levels)融合特征, 这一点对于构建最终的 multi-level feature pyramid 来说至关重要. <strong>FFMs 使用 $1\times 1$ 的卷积层来压缩 input features 的 channels, 同时使用连接操作(concatenation operation) 来聚集这些特征图谱</strong>. 特别的, 由于 FFMv1 接受 backbone 中两个不同尺寸(scales)的 feature map 作为输入, 所以它将会采用上采样操作(upsample operation)来将深层次的 feature map 放大到和浅层 map 相同到尺寸, 然后才进行 concatenation 操作. 同时, FFMv2 接受 base feature 和前一个 TUM 输出的最大 feature map 作为输入, 这两个 feature map 本身就具有相同的尺寸(scale), 并且会生成融合后的特征, 用作下一个 TUM 的输入. FFMv1 和 FFMv2 的结构细节分别如图4(a)和(b)所示.</p>
 <p><div style="width: 550px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1g14s31ygnyj21280ocjvp.jpg" alt="图4"></div></p>
-<p><strong>TUMs:</strong> 如图4所示, 和 FPN 以及 RetinaNet 不同, TUM 采用一个 “更薄” 的 U-shape 结构. <strong>encoder 是一系列 stride 为 2 的 $3 \times 3$ 的卷积层组成, decoder 将这些卷积层的输出作为其特征映射的参考集, 而 FPN 的做法是将 ResNet backbone 中每一个卷积段(stage)的最后一层的输出作为参考集.</strong> 除此以外, 我们在 decoder 的 upsample 和 element-wise sum operation 之后添加了 $1\times 1$ 的卷积层来增加学习能力, 同时保持特征的平滑度(smoothness). 每一个 TUM 的 decoder 的所有输出构成了当前 level 和 multi-scale features. 最终, 堆叠的 TUMs 的输出构成了 multi-level multi-scale features, 中间的 TUM 提供中间层级特征(medium-level features), 后面的 TUM 提供深层次的特征(deep-level features).</p>
+<p><strong>TUMs:</strong> 如图4(c)所示, 和 FPN 以及 RetinaNet 不同, TUM 采用一个 “更薄” 的 U-shape 结构. <strong>encoder 是一系列 stride 为 2 的 $3 \times 3$ 的卷积层组成, decoder 将这些卷积层的输出作为其特征映射的参考集, 而 FPN 的做法是将 ResNet backbone 中每一个卷积段(stage)的最后一层的输出作为参考集.</strong> 除此以外, 我们在 decoder 的 upsample 和 element-wise sum operation 之后添加了 $1\times 1$ 的卷积层来增加学习能力, 同时保持特征的平滑度(smoothness). 每一个 TUM 的 decoder 的所有输出构成了当前 level 和 multi-scale features. 最终, 堆叠的 TUMs 的输出构成了 multi-level multi-scale features, 中间的 TUM 提供中间层级特征(medium-level features), 后面的 TUM 提供深层次的特征(deep-level features).</p>
 <p><div style="width: 550px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1g14s2hzbonj21en0bsmzp.jpg" alt="图3"></div></p>
 <p><strong>SFAM:</strong> SFAM 的目的是聚集 TUMs 产生的 multi-level multi-scale features 到图3所示的 multi-level feature pyramid. SFAM 的第一阶段是沿着 channel dimension 将具有相同尺寸(scale) 的特征图片连接(concatenate)起来. 聚集后的特征金字塔可以表示成: $X = [X_1, X_2, …, X_i]$, 这里 $X_i = Concat(x_i^1, x_i^2, …, x_i^L) \in R^{W_i \times H_i \times C}$, 代表第 $i$ 大(scale)的特征. 因此, 在聚集后的特征金字塔中的每一个 scale 都包含 multi-level depths 的特征. 然而, <strong>简单的连接操作(concatenation) 并没有足够的适应能力(not adaptive enough).</strong> 在第二阶段, 我们引入了 channel-wise attention module 来丰富特征, 以便它能关注那些有益的 channels. Following SE block, 我们在 squeeze step 使用 global average pooling 来生成 channel-wise statistics $z\in R^C$. 同时为了完全捕获 channel-wise dependencies, 在之后的 excitation step 通过两个全连接层来学习注意力机制:</p>
 <script type="math/tex; mode=display">s = F_{ex}(z, W) = \sigma(W_2 \delta (W_1 z)), \tag 2</script><p>上式中 $\sigma$ 代表 ReLU, $\delta$ 代表 sigmoid, $W_1 \in R^{\frac{C}{r}\times C}$, $W_2 \in R^{ C\times \frac{C}{r}}$, $r$ 是 reduction ratio(在本文的实验中 $r=16$). 最终的输出是通过 reweighting the input X with activation s 得到的:</p>
@@ -733,7 +733,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">244</span>
+                    <span class="site-state-item-count">263</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -859,7 +859,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">37</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -964,7 +970,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.9m</span>
+    <span title="站点总字数">2.3m</span>
   
 
   
@@ -973,7 +979,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">28:15</span>
+    <span title="站点阅读时长">34:29</span>
   
 </div>
 
