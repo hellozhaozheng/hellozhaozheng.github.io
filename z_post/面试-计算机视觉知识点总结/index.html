@@ -112,13 +112,13 @@
 
 
 
-  <meta name="description" content="总目录篇机器学习: 逻辑回归, 支持向量机, 决策树, 降维, 聚类 深度学习: 优化方法, 初始化方法, 损失函数, 激活函数, 正则化, 归一化, 感受野, 全连接层, 卷积层, 反卷积层, 池化层, 训练问题 网络结构: AlexNet, VGGNet, InceptionV1, InceptionV2, InceptionV3, InceptionV4, Xception, ResNet,">
+  <meta name="description" content="神经网络中如果预测值与实际值的误差越大，那么在反向传播训练的过程中，各种参数调整的幅度就要更大，从而使训练更快收敛；如果预测值与实际值的误差小，各种参数调整的幅度就要小，从而减少震荡。 使用平方误差损失函数，误差增大参数的梯度会增大，但是当误差很大时，参数的梯度就会又减小了。 使用交叉熵损失函数，误差越大参数的梯度也越大，能够快速收敛。 总目录篇机器学习: 逻辑回归, 支持向量机, 决策树, 降维">
 <meta name="keywords" content="知识点梳理,计算机视觉">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【置顶】计算机视觉知识点总结">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/面试-计算机视觉知识点总结/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="总目录篇机器学习: 逻辑回归, 支持向量机, 决策树, 降维, 聚类 深度学习: 优化方法, 初始化方法, 损失函数, 激活函数, 正则化, 归一化, 感受野, 全连接层, 卷积层, 反卷积层, 池化层, 训练问题 网络结构: AlexNet, VGGNet, InceptionV1, InceptionV2, InceptionV3, InceptionV4, Xception, ResNet,">
+<meta property="og:description" content="神经网络中如果预测值与实际值的误差越大，那么在反向传播训练的过程中，各种参数调整的幅度就要更大，从而使训练更快收敛；如果预测值与实际值的误差小，各种参数调整的幅度就要小，从而减少震荡。 使用平方误差损失函数，误差增大参数的梯度会增大，但是当误差很大时，参数的梯度就会又减小了。 使用交叉熵损失函数，误差越大参数的梯度也越大，能够快速收敛。 总目录篇机器学习: 逻辑回归, 支持向量机, 决策树, 降维">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fww4hqied3j21kw0esjwt.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1g0ixnfk7w4j20o408q3yr.jpg">
@@ -133,10 +133,10 @@
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fx1toyw0xkj20kc0a5wkw.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1g1hbfdtyvcj21dg0m6ta3.jpg">
 <meta property="og:image" content="https://hellozhaozheng.github.io/z_post/面试-计算机视觉知识点总结/Batch-Normalization深入解析">
-<meta property="og:updated_time" content="2019-06-26T08:09:46.206Z">
+<meta property="og:updated_time" content="2019-07-07T11:28:12.596Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【置顶】计算机视觉知识点总结">
-<meta name="twitter:description" content="总目录篇机器学习: 逻辑回归, 支持向量机, 决策树, 降维, 聚类 深度学习: 优化方法, 初始化方法, 损失函数, 激活函数, 正则化, 归一化, 感受野, 全连接层, 卷积层, 反卷积层, 池化层, 训练问题 网络结构: AlexNet, VGGNet, InceptionV1, InceptionV2, InceptionV3, InceptionV4, Xception, ResNet,">
+<meta name="twitter:description" content="神经网络中如果预测值与实际值的误差越大，那么在反向传播训练的过程中，各种参数调整的幅度就要更大，从而使训练更快收敛；如果预测值与实际值的误差小，各种参数调整的幅度就要小，从而减少震荡。 使用平方误差损失函数，误差增大参数的梯度会增大，但是当误差很大时，参数的梯度就会又减小了。 使用交叉熵损失函数，误差越大参数的梯度也越大，能够快速收敛。 总目录篇机器学习: 逻辑回归, 支持向量机, 决策树, 降维">
 <meta name="twitter:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fww4hqied3j21kw0esjwt.jpg">
 
 
@@ -262,7 +262,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">263</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">262</span></a>
   </li>
         
         
@@ -499,8 +499,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-06-26T16:09:46+08:00" content="2019-06-26">
-      		  2019-06-26
+    		<time itemprop="dateUpdated" datetime="2019-07-07T19:28:12+08:00" content="2019-07-07">
+      		  2019-07-07
     		</time>
   	  </span>
 	  
@@ -553,7 +553,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">9.4k</span>
+                <span title="本文字数">9.5k</span>
               
 
               
@@ -587,7 +587,10 @@
       
 
       
-        <h1 id="总目录篇"><a href="#总目录篇" class="headerlink" title="总目录篇"></a>总目录篇</h1><p><strong>机器学习:</strong> <a href="#逻辑回归">逻辑回归</a>, <a href="#支持向量机">支持向量机</a>, <a href="#决策树">决策树</a>, <a href="#降维">降维</a>, <a href="#聚类">聚类</a></p>
+        <p>神经网络中如果预测值与实际值的误差越大，那么在反向传播训练的过程中，各种参数调整的幅度就要更大，从而使训练更快收敛；如果预测值与实际值的误差小，各种参数调整的幅度就要小，从而减少震荡。</p>
+<p>使用平方误差损失函数，误差增大参数的梯度会增大，但是当误差很大时，参数的梯度就会又减小了。</p>
+<p>使用交叉熵损失函数，误差越大参数的梯度也越大，能够快速收敛。</p>
+<h1 id="总目录篇"><a href="#总目录篇" class="headerlink" title="总目录篇"></a>总目录篇</h1><p><strong>机器学习:</strong> <a href="#逻辑回归">逻辑回归</a>, <a href="#支持向量机">支持向量机</a>, <a href="#决策树">决策树</a>, <a href="#降维">降维</a>, <a href="#聚类">聚类</a></p>
 <p><strong>深度学习:</strong> <a href="#优化方法">优化方法</a>, <a href="#初始化方法">初始化方法</a>, <a href="#损失函数">损失函数</a>, <a href="#激活函数">激活函数</a>, <a href="#正则化">正则化</a>, <a href="#归一化">归一化</a>, <a href="#感受野">感受野</a>, <a href="#全连接层">全连接层</a>, <a href="#卷积层">卷积层</a>, <a href="#反卷积层">反卷积层</a>, <a href="#池化层">池化层</a>, <a href="#训练问题">训练问题</a></p>
 <p><strong>网络结构:</strong> <a href="#AlexNet">AlexNet</a>, <a href="#VGGNet">VGGNet</a>, <a href="#InceptionV1">InceptionV1</a>, <a href="#InceptionV2">InceptionV2</a>, <a href="#InceptionV3">InceptionV3</a>, <a href="#InceptionV4">InceptionV4</a>, <a href="#Xception">Xception</a>, <a href="#ResNet">ResNet</a>, <a href="#ResNeXt">ResNeXt</a>, <a href="#DenseNet">DenseNet</a>, <a href="#SqueezeNet">SqueezeNet</a>, <a href="#MobileNet">MobileNet</a>, <a href="#MobileNetV2">MobileNetV2</a>, <a href="#ShuffleNet">ShuffleNet</a>, <a href="#ShuffleNetV2">ShuffleNetV2</a>, <a href="#SENetV2">SENet</a>,</p>
 <p><strong>目标检测:</strong> <a href="#NMS">NMS</a></p>
@@ -1305,7 +1308,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">263</span>
+                    <span class="site-state-item-count">262</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1542,7 +1545,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">2.3m</span>
+    <span title="站点总字数">2.4m</span>
   
 
   
@@ -1551,7 +1554,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">34:29</span>
+    <span title="站点阅读时长">35:45</span>
   
 </div>
 

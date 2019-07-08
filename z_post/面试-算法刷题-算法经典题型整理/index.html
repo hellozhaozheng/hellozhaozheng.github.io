@@ -134,7 +134,7 @@
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fyfv96duh4j20wd095754.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fyfx303ghvj20y107p74w.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fyfx3ex4fbj20zq09u3zb.jpg">
-<meta property="og:updated_time" content="2019-06-27T02:20:20.561Z">
+<meta property="og:updated_time" content="2019-07-08T07:39:36.631Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法经典题型整理">
 <meta name="twitter:description" content="LeetCode 算法题(Easy)LeetCode 算法题(Medium)LeetCode 算法题(Hard)剑指 offer 背包问题01 背包完全背包多重背包最长公共子串题目地址 题目描述对于两个字符串, 请设计一个时间复杂度为 $O(mn)$ 的算法(这里的 $m$ 和 $n$ 为两串的长度), 求出两串的最长公共子串的长度。这里的最长公共子串的定义为两个序列 U1,U2,..Un 和 V">
@@ -263,7 +263,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">263</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">262</span></a>
   </li>
         
         
@@ -496,8 +496,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-06-27T10:20:20+08:00" content="2019-06-27">
-      		  2019-06-27
+    		<time itemprop="dateUpdated" datetime="2019-07-08T15:39:36+08:00" content="2019-07-08">
+      		  2019-07-08
     		</time>
   	  </span>
 	  
@@ -550,7 +550,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">22k</span>
+                <span title="本文字数">23k</span>
               
 
               
@@ -564,7 +564,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">20 分钟</span>
+                <span title="阅读时长">21 分钟</span>
               
             </div>
           
@@ -734,6 +734,34 @@
 <h3 id="解法二-动态规划-1"><a href="#解法二-动态规划-1" class="headerlink" title="解法二: 动态规划"></a>解法二: 动态规划</h3><p>当我们求取某个值的可能组合数时, 我们可以利用前面已经求得的情况来简化. 如下所示</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">combinationSum4</span><span class="params">(self, nums: List[int], target: int)</span> -&gt; int:</span></span><br><span class="line">        <span class="comment"># dp[i] 代表, target 为 i 的组合数目</span></span><br><span class="line">        nums, dp = sorted(nums), [<span class="number">0</span>] + [<span class="number">0</span>] * target</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, target+<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">                <span class="keyword">if</span> num &gt; i: <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">if</span> num == i: dp[i] += <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span> num &lt; i : dp[i] += dp[i - num]</span><br><span class="line">        <span class="keyword">return</span> dp[target]</span><br></pre></td></tr></table></figure>
 <h1 id="回溯"><a href="#回溯" class="headerlink" title="回溯"></a>回溯</h1><p>用回溯解决一系列问题: <a href="https://leetcode.com/problems/combination-sum/discuss/16502/A-general-approach-to-backtracking-questions-in-Java-(Subsets-Permutations-Combination-Sum-Palindrome-Partitioning" target="_blank" rel="noopener">https://leetcode.com/problems/combination-sum/discuss/16502/A-general-approach-to-backtracking-questions-in-Java-(Subsets-Permutations-Combination-Sum-Palindrome-Partitioning</a>)</p>
+<h1 id="卡塔兰数"><a href="#卡塔兰数" class="headerlink" title="卡塔兰数"></a>卡塔兰数</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>卡特兰数又称卡塔兰数, 英文名Catalan number, 是组合数学中一个常出现在各种计数问题中出现的数列。以比利时的数学家欧仁·查理·卡塔兰 (1814–1894)的名字来命名, 其前几项为（从第零项开始） : 1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796, 58786, 208012, 742900, 2674440, 9694845, 35357670, 129644790, 477638700, 1767263190, 6564120420, 24466267020, 91482563640, 343059613650, 1289904147324, 4861946401452, …</p>
+<p>卡特兰数 $Cn$ 满足以下递推关系:</p>
+<ol>
+<li>$C_{n+1} = C_0 C_n + C_1 C_{n-1} + … + C_n C_0$</li>
+<li>$(n-1)C_n = \frac{n}{2} (C_3C_{n-1} + C_4 C_{n-2} + C_5 C_{n-3} + … + C_{n-2}C_4 + C_{n-1} C_3)$</li>
+</ol>
+<p>其他符合卡特兰数的特征:</p>
+<ol>
+<li>令 $h(0)=1, h(1)=1$, 卡特兰树满足递推式: $h(n)=h(0)\times h(n-1) + h(1)\times h(n-2) + … + h(n-1) \times h(0)$</li>
+<li>卡特兰数满足递推式: $h(n) = \frac{4n-2}{n+1} h(n-1)$, 写代码时多用: $h(n+1) = \frac{4n+2}{n+2} h(n)$</li>
+<li>卡特兰数的解为: $h(n) = \frac{1}{n+1} C_{2n}^{n}$</li>
+<li>卡特兰数的解为: $h(n) = C_{2n}^{n} - C_{2n}^{n-1}$</li>
+</ol>
+<h2 id="常见题型"><a href="#常见题型" class="headerlink" title="常见题型"></a>常见题型</h2><h3 id="0-1-类"><a href="#0-1-类" class="headerlink" title="0-1 类"></a>0-1 类</h3><p>n 个 0 与 n 个 1 随机组合, 要求从左到右数时, 确保每一个数之前 0 的个数不少于 1 个个数.</p>
+<p>实际题型举例:</p>
+<ol>
+<li>括号化问题。一个合法的表达式由()包围, ()可以嵌套和连接, 如(())()也是合法 表达式；现在有 n 对(), 它们可以组成的合法表达式的个数为</li>
+<li>矩阵连乘： P=a1×a2×a3×……×an, 依据乘法结合律, 不改变其顺序, 只用括号表示成对的乘积, 试问有几种括号化的方案</li>
+<li>出栈次序问题. 一个栈(无穷大)的进栈序列为1,2,3,..n,有多少个不同的出栈序列</li>
+<li>在图书馆一共 2n 个人在排队, n 个还《面试宝典》一书, n 个在借《面试宝典》一书, 图书馆此时没有了面试宝典了, 确保所有人都能借到书, 求他们排队的总数</li>
+<li><p>2n 个人排队买票, 其中 n 个人持 50 元, n 个人持 100 元。每张票 50 元, 且一人只买一张票。初始时售票处没有零钱找零。请问这 2n 个人一共有多少种排队顺序, 不至于使售票处找不开钱</p>
+</li>
+<li><p>$n\times n$ 的方格地图中, 从一个角到另外一个角, 不跨越对角线的路径数</p>
+</li>
+</ol>
+<h3 id="多边形类"><a href="#多边形类" class="headerlink" title="多边形类"></a>多边形类</h3><p>将多边行划分为三角形问题。将一个凸N+2多边形区域分成三角形区域的方法数?类似：一位大城市的律师在她住所以北n个街区和以东n个街区处工作。每天她走2n个街区去上班。如果她从不穿越（但可以碰到）从家到办公室的对角线, 那么有多少条可能的道路？类似：在圆上选择2n个点,将这些点成对连接起来使得所得到的n条线段不相交的方法数</p>
+<h3 id="二叉树类"><a href="#二叉树类" class="headerlink" title="二叉树类"></a>二叉树类</h3><p>给顶节点组成二叉树的问题。给定N个节点, 能构成多少种不同的二叉树</p>
+<p>不同的二叉搜索树: <a href="https://leetcode-cn.com/problems/unique-binary-search-trees/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/unique-binary-search-trees/</a></p>
 
       
     </div>
@@ -857,7 +885,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">263</span>
+                    <span class="site-state-item-count">262</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1057,7 +1085,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背包问题"><span class="nav-text">背包问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#01-背包"><span class="nav-text">01 背包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完全背包"><span class="nav-text">完全背包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多重背包"><span class="nav-text">多重背包</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最长公共子串"><span class="nav-text">最长公共子串</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目描述"><span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法一-暴力"><span class="nav-text">解法一: 暴力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法二-动态规划"><span class="nav-text">解法二: 动态规划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法三-优化的动态规划"><span class="nav-text">解法三: 优化的动态规划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法四-再优化的动态规划"><span class="nav-text">解法四: 再优化的动态规划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法五-后缀自动机"><span class="nav-text">解法五: 后缀自动机</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最长公共子序列"><span class="nav-text">最长公共子序列</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解法一-动态规划"><span class="nav-text">解法一: 动态规划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法二-优化的动态规划"><span class="nav-text">解法二: 优化的动态规划</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字符串匹配算法"><span class="nav-text">字符串匹配算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#暴力匹配法-朴素字符串匹配"><span class="nav-text">暴力匹配法(朴素字符串匹配)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rabin-Karp"><span class="nav-text">Rabin-Karp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Finite-automaton-优先自动机"><span class="nav-text">Finite automaton(优先自动机)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Knuth-Morris-Pratt-KMP"><span class="nav-text">Knuth-Morris-Pratt(KMP)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#排列算法"><span class="nav-text">排列算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#next-permutation"><span class="nav-text">next_permutation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#prev-permutation"><span class="nav-text">prev_permutation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#permutation-sequence"><span class="nav-text">permutation sequence</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#组合算法"><span class="nav-text">组合算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Combinations"><span class="nav-text">Combinations</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解法一-递归"><span class="nav-text">解法一: 递归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解法二-迭代"><span class="nav-text">解法二: 迭代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解法三-回溯"><span class="nav-text">解法三: 回溯</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Combinations-Sum-I"><span class="nav-text">Combinations Sum I</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解法一-回溯"><span class="nav-text">解法一: 回溯</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Combination-Sum-II"><span class="nav-text">Combination Sum II</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解法一-回溯-1"><span class="nav-text">解法一: 回溯</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Combination-Sum-III"><span class="nav-text">Combination Sum III</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解法一-回溯-2"><span class="nav-text">解法一: 回溯</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Combinations-Sum-IV"><span class="nav-text">Combinations Sum IV</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解法一-回溯-3"><span class="nav-text">解法一: 回溯</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解法二-动态规划-1"><span class="nav-text">解法二: 动态规划</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#回溯"><span class="nav-text">回溯</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背包问题"><span class="nav-text">背包问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#01-背包"><span class="nav-text">01 背包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完全背包"><span class="nav-text">完全背包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多重背包"><span class="nav-text">多重背包</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最长公共子串"><span class="nav-text">最长公共子串</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目描述"><span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法一-暴力"><span class="nav-text">解法一: 暴力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法二-动态规划"><span class="nav-text">解法二: 动态规划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法三-优化的动态规划"><span class="nav-text">解法三: 优化的动态规划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法四-再优化的动态规划"><span class="nav-text">解法四: 再优化的动态规划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法五-后缀自动机"><span class="nav-text">解法五: 后缀自动机</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最长公共子序列"><span class="nav-text">最长公共子序列</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解法一-动态规划"><span class="nav-text">解法一: 动态规划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法二-优化的动态规划"><span class="nav-text">解法二: 优化的动态规划</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字符串匹配算法"><span class="nav-text">字符串匹配算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#暴力匹配法-朴素字符串匹配"><span class="nav-text">暴力匹配法(朴素字符串匹配)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rabin-Karp"><span class="nav-text">Rabin-Karp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Finite-automaton-优先自动机"><span class="nav-text">Finite automaton(优先自动机)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Knuth-Morris-Pratt-KMP"><span class="nav-text">Knuth-Morris-Pratt(KMP)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#排列算法"><span class="nav-text">排列算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#next-permutation"><span class="nav-text">next_permutation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#prev-permutation"><span class="nav-text">prev_permutation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#permutation-sequence"><span class="nav-text">permutation sequence</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#组合算法"><span class="nav-text">组合算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Combinations"><span class="nav-text">Combinations</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解法一-递归"><span class="nav-text">解法一: 递归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解法二-迭代"><span class="nav-text">解法二: 迭代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解法三-回溯"><span class="nav-text">解法三: 回溯</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Combinations-Sum-I"><span class="nav-text">Combinations Sum I</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解法一-回溯"><span class="nav-text">解法一: 回溯</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Combination-Sum-II"><span class="nav-text">Combination Sum II</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解法一-回溯-1"><span class="nav-text">解法一: 回溯</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Combination-Sum-III"><span class="nav-text">Combination Sum III</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解法一-回溯-2"><span class="nav-text">解法一: 回溯</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Combinations-Sum-IV"><span class="nav-text">Combinations Sum IV</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解法一-回溯-3"><span class="nav-text">解法一: 回溯</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解法二-动态规划-1"><span class="nav-text">解法二: 动态规划</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#回溯"><span class="nav-text">回溯</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#卡塔兰数"><span class="nav-text">卡塔兰数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见题型"><span class="nav-text">常见题型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-1-类"><span class="nav-text">0-1 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多边形类"><span class="nav-text">多边形类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉树类"><span class="nav-text">二叉树类</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -1094,7 +1122,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">2.3m</span>
+    <span title="站点总字数">2.4m</span>
   
 
   
@@ -1103,7 +1131,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">34:29</span>
+    <span title="站点阅读时长">35:45</span>
   
 </div>
 

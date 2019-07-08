@@ -135,7 +135,7 @@
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fwwet5sufej20sa0f5aoe.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fwwet9mkjbj20s209s762.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fww4hqied3j21kw0esjwt.jpg">
-<meta property="og:updated_time" content="2019-03-26T03:05:33.982Z">
+<meta property="og:updated_time" content="2019-07-07T11:06:17.145Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Group Normalization">
 <meta name="twitter:description" content="作者: Yuxin Wu and Kaiming He发表: ECCV 2018, Best Paper Honorable Mention 核心亮点针对BN对batch size的依赖问题, 提出了一种新的通用型归一化方法提出了一个用于替代BN的简单算法, 称之为GN(Group Normalization). GN将输入图谱的通道分成不同的组, 并且计算每一组的mean和variance, 然">
@@ -264,7 +264,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">263</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">262</span></a>
   </li>
         
         
@@ -497,8 +497,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-26T11:05:33+08:00" content="2019-03-26">
-      		  2019-03-26
+    		<time itemprop="dateUpdated" datetime="2019-07-07T19:06:17+08:00" content="2019-07-07">
+      		  2019-07-07
     		</time>
   	  </span>
 	  
@@ -551,7 +551,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">5.2k</span>
+                <span title="本文字数">6.1k</span>
               
 
               
@@ -565,7 +565,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">5 分钟</span>
+                <span title="阅读时长">6 分钟</span>
               
             </div>
           
@@ -625,6 +625,7 @@
 <h1 id="简述-GN-的原理"><a href="#简述-GN-的原理" class="headerlink" title="简述 GN 的原理"></a>简述 GN 的原理</h1><p>BN 在很多任务上都取得了很好的效果(BN通常会在每一层都执行), 但是, BN 依赖于 batch 的平均值和方差, 这使得 batch size 的大小对BN的效果有较大的影响, 同时, 在测试阶段, 单个的图片无法提供良好的均值和方差进行归一化, 所以只能用整个数据集的均值和方差来代替, 通常会使用滑动平均来维护这两个变量, 也就是说, 在使用 BN 时, 如果数据集改变了, 则均值和方差就会有较大改变, 这就造成了训练阶段和测试阶段的不一致性, 由此也会带来一些问题. 因此, GN 为了解决 BN 对 batch 大小的依赖问题, 转而从另一个角度来进行归一化, GN 更像是介于 LN 和 IN 中间的一种归一化方法, 它会将通道分成不同的组, 同时在固定下标 N 的同时, 求取当前组内的均值和方差来进行归一化. 通过实验分析和论证, GN 可以取得不错的效果, 避免了对 batch 的依赖问题.</p>
 <p><span id="为什么 GN 效果好"></span></p>
 <h1 id="为什么-GN-效果好"><a href="#为什么-GN-效果好" class="headerlink" title="为什么 GN 效果好"></a>为什么 GN 效果好</h1><p>GN 是从 LN 和 IN 中变化来的, 组的划分实际上可以看做是一种对数据分布的假设, 以 LN 为例, 它实际上假设了每张图片所有通道的特征都是同分布的, 而 GN 则是假设每个组的分布不同, 条件没有那么苛刻, 因此 GN 的表现力和包容性会更强, 而 IN 只依赖与独立的某一维, 没有探究不同通道之间特征的关联性. 相对于 BN 来说, 当 batch 的大小足够时, BN 的性能表现依然很不错, 因此, GN 充当的角色更像是当 batch 较小, 无法使用 BN 时的一种替代措施.</p>
+<p>传统角度来讲，在深度学习没有火起来之前，提取特征通常是使用SIFT，HOG和GIST特征，这些特征有一个共性，都具有按group表示的特性，每一个group由相同种类直方图的构建而成，这些特征通常是对在每个直方图（histogram）或每个方向（orientation）上进行组归一化（group-wise norm）而得到。而更高维的特征比如VLAD和Fisher Vectors(FV)也可以看作是group-wise feature，此处的group可以被认为是每个聚类（cluster）下的子向量sub-vector。<br>从深度学习上来讲，完全可以认为卷积提取的特征是一种非结构化的特征或者向量，拿网络的第一层卷积为例，卷积层中的的卷积核filter1和此卷积核的其他经过transform过的版本filter2（transform可以是horizontal flipping等），在同一张图像上学习到的特征应该是具有相同的分布，那么，具有相同的特征可以被分到同一个group中，按照个人理解，每一层有很多的卷积核，这些核学习到的特征并不完全是独立的，某些特征具有相同的分布，因此可以被group。<br>导致分组（group）的因素有很多，比如频率、形状、亮度和纹理等，HOG特征根据orientation分组，而对神经网络来讲，其提取特征的机制更加复杂，也更加难以描述，变得不那么直观。另在神经科学领域，一种被广泛接受的计算模型是对cell的响应做归一化，此现象存在于浅层视觉皮层和整个视觉系统。<br>作者基于此，尝试使用了组归一化（Group Normalization）的方式进行模型训练, 结果意外发现训练效果非常不错, 显著优于BN、LN、IN等。</p>
 <p><span id="简述 BN, LN, IN, GN 的区别"></span></p>
 <h1 id="简述-BN-LN-IN-GN-的区别"><a href="#简述-BN-LN-IN-GN-的区别" class="headerlink" title="简述 BN, LN, IN, GN 的区别"></a>简述 BN, LN, IN, GN 的区别</h1><p><div style="width: 550px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fww4hqied3j21kw0esjwt.jpg" alt="图2"><br>这些 Norm 方法的不同之处就在于计算均值和方差时使用的像素集合不同(如图2所示), 假设输入的 tensor 的 shape 为 $(N, C, H, W)$:</div></p>
 <ul>
@@ -636,6 +637,8 @@
 <p><strong>注意, 无论是哪种 Norm 方法, 它们使用的线性偏移的参数个数都等于通道 $C$ 的大小.</strong></p>
 <p><span id="GN 中线性偏移的参数个数怎么计算的"></span></p>
 <h1 id="GN-中线性偏移的参数个数怎么计算的"><a href="#GN-中线性偏移的参数个数怎么计算的" class="headerlink" title="GN 中线性偏移的参数个数怎么计算的"></a>GN 中线性偏移的参数个数怎么计算的</h1><p>对于 GN 层来说, 如果它的输入 shape 均为为 $(N, C, H, W)$, 则其输出 shape 也为 $(N, C, H, W)$, <strong>即保持输入输出 shape 不变.</strong> GN 中的线性偏移参数 $\gamma$ 和 $beta$ 的个数 <strong>与输入 shape 的通道数相同, 均为 $C$</strong>. GN 除了需要确定输入层的通道数以外, 还需要确定 Goup 的数量. 下面给 PyTorch 中 GN 的声明.<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.nn.GroupNorm(num_groups, num_channels, eps=<span class="number">1e-05</span>, affine=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure></p>
+<p>GN, 在进行归一化时, 使用的mean和var是按照组进行划分的, 但是, 在进行偏移时的gamma和beta参数, 仍然是与 channel 数量保持一致的</p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>预训练很重要, 尤其是当你的数据集很小时,它可以有效的防止过拟合, 提高泛化能力</p>
 
       
     </div>
@@ -763,7 +766,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">263</span>
+                    <span class="site-state-item-count">262</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -963,7 +966,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#核心亮点"><span class="nav-text">核心亮点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关工作"><span class="nav-text">相关工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Group-Normalization"><span class="nav-text">Group Normalization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#公式"><span class="nav-text">公式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-text">实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实验"><span class="nav-text">实验</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简述-GN-的原理"><span class="nav-text">简述 GN 的原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么-GN-效果好"><span class="nav-text">为什么 GN 效果好</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简述-BN-LN-IN-GN-的区别"><span class="nav-text">简述 BN, LN, IN, GN 的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GN-中线性偏移的参数个数怎么计算的"><span class="nav-text">GN 中线性偏移的参数个数怎么计算的</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#核心亮点"><span class="nav-text">核心亮点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关工作"><span class="nav-text">相关工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Group-Normalization"><span class="nav-text">Group Normalization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#公式"><span class="nav-text">公式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-text">实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实验"><span class="nav-text">实验</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简述-GN-的原理"><span class="nav-text">简述 GN 的原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么-GN-效果好"><span class="nav-text">为什么 GN 效果好</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简述-BN-LN-IN-GN-的区别"><span class="nav-text">简述 BN, LN, IN, GN 的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GN-中线性偏移的参数个数怎么计算的"><span class="nav-text">GN 中线性偏移的参数个数怎么计算的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他"><span class="nav-text">其他</span></a></li></ol></div>
             
 
           </div>
@@ -1000,7 +1003,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">2.3m</span>
+    <span title="站点总字数">2.4m</span>
   
 
   
@@ -1009,7 +1012,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">34:29</span>
+    <span title="站点阅读时长">35:45</span>
   
 </div>
 
