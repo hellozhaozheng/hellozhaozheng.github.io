@@ -112,18 +112,30 @@
 
 
 
-  <meta name="description" content="论文: Feature Selective Anchor-Free Module for Single-Shot Object Detection作者: Chenchen Zhu Yihui He Marios Savvides 论文亮点摘要IntroductionRelated WorkOur Approach">
+  <meta name="description" content="论文: Feature Selective Anchor-Free Module for Single-Shot Object Detection作者: Chenchen Zhu Yihui He Marios Savvides 摘要本文提出了一种简单有效的针对 single-shot detector 的 Feature Selective Anchor Free(FSAF) 模块。它可以嵌入到">
 <meta name="keywords" content="目标检测,计算机视觉,论文解读">
 <meta property="og:type" content="article">
 <meta property="og:title" content="FSAF (CVPR, 2019)">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-FSAF-CVPR2019/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="论文: Feature Selective Anchor-Free Module for Single-Shot Object Detection作者: Chenchen Zhu Yihui He Marios Savvides 论文亮点摘要IntroductionRelated WorkOur Approach">
+<meta property="og:description" content="论文: Feature Selective Anchor-Free Module for Single-Shot Object Detection作者: Chenchen Zhu Yihui He Marios Savvides 摘要本文提出了一种简单有效的针对 single-shot detector 的 Feature Selective Anchor Free(FSAF) 模块。它可以嵌入到">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-22T00:25:59.640Z">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/fig1.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/fig2.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/fig3.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/fig4.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/fig5.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/fig6.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/tab1.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/fig7.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/fig8.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/tab2.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/tab3.jpg?x-oss-process=style/blog_img">
+<meta property="og:updated_time" content="2019-07-18T05:36:07.506Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FSAF (CVPR, 2019)">
-<meta name="twitter:description" content="论文: Feature Selective Anchor-Free Module for Single-Shot Object Detection作者: Chenchen Zhu Yihui He Marios Savvides 论文亮点摘要IntroductionRelated WorkOur Approach">
+<meta name="twitter:description" content="论文: Feature Selective Anchor-Free Module for Single-Shot Object Detection作者: Chenchen Zhu Yihui He Marios Savvides 摘要本文提出了一种简单有效的针对 single-shot detector 的 Feature Selective Anchor Free(FSAF) 模块。它可以嵌入到">
+<meta name="twitter:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/fig1.jpg?x-oss-process=style/blog_img">
 
 
 
@@ -248,7 +260,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">262</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">265</span></a>
   </li>
         
         
@@ -481,8 +493,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-06-22T08:25:59+08:00" content="2019-06-22">
-      		  2019-06-22
+    		<time itemprop="dateUpdated" datetime="2019-07-18T13:36:07+08:00" content="2019-07-18">
+      		  2019-07-18
     		</time>
   	  </span>
 	  
@@ -535,7 +547,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">157</span>
+                <span title="本文字数">8.8k</span>
               
 
               
@@ -549,7 +561,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">8 分钟</span>
               
             </div>
           
@@ -570,7 +582,54 @@
 
       
         <p><strong>论文:</strong> Feature Selective Anchor-Free Module for Single-Shot Object Detection<br><strong>作者:</strong> Chenchen Zhu Yihui He Marios Savvides</p>
-<h1 id="论文亮点"><a href="#论文亮点" class="headerlink" title="论文亮点"></a>论文亮点</h1><h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><h1 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h1><h1 id="Our-Approach"><a href="#Our-Approach" class="headerlink" title="Our Approach"></a>Our Approach</h1>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本文提出了一种简单有效的针对 single-shot detector 的 Feature Selective Anchor Free(FSAF) 模块。它可以嵌入到具有特征金字塔结构的任何 single-shot detector 中。FSAF模块解决了传统 anchor-based 检测方法存在的 <strong>两个局限性: 1)启发式引导的特征选择; 2)overlap-based anchor sampling。</strong> FSAF模块的基本概念是将 <strong>在线特征选择</strong> 应用于多级 anchor free 分支的训练。具体来说，一个 anchor free 分支会被附加到特征金字塔的每一层，允许在任意一层以 anchor free 的方式进行 box 的编码和解码。在训练过程中，我们动态地将每个实例分配到最合适的金字塔特征级别。在 inference 阶段，FSAF 模块可以通过并行输出 predictions 来与 anchor-based 分支协同工作。我们用 anchor free 的简单实现和在线特征选择策略实现了这个想法。在COCO检测任务上的实验结果表明，我们的 FSAF 模块性能优于 anchor-based 的同类模块，同时速度更快。当与 anchor-based 的分支协同工作时，FSAF 模块在各种条件下都显著提高了 baseline RetinaNet 的性能，同时引入了几乎 free 的 inference cost。本文所得到的最佳模型可以获得 SOTA 的44.6%的mAP，性能优于COCO上现有的所有 single-shot detector 。</p>
+<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/fig1.jpg?x-oss-process=style/blog_img" alt="FSAF%2Ffig1.jpg"></div></p>
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>目标检测是计算机视觉领域的一项重要任务。它是各种下游视觉应用的先决条件，如实例分割[12]、人脸分析[1,39]、自动驾驶汽车[6,20]和视频分析[25,33]。由于深度卷积神经网络[16,29,13,34]和注释良好的数据集[7,23]的发展，对象检测器的性能得到了显著提高。</p>
+<p>Anchor box…</p>
+<p>然而，这种设计(anchor box)有两个局限性:1)启发式引导的特征选择;2)基于覆盖锚取样。在训练过程中，每个实例总是根据IoU重叠匹配到最近的锚盒(es)。而锚框则通过 <strong>人类定义</strong> 的规则(如框的大小)与特定级别的功能映射相关联。因此，为每个实例选择的特性级别完全基于自组织启发式。例如,一个50×50像素大小的汽车实例和另一个类似的 60x60 大小的汽车实例可能分配到两个不同的 feature levels, 而另一个 40×40 的汽车实例可能被分配到和 50×50 实例相同的 feature levels,如图2所示。换句话说，anchor 匹配机制本质上是启发式引导的。这将导致一个主要缺陷，<strong>即用于训练每个实例的所选特征级别可能不是最优的。(与认为定义的 anchor 参数有关)</strong></p>
+<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/fig2.jpg?x-oss-process=style/blog_img" alt="FSAF%2Ffig2.jpg"></div></p>
+<p>为了同时解决这两个缺点，我们提出了一种简单有效的方法 - Feature Selective Anchor Free(FSAF)模块。我们的动机是 <strong>让每个实例自由地选择最佳级别的金字塔特征来优化网络</strong>，因此在我们的模块中不应该有 anchor box 来约束特征的选择。相反，我们以 anchor free 的方式对实例进行编码，以学习用于分类和回归的参数。图3给出了概念示意图。每个层次的特征金字塔都会构建一个 anchor free 分支，该分支独立于 anchor based 分支。与 anchor based 分支类似，它由 classification subnet 和 regression subnet 组成(如图所示)。<strong>可以将实例分配到 anchor free 分支的任意级别</strong>。在训练过程中，我们 <strong>根据实例内容动态地为每个实例选择最合适的金字塔特征级别，而不是仅仅根据实例框的大小</strong>。然后，所选的特征级别将检测所分配到的对应实例。在 inference 时，FSAF 模块可以独立运行，也可以与 anchor-based 的分支联合运行。我们的 FSAF 模块与 backbone 无关，因此可以应用到任何具有特征金字塔结构的 single-shot 检测器中。此外，anchor free 分支的具体实例化和 online feature selection 可以是多种多样的。在这项工作中，我们保持我们的 FSAF 模块的实现简单，使其计算成本和整个网络相比只增加一点.</p>
+<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/fig3.jpg?x-oss-process=style/blog_img" alt="FSAF%2Ffig3.jpg"></div></p>
+<p>我们在COCO[23]目标检测的 benchmark 上的大量实验验证了该方法的有效性。FSAF模块本身性能优于 anchor based 的对应模块，运行速度也更快。在与 anchor-based 分支协同工作时，FSAF模块可以在不同主干网之间持续大幅度地改进 strong baselines，同时引入最小的计算成本。特别的，我们使用 ResNeXt-101[34]提高了将 RetinaNet 的分数提高了 1.8%，并且仅增加了6ms的推断延迟。此外，我们最终的 detector 在使用 multi-scale testing 时实现了 SOTA 的44.6%的 mAP，超过了所有现有的 single-shot detector.</p>
+<h1 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h1><p>SSD, FPN, DSSD, RetinaNet, DetNet<br>DenseBox, UnitBox, CornerNet</p>
+<h1 id="Feature-Selective-Anchor-Free-Module"><a href="#Feature-Selective-Anchor-Free-Module" class="headerlink" title="Feature Selective Anchor-Free Module"></a>Feature Selective Anchor-Free Module</h1><p>在本节中，我们实例化了 Feature Selective Anchor Free(FSAF)模块，展示了如何将它应用于具有特征金字塔的 single-shot detector，如SSD[24]、DSSD[8]和RetinaNet[22]。在不失一般性的前提下，我们将FSAF模块应用到目前最先进的RetinaNet[22]中，并从以下几个方面展示了我们的设计:</p>
+<ol>
+<li>如何在网络中创建 anchor-free 分支(3.1)</li>
+<li>如何为 anchor free 支路生成 supervision signals(监控信号)(3.2);</li>
+<li>如何为每个实例动态选择 feature level (3.3);</li>
+<li>如何联合训练和测试 anchor free 分支和 anchor based 的分支(3.4)。</li>
+</ol>
+<h2 id="Network-Architecture"><a href="#Network-Architecture" class="headerlink" title="Network Architecture"></a>Network Architecture</h2><p>从网络模型的角度来看，我们的FSAF模块非常简单。图4说明了带有FSAF模块的RetinaNet[22]的体系结构。简而言之，RetinaNet由一个主干网络和两个用于特定任务的子网组成。特征金字塔 backbone 网络的P3到P7构成，其中 $l$ 为金字塔级，$P_l$ 的分辨率为输入图像的 $1/2^l$。为了简单起见，只显示了三个级别。<strong>金字塔的每一层都用于探测不同尺度(scale)的物体</strong>。为此，每一层的 $P_l$ 都附加了一个分类子网和一个回归子网，<strong>它们都是小的全卷积网络</strong>。分类子网为 A 个 anchor 中每个 anchor 和K个对象类预测对象在每个空间位置的概率。如果存在，回归子网预测每个 anchor 到附近实例的4维类无关偏移量。</p>
+<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/fig4.jpg?x-oss-process=style/blog_img" alt="FSAF%2Ffig4.jpg"></div></p>
+<p>在RetinaNet的顶部，<strong>我们的FSAF模块仅为每个金字塔层引入两个额外的conv层</strong>，如图4中虚线 feature maps 所示。这两个网络层分别负责 anchor free 分支的分类和回归预测。<strong>更具体地说，我们会在分类子网中最后的 feature map 上附加了一个带有 $K$ 个 filter 的 3×3 conv 层，后面是 sigmoid 函数, 用于二分类，该网络层与 anchor based 分支的网络层并行。它为K个对象类预测对象会出现在每个空间位置的概率。同样的，回归子网中的 feature map 上也附加了一个 3×3 conv 层，带有 4 个filter，然后是ReLU[26]函数。它负责预测以 anchor free 方式编码的 bbox 偏移量。</strong> 因此，anchor free 和 anchor based 分支可以以多任务的方式联合工作，共享每个金字塔级别的特性。</p>
+<h2 id="Ground-truth-and-Loss"><a href="#Ground-truth-and-Loss" class="headerlink" title="Ground-truth and Loss"></a>Ground-truth and Loss</h2><p>给定一个对象实例，我们已知它的类标签 $k$ 和边界框坐标 $b = [x, y, w,h]$，其中 $(x, y)$ 是框的中心，$w,h$ 分别是框的宽度和高度。在训练过程中，实例可以被分配到任意的 feature level $P_l$。我们将投影框 $b^l_p = [x_p^l, y_p^l, w_p^l, h_p^l]$ 定义为 $b$ 在特征金字塔 $P_l$ 上的投影，即 $b^l_p = b/2^l$。我们还定义了 $b_p^l$ 的部分区域分别为 effective box $b_e^l = [x_e^l, y_e^l, w_e^l, h_e^l]$ 和 ignoring box $b_i^l = [x_i^l, y_i^l, w_i^l, h_i^l]$, 它们分别受到缩放因子 $\epsilon_e$ 和 $\epsilon_i$ 的控制, $x^l_e = x^l_p, y_e^l= y_p^l, w_e^l = \epsilon_e w_p^l, h_e^l = \epsilon_e h_e^l, x_i^l = x_p^l, y_i^l = y_p^l, w_i^l = \epsilon_i w_p^l, h_i^l = \epsilon_i h_p^l$, 在本文中, 我们设置 $\epsilon_e = 0.2, \epsilon_i = 0.5$. 图5显示了一个为car实例生成ground-truth的示例。</p>
+<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/fig5.jpg?x-oss-process=style/blog_img" alt="FSAF%2Ffig5.jpg"></div></p>
+<p><strong>Classification Output:</strong> 针对分类输出的 gt 是 $K$ 个 maps，每个 map 对应一个类。每个实例以三种方式影响第 $k$ 个 gt map。首先，effective box $b^l_e$ 区域是由 “car” class map 中的白色方框所填充的 positive region，表示该实例的存在性。其次，不包括 effective box 的 ignoring box $(b^l_i−b^l_e)$ 是显示为灰色区域的 ignoring region，<strong>这意味着该区域的梯度不会传播回网络</strong>。第三，相邻特征层 $(b^{l-1}_i, b^{l+1}_i)$ 中的忽略框如果存在，也将忽略该区域。注意，如果两个实例的 effective box 在一个特征级别上重叠，则较小的实例具有更高的优先级。gt map 的其余区域是由零填充的 negative region(黑色)，表示没有对象。我们使用 Focal Loss 作为损失函数进行监督, 超参数 $\alpha = 0.25$, $\gamma = 2.0$。图像 anchor free 分支的分类总损失是所有非忽略区域上的 Focal Loss 之和，由所有 effective box 区域内的像素总数归一化</p>
+<p><strong>Box Regression Output:</strong> 回归输出的 gt 是 4 个与类别无关的 offset maps。实例只影响 offset maps 上的 $b^l_e$ 区域。<strong>对于 $b^l_e$ 中的每一个像素 location $(i, j)$</strong>, 我们将 projected box 表示为一个四维矢量 $d^l_{i,j} = [d^l_t_{i,j}, d^l_l{i,j}, d^l_b{i,j}, d^l_r_{i,j}]$, 其中, $d^l_t, d^l_l, d^l_b,d^l_r$ 是当前像素位置 $(i, j)$ 分别和 $b^l_p$ 顶部,左部,底部,右部边界之间的距离。然后将4个 offset maps 上(i, j)处的四维向量设置为 $d^l_{i,j}/S$，每个 map 对应一个维度。$S$ 是一个归一化常量，我们根据经验选择 $S = 4.0$。effective box 外的位置是忽略梯度的灰色区域。我们采用IoU损失[36]进行优化。图像 anchor free 分支的总回归损失是所有有效盒区域IoU损失的平均值.</p>
+<p>在 Inference 过程中，很容易从分类和回归输出中解码 predicted boxes。在每个像素位置 $(i, j)$,假设 predicted offsets 为$[\hat o_t_{i,j}, \hat o_l_{i,j}, \hat o_b_{i,j}, \hat o_r_{i,j}]$。然后 predicted distances 为 $[S\hat o_t_{i,j}, S\hat o_l_{i,j}, S\hat o_b_{i,j}, S\hat o_r_{i,j}]$。predicted projected box 左上角和右下角分别为 $i-S\hat o_t_{i,j}, j-S\hat_l_{i,j}$ 和 $i+S\hat b_{i,j}, j+S\hat o_r_{i,j}$。我们进一步将投影框放大 $2^l$，得到图像平面中的最终框。框的置信度和类别由分类输出图上位置 $(i, j)$ 处的 $k$ 维向量的最大得分和对应的类决定。</p>
+<h2 id="Online-Feature-Selection"><a href="#Online-Feature-Selection" class="headerlink" title="Online Feature Selection"></a>Online Feature Selection</h2><p>anchor free 分支的设计允许我们使用任意金字塔级 $P_l$ 的特征来学习每个实例。为了找到最优的特征级别，我们的FSAF模块根据实例内容(instance content)选择最佳 $P_l$，而不是像anchor-based的方法中那样选择实例框的大小。</p>
+<p>以实例 $I$ 为例，将其在 $P_l$ 上的分类损失和box回归损失分别定义为 $L^I_{FL}(l)$ 和 $L^I_{IoU}(l)$。它们的是通过平均有效盒区 $b^l_e$ 上的 Focal Loss 和 IoU loss 得到的，即:</p>
+<script type="math/tex; mode=display">L^I_{FL}(l) = \frac{1}{N(b^l_e)}\sum_{i,j \in b^l_e} FL(l, i, j)</script><script type="math/tex; mode=display">L^I_{IoU}(l) = \frac{1}{N(b^l_e)}\sum_{i,j \in b^l_e} IoU(l, i, j)</script><p>其中 $N(b^l_e)$ 为 $b^l_e$ 区域内的像素个数，$FL(l,i,j)$、$IoU(l,i,j)$ 分别为 $P_l$ 在 location $(i,j)$ 处的 Focal Loss[22]和IoU Loss[36]。</p>
+<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/fig6.jpg?x-oss-process=style/blog_img" alt="FSAF%2Ffig6.jpg"></div></p>
+<p>图6显示了 FASF 过程。首先，实例 $I$ 通过特征金字塔所有层级的 forward 计算。在此基础上，对所有 anchor free 支路进行计算 $L^I_{FL}(l)$ 和 $L^I_{IoU}(l)$ 的求和。最后，<strong>我们选择产生最小损失和的金字塔级 $P_l$ 作为学习实例的最佳目标层级</strong>，即</p>
+<script type="math/tex; mode=display">l^* = \arg \min_l L^I_{FL}(l) + F^I_{IoU}(l)</script><p>对于一个 training batch，将为其相应分配的实例更新特性。直观的感觉是，所选的特性目前是对实例建模的最佳特性。它的损失在特征空间中形成一个下界。通过训练，我们进一步拉下这个下界。<strong>在 Inference 时，我们不需要选择特征，因为最合适的特征金字塔水平自然会输出较高的置信度得分。</strong></p>
+<p>为了验证我们的在线特征选择的重要性，我们还在消融研究中进行了启发式特征选择过程的比较(4.1)。启发式特征选择完全依赖于框的大小。根据框的大小决定实例应该分配给哪一个特征金字塔层级进行处理.</p>
+<h2 id="Joint-Inference-and-Training"><a href="#Joint-Inference-and-Training" class="headerlink" title="Joint Inference and Training"></a>Joint Inference and Training</h2><p>当插入到RetinaNet[22]时，我们的FSAF模块与 anchor-based 的分支协同工作，如图4所示。我们保持了原始的 anchor-based 的分支，在训练和推理过程中，所有超参数都保持不变。</p>
+<p><strong>Inference:</strong> FSAF模块只是在全卷积的 RetinaNet 上增加了几个卷积层，所以 Inference 过程仍然像之前一样简单。对于 anchor free 的分支，我们只解码每个金字塔级别中得分最高的 <strong>1k</strong> 个 <strong>locations</strong> 的 box predictions，将置信值阈值设为0.05。这些来自各个级别的 top predictions 会与 anchor-based 的分支的box predictions 合并，然后利用阈值为0.5的非最大抑制，得到最终的检测结果。</p>
+<p><strong>Initialization:</strong> 略…</p>
+<p><strong>Optimization:</strong> 略…</p>
+<h1 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h1><h2 id="Ablation-Studies"><a href="#Ablation-Studies" class="headerlink" title="Ablation Studies"></a>Ablation Studies</h2><p><strong>Anchor-free branches are necessary:</strong> 事实证明，anchor free 分支只能取得不错的效果, 它需要结合 anchor-based 分支才能显示出较好的检测效果. 为了找出FSAF模块能够检测到的对象类型，我们在图7中展示了与我们的RetinaNet进行面对面比较的一些定性结果。显然，我们的FSAF模块更擅长于寻找具有挑战性的实例，例如锚盒不能很好地覆盖的微小和非常薄的对象</p>
+<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/tab1.jpg?x-oss-process=style/blog_img" alt="FSAF%2Ftab1.jpg"></div></p>
+<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/fig7.jpg?x-oss-process=style/blog_img" alt="FSAF%2Ffig7.jpg"></div></p>
+<p><strong>Online feature selection is essential:</strong> 表1第4和第5项进一步证实，我们的在线特性选择对于 anchor free 和 anchor based 的分支机构很好地协同工作是必不可少的。</p>
+<p><strong>How is optimal feature selected?</strong> 为了理解为实例选择的最优金字塔级别，我们可视化了图8中仅来自 anchor-free 分支的一些定性检测结果。类名前的数字表示检测对象的特性级别。事实证明，在线特性选择实际上遵循这样的规则:上层选择较大的实例，而低层负责较小的实例，这与anchor-based的分支中的原则相同。然而，也有相当多的例外，即在线特征选择选择金字塔级别不同于anchor-based的分支的选择。我们将这些异常标记为图8中的红色框。绿框表示FSAF模块和anchor-based的分支之间的协议。通过捕获这些异常，我们的FSAF模块可以使用更好的特性来检测具有挑战性的对象。</p>
+<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/fig8.jpg?x-oss-process=style/blog_img" alt="FSAF%2Ffig8.jpg"></div></p>
+<p><strong>FSAF module is robust and efficient:</strong> 我们也评估了主干网对我们的FSAF模块在精度和速度方面的影响。三个主干网络包括ResNet-50、ResNet-101[13]和ResNeXt-101[34]。探测器运行在一个单一的泰坦X GPU与CUDA 9和CUDNN 7使用批量大小为1。结果见表2。我们发现我们的FSAF模块对各种主干网都是鲁棒的。FSAF模块本身已经比anchor-based的RetinaNet更好更快。在ResNeXt-101上，FSAF模块的性能比anchor-based的模块高出1.2%，同时速度快68毫秒。当与anchor-based的分支联合应用时，我们的FSAF模块始终能够提供相当大的改进。这也表明anchor-based的分支没有充分利用主干网络的能力。同时，我们的FSAF模块在整个网络中引入了边际计算成本，推理速度损失可以忽略不计。特别地，我们在ResNeXt-101的基础上提高了1.8% AP，仅增加了6ms的推断延迟。</p>
+<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/tab2.jpg?x-oss-process=style/blog_img" alt="FSAF%2Ftab2.jpg"></div></p>
+<h2 id="Comparison-to-State-of-the-Art"><a href="#Comparison-to-State-of-the-Art" class="headerlink" title="Comparison to State of the Art"></a>Comparison to State of the Art</h2><p>我们评估了COCO test-dev分割上的最终检测器，并与最新的最先进的方法进行了比较。我们最后的模型是带有FSAF模块的RetinaNet，即anchor-based的分支加上FSAF模块。该模型使用比标度{640,672,704,736,768,800}更大的尺度抖动进行训练，比第4.1节中的模型长1.5倍。评估包括单尺度和多尺度版本，其中单尺度测试使用800像素的图像尺度，多尺度测试使用测试时间增量。在检测器[10]之后，测试时间的增加是在超过400、500、600、700、900、1000、1100、1200}的刻度上进行测试，并在每个刻度上进行水平翻转。我们所有的结果都来自于没有集成的单个模型。<br>表3给出了比较。通过ResNet-101，我们的检测器能够在单尺度和多尺度场景中实现竞争性能。插入ResNeXt-101-64x4d后，AP进一步提高到44.6%，大大超过了以前最先进的single-shot detector。</p>
+<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/tab3.jpg?x-oss-process=style/blog_img" alt="FSAF%2Ftab3.jpg"></div></p>
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>该工作确定启发式特征选择作为anchor-based点的单镜头特征金字塔检测器的主要限制。为了解决这一问题，我们提出了FSAF模块，该模块应用在线特征选择来训练特征金字塔中的 anchor-free 分支。它显著提高了强大的基线与微小的推理开销，并优于目前最先进的single-shot detector。</p>
+
       
     </div>
 
@@ -617,8 +676,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/计算机视觉-ExtremeNet-CVPR2019/" rel="next" title="ExtremeNet (CVPR, 2019)">
-                ExtremeNet (CVPR, 2019) <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/计算机视觉-FCOS-CVPR2019/" rel="next" title="FCOS">
+                FCOS <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -697,7 +756,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">262</span>
+                    <span class="site-state-item-count">265</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -875,6 +934,10 @@
                     <a href="https://xinghanzzy.github.io/" title="BoXiao的博客" target="_blank">BoXiao的博客</a>
                   </li>
                 
+                  <li class="links-of-blogroll-item">
+                    <a href="https://oldpan.me/" title="Oldpan的博客" target="_blank">Oldpan的博客</a>
+                  </li>
+                
               </ul>
             </div>
           
@@ -897,7 +960,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#论文亮点"><span class="nav-text">论文亮点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Related-Work"><span class="nav-text">Related Work</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Our-Approach"><span class="nav-text">Our Approach</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Related-Work"><span class="nav-text">Related Work</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Feature-Selective-Anchor-Free-Module"><span class="nav-text">Feature Selective Anchor-Free Module</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Network-Architecture"><span class="nav-text">Network Architecture</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ground-truth-and-Loss"><span class="nav-text">Ground-truth and Loss</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Online-Feature-Selection"><span class="nav-text">Online Feature Selection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Joint-Inference-and-Training"><span class="nav-text">Joint Inference and Training</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Experiments"><span class="nav-text">Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ablation-Studies"><span class="nav-text">Ablation Studies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Comparison-to-State-of-the-Art"><span class="nav-text">Comparison to State of the Art</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Conclusion"><span class="nav-text">Conclusion</span></a></li></ol></div>
             
 
           </div>
@@ -934,7 +997,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">2.4m</span>
+    <span title="站点总字数">2.5m</span>
   
 
   
@@ -943,7 +1006,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">35:45</span>
+    <span title="站点阅读时长">37:45</span>
   
 </div>
 

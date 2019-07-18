@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="在 C++ 中, 用于处理字符串的类 string 虽然有用很多和 STL 相似的性质和用法, 但是一般来说, 我们不认为它是 STL 的一份子, 因为实际上,  string 并不是模板, 它其实是某个模板的实例, 即 basic_string&amp;lt;char&amp;gt;. 因此, 这里我们单独讨论关于 string 类的一系列方法和属性, 但是需要知道, string 类在很多地方都与模板的函数或">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-17T06:08:55.967Z">
+<meta property="og:updated_time" content="2019-07-11T06:52:24.140Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++ string 完整笔记">
 <meta name="twitter:description" content="在 C++ 中, 用于处理字符串的类 string 虽然有用很多和 STL 相似的性质和用法, 但是一般来说, 我们不认为它是 STL 的一份子, 因为实际上,  string 并不是模板, 它其实是某个模板的实例, 即 basic_string&amp;lt;char&amp;gt;. 因此, 这里我们单独讨论关于 string 类的一系列方法和属性, 但是需要知道, string 类在很多地方都与模板的函数或">
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">262</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">265</span></a>
   </li>
         
         
@@ -481,8 +481,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-06-17T14:08:55+08:00" content="2019-06-17">
-      		  2019-06-17
+    		<time itemprop="dateUpdated" datetime="2019-07-11T14:52:24+08:00" content="2019-07-11">
+      		  2019-07-11
     		</time>
   	  </span>
 	  
@@ -535,7 +535,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.4k</span>
+                <span title="本文字数">1.6k</span>
               
 
               
@@ -574,7 +574,16 @@
 <p>[] 返回char类型的字符</p>
 <h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><p>push_back: 将字符添加到字符串结尾</p>
 <p>pop_back: 移除末尾字符</p>
-<h1 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h1><h2 id="string-转换到其他类型"><a href="#string-转换到其他类型" class="headerlink" title="string 转换到其他类型"></a>string 转换到其他类型</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="comment">// 别忘了加 std::</span></span><br><span class="line">stod()</span><br><span class="line">stof()</span><br><span class="line">stoi()</span><br><span class="line">stol()</span><br><span class="line">stold()</span><br><span class="line">stoll()</span><br><span class="line">stoul()</span><br><span class="line">stoull</span><br></pre></td></tr></table></figure>
+<h1 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h1><h2 id="单个字符-char-转换到-string"><a href="#单个字符-char-转换到-string" class="headerlink" title="单个字符 char 转换到 string"></a>单个字符 char 转换到 string</h2><p>单个字符无法直接转换成 <code>string</code>:<br>可以通过以下两种方式间接转换:</p>
+<ol>
+<li><p>字符数组</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> c = <span class="string">'c'</span></span><br><span class="line"><span class="keyword">char</span> s1[<span class="number">2</span>] = &#123;c, <span class="string">'\0'</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>新建 string 对象</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> c = <span class="string">'c'</span>;</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">string</span> str = <span class="string">"a"</span>;</span><br><span class="line">str[<span class="number">0</span>] = c;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="string-转换到其他类型"><a href="#string-转换到其他类型" class="headerlink" title="string 转换到其他类型"></a>string 转换到其他类型</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="comment">// 别忘了加 std::</span></span><br><span class="line">stod()</span><br><span class="line">stof()</span><br><span class="line">stoi()</span><br><span class="line">stol()</span><br><span class="line">stold()</span><br><span class="line">stoll()</span><br><span class="line">stoul()</span><br><span class="line">stoull</span><br></pre></td></tr></table></figure>
 <h2 id="char-转换到其他类型"><a href="#char-转换到其他类型" class="headerlink" title="char 转换到其他类型"></a>char 转换到其他类型</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这些函数不在 stirng 头文件中, 是 C 自身有的函数, 不需要加 std::</span></span><br><span class="line">atof()</span><br><span class="line">atoi()</span><br><span class="line">atol()</span><br><span class="line">atoll()</span><br></pre></td></tr></table></figure>
 <h2 id="其他类型转换到-string"><a href="#其他类型转换到-string" class="headerlink" title="其他类型转换到 string"></a>其他类型转换到 string</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="built_in">std</span>::to_string()</span><br><span class="line"><span class="built_in">std</span>::to_wstring()</span><br></pre></td></tr></table></figure>
 <h2 id="最简单的将int转换成string的方法"><a href="#最简单的将int转换成string的方法" class="headerlink" title="最简单的将int转换成string的方法"></a>最简单的将int转换成string的方法</h2><p>方法一：C风格的itoa<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">char</span>* intStr = itoa(a);</span><br><span class="line"><span class="built_in">string</span> str = <span class="built_in">string</span>(intStr);</span><br></pre></td></tr></table></figure></p>
@@ -709,7 +718,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">262</span>
+                    <span class="site-state-item-count">265</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -887,6 +896,10 @@
                     <a href="https://xinghanzzy.github.io/" title="BoXiao的博客" target="_blank">BoXiao的博客</a>
                   </li>
                 
+                  <li class="links-of-blogroll-item">
+                    <a href="https://oldpan.me/" title="Oldpan的博客" target="_blank">Oldpan的博客</a>
+                  </li>
+                
               </ul>
             </div>
           
@@ -909,7 +922,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#成员函数"><span class="nav-text">成员函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#元素访问"><span class="nav-text">元素访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作"><span class="nav-text">操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类型转换"><span class="nav-text">类型转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#string-转换到其他类型"><span class="nav-text">string 转换到其他类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#char-转换到其他类型"><span class="nav-text">char 转换到其他类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他类型转换到-string"><span class="nav-text">其他类型转换到 string</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最简单的将int转换成string的方法"><span class="nav-text">最简单的将int转换成string的方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字符串流"><span class="nav-text">字符串流</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#stringstream"><span class="nav-text">stringstream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#istringstream"><span class="nav-text">istringstream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ostringstream"><span class="nav-text">ostringstream</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#不确定数目的整数输入"><span class="nav-text">不确定数目的整数输入</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#成员函数"><span class="nav-text">成员函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#元素访问"><span class="nav-text">元素访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作"><span class="nav-text">操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类型转换"><span class="nav-text">类型转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#单个字符-char-转换到-string"><span class="nav-text">单个字符 char 转换到 string</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#string-转换到其他类型"><span class="nav-text">string 转换到其他类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#char-转换到其他类型"><span class="nav-text">char 转换到其他类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他类型转换到-string"><span class="nav-text">其他类型转换到 string</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最简单的将int转换成string的方法"><span class="nav-text">最简单的将int转换成string的方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字符串流"><span class="nav-text">字符串流</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#stringstream"><span class="nav-text">stringstream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#istringstream"><span class="nav-text">istringstream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ostringstream"><span class="nav-text">ostringstream</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#不确定数目的整数输入"><span class="nav-text">不确定数目的整数输入</span></a></li></ol></div>
             
 
           </div>
@@ -946,7 +959,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">2.4m</span>
+    <span title="站点总字数">2.5m</span>
   
 
   
@@ -955,7 +968,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">35:45</span>
+    <span title="站点阅读时长">37:45</span>
   
 </div>
 

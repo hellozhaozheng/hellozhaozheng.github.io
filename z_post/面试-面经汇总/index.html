@@ -119,7 +119,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="优秀面经https://www.cnblogs.com/huanyi0723/p/8470866.html https://www.nowcoder.com/discuss/78195 http://www.zheyibu.com/article/5626.html https://www.jianshu.com/p/6671232cec79 https://www.zhihu.com/quest">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-08T03:08:13.875Z">
+<meta property="og:updated_time" content="2019-07-14T08:03:54.107Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面试-面经汇总">
 <meta name="twitter:description" content="优秀面经https://www.cnblogs.com/huanyi0723/p/8470866.html https://www.nowcoder.com/discuss/78195 http://www.zheyibu.com/article/5626.html https://www.jianshu.com/p/6671232cec79 https://www.zhihu.com/quest">
@@ -247,7 +247,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">262</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">265</span></a>
   </li>
         
         
@@ -480,8 +480,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-08T11:08:13+08:00" content="2019-03-08">
-      		  2019-03-08
+    		<time itemprop="dateUpdated" datetime="2019-07-14T16:03:54+08:00" content="2019-07-14">
+      		  2019-07-14
     		</time>
   	  </span>
 	  
@@ -534,7 +534,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">6.8k</span>
+                <span title="本文字数">9.2k</span>
               
 
               
@@ -548,7 +548,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">6 分钟</span>
+                <span title="阅读时长">8 分钟</span>
               
             </div>
           
@@ -638,6 +638,46 @@ SLAM里面闭环检测是什么怎么做
 <p><a href="https://www.nowcoder.com/discuss/73739" target="_blank" rel="noopener">https://www.nowcoder.com/discuss/73739</a></p>
 <p><a href="https://zhuanlan.zhihu.com/p/38067051" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/38067051</a></p>
 <p>【链接】依图科技暑期实习生面试经验<br><a href="https://blog.csdn.net/wslf123/article/details/79924413" target="_blank" rel="noopener">https://blog.csdn.net/wslf123/article/details/79924413</a></p>
+<h1 id="字节跳动提前批"><a href="#字节跳动提前批" class="headerlink" title="字节跳动提前批"></a>字节跳动提前批</h1><p>作者：DASEason<br>链接：<a href="https://www.nowcoder.com/discuss/206226?type=2" target="_blank" rel="noopener">https://www.nowcoder.com/discuss/206226?type=2</a><br>来源：牛客网</p>
+<p>一面二面是现场面，三面和交叉面是视频面<br>一面和二面连在一起，三面大约5天之后，交叉面大约三面的两天后，offer call在交叉面的一天后</p>
+<h2 id="本人研究方向是NLP，面的是AILab语音部门（前期负责语音组的NLP任务，后期慢慢接手语音相关任务）"><a href="#本人研究方向是NLP，面的是AILab语音部门（前期负责语音组的NLP任务，后期慢慢接手语音相关任务）" class="headerlink" title="本人研究方向是NLP，面的是AILab语音部门（前期负责语音组的NLP任务，后期慢慢接手语音相关任务）"></a>本人研究方向是NLP，面的是AILab语音部门（前期负责语音组的NLP任务，后期慢慢接手语音相关任务）</h2><p>一面（两道编程题）：<br>面试官应该是未来同事，上来在白板上先描述了第一道题。<br>A题题意：给定n个结点，m条有向边（n&lt;=100）。每个结点代表一个抖音用户，每条边A-&gt;B代表A关注了B。关注具有传递性，即若A关注了B且B关注了C，那么等同于A关注了C。 然后定义“抖音红人”的概念：若一个用户被其它n-1个用户关注，那么他是抖音红人。现给定这样一个关注网络，返回所有的“抖音红人”列表。<br>A题题解：DP+dfs（记忆化搜索）。对于某个用户A，若要求关注A的的用户个数，则需要累加所有指向A的用户的被关注数。然后递归地（dfs）求所有指向A的用户Bi，也要累加所有指向Bi的用户的被关注数。。 有两个关键点：1.需要用记忆化搜索保存中间过程，对于已求过的结点，不能重复递归计算；2.累加不是单纯的加和，而是要对每个结点维护一个集合set，累加的操作其实是求并集操作，防止同一用户被累加多次。<br>本人解题情况：一开始写的猛如虎，然后忘记考虑集合求并集的操作了，后来面试官比较好提醒了我一下，后来把代码改对了。</p>
+<p>然后面试官接着描述了B题，题意比较简单：描述KMeans算法，并用Tensorflow写代码实现。<br>题解：这题没啥好说了，把能说的关于Kmeans的细节都和面试官说了，代码也写的还OK（不用写feed_dict那些繁琐的过程，只要写建图的部分就好）。 注意代码需要高度并行化，例如计算相似度这些操作需要用张量运算，保证高度并行化。</p>
+<p>两题写完之后，面试官问我有啥想问的，然后就让我等一会儿。过5分钟二面开始。</p>
+<hr>
+<p>二面（个人经历、项目、竞赛、论文）<br>二面面试官应该是我将来的mentor，很和蔼。一开始就让我介绍我的经历，然后我就从本科到研究生的经历都说了一遍，沟通过程也很愉快。 中间主要花时间和面试官讲解了曾经的ACM经历（挫折，成就，意义）、介绍 Github 1.5k star 的项目（项目做了啥，为什么受到这么多关注，创新点）、介绍一年多的实习项目（开发过程，技术细节，沟通协作）、讲解自己的一篇AAAI paper（模型架构，contribution，实验）。<br>最后二面面试官挺满意的，面试愉快地结束了。</p>
+<hr>
+<p>三面（个人经历、项目、竞赛、论文）<br>三面面试官是AILab王雨轩总监。王老师人在美国，所以是早上7点的视频面。。<br>三面是我个人感觉最难一面，由于不能保证我回答的准确性，这里只写王老师问了啥。</p>
+<ol>
+<li>讲讲你的个人经历</li>
+<li>你介绍一下你的Paper</li>
+<li>我看你还做过CV的项目和安卓游戏的项目，也简单介绍一下吧<br>4.（开始虐了）先写道题吧。用Tensorflow写一个KNN算法</li>
+<li>KNN算法是否可微</li>
+<li>我看你用了tf.argmax()，argmax的导数是啥（其实是不可导，因为我之前回答了KNN是可微的，所以他想看看我会回答什么）<br>7.（王老师看我被虐的有点惨，笑着说换道题吧）用C++写个简单的矩阵乘法吧</li>
+<li>矩阵乘法怎么优化？（当时我回答的是将复杂度优化到O(n^log7)的Strassen算法，而且算法名字不会读。。  有可能王老师还希望听到我回答关于多线程的优化方法）</li>
+<li>两个上三角矩阵相乘如何优化？（完全懵逼，答不出来）<br>王老师还问了一些其它细节问题，暂时想不起来了。 当时三面面完感觉自己要凉了。。</li>
+</ol>
+<hr>
+<p>交叉面（个人经历、项目、NLP算法细节、职业规划）<br>当接到HR交叉面的通知时，我是不敢相信的（而且HR居然说前三面的面试官对我的评分都很不错，难以置信。。）<br>当我知道面试官是李航老师的时候，我更是不敢相信的（当时心里太激动，心想能和李航老师交流，挂了也值了-。-）<br>抱着久久不能平复的心情，坐在显示器前等待了一个多小时，终于等到李航老师上线了。 能和偶像当面对话，难掩心中的激动，但是担心给李航老师留下不好的印象，于是还是克制住了自己激动的情绪。。<br>我这里也主要只写李航老师问了啥吧，我的回答就不写了。</p>
+<ol>
+<li>介绍一下你做过的项目</li>
+<li>介绍一下你的paper</li>
+<li>Word2vec，fasttext，ELMo，GPT，BERT的区别</li>
+<li>介绍一下BERT的模型架构，多少层，怎么预训练，怎么feature based/fine-tune</li>
+<li>什么是self-attention，什么情况下要用，K、Q、V分别是啥</li>
+<li>你为什么选择我们公司</li>
+<li>你将来的职业发展规划<br>李航老师人也特别的好，基本没有怎么为难我（而且没考我《统计学习方法》）。<br>最后李航老师问你有什么想问我的。于是我面试结束前才屁颠屁颠地表达了我压抑已久的对李航老师的仰慕，然后臭不要脸地加了李航老师的微信（这波不亏！）</li>
+</ol>
+<hr>
+<p>最终本人于一天后收到offer call。简单总结一下个人认为面试成功的几个关键因素：</p>
+<ol>
+<li>刷题还是很必须的。要做到快速出题，实在不会的题也得写个次优解，千万不要挂机。</li>
+<li>多掌握面试的主导权。引导面试官听你擅长的东西。</li>
+<li>面试气氛也很重要。 至少你要保持笑容，尽量不要愁眉苦脸，让面试官觉得以后和你合作会很愉快。</li>
+<li>知识的积累。这个平时就要做到，就不多说了。</li>
+<li>面试前的复习重点是自己的简历。 因为面试官重点会考察你对自己做过的项目的理解程度，看你是不是划水的。</li>
+<li>放松心态。 不要因为一个题出不来就方了，其实很多题大家都做不出来。保持心态回答后续的问题，不要中途就认为自己凉了。很多面试其实是所谓的“压力面”，面试官并不指望你能回答所有问题，有的时候更想看看你在面对这种难题时是如何思考和应对的。</li>
+</ol>
+<p>暂时先写这么多吧，祝大家都拿到自己心仪的offer！</p>
 
       
     </div>
@@ -755,7 +795,7 @@ SLAM里面闭环检测是什么怎么做
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">262</span>
+                    <span class="site-state-item-count">265</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -933,6 +973,10 @@ SLAM里面闭环检测是什么怎么做
                     <a href="https://xinghanzzy.github.io/" title="BoXiao的博客" target="_blank">BoXiao的博客</a>
                   </li>
                 
+                  <li class="links-of-blogroll-item">
+                    <a href="https://oldpan.me/" title="Oldpan的博客" target="_blank">Oldpan的博客</a>
+                  </li>
+                
               </ul>
             </div>
           
@@ -955,7 +999,7 @@ SLAM里面闭环检测是什么怎么做
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#优秀面经"><span class="nav-text">优秀面经</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#在多线程和大量并发环境下，如果有一个平均运行一百万次出现一次的bug，-你如何调试这个bug。"><span class="nav-text">在多线程和大量并发环境下，如果有一个平均运行一百万次出现一次的bug， 你如何调试这个bug。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#这个bug很难重现，这个时候你要怎么处理或者重现呢。"><span class="nav-text">这个bug很难重现，这个时候你要怎么处理或者重现呢。</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#有一个类指针，指向类实例化的对象，在这个对象程序的运行过程中，程序崩溃了，后来发现是这个类指针的虚函数表被破坏了，现在如何定位这个问题。"><span class="nav-text">有一个类指针，指向类实例化的对象，在这个对象程序的运行过程中，程序崩溃了，后来发现是这个类指针的虚函数表被破坏了，现在如何定位这个问题。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模型压缩"><span class="nav-text">模型压缩</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cuda"><span class="nav-text">cuda</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#face-面经"><span class="nav-text">face++ 面经</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#待看"><span class="nav-text">待看</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#优秀面经"><span class="nav-text">优秀面经</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#在多线程和大量并发环境下，如果有一个平均运行一百万次出现一次的bug，-你如何调试这个bug。"><span class="nav-text">在多线程和大量并发环境下，如果有一个平均运行一百万次出现一次的bug， 你如何调试这个bug。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#这个bug很难重现，这个时候你要怎么处理或者重现呢。"><span class="nav-text">这个bug很难重现，这个时候你要怎么处理或者重现呢。</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#有一个类指针，指向类实例化的对象，在这个对象程序的运行过程中，程序崩溃了，后来发现是这个类指针的虚函数表被破坏了，现在如何定位这个问题。"><span class="nav-text">有一个类指针，指向类实例化的对象，在这个对象程序的运行过程中，程序崩溃了，后来发现是这个类指针的虚函数表被破坏了，现在如何定位这个问题。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模型压缩"><span class="nav-text">模型压缩</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cuda"><span class="nav-text">cuda</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#face-面经"><span class="nav-text">face++ 面经</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#待看"><span class="nav-text">待看</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字节跳动提前批"><span class="nav-text">字节跳动提前批</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#本人研究方向是NLP，面的是AILab语音部门（前期负责语音组的NLP任务，后期慢慢接手语音相关任务）"><span class="nav-text">本人研究方向是NLP，面的是AILab语音部门（前期负责语音组的NLP任务，后期慢慢接手语音相关任务）</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -992,7 +1036,7 @@ SLAM里面闭环检测是什么怎么做
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">2.4m</span>
+    <span title="站点总字数">2.5m</span>
   
 
   
@@ -1001,7 +1045,7 @@ SLAM里面闭环检测是什么怎么做
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">35:45</span>
+    <span title="站点阅读时长">37:45</span>
   
 </div>
 

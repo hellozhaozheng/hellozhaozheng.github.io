@@ -123,7 +123,7 @@
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1g0oqi9rwlyj20v50crgmh.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1g0oqix3d83j20uh0ayaao.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1g0oqi9rwlyj20v50crgmh.jpg">
-<meta property="og:updated_time" content="2019-06-22T00:37:20.655Z">
+<meta property="og:updated_time" content="2019-07-12T13:09:59.284Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【置顶】通用深度学习推理框架-EasyInfer">
 <meta name="twitter:description" content="一. 项目简介在实际生产环境下, 当我们的深度学习模型训练完成后, 我们通常需要将预测模型部署到嵌入式平台上才能正式产生效益, 但是在模型部署过程中, 脱离了训练环境, 就会产生各种依赖问题, 使得部署过程十分麻烦, 另外, 一般的用户对现在流行的神经网络前向计算框架如 TensorRT, NCNN, OpenVINO 等加速引擎的诸多细节都无法清楚理解, 尤其是对于专注于算法提升的算法人员来说,">
@@ -252,7 +252,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">262</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">265</span></a>
   </li>
         
         
@@ -489,8 +489,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-06-22T08:37:20+08:00" content="2019-06-22">
-      		  2019-06-22
+    		<time itemprop="dateUpdated" datetime="2019-07-12T21:09:59+08:00" content="2019-07-12">
+      		  2019-07-12
     		</time>
   	  </span>
 	  
@@ -580,7 +580,7 @@
         <h1 id="一-项目简介"><a href="#一-项目简介" class="headerlink" title="一. 项目简介"></a>一. 项目简介</h1><p>在实际生产环境下, 当我们的深度学习模型训练完成后, 我们通常需要将预测模型部署到嵌入式平台上才能正式产生效益, 但是在模型部署过程中, 脱离了训练环境, 就会产生各种依赖问题, 使得部署过程十分麻烦, 另外, 一般的用户对现在流行的神经网络前向计算框架如 TensorRT, NCNN, OpenVINO 等加速引擎的诸多细节都无法清楚理解, 尤其是对于专注于算法提升的算法人员来说, 更是无暇顾及. 因此, 我们开发了一个通用的神经网络前向计算框架: <strong>EasyInfer</strong>, 之所以说它通用, 是因为它的底层支持调用 NCNN, TensorRT 和 OpenVINO 三种不同的引擎, 同时, 可以支持多种模型格式的输入, 包括 MXNet, Caffe, Onnx 等, 未来还计划支持 PyTorch 和 TensorFlow. 同时还提供了 C, C++ 和 Python 三套接口, 并且可以支持 Linux, Windows 以及 OSX 系统, 未来计划支持 Android 和 IOS 系统.当用户需要快速验证模型在部署环境下的性能或效率时, 只需要掌握 EasyInfer 提供的自定义引擎开发接口和自定义模型开发接口, 就可以根据自己的需求快速的完成模型的部署, 同时还能灵活的选择和切换底层的推理引擎, 大大地节省了算法和部署人员的时间成本.</p>
 <h2 id="源码架构"><a href="#源码架构" class="headerlink" title="源码架构"></a>源码架构</h2><p>EasyInfer 的整体代码架构如下图所示, 首先 EasyInfer 本身并不是一个独立的前向计算引擎, 它实际上可以看做是众多主流加速引擎的一个代理, 用户通过调用 EasyInfer 统一的 API 接口, 可以自由灵活的切换底层使用的加速引擎, 如图中所示, 我们目前提供了三种加速引擎的支持, 分别是 NCNN, TensorRT 以及 OpenVINO. 其中, NCNN 加速引擎已经作为一个子模块被内置到 EasyInfer 源码中, 用户无需单独编译和安装 NCNN 就可以直接使用 EasyInfer 进行模型部署(默认调用 NCNN 引擎). 对于其他的加速引擎, 用户只需要安装官网的安装教程完成引擎安装, 就可以在代码中改变需要调用的引擎. 而对于一些特殊的网络层, 有些推理引擎可能没有提供相应的接口. 例如 Slice 层, 在 TensorRT 中就没有对应的层与之匹配, 对于这种情况, 我们也提供了相应的插件可以让用户使用, 目的就是为了让用户更加方便无痛地完成模型的转换和部署(如图中的 TRTPlugin Factory 所示).</p>
 <p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1g0oqlor8e1j20tq0ds0u0.jpg" alt=""></p>
-<h2 id="模型转换"><a href="#模型转换" class="headerlink" title="模型转换"></a>模型转换</h2><p>在 EasyInfer 的工作流程中, 很重要的第一步工作就是将用户提供的模型文件转换成底层引擎使用的模型文件格式, 如下图所示, 目前我们已经支持将 Caffe, Onnx, 和 MXNet 模型全自动的转换到不同的底层引擎模型格式. 其中, 对于 MXNet 模型文件, 起初由于我们是开发了一个将 MXNet 模型文件转换成 Caffe 模型文件的工具, 但是后来我们发现, 有些 MXNet 网络的参数在 Caffe 中不支持, 并且 Caffe 目前已经处于停止维护的状态, 因此, 我们决定重新编写将 MXNet 网络模型直接转换成底层引擎模型格式的代码, 但是对于 TensorRT 来说, 由于它没有提供现成可用的 MXNet 解析类, 因此, 我们必须手动实习对 MXNet 模型文件的解析, 然后将解析后的结果存入 TensorRT 模型中. 这一部分的任务也是我在实习期间的任务之一, 关于这一部分的细节会在后文介绍.</p>
+<h2 id="模型转换"><a href="#模型转换" class="headerlink" title="模型转换"></a>模型转换</h2><p>在 EasyInfer 的工作流程中, 很重要的第一步工作就是将用户提供的模型文件转换成底层引擎使用的模型文件格式, 如下图所示, 目前我们已经支持将 Caffe, Onnx, 和 MXNet 模型全自动的转换到不同的底层引擎模型格式. 其中, 对于 MXNet 模型文件, 起初由于我们是开发了一个将 MXNet 模型文件转换成 Caffe 模型文件的工具, 但是后来我们发现, 有些 MXNet 网络的参数在 Caffe 中不支持, 并且 Caffe 目前已经处于停止维护的状态, 因此, 我们决定重新编写将 MXNet 网络模型直接转换成底层引擎模型格式的代码, 但是对于 TensorRT 来说, 由于它没有提供现成可用的 MXNet 解析类, 因此, 我们必须手动实现对 MXNet 模型文件的解析, 然后将解析后的结果存入 TensorRT 模型中. 这一部分的任务也是我的任务之一, 关于这一部分的细节会在后文介绍.</p>
 <p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1g0oqi9rwlyj20v50crgmh.jpg" alt=""></p>
 <h2 id="模型运行"><a href="#模型运行" class="headerlink" title="模型运行"></a>模型运行</h2><p>在完成模型转换后(我们会将模型统一转换成指定的格式, 这里我们用 EasyModel 指代这些转换后的模型). 我们就可以根据我们的模型和需要来编写相应的代码完成模型部署工作. 这里我们为用户提供了极简的引擎开发接口和模型开发接口: <strong>ModelBase</strong>. ModelBase 在整个模型执行流程中扮演了一个非常重要的角色, 它会接受来自用户提供的转换后的模型文件, 同时会调用底层的 EasyEngine 引擎代理, 然后根据用户提供的不同输入, 做出相应的预测结果, 如下图所示.<br><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1g0oqix3d83j20uh0ayaao.jpg" alt=""></p>
 <p>上图中的 ModelBase 是所有模型组件的基类, 是模型到引擎的桥梁, 也是整个 EasyInfer 的核心, 它面向算法研发人员封装了引擎操作的细节, 仅暴露极简的接口实现图像数据的输入和输出. 其主要接口(并非所有接口, 这里只介绍最主要的一些接口)有:</p>
@@ -668,7 +668,7 @@
 <p>ncnn 要用protoc生成caffe/tf/onnx下的.cc和.h文件, 然后ncnn会使用这些文件</p>
 <p>这中间还有很多依赖库的设置问题(libprotobuf.a), 各种编译选项的设置问题(-lpthread), 等等等等</p>
 <p>回看的话感觉好像不是那么难, 但是当时调试的时候并不知道问题具体出错在哪了, 因为明明正确生成了protoc, 但是ncnn却显示找不到, 而且当时对cmake和make的流程也不是特别熟悉, 所以这个bug调了很久(一整天, 印象很深刻)</p>
-<h2 id="定制版-easyinfer-的命名空间问题"><a href="#定制版-easyinfer-的命名空间问题" class="headerlink" title="定制版 easyinfer 的命名空间问题"></a>定制版 easyinfer 的命名空间问题</h2><p>由于定制版的 easyinfer 不使用任何依赖, 也就是说我们需要将 protobuf 和 opencv 全部内置到 easyinfer 中(公司内部需求), 这个时候, 命名空间就会出现问题, 以 opencv 举例来说, 当 easyinfer 底层使用类似于<code>cv::imread()</code>这样的语句时, 如果此时用户的系统中已经安装了其他版本的 opencv, 那么在编译连接的时候, 就有可能会链接到用户自己安装的opencv库中, 而在程序其他地方有可能会使用内置的opencv库, 又或者是版本之间的兼容性等等问题, 往往就会报类似 <code>undefined reference</code> 的错误. 对于 protobuf 来说也是同理, 对于 <code>google::</code> 来说, 也会报出相应的错误.<br>解决上面问题的方案是(不是最好的方案, 但是是目前正在使用的方案): 修改自定义 opencv 和 protobuf 的命名空间, 将<code>cv::</code>修改成<code>CV::</code>, <code>google::</code>修改成<code>Google::</code>. 实际上, 在opencv内部也使用了自己封装的protobuf, 它采取了和我们类似的解决方案, 也就是将protobuf的命名空间改成了<code>google_private::</code>.</p>
+<h2 id="定制版-easyinfer-的命名空间问题"><a href="#定制版-easyinfer-的命名空间问题" class="headerlink" title="定制版 easyinfer 的命名空间问题"></a>定制版 easyinfer 的命名空间问题</h2><p>由于定制版的 easyinfer 不使用任何依赖, 也就是说我们需要将 protobuf 和 opencv 全部内置到 easyinfer 中(内部需求), 这个时候, 命名空间就会出现问题, 以 opencv 举例来说, 当 easyinfer 底层使用类似于<code>cv::imread()</code>这样的语句时, 如果此时用户的系统中已经安装了其他版本的 opencv, 那么在编译连接的时候, 就有可能会链接到用户自己安装的opencv库中, 而在程序其他地方有可能会使用内置的opencv库, 又或者是版本之间的兼容性等等问题, 往往就会报类似 <code>undefined reference</code> 的错误. 对于 protobuf 来说也是同理, 对于 <code>google::</code> 来说, 也会报出相应的错误.<br>解决上面问题的方案是(不是最好的方案, 但是是目前正在使用的方案): 修改自定义 opencv 和 protobuf 的命名空间, 将<code>cv::</code>修改成<code>CV::</code>, <code>google::</code>修改成<code>Google::</code>. 实际上, 在opencv内部也使用了自己封装的protobuf, 它采取了和我们类似的解决方案, 也就是将protobuf的命名空间改成了<code>google_private::</code>.</p>
 <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>pkg-config 查询opencv 文件是根据 opencv.pc 里面的文本输出的</p>
 <p>-L 指定路径 -l 会在 L 指定的路径想进行搜索, 链接对应的文件</p>
 <p>ImportError: cannot import name main when running pip —version command in windows7 32 bit</p>
@@ -790,7 +790,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">262</span>
+                    <span class="site-state-item-count">265</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -968,6 +968,10 @@
                     <a href="https://xinghanzzy.github.io/" title="BoXiao的博客" target="_blank">BoXiao的博客</a>
                   </li>
                 
+                  <li class="links-of-blogroll-item">
+                    <a href="https://oldpan.me/" title="Oldpan的博客" target="_blank">Oldpan的博客</a>
+                  </li>
+                
               </ul>
             </div>
           
@@ -1027,7 +1031,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">2.4m</span>
+    <span title="站点总字数">2.5m</span>
   
 
   
@@ -1036,7 +1040,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">35:45</span>
+    <span title="站点阅读时长">37:45</span>
   
 </div>
 

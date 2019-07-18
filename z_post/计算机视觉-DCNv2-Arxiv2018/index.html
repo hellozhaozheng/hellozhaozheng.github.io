@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="文章: Deformable ConvNets v2: More Deformable, Better Results作者: Xizhou Zhu, Han Hu, Stephen Lin, Jifeng Dai机构: 中科大, Microsoft Research Asia 摘要可变形卷积网络的优越性能源于其对目标几何变化的适应能力。通过对其自适应行为的考察，我们发现，虽然其自然特征的空间支持比">
+<meta name="keywords" content="计算机视觉">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DCN v2 (Arxiv, 2018)">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-DCNv2-Arxiv2018/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="文章: Deformable ConvNets v2: More Deformable, Better Results作者: Xizhou Zhu, Han Hu, Stephen Lin, Jifeng Dai机构: 中科大, Microsoft Research Asia 摘要可变形卷积网络的优越性能源于其对目标几何变化的适应能力。通过对其自适应行为的考察，我们发现，虽然其自然特征的空间支持比">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/fig1.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/fig2.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/fig3.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/tab1.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/tab2.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/tab3.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/tab4.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/fig4.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/fig5.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/tab5.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/tab6.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/tab7.jpg?x-oss-process=style/blog_img">
+<meta property="og:updated_time" content="2019-07-14T14:30:59.211Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DCN v2 (Arxiv, 2018)">
+<meta name="twitter:description" content="文章: Deformable ConvNets v2: More Deformable, Better Results作者: Xizhou Zhu, Han Hu, Stephen Lin, Jifeng Dai机构: 中科大, Microsoft Research Asia 摘要可变形卷积网络的优越性能源于其对目标几何变化的适应能力。通过对其自适应行为的考察，我们发现，虽然其自然特征的空间支持比">
+<meta name="twitter:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/fig1.jpg?x-oss-process=style/blog_img">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/计算机视觉-DCNv2-Arxiv2018/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>DCN v2 (Arxiv, 2018) | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">265</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其他">
+    <a href="/categories/其他/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">40</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/计算机视觉-DCNv2-Arxiv2018/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">DCN v2 (Arxiv, 2018)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-05 17:04:56" itemprop="dateCreated datePublished" datetime="2019-01-05T17:04:56+08:00">2019-01-05</time>
+            
+
+            
+          </span>
+
+	  
+  	    <span class="post-updated">
+    		&nbsp; | &nbsp; 更新于
+    		<time itemprop="dateUpdated" datetime="2019-07-14T22:30:59+08:00" content="2019-07-14">
+      		  2019-07-14
+    		</time>
+  	  </span>
+	  
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/计算机视觉/" itemprop="url" rel="index"><span itemprop="name">计算机视觉</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">9.8k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">9 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>文章:</strong> Deformable ConvNets v2: More Deformable, Better Results<br><strong>作者:</strong> Xizhou Zhu, Han Hu, Stephen Lin, Jifeng Dai<br><strong>机构:</strong> 中科大, Microsoft Research Asia</p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>可变形卷积网络的优越性能源于其对目标几何变化的适应能力。通过对其自适应行为的考察，我们发现，虽然其自然特征的空间支持比规则的ConvNets更接近于对象结构，但这种支持可能 <strong>远远超出了感兴趣的区域，导致特征受到不相关图像内容的影响</strong>。为了解决这个问题，我们提出了一种新的可变形卷积神经网络，通过增加建模能力和更强的训练，提高了它对相关图像区域的 <strong>聚焦能力</strong>。通过在网络内部对可变形卷积进行更全面的集成，引入一种可以扩展变形建模范围的 modulation mechanism，增强了建模能力。为了有效利用这种丰富的建模能力，我们提出了一种 feature mimicking scheme 来指导网络训练，帮助网络学习反映R-CNN特征的对象焦点和分类能力的特征。在本文的贡献下，这个可变形ConvNets的新版本在原始模型的基础上获得了显著的性能提升，并在用于对象检测和实例分割的COCO基准上产生了领先的结果。</p>
+<p>由于尺度、姿态、视点和零件变形等因素引起的几何变化是物体识别和检测的主要挑战。目前解决这一问题的最先进的方法是可变形卷积网络(DCNv1)[8]，它引入了两个模块来帮助CNNs对这种变化进行建模。其中一个模块是可变形卷积(deformable convolution)，其中标准卷积的网格采样位置都是通过相对于前面的特征图所学习到的位移来偏移的。另一个是可变形的RoIpooling，在这里可以学习RoIpooling[16]中bin位置的偏移量。将这些模块合并到一个神经网络中，使其能够适应对象的配置，特别是通过变形其采样和池化模式来适应对象的结构。利用该方法，可以大大提高目标检测的精度。</p>
+<p>在本文中，我们提出了一种新的变形卷积算法，称为Deformable ConvNets v2 (DCNv2)，它增强了学习可变形卷积的建模能力。这种建模能力的增加来自于两种互补的形式。首先是网络中可变形卷积层的扩展使用。使用偏移学习能力装备更多的卷积层允许DCNv2在更大范围的特征级别上控制采样。第二种是可变形卷积模块中的 modulation mechanism，其中每个样本不仅要经过学习偏移量，而且还要经过学习到的特征幅值的 modulated(调制)。因此，网络模块能够改变空间分布及其样本的相对影响。(The network module is thus given the ability to vary both the spatial distribution and the relative influence of its samples.)</p>
+<p>为了充分利用DCNv2不断增长的建模能力，需要进行有效的 training。受神经网络中知识蒸馏工作的启发[2,22]，我们利用 teacher network 来实现这一目的，teacher 会在 training 过程中提供指导。我们特别使用 R-CNN[17] 作为 teacher。由于R-CNN是一个训练有素的对裁剪后的图像内容进行分类的网络，它可以学习不受感兴趣区域之外无关信息影响的特征。为了模拟这个特性，DCNv2在其训练中加入了一个模拟损失的特性，这有助于学习与R-CNN一致的特性。这样，DCNv2的增强变形采样得到了较强的训练信号。</p>
+<p>通过以上提议的更改，可变形模块仍然是轻量级的，并且可以轻松地集成到现有的网络体系结构中。具体来说，我们将DCNv2合并到 Faster R-CNN[33]和 Mask R-CNN[20]系统中，使用多种骨干网络。在 COCO benchmark 上的大量实验表明，在对象检测和实例分割方面，DCNv2比DCNv1有显著的改进。DCNv2的代码将会发布。</p>
+<h1 id="Analysis-of-Deformable-ConvNet-Behavior"><a href="#Analysis-of-Deformable-ConvNet-Behavior" class="headerlink" title="Analysis of Deformable ConvNet Behavior"></a>Analysis of Deformable ConvNet Behavior</h1><h2 id="Spatial-Support-Visualization"><a href="#Spatial-Support-Visualization" class="headerlink" title="Spatial Support Visualization"></a>Spatial Support Visualization</h2><p>为了更好地理解可变形卷积网络的行为，我们通过网络节点的有效感受野(Effective receptive fileds)[31]、有效采样位置(Effective sampling/bin locations)和误差有界显著性区域(Error-bounded saliency regions)来形象化网络节点的空间支持。这三种模式提供了不同的和互补的观点，可以帮助理解图像区域对于神经网络节点的响应。</p>
+<p><strong>Effective receptive fields:</strong> 并不是网络节点感受野内的所有像素都对其响应做出相同的贡献。这些贡献的差异由一个有效的感受野表示，其值计算为节点响应相对于每个图像像素[31]的强度扰动的梯度。我们利用有效感受野来检验单个像素对网络节点的相对影响，但注意，该方法不能反映完整图像区域的结构化影响。</p>
+<p><strong>Effective sampling/bin locations:</strong> 在[8]中，为了理解可变形卷积网络的行为，可视化了(堆叠)卷积层的采样位置和RoIpooling层中的 sampling bins。但是，这些采样位置对网络节点的相对贡献没有被揭示。相反，我们将包含此信息的有效抽样位置可视化，计算为网络节点相对于 sampling / bin locations的梯度，以便了解它们的贡献强度。</p>
+<p><strong>Error-bounded saliency regions:</strong> 最近关于图像显著性的研究[41,44,13,7]表明，去除不影响网络节点的图像区域，网络节点的响应不会发生变化。基于此属性，我们可以在一个小的误差范围内，将节点的支持区域确定为与完整图像响应相同的最小图像区域。我们将此称为错误有界显著性区域(Error-bounded saliency regions)，它可以通过逐步屏蔽图像的部分并计算得到的节点响应来找到，详见附录。误差有界显著性区域便于比较不同网络的支持区域。</p>
+<h2 id="Spatial-Support-of-Deformable-ConvNets"><a href="#Spatial-Support-of-Deformable-ConvNets" class="headerlink" title="Spatial Support of Deformable ConvNets"></a>Spatial Support of Deformable ConvNets</h2><p>本文分析了可变形卷积网络在目标检测中的视觉支持区域。我们使用常规的 ConvNet 作为 baseline，包括一个 Faster R-CNN + ResNet-50[21]对象检测器与 Aligned RoIpooling1[20]。ResNet-50中的所有卷积层都应用于整个输入图像。conv5阶段的有效步长由32个像素降低到16个像素，提高了 feature map 的分辨率。RPN[33]头是在ResNet-101的 conv4 特征的基础上添加的。在 conv5 特征的基础上，我们添加了 Faster R-CNN 头部[16]，它由 Aligned RoIpooling和两个完全连接(fc)层组成，然后是分类和 bbox 回归分支。我们按照[8]中的步骤将目标检测器转换为 Deformable 的对应网络。将conv5阶段的3×3卷积层替换为可变形卷积层。此外，将 Aligned RoIpooling 替换为 Deformable RoIpooling。这两个网络都是在COCO基准上训练和可视化的。值得一提的是，当 offset 的学习率设置为零时，Deformable Faster R-CNN检测器会退化为规则的 Faster R-CNN with aligned RoIpooling.</p>
+<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/fig1.jpg?x-oss-process=style/blog_img" alt="DCNv2%2Ffig1.jpg"></div></p>
+<p>使用这三种可视化模式，我们检查了conv5阶段的最后一层节点的空间支持, 如图 1 (a)~(b) 所示。并给出了在[8]中分析的采样位置。通过这些可视化，我们得出以下观察结果:</p>
+<ol>
+<li>规则的ConvNets可以在一定程度上对几何变化进行建模，这可以从图像内容在空间支持方面的变化得到证明。由于深卷积的强大表示能力，网络权值能够适应一定程度的几何变换。</li>
+<li>通过引入可变形卷积，网络对几何变换建模的能力大大增强，即使在具有挑战性的COCO基准上也是如此。空间支持更适合于图像内容，前景的节点拥有覆盖整个对象的支持，而后景的节点则扩展了包含更大上下文的支持。然而，空间支持的范围可能是不精确的，包括与检测无关的背景区域在内的前景节点的有效感受野和误差有界显著性区域。</li>
+<li>这三种类型的空间支持可视化比[8]中使用的采样位置提供更多的信息。这一点可以在规则的ConvNets中看到，规则ConvNets在网格中具有固定的采样位置，但实际上通过网络权重调整其有效的空间支持。可变形卷积网络也是如此，它的预测受到学习偏移量和网络权重的共同影响。就像在[8]中所做的那样，单独检查采样位置可能会导致关于可变形卷积网络的错误结论。<br>图2 (a)∼(b)显示了每个roi检测头中2fc节点的空间支持，紧接着是分类和边界框回归分支。有效bin位置的可视化表明，目标前景上的bin通常会从分类分支获得较大的梯度，从而对预测产生较大的影响。这种观察适用于 Aligned RoIpooling和 Deformable RoIpooling。在 Deformable RoIpooling中，由于引入了可学习的bin偏移量，与 Aligned RoIpooling相比，覆盖对象前景的bin比例要大得多。因此，下游 Faster R-CNN head可以获得更多相关 bins 的信息。同时，Aligned RoIpooling和 Deformable RoIpooling中误差有界的显著性区域都没有完全聚焦于对象前景，这 <strong>说明RoI外的图像内容影响预测结果</strong>。根据最近的一项研究[6]，这种特征干扰可能对检测有害。</li>
+</ol>
+<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/fig2.jpg?x-oss-process=style/blog_img" alt="DCNv2%2Ffig2.jpg"></div></p>
+<p><strong>虽然与常规卷积网相比，可变形卷积网对几何变化的适应能力明显提高，但也可以看出，它们的空间支持可以扩展到感兴趣的区域之外。因此，我们寻求升级可变形卷积网络，使其能够更好地聚焦于相关的图像内容，并提供更高的检测精度。(这是 DCN v2 的核心优化点)</strong></p>
+<h1 id="More-Deformable-ConvNets"><a href="#More-Deformable-ConvNets" class="headerlink" title="More Deformable ConvNets"></a>More Deformable ConvNets</h1><p>为了提高网络适应几何变化的能力，我们提出了一些变化来增强其建模能力，并帮助它利用这种增强后的能力。</p>
+<h2 id="Stacking-More-Deformable-Conv-Layers"><a href="#Stacking-More-Deformable-Conv-Layers" class="headerlink" title="Stacking More Deformable Conv Layers"></a>Stacking More Deformable Conv Layers</h2><p>在可变形卷积网络能够有效地对具有挑战性的基准进行几何变换建模这一观察结果的鼓舞下，我们大胆地用可变形卷积层替换更多的常规卷积层。我们希望通过叠加更多的可变形conv层，进一步增强整个网络的几何变换建模能力。</p>
+<p>本文将 ResNet-50 的 conv3、conv4、conv5 阶段中的所有 3×3 卷积层都替换成了可变形卷积。因此，网络中有12层可变形卷积。相比之下，[8]中只使用了三层可变形卷积，全部处于conv5阶段。<strong>在[8]中可以观察到，在相对简单和小规模的PASCAL VOC基准测试中，当叠加超过三层时，性能达到饱和。此外，对COCO的误导偏移可视化可能阻碍了对更具挑战性的基准的进一步探索。</strong> 在实验中，我们观察到将可变形层应用到 conv3-conv5 阶段可以达到对COCO目标检测的精度和效率之间的 best tradeoff。详见5.2节。</p>
+<h2 id="Modulated-Deformable-Modules"><a href="#Modulated-Deformable-Modules" class="headerlink" title="Modulated Deformable Modules"></a>Modulated Deformable Modules</h2><p>为了进一步增强可变形卷积神经网络对空间支持区域的控制能力，提出了一种调制机制(Modulation Mechanism)。使用该机制, 可变形 ConvNets 模块不仅可以在感知输入特征时调整偏移量，还可以从不同的 spatial locations/bins 中调节输入的特征幅值(feature amplitude)。在极端情况下，模块可以通过将特征振幅设置为零来决定不接收来自特定 location / bin 的信号。因此，来自相应空间位置的图像内容会大大减少或不影响模块输出。也可以说，调制机制为网络模块提供了另一个自由度来调整其空间支持区域。</p>
+<p>给定 $K$ 个采样点的卷积核，令 $w_k$ 和 $p_k$ 分别表示第 $K$ 个采样点的权值和预先指定的偏移量。例如，$K = 9, pk∈{(- 1，- 1)，(- 1,0)，…，(1,1)}$ 定义了一个膨胀为 1 的 $3×3$ 卷积核。设 $x(p)$ 和 $y(p)$ 分别表示输入特征图 $x$ 和输出特征图 $y$ 中位置 $p$ 处的特征。那么调制(modulated)后的可变形卷积可表示为:</p>
+<script type="math/tex; mode=display">y(p) = \sum^K_{k=1} w_k \cdot x(p + p_k + \Delta p_k) \cdot \Delta m_k</script><p>上式中 $\Delta p_k$ 和 $\Delta m_k$ 分别为第 $k$ 个位置的学习参数偏移量和调制标量。调制标量 $\Delta m_k$ 位于 $[0,1]$ 范围内，$\Delta p_k$ 为实数，取值范围无约束。由于 $p + p_k +\Delta p_k$ 为分数形式，因此在计算 $x(p + p_k +\Delta p_k)$ 时采用了双线性插值，和[8]相同。 $\Delta p_k$ 和 $\Delta m_k$ 都是通过在相同的输入 feature map $x$ 上应用一个单独的卷积层得到的，这个卷积层与当前卷积层具有相同的空间分辨率和膨胀。输出为 $3K$ 通道，其中第一个 $2K$ 通道对应于学习到的偏移量 $\{\Delta p_k\}^K_{k=1}$，其余 $K$ 通道进一步送入 <strong>sigmoid层</strong>，得到调制标量 $\{\Delta m_k\}^K_{k=1}$。在这个单独的卷积层中，内核权值初始化为零。因此，$\Delta p_k$ 和 $\Delta m_k$ 的初始值分别为 0 和 0.5。新添加的用于偏移和调制学习的conv层的学习率设置为现有层的0.1倍。</p>
+<p>Modulated Deformable RoIpooling 的设计与此类似。给定一个 RoI 输入, RoIpooling 将其划分为 K 个 spatial bins(如7×7)，在每个 bin 中应用空间间隔相等的采样网格(如2×2)，取网格上采样值的平均值，计算bin输出。设 $\Delta p_k$ 和 $\Delta m_k$ 为第 k 个 bin 的可学习偏移量和调制量。output binning feature y(k) 计算如下:</p>
+<script type="math/tex; mode=display">y(k) = \sum^{n_k}{j=1} x(p_{kj} + \Delta p_k) \cdot m_k / n_k</script><p>其中 $p_{kj}$ 为第 $k$ 个 $bin$ 中第 $j$ 个网格单元的采样位置，$n_k$ 为采样网格单元的个数。采用双线性插值获取特征 $x(p_{kj} +\Delta p_k)$。$\Delta p_k$ 和 $\Delta m_k$ 的值由输入的 feature map 上的同级分支产生。在这个分支中，RoIpooling在RoI上生成特征，然后是 1024 维的两个fc层(初始化的值为标准差为0.01的高斯分布)。在此之上，新添加一个额外 fc 层生成 $3K$ 通道的输出(初始化的值为零)。其中第一个 $2K$ 通道是归一化的可学习偏移量(normalized learnable offsets)，其中会会根据 RoI 的宽和高使用 element-wise multiplications，以此获得 $\{\Delta p_k\}^K_{k=1}$。其余的 $K$ 个通道用一个 sigmoid 层进行归一化，以此生成 $\{\Delta m_k\}^K_{k=1}$。新添加的fc层用于学习 offset 的学习率与现有层相同。</p>
+<h2 id="R-CNN-Feature-Mimicking"><a href="#R-CNN-Feature-Mimicking" class="headerlink" title="R-CNN Feature Mimicking"></a>R-CNN Feature Mimicking</h2><p>如图2所示，对于常规的卷积网和可变形卷积网，每个RoI分类节点的误差有界显著性区域都可以超出RoI。RoI外的图像内容可能会影响提取的特征，从而降低目标检测的最终结果。</p>
+<p>在[6]中，作者发现冗余上下文可能是 Faster R-CNN 检测错误的来源。结合其他动机(如分类和边界盒回归分支之间共享较少的特征)，作者提出将 Faster R-CNN 和 R-CNN 的分类得分结合起来，得到最终的检测得分。由于 R-CNN 分类得分主要集中在从输入RoI中裁剪的图像内容上，将其合并将有助于缓解冗余上下文问题，提高检测精度。然而，由于 Faster R-CNN 和 R-CNN 分支都需要同时应用于训练和推理，因此组合后的系统速度较慢。</p>
+<p>同时，可变形卷积网络在调节空间支持区域方面具有强大的功能。对于 DCNv2 来说，Modulated Deformable RoIpooling 模块可以通过简单地设置 bin 的调制量(Modulated Scalars)，来排除冗余上下文。<strong>然而，我们在第5.3节的实验表明，即使使用 Modulated Deformable 模块，也不能通过标准的 Faster R-CNN 训练程序很好地学习这种表征。</strong> 我们怀疑这是因为传统的 Faster R-CNN 的训练损失不能有效地驱动这种表征的学习。因此需要额外的 guidance 来指导 training。</p>
+<p>受最近关于特征模仿的研究[2,22,28]的启发，我们在 Deformable Faster R-CNN 的每个 RoI 特征上加入了一个特征模拟损失(feature mimic loss)，以迫使它们类似于从裁剪图像中提取的 R-CNN 特征。这个辅助训练目标的目的是驱动 Deformable Faster R-CNN 学习更多的“聚焦”特征表示(“focused” feature representations)，就像 R-CNN 一样。我们注意到，基于图2中可视化的空间支持区域，对于图像背景上的 negative RoIs，聚焦特征表示很可能不是最优的。因为对于背景区域，可能需要考虑更多的上下文信息，以免产生假阳性检测。因此，特征模拟损失只在和那些与 ground-truth objects 有足够重叠的 positive RoIs 上强制执行。</p>
+<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/fig3.jpg?x-oss-process=style/blog_img" alt="DCNv2%2Ffig3.jpg"></div></p>
+<p>训练 Deformable Faster R-CNN 的网络结构如图3所示。除了 Faster R-CNN 网络之外，还增加了一个R-CNN分支，用于模拟特征。给定一个用于特征模仿的 RoI $b$，裁剪相应的图像块并将其大小调整到224×224像素。在R-CNN分支中，主干网对 resized image patch 进行操作，生成14×14空间分辨率的feature map。在特征图的顶部应用 (Modulated) Deformable RoIpooling 层，其中 input RoI 覆盖整个 resized image patch(左上角为(0,0)，高度和宽度为224像素)。然后，应用两个 1024 维的 fc 层，对输 input image patch 生成 R-CNN 特征表示，用 $f_{RCNN}(b)$ 表示。在 fc 层之后, 一个 $(C+1)$ 维的 Softmax 分类器紧跟其后, $C$ 代表类别数, 加一代表背景. 特征模拟损失是在 R-CNN 特征表示 $f_{RCNN}(b)$ 和 Faster R-CNN 对应的 $f_{FRCNN}(b)$ 之间进行的，后者也是1024维，由 Fast R-CNN 头部的2个fc层产生。特征模仿损失(feature mimic loss)由 $f_{RCNN}(b)$ 与 $f_{FRCNN}(b)$ 的余弦相似度定义，计算如下:</p>
+<script type="math/tex; mode=display">L_{mimic} = \sum_{b\in \Omega} [1 -  \cos(f_{RCNN}(b), f_{FRCNN}(b))]</script><p>上式中 $\Omega$ 表示用于 feature mimic training的 RoIs 采样集合. 。在 SGD 训练中, 给定一个输入图像, RPN 会产生 32 个 positive region proposals 采样样本添加到 $\Omega$ 当中。在 R-CNN 的 classification head 上, 我们使用了交叉熵损失, 同时也会计算 $\Omega$ 中的 RoIs。网络训练是由特征模拟损失和 R-CNN 分类损失以及 Faster R-CNN 的原始损失项驱动的。两个新引入的损失项的权重是原来 Faster R-CNN 损失项的0.1倍。R-CNN中对应模块与 Faster R-CNN 分支之间的网络参数是共享的，包括主干网络、(Modulated) Deformable RoIpooling 和2个fc头(两个分支中的分类头是不共享的)。在推理过程中，对测试图像只使用 Faster R-CNN网络，不使用辅助的R-CNN分支。因此，R-CNN feature mimicking 在 inference 中没有引入额外的计算。</p>
+<h1 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h1><p>Deformation Modeling: SIFT, ORB, DPM, STN(Spatial translation-invariant)<br>Relation Networks and Attention Modules<br>Spatial Support Manipulation<br>Effective Receptive Field and Salient Region<br>Network Mimicking and Distillation</p>
+<h1 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h1><h2 id="Enriched-Deformation-Modeling"><a href="#Enriched-Deformation-Modeling" class="headerlink" title="Enriched Deformation Modeling"></a>Enriched Deformation Modeling</h2><p>从表1所示的消融实验中检验了 enriched deformable 模型的效果。</p>
+<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/tab1.jpg?x-oss-process=style/blog_img" alt="DCNv2%2Ftab1.jpg"></div></p>
+<p>表2给出了输入图像分辨率为800像素时的结果，该结果遵循 Detectron 代码库中的默认设置。同样的结论也成立。</p>
+<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/tab2.jpg?x-oss-process=style/blog_img" alt="DCNv2%2Ftab2.jpg"></div></p>
+<h2 id="R-CNN-Feature-Mimicking-1"><a href="#R-CNN-Feature-Mimicking-1" class="headerlink" title="R-CNN Feature Mimicking"></a>R-CNN Feature Mimicking</h2><p>表3显示了 R-CNN feature mimicking 不同设计选择的消融实验</p>
+<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/tab3.jpg?x-oss-process=style/blog_img" alt="DCNv2%2Ftab3.jpg"></div></p>
+<h2 id="Application-on-Stronger-Backbones"><a href="#Application-on-Stronger-Backbones" class="headerlink" title="Application on Stronger Backbones"></a>Application on Stronger Backbones</h2><p>将ResNet-50替换为ResNet-101和ResNext-101[39]，得到的结果如表4所示。</p>
+<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/tab4.jpg?x-oss-process=style/blog_img" alt="DCNv2%2Ftab4.jpg"></div></p>
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>尽管可变形卷积网络在几何变化建模方面具有优越的性能，但其空间支持远远超出了感兴趣的区域，导致特征受到无关图像内容的影响。在本文中，我们提出了一种新的可变形的卷积神经网络，通过增强建模能力和更强的训练策略，提高了它对相关图像区域的聚焦能力。在用于对象检测和实例分割的COCO基准上获得了显著的性能提升。</p>
+<h1 id="A1-Error-bounded-Image-Saliency"><a href="#A1-Error-bounded-Image-Saliency" class="headerlink" title="A1. Error-bounded Image Saliency"></a>A1. Error-bounded Image Saliency</h1><h1 id="A2-DCNv2-with-Various-Image-Resolution"><a href="#A2-DCNv2-with-Various-Image-Resolution" class="headerlink" title="A2. DCNv2 with Various Image Resolution"></a>A2. DCNv2 with Various Image Resolution</h1><p>图4为常规的 ConvNets 和 DCNv2 在不同分辨率图像上的应用结果。</p>
+<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/fig4.jpg?x-oss-process=style/blog_img" alt="DCNv2%2Ffig4.jpg"></div></p>
+<p>如图5所示，常规ConvNets的空间支持只能覆盖如此高分辨率大对象的一小部分，精度受到影响。同时，DCNv2的空间支持可以有效地适应不同分辨率的物体。</p>
+<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/fig5.jpg?x-oss-process=style/blog_img" alt="DCNv2%2Ffig5.jpg"></div></p>
+<p>表5给出了使用ResNet-101进行多尺度测试的结果。</p>
+<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/tab5.jpg?x-oss-process=style/blog_img" alt="DCNv2%2Ftab5.jpg"></div></p>
+<h1 id="A3-ImageNet-Pre-Trained-DCNv2"><a href="#A3-ImageNet-Pre-Trained-DCNv2" class="headerlink" title="A3. ImageNet Pre-Trained DCNv2"></a>A3. ImageNet Pre-Trained DCNv2</h1><p>表6给出了验证集的前1和前5个分类精度。DCNv2比常规基线和DCNv1基线都有明显的改进，只需要少量额外的计算开销。DCNv2丰富的变形建模能力，有利于ImageNet分类任务本身。</p>
+<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/tab6.jpg?x-oss-process=style/blog_img" alt="DCNv2%2Ftab6.jpg"></div></p>
+<p>表7比较了使用不同预训练模型的DCNv2在不同任务上的性能。</p>
+<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/tab7.jpg?x-oss-process=style/blog_img" alt="DCNv2%2Ftab7.jpg"></div></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/计算机视觉/" rel="tag"><i class="fa fa-tag"></i> 计算机视觉</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/计算机视觉-M2Det-AAAI2019/" rel="prev" title="M2Det (AAAI, 2019)">
+                <i class="fa fa-chevron-left"></i> M2Det (AAAI, 2019)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/PyTorch-SSD/" rel="next" title="SSD 源码实现 (PyTorch)">
+                SSD 源码实现 (PyTorch) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">265</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="零域CSDN博客" target="_blank">零域CSDN博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xinghanzzy.github.io/" title="BoXiao的博客" target="_blank">BoXiao的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://oldpan.me/" title="Oldpan的博客" target="_blank">Oldpan的博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Analysis-of-Deformable-ConvNet-Behavior"><span class="nav-text">Analysis of Deformable ConvNet Behavior</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spatial-Support-Visualization"><span class="nav-text">Spatial Support Visualization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spatial-Support-of-Deformable-ConvNets"><span class="nav-text">Spatial Support of Deformable ConvNets</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#More-Deformable-ConvNets"><span class="nav-text">More Deformable ConvNets</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Stacking-More-Deformable-Conv-Layers"><span class="nav-text">Stacking More Deformable Conv Layers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Modulated-Deformable-Modules"><span class="nav-text">Modulated Deformable Modules</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#R-CNN-Feature-Mimicking"><span class="nav-text">R-CNN Feature Mimicking</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Related-Work"><span class="nav-text">Related Work</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Experiments"><span class="nav-text">Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Enriched-Deformation-Modeling"><span class="nav-text">Enriched Deformation Modeling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#R-CNN-Feature-Mimicking-1"><span class="nav-text">R-CNN Feature Mimicking</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Application-on-Stronger-Backbones"><span class="nav-text">Application on Stronger Backbones</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Conclusion"><span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#A1-Error-bounded-Image-Saliency"><span class="nav-text">A1. Error-bounded Image Saliency</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#A2-DCNv2-with-Various-Image-Resolution"><span class="nav-text">A2. DCNv2 with Various Image Resolution</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#A3-ImageNet-Pre-Trained-DCNv2"><span class="nav-text">A3. ImageNet Pre-Trained DCNv2</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">2.5m</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">37:45</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

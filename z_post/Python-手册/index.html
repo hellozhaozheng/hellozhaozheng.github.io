@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="字符串固定字数, 不足的空格补齐12345str.ljust(10) # 左对齐 字符串长10位rjust，ljust和center三个方法来给字符串补全空格rjust，向右对其，在左边补空格ljust，向左对其，在右边补空格center，让字符串居中，在左右补空格 排序sorted: 返回一个新的 listlist.sort(): 改变 list 自身的值reverse 参数: 默认为 Fals">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-04T03:13:32.031Z">
+<meta property="og:updated_time" content="2019-07-11T05:49:52.537Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python 手册">
 <meta name="twitter:description" content="字符串固定字数, 不足的空格补齐12345str.ljust(10) # 左对齐 字符串长10位rjust，ljust和center三个方法来给字符串补全空格rjust，向右对其，在左边补空格ljust，向左对其，在右边补空格center，让字符串居中，在左右补空格 排序sorted: 返回一个新的 listlist.sort(): 改变 list 自身的值reverse 参数: 默认为 Fals">
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">262</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">265</span></a>
   </li>
         
         
@@ -481,8 +481,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-07-04T11:13:32+08:00" content="2019-07-04">
-      		  2019-07-04
+    		<time itemprop="dateUpdated" datetime="2019-07-11T13:49:52+08:00" content="2019-07-11">
+      		  2019-07-11
     		</time>
   	  </span>
 	  
@@ -535,7 +535,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">12k</span>
+                <span title="本文字数">13k</span>
               
 
               
@@ -549,7 +549,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">11 分钟</span>
+                <span title="阅读时长">12 分钟</span>
               
             </div>
           
@@ -594,7 +594,12 @@
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输出均为 1 2 3</span></span><br><span class="line"><span class="keyword">for</span> value <span class="keyword">in</span> zz_dict.itervalues():</span><br><span class="line">    print(value)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> value <span class="keyword">in</span> zz_dict.values():</span><br><span class="line">    print(value)</span><br></pre></td></tr></table></figure>
 <p>遍历keys和values</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输出为: x corresponds to 1 (其余两个也一样)</span></span><br><span class="line"><span class="keyword">for</span> key, value <span class="keyword">in</span> zz_dict.iteritems():  <span class="comment"># python3 没有iteritems</span></span><br><span class="line">    print(key, <span class="string">"corresponds to"</span>, value)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> key, value <span class="keyword">in</span> zz_dict.items():</span><br><span class="line">    print(key, <span class="string">"corresponds to"</span>, value)</span><br></pre></td></tr></table></figure>
-<h1 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h1><h2 id="str-rstrip"><a href="#str-rstrip" class="headerlink" title="str.rstrip()"></a>str.rstrip()</h2><p><strong>参数:</strong><br><code>chars</code>: 指定删除的字符(默认为空格或换行符)</p>
+<h1 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h1><h2 id="判断字符串是否为字母或者数字"><a href="#判断字符串是否为字母或者数字" class="headerlink" title="判断字符串是否为字母或者数字"></a>判断字符串是否为字母或者数字</h2><p>str.isalnum() 字母或数字<br>str.isalpha() 字母<br>str.isdigit() 数字<br>str.isspace() 空白符, <code>\t, \n, \r</code></p>
+<p><code>isdigit()</code> 和 <code>isnumeric()</code> 的区别<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">num = <span class="string">"1"</span>  <span class="comment">#unicode</span></span><br><span class="line">num.isdigit()   <span class="comment"># True</span></span><br><span class="line">num.isdecimal() <span class="comment"># True</span></span><br><span class="line">num.isnumeric() <span class="comment"># True</span></span><br><span class="line"></span><br><span class="line">num = <span class="string">"1"</span> <span class="comment"># 全角</span></span><br><span class="line">num.isdigit()   <span class="comment"># True</span></span><br><span class="line">num.isdecimal() <span class="comment"># True</span></span><br><span class="line">num.isnumeric() <span class="comment"># True</span></span><br><span class="line"></span><br><span class="line">num = <span class="string">b"1"</span> <span class="comment"># byte</span></span><br><span class="line">num.isdigit()   <span class="comment"># True</span></span><br><span class="line">num.isdecimal() <span class="comment"># AttributeError 'bytes' object has no attribute 'isdecimal'</span></span><br><span class="line">num.isnumeric() <span class="comment"># AttributeError 'bytes' object has no attribute 'isnumeric'</span></span><br><span class="line"></span><br><span class="line">num = <span class="string">"IV"</span> <span class="comment"># 罗马数字</span></span><br><span class="line">num.isdigit()   <span class="comment"># True</span></span><br><span class="line">num.isdecimal() <span class="comment"># False</span></span><br><span class="line">num.isnumeric() <span class="comment"># True</span></span><br><span class="line"></span><br><span class="line">num = <span class="string">"四"</span> <span class="comment"># 汉字</span></span><br><span class="line">num.isdigit()   <span class="comment"># False</span></span><br><span class="line">num.isdecimal() <span class="comment"># False</span></span><br><span class="line">num.isnumeric() <span class="comment"># True</span></span><br></pre></td></tr></table></figure></p>
+<p>===================<br>isdigit()<br>True: Unicode数字，byte数字（单字节），全角数字（双字节），罗马数字<br>False: 汉字数字<br>Error: 无</p>
+<p>isdecimal()<br>True: Unicode数字，，全角数字（双字节）<br>False: 罗马数字，汉字数字<br>Error: byte数字（单字节）</p>
+<p>isnumeric()<br>True: Unicode数字，全角数字（双字节），罗马数字，汉字数字<br>False: 无<br>Error: byte数字（单字节）</p>
+<h2 id="str-rstrip"><a href="#str-rstrip" class="headerlink" title="str.rstrip()"></a>str.rstrip()</h2><p><strong>参数:</strong><br><code>chars</code>: 指定删除的字符(默认为空格或换行符)</p>
 <p><strong>返回值:</strong><br>返回删除指定字符后的新字符串</p>
 <p><strong>备注:</strong><br>删除字符串末尾的指定字符(默认为空格或换行符)</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str.rstrip([chars])</span><br></pre></td></tr></table></figure>
@@ -810,7 +815,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">262</span>
+                    <span class="site-state-item-count">265</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -988,6 +993,10 @@
                     <a href="https://xinghanzzy.github.io/" title="BoXiao的博客" target="_blank">BoXiao的博客</a>
                   </li>
                 
+                  <li class="links-of-blogroll-item">
+                    <a href="https://oldpan.me/" title="Oldpan的博客" target="_blank">Oldpan的博客</a>
+                  </li>
+                
               </ul>
             </div>
           
@@ -1010,7 +1019,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#字符串固定字数-不足的空格补齐"><span class="nav-text">字符串固定字数, 不足的空格补齐</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#排序"><span class="nav-text">排序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#列表"><span class="nav-text">列表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#循环删除列表元素"><span class="nav-text">循环删除列表元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遍历列表"><span class="nav-text">遍历列表:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#append-方法"><span class="nav-text">append() 方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extend-方法"><span class="nav-text">extend() 方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#序列切片-双冒号"><span class="nav-text">序列切片(双冒号)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#update-方法"><span class="nav-text">update() 方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字典"><span class="nav-text">字典</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字符串"><span class="nav-text">字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#str-rstrip"><span class="nav-text">str.rstrip()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#str-strip"><span class="nav-text">str.strip()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#str-split"><span class="nav-text">str.split()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件"><span class="nav-text">文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reduce-函数"><span class="nav-text">reduce() 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zip-函数"><span class="nav-text">zip() 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#getattr-函数"><span class="nav-text">getattr() 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#property"><span class="nav-text">@property</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dir-函数"><span class="nav-text">dir() 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#下划线"><span class="nav-text">下划线</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类的特殊方法"><span class="nav-text">类的特殊方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#call"><span class="nav-text">call()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getitem"><span class="nav-text">getitem()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setitem"><span class="nav-text">setitem()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#file"><span class="nav-text">file()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#len"><span class="nav-text">len()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#repr"><span class="nav-text">repr()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#str"><span class="nav-text">str()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#星号"><span class="nav-text">星号 *</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用于计算"><span class="nav-text">用于计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用于函数参数"><span class="nav-text">用于函数参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#globals-函数"><span class="nav-text">globals() 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#stripe"><span class="nav-text">stripe()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#readlines"><span class="nav-text">readlines()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lambda-函数"><span class="nav-text">lambda 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-6新功能-f-string"><span class="nav-text">3.6新功能 f string</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#包的导入机制"><span class="nav-text">包的导入机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#模块和包的定义"><span class="nav-text">模块和包的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#import-的搜索路径"><span class="nav-text">import 的搜索路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相对导入和绝对导入"><span class="nav-text">相对导入和绝对导入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#综合距离"><span class="nav-text">综合距离</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取-python-版本"><span class="nav-text">获取 python 版本:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取包的安装位置"><span class="nav-text">获取包的安装位置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解析-xml-文件"><span class="nav-text">解析 xml 文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#python-中-和-is-的区别"><span class="nav-text">python 中 == 和 is 的区别</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#字符串固定字数-不足的空格补齐"><span class="nav-text">字符串固定字数, 不足的空格补齐</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#排序"><span class="nav-text">排序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#列表"><span class="nav-text">列表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#循环删除列表元素"><span class="nav-text">循环删除列表元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遍历列表"><span class="nav-text">遍历列表:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#append-方法"><span class="nav-text">append() 方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extend-方法"><span class="nav-text">extend() 方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#序列切片-双冒号"><span class="nav-text">序列切片(双冒号)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#update-方法"><span class="nav-text">update() 方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字典"><span class="nav-text">字典</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字符串"><span class="nav-text">字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#判断字符串是否为字母或者数字"><span class="nav-text">判断字符串是否为字母或者数字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#str-rstrip"><span class="nav-text">str.rstrip()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#str-strip"><span class="nav-text">str.strip()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#str-split"><span class="nav-text">str.split()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件"><span class="nav-text">文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reduce-函数"><span class="nav-text">reduce() 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zip-函数"><span class="nav-text">zip() 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#getattr-函数"><span class="nav-text">getattr() 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#property"><span class="nav-text">@property</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dir-函数"><span class="nav-text">dir() 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#下划线"><span class="nav-text">下划线</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类的特殊方法"><span class="nav-text">类的特殊方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#call"><span class="nav-text">call()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getitem"><span class="nav-text">getitem()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setitem"><span class="nav-text">setitem()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#file"><span class="nav-text">file()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#len"><span class="nav-text">len()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#repr"><span class="nav-text">repr()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#str"><span class="nav-text">str()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#星号"><span class="nav-text">星号 *</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用于计算"><span class="nav-text">用于计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用于函数参数"><span class="nav-text">用于函数参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#globals-函数"><span class="nav-text">globals() 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#stripe"><span class="nav-text">stripe()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#readlines"><span class="nav-text">readlines()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lambda-函数"><span class="nav-text">lambda 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-6新功能-f-string"><span class="nav-text">3.6新功能 f string</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#包的导入机制"><span class="nav-text">包的导入机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#模块和包的定义"><span class="nav-text">模块和包的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#import-的搜索路径"><span class="nav-text">import 的搜索路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相对导入和绝对导入"><span class="nav-text">相对导入和绝对导入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#综合距离"><span class="nav-text">综合距离</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取-python-版本"><span class="nav-text">获取 python 版本:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取包的安装位置"><span class="nav-text">获取包的安装位置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解析-xml-文件"><span class="nav-text">解析 xml 文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#python-中-和-is-的区别"><span class="nav-text">python 中 == 和 is 的区别</span></a></li></ol></div>
             
 
           </div>
@@ -1047,7 +1056,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">2.4m</span>
+    <span title="站点总字数">2.5m</span>
   
 
   
@@ -1056,7 +1065,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">35:45</span>
+    <span title="站点阅读时长">37:45</span>
   
 </div>
 
