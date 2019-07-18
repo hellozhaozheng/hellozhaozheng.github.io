@@ -112,18 +112,35 @@
 
 
 
-  <meta name="description" content="论文: FCOS: Fully Convolutional One-Stage Object Detection作者: Zhi Tian Chunhua Shen∗ Hao Chen Tong He 论文亮点TL;DR本文提出了一种新的基于全卷积的 anchor free 目标检测方法, 抛弃了传统的 anchor 设定, 以每个像素点距离四个边框的距离作为回归目标, 通过多级特征和center-">
+  <meta name="description" content="论文: FCOS: Fully Convolutional One-Stage Object Detection作者: Zhi Tian Chunhua Shen Hao Chen Tong He机构: The University of Adelaide, Australia                 论文亮点TL;DR本文提出了一种新的基于全卷积的 anchor free 目标检测方法,">
 <meta name="keywords" content="目标检测,计算机视觉,论文解读">
 <meta property="og:type" content="article">
 <meta property="og:title" content="FCOS">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-FCOS-CVPR2019/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="论文: FCOS: Fully Convolutional One-Stage Object Detection作者: Zhi Tian Chunhua Shen∗ Hao Chen Tong He 论文亮点TL;DR本文提出了一种新的基于全卷积的 anchor free 目标检测方法, 抛弃了传统的 anchor 设定, 以每个像素点距离四个边框的距离作为回归目标, 通过多级特征和center-">
+<meta property="og:description" content="论文: FCOS: Fully Convolutional One-Stage Object Detection作者: Zhi Tian Chunhua Shen Hao Chen Tong He机构: The University of Adelaide, Australia                 论文亮点TL;DR本文提出了一种新的基于全卷积的 anchor free 目标检测方法,">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-17T10:45:59.022Z">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/fig1.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/fig2.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/fig3.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/fig4.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/fig5.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/fig6.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/fig7.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/tab1.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/tab2.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/tab3.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/tab4.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/tab5.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/tab6.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/tab7.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/tab8.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/tab9.jpg?x-oss-process=style/blog_img">
+<meta property="og:updated_time" content="2019-07-18T06:04:04.372Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FCOS">
-<meta name="twitter:description" content="论文: FCOS: Fully Convolutional One-Stage Object Detection作者: Zhi Tian Chunhua Shen∗ Hao Chen Tong He 论文亮点TL;DR本文提出了一种新的基于全卷积的 anchor free 目标检测方法, 抛弃了传统的 anchor 设定, 以每个像素点距离四个边框的距离作为回归目标, 通过多级特征和center-">
+<meta name="twitter:description" content="论文: FCOS: Fully Convolutional One-Stage Object Detection作者: Zhi Tian Chunhua Shen Hao Chen Tong He机构: The University of Adelaide, Australia                 论文亮点TL;DR本文提出了一种新的基于全卷积的 anchor free 目标检测方法,">
+<meta name="twitter:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/fig1.jpg?x-oss-process=style/blog_img">
 
 
 
@@ -481,8 +498,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-07-17T18:45:59+08:00" content="2019-07-17">
-      		  2019-07-17
+    		<time itemprop="dateUpdated" datetime="2019-07-18T14:04:04+08:00" content="2019-07-18">
+      		  2019-07-18
     		</time>
   	  </span>
 	  
@@ -535,7 +552,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">808</span>
+                <span title="本文字数">864</span>
               
 
               
@@ -569,7 +586,23 @@
       
 
       
-        <p><strong>论文:</strong> FCOS: Fully Convolutional One-Stage Object Detection<br><strong>作者:</strong> Zhi Tian Chunhua Shen∗ Hao Chen Tong He</p>
+        <p><strong>论文:</strong> FCOS: Fully Convolutional One-Stage Object Detection<br><strong>作者:</strong> Zhi Tian Chunhua Shen Hao Chen Tong He<br><strong>机构:</strong> The University of Adelaide, Australia</p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/fig1.jpg?x-oss-process=style/blog_img" alt="FCOS%2Ffig1.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/fig2.jpg?x-oss-process=style/blog_img" alt="FCOS%2Ffig2.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/fig3.jpg?x-oss-process=style/blog_img" alt="FCOS%2Ffig3.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/fig4.jpg?x-oss-process=style/blog_img" alt="FCOS%2Ffig4.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/fig5.jpg?x-oss-process=style/blog_img" alt="FCOS%2Ffig5.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/fig6.jpg?x-oss-process=style/blog_img" alt="FCOS%2Ffig6.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/fig7.jpg?x-oss-process=style/blog_img" alt="FCOS%2Ffig7.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/tab1.jpg?x-oss-process=style/blog_img" alt="FCOS%2Ftab1.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/tab2.jpg?x-oss-process=style/blog_img" alt="FCOS%2Ftab2.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/tab3.jpg?x-oss-process=style/blog_img" alt="FCOS%2Ftab3.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/tab4.jpg?x-oss-process=style/blog_img" alt="FCOS%2Ftab4.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/tab5.jpg?x-oss-process=style/blog_img" alt="FCOS%2Ftab5.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/tab6.jpg?x-oss-process=style/blog_img" alt="FCOS%2Ftab6.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/tab7.jpg?x-oss-process=style/blog_img" alt="FCOS%2Ftab7.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/tab8.jpg?x-oss-process=style/blog_img" alt="FCOS%2Ftab8.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/tab9.jpg?x-oss-process=style/blog_img" alt="FCOS%2Ftab9.jpg"></div></p>
 <h1 id="论文亮点"><a href="#论文亮点" class="headerlink" title="论文亮点"></a>论文亮点</h1><p>TL;DR<br>本文提出了一种新的基于全卷积的 anchor free 目标检测方法, 抛弃了传统的 anchor 设定, 以每个像素点距离四个边框的距离作为回归目标, 通过多级特征和center-ness的加持, 取得了超过anhor-based方法的性能表现</p>
 <p>Algorithm<br>首先, 作者重新定义了 bounding box 的回归方式, 以此抛弃 anchor box 的设定, 新的回归方式如下图, 对于每一个像素点, 其回归目标是该点到四个边界的距离, 当一个像素点落在 gt 物体内部时, 认为他是正样本, 反之, 认为是负样本</p>
 <p>由于同一个像素点可能会属于多个不同的物体, 因此, 为了解决这个问题, 作者提出用特征金字塔的不同层来控制不同物体的预测, 由于交并比高的物体, 往往具有不同的尺寸, 因此, 将它们分别放在不同的特征图谱上去预测, 可以有效的解决这个模糊样本带来的问题.</p>

@@ -132,7 +132,7 @@
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/tab3.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/fig8.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/tab4.jpg?x-oss-process=style/blog_img">
-<meta property="og:updated_time" content="2019-07-16T08:22:10.819Z">
+<meta property="og:updated_time" content="2019-07-18T06:06:37.290Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CornerNet (ECCV, 2018)">
 <meta name="twitter:description" content="文章: CornerNet: Detecting Objects as Paired Keypoints作者: Hei Law, Jia Deng机构: University of Michigan 摘要本文提出了一种新的检测方法, 即利用一对关键点(左上角和右下角)来检测物体, 我们仅用了单一的神经网络来搭建该模型, 并命名为 CornerNet. 通过一对关键点来检测物体, 可以省去设计 an">
@@ -494,8 +494,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-07-16T16:22:10+08:00" content="2019-07-16">
-      		  2019-07-16
+    		<time itemprop="dateUpdated" datetime="2019-07-18T14:06:37+08:00" content="2019-07-18">
+      		  2019-07-18
     		</time>
   	  </span>
 	  
@@ -585,18 +585,18 @@
         <p><strong>文章:</strong> CornerNet: Detecting Objects as Paired Keypoints<br><strong>作者:</strong> Hei Law, Jia Deng<br><strong>机构:</strong> University of Michigan</p>
 <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本文提出了一种新的检测方法, 即利用一对关键点(左上角和右下角)来检测物体, 我们仅用了单一的神经网络来搭建该模型, 并命名为 CornerNet. 通过一对关键点来检测物体, 可以省去设计 anchor boxes 的步骤. 除此之外, 我们还引入了 corner pooling, 这是一个新型的池化层, 可以帮助网络更好的定位 corner. 实验表明 CornerNet 在 MS COCO 上取得了 42.1% AP, 超过了所有的 one-stage 模型.</p>
 <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>现有的 sota 目标检测方法中的一个很常用的组成元素是 anchor boxes. anchor boxes 用在 one-stage 方法中时, 可以取得与 two-stage 相媲美的性能表现.<br><strong>但是使用 anchor boxes 具有两个缺点:</strong><br><strong>第一,</strong> 通常来说, 我们会生成大量的 anchor boxes. (eg, more than 40k in DSSD). 这是因为检测器是被训练来决定每一个 anchor box 是否与 gt box 有足够大的交集的, 因此, 必须有足够多的 anchor boxes 才能保证尽可能的覆盖所有的 gt boxes. 最终, 仅仅只有一小部分的 anchor box 会有 gt box 的交并比大于一定值, 因此, 这会造成正样本和负样本之间的不均衡, 同时会降低训练速度.<br><strong>第二,</strong> 使用 anchor boxes 会引入很多的超参数和设计选择. 包括需要多少个 boxes, 它们的 sizes 是多少, 以及它们的宽高比是多少等等. 这些选择很大程度上是通过特别的启发式规则做出的, 并且在结合 multiscale 结构时会变得更加复杂<br>在本文中, 我们提出了一个舍弃了 anchor boxes 设计的 one-stage 检测模型, 命名为 CornerNet. 我们利用一对关键点(左上角和右下角)来检测物体. 我们利用一个单一的卷积网络来预测同一对象类别的所有实例的 <strong>左上角和右下角的热图(heatmap)</strong>, 以及每个检测到的角的 embedding vector. 这些 embeddings 用于对属于同一对象的一对角进行分组, 网络被训练为预测它们的类似 embeddings。我们的灵感来自于人体关键点检测的一篇文章. 图1展示了本文方法的整体流程(overall pipeline).</p>
-<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/fig1.jpg?x-oss-process=style/blog_img" alt="CornerNet%2Ffig1.jpg"></div></p>
-<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/fig2.jpg?x-oss-process=style/blog_img" alt="CornerNet%2Ffig2.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/fig1.jpg?x-oss-process=style/blog_img" alt="CornerNet%2Ffig1.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/fig2.jpg?x-oss-process=style/blog_img" alt="CornerNet%2Ffig2.jpg"></div></p>
 <p>CornerNet 中另一个新颖的组成要素就是 <strong>corner pooling</strong>, 它可以帮助卷积网络更好的定位 bbox 的 corner. bbox 的 corner 经常处于物体的外侧, 如图2所示. 在这种情况下, 不能基于局部特征对某个 corner 进行定位. 相反的, <strong>为了决定某个像素位置上是否存在一个 top-left corner, 我们需要水平向右寻找物体的最高边界, 同时需要垂直向下寻找最左边界</strong>. 这种特点启发我们提出了 <strong>corner pooling layer</strong>: 它包含两个特征图, 在每一个像素位置上, 它对第一个特征图谱右侧的所有特征向量进行最大池化操作, 对第二个特征图谱下方的所有特征向量进行最大池化操作, 然后将两个池化后的结果相加. 示例如图3所示.</p>
-<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/fig3.jpg?x-oss-process=style/blog_img" alt="CornerNet%2Ffig3.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/fig3.jpg?x-oss-process=style/blog_img" alt="CornerNet%2Ffig3.jpg"></div></p>
 <p><strong>我们假设了两个原因</strong> 来解释为什么检测 corners 会比检测 bbox centers 或者 proposals 的效果好. <strong>第一</strong>, 定位 anchor box 更难一些, 因为它需要依赖物体的4个边界才能确定, 但是 corner 只需要物体的两个边界就可以确定, corner pooling 也是如此, 它编码了关于 corner 的一些明确的先验知识. <strong>第二</strong>, corners 提供了一种更加有效的方式来密集的对 boxes 的空间进行离散化: 我们只需要 $O(wh)$ 的 corners, 而 anchor boxes 需要的复杂度是 $O(w^2h^2)$.</p>
 <p>我们通过实验证明了 CornerNet 的有效性, 同时通过消融实验发现, corner pooling 对于 CornerNet 的性能表现来说很重要.</p>
 <h1 id="Related-Works"><a href="#Related-Works" class="headerlink" title="Related Works"></a>Related Works</h1><p>Two-stage object detectors: R-CNN, SPP, RPN, R-FCN<br>One-stage object detectors: YOLO, SSD, DSSD, RON, YOLO9000, RetinaNet, RefineDet<br>DeNet<br>Multi-person pose estimation</p>
 <h1 id="CornerNet"><a href="#CornerNet" class="headerlink" title="CornerNet"></a>CornerNet</h1><p>在 CornerNet 中, 我们利用一对关键点(左上角和右下角)来检测物体. 卷积网络会预测两组热图(heatmaps)来表示不同物体类别的 corners locations, 一组用于表示左上角, 一组用于表示右下角. 同时, <strong>网络还会为每个检测到的 corner 预测一个 embedding vector, 其特点是同一个物体的两个角点(corners)的 embeddings vector 之间的距离会非常小</strong>. 为了产生更紧密的边界框, 网络还会预测偏移量, 以稍微调整角点的位置. 得到预测的 heatmaps, embeddings 和 offsets 之后, 我们会使用简单的后处理算法来获取最终的 bboxes.</p>
-<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/fig4.jpg?x-oss-process=style/blog_img" alt="CornerNet%2Ffig4.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/fig4.jpg?x-oss-process=style/blog_img" alt="CornerNet%2Ffig4.jpg"></div></p>
 <p>图4展示了 CornerNet 的整体结构, 我们使用 <strong>Hourglass 网络作为 backbone 网络</strong>, 之后接着是两个预测模块(prediction modules). 其中一个用来预测左上角点, 另一个预测右下角点. 每一个模块都有自己的 corner pooling 来池化从 hourglass 网络得到的特征, 然后再预测 heatmaps, embeddings, 和 offsets. <strong>和其他目标检测器不同, 我们不使用不同尺度的特征图谱来检测不同尺度的物体. 我们仅仅使用 hourglass network 输出的特征进行检测.</strong></p>
 <h2 id="Detecting-Corners"><a href="#Detecting-Corners" class="headerlink" title="Detecting Corners"></a>Detecting Corners</h2><p>我们预测两组热图, 每一组热图都具有 $C$ 个通道, $C$ 代表了物体类别的数量, 热图的尺寸为 $H\times W$. <strong>注意, 这里没有背景的通道(background channel)</strong>. 每一个 channel 都是一个二值的 mask, 用于指示某个类别的角点位置.<br>对于每个角点来说, 都会有一个 gt positive location, 而其他的 locations 都将是负样本. 在训练阶段, <strong>我们不会等价的惩罚负样本, 我们减少了在正样本的一定半径内负样本的惩罚. 这是因为对于一对假的角点检测来说, 如果它们接近各自的真实位置, 那么就仍然可以产生一个与真实框差不多的框, 如图5所示.</strong> 我们通过确保半径内的一对点将生成一个至少与真实框具有 $t$ IoU ($t=0.7$)以上的边界框, 从而根据物体的大小来确定半径的值. 在给定半径以后, 减少惩罚的数量通过一个非规范的 2D 高斯分布给出: $e^{-\frac{x^2 + y^2}{2\sigma^2}}$, 其中心位于正样本的位置, $\sigma$ 的大小是半径的三分之一.</p>
-<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/fig5.jpg?x-oss-process=style/blog_img" alt="CornerNet%2Ffig5.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/fig5.jpg?x-oss-process=style/blog_img" alt="CornerNet%2Ffig5.jpg"></div></p>
 <p>设 $p_{cij}$ 为预测热图中 $c$ 类在位置 $(i,j)$ 处的得分，$y_{cij}$ 为使用 unnormalized 高斯增广的 gt 热图。我们设计了一种 focal loss[23]的变体:</p>
 <script type="math/tex; mode=display">L_{det} = \frac{-1}{N}\sum_{c=1}^{C} \sum_{i=1}^{H} \sum_{j=1}^{W} \begin{cases} (1-p_{cij})^\alpha log(p_{cij}) && y_{cij} = 1 \\ (1-y_{cij})^{beta} (p_{cij})^\alpha log(1 - p_{cij}) && otherwise \end{cases} \tag 1</script><p>其中 $N$ 是图像中物体的数量, $\alpha$ 和 $\beta$ 是用于控制每个点贡献度的超参数. (我们在所有实验中设置 $alpha=2, \beta=4$)。$y_{cij}$ 使用 Gaussian bumps 进行编码，$(1-y_{cij})$ 项减少了对 gt locations 的惩罚。</p>
 <p>许多网络[15,28]使用向下采样层来收集全局信息同时减少内存使用。当它们应用于完全卷积的图像时，输出的大小通常小于图像。因此，需要将图像中的位置 $(x, y)$ 映射到 heatmap 中的位置 $(x/n, y/n)$ ，其中 $n$ 为下采样因子。当我们将热图中的位置重新映射到输入图像时，可能会丢失一些精度，这将极大地影响 gt 和小边界框的 IoU 大小。为了解决这个问题，我们预测 location offsets，以便在将它们重新映射到输入分辨率之前稍微调整转角位置。</p>
@@ -607,23 +607,23 @@
 <h2 id="Corner-Pooling"><a href="#Corner-Pooling" class="headerlink" title="Corner Pooling"></a>Corner Pooling</h2><p>如图2所示, 我们往往不能从局部的特征中推断出角点的位置. 为了确定一个像素点是不是 <strong>左上角角点, 我们需要水平和垂直的向右向下看才能确定</strong>, 因此我们提出了 corner pooling 来更好的确定角点.</p>
 <p>假设我们想确定位置 $(i, j)$ 处的像素是否为左上角角点。设 $f_t$ 和 $f_l$ 分别为左上 corner pooling化层输入的 feature map, 设 $f_{t_{ij}}$ 和 $f_{l_{ij}}$ 分别为 $f_t$ 和 $f_l$ 中位置 $(i,j)$ 处的向量。在 $H×W$ 的 feature map 中，角点池化层首先将 $f_t$ 中 $(i,j)$ 和 $(i,H)$ 之间的所有特征向量都最大池化到一个特征向量 $t_{ij}$，将 $f_l$ 中 $(i,j)$ 和 $(W,j)$ 之间的所有特征向量最大池化到一个特征向量 $l_{ij}$。最后，将 $t_{ij}$ 和 $l_{ij}$ 相加。计算公式如下:</p>
 <script type="math/tex; mode=display">t_{ij} = \begin{cases} \max(f_{t_{ij}}, t_{(i+1)j}) && i < H \\ f_{t_{Hj}} && otherwise \end{cases} \tag 6</script><script type="math/tex; mode=display">l_{ij} = \begin{cases} \max(f_{l_{ij}}, t_{i(j+1)}) && i < H \\ f_{l_{iW}} && otherwise \end{cases} \tag 7</script><p>$t_{ij}$ 和 $l_{ij}$ 可以利用动态规划高效得到, 如图6所示</p>
-<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/fig6.jpg?x-oss-process=style/blog_img" alt="CornerNet%2Ffig6.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/fig6.jpg?x-oss-process=style/blog_img" alt="CornerNet%2Ffig6.jpg"></div></p>
 <p>我们以类似的方式定义了右下角的池化层。它将 $(0,j)$ 和 $(i,j)$ 之间的所有特征向量和 $(i, 0)$ 和 $(i,j)$ 之间的所有特征向量使用最大池化汇集在一起，然后再将汇集的结果相加。在预测模块中使用角点池层来预测 heatmaps, embeddings, 和 offsets.</p>
 <p>预测模块的结构如图7所示。模块的第一部分是 residual block[15]的修改版本。在这个修改后的残块中，我们将第一个3×3卷积模块替换为一个角点池化模块，该角点池化模块首先用两个3×3卷积模块处理来自主干网的特征，卷积模块有128个信道，然后应用 corner pooling层。在剩余块的设计之后，我们将合并后的特征输入到一个3×3的对流bn层，该层有256个通道，并添加相应的 projection shortcut。修改后的残差块后面是一个具有256通道的3×3卷积模块和3个 Conv-relu-Conv层，生成 heatmaps, embeddings 和 offsets.</p>
-<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/fig7.jpg?x-oss-process=style/blog_img" alt="CornerNet%2Ffig7.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/fig7.jpg?x-oss-process=style/blog_img" alt="CornerNet%2Ffig7.jpg"></div></p>
 <h2 id="Hourglass-Network"><a href="#Hourglass-Network" class="headerlink" title="Hourglass Network"></a>Hourglass Network</h2><p>CornerNet使用 hourglass 网络[28]作为其骨干网络。 hourglass 网络首先被引入到人体姿态估计任务中。它是一个完全卷积的神经网络，由一个或多个 hourglass 模块组成。 hourglass 模块首先通过一系列卷积和最大池化层对输入特征进行采样。然后通过一系列上采样和卷积层对特征进行上采样，使其恢复到原始分辨率。由于细节在最大池层中丢失，因此添加了 skip layers，以将细节带回上采样的特征。 hourglass 模块以一个统一的结构捕获全局和局部特征。当多个 hourglass 模块在网络中堆叠时， hourglass 模块可以重新处理这些特征来捕获更高级别的信息。这些特征使得 hourglass 网络也成为目标检测的理想选择。事实上，许多当前的检测器(FPN, DSSD)已经采用了类似 hourglass 网络的网络。</p>
 <p>我们的 hourglass 网络由两个 hourglass 模块组成，我们对 hourglass 模块的架构做了一些修改。我们没有使用最大池，而是简单地使用stride 2来降低特征分辨率。我们将特征分辨率降低了5倍，同时增加了特征通道的数量(256,384,384,384,512)。当我们对特征进行上采样时，我们应用了两个剩余模块，然后是一个最近邻上采样。每个 skip 连接还包含2个 residual 模块。 hourglass 模块中有4个 residual 模块，中间有512个通道。在 hourglass 模块之前，我们使用一个具有 stride 2 和128通道的7×7卷积模块和一个具有stride 2和256通道的残块[15]，将图像分辨率降低了4倍.<br>在[28]之后，我们还在培训中增加了 intermediate supervision。但是，我们没有将中间预测添加回网络，因为我们发现这会损害网络的性能。我们对第一个 hourglass 模块的输入和输出都应用了一个3×3 Conv-BN 模块。然后，我们通过按元素顺序添加一个ReLU和一个包含256个通道的剩余块来合并它们，然后将其用作第二个 hourglass 模块的输入。 hourglass 网络的深度为104。与许多其他最先进的探测器不同，我们只使用整个网络最后一层的特性来进行预测。</p>
 <h1 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h1><h2 id="Training-Details"><a href="#Training-Details" class="headerlink" title="Training Details"></a>Training Details</h2><p>略…</p>
 <h2 id="Testing-Details"><a href="#Testing-Details" class="headerlink" title="Testing Details"></a>Testing Details</h2><p>在测试过程中，我们使用一个简单的后处理算法从热图、嵌入和偏移量生成边界框。我们首先应用非最大抑制(NMS)使用一个3×3最大池层的角落热图。然后我们从热图中选择前100个左上角和前100个右下角。角的位置由相应的偏移量来调整。我们计算了左上角和右下角嵌入点之间的L1距离。距离大于0.5或包含来自不同类别的角的对将被拒绝。使用左上角和右下角的平均分数作为检测分数。</p>
 <h2 id="Ablation-Study"><a href="#Ablation-Study" class="headerlink" title="Ablation Study"></a>Ablation Study</h2><p><strong>Corner Pooling</strong> corner pooling是角网的重要组成部分。为了理解它对性能的贡献，我们训练了另一个没有 corner pooling但具有相同数量参数的网络。如表1所示</p>
-<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/tab1.jpg?x-oss-process=style/blog_img" alt="CornerNet%2Ftab1.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/tab1.jpg?x-oss-process=style/blog_img" alt="CornerNet%2Ftab1.jpg"></div></p>
 <p><strong>Reducing penalty to negative locations</strong> 我们减少了对一个正位置周围的负位置的惩罚，在一个由物体大小决定的半径内(第3.2节)。为了理解这如何帮助训练角网，我们训练一个没有惩罚减少的网络和另一个半径固定为2.5的网络。我们将它们与验证集上的角网进行比较。如表2所示</p>
-<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/tab2.jpg?x-oss-process=style/blog_img" alt="CornerNet%2Ftab2.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/tab2.jpg?x-oss-process=style/blog_img" alt="CornerNet%2Ftab2.jpg"></div></p>
 <p><strong>Error Analysis:</strong> CornerNet 同时输出 heatmaps、 offsets 和 embeddings，所有这些都会影响检测性能。如果一个物体的任何一个角丢失了，该物体的检测结果就会丢失;需要精确的偏移量来生成紧密的边界框;不正确的嵌入将导致许多错误的边界框。为了了解每个部分对最终误差的影响，我们用 gt 值替换预测的热图和偏移量，并对验证集的性能进行评估，从而进行误差分析。如表3所示, 这说明，尽管在检测角点和分组角点方面仍有很大的改进空间，但主要的瓶颈是检测角点。</p>
-<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/tab3.jpg?x-oss-process=style/blog_img" alt="CornerNet%2Ftab3.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/tab3.jpg?x-oss-process=style/blog_img" alt="CornerNet%2Ftab3.jpg"></div></p>
 <p>图 8 展示了两组检测效果图:</p>
-<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/fig8.jpg?x-oss-process=style/blog_img" alt="CornerNet%2Ffig8.jpg"></div></p>
-<h2 id="Comparisons-with-state-of-the-art-detectors"><a href="#Comparisons-with-state-of-the-art-detectors" class="headerlink" title="Comparisons with state-of-the-art detectors"></a>Comparisons with state-of-the-art detectors</h2><p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/tab4.jpg?x-oss-process=style/blog_img" alt="CornerNet%2Ftab4.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/fig8.jpg?x-oss-process=style/blog_img" alt="CornerNet%2Ffig8.jpg"></div></p>
+<h2 id="Comparisons-with-state-of-the-art-detectors"><a href="#Comparisons-with-state-of-the-art-detectors" class="headerlink" title="Comparisons with state-of-the-art detectors"></a>Comparisons with state-of-the-art detectors</h2><p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/tab4.jpg?x-oss-process=style/blog_img" alt="CornerNet%2Ftab4.jpg"></div></p>
 
       
     </div>

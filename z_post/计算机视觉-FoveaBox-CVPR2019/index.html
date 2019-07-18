@@ -132,7 +132,7 @@
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/tab3.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/tab4.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/tab5.jpg?x-oss-process=style/blog_img">
-<meta property="og:updated_time" content="2019-07-18T01:03:57.355Z">
+<meta property="og:updated_time" content="2019-07-18T06:05:57.647Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FoveaBox (CVPR, 2019)">
 <meta name="twitter:description" content="论文: FoveaBox: Beyond Anchor-based Object Detector作者: Tao Kong1 Fuchun Sun1 Huaping Liu1 Yuning Jiang2 Jianbo Shi3机构: 1Department of Computer Science and Technology, Tsinghua University, Beijing Nation">
@@ -494,7 +494,7 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-07-18T09:03:57+08:00" content="2019-07-18">
+    		<time itemprop="dateUpdated" datetime="2019-07-18T14:05:57+08:00" content="2019-07-18">
       		  2019-07-18
     		</time>
   	  </span>
@@ -606,9 +606,9 @@
 <script type="math/tex; mode=display">S_l = 4^l \cdot S_0 \tag 1</script><p>类似于使用 $C4$ 作为单尺度特征图的基于ResNet的 Faster R-CNN系统，我们将 $S_0$ 设置为 16 (也就是 $4^2$). 在FoveaBox中，每个特征金字塔会学习响应特定尺度的对象。 金字塔等级 $l$ 的目标框的有效比例范围计算为</p>
 <script type="math/tex; mode=display">[S_l / \eta^2, S_l \cdot \eta^2] \tag 2</script><p>其中 $\eta$ 是根据经验设置的，以控制每个金字塔的比例范围。在训练过程中忽略不在相应尺度范围内的目标对象。注意，<strong>一个对象可能被网络的多个金字塔检测到，这与以前只将对象映射到一个特征金字塔的做法不同(FPN, MaskRCNN).</strong></p>
 <h1 id="Object-Fovea"><a href="#Object-Fovea" class="headerlink" title="Object Fovea"></a>Object Fovea</h1><p>金字塔形 heatmap 的每组输出都有 $K$ 个通道，其中 $K$ 是类别数，尺寸为 $H×W$ (图4)。 每个通道都是一个二进制掩码，表示类的可能性。 给出一个 gt box，表示为$(x1,y1,x2,y2)$。我们首先将该框映射到步幅为 $2^l$ 的目标特征金字塔 $P_l$ 上:</p>
-<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/fig4.jpg?x-oss-process=style/blog_img" alt="FoveaBox%2Ffig4.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/fig4.jpg?x-oss-process=style/blog_img" alt="FoveaBox%2Ffig4.jpg"></div></p>
 <script type="math/tex; mode=display">\begin{cases} x_1' = \frac{x_1}{2^l}, y_1' = \frac{y_1}{2^l} , \\ x_2' = \frac{x_2}{2^l}, y_2' = \frac{y_2}{2^l}, \\ c_x' = x_1' + 0.5(x_2' - x_1'), \\ c_y' = y_1' + 0.5(y_2' - y_1').\end{cases} \tag 3</script><p>score map 上四边形的 positive area(fovea) 定义为原始四边形的缩小版(见图3)。$R^{pos} = (x_1’’, y_1’’, x_2’’, y_2’’)$</p>
-<script type="math/tex; mode=display">\begin{cases}x_1'' = c_x' - 0.5(x_2'-x_1')\sigma_1, \\ y_1'' = c_y' - 0.5(y_2' - y_1')\sigma_1, \\ x_2'' = c_x' + 0.5(x_2' - x_1')\sigma_1, \\ y_2'' = c_y' + 0.5(y_2' - y_1')\sigma_1, \end{cases} \tag 4</script><p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/fig3.jpg?x-oss-process=style/blog_img" alt="FoveaBox%2Ffig3.jpg"></div></p>
+<script type="math/tex; mode=display">\begin{cases}x_1'' = c_x' - 0.5(x_2'-x_1')\sigma_1, \\ y_1'' = c_y' - 0.5(y_2' - y_1')\sigma_1, \\ x_2'' = c_x' + 0.5(x_2' - x_1')\sigma_1, \\ y_2'' = c_y' + 0.5(y_2' - y_1')\sigma_1, \end{cases} \tag 4</script><p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/fig3.jpg?x-oss-process=style/blog_img" alt="FoveaBox%2Ffig3.jpg"></div></p>
 <p>其中 $\sigma_1$ 是收缩因子。 在训练的时候, positive area 内的每个 cell 都用相应的目标类标签进行标注以进行训练。 对于负样本的定义，我们引入另一个缩小因子 $\sigma_2$ 并使用等式(4)生成 $R^{neg}$。negative area 是整个 feature map 中不包括 $R^{neg}$ 的区域(<strong>注意, 这里没有写错, 通常 $R^{neg}$ 会比 $R^{pos}$ 大一圈, 而除了这两处之外的其他地方, 皆认为是 background, 即负样本</strong>)。 如果单元格未分配，则在训练期间将忽略该单元格。 <strong>positive area 通常占整个特征图的一小部分，因此我们使用Focal Loss [28]来训练该分支的 target $L{cls}$。</strong></p>
 <h2 id="Box-Prediction"><a href="#Box-Prediction" class="headerlink" title="Box Prediction"></a>Box Prediction</h2><p>object fovea 只编码目标物体存在的可能性。要确定位置，模型必须预测每个潜在实例的边界框。每个 ground-truth 边界框都以 $G = (x1, y1, x2, y2)$ 的方式指定。我们的 <strong>目标是学习一个 transformation</strong>， 它可以将 feature maps 中在 cell $(x, y)$ 处的网络 localization outputs $(t_{x1}, t_{y1}, t_{x2}, t_{y2})$ 映射到 ground-truth box $G$:</p>
 <script type="math/tex; mode=display">\begin{cases}t_{x1} = \log \frac{2^l(x+0.5) - x_1}{z}, \\ t_{y1} = \log \frac{2^l(y+0.5) - y_1}{z}, \\ t_{x2} = \log\frac{x_2 - 2^l(x+0.5)}{z}, \\ t_{y2} = \log\frac{y_2 - 2^l(y+0.5)}{z} \end{cases} \tag 5</script><p>上式中 $z = \sqrt{S_l}$ 是将输出空间投影到以1为中心的空间的归一化因子，使得目标的学习更加敏捷和稳定. <strong>该函数首先将坐标(x, y)映射到输入图像，然后计算投影坐标与 $G$ 之间的归一化偏移量。最后利用对数空间函数对目标进行正则化。</strong></p>
@@ -616,8 +616,8 @@
 <h1 id="Optimization"><a href="#Optimization" class="headerlink" title="Optimization"></a>Optimization</h1><p>synchronized SGD<br>learning rate: 0.005, 180k, 240k, 缩小10倍<br>Weight decay: 0.0001<br>momentum: 0.9<br>standard horizontal image flipping, random aspect ratio jittering.<br>$\sigma_1 = 0.3$, $\sigma_2 = 0.4$</p>
 <h1 id="Inference"><a href="#Inference" class="headerlink" title="Inference"></a>Inference</h1><p>在推理过程中，我们首先使用0.05的置信阈值来过滤掉低置信值的预测。然后，我们从每个预测层中选择前1000个 scoring box。然后，对 <strong>每个类</strong> 分别应用阈值为0.5的非最大抑制(non-maximum suppression, NMS)。最后，为每个图像选择前100个 scoring predictions。这个推理设置与Detectron基线[13]完全相同。尽管有更智能的方法来执行后处理，如bbox voting[10]、Soft-NMS[2]或 test-time image augmentations，为了保持简单性并与基线模型进行公平比较，我们这里不使用这些技巧。</p>
 <h1 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h1><h2 id="Ablation-Study"><a href="#Ablation-Study" class="headerlink" title="Ablation Study"></a>Ablation Study</h2><h3 id="Various-anchor-densities-and-FoveaBox"><a href="#Various-anchor-densities-and-FoveaBox" class="headerlink" title="Various anchor densities and FoveaBox"></a>Various anchor densities and FoveaBox</h3><p>基于 anchor 的检测系统中最重要的设计因素之一是它如何密集地覆盖可能的图像框的空间。 由于基于 anchor 的探测器使用固定的采样网格，在这些方法中实现高覆盖率的主要方法是在每个空间位置使用多个 anchor 来覆盖各种尺度和纵横比的框。可以预期，当在每个位置上附加更密集的 anchor 时，我们总能获得更好的性能。为了验证这一假设，我们枚举了 RetinaNet 中每个空间位置和每个金字塔等级使用的比例和纵横比 anchor 的数量，包括每个位置的单个方形 anchor 到每个位置 12个 anchor, 如表 1(a) 所示。 <strong>当增加超过 6~9 个 anchor 后模型并没有显示出进一步的收益。 性能或者说密集程度的饱和意味着手工制作的、密度过大的 anchor 没有优势。</strong></p>
-<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/tab1.jpg?x-oss-process=style/blog_img" alt="FoveaBox%2Ftab1.jpg"></div></p>
-<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/fig1.jpg?x-oss-process=style/blog_img" alt="FoveaBox%2Ffig1.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/tab1.jpg?x-oss-process=style/blog_img" alt="FoveaBox%2Ftab1.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/fig1.jpg?x-oss-process=style/blog_img" alt="FoveaBox%2Ffig1.jpg"></div></p>
 <p>过于密集的 anchor 不仅会增加 前景-背景 的优化难度，而且还可能导致模糊位置定义问题。 对于每个输出空间的 location 来说，其 anchors 的标签根据与 GT 的 IoU 值定义。 其中，有一些 anchor 被定义为 positive samples，而另一些则被定义为 negative samples。 但是，它们共享这相同的 feature maps。因此分类器不仅需要区分不同位置的样本，还需要在同一位置区分不同的 anchor。</p>
 <p>相比之下，<strong>FoveaBox 会明确预测每个位置的一个目标，并且其性能不比最好的 anchor-based 模型差。</strong> target 的标签由它是否在物体的边界框内定义。 与 anchor-based 的方案相比，FoveaBox 具有几个优点:</p>
 <ol>
@@ -626,23 +626,23 @@
 <li>FoveaBox 在使用上更灵活，因为我们不需要认为设计 anchor 来获得相对更好的结果</li>
 </ol>
 <h3 id="Analysis-of-Scale-Assignment"><a href="#Analysis-of-Scale-Assignment" class="headerlink" title="Analysis of Scale Assignment"></a>Analysis of Scale Assignment</h3><p>在公式(2)中, $\eta$ 控制了每一个金字塔层级的尺度匹配范围. 当 $\eta=\sqrt 2$ 时，物体的尺度会被划分为 <strong>非重叠</strong> 的区间，每个区间由相应的特征金字塔进行预测。 随着 $\eta$ 的增加，每个金字塔都会响应更多的物体尺度, 这就使得同一个尺度可能会被不同的金字塔层级进行检测。 表2显示了 $\eta$ 最终检测性能的影响。(在本文的实验中, 我们使用 $\eta = 2$)</p>
-<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/tab2.jpg?x-oss-process=style/blog_img" alt="FoveaBox%2Ftab2.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/tab2.jpg?x-oss-process=style/blog_img" alt="FoveaBox%2Ftab2.jpg"></div></p>
 <h3 id="FoveaBox-is-more-robust-to-box-distributions"><a href="#FoveaBox-is-more-robust-to-box-distributions" class="headerlink" title="FoveaBox is more robust to box distributions"></a>FoveaBox is more robust to box distributions</h3><p>与传统的预定义 anchor 策略不同，FoveaBox 的主要优点之一是对边界框预测的鲁棒性。 为了验证这一点，我们进行了两个实验来比较不同方法的定位性能。</p>
 <p>在第一个实验中，我们根据 GT 的宽高比将验证集中的 boxes 划分成三组, GT 宽高比为 $U={u_i= \min(\frac{h_i}{w_i},\frac{w_i}{h_i})}, i = 1,···,N$, 其中 $N$ 是数据集中的实例数量。我们在不同的长宽比阈值下比较 FoveaBox 和 RetinaNet, 如表 1(b) 所示。 这里<code>*</code>表示训练模型的时候会使用 aspect ratio jittering。我们看到，当 $u$ 很低时，两种方法都能获得最佳性能。 虽然 FoveaBox 在 $u$ 增加时也会降低性能，但它比 anchor free 的 RetinaNet 要好得多。</p>
 <p>为了进一步验证不同方法的边界框的鲁棒性，我们手动拉伸图像以及验证集中的标注，并查看不同检测器的行为。 图5显示了在不同 $h/w$ 拉伸阈值下的 localization 性能。在 $h/w=1$ 的评估标准下，两个检测器之间的性能差距相对较小。 随着我们增加拉伸阈值，差距开始增大。 具体来说，当将 $h/w$ 拉伸3倍时，FoveaBox获得21.3的AP，比对应的 RetinaNet* 高3.7分。</p>
-<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/fig5.jpg?x-oss-process=style/blog_img" alt="FoveaBox%2Ffig5.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/fig5.jpg?x-oss-process=style/blog_img" alt="FoveaBox%2Ffig5.jpg"></div></p>
 <p>anchor based 方法依赖于具有 anchor reference 的 box regression 来生成最终边界框。 在实践中，回归器是针对 positive anchor 进行训练的，这将在预测更多任意形状的目标时损害其泛化性。 在FoveaBox中，每个预测位置与特定参考形状无关，它会直接预测目标的 GT Box。 由于FoveaBox允许生成任意宽高比的 box，因此它能够更好地捕获那些极高或极宽的物体。 具体可参见图6中的一些示例。</p>
-<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/fig6.jpg?x-oss-process=style/blog_img" alt="FoveaBox%2Ffig6.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/fig6.jpg?x-oss-process=style/blog_img" alt="FoveaBox%2Ffig6.jpg"></div></p>
 <h3 id="Per-class-difference"><a href="#Per-class-difference" class="headerlink" title="Per-class difference"></a>Per-class difference</h3><p>图2显示了 FoveaBox 和 RetinaNet 每一类的 AP 差异。 它们都具有 ResNet-50-FPN BackBone 和 800 的输入尺寸。 纵轴代表 $AP_{FoveaBox} - AP_{RetinaNet}$ 的值。 FoveaBox 对于大多数类都能获得一定改进，特别是对于边界框更随意的类, 例如对于类牙刷，叉子，运动球，滑雪板，领带和火车等，AP的改进都大于 5 个点。</p>
-<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/fig2.jpg?x-oss-process=style/blog_img" alt="FoveaBox%2Ffig2.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/fig2.jpg?x-oss-process=style/blog_img" alt="FoveaBox%2Ffig2.jpg"></div></p>
 <h3 id="Generating-high-quality-region-proposals"><a href="#Generating-high-quality-region-proposals" class="headerlink" title="Generating high-quality region proposals"></a>Generating high-quality region proposals</h3><p>将 classification target 更改为与 class-agnostic head 是非常直截的，并且可以生成 region proposals。 我们将 proposal performance 与 RPN[40]进行比较，并使用在 COCO minival 上生成不同数量的 proposals 集合来评估平均召回率（AR），如表1（c）所示。</p>
 <p>令人惊讶的是，我们的方法在所有标准中都大大优于RPN baseline。 具体来说，在前100个 region proposals 中，FoveaBox获得53.0 AR，高出RPN 8.5分。 这证实了我们的模型在生成高质量 region proposals 方面的能力。</p>
-<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/fig7.jpg?x-oss-process=style/blog_img" alt="FoveaBox%2Ffig7.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/fig7.jpg?x-oss-process=style/blog_img" alt="FoveaBox%2Ffig7.jpg"></div></p>
 <h3 id="Across-model-depth-and-scale"><a href="#Across-model-depth-and-scale" class="headerlink" title="Across model depth and scale"></a>Across model depth and scale</h3><p>表3显示了FoveaBox利用不同的 backbone 和 input resolutions 的 AP 性能。Inference settings 与RetinaNet完全相同，速度也与相应的 baseline 相同。</p>
-<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/tab3.jpg?x-oss-process=style/blog_img" alt="FoveaBox%2Ftab3.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/tab3.jpg?x-oss-process=style/blog_img" alt="FoveaBox%2Ftab3.jpg"></div></p>
 <p>如表3所示，FoveaBox 对 RetinaNet baseline 始终提高提升 1~2分。 并且这种提升来自与所有尺度(S, M, L)的物体。</p>
 <h2 id="Main-Results"><a href="#Main-Results" class="headerlink" title="Main Results"></a>Main Results</h2><p>我们将FoveaBox与表4中目标检测 SOTA 的方法进行了比较。我们模型的所有实例都优于以前的模型的 baseline variants。 表4中的第一组 detectors 是 two-stage detectors，第二组是 one-stage detectors，最后一组是 FoveaBox detector。 在所有评估指标下，FoveaBox 优于 ResNet-101 backbone 下的所有 one-stage detector。 这包括最近的 CornerNet。 FoveaBox 也优于大多数 two-stage detector，包括 FPN 和 Mask R-CNN 。</p>
-<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/tab4.jpg?x-oss-process=style/blog_img" alt="FoveaBox%2Ftab4.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/tab4.jpg?x-oss-process=style/blog_img" alt="FoveaBox%2Ftab4.jpg"></div></p>
 <p>two-stage detector 依赖于 region-wise sub-networks 来进一步对 sparse region proposals 进行分类。 Cascade R-CNN 将 two-stage 方案扩展到多个 stage 以进一步 refine region。 由于 FoveaBox 还可以通过将模型 head 改为 class agnostic scheme（表1（c））来生成 region proposals，我们相信它可以进一步提高 two-stage detector 的性能，不过这超出了本文的重点, 故暂时不做讨论.</p>
 <h1 id="More-Discussions-to-Prior-Works"><a href="#More-Discussions-to-Prior-Works" class="headerlink" title="More Discussions to Prior Works"></a>More Discussions to Prior Works</h1><p><strong>Score Mask for Text Detection:</strong> score mask 技术已经广泛应用于文本检测领域。 这些工作通常利用完全卷积网络[32]来预测目标场景文本和四边形形状的 existence。 与场景文本检测相比，通用对象检测更具挑战性，因为它面临更多的遮挡，多类别分类和规模问题。简单地将文本检测方法应用于通用对象检测通常会得到较差的性能。</p>
 <p><strong>Guided-Anchoring:</strong> 它共同预测了可能存在感兴趣目标中心的位置以及以相应位置为中心的尺度和宽高比。 如果 $(x,y)$ 不在目标中心，则检测到的框不是最佳框。 Guided-Anchoring 依靠中心点来提供最佳预测。 相比之下，FoveaBox 预测每个前景位置的对象（左，上，右，下）边界，这更加健壮。</p>
@@ -652,7 +652,7 @@
 <li>为了优化 box boundary，FSAF 利用 IoU-Loss [47]来最大化 predicted box 和 GT 之间的 IoU。在 FoveaBox中，我们使用 Smooth L1 损失直接预测四个边界，这更简单直接。</li>
 <li>与 FSAF 相比，FoveaBox显示出更好的性能，如表5所示.</li>
 </ol>
-<p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/tab5.jpg?x-oss-process=style/blog_img" alt="FoveaBox%2Ftab5.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/tab5.jpg?x-oss-process=style/blog_img" alt="FoveaBox%2Ftab5.jpg"></div></p>
 <p><strong>CornerNet:</strong> CornerNet 通过左上角和右下角的关键点对来检测对象。 CornerNet 的关键步骤是 <strong>识别哪些关键点属于同一个实例并正确分组</strong>。 相反，在 FoveaBox 中, 实例的类和边界框关联在一起。 我们直接预测框和类，不需要任何分组方案来分隔不同的实例。</p>
 <h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p><strong>anchor 的数量并不是越多越好</strong>, 虽然直观上来说, anchor 越多时, 可以覆盖越好的 gt box, 但是, 当 anchor 的数量过多时, 一方面由于每一个点上产生的 anchor 实际上共享了一块相似的特征, 但是这些 anchor 有一部分作为正样本, 而另一部分作为负样本, 因此, 对于神经网络来说, 他要通过不断学习来区分这些样本, 不仅如此, 他还要将这些样本与其他点产生的 anchor 区分开, 虽然 anchor 数量的增多, 学习的难度也就慢慢增多, 最终甚至会出现掉点的现象, 个人任务不会掉的特别多, 因为毕竟更多的 anchor 可以覆盖更多的局部最优解. 但是 anchor 会导致计算量的上升, 因此不建议设置过多 anchor.</p>
 <p>FoveaBox 的优势(就 anchor 来说): (1) 神经网络的输出维度大大降低(1/A), 学习起来相对简单直接; (2) 不会出现 anchor 之间互相矛盾的现象 (3) 没有了 anchor 后, 检测网络变的更加简单直接, 扩展性更好</p>
