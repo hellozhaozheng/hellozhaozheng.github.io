@@ -131,7 +131,7 @@
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/fig8.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/tab2.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/tab3.jpg?x-oss-process=style/blog_img">
-<meta property="og:updated_time" content="2019-07-18T06:05:39.890Z">
+<meta property="og:updated_time" content="2019-07-19T08:16:48.346Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FSAF (CVPR, 2019)">
 <meta name="twitter:description" content="论文: Feature Selective Anchor-Free Module for Single-Shot Object Detection作者: Chenchen Zhu Yihui He Marios Savvides 摘要本文提出了一种简单有效的针对 single-shot detector 的 Feature Selective Anchor Free(FSAF) 模块。它可以嵌入到">
@@ -260,7 +260,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">263</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">266</span></a>
   </li>
         
         
@@ -340,7 +340,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">40</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">41</span></a>
   </li>
         
         
@@ -493,8 +493,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-07-18T14:05:39+08:00" content="2019-07-18">
-      		  2019-07-18
+    		<time itemprop="dateUpdated" datetime="2019-07-19T16:16:48+08:00" content="2019-07-19">
+      		  2019-07-19
     		</time>
   	  </span>
 	  
@@ -605,8 +605,8 @@
 <h2 id="Ground-truth-and-Loss"><a href="#Ground-truth-and-Loss" class="headerlink" title="Ground-truth and Loss"></a>Ground-truth and Loss</h2><p>给定一个对象实例，我们已知它的类标签 $k$ 和边界框坐标 $b = [x, y, w,h]$，其中 $(x, y)$ 是框的中心，$w,h$ 分别是框的宽度和高度。在训练过程中，实例可以被分配到任意的 feature level $P_l$。我们将投影框 $b^l_p = [x_p^l, y_p^l, w_p^l, h_p^l]$ 定义为 $b$ 在特征金字塔 $P_l$ 上的投影，即 $b^l_p = b/2^l$。我们还定义了 $b_p^l$ 的部分区域分别为 effective box $b_e^l = [x_e^l, y_e^l, w_e^l, h_e^l]$ 和 ignoring box $b_i^l = [x_i^l, y_i^l, w_i^l, h_i^l]$, 它们分别受到缩放因子 $\epsilon_e$ 和 $\epsilon_i$ 的控制, $x^l_e = x^l_p, y_e^l= y_p^l, w_e^l = \epsilon_e w_p^l, h_e^l = \epsilon_e h_e^l, x_i^l = x_p^l, y_i^l = y_p^l, w_i^l = \epsilon_i w_p^l, h_i^l = \epsilon_i h_p^l$, 在本文中, 我们设置 $\epsilon_e = 0.2, \epsilon_i = 0.5$. 图5显示了一个为car实例生成ground-truth的示例。</p>
 <p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FSAF/fig5.jpg?x-oss-process=style/blog_img" alt="FSAF%2Ffig5.jpg"></div></p>
 <p><strong>Classification Output:</strong> 针对分类输出的 gt 是 $K$ 个 maps，每个 map 对应一个类。每个实例以三种方式影响第 $k$ 个 gt map。首先，effective box $b^l_e$ 区域是由 “car” class map 中的白色方框所填充的 positive region，表示该实例的存在性。其次，不包括 effective box 的 ignoring box $(b^l_i−b^l_e)$ 是显示为灰色区域的 ignoring region，<strong>这意味着该区域的梯度不会传播回网络</strong>。第三，相邻特征层 $(b^{l-1}_i, b^{l+1}_i)$ 中的忽略框如果存在，也将忽略该区域。注意，如果两个实例的 effective box 在一个特征级别上重叠，则较小的实例具有更高的优先级。gt map 的其余区域是由零填充的 negative region(黑色)，表示没有对象。我们使用 Focal Loss 作为损失函数进行监督, 超参数 $\alpha = 0.25$, $\gamma = 2.0$。图像 anchor free 分支的分类总损失是所有非忽略区域上的 Focal Loss 之和，由所有 effective box 区域内的像素总数归一化</p>
-<p><strong>Box Regression Output:</strong> 回归输出的 gt 是 4 个与类别无关的 offset maps。实例只影响 offset maps 上的 $b^l_e$ 区域。<strong>对于 $b^l_e$ 中的每一个像素 location $(i, j)$</strong>, 我们将 projected box 表示为一个四维矢量 $d^l_{i,j} = [d^l_t_{i,j}, d^l_l{i,j}, d^l_b{i,j}, d^l_r_{i,j}]$, 其中, $d^l_t, d^l_l, d^l_b,d^l_r$ 是当前像素位置 $(i, j)$ 分别和 $b^l_p$ 顶部,左部,底部,右部边界之间的距离。然后将4个 offset maps 上(i, j)处的四维向量设置为 $d^l_{i,j}/S$，每个 map 对应一个维度。$S$ 是一个归一化常量，我们根据经验选择 $S = 4.0$。effective box 外的位置是忽略梯度的灰色区域。我们采用IoU损失[36]进行优化。图像 anchor free 分支的总回归损失是所有有效盒区域IoU损失的平均值.</p>
-<p>在 Inference 过程中，很容易从分类和回归输出中解码 predicted boxes。在每个像素位置 $(i, j)$,假设 predicted offsets 为$[\hat o_t_{i,j}, \hat o_l_{i,j}, \hat o_b_{i,j}, \hat o_r_{i,j}]$。然后 predicted distances 为 $[S\hat o_t_{i,j}, S\hat o_l_{i,j}, S\hat o_b_{i,j}, S\hat o_r_{i,j}]$。predicted projected box 左上角和右下角分别为 $i-S\hat o_t_{i,j}, j-S\hat_l_{i,j}$ 和 $i+S\hat b_{i,j}, j+S\hat o_r_{i,j}$。我们进一步将投影框放大 $2^l$，得到图像平面中的最终框。框的置信度和类别由分类输出图上位置 $(i, j)$ 处的 $k$ 维向量的最大得分和对应的类决定。</p>
+<p><strong>Box Regression Output:</strong> 回归输出的 gt 是 4 个与类别无关的 offset maps。实例只影响 offset maps 上的 $b^l_e$ 区域。<strong>对于 $b^l_e$ 中的每一个像素 location $(i, j)$</strong>, 我们将 projected box 表示为一个四维矢量 $d^l_{i,j} = [d^l_{t_{i,j}}, d^l_l{i,j}, d^l_b{i,j}, d^l_{r_{i,j}}]$, 其中, $d^l_t, d^l_l, d^l_b,d^l_r$ 是当前像素位置 $(i, j)$ 分别和 $b^l_p$ 顶部,左部,底部,右部边界之间的距离。然后将4个 offset maps 上(i, j)处的四维向量设置为 $d^l_{i,j}/S$，每个 map 对应一个维度。$S$ 是一个归一化常量，我们根据经验选择 $S = 4.0$。effective box 外的位置是忽略梯度的灰色区域。我们采用IoU损失[36]进行优化。图像 anchor free 分支的总回归损失是所有有效盒区域IoU损失的平均值.</p>
+<p>在 Inference 过程中，很容易从分类和回归输出中解码 predicted boxes。在每个像素位置 $(i, j)$,假设 predicted offsets 为$[\hat o_{t_{i,j}}, \hat o_{l_{i,j}}, \hat o_{b_{i,j}}, \hat o_{r_{i,j}}]$。然后 predicted distances 为 $[S\hat o_{t_{i,j}}, S\hat o_{l_{i,j}}, S\hat o_{b_{i,j}}, S\hat o_{r_{i,j}}]$。predicted projected box 左上角和右下角分别为 $i-S\hat o_{t_{i,j}}, j-S\hat o_{l_{i,j}}$ 和 $i+S\hat o_{b_{i,j}}, j+S\hat o_{r_{i,j}}$。我们进一步将投影框放大 $2^l$，得到图像平面中的最终框。框的置信度和类别由分类输出图上位置 $(i, j)$ 处的 $k$ 维向量的最大得分和对应的类决定。</p>
 <h2 id="Online-Feature-Selection"><a href="#Online-Feature-Selection" class="headerlink" title="Online Feature Selection"></a>Online Feature Selection</h2><p>anchor free 分支的设计允许我们使用任意金字塔级 $P_l$ 的特征来学习每个实例。为了找到最优的特征级别，我们的FSAF模块根据实例内容(instance content)选择最佳 $P_l$，而不是像anchor-based的方法中那样选择实例框的大小。</p>
 <p>以实例 $I$ 为例，将其在 $P_l$ 上的分类损失和box回归损失分别定义为 $L^I_{FL}(l)$ 和 $L^I_{IoU}(l)$。它们的是通过平均有效盒区 $b^l_e$ 上的 Focal Loss 和 IoU loss 得到的，即:</p>
 <script type="math/tex; mode=display">L^I_{FL}(l) = \frac{1}{N(b^l_e)}\sum_{i,j \in b^l_e} FL(l, i, j)</script><script type="math/tex; mode=display">L^I_{IoU}(l) = \frac{1}{N(b^l_e)}\sum_{i,j \in b^l_e} IoU(l, i, j)</script><p>其中 $N(b^l_e)$ 为 $b^l_e$ 区域内的像素个数，$FL(l,i,j)$、$IoU(l,i,j)$ 分别为 $P_l$ 在 location $(i,j)$ 处的 Focal Loss[22]和IoU Loss[36]。</p>
@@ -666,8 +666,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/面试-算法刷题-牛客2018年校招真题/" rel="prev" title="牛客2018年校招真题">
-                <i class="fa fa-chevron-left"></i> 牛客2018年校招真题
+              <a href="/z_post/计算机视觉-FoveaBox-CVPR2019/" rel="prev" title="FoveaBox (CVPR, 2019)">
+                <i class="fa fa-chevron-left"></i> FoveaBox (CVPR, 2019)
               </a>
             
           </div>
@@ -676,8 +676,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/计算机视觉-FCOS-CVPR2019/" rel="next" title="FCOS">
-                FCOS <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/计算机视觉-FCOS-CVPR2019/" rel="next" title="FCOS (CVPR, 2019)">
+                FCOS (CVPR, 2019) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -756,7 +756,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">263</span>
+                    <span class="site-state-item-count">266</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -888,7 +888,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">40</span>
+                      
+                    
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1006,7 +1008,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">37:45</span>
+    <span title="站点阅读时长">38:13</span>
   
 </div>
 

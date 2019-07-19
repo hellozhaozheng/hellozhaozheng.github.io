@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="文章: CornerNet-Lite: Efficient Keypoint Based Object Detection作者: Hei Law, Yun Teng, Olga Russakovsky, Jia Deng机构: Princeton University 摘要saccade: [sæ’kɑd] 基于关键点的方法是对象检测中相对较新的尝试，消除了对 anchor 的需求并提供了简化的检">
+<meta name="keywords" content="目标检测,计算机视觉,论文解读">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CornerNet-Lite (Arxiv, 2019)">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-CornerNetLite-Arxiv2019/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="文章: CornerNet-Lite: Efficient Keypoint Based Object Detection作者: Hei Law, Yun Teng, Olga Russakovsky, Jia Deng机构: Princeton University 摘要saccade: [sæ’kɑd] 基于关键点的方法是对象检测中相对较新的尝试，消除了对 anchor 的需求并提供了简化的检">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/fig1.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/Fig2.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/fig3.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/fig4.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/tab1.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/fig6.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/fig5.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/tab2.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/tab3.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/tab4.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/tab5.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/tab6.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/tab7.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/tab8.jpg?x-oss-process=style/blog_img">
+<meta property="og:updated_time" content="2019-07-19T08:30:58.390Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CornerNet-Lite (Arxiv, 2019)">
+<meta name="twitter:description" content="文章: CornerNet-Lite: Efficient Keypoint Based Object Detection作者: Hei Law, Yun Teng, Olga Russakovsky, Jia Deng机构: Princeton University 摘要saccade: [sæ’kɑd] 基于关键点的方法是对象检测中相对较新的尝试，消除了对 anchor 的需求并提供了简化的检">
+<meta name="twitter:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/fig1.jpg?x-oss-process=style/blog_img">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/计算机视觉-CornerNetLite-Arxiv2019/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>CornerNet-Lite (Arxiv, 2019) | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">266</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其他">
+    <a href="/categories/其他/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">41</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/计算机视觉-CornerNetLite-Arxiv2019/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CornerNet-Lite (Arxiv, 2019)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-09 13:06:59" itemprop="dateCreated datePublished" datetime="2019-07-09T13:06:59+08:00">2019-07-09</time>
+            
+
+            
+          </span>
+
+	  
+  	    <span class="post-updated">
+    		&nbsp; | &nbsp; 更新于
+    		<time itemprop="dateUpdated" datetime="2019-07-19T16:30:58+08:00" content="2019-07-19">
+      		  2019-07-19
+    		</time>
+  	  </span>
+	  
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/计算机视觉/" itemprop="url" rel="index"><span itemprop="name">计算机视觉</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">12k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">11 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>文章:</strong> CornerNet-Lite: Efficient Keypoint Based Object Detection<br><strong>作者:</strong> Hei Law, Yun Teng, Olga Russakovsky, Jia Deng<br><strong>机构:</strong> Princeton University</p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>saccade: [sæ’kɑd]</p>
+<p>基于关键点的方法是对象检测中相对较新的尝试，消除了对 anchor 的需求并提供了简化的检测框架。基于 Keypoint 的 CornerNet 在 One-Stage 检测器中实现了 SOTA 的精度。然而，这种准确性来自 <strong>高处理成本</strong>。在这项工作中，我们解决了基于关键点的 <strong>高效</strong> 对象检测问题，并了介绍 CornerNet-Lite。 CornerNet-Lite 是 CornerNet 的两种有效变体的组合：</p>
+<ol>
+<li>CornerNet-Saccade，它使用注意机制消除了对图像的所有像素进行彻底处理的必要性</li>
+<li>CornerNet-Squeeze, 它引入了一种新的紧凑 backbone architecture。<br>这两种变体共同解决了有效物体检测中的两个关键用例：<strong>在不牺牲精度的情况下提高效率(速度)，以及在确保实时效率的情况下提高准确性。</strong> CornerNet-Saccade 适用于离线处理，可以将 CornerNet 在 COCO 上的效率提高 6.0 倍，同时将 AP 提高 1.0％。 CornerNet-Squeeze 适用于实时检测，可以提高目前主流的实时检测器 YOLOv3 的效率和准确性（CornerNet-Squeeze 为 34ms, 34.4％AP，YOLOv3 为 39ms，AP 33.0%）。这些贡献首次共同揭示了基于关键点的检测的潜力对于需要处理效率的应用是有用的。</li>
+</ol>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/fig1.jpg?x-oss-process=style/blog_img" alt="CornerNet-Lite%2Ffig1.jpg"></div></p>
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>基于关键点的对象检测[53,56,26]是一类通过检测和分组其关键点来生成对象边界框的方法。 CornerNet [26]是其中最先进的技术，可以检测并分组边界框的左上角和右下角; 它使用堆叠 HourGlass 网络[39]来预测角落的热图，然后使用 associate embeddings [38]对它们进行分组。 CornerNet 允许简化设计，无需使用 anchor box[46]，并且在 One-Stage 检测器中实现了COCO [32]的 SOTA 精度。</p>
+<p>但是，CornerNet 的一个 <strong>主要缺点</strong> 是它的 Inference 速度。 它在 COCO 上的平均精度（AP）为42.2％，每张图像的 Inference 成本为 1.147s，这对于需要实时或交互速率的视频应用来说太慢了。尽管可以通过减少处理的像素数量（例如，通过减少处理的比例数或图像分辨率）来轻易地加速 Inference，但是这会导致大的精度下降。 例如，使用单一尺度处理与降低输入分辨率相结合可以让 CornerNet 对每张图像的 Inference 时间降低到 42ms，相当于流行的快速检测器 YOLOv3 的39ms，但会将 AP 降低到 25.6％, 低于 YOLOv3 的33.0％。 这使得 CornerNet 在准确性-效率权衡方面的竞争力降低。</p>
+<p>在本文中，我们寻求提高 CornerNet Inference 效率的方法。可以沿两个正交方向改善物体检测器的效率: <strong>减少处理的像素数量</strong> 以及 <strong>减少每个像素的处理量</strong>。 我们探索这两个方向并介绍两种有效的 CornerNet 变种: CornerNet-Saccade 和 CornerNet-Squeeze，我们将其统称为 CornerNet-Lite。</p>
+<p>CornerNet-Saccade 通过 <strong>减少要处理的像素数</strong> 来加速推理。 它在人类视觉中使用类似于 saccade 的 <strong>注意机制</strong>[58,1]。 它从 <strong>缩小的完整图像</strong> 开始并生成注意力图，然后放大并由模型进一步处理。<strong>这与原始的 CornerNet 不同之处在于它是在多个尺度上被完全卷积地应用的</strong>。 通过选择要以高分辨率检查的 crops 子集，CornerNet-Saccade 可提高速度，同时提高准确性。 COCO上的实验表明，CornerNet-Saccade在每张图像耗时 190ms 时实现了 43.2％ 的AP，AP增加了1％，速度比原始 CornerNet 提高了6.0倍。</p>
+<p>CornerNet-Squeeze 通过 <strong>减少每个像素的处理量</strong> 来加速 Inference。 它结合了 SqueezeNet 和 MobileNets 的思想，并引入了一种新的紧凑型 hourglass backbone，广泛的使用了 1×1 卷积，bottleneck 层和深度可分离卷积。使用新的 hourglass backbone，CornerNet-Squeeze 用了 34ms 内在COCO上实现了34.4％的AP，同时比YOLOv3更准确和更快（39.0％时为33.0％）。</p>
+<p>一个很自然的问题是 CornerNet-Squeeze 是否可以与 saccades 结合以进一步提高其效率。 有些令人惊讶的是，我们的实验给出了一个 <strong>否定的答案</strong>: <strong>CornerNet-Squeeze-Saccade 比 CornerNet-Squeeze 更慢，更不准确。这是因为对于 saccades 来说，网络需要能够生成足够准确的注意力图，但 CornerNet-Squeeze 的超紧凑架构没有这种额外的容量。</strong> 此外，原始的 CornerNet 应用于多个尺度，为 saccades 提供了足够的空间来减少要处理的像素数量。 相比之下，由于超紧密的推理预算，CornerNet-Squeeze 已经应用于 single-scale，这为 saccades 提供了更少的空间。</p>
+<p><strong>Significance and novelty:</strong> 总的来说，CornerNet-Lite的这两种变体使得基于关键点的方法更加具有竞争力，涵盖了两个流行的用例：用于离线处理的 CornerNet-Saccade，<strong>在不牺牲精度的情况下提高效率</strong>，以及用于实时处理的 CornerNet-Squeeze，<strong>在不牺牲效率的情况下提高准确性。</strong></p>
+<p>CornerNet-Lite 的两种变体在技术上都是新颖的。 CornerNet-Saccade是第一个将 saccade 与基于关键点的对象检测集成在一起的。 它与先前工作的主要区别在于 <strong>如何处理每个 crops</strong>（处理 crops 对应的像素或特征图）。 使用 saccade 式机制的先前工作要么检测每个 crops 的单个物体（例如 Faster R-CNN [46]），要么每个 crops 产生多个检测，其中包含额外的 sub-crops 的两阶段网络（例如AutoFocus）。 相比之下，<strong>CornerNet-Saccade 通过 One-Stage 网络为每个 crops 生成多个检测。</strong></p>
+<p>CornerNet-Squeeze 是第一个将 SqueezeNet 与 stacked hourglass 架构集成并将这种组合应用于对象检测的网络。采用 hourglass 的先前工作在实现准确性方面表现出色，但不清楚 hourglass 架构是否以及如何在效率方面具有竞争力。</p>
+<p><strong>Contributions:</strong></p>
+<ol>
+<li>我们提出了 CornerNet-Saccade 和 CornerNet-Squeeze，这两种新方法可以提高基于关键点的物体检测效率;</li>
+<li>在COCO上，我们将最先进的基于关键点的检测效率提高了6倍，AP从42.2％提高到43.2％。</li>
+<li>在COCO上，我们同时提高了准确性和效率, 使之超过了 SOTA 的实时目标检测系统的准确率和速度（30毫秒时34.4％，YOLOv3 39毫秒时33.0％）。</li>
+</ol>
+<h1 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h1><p>Saccades in Object Detection: 略…</p>
+<p>R-CNN, Cascade R-CNN</p>
+<p>Efficient Object Detectors: R-FCN</p>
+<p>Efficient Network Architectures: SqueezeNet, MobileNets, PeleeNet, YOLO, RFBNet</p>
+<h1 id="CornerNet-Saccade"><a href="#CornerNet-Saccade" class="headerlink" title="CornerNet-Saccade"></a>CornerNet-Saccade</h1><p>CornerNet-Saccade 会检测图像中可能出现物体位置周围的小区域内的对象。它使用 <strong>缩小的完整图像</strong> 来预测 attention maps 以及粗糙的 bounding boxes; 这两者都会提出可能出现对象的位置. 然后，CornerNet-Saccade通过检查以高分辨率为中心的区域来检测物体。 它还可以通过控制每个图像处理的最大对象位置数来提高效率。 Overview of pipeline 如图2所示。在本节中，我们将详细描述每个步骤。</p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/Fig2.jpg?x-oss-process=style/blog_img" alt="CornerNet-Lite%2FFig2.jpg"></div></p>
+<h2 id="Estimating-Object-Locations"><a href="#Estimating-Object-Locations" class="headerlink" title="Estimating Object Locations"></a>Estimating Object Locations</h2><p>CornerNet-Saccade 的第一步是获取图像中可能的对象位置。 我们使用 <strong>缩小的完整图像</strong> 来预测 attention map，其指示某处对象的 locations 和 coarse scales。 给定一个图像，我们通过将图像的长边调整为 255 和 192 像素，将其缩小到两个比例。 大小为 192 的图像用零填充到 255 的大小，以便它们可以并行处理。<strong>在如此低的分辨率下使用图像有两个原因</strong>。 首先，这一步不应成为 inference 时间的瓶颈。 其次，网络应该能够容易的利用图像中的上下文信息来预测 attention map。</p>
+<p>对于缩小尺寸的图像，CornerNet-Saccade 会预测 3 个 attention maps，一个用于小物体，一个用于中等物体，一个用于大物体。如果对象较长的边长小于 32 像素，则该对象被认为是小物体，如果它在 32 到 96 像素之间则认为是中等物体，如果大于 96 像素，则该对象被认为是大物体。针对不同的物体尺寸单独预测 location，可以更好地控制 CornerNet-Saccade 在每个位置放大的程度。<strong>我们可以在小对象位置的放大程度更大一些，而在中等对象位置放大幅度相对小一些。</strong></p>
+<p>我们通过使用不同尺度的 feature maps 来预测 attention maps。特征图来自 CornerNet-Saccade 中的 backbone 网络，这是一个 hourglass 网络。网络中的每个 hourglass 模块都应用几个卷积和下采样层来缩小输入 feature maps 的尺寸。然后，它通过多个卷积和上采样层将 feature maps 上采样回原始的输入分辨率。 <strong>来自上采样层的 feature maps 将会用于预测注意力图。</strong> 较精细(高分辨率)尺度的特征图用于较小的对象，而较粗尺度的特征图用于较大的对象。我们 <strong>通过在每个特征图上应用 $3×3$ 的 Conv-ReLU 模块，然后应用 $1×1$ 的 Conv-Sigmoid 模块来预测注意力图</strong>。在 testing 过程中，我们只处理分数高于阈值 $t$ 的位置，我们在实验中设置 $t=0.3$。<br>当 CornerNet-Saccade 处理缩小尺寸的图像时，它可能会检测到图像中的某些对象并为它们生成 bounding box。从缩小尺寸的图像获得的边界框可能不准确。因此，我们还会检查高分辨率的区域以获得更好的边界框。<br><strong>在训练期间，我们将相应 attention maps 上每个边界框的中心位置设置为正，其余为负。</strong> 然后我们应用 $\alpha = 2$ 的 Focal Loss。根据 Focal Loss 中的选择设置预测 attention maps 的卷积层中的偏差。</p>
+<h2 id="Detecting-Objects"><a href="#Detecting-Objects" class="headerlink" title="Detecting Objects"></a>Detecting Objects</h2><p>CornerNet-Saccade 使用从缩小图像中获得的位置来确定哪些地方要进行处理。<strong>如果我们直接从缩小的图像中裁剪区域，则某些对象可能变得太小而无法准确检测。</strong> 因此，我们 <strong>应该根据第一步中获得的尺度信息检查更高分辨率的区域。</strong></p>
+<p>对于从 attention maps 中获得的位置，我们可以为 <strong>不同的对象大小确定不同的放大比例</strong>: 小对象放大 $s_s$，中等对象放大 $s_m$, 大对象放大 $s_l$. 一般来说, $s_s &gt; s_m &gt; s_l$. 因为我们应该为较小的对象放大更多的比例，所以我们设置 $s_s = 4，s_m = 2, s_l = 1$.在每个可能出现物体的位置 $(x, y)$，我们通过 $s_i$ 放大缩小的图像 ，其中 $i\in \{s，m，l\}$, 具体的比例取决于 coarse object 的 scale。然后我们将 CornerNet-Saccade 应用于以该位置为中心的 $255×255$ 的窗口。</p>
+<p>从 bounding box 预测中获得的位置提供了有关对象大小的更多信息。我们可以使用 bounding box 的大小来确定放大比例。 确保比例能够使得放大后 bounding box 的较长边对于小物体是 24，对于中等物体是 64, 而对于大物体192。</p>
+<p>有一些重要的实现细节可以提高处理效率。 首先，我们批量处理这些区域以更好地利用GPU。 其次，我们将原始图像保留在GPU内存中，并在GPU上执行调整大小和裁剪，以减少在CPU和GPU之间传输图像数据的开销。</p>
+<p>在检测到可能出现物体的位置处的物体之后，我们通过应用 Soft-NMS 合并边界框并删除冗余框。当我们裁剪区域时，区域可能包括触及或超出裁剪边界处的部分对象，如图3所示。检测器可能会为这些对象生成边界框，这些边界框可能无法被 Soft-NMS 移除，因为它们可能与完整对象的边界框有较低的重叠. 因此，<strong>我们删除了触及 crop 边界的边界框(如图3所示)</strong>。在训练期间，我们在 CornerNet 中应用相同的训练损失来训练网络以预测 corner heatmaps, embeddings 和 offsets.</p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/fig3.jpg?x-oss-process=style/blog_img" alt="CornerNet-Lite%2Ffig3.jpg"></div></p>
+<h2 id="Trading-Accuracy-with-Efficiency"><a href="#Trading-Accuracy-with-Efficiency" class="headerlink" title="Trading Accuracy with Efficiency"></a>Trading Accuracy with Efficiency</h2><p>我们可以通过控制每个图像处理的最大的 object locations 数量来提高效率。为了实现良好的准确性和效率的权衡，我们 <strong>优先考虑更可能包含对象的位置</strong>。 因此，在我们获得对象位置之后，我们按它们的分数对它们进行排名，并优先考虑从边界框获得的位置。 给定 $k_{max}$ 作为最大的 crops 处理数量，我们检测 top $k_{max}$ 个 object locations 中的 object。</p>
+<h2 id="Suppressing-Redundant-Object-Locations"><a href="#Suppressing-Redundant-Object-Locations" class="headerlink" title="Suppressing Redundant Object Locations"></a>Suppressing Redundant Object Locations</h2><p>当物体彼此靠近时，我们可能会产生彼此高度重叠的区域，如图4所示。五门不希望对这两个区域都进行，因为处理它们中的任何一个都可能检测到另一个中的物体。</p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/fig4.jpg?x-oss-process=style/blog_img" alt="CornerNet-Lite%2Ffig4.jpg"></div></p>
+<p>我们采用类似于 NMS 的过程来删除冗余位置。 首先，我们对对象位置进行排名，优先考虑来自 attention maps 的位置上的边界框的位置。 然后，我们保留最佳对象位置并删除靠近最佳位置的位置。 我们重复该过程，直到没有任何对象位置。</p>
+<h2 id="Backbone-Network"><a href="#Backbone-Network" class="headerlink" title="Backbone Network"></a>Backbone Network</h2><p>我们设计了一个新的 hourglass  骨干网络，在 CornerNet-Saccade 中运行得更好。 新的 hourglass  网络由 3 个 hourglass  模块组成，深度为 54 层，尽管 CornerNet 中的 hourglass-104由2个 hourglass 模块组成，深度为104.我们将新骨干称为 Hourglass-54</p>
+<p> hourglass-54 中的每个 hourglass 模块具有较少的参数并且比 hourglass-104中的 hourglass 模块浅。 按照 Hourglass-104 中的缩小策略，我们按步幅 2 缩小了特征。我们在每个下采样层之后和每个 shortcut 连接中应用一个残差模块[14]。 每个 hourglass  模块将 input feature 缩小3倍，并增加沿途的通道数量（384,384,512）。 模块中间有一个残留模块，512个通道，每个上采样层后有一个残余模块。 我们还在 hourglass  模块之前将图像缩小了两倍。</p>
+<p>遵循训练 hourglass 网络的通用做法，我们还在训练期间添加中间监督。 在测试期间，我们仅使用网络中最后一个 hourglass 模块的预测。</p>
+<h2 id="Training-Details"><a href="#Training-Details" class="headerlink" title="Training Details"></a>Training Details</h2><p>我们使用 Adam [22]来优化注意力图和对象检测的损失，并使用 CornerNet 中的相同训练超参数。 网络的输入大小为255×255，这也是推理期间的输入分辨率。 我们在四个1080Ti GPU上训练批量大小为48的网络。 为了避免过度拟合，我们采用了Corner-Net中使用的数据增强技术。 当我们随机裁剪对象周围的区域时，对象可以随机放置，也可以放在中心，并带有一些随机偏移。 这确保了训练和测试是一致的，因为网络检测以对象位置为中心的作物内的对象。</p>
+<h1 id="CornerNet-Squeeze"><a href="#CornerNet-Squeeze" class="headerlink" title="CornerNet-Squeeze"></a>CornerNet-Squeeze</h1><h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>CornerNet-Saccade专注于像素的一个子集以减少处理量，与 CornerNet-Saccade 相比，而 CornerNet-Squeeze 探索了一种 <strong>减少每个像素处理量的替代方法</strong>。 在 Corner-Net 中，大部分计算资源都花在了 Hourglass-104 上。  hourglass 104 由残差块构成，其由两个3×3卷积层和跳过连接组成。 尽管 Hourglass-104 有一定竞争性能，但在参数数量和推理时间方面却有很高的成本。为了降低 Hourglass-104 的复杂性，我们将 SqueezeNet 和 MobileNets 的想法融入到轻量级 hourglass 的架构设计中。</p>
+<h2 id="Ideas-from-SqueezeNet-and-MobileNets"><a href="#Ideas-from-SqueezeNet-and-MobileNets" class="headerlink" title="Ideas from SqueezeNet and MobileNets"></a>Ideas from SqueezeNet and MobileNets</h2><p>SqueezeNet提出了三种降低网络复杂度的策略：（1）用1×1内核替换3×3内核; （2）减少3×3内核的通道数; （3）延迟下采样。 SqueezeNet的构建块，即消 fire module，封装了前两个想法。fire 模块首先通过由1×1滤波器组成的 squeeze 层来减少输入通道的数量。 然后，它通过由1×1和3×3滤波器的混合物组成的 expand 层来提供结果。</p>
+<p>根据SqueezeNet提供的见解，我们在 CornerNet-Squeeze 中使用 fire 模块而不是残余块。 此外，受MobileNets成功的启发，我们用3×3深度可分离卷积替换第二层中的3×3标准卷积，这进一步改善了推理时间。 标签。 表1显示了CornerNet中的残差块与CornerNet-Squeeze中的 fire 模块之间的详细比较。</p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/tab1.jpg?x-oss-process=style/blog_img" alt="CornerNet-Lite%2Ftab1.jpg"></div></p>
+<p>我们没有采用 SqueezeNet 中的第三个想法。 由于 hourglass 网络具有对称结构，因此延迟下采样会在上采样期间产生更高分辨率的特征图。 在高分辨率特征图上执行卷积在计算上是昂贵的，这将不利于我们实现实时检测。<br>除了替换剩余块之外，我们还进行了一些修改。 我们通过在 hourglass 模块之前添加一个下采样层来减少 hourglass 模块的最大特征图分辨率，并在每个 hourglass 模块中删除一个下采样层。 CornerNet-Squeeze 相应地在 hourglass 模块之前将图像缩小三次，而CornerNet将图像缩小两次。 我们在CornerNet的预测模块中用1×1滤波器替换3×3滤波器。 最后，我们用4×4内核的转置卷积替换 hourglass 网络中最近邻居的上采样。</p>
+<h2 id="Training-Details-1"><a href="#Training-Details-1" class="headerlink" title="Training Details"></a>Training Details</h2><p>我们使用相同的训练损失和CornerNet的超参数来训练CornerNet-Squeeze。 唯一的变化是批量大小。 在 hourglass 模块之前再次缩小图像会在CornerNet-Squeeze中的相同图像分辨率下将内存使用量减少4倍。 我们能够在四个1080Ti GPU上训练批量大小为55的网络（主GPU上有13个图像，其余GPU上有每个GPU 14个图像）。</p>
+<h1 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h1><h2 id="Implementation-Details"><a href="#Implementation-Details" class="headerlink" title="Implementation Details"></a>Implementation Details</h2><p>CornerNet-Lite在PyTorch [40]中实现。 我们使用COCO [32]来评估CornerNet-Lite并将其与其他检测器进行比较。 在COCO中，有80个对象类别，115k用于训练的图像，用于验证的5k图像和用于测试的20k图像。<br>为了测量推理时间，对于每个检测器，我们在完成读取图像后立即启动计时器，并在获得最终边界框后立即停止计时器。 硬件配置可能会影响推理时间。 为了在不同的检测器之间提供公平的比较，我们使用1080Ti GPU和Intel Core i7-7700k CPU测量同一台机器上的推理时间。</p>
+<h2 id="Accuracy-and-Efficiency-Trade-offs"><a href="#Accuracy-and-Efficiency-Trade-offs" class="headerlink" title="Accuracy and Efficiency Trade-offs"></a>Accuracy and Efficiency Trade-offs</h2><p>我们在验证集上比较了CornerNet-Lite与三种最先进的物体检测器的准确性 - 效率权衡，包括YOLOv3，RetinaNet 和 Corner-Net。 精度和速度权衡曲线如图6所示。</p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/fig6.jpg?x-oss-process=style/blog_img" alt="CornerNet-Lite%2Ffig6.jpg"></div></p>
+<p>我们在不同的 $k_max$ 下评估 CornerNet-Saccade，范围从1到30.对于 RetinaNet，我们评估不同的 single-scale 设置，包括 300,400,500,600,700和800（默认比例）。 对于 CornerNet，我们在原始图像分辨率的不同 single-scale 下进行评估，包括0.5,0.6,0.7,0.8,0.9和1（原始图像分辨率）。 我们还在默认的 multi-scale 设置下测试它，并且没有翻转图像。 CornerNet-Saccade实现了比 RetinaNet（在190ms时为39.8％）和 CornerNet（在213ms时为40.6％）更好的准确性和效率权衡（在190ms时为42.6％）。 图5显示了一些比较 CornerNet-Saccade 和 CornerNet 的示例。</p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/fig5.jpg?x-oss-process=style/blog_img" alt="CornerNet-Lite%2Ffig5.jpg"></div></p>
+<p>遵循YOLOv3的默认设置，我们在 3 个 single image scale（320,416和608）下评估YOLOv3。 同样，我们还评估了不同 sginle scale （0.5, 0.6, 0.7, 0.8, 0.9, 1）的 CornerNet-Squeeze。 CornerNet-Squeeze 实现了比 YOLOv3 更好的准确性和效率（前者 30ms时为34.4％, 后者 39ms时为32.4％）。 我们通过在翻转图像和原始图像上运行它来进一步提高 CornerNet-Squeeze 的准确性，在50ms时将其AP提高到36.5％，并且仍然实现了良好的折衷。 当我们在多尺度设置下测试CornerNet-Squeeze时，我们观察到AP仅有 0.6％ 的改善但是 Inference 时间增加到170ms。</p>
+<h2 id="CornerNet-Saccade-Results"><a href="#CornerNet-Saccade-Results" class="headerlink" title="CornerNet-Saccade Results"></a>CornerNet-Saccade Results</h2><p><strong>Training Efficiency:</strong> CornerNet-Saccade 不仅提高了测试效率，还提高了训练效率。 我们能够仅在四个1080Ti GPU上训练 CornerNet-Saccade，总共 44GB GPU内存，而CornerNet需要十个Titan X（PASCAL）GPU，总共120GB GPU内存。 我们将内存使用量减少了60％以上。<strong>CornerNet 和 CornerNet-Saccade都没有使用混合精确训练(mixed precision training)[36]。</strong> 如表2所示</p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/tab2.jpg?x-oss-process=style/blog_img" alt="CornerNet-Lite%2Ftab2.jpg"></div></p>
+<p><strong>Error Analysis:</strong> 注意图对CornerNet-Saccade很重要。 如果注意力图不准确，CornerNet-Saccade将错过图像中的对象。 为了更好地理解注意力图质量，我们将预测的注意力图替换为真实的注意力图。 这在验证集上将CornerNet-Saccade的AP从42.6％提高到50.3％，表明有足够的空间来改进注意力图。如下面表3所示</p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/tab3.jpg?x-oss-process=style/blog_img" alt="CornerNet-Lite%2Ftab3.jpg"></div></p>
+<p><strong>Performance Analysis of Hourglass-54:</strong> 我们在CornerNet-Saccade中引入了一个新的 hourglass ，Hourglass-54，并进行了两次实验，以更好地理解 hourglass-54 的性能贡献。 首先，我们使用Hourglass-104而不是Hourglass-54训练CornerNet-Saccade。 其次，我们使用Hourglass-54而不是Hourglass-104训练CornerNet。 对于第二个实验，由于资源有限，我们在四个1080Ti GPU上训练两个批量大小为15的网络，我们遵循CornerNet [26]中的培训细节。<br>表4显示具有 hourglass-54（42.6％AP）的CornerNet-Saccade比使用 hourglass-104（41.4％）更准确。 为了研究性能差异，我们评估了注意力图和边界框的质量。 首先，预测注意力图可以被视为二元分类问题，其中对象位置是正数，其余是负数。 我们通过平均精度来衡量注意力图的质量，表示为APatt。 Hourglass-54的APatt达到42.7％，而Hourglass-104达到40.1％，这表明Hourglass-54在预测注意力图方面表现更好。<br>其次，为了研究每个网络的边界框的质量，我们用地面实况注意力图代替预测的注意力图，并用 hourglass-54 训练 Corner-Net。 通过 GT 注意力图，带有 hourglass-54 的 CornerNet-Saccade 实现了50.3％的AP，而具有 hourglass-104 的 CornerNet-Saccade 实现了48.9％的AP。 使用 Hourglass-54 的CornerNet实现了 37.2％ 的AP，而 hourglass 104 达到了38.2％。 结果表明 hourglass-54与 saccade 结合时可以产生更好的边界框。</p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/tab4.jpg?x-oss-process=style/blog_img" alt="CornerNet-Lite%2Ftab4.jpg"></div></p>
+<h2 id="CornerNet-Squeeze-Results"><a href="#CornerNet-Squeeze-Results" class="headerlink" title="CornerNet-Squeeze Results"></a>CornerNet-Squeeze Results</h2><p><strong>Comparison with YOLOv3:</strong> 我们将 CornerNet-Squeeze 与一个广泛使用的实时探测器YOLOv3 [45]进行比较, 如表5所示. YOLOv3在  C语言中实现，并且还提供了一个Python API，它使得 Inference 时间增加了 10ms 的开销。 另一方面，CornerNet-Squeeze在Python中实现，并且仍然比YOLOv3的C版本更快。 如果我们纯粹用 C 实现 CornerNet-Squeeze，那么可能会更快。</p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/tab5.jpg?x-oss-process=style/blog_img" alt="CornerNet-Lite%2Ftab5.jpg"></div></p>
+<p><strong>Ablation Study:</strong> 我们研究了CornerNet-Squeeze的每个主要变化，以了解它对推理时间和AP的贡献。 为了节省GPU资源，每个模型仅针对250k次迭代进行训练，遵循 Sec 4.3 中的详细信息。通过 hourglass 模块之前的额外缩小，我们能够训练批量大小为55（第4.3节）的网络，而我们只能在四个1080Ti GPU上训练批量大小为15的CornerNet。 我们只在Tab中提供250k的CornerNet AP。 具体如表6所示。<br>在 CornerNet 中， hourglass 模块之前有两个下采样层。 如果我们再添加一个下采样层，我们可以将推理时间从114ms减少到46ms。 用 fire 模块替换残差块可以节省11ms，并且在预测层中使用1×1内核可以节省另外2ms而不会有任何性能损失。 最后，我们使用反卷积(Transpose Convolution)，因为它将AP提高了0.5％，Inference 时间略有增加</p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/tab6.jpg?x-oss-process=style/blog_img" alt="CornerNet-Lite%2Ftab6.jpg"></div></p>
+<h2 id="CornerNet-Squeeze-Saccade-Results"><a href="#CornerNet-Squeeze-Saccade-Results" class="headerlink" title="CornerNet-Squeeze-Saccade Results"></a>CornerNet-Squeeze-Saccade Results</h2><p>我们尝试将CornerNet-Squeeze与saccades结合使用，以进一步提高效率。 但是，我们发现CornerNet-Squeeze-Saccade的性能并不优于CornerNet-Squeeze。 在验证集上，CornerNet-Squeeze实现了34.4％的AP，而 $k_{max} = 30$ 的CornerNet-Squeeze-Saccade实现了32.7％。 如果我们用 GT 注意力图（即物体位置已知）替换预测的注意力图，我们将CornerNet-Squeeze-Saccade的AP提高到38.0％，优于CornerNet-Squeeze。</p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/tab7.jpg?x-oss-process=style/blog_img" alt="CornerNet-Lite%2Ftab7.jpg"></div></p>
+<p>结果表明，如果注意力图足够准确，Saccade 只能有所帮助。 由于其超紧凑的架构，CornerNet-Squeeze-Saccade没有足够的容量来检测物体并同时预测注意力图。 此外，CornerNet-Squeeze仅对 single-scale 图像进行操作，这为CornerNet-Squeeze-Saccade节省的空间提供了更少的空间。 CornerNet-Squeeze-Saccade可以处理比CornerNet-Squeeze更多的像素，从而减慢 Inference 时间。</p>
+<h2 id="COCO-Test-AP"><a href="#COCO-Test-AP" class="headerlink" title="COCO Test AP"></a>COCO Test AP</h2><p>我们还在COCO测试集上比较了CornerNet-Lite和CornerNet以及YOLOv3。如表8所示. CornerNet-Squeeze比YOLOv3更快，更准确。 CornerNet-Saccade 在 multi-scale testing 上比 CornerNet 更准确，且速度提高了 6 倍。</p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet-Lite/tab8.jpg?x-oss-process=style/blog_img" alt="CornerNet-Lite%2Ftab8.jpg"></div></p>
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>我们推荐使用 CornerNet-Lite，它是CornerNet的两种有效变体的组合：CornerNet-Saccade和CornerNet-Squeeze。 本文的实验揭示了基于关键点的检测对于需要同时考虑精度和速度的任务来说, 是具有一定优势的.</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/目标检测/" rel="tag"><i class="fa fa-tag"></i> 目标检测</a>
+          
+            <a href="/tags/计算机视觉/" rel="tag"><i class="fa fa-tag"></i> 计算机视觉</a>
+          
+            <a href="/tags/论文解读/" rel="tag"><i class="fa fa-tag"></i> 论文解读</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/计算机视觉-EfficientNet-ICML2019/" rel="prev" title="EfficientNet (ICML, 2019)">
+                <i class="fa fa-chevron-left"></i> EfficientNet (ICML, 2019)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/计算机视觉-CenterNet-Points-CVPR2019/" rel="next" title="CenterNet(Points) (CVPR, 2019)">
+                CenterNet(Points) (CVPR, 2019) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">266</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">41</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="零域CSDN博客" target="_blank">零域CSDN博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xinghanzzy.github.io/" title="BoXiao的博客" target="_blank">BoXiao的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://oldpan.me/" title="Oldpan的博客" target="_blank">Oldpan的博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Related-Work"><span class="nav-text">Related Work</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CornerNet-Saccade"><span class="nav-text">CornerNet-Saccade</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Estimating-Object-Locations"><span class="nav-text">Estimating Object Locations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Detecting-Objects"><span class="nav-text">Detecting Objects</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Trading-Accuracy-with-Efficiency"><span class="nav-text">Trading Accuracy with Efficiency</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Suppressing-Redundant-Object-Locations"><span class="nav-text">Suppressing Redundant Object Locations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Backbone-Network"><span class="nav-text">Backbone Network</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Training-Details"><span class="nav-text">Training Details</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CornerNet-Squeeze"><span class="nav-text">CornerNet-Squeeze</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Overview"><span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ideas-from-SqueezeNet-and-MobileNets"><span class="nav-text">Ideas from SqueezeNet and MobileNets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Training-Details-1"><span class="nav-text">Training Details</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Experiments"><span class="nav-text">Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementation-Details"><span class="nav-text">Implementation Details</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Accuracy-and-Efficiency-Trade-offs"><span class="nav-text">Accuracy and Efficiency Trade-offs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CornerNet-Saccade-Results"><span class="nav-text">CornerNet-Saccade Results</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CornerNet-Squeeze-Results"><span class="nav-text">CornerNet-Squeeze Results</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CornerNet-Squeeze-Saccade-Results"><span class="nav-text">CornerNet-Squeeze-Saccade Results</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#COCO-Test-AP"><span class="nav-text">COCO Test AP</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Conclusion"><span class="nav-text">Conclusion</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">2.5m</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">38:13</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>
