@@ -137,7 +137,7 @@
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/%E9%9D%A2%E8%AF%95-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/RooflineModel.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/%E9%9D%A2%E8%AF%95-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/RooflineModel2.png?x-oss-process=style/blog_img">
 <meta property="og:image" content="https://hellozhaozheng.github.io/z_post/面试-计算机视觉知识点总结/Batch-Normalization深入解析">
-<meta property="og:updated_time" content="2019-07-19T08:21:48.242Z">
+<meta property="og:updated_time" content="2019-07-19T11:52:46.099Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【置顶】计算机视觉知识点总结">
 <meta name="twitter:description" content="总目录篇机器学习: 逻辑回归, 支持向量机, 决策树, 降维, 聚类 深度学习: 优化方法, 初始化方法, 损失函数, 激活函数, 正则化, 归一化, 感受野, 全连接层, 卷积层, 反卷积层, 池化层, 训练问题 网络结构: AlexNet, VGGNet, InceptionV1, InceptionV2, InceptionV3, InceptionV4, Xception, ResNet,">
@@ -503,7 +503,7 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-07-19T16:21:48+08:00" content="2019-07-19">
+    		<time itemprop="dateUpdated" datetime="2019-07-19T19:52:46+08:00" content="2019-07-19">
       		  2019-07-19
     		</time>
   	  </span>
@@ -1033,7 +1033,8 @@
 <h2 id="YOLOv1"><a href="#YOLOv1" class="headerlink" title="YOLOv1"></a>YOLOv1</h2><p><a href="http://caffecn.cn/?/question/1842" target="_blank" rel="noopener">http://caffecn.cn/?/question/1842</a></p>
 <h2 id="YOLOv2"><a href="#YOLOv2" class="headerlink" title="YOLOv2"></a>YOLOv2</h2><p>YOLOv2(也叫做 YOLO9000)</p>
 <h2 id="YOLOv3"><a href="#YOLOv3" class="headerlink" title="YOLOv3"></a>YOLOv3</h2><h2 id="FocalLoss"><a href="#FocalLoss" class="headerlink" title="FocalLoss"></a><a href="../计算机视觉-FocalLoss-ICCV2017">FocalLoss</a></h2><p>FocalLoss</p>
-<h2 id="SNIP"><a href="#SNIP" class="headerlink" title="SNIP"></a><a href="../">SNIP</a></h2><h2 id="SNIPER"><a href="#SNIPER" class="headerlink" title="SNIPER"></a><a href="../">SNIPER</a></h2><h2 id="TridentNet"><a href="#TridentNet" class="headerlink" title="TridentNet"></a><a href="../">TridentNet</a></h2><h2 id="DenseBox"><a href="#DenseBox" class="headerlink" title="DenseBox"></a><a href="../">DenseBox</a></h2><h2 id="CornerNet"><a href="#CornerNet" class="headerlink" title="CornerNet"></a><a href="../">CornerNet</a></h2><p>CornerNet-Lite: 基于关键点的对象检测[53,56,26]是一类通过检测和分组其关键点来生成对象边界框的方法。 CornerNet [26]是其中最先进的技术，可以检测并分组边界框的左上角和右下角; 它使用堆叠 HourGlass 网络[39]来预测角落的热图，然后使用 associate embeddings [38]对它们进行分组。 CornerNet 允许简化设计，无需使用 anchor box[46]，并且在 One-Stage 探测器中实现了COCO [32]的 SOTA 精度。</p>
+<h2 id="SNIP"><a href="#SNIP" class="headerlink" title="SNIP"></a><a href="../">SNIP</a></h2><h2 id="SNIPER"><a href="#SNIPER" class="headerlink" title="SNIPER"></a><a href="../">SNIPER</a></h2><h2 id="TridentNet"><a href="#TridentNet" class="headerlink" title="TridentNet"></a><a href="../">TridentNet</a></h2><h2 id="DenseBox"><a href="#DenseBox" class="headerlink" title="DenseBox"></a><a href="../">DenseBox</a></h2><h2 id="CornerNet"><a href="#CornerNet" class="headerlink" title="CornerNet"></a><a href="../">CornerNet</a></h2><p>CornerNet-Lite 描述<br>基于关键点的对象检测[53,56,26]是一类通过检测和分组其关键点来生成对象边界框的方法。 CornerNet [26]是其中最先进的技术，可以检测并分组边界框的左上角和右下角; 它使用堆叠 HourGlass 网络[39]来预测角落的热图，然后使用 associate embeddings [38]对它们进行分组。 CornerNet 允许简化设计，无需使用 anchor box[46]，并且在 One-Stage 探测器中实现了COCO [32]的 SOTA 精度。</p>
+<p>CenterNet 描述:<br>为了检测 corner，CornerNet 会产生两个热图：左上角的热图和右下角的热图。热图表示不同类别的关键点的位置，并为每个关键点分配置信度分数。此外，它还会预测每个 corner 的 embedding 和一组 offsets。embedding 用于识别两个 corner 是否来自同一对象。offsets 将热图上的 corners 重新映射到输入图像上。为了生成 object bounding box，分别根据它们的分数从热图中选择前 $k$ 个左上角和右下角。然后，计算一对 corners 的 embedding 距离以确定成对的 corner 是否属于同一对象。如果距离小于阈值，则生成对象边界框。为边界框分配置信度分数，该分数等于 corner pairs 的平均分数。</p>
 <h2 id="CornerNet-Lite"><a href="#CornerNet-Lite" class="headerlink" title="CornerNet-Lite"></a><a href="../">CornerNet-Lite</a></h2><h2 id="FSAF"><a href="#FSAF" class="headerlink" title="FSAF"></a><a href="../">FSAF</a></h2><h2 id="FoveaBox"><a href="#FoveaBox" class="headerlink" title="FoveaBox"></a><a href="../">FoveaBox</a></h2><h2 id="FCOS"><a href="#FCOS" class="headerlink" title="FCOS"></a><a href="../">FCOS</a></h2><h2 id="ExtremeNet"><a href="#ExtremeNet" class="headerlink" title="ExtremeNet"></a><a href="../">ExtremeNet</a></h2><h2 id="CenterNet"><a href="#CenterNet" class="headerlink" title="CenterNet"></a><a href="../">CenterNet</a></h2><h2 id="CenterNet-Objects-as-Points"><a href="#CenterNet-Objects-as-Points" class="headerlink" title="CenterNet(Objects as Points)"></a><a href="../">CenterNet(Objects as Points)</a></h2><h2 id="CornerNet-Lite-1"><a href="#CornerNet-Lite-1" class="headerlink" title="CornerNet-Lite"></a><a href="../">CornerNet-Lite</a></h2><h2 id="TridentNet-1"><a href="#TridentNet-1" class="headerlink" title="TridentNet"></a><a href="../">TridentNet</a></h2><h2 id="HTC"><a href="#HTC" class="headerlink" title="HTC"></a><a href="../">HTC</a></h2><h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>RefineDet, SNIP, SNIPPER, Fitness NMS, RFBNet, M2Det, TridentNet, HTC, NAS-FPN(为开源)</p>
 <p>Guided Anchoring<br>Libra R-CNN<br>Hybrid Task Cascade</p>
 <h1 id="图像处理篇"><a href="#图像处理篇" class="headerlink" title="图像处理篇"></a>图像处理篇</h1><p>4.1 图像特征提取的算法有哪些，各自优缺点、适用范围<br><a href="https://blog.csdn.net/xiongchao99/article/details/78776629" target="_blank" rel="noopener">https://blog.csdn.net/xiongchao99/article/details/78776629</a></p>
@@ -1773,7 +1774,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">38:13</span>
+    <span title="站点阅读时长">38:24</span>
   
 </div>
 
