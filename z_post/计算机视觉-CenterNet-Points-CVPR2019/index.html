@@ -112,17 +112,31 @@
 
 
 
-  <meta name="description" content="文章: CornerNet-Lite: Efficient Keypoint Based Object Detection作者: Hei Law, Yun Teng, Olga Russakovsky, Jia Deng机构: Princeton University">
+  <meta name="description" content="文章: Objects as Points作者: Xingyi Zhou, Dequan Wang, Philipp Kra ̈henbu ̈hl机构: UT Austin, UC Berkeley, UT Austin 摘要检测任务将物体标识为图像中的轴对齐框。大多数成功的物体检测器都枚举了潜在物体位置的几乎详尽的候选区域, 并对每个物体进行分类。这种方法是比较耗费资源且低效的，并且需要额外的后">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CenterNet(Points) (Arxiv, 2019)">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-CenterNet-Points-CVPR2019/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="文章: CornerNet-Lite: Efficient Keypoint Based Object Detection作者: Hei Law, Yun Teng, Olga Russakovsky, Jia Deng机构: Princeton University">
+<meta property="og:description" content="文章: Objects as Points作者: Xingyi Zhou, Dequan Wang, Philipp Kra ̈henbu ̈hl机构: UT Austin, UC Berkeley, UT Austin 摘要检测任务将物体标识为图像中的轴对齐框。大多数成功的物体检测器都枚举了潜在物体位置的几乎详尽的候选区域, 并对每个物体进行分类。这种方法是比较耗费资源且低效的，并且需要额外的后">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-19T11:31:00.962Z">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/fig2.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/fig1.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/fig3.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/fig4.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/tab1.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/tab2.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/tab3.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/tab4.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/tab5.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/fig5.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/fig6.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/tab6.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/tab7.jpg?x-oss-process=style/blog_img">
+<meta property="og:updated_time" content="2019-07-21T02:56:34.880Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CenterNet(Points) (Arxiv, 2019)">
-<meta name="twitter:description" content="文章: CornerNet-Lite: Efficient Keypoint Based Object Detection作者: Hei Law, Yun Teng, Olga Russakovsky, Jia Deng机构: Princeton University">
+<meta name="twitter:description" content="文章: Objects as Points作者: Xingyi Zhou, Dequan Wang, Philipp Kra ̈henbu ̈hl机构: UT Austin, UC Berkeley, UT Austin 摘要检测任务将物体标识为图像中的轴对齐框。大多数成功的物体检测器都枚举了潜在物体位置的几乎详尽的候选区域, 并对每个物体进行分类。这种方法是比较耗费资源且低效的，并且需要额外的后">
+<meta name="twitter:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/fig2.jpg?x-oss-process=style/blog_img">
 
 
 
@@ -432,7 +446,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZeroZone">
-      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="description" content="吾乃闪耀的芝士蛋挞!">
       <meta itemprop="image" content="/images/avatar_zz.png">
     </span>
 
@@ -480,8 +494,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-07-19T19:31:00+08:00" content="2019-07-19">
-      		  2019-07-19
+    		<time itemprop="dateUpdated" datetime="2019-07-21T10:56:34+08:00" content="2019-07-21">
+      		  2019-07-21
     		</time>
   	  </span>
 	  
@@ -534,7 +548,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">135</span>
+                <span title="本文字数">12k</span>
               
 
               
@@ -548,7 +562,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">11 分钟</span>
               
             </div>
           
@@ -568,7 +582,78 @@
       
 
       
-        <p><strong>文章:</strong> CornerNet-Lite: Efficient Keypoint Based Object Detection<br><strong>作者:</strong> Hei Law, Yun Teng, Olga Russakovsky, Jia Deng<br><strong>机构:</strong> Princeton University</p>
+        <p><strong>文章:</strong> Objects as Points<br><strong>作者:</strong> Xingyi Zhou, Dequan Wang, Philipp Kra ̈henbu ̈hl<br><strong>机构:</strong> UT Austin, UC Berkeley, UT Austin</p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>检测任务将物体标识为图像中的轴对齐框。大多数成功的物体检测器都枚举了潜在物体位置的几乎详尽的候选区域, 并对每个物体进行分类。这种方法是比较耗费资源且低效的，并且需要额外的后处理操作。在本文中，我们采取了不同的方法。我们 <strong>将物体建模为单个点-其边界框的中心点。</strong> 我们的探测器使用关键点估计来查找中心点并回归所有其他物体属性，例如大小，3D位置，方向甚至姿势。我们的基于中心点的方法 CenterNet 与相应的基于边界框的探测器相比, 具有端到端可微分，更简单，更快速和更准确的优势。 CenterNet 在 MS COCO 数据集上实现了最佳的速度-准确性权衡，其中 28.1％ AP为 142 FPS，37.4％AP 为 52 FPS，使用 multi-scale testing 的 45.1％ AP 为 1.4 FPS。我们可以使用相同的方法来估计 KITTI benchmark 中的 3D 边界框和 COCO 关键点数据集上的人体姿势。我们的方法可以媲美复杂的多阶段方法并且可以实时运行。</p>
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>物体检测为许多视觉任务提供动力，如实例分割[7,21,32]，姿势估计[3,15,39]，跟踪[24,27]和动作识别[5]。它在监控[57]，自动驾驶[53]和视觉问题回答[1]中具有很多应用。当前的物体探测器通过轴对齐的边界框表示每个物体，该边界框紧紧地包围物体[18,19,33,43,46]。然后，他们将物体检测任务简化成对大量潜在物体边界框的图像分类任务。对于每个边界框，分类器要确定图像内容是特定的物体还是背景。One-Stage 探测器[33,43]在图像上滑动生成可能的边界框（称为 anchors）的复杂排列，并 <strong>直接对它们进行分类，而不对边界框进行详细判断</strong>。Two-Stage 探测器[18,19,46] <strong>重新计算每个潜在盒子的图像特征</strong>，然后对这些特征进行分类。然后利用 NMS 通过计算边界框IoU来移除相同实例的重复检测。这种后处理操作难以微分和训练[23]，因此大多数现有检测器 <strong>不是端到端的可训练的</strong>。尽管如此，在过去五年[19]中，这一想法取得了很好的效果[12,21,25,26,31,35,47,48,56,62,63]。然而，基于滑动窗口的物体检测器有点耗费资源，因为它们需要 <strong>枚举所有可能的物体位置和尺寸。</strong></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/fig2.jpg?x-oss-process=style/blog_img" alt="CenterNet_Points%2Ffig2.jpg"></div></p>
+<p>在本文中，我们提供了一种更简单，更有效的替代方案。<strong>我们通过其边界框中心的单个点来表示物体（参见图2）。</strong> 然后，<strong>直接从中心位置的图像特征回归其他属性</strong>，例如物体大小，尺寸，3D范围，方向和姿势。于是，物体检测就变成了一个标准的关键点估计问题。 我们只需要将输入图像输入完全卷积网络，然后生成相应的热图净额。 此热图中的峰值(peaks)对应着物体的中心。每个峰值处的图像特征可以用来预测物体框的高度和权重。该模型使用标准密集监督学习[39,60]进行训练。 Inference 时是单个网络的前向传递，<strong>在后处理的时候没有使用 NMS</strong>。</p>
+<p>我们的方法很通用，只需很少的修改就可以扩展到其他任务。我们通过在每个中心点上预测一些附加输出，就可以执行 3D物体检测[17]和多人人体姿态估计[4]任务（见图4）。 对于3D边界框估计，我们回归到物体的绝对深度，3D边界框尺寸和物体方向[38]。 对于人体姿势估计，我们将2D关节位置视为距中心的偏移，并从中心点位置直接回归到它们。</p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/fig1.jpg?x-oss-process=style/blog_img" alt="CenterNet_Points%2Ffig1.jpg"></div></p>
+<p>我们的方法很简单，并且可以以非常高的速度运行（图1）。 使用简单的 Resnet-18 和 up-conv layers[55]，我们的网络可以以 142 FPS 的速度运行，并且具有 28.1％ COCO AP。 通过精心设计的关键点检测网络 DLA-34 [58]，我们的网络在 52 FPS 下实现了 37.4％ 的 COCO AP。 配备最先进的 keypoint estimation 网络，Hourglass-104 [30,40]和 multi-scale testing，我们的网络可以在 1.4 FPS下 实现 45.1％ 的 COCO AP。 在3D边界框估计和人体姿态估计方面，我们以更高的 inference 速度与 SOTA 模型相媲美。</p>
+<h1 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h1><p><strong>Object detection by region classification:</strong> RCNN [19]是第一个成功的深层物体探测器之一，它从大量区域候选物[52]中计算物体位置，对它们进行 crop，并使用深层网络对每个区域进行分类。 Fast-RCNN [18]改为使用图像特征来节省计算量。 但是，这两种方法都依赖于缓慢的低级别区域提议方法。</p>
+<p><strong>Object detection with implicit anchors:</strong> Faster RCNN [46]在检测网络内生成 region proposals。 它在低分辨率图像网格周围对固定形状的边界框（anchor）进行采样，并将每个边界框分类为“前景与否”。 与任何地面实况物体重叠&gt; 0.7标记为前景，背景为&lt;0.3重叠，否则忽略。 每个生成的 region proposals 再次被分类[18]。 将提议分类器更改为多级分类构成了一级检测器的基础。 对一级探测器的一些改进包括锚形状先验[44,45]，不同的特征分辨率[36]，以及不同样本之间的损失重新加权[33]。<br>我们的方法与基于 anchor 的一阶段方法密切相关[33,36,43]。中心点可以看作是一个与形状无关的 anchor（见图3）。 但是，有一些重要区别:</p>
+<ol>
+<li>我们的 CenterNet 仅根据 location 分配 anchor，而不是 box overlap[18]。我们没有区分前景和背景的手动阈值[18]。</li>
+<li>每个物体只有一个 positive anchor，因此不需要 NMS。 我们只是在关键点热图中提取局部峰值[4,39]。</li>
+<li>与传统物体探测器[21,22]（输出步幅为16）相比，CenterNet使用更大的输出分辨率（输出步幅为4）。 这消除了对多个 anchor 的需求[47]。</li>
+</ol>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/fig3.jpg?x-oss-process=style/blog_img" alt="CenterNet_Points%2Ffig3.jpg"></div></p>
+<p><strong>Object detection by keypoint estimation:</strong> CornerNet, ExtremeNet, 这两个网络都需要一定的 group 策略来确定 keypoints 的分组, 这降低了算法的执行速度.</p>
+<p><strong>Monocular 3D object detection:</strong> Deep3Dbox, 3D RCNN, Deep Manta</p>
+<h1 id="Preliminary"><a href="#Preliminary" class="headerlink" title="Preliminary"></a>Preliminary</h1><p>设 $I\in R^{W×H×3}$ 是宽度 $W$ 高度 $H$ 的输入图像。我们的目的是产生关键点热图 $\hat Y\in [0,1]^{\frac{W}{R}×\frac{H}{R}×C}$，其中 $R$ 是输出步幅，$C$ 是关键点(物体)类型数。 关键点类型可以人类姿势估计中的 $C = 17$ 个人体关节[4,55]，或者物体检测中的 $C = 80$ 个物体类别[30,61]。 <strong>我们使用文献[4,40,42]中 $R = 4$ 的默认输出步幅。</strong> 输出步幅通过因子 $R$ 对输出预测进行下采样。我们设 $\hat Y_{x,y,c} = 1$ 对应于检测到的关键点，而 $\hat Y_{x,y,c} = 0$ 是背景。 我们使用几种不同的 fully-convolutional encoder-decoder 网络来预测图像 $I$ 中的 $\hat Y$: stacked hourglass network[30,40]，ResNet[22,55]和 DLA[58]。</p>
+<p>我们参考 CornerNet 的工作来训练 keypoint prediction network. 对于每一个 GT keypoint $p\in R^2$, 其类别为 $c$, 我们先计算出相应的低分辨率的 location $\tilde p = \lfloor \frac{p}{R} \rfloor$. <strong>然后，我们使用高斯核 $Y_{xyc} = exp\big(-\frac{(x-\tilde p_x)^2 + (y - \tilde p_y)^2}{2\sigma^2_p} \big)$ 将所有 GT 关键点划分到热图 $Y \in [0, 1]^{\frac{W}{R}\times \frac{H}{R} \times C}$ 上，其中 $\sigma_p$ 是根据物体大小自适应的标准差</strong>. 如果两个高斯核对应的关键点是相同的类别, 那么我们就利用 element-wise maximum 来确定它的值. 训练函数是使用 <strong>focal loss 的 penalty-reduced pixel-wise logistic regression.</strong></p>
+<script type="math/tex; mode=display">L_k = \frac{-1}{N} \sum_{xyc} \begin{cases} (1-\hat Y_{xyc})^{\alpha} log(\hat Y_{xyc}) && Y_{xyc} = 1 \\ (1-Y_{xyc})^{\beta} (\hat Y_{xyc})^{\alpha} log (1-\hat Y_{xyc}) && otherwise \end{cases}\tag 1</script><p>上式中 $\alpha$ 和 $\beta$ 是 focal loss 的超参数, $N$ 是图像 $I$ 中的 keypoints 数量. 我们选择 $N$ 的标准化以使所有 positive focal loss 实例归一化到 1。我们根据 CornerNet 采用 $\alpha = 2$, $\beta=4$ 的设置.</p>
+<p>为了恢复由输出步幅引起的离散化误差，我们另外预测每个中心点的 local offset $\hat O\in R^{\frac{W}{R} \times \frac{H}{R}\times 2}. 所有的类别 $c$ 都共享相同的偏移预测。我们通过L1损失来训练 offset:</p>
+<script type="math/tex; mode=display">L_{off} = \frac{1}{N}\sum_p | \tilde O_{\tilde p} - (\frac{p}{R} - \tilde p) |\tag 2</script><p>该函数的监督行为只针对关键点 location $\tilde p$, 所有的其他位置都被忽略.</p>
+<h1 id="Objects-as-Points"><a href="#Objects-as-Points" class="headerlink" title="Objects as Points"></a>Objects as Points</h1><p>令 $(x^{(k)}_1, y^{(k)}_1, x^{(k)}_2, y^{(k)}_2)$ 代表物体 $k$ 的 bbox, 其类别为 $c_k$. 它的 center points 为 $p_k = (\frac{x^{(k)}_1 + x^{(k)}_2}{2}, \frac{y^{(k)}_1 + y^{(k)}_2}{2})$, 我们利用 keypoint estimator $\hat Y$ 去预测所有的 center points. 除此以外, 我们还会回归物体 $k$ 的尺寸 $s_k = (x^{(k)}_2 - x^{(k)}_1, y^{(k)}_2 - y^{(k)}_1)$. 为了控制计算成本, 我们对所有的物体类别都使用 single size 的预测, $\hat S \in R^{\frac{W}{R} \times \frac{H}{R} \times 2}$. 我们在 center point 使用类似公式2的 L1 损失:</p>
+<script type="math/tex; mode=display">L_{size} = \frac{1}{N} \sum_{k=1}^N |\hat S_{P_k} - s_k | \tag 3</script><p>我们不对 scale 进行归一化, 而是直接使用 raw pixel coordinates. 然后我们利用一个常量 $\lambda_{size}$ 将 loss 缩放, 整体的训练损失为:</p>
+<script type="math/tex; mode=display">L_{det} = L_k + \lambda_{size} L_{size} + \lambda_{off} L_{off}\tag 4</script><p>除非另有说明，否则我们在所有实验中都设置 $\lambda_{size}= 0.1$, $\lambda_{off}= 1$。 <strong>我们使用同一个网络来预测关键点 $\hat Y$，offsets $\hat O$ 和 size $\hat S$.</strong> 整个网络在每个位置的输出总共 $C + 4$ 维。 所有的输出都共享同一个 fully-convolutional backbone 网络。对于每种 modality，backbone 的特征会通过单独的3×3卷积，ReLU和另一个1×1卷积进行传播。 图4显示了网络输出的 overview。</p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/fig4.jpg?x-oss-process=style/blog_img" alt="CenterNet_Points%2Ffig4.jpg"></div></p>
+<p><strong>From points to bounding boxes:</strong> 在 Inference 阶段，我们首先 <strong>独立</strong> 地提取 <strong>每个类别</strong> 热图中的峰值。我们会检测其值大于或等于其8个连接邻居的所有响应, 并保持前100个峰值(每个类别都会提取 100 个峰值)。令 $\hat P_c$ 为 $c$ 类的 $n$ 个检测中心点的集合。 每个关键点位置由整数坐标 $(x_i，y_i)$ 给出。我们使用关键点值 $\hat Y_{x_i y_i c}$ 作为其检测置信度的度量，并在该位置处生成边界框</p>
+<script type="math/tex; mode=display">(\hat x_i+\delta \hat x_i - \hat w_i / 2, \hat y_i + \delta \hat y_i - \hat h_i / 2, \hat x_i + \delta \hat x_i + \hat w_i / 2, \hat y_i + \delta \hat y_i + \hat h_i / 2)</script><p>上式中, $(\delta \hat x_i, \delta \hat y_i) = \hat O_{\hat x_i, \hat y_i}$ 代表 offset prediction, $\hat w_i, \hat h_i = \hat S_{\hat x_i, \hat y_i}$ 代表 size prediction. 所有的输出都直接从 keypoint estimation产生，无需基于IoU的非最大值抑制（NMS）或其他后处理。 峰值关键点提取可以看做是 NMS 的替代方案，并且可以使用3×3最大池化操作在设备上有效地实现。</p>
+<h2 id="3D-detection"><a href="#3D-detection" class="headerlink" title="3D detection"></a>3D detection</h2><p>3D检测会估计每个物体的三维边界框，并且 <strong>每个中心点需要三个附加属性</strong>：depth，3D dimension 和 orientation。我们为这三个属性分别添加一个单独的 head。 深度 $d$ 是每个中心点的单个标量。但是，深度很难直接回归。 我们改为使用Eigen等人提出的 output transformation, $d = 1 /\sigma(\hat d)-1$，其中 $\sigma$ 是 sigmoid 函数。 我们将深度计算为我们的关键点估计器的附加输出通道 $\hat D \in [0,1]^{\frac{W}{R}×\frac{H}{R}}$。 它同样使用由 ReLU 分隔的两个卷积层。与以前的 modalites 不同，它在输出层使用 inverse sigmoidal transformation。在 sigmoidal transformation 之后，我们使用原始深度域中的 L1 损失训练深度估计器。</p>
+<p>物体的3D尺寸是三个标量。我们直接使用一个独立的 head $\hat \Gamma \in R^{\frac{W}{R}\times \frac{H}{R} \times3}$ 以米为单位来回归他们的绝对值.</p>
+<h2 id="Human-pose-estimation"><a href="#Human-pose-estimation" class="headerlink" title="Human pose estimation"></a>Human pose estimation</h2><p>略…</p>
+<h1 id="Implementation-details"><a href="#Implementation-details" class="headerlink" title="Implementation details"></a>Implementation details</h1><p>我们尝试了4种体系结构：ResNet-18，ResNet-101 [55]，DLA-34 [58]和Hourglass-104 [30]。 我们使用可变形卷积层[12]修改ResNets和DLA-34，并按原始设定使用 Hourglass 网络。</p>
+<p><strong>Hourglass:</strong> Stacked Hourglass 网络[30,40]将输入下采样4倍，然后是两个连续的 Hourglass 模块。 每个 Hourglass 模块都是一个对称的5层向下和向上卷积网络，同时带有 shortcut。该网络非常大，但通常会产生最佳的 keypoint estimation。</p>
+<p><strong>ResNet:</strong> 使用了三个上卷积网络增加标准 ResNet 的特征图谱分辨率[22]，以允许更高分辨率的输出（输出步幅4）。 我们首先将三个上采样层的通道分别更改为256,128,64，以节省计算量。 然后，我们在每个上升卷积之前分别添加一个3×3的通道为256,128,64可变形卷积层。上卷积核被初始化为双线性插值。 有关详细的体系结构图，请参阅补充</p>
+<p><strong>DLA:</strong> Deep Layer Aggregation（DLA）[58]是具有 hierarchical skip connections 的图像分类网络。 我们利用DLA的完全卷积上采样版本进行密集预测，它使用迭代深度聚合来对称地增加特征图分辨率。 我们使用可变形卷积[63]从较低层到输出增加 shortcut。 具体来说，我们在每个上采样层用3×3可变形卷积替换原始卷积。 有关详细的体系结构图，请参阅补充</p>
+<p><strong>Training:</strong> 我们以512×512的输入分辨率进行训练。这样可以为所有型号提供128×128的输出分辨率。我们使用随机翻转，随机缩放（在0.6到1.3之间），裁剪和颜色抖动作为数据增强，并使用Adam [28]来优化整体目标。我们不使用增强来训练3D估计分支，因为裁剪或缩放会改变3D测量。对于剩余网络和DLA-34，我们训练批量大小为128（8个GPU）和学习率5e-4为140个时期，学习率分别在90和120个时期下降10倍（以下[55] ]）。对于Hourglass-104，我们遵循ExtremeNet [61]并使用批量大小29（在5个GPU上，主GPU批量大小为4）和学习率2.5e-4为50个时期，在40个时期下降10倍学习率。为了检测，我们从ExtremeNet [61]微调Hourglass-104以节省计算。 Resnet-101和DLA-34的下采样层用ImageNet pretrain初始化，上采样层随机初始化。 Resnet-101和DLA-34在8个TITAN-V GPU上训练2.5天，而沙漏104需要5天。</p>
+<p><strong>Inference:</strong> 我们使用三个级别的 test augmentations：无增强，翻转增强，翻转和多尺度（0.5,0.75,1,1.25,1.5）。 对于翻转，我们在解码边界框之前平均网络输出。 对于多尺度，我们使用NMS来合并结果。 这些增强会产生不同的速度 - 精度权衡，如下一节所示。</p>
+<h1 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h1><p>我们在MS COCO数据集[34]上评估我们的物体检测性能，其中包含118k训练图像（train2017），5k验证图像（val2017）和20k保持测试图像（test-dev）。 我们报告了所有IOU阈值（AP）的平均精度，AP在IOU阈值0.5（AP50）和0.75（AP75）。 补充中包含PascalVOC的额外实验[14]。</p>
+<h2 id="Object-detection"><a href="#Object-detection" class="headerlink" title="Object detection"></a>Object detection</h2><p>表1显示了我们使用不同 backbones 和 testing options 进行 COCO 验证的结果，而图1则将CenterNet与其他实时检测器进行了比较。 运行时间在我们的本地机器上进行测试，包括Intel Core i7-8086K CPU，Titan Xp GPU，Pytorch 0.4.1，CUDA 9.0和CUDNN 7.1。</p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/tab1.jpg?x-oss-process=style/blog_img" alt="CenterNet_Points%2Ftab1.jpg"></div></p>
+<p>Hourglass 104以相对较好的速度达到最佳精度，其中AP为42.2％，7.8 FPS。 在这个 backbone 上，CenterNet在速度和准确性方面优于CornerNet [30]（4.1 FPS中40.6％AP）和ExtremeNet [61]（3.1 FPS中40.3％AP）。 运行时间的改善来自更少的 outputs head 和更简单的 box decoding 方案。 更高的精确度表明中心点比角点或极端点更容易检测。</p>
+<p>使用ResNet-101，我们在同一网络骨干网上胜过RetinaNet [33]。 我们仅在上采样层中使用可变形卷积，这不会影响RetinaNet。 我们在相同精度下的速度超过两倍（CenterNet 34.8％AP在45 FPS（输入512×512）与RetinaNet 34.4％AP在18 FPS（输入500×800））。 我们最快的ResNet-18型号在142 FPS下也实现了28.1％COCO AP的可观性能。</p>
+<p>DLA-34 提供最佳的速度/准确性权衡。 它的运行速度为52FPS，AP为37.4％。 这比YOLOv3 [45]快两倍，AP 高 4.4％。 通过翻转测试，我们的模型仍然比YOLOv3 [45]更快，并且达到 Faster-RCNN-FPN [46]的准确度水平（28 FPS中的CenterNet 39.2％AP与11 FPS中的Faster-RCNN 39.8％AP）。</p>
+<p><strong>State of the art comparison:</strong> 我们在表2中将其与 COCO test-dev 中的其他最先进的探测器进行比较。通过 multi-scale evaluation，Hourglass 104 的 CenterNet 实现了45.1％的AP，优于所有现有的 One-Stage Detectors。 复杂的两级探测器[31,35,48,63]更准确，但也更慢。 对于不同的物体尺寸或IoU阈值，CenterNet和滑动窗口探测器之间没有显着差异。 CenterNet的行为类似于常规探测器，速度更快。</p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/tab2.jpg?x-oss-process=style/blog_img" alt="CenterNet_Points%2Ftab2.jpg"></div></p>
+<h3 id="Additional-experiments"><a href="#Additional-experiments" class="headerlink" title="Additional experiments"></a>Additional experiments</h3><p><strong>在极端的情况下，如果两个 bbox 完全对齐，则这两个不同的物体可能共享同一个中心。 在这种情况下，CenterNet只会检测其中一个。</strong> 我们首先研究这种情况在实践中发生的频率，并将其与缺少竞争方法的检测结果联系起来。</p>
+<p><strong>Center point collision:</strong> 在COCO训练集中，有 614 对物体落在了步幅4的 feature map 上同一中心点。该数据集中总共有860001个物体，因此CenterNet由于中心点碰撞而导致无法预测的物体 &lt; 0.1％。 由于不完善的 region proposals（~2％），这远远少于 RCNN 未命中的比例，并且比基于 anchor 方法中由于锚定位置不足而导致的丢失少[46]（Faster-RCNN为20.0％, 每处 location 具有 15 个 anchor, IOU阈值选为 0.5）。 此外，715对 IoU&gt; 0.7 的物体界框将被分配给两个 anchor，<strong>因此基于中心的分配具有更少的冲突。</strong></p>
+<p><strong>NMS:</strong> 为了验证CenterNet不需要基于IoU的NMS，我们将其作为预测的后处理步骤运行。 对于DLA-34（翻转测试），AP从39.2％提高到39.7％。 对于 Hourglass 104，AP保持在42.2％。 鉴于影响较小，我们不会使用它。</p>
+<p>接下来，我们进行模型的新超参数实验。 所有实验均在DLA-34上完成。</p>
+<p><strong>Training and Testing resolution:</strong> 在训练期间，我们将输入分辨率固定为512×512。在测试期间，我们遵循CornerNet [30]以保持原始图像分辨率并将输入零填充到网络的最大步幅。 对于ResNet和DLA，我们用最多32个像素填充图像，对于HourglassNet，我们使用128个像素。 如表3(a)所示，保持原始分辨率略好于修复测试分辨率。 较低分辨率（384×384）的训练和测试运行速度提高1.7倍，但降低了3 AP。</p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/tab3.jpg?x-oss-process=style/blog_img" alt="CenterNet_Points%2Ftab3.jpg"></div></p>
+<p><strong>Regression loss:</strong> 我们将原始L1损失与 Smooth L1 [18]进行比较以进行 size regression。 我们在表3c中的实验表明L1明显优于Smooth L1。它可以在精细尺度上产生更好的精度，这是COCO评估指标所敏感的。 这在关键点回归中是独立观察到的</p>
+<p><strong>Bounding box size weight:</strong> 我们分析了我们的方法对损失权重 $\lambda_{size}$ 的敏感性。 表3b显示0.1给出了良好的结果。 对于较大的值，由于 loss 的范围是从0到输出大小 $w/R$ 或 $h/R$ 而不是0到1，因此AP会显着降级。但是，对于较低的权重，该值不会显着降低。</p>
+<p><strong>Training schedule:</strong> 默认情况下，我们训练关键点估计网络140个epoch，学习率下降到90个epoch。 如果我们在降低学习率之前将训练时期加倍，则性能进一步提高1.1 AP（表3d），代价是更长的训练时间。 为了节省计算资源（和北极熊, 温室效应），我们在消融实验中使用了140个时期，但与其他方法相比，它坚持使用230个DLA时期。<br>最后，我们通过回归到多个物体大小来尝试CenterNet的多个“锚”版本。 实验没有取得任何成功。 见补充。</p>
+<h2 id="3D-detection-1"><a href="#3D-detection-1" class="headerlink" title="3D detection"></a>3D detection</h2><p>如表4所示，我们的方法在AP和AOS上的效果与对应方法相当，并且在BEV方面略胜一筹。 我们的CenterNet比两种方法快两个数量级。</p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/tab4.jpg?x-oss-process=style/blog_img" alt="CenterNet_Points%2Ftab4.jpg"></div></p>
+<h2 id="Pose-estimation"><a href="#Pose-estimation" class="headerlink" title="Pose estimation"></a>Pose estimation</h2><p>结果显示在表5中。对关键点的直接回归合理地执行，但不是最先进的。 它尤其在高IoU制度中挣扎。 将我们的输出投射到最接近的关节检测可以改善整个结果，并且与最先进的多人姿势估计器竞争性地进行[4,21,39,41]。 这将验证CenterNet是否通用，易于适应新任务。</p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/tab5.jpg?x-oss-process=style/blog_img" alt="CenterNet_Points%2Ftab5.jpg"></div></p>
+<p>图5 展示了一些检测示例:</p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/fig5.jpg?x-oss-process=style/blog_img" alt="CenterNet_Points%2Ffig5.jpg"></div></p>
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>总之，我们提出了一个新的物体表示：Points。 我们的CenterNet物体检测器建立在成功的关键点估计网络的基础上，找到物体中心，并回归到它们的大小。 该算法简单，快速，准确，端到端可区分，无需任何NMS后处理。 这个想法很普遍，除了简单的二维检测外，还有广泛的应用。 CenterNet可以在一次正向传递中估计一系列其他物体属性，例如姿势，3D方向，深度和范围。 我们的初步实验令人鼓舞，为实时物体识别和相关任务开辟了新的方向。</p>
+<h1 id="Appendix-A-Model-Architecture"><a href="#Appendix-A-Model-Architecture" class="headerlink" title="Appendix A: Model Architecture"></a>Appendix A: Model Architecture</h1><p>如图6所示</p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/fig6.jpg?x-oss-process=style/blog_img" alt="CenterNet_Points%2Ffig6.jpg"></div></p>
+<h1 id="Appendix-B-3D-BBox-Estimation-Details"><a href="#Appendix-B-3D-BBox-Estimation-Details" class="headerlink" title="Appendix B: 3D BBox Estimation Details"></a>Appendix B: 3D BBox Estimation Details</h1><p>略…</p>
+<h1 id="Appendix-C-Collision-Experiments-Details"><a href="#Appendix-C-Collision-Experiments-Details" class="headerlink" title="Appendix C: Collision Experiments Details"></a>Appendix C: Collision Experiments Details</h1><p>略…</p>
+<h1 id="Appendix-D-Experiments-on-PascalVOC"><a href="#Appendix-D-Experiments-on-PascalVOC" class="headerlink" title="Appendix D: Experiments on PascalVOC"></a>Appendix D: Experiments on PascalVOC</h1><p>略…</p>
+<p>结果如表6所示。我们最好的CenterNet-DLA模型与顶级方法相比具有竞争力，并保持实时速度。</p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/tab6.jpg?x-oss-process=style/blog_img" alt="CenterNet_Points%2Ftab6.jpg"></div></p>
+<h1 id="Appendix-E-Error-Analysis"><a href="#Appendix-E-Error-Analysis" class="headerlink" title="Appendix E: Error Analysis"></a>Appendix E: Error Analysis</h1><p>We perform an error analysis by replacing each output head with its ground truth. For the center point heatmap, we use the rendered Gaussian ground truth heatmap. For the bounding box size, we use the nearest ground truth size for each detection.</p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/tab7.jpg?x-oss-process=style/blog_img" alt="CenterNet_Points%2Ftab7.jpg"></div></p>
+<p>The results in Table 7 show that improving both size map leads to a modest performance gain, while the center map gains are much larger. If only the keypoint offset is not pre- dicted, the maximum AP reaches 83.1. The entire pipeline on ground truth misses about 0.5% of objects, due to dis- cretization and estimation errors in the Gaussian heatmap rendering.</p>
 
       
     </div>
@@ -657,8 +742,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -667,7 +761,7 @@
                 alt="ZeroZone" />
             
               <p class="site-author-name" itemprop="name">ZeroZone</p>
-              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+              <p class="site-description motion-element" itemprop="description">吾乃闪耀的芝士蛋挞!</p>
           </div>
 
           
@@ -874,6 +968,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Related-Work"><span class="nav-text">Related Work</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Preliminary"><span class="nav-text">Preliminary</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Objects-as-Points"><span class="nav-text">Objects as Points</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3D-detection"><span class="nav-text">3D detection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Human-pose-estimation"><span class="nav-text">Human pose estimation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Implementation-details"><span class="nav-text">Implementation details</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Experiments"><span class="nav-text">Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Object-detection"><span class="nav-text">Object detection</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Additional-experiments"><span class="nav-text">Additional experiments</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3D-detection-1"><span class="nav-text">3D detection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pose-estimation"><span class="nav-text">Pose estimation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Conclusion"><span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Appendix-A-Model-Architecture"><span class="nav-text">Appendix A: Model Architecture</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Appendix-B-3D-BBox-Estimation-Details"><span class="nav-text">Appendix B: 3D BBox Estimation Details</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Appendix-C-Collision-Experiments-Details"><span class="nav-text">Appendix C: Collision Experiments Details</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Appendix-D-Experiments-on-PascalVOC"><span class="nav-text">Appendix D: Experiments on PascalVOC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Appendix-E-Error-Analysis"><span class="nav-text">Appendix E: Error Analysis</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
         <div class="back-to-top">
@@ -904,7 +1014,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">2.5m</span>
+    <span title="站点总字数">2.6m</span>
   
 
   
@@ -913,7 +1023,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">38:24</span>
+    <span title="站点阅读时长">38:43</span>
   
 </div>
 

@@ -127,7 +127,7 @@
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1g1nf97t0s9j21jf0oyhat.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1g1nfajpr1pj21is0intf8.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1g1nfawjkj3j21j40jaagf.jpg">
-<meta property="og:updated_time" content="2019-04-02T13:42:27.809Z">
+<meta property="og:updated_time" content="2019-07-21T04:07:05.106Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SNIP (CVPR, 2018)">
 <meta name="twitter:description" content="文章: An Analysis of Scale Invariance in Object Detection - SNIP作者: Bharat Singh, Larry S.Davis备注: Maryland 摘要本文分析了在极端尺度变化下的目标识别和检测的各种技术, 通过对不同输入数据配置的检测器进行训练, 比较了尺度固定(scale specific)和尺度不变(scale invarian">
@@ -441,7 +441,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZeroZone">
-      <meta itemprop="description" content="并不是什么厉害的地方<br>只是一个安静的学习角落">
+      <meta itemprop="description" content="吾乃闪耀的芝士蛋挞!">
       <meta itemprop="image" content="/images/avatar_zz.png">
     </span>
 
@@ -489,8 +489,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-04-02T21:42:27+08:00" content="2019-04-02">
-      		  2019-04-02
+    		<time itemprop="dateUpdated" datetime="2019-07-21T12:07:05+08:00" content="2019-07-21">
+      		  2019-07-21
     		</time>
   	  </span>
 	  
@@ -612,7 +612,7 @@
 <p>池化后的 RoI 的分辨率和预训练的网络相匹配, 因此在 fine-tuning 期间网络更容易学习. 对于像 R-FCN 这样将 RoI 分成子部分并使用 position sensitive filters 的方法, 这边的更加重要. 例如, 如果 RoI 的大小为 48 个像素(在 conv5 中就会变成 3 像素), 并且每个轴上都有 7 个 filters, 那么特征和 filters 之间的位置对应关系就会丢失.</p>
 <h2 id="Sampling-Sub-Images"><a href="#Sampling-Sub-Images" class="headerlink" title="Sampling Sub-Images"></a>Sampling Sub-Images</h2><p>用深度卷积网络训练高分辨率的图像需要更多的 GPU 显存. 因此, 我们对图片进行剪裁, 以使得他们可以适应 GPU 的显存大小. 我们的目标是生成最小数量的 1000x1000 尺寸的 chips(sub-images), 并让这些 chips 覆盖图像中的所有小目标. 这有助于加速训练, 因为在没有小目标物体的地方不需要进行计算. 为此, 我们为每张图像生成 50 个随机定位的芯片, 大小为 1000x1000. 我们将覆盖最多目标对象的 chips 添加到我们的训练集中, 在覆盖图片中的所有目标物体之前, 我们队其余对象重复这个采样和选择过程. 由于 chips 是随机生成的, 而 proposals boxes 通常在图像边界上有一个边, 因此为了加速采样过程, 我们将芯片对于到图像的边界. 我们发现, 平均情况下, 对于 1400x2000 的图像, 可以生成 1.7 个尺寸为 1000x1000 的 chips. 在图片分辨率为 800x1200 或者 480x640 , 或者图片中不包含小物体时, 这个采样步骤是不需要的. 随机剪裁并不是 detectors 性能提高的原因. 为了验证这一点, 我们使用了非剪裁的高分辨率图像(1400x2000)来训练 ResNet-50, 并且没有发现 mAP 的变化.</p>
 <h1 id="Datasets-and-Evaluation"><a href="#Datasets-and-Evaluation" class="headerlink" title="Datasets and Evaluation"></a>Datasets and Evaluation</h1><p>small objects: less than 32<br>medium objects: from 32 to 96<br>large objects: greater than 96</p>
-<h2 id="Training-Details"><a href="#Training-Details" class="headerlink" title="Training Details"></a>Training Details</h2><p>在三个不同的分辨率上训练 Deformable-RFCN: 480x800, 800x1200, 1400x2000, 第一个值代表 shorter side 的长度, 第二个值代表边长的最大值;<br>training: 7 epochs for classifier while RPN is trained for 6 epochs.<br>warmup learning rate: 0.0005 for 1000 iterations, then 0.005. step down is performed at 4.33 epochs for RPN and 5.33 epochs otherwise.<br>valid range: $[0, 80], [40, 160], [120, \infity]$</p>
+<h2 id="Training-Details"><a href="#Training-Details" class="headerlink" title="Training Details"></a>Training Details</h2><p>在三个不同的分辨率上训练 Deformable-RFCN: 480x800, 800x1200, 1400x2000, 第一个值代表 shorter side 的长度, 第二个值代表边长的最大值;<br>training: 7 epochs for classifier while RPN is trained for 6 epochs.<br>warmup learning rate: 0.0005 for 1000 iterations, then 0.005. step down is performed at 4.33 epochs for RPN and 5.33 epochs otherwise.<br>valid range: $[0, 80], [40, 160], [120, \infty]$</p>
 <p><strong>SNIP doubles the training time</strong></p>
 <h2 id="Improving-RPN"><a href="#Improving-RPN" class="headerlink" title="Improving RPN"></a>Improving RPN</h2><h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p>表 2 展示了 single scale model, multi-scale testing, multi-scale training + multi-scale testing 的性能</p>
 <p>表 3 展示了 Average Recall 的性能表现, 使用更强的分类网络(DPN-92)也能够提升 AR.</p>
@@ -736,7 +736,7 @@
                 alt="ZeroZone" />
             
               <p class="site-author-name" itemprop="name">ZeroZone</p>
-              <p class="site-description motion-element" itemprop="description">并不是什么厉害的地方<br>只是一个安静的学习角落</p>
+              <p class="site-description motion-element" itemprop="description">吾乃闪耀的芝士蛋挞!</p>
           </div>
 
           
@@ -989,7 +989,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">2.5m</span>
+    <span title="站点总字数">2.6m</span>
   
 
   
@@ -998,7 +998,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">38:24</span>
+    <span title="站点阅读时长">38:43</span>
   
 </div>
 
