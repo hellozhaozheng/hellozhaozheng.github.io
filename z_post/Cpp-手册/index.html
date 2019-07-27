@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="闲杂123Array &amp;lt; Stack&amp;lt;int&amp;gt; &amp;gt; array_stack;//在C++98中，要求至少用一个空白符将两个&amp;gt;符号分开，以免与运算符&amp;gt;&amp;gt;混淆，C++11不要求这样做 花括号与分号在结构体与类定义大括号后面需要分号；其余可要可不要if else、try catch等组合语句如果在中间加了分号会将一个语句块分成两个 cmath123456789#">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-25T11:29:34.595Z">
+<meta property="og:updated_time" content="2019-07-25T01:55:40.182Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++ 手册">
 <meta name="twitter:description" content="闲杂123Array &amp;lt; Stack&amp;lt;int&amp;gt; &amp;gt; array_stack;//在C++98中，要求至少用一个空白符将两个&amp;gt;符号分开，以免与运算符&amp;gt;&amp;gt;混淆，C++11不要求这样做 花括号与分号在结构体与类定义大括号后面需要分号；其余可要可不要if else、try catch等组合语句如果在中间加了分号会将一个语句块分成两个 cmath123456789#">
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">267</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">268</span></a>
   </li>
         
         
@@ -481,8 +481,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-02-25T19:29:34+08:00" content="2019-02-25">
-      		  2019-02-25
+    		<time itemprop="dateUpdated" datetime="2019-07-25T09:55:40+08:00" content="2019-07-25">
+      		  2019-07-25
     		</time>
   	  </span>
 	  
@@ -535,7 +535,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">8.3k</span>
+                <span title="本文字数">8.4k</span>
               
 
               
@@ -577,7 +577,7 @@
 <p>类类型元素的数组，则无论是否使用（），都会自动调用其默认构造函数来初始化：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> *psa = <span class="keyword">new</span> <span class="built_in">string</span>[<span class="number">10</span>];  <span class="comment">// 每个元素调用默认构造函数初始化</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> *psa = <span class="keyword">new</span> <span class="built_in">string</span>[<span class="number">10</span>]();  <span class="comment">// 每个元素调用默认构造函数初始化</span></span><br></pre></td></tr></table></figure>
 <h1 id="std-find"><a href="#std-find" class="headerlink" title="std::find()"></a>std::find()</h1><p>返回范围 [first, last) 中满足特定判别标准的首个元素迭代器，查找失败则返回end迭代器</p>
-<h1 id="std-sort"><a href="#std-sort" class="headerlink" title="std::sort()"></a>std::sort()</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自定义函数必须写在最外吗，否则无法通过</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">mysort</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>&#123; <span class="keyword">return</span> a&gt;b; &#125; <span class="comment">//降序</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v = &#123;<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">787</span>,<span class="number">8</span>,<span class="number">5</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">std</span>::sort(v.begin(), v.end(), mysort);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> iter = v.begin(); iter!= v.end(); iter++)&#123;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;* iter&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="std-sort"><a href="#std-sort" class="headerlink" title="std::sort()"></a>std::sort()</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自定义函数必须写在最外吗，否则无法通过</span></span><br><span class="line"><span class="comment">// 在类内部, 可以写成静态函数.</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">mysort</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>&#123; <span class="keyword">return</span> a&gt;b; &#125; <span class="comment">//降序</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v = &#123;<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">787</span>,<span class="number">8</span>,<span class="number">5</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">std</span>::sort(v.begin(), v.end(), mysort);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> iter = v.begin(); iter!= v.end(); iter++)&#123;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;* iter&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>lamda 表达式:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::sort(s.begin(), s.end(), [](<span class="keyword">int</span> a, <span class="keyword">int</span> b) &#123;</span><br><span class="line">       <span class="keyword">return</span> b &lt; a;   </span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure></p>
 <p>重载<code>operator()</code>运算符<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function">    </span>&#123;   </span><br><span class="line">        <span class="keyword">return</span> a &lt; b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; customLess;</span><br><span class="line"><span class="built_in">std</span>::sort(s.begin(), s.end(), customLess); <span class="comment">//升序</span></span><br></pre></td></tr></table></figure></p>
 <h1 id="std-reverse"><a href="#std-reverse" class="headerlink" title="std::reverse()"></a>std::reverse()</h1><p>反转[first, last)范围中的元素顺序. (借助 <code>std::swap()</code>实现)<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</span><br><span class="line"><span class="built_in">std</span>::reverse(<span class="built_in">std</span>::begin(v), <span class="built_in">std</span>::end(v));</span><br><span class="line"><span class="built_in">std</span>::reverse(v.begin(), v.end());</span><br></pre></td></tr></table></figure></p>
@@ -794,7 +794,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">267</span>
+                    <span class="site-state-item-count">268</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1037,7 +1037,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">2.6m</span>
+    <span title="站点总字数">2.7m</span>
   
 
   
@@ -1046,7 +1046,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">39:23</span>
+    <span title="站点阅读时长">40:11</span>
   
 </div>
 

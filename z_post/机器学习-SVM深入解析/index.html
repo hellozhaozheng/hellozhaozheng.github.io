@@ -123,7 +123,7 @@
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvrusa33dkj20hx0dnmxr.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fvsu4x9m5hj20ci0a8wel.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fvsu4xaa2nj20ca0ae3yn.jpg">
-<meta property="og:updated_time" content="2019-03-27T07:27:19.352Z">
+<meta property="og:updated_time" content="2019-07-26T10:48:43.133Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SVM深入解析">
 <meta name="twitter:description" content="前言起初让我最头疼的是拉格朗日对偶和SMO，后来逐渐明白拉格朗日对偶的重要作用是将w的计算提前并消除w，使得优化函数变为拉格朗日乘子的单一参数优化问题。而SMO里面迭代公式的推导也着实让我花费了不少时间。 对比这么复杂的推导过程，SVM的思想确实那么简单。它不再像logistic回归一样企图去拟合样本点（中间加了一层sigmoid函数变换），而是就在样本中去找分隔线，为了评判哪条分界线更好，引入了">
@@ -252,7 +252,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">267</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">268</span></a>
   </li>
         
         
@@ -485,8 +485,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-27T15:27:19+08:00" content="2019-03-27">
-      		  2019-03-27
+    		<time itemprop="dateUpdated" datetime="2019-07-26T18:48:43+08:00" content="2019-07-26">
+      		  2019-07-26
     		</time>
   	  </span>
 	  
@@ -553,7 +553,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">17 分钟</span>
+                <span title="阅读时长">18 分钟</span>
               
             </div>
           
@@ -735,7 +735,12 @@
 <script type="math/tex; mode=display">\min_{f} \Omega(f) + C\sum_{i=1}^{m} l(f(\vec x_i) , y_i)</script><p>其中, $\Omega(f)$ 称为”结构风险”(structural risk), 用于描述模型 $f$ 自身的性质; 第二项 $C\sum_{i=1}^{m} l(f(\vec x_i)$ 称为”经验风险”(empirical risk), 用于描述模型与训练数据的契合程度. $C$ 用于对二者进行折衷.</p>
 <p>从预测误差的角度来看, 第二项相当于模型误差, 第一项相当于正则化项, 表述了模型本身的性质, 一方面, 这为引入领域知识和用户意图提供了途径, 另一方面, 该信息有助于消减假设空间, 降低过拟合风险</p>
 <p><span id="SVM 如何解决线性不可分问题"></span></p>
-<h1 id="SVM-如何解决线性不可分问题"><a href="#SVM-如何解决线性不可分问题" class="headerlink" title="SVM 如何解决线性不可分问题"></a>SVM 如何解决线性不可分问题</h1><p><span id="为什么SVM的分类结果仅依赖于支持向量?"></span></p>
+<h1 id="SVM-如何解决线性不可分问题"><a href="#SVM-如何解决线性不可分问题" class="headerlink" title="SVM 如何解决线性不可分问题"></a>SVM 如何解决线性不可分问题</h1><p>解决线性不可分的基本思路有两个:</p>
+<ul>
+<li>加入松弛变量和惩罚因子, 找到 <strong>相对较好</strong> 的超平面, 这里的 <strong>相对较好</strong> 可以理解为 <strong>尽可能</strong> 的将数据正确分类</li>
+<li>使用核函数, 将低维的数据映射到更高维的空间, 使得高维空间中的数据是线性可分的, 那么在高维空间吗使用线性分类模型即可.</li>
+</ul>
+<p><span id="为什么SVM的分类结果仅依赖于支持向量?"></span></p>
 <h1 id="为什么SVM的分类结果仅依赖于支持向量"><a href="#为什么SVM的分类结果仅依赖于支持向量" class="headerlink" title="为什么SVM的分类结果仅依赖于支持向量?"></a>为什么SVM的分类结果仅依赖于支持向量?</h1><p>百机p53</p>
 <p><span id="如何选取核函数?"></span></p>
 <h1 id="如何选取核函数"><a href="#如何选取核函数" class="headerlink" title="如何选取核函数?"></a>如何选取核函数?</h1><p>最常用的是线性核与高斯核, 也就是 Linear 核与 RBF 核. 一般情况下 RBF 效果不会差于 Linear, 但是时间上 RBF 会耗费更多.</p>
@@ -888,7 +893,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">267</span>
+                    <span class="site-state-item-count">268</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1131,7 +1136,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">2.6m</span>
+    <span title="站点总字数">2.7m</span>
   
 
   
@@ -1140,7 +1145,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">39:23</span>
+    <span title="站点阅读时长">40:11</span>
   
 </div>
 
