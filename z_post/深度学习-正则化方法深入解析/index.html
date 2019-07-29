@@ -112,21 +112,21 @@
 
 
 
-  <meta name="description" content="L1 正则L1范数为: \|w\|_1 = |w_1| + |w_2| + ... + |w_n|L1正则项如下所示, 其中 $L_0$ 代表原始的不加正则项的损失函数, $L$ 代表加了正则项以后的损失函数, $m$ 则代表训练batch的样本大小 : L = L_0 + \lambda\|w\|_1 = L_0 + \lambda \sum_{w}|w|将上式对参数 $w$ 求导如下(由于正则">
+  <meta name="description" content="L1 正则L1范数为: \vert w\vert_1 = |w_1| + |w_2| + ... + |w_n|L1正则项如下所示, 其中 $L_0$ 代表原始的不加正则项的损失函数, $L$ 代表加了正则项以后的损失函数, $m$ 则代表训练batch的样本大小 : L = L_0 + \lambda\vert w\vert_1 = L_0 + \lambda \sum_{w}|w|将上式对参数">
 <meta name="keywords" content="知识点梳理,深度学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="正则化方法深入解析">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/深度学习-正则化方法深入解析/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="L1 正则L1范数为: \|w\|_1 = |w_1| + |w_2| + ... + |w_n|L1正则项如下所示, 其中 $L_0$ 代表原始的不加正则项的损失函数, $L$ 代表加了正则项以后的损失函数, $m$ 则代表训练batch的样本大小 : L = L_0 + \lambda\|w\|_1 = L_0 + \lambda \sum_{w}|w|将上式对参数 $w$ 求导如下(由于正则">
+<meta property="og:description" content="L1 正则L1范数为: \vert w\vert_1 = |w_1| + |w_2| + ... + |w_n|L1正则项如下所示, 其中 $L_0$ 代表原始的不加正则项的损失函数, $L$ 代表加了正则项以后的损失函数, $m$ 则代表训练batch的样本大小 : L = L_0 + \lambda\vert w\vert_1 = L_0 + \lambda \sum_{w}|w|将上式对参数">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1g12m2q505xj20dc0dcmyk.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fvxnikras2j20em0byjsh.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fvu4qp7cdwj2067060jri.jpg">
-<meta property="og:updated_time" content="2019-03-15T08:15:11.459Z">
+<meta property="og:updated_time" content="2019-07-28T14:35:50.612Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正则化方法深入解析">
-<meta name="twitter:description" content="L1 正则L1范数为: \|w\|_1 = |w_1| + |w_2| + ... + |w_n|L1正则项如下所示, 其中 $L_0$ 代表原始的不加正则项的损失函数, $L$ 代表加了正则项以后的损失函数, $m$ 则代表训练batch的样本大小 : L = L_0 + \lambda\|w\|_1 = L_0 + \lambda \sum_{w}|w|将上式对参数 $w$ 求导如下(由于正则">
+<meta name="twitter:description" content="L1 正则L1范数为: \vert w\vert_1 = |w_1| + |w_2| + ... + |w_n|L1正则项如下所示, 其中 $L_0$ 代表原始的不加正则项的损失函数, $L$ 代表加了正则项以后的损失函数, $m$ 则代表训练batch的样本大小 : L = L_0 + \lambda\vert w\vert_1 = L_0 + \lambda \sum_{w}|w|将上式对参数">
 <meta name="twitter:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1g12m2q505xj20dc0dcmyk.jpg">
 
 
@@ -485,8 +485,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-15T16:15:11+08:00" content="2019-03-15">
-      		  2019-03-15
+    		<time itemprop="dateUpdated" datetime="2019-07-28T22:35:50+08:00" content="2019-07-28">
+      		  2019-07-28
     		</time>
   	  </span>
 	  
@@ -574,13 +574,13 @@
 
       
         <h1 id="L1-正则"><a href="#L1-正则" class="headerlink" title="L1 正则"></a>L1 正则</h1><p>L1范数为:</p>
-<script type="math/tex; mode=display">\|w\|_1 = |w_1| + |w_2| + ... + |w_n|</script><p>L1正则项如下所示, 其中 $L_0$ 代表原始的不加正则项的损失函数, $L$ 代表加了正则项以后的损失函数, <del>$m$ 则代表训练batch的样本大小</del> :</p>
-<script type="math/tex; mode=display">L = L_0 + \lambda\|w\|_1 = L_0 + \lambda \sum_{w}|w|</script><p>将上式对参数 $w$ 求导如下(由于正则项与 $b$ 无关, 因此参数 $b$ 的导数不变):</p>
+<script type="math/tex; mode=display">\vert w\vert_1 = |w_1| + |w_2| + ... + |w_n|</script><p>L1正则项如下所示, 其中 $L_0$ 代表原始的不加正则项的损失函数, $L$ 代表加了正则项以后的损失函数, <del>$m$ 则代表训练batch的样本大小</del> :</p>
+<script type="math/tex; mode=display">L = L_0 + \lambda\vert w\vert_1 = L_0 + \lambda \sum_{w}|w|</script><p>将上式对参数 $w$ 求导如下(由于正则项与 $b$ 无关, 因此参数 $b$ 的导数不变):</p>
 <script type="math/tex; mode=display">\frac{\partial L}{\partial w} = \frac{\partial L_0}{\partial w} + \lambda sign(w)</script><p>上式中 $sign(w)$ 表示 $w$ 的符号, 当 $w&gt;0$ 时, $sign(w)=1$ , 当 $w&lt;0$ 时, $sign(w)=-1$, 为了实现方便, 我们特意规定, 当 $w=0$ 时,  $sign(w) = 0$ , 相当于去掉了正则项.</p>
 <p>因此, 权重 $w$ 的更新表达式可如下表示:</p>
 <script type="math/tex; mode=display">w \to w' = w - \eta \frac{\partial L_0}{\partial w} - \eta \lambda sign(w)</script><h1 id="L2-正则-权重衰减-岭回归"><a href="#L2-正则-权重衰减-岭回归" class="headerlink" title="L2 正则(权重衰减/岭回归)"></a>L2 正则(权重衰减/岭回归)</h1><p>L2范数为:</p>
-<script type="math/tex; mode=display">\|w\|_1 = \sqrt {w_1^2 + w_2^2 + ... + w_n^2 }</script><p>L2正则项如下所示, 其中 $L_0$ 代表原始的不加正则项的损失函数, $L$ 代表加了正则项以后的损失函数, <del>式中的系数 $\frac{1}{2}$ 主要是为了消去求导后产生的常数 $2$, 方便表示 (因为可以根据 $\lambda$ 的值来替代这些常数)</del>:</p>
-<script type="math/tex; mode=display">L = L_0 + \lambda\|w\|^2_2 =L_0 + \lambda \sum_{w}w^2</script><p>将上式对参数 $w$ 求导如下:</p>
+<script type="math/tex; mode=display">\vert w\vert_1 = \sqrt {w_1^2 + w_2^2 + ... + w_n^2 }</script><p>L2正则项如下所示, 其中 $L_0$ 代表原始的不加正则项的损失函数, $L$ 代表加了正则项以后的损失函数, <del>式中的系数 $\frac{1}{2}$ 主要是为了消去求导后产生的常数 $2$, 方便表示 (因为可以根据 $\lambda$ 的值来替代这些常数)</del>:</p>
+<script type="math/tex; mode=display">L = L_0 + \lambda\vert w\vert^2_2 =L_0 + \lambda \sum_{w}w^2</script><p>将上式对参数 $w$ 求导如下:</p>
 <script type="math/tex; mode=display">\frac{\partial L}{\partial w} = \frac{\partial L_0}{\partial w} + 2\lambda w</script><p>则, 权重 $w$ 的更新表达式可如下表示:</p>
 <script type="math/tex; mode=display">w \to w' = w - \eta \frac{\partial L_0}{\partial w} - \eta 2\lambda w</script><p>由于, $\eta, \lambda, m$ 三个值都是正的, 因此, 加上 $L2$ 正则化以后, 权重整体减小了, 这也是”权重衰减”的由来.</p>
 <h1 id="L1-正则和-L2-正则的特点是什么-各有什么优势"><a href="#L1-正则和-L2-正则的特点是什么-各有什么优势" class="headerlink" title="L1 正则和 L2 正则的特点是什么? 各有什么优势?"></a>L1 正则和 L2 正则的特点是什么? 各有什么优势?</h1><p>二者共同的特点都是能够防止过拟合问题.</p>
@@ -617,7 +617,7 @@
 <p><strong>优化计算:</strong></p>
 <p>从优化或者数值计算的角度来说, L2正则化有利于提高模型训练速度, 加快计算</p>
 <p>原因: <a href="https://www.cnblogs.com/callyblog/p/8094745.html" target="_blank" rel="noopener">https://www.cnblogs.com/callyblog/p/8094745.html</a></p>
-<h1 id="正则项前面的系数一般怎么设置"><a href="#正则项前面的系数一般怎么设置" class="headerlink" title="正则项前面的系数一般怎么设置?"></a>正则项前面的系数一般怎么设置?</h1><p>通常做法是一开始将正则项系数 $\lambda$ 设置为 0, 然后先确定出一个比较好的 learning rate, 接着固定该 learning rate, 给 $lambda$ 一个初始值, 如 1.0. 然后根据验证集上的准确率, 将 $\lambda$ 增大或者缩小 10 倍, 这里增减 10 倍是粗调节, 当确定了 $\lambda$ 合适的数量级以后, 再进一步的细调节.</p>
+<h1 id="正则项前面的系数一般怎么设置"><a href="#正则项前面的系数一般怎么设置" class="headerlink" title="正则项前面的系数一般怎么设置?"></a>正则项前面的系数一般怎么设置?</h1><p>通常做法是一开始将正则项系数 $\lambda$ 设置为 0, 然后先确定出一个比较好的 learning rate, 接着固定该 learning rate, 给 $lambda$ 一个初始值, 如 1e-4. 然后根据验证集上的准确率, 将 $\lambda$ 增大或者缩小 10 倍, 这里增减 10 倍是粗调节, 当确定了 $\lambda$ 合适的数量级以后, 再进一步的细调节.</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://www.zhihu.com/question/26485586" target="_blank" rel="noopener">知乎: l1正则与l2正则的特点是什么，各有什么优势</a><br><a href="https://www.zhihu.com/question/20924039" target="_blank" rel="noopener">知乎: 机器学习中常常提到的正则化到底是什么意思</a></p>
 
       
@@ -996,7 +996,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">40:11</span>
+    <span title="站点阅读时长">40:38</span>
   
 </div>
 
@@ -1437,7 +1437,7 @@
             }
           }
 
-          if ('auto' === 'auto') {
+          if ('auto' === 'manual') {
             input.addEventListener('input', inputEventFunction);
           } else {
             $('.search-icon').click(inputEventFunction);
