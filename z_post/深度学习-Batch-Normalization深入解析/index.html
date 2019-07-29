@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="InceptionV2 在 V1 的基础上引入了 BN 层, 减少了 Internal Covariate Shift(内部神经元的数据分布差异), 使得每一层的输出都可以规范化到一个标准高斯分布上.  为什么要进行归一化在神经网络中, 数据分布对训练会产生影响. 当数据较大时, 有的激活函数比如 sigmoid 或者 tanh 的输出就会接近于 1, 此时的梯度就会接近于0, 处于激活函数的饱和">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-26T05:04:20.651Z">
+<meta property="og:updated_time" content="2019-07-29T12:32:53.800Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Batch-Normalization深入解析">
 <meta name="twitter:description" content="InceptionV2 在 V1 的基础上引入了 BN 层, 减少了 Internal Covariate Shift(内部神经元的数据分布差异), 使得每一层的输出都可以规范化到一个标准高斯分布上.  为什么要进行归一化在神经网络中, 数据分布对训练会产生影响. 当数据较大时, 有的激活函数比如 sigmoid 或者 tanh 的输出就会接近于 1, 此时的梯度就会接近于0, 处于激活函数的饱和">
@@ -481,8 +481,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-26T13:04:20+08:00" content="2019-03-26">
-      		  2019-03-26
+    		<time itemprop="dateUpdated" datetime="2019-07-29T20:32:53+08:00" content="2019-07-29">
+      		  2019-07-29
     		</time>
   	  </span>
 	  
@@ -596,7 +596,7 @@
 <p><strong>(3) BN允许网络使用饱和性激活函数（例如sigmoid，tanh等），缓解梯度消失问题</strong><br>在不使用BN层的时候，由于网络的深度与复杂性，很容易使得底层网络变化累积到上层网络中，导致模型的训练很容易进入到激活函数的梯度饱和区；通过normalize操作可以让激活函数的输入数据落在梯度非饱和区，缓解梯度消失的问题；另外通过自适应学习 $\gamma$ 与 $\beta$ 又让数据保留更多的原始信息。</p>
 <p><strong>(4)BN具有一定的正则化效果</strong><br>在Batch Normalization中，由于我们使用mini-batch的均值与方差作为对整体训练样本均值与方差的估计，尽管每一个batch中的数据都是从总体样本中抽样得到，但不同mini-batch的均值与方差会有所不同，这就为网络的学习过程中增加了随机噪音，与Dropout通过关闭神经元给网络训练带来噪音类似，在一定程度上对模型起到了正则化的效果。原作者也证明了网络加入BN后，可以丢弃Dropout，模型也同样具有很好的泛化效果。</p>
 <p><span id="BN 层通常处于网络中的什么位置"></span></p>
-<h1 id="BN-层通常处于网络中的什么位置"><a href="#BN-层通常处于网络中的什么位置" class="headerlink" title="BN 层通常处于网络中的什么位置"></a>BN 层通常处于网络中的什么位置</h1><p>BN 通常应用于网络中的非线性激活层之前, 将卷积层的输出归一化, 使得激活层的输入在 [0, 1] 之间, 避免梯度消失的问题.</p>
+<h1 id="BN-层通常处于网络中的什么位置"><a href="#BN-层通常处于网络中的什么位置" class="headerlink" title="BN 层通常处于网络中的什么位置"></a>BN 层通常处于网络中的什么位置</h1><p>BN 通常应用于网络中的非线性激活层之前, 将卷积层的输出归一化, 使得激活层的输入服从 (0, 1) 正态分布, 避免梯度消失的问题.</p>
 <p><span id="BN 中 batch 的大小对网络性能有什么影响"></span></p>
 <h1 id="BN-中-batch-的大小对网络性能有什么影响"><a href="#BN-中-batch-的大小对网络性能有什么影响" class="headerlink" title="BN 中 batch 的大小对网络性能有什么影响"></a>BN 中 batch 的大小对网络性能有什么影响</h1><p>由于 BN 在计算均值和方差时是在当前的 batch 上进行计算的, 因此, 当 batch 较小时, 求出来的均值和方差就会有较大的随机性, 从而导致效果下降, 具体来说, 当 batch 的大小低于 16 时, 就不建议使用 BN, 当 batch 低于 8 时, 网络的性能就会有非常明显的下降.</p>
 <p><span id="BN 中线性偏移的参数个数怎么计算的"></span></p>
@@ -997,7 +997,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">40:38</span>
+    <span title="站点阅读时长">40:44</span>
   
 </div>
 
