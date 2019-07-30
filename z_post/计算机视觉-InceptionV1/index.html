@@ -124,7 +124,7 @@
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fvn6q3t8hfj20j01x2qcf.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fvn98ano6mj20ps0f5778.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fvn6do3nmnj20un08y75k.jpg">
-<meta property="og:updated_time" content="2019-04-10T05:48:34.940Z">
+<meta property="og:updated_time" content="2019-07-30T11:12:43.541Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Inception V1 (GoogLeNet)">
 <meta name="twitter:description" content="文章: Going Deeper with Convolutions作者: Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, Andrew Rabinovich备注: Google, Inception">
@@ -486,8 +486,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-04-10T13:48:34+08:00" content="2019-04-10">
-      		  2019-04-10
+    		<time itemprop="dateUpdated" datetime="2019-07-30T19:12:43+08:00" content="2019-07-30">
+      		  2019-07-30
     		</time>
   	  </span>
 	  
@@ -550,7 +550,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">4.2k</span>
+                <span title="本文字数">4.1k</span>
               
 
               
@@ -644,7 +644,7 @@
 </ul>
 <h1 id="用卷积层代替全连接层的好处"><a href="#用卷积层代替全连接层的好处" class="headerlink" title="用卷积层代替全连接层的好处"></a>用卷积层代替全连接层的好处</h1><p>这样做其实有非常多的好处，比如上面的例子中输入是224x224x3 的图像，如果此时图像变得更大了，变成384x384大小的了，那么一开始按照32作为步长来进行卷积操作，最后还按照这个网络结构能得到一个[6×6×1000]层的，那么前面那个[6×6]有什么用呢，这个代表每一个位置上，其属于1000个分类结果中的打分，所以这在图像分割等领域等领域有着非常重要的作用【之前一篇论文就是用的这种方法Fully Convolutional Networks for Semantic Segmentation】。</p>
 <p><span id="Inception 中为什么使用全局平均池化层"></span></p>
-<h1 id="Inception-中为什么使用全局平均池化层"><a href="#Inception-中为什么使用全局平均池化层" class="headerlink" title="Inception 中为什么使用全局平均池化层"></a>Inception 中为什么使用全局平均池化层</h1><p>最主要的作用就是大大降低了特征图谱的维度, 使得模型的参数量大大减少, 参数量的减少从另一方面来说相对于对网络模型的复杂度做了正则化, 从而在一定程度上可以防止网络模型出现过拟合问题.</p>
+<h1 id="Inception-中为什么使用全局平均池化层"><a href="#Inception-中为什么使用全局平均池化层" class="headerlink" title="Inception 中为什么使用全局平均池化层"></a>Inception 中为什么使用全局平均池化层</h1><p>见关于池化层的讨论</p>
 <p><span id="为什么使用侧枝"></span></p>
 <h1 id="为什么使用侧枝"><a href="#为什么使用侧枝" class="headerlink" title="为什么使用侧枝"></a>为什么使用侧枝</h1><p>为了避免梯度消失，网络额外增加了2个辅助的softmax用于向前传导梯度（辅助分类器）。辅助分类器是将中间某一层的输出用作分类，并按一个较小的权重（0.3）加到最终分类结果中，这样相当于做了模型融合，同时给网络增加了反向传播的梯度信号，也提供了额外的正则化，对于整个网络的训练很有裨益。而在实际测试的时候，这两个额外的softmax会被去掉。也就是说在测试的时候，只会用最后的softmax结果作为分类依据。</p>
 <p>当时Inception网络还是太深了，不好训练，因此网络中还加了两个侧枝，通过中间层的feature map，来得到预测结果（有了ResNet的shortcut以后，这种侧枝用的比较少了）。</p>
@@ -1032,7 +1032,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">40:44</span>
+    <span title="站点阅读时长">41:07</span>
   
 </div>
 
