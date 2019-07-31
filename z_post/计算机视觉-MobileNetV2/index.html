@@ -125,13 +125,17 @@
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1g1kshuym7bj20tg0iyq6n.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1g1ksi26jfej20vn0ao40l.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1g1ksigcb7hj20tq0tajx5.jpg">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/MobileNetV2/tab1.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/MobileNetV2/tab3.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1g1ksiaefupj20tc0ueq8s.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1g1ksj50ekgj20t50ygn31.jpg">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/MobileNetV2/tab2.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/MobileNetV2/fig4.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1g1ksjfishsj20ub0l1q5t.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1g1ksm39wblj21910rmk1m.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1g1ksmkmm8uj20tu0woah6.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1g1ksjxpih3j20th0e9gnm.jpg">
-<meta property="og:updated_time" content="2019-04-02T08:14:00.557Z">
+<meta property="og:updated_time" content="2019-07-31T09:01:03.789Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MobileNetV2">
 <meta name="twitter:description" content="文章: MobileNetV2: Inverted Residuals and Linear Bottlenecks作者: Mark Sandler, Andrew Howard, Menglong Zhu, Andrey Zhmoginov, Liang-Chieh Chen备注: Google 摘要本文中我们介绍了一个新的网络结构, MobileNetV2, 提高了移动模型在多个任务和基准以及">
@@ -493,8 +497,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-04-02T16:14:00+08:00" content="2019-04-02">
-      		  2019-04-02
+    		<time itemprop="dateUpdated" datetime="2019-07-31T17:01:03+08:00" content="2019-07-31">
+      		  2019-07-31
     		</time>
   	  </span>
 	  
@@ -616,10 +620,14 @@
 <p><strong>Running time and parameter count for bottleneck convolution</strong> 基本的实现结构如表1所示. 在表3中, 我们比较了 MobileNetV1, MobileNetV2, ShuffleNet 所需的分辨率大小.</p>
 <p><div style="width: 550px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1g1ksi26jfej20vn0ao40l.jpg" alt="表1"></div></p>
 <p><div style="width: 550px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1g1ksigcb7hj20tq0tajx5.jpg" alt="表3"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/MobileNetV2/tab1.jpg?x-oss-process=style/blog_img" alt="MobileNetV2%2Ftab1.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/MobileNetV2/tab3.jpg?x-oss-process=style/blog_img" alt="MobileNetV2%2Ftab3.jpg"></div></p>
 <h2 id="Information-flow-interpretation"><a href="#Information-flow-interpretation" class="headerlink" title="Information flow interpretation"></a>Information flow interpretation</h2><p>我们的网络结构的一个有趣的特性是, 它在 building blocks(bottleneck layers) 的 input/output domains 和层转换之间提供了一种自然的间隔(natural separation). 层转换是一个将输入转换为输出的非线性函数, 前者可以看做是网络在每一层的容量(capacity), 而后者可以看做是表征能力(expressiveness). 这与传统的卷积块形成了鲜明的对比, 传统的卷积是 regular and separable 的, 它的 expressiveness 和 capacity 是纠缠在一起的, 是输出图谱通道数的函数. 特别地, 在我们的例子中, 当内层网络的深度为 0 时, 多亏了 shortcut 的存在, 使得底层卷积变成了一个 indentity function. 当膨胀比(expansion ratio)小于 1 时, 这就是一个经典的残差卷积块. <strong>但是, for our purposes, 我们展示了大于 1 的膨胀比是最有用的.</strong><br>这一解释使得我们能够不考虑 capacity 而独立的研究网络的表征能力, 我们认为, 对这种 separation 的进一步探索有助于更好的理解网络的特性.</p>
 <h1 id="Model-Architecture"><a href="#Model-Architecture" class="headerlink" title="Model Architecture"></a>Model Architecture</h1><p>接下来我们将详细描述我们的网络结构. 正如前一节所讨论的, 基本的 building block 是 bottleneck depth-separable convolution with residuals. 该模块的详细结构如表 1 所示. MobileNetV2 的网络结构如表2 所示, 第一层是一个 filters 数量为 32 的卷积层, 后面 19 个 residual bottleneck 层. 由于 <strong>ReLU6</strong> 在面对低精度计算时具有更高的鲁棒性, 因此我们选它作为非线性激活函数. 我们的卷积核大小通常为 3x3, 并在训练中使用 dropout 和 BN.</p>
 <p><div style="width: 550px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1g1ksiaefupj20tc0ueq8s.jpg" alt="表2"></div></p>
 <p><div style="width: 550px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1g1ksj50ekgj20t50ygn31.jpg" alt="图4"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/MobileNetV2/tab2.jpg?x-oss-process=style/blog_img" alt="MobileNetV2%2Ftab2.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/MobileNetV2/fig4.jpg?x-oss-process=style/blog_img" alt="MobileNetV2%2Ffig4.jpg"></div></p>
 <p>除了第一层以外, 我们在整个网络中都使用了恒定的膨胀率. 在我们的实验中, 我们发现在膨胀率在 5~10 之间时具有几乎相同的性能曲线, 并且在较小的网络中小膨胀率性能更好, 在较大的网络中大膨胀率性能较好.<br>在我们主要的实验中, 均使用大小为 6 的膨胀因子. <strong>例如, 对于一个输入通道数为 64, 输出通道数为 128 的 bottleneck 模块来说, 中间的 expansion layer 的通道数为 $64\times 6 = 384$.</strong></p>
 <p><strong>Trade-off hyper parameters</strong> 和 MobileNetV1 中一样, 我们将输入图像的分辨率和宽度乘子作为可调节的超参数, 根据所需的精度和性能要求权衡我们的体系结构, 以此适应不同的性能. 我们的 primary network(width multiplier 1, 224x224) 的计算成本为 3 亿次 multiply-adds, 并且具有 3.4 million 的参数. 我们探索了从 resolution 才 96 到 224, width multipliers 从 0.35 到 1.4 的性能表现. 网络的计算成本在 7~585 M MAdds, 模型大小在 1.7~6.9M 个参数.<br>MobileNetV2 在实现上与 MobileNetV1 的一个小的差异是, 对于小于 1 的乘数, 我们将 width multiplier 应用于除最后一个卷积层之外的所有层. 这对小模型的性能有所提升.</p>
 <h1 id="Implementation-Notes"><a href="#Implementation-Notes" class="headerlink" title="Implementation Notes"></a>Implementation Notes</h1><h2 id="Memory-efficient-inference"><a href="#Memory-efficient-inference" class="headerlink" title="Memory efficient inference"></a>Memory efficient inference</h2><p>Inverted Residual  Bottleneck 可以实现时具有内存高效的好处, 这对于移动应用来说非常重要.  计算过程会优先使需要在内存中的张量总数最小化来进行安排. 在通常情况下, 深度学习框架(TF, Caffe)会搜索所有可能的计算顺序 $\Sigma (G)$, 并从中选择总计算量最小的一个.</p>
@@ -1020,7 +1028,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">41:12</span>
+    <span title="站点阅读时长">41:24</span>
   
 </div>
 

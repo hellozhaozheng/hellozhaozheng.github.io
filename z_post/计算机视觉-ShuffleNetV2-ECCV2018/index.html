@@ -135,7 +135,7 @@
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/ShuffleNetV2/tab6.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/ShuffleNetV2/Atab2.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/ShuffleNetV2/tab7.jpg?x-oss-process=style/blog_img">
-<meta property="og:updated_time" content="2019-07-12T11:35:13.452Z">
+<meta property="og:updated_time" content="2019-07-31T14:21:21.468Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ShuffleNetV2 (ECCV, 2018)">
 <meta name="twitter:description" content="文章: ShuffleNet V2: Practical Guidelines for Efficient CNN Architecture Design作者: Ningning Ma, Xiangyu Zhang, Hai-Tao Zheng, Jian Sun备注: Megvii 摘要目前，神经网络体系结构设计主要以计算复杂度的 间接度量 为指导，即, FLOPs。然而，速度等直接指标也取决于">
@@ -497,8 +497,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-07-12T19:35:13+08:00" content="2019-07-12">
-      		  2019-07-12
+    		<time itemprop="dateUpdated" datetime="2019-07-31T22:21:21+08:00" content="2019-07-31">
+      		  2019-07-31
     		</time>
   	  </span>
 	  
@@ -609,18 +609,19 @@
 <p>根据不同的操作分解整个运行时间，结果如图2所示。本文注意到 FLOPs 只占有卷积部分。虽然这部分花费的时间最多，但是其他操作包括数据I/O、data shuffle 和 element-wise 操作(add张量、ReLU等)也需要相当长的时间。因此，只使用 FLOPs 对实际运行时进行估计不够准确。</p>
 <p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/ShuffleNetV2/fig2.jpg?x-oss-process=style/blog_img" alt="ShuffleNetV2%2Ffig2.jpg"></div></p>
 <p>基于这一观察，本文从几个不同的方面对运行时间(或速度)进行了详细的分析，并为高效的网络架构设计得出了几个实用的指导原则。</p>
-<h2 id="G1-通道宽度相等，内存访问成本-MAC-最小"><a href="#G1-通道宽度相等，内存访问成本-MAC-最小" class="headerlink" title="G1) 通道宽度相等，内存访问成本(MAC)最小"></a>G1) 通道宽度相等，内存访问成本(MAC)最小</h2><p>现代网络通常采用深度可分卷积[12,13,15,14]，其中点态卷积(即 1×1 卷积)占了[15]复杂度的绝大部分。本文研究了1×1卷积的核形状, 发现其由两个参数指定: 输入通道 $c_1$ 和输出通道 $c_2$ 的数量。设 $h$ 和 $w$ 为 feature map 的空间大小，1×1 卷积的 FLOPs 为 $B = hwc_1c_2$<br>为了简单起见，本文假设计算设备中的缓存足够大，可以存储整个特征图谱和参数。因此，内存访问成本(MAC)或内存访问操作的数量是 $MAC = hw(c_1+c_2)+c_1c_2$。注意，这两项分别对应于输入/输出特性映射和卷积核权重的内存访问。<br>从均值不等式，本文得到:</p>
-<script type="math/tex; mode=display">MAC \geq 2\sqrt{hwB} + \frac{B}{hw}</script><p><strong>因此，MAC有一个由FLOPs给出的下界。当输入通道和输出通道数目相等时，到达下界。</strong><br>上面结论只是理论性的。实际上，许多设备上的缓存不够大。此外，现代计算库通常采用复杂的阻塞策略来充分利用缓存机制[24]。因此，实际MAC可能会偏离理论MAC。为了验证上述结论，本文进行了如下实验。通过重复叠加10个 building block 来构建基准网络。每个 block 包含两个卷积层。第一个包含c1输入通道和c2输出通道，and the second otherwise.(啥意思?)<br>表1通过改变 $c_1:c2$ 的比例来测试运行速度，同时固定 FLOPs 不变。很明显，当 $c_1:c_2$ 接近 1:1 时，MAC变得更小，网络评估速度更快。</p>
+<h2 id="G1-通道宽度相等，内存访问成本-MAC-最小"><a href="#G1-通道宽度相等，内存访问成本-MAC-最小" class="headerlink" title="G1) 通道宽度相等，内存访问成本(MAC)最小"></a>G1) 通道宽度相等，内存访问成本(MAC)最小</h2><p>现代网络通常采用深度可分卷积[12,13,15,14]，其中点态卷积(即 1×1 卷积)占了[15]复杂度的绝大部分。本文研究了1×1卷积的核形状, 发现其由两个参数指定: 输入通道 $c_1$ 和输出通道 $c_2$ 的数量。设 $h$ 和 $w$ 为 feature map 的空间大小，1×1 卷积的 FLOPs 为 $B = hwc_1c_2$<br>为了简单起见，本文假设计算设备中的缓存足够大，可以存储整个特征图谱和参数。因此，内存访问成本(MAC)或内存访问操作的数量是 $MAC = hw(c_1+c_2)+c_1c_2$。注意，这两项分别对应于输入/输出特性映射和卷积核权重的内存访问。<br>均值不等式，对于非负实数有 $a + b \geq 2\sqrt {ab}$, 并且仅当 $a=b$ 时才取得最小值, 由此本文得到:</p>
+<script type="math/tex; mode=display">MAC \geq 2\sqrt{hwB} + \frac{B}{hw}</script><p>推理过程如下:</p>
+<script type="math/tex; mode=display">MAC = hw(c_1+c_2)+c_1c_2 = hwc_1 + hwc_2 + c_1 c_2 \geq 2\sqrt{hwc_1 hwc_2} + c_1 c_2 = 2\sqrt{hwB} + \frac{B}{hw}</script><p><strong>因此，MAC有一个由FLOPs给出的下界。当输入通道和输出通道数目相等时，到达下界。</strong><br>上面结论只是理论性的。实际上，许多设备上的缓存不够大。此外，现代计算库通常采用复杂的阻塞策略来充分利用缓存机制[24]。因此，实际MAC可能会偏离理论MAC。为了验证上述结论，本文进行了如下实验。通过重复叠加10个 building block 来构建基准网络。每个 block 包含两个卷积层。第一个包含c1输入通道和c2输出通道，and the second otherwise.(啥意思?)<br>表1通过改变 $c_1:c_2$ 的比例来测试运行速度，同时固定 FLOPs 不变。很明显，当 $c_1:c_2$ 接近 1:1 时，MAC变得更小，网络评估速度更快。</p>
 <p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/ShuffleNetV2/tab1.jpg?x-oss-process=style/blog_img" alt="ShuffleNetV2%2Ftab1.jpg"></div></p>
 <h2 id="G2-过多的-Group-Conv-会增加-MAC"><a href="#G2-过多的-Group-Conv-会增加-MAC" class="headerlink" title="G2) 过多的 Group Conv 会增加 MAC"></a>G2) 过多的 Group Conv 会增加 MAC</h2><p>Group Conv 是现代网络结构的核心[7,15,25,26,27,28]。它通过将所有通道之间的密集卷积变的更稀疏(仅在通道组内)来降低计算复杂度(FLOPs)。一方面，它允许在给定 FLOPs 的情况下使用更多的通道，增加了网络容量(从而提高了准确性)。然而，另一方面, 通道数量的增加导致更多的 MAC。<br>形式上，1×1 Group Conv 的 MAC 和 FLOPs 之间的关系为</p>
-<script type="math/tex; mode=display">MAC = hw(c_1 + c_2) + \frac{c_1 c_2}{g} = hwc_1 + \frac{Bg}{c_1} + \frac{B}{hw}</script><p>其中 $g$ 为组数，$B = hwc_1c_2 / g$ 为 FLOPs。可以看出，<strong>给定固定的输入形状 $c_1\times h\times w$，计算量 B 和 MAC 都随着 $g$ 的增大而增大。</strong></p>
+<script type="math/tex; mode=display">MAC = hw(c_1 + c_2) + \frac{c_1 c_2}{g} = hwc_1 + \frac{Bg}{c_1} + \frac{B}{hw}</script><p>其中 $g$ 为组数，$B = hwc_1c_2 / g$ 为 FLOPs。可以看出，<strong>给定固定的输入形状 $c_1\times h\times w$ 和计算量 B, MAC 都随着 $g$ 的增大而增大。</strong></p>
 <p>为了验证 Group Conv 在实际应用中的影响，本文通过叠加 10个 pointwise group 卷积层，建立了一个基准网络。表2显示了在固定 FLOPs 不变时使用不同 group numbers 的运行速度. 很明显，使用较大的分组数量会显著降低运行速度。例如，在GPU上使用8组比使用1组(标准密集卷积)慢两倍多，在ARM上慢30%。这主要是由于MAC的增加。本文注意到，本文的实现经过了特别的优化，比一组一组地计算卷积要快得多。</p>
 <p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/ShuffleNetV2/tab2.jpg?x-oss-process=style/blog_img" alt="ShuffleNetV2%2Ftab2.jpg"></div></p>
 <p><strong>因此，本文建议根据目标平台和具体任务谨慎的选择分组数量。使用较大的组号是不明智的，因为这可能会导致产生更多的通道，这样一来精度提高的好处很容易被快速增长的计算成本所抵消。</strong></p>
 <h2 id="G3-网络碎片化降低了并行度"><a href="#G3-网络碎片化降低了并行度" class="headerlink" title="G3) 网络碎片化降低了并行度"></a>G3) 网络碎片化降低了并行度</h2><p>在 GoogLeNet 系列[29,30,3,31]和自动生成的体系结构[9,11,10]中，每个网络块都广泛采用“多路径”结构。使用许多小的操作符(这里称为“片段操作符”)，而不是一些大的操作符。例如，在NASNET-A[9]中，碎片操作符的数量(即一个 building block 中单个卷积或池化操作的数量)为13。相反，在像 ResNet 这样的常规结构中，这个数字是2或3。<br>虽然这种碎片化的结构已被证明有利于提高精度，但它可能会降低效率，因为它对GPU等具有强大并行计算能力的设备不友好。它还引入了额外的开销，比如 kernel launching 和信息同步(synchronization)</p>
 <p>为了量化网络碎片化对效率的影响，本文评估了不同碎片化程度的网络块的结构。具体来说，每个构建块由1到4个1×1的卷积组成，这些卷积按顺序或并行排列。块结构如附录图1所示。每个网络块都会重复堆叠10次。</p>
 <p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/ShuffleNetV2/Afig1.jpg?x-oss-process=style/blog_img" alt="ShuffleNetV2%2FAfig1.jpg"></div></p>
-<p>表3的结果显示，分段在GPU上显著降低了速度，如4段结构比1段慢3倍。在ARM上，减速相对较小。</p>
+<p>表3的结果显示，多段结构(即使是多段并行)在GPU上显著降低了速度，如4段结构比1段慢3倍。在ARM上，减速相对较小, 因为主要影响的是并行程度, 而 CPU 上主要进行串行计算.</p>
 <p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/ShuffleNetV2/tab3.jpg?x-oss-process=style/blog_img" alt="ShuffleNetV2%2Ftab3.jpg"></div></p>
 <h2 id="G4-Element-wise-操作是不可忽略的"><a href="#G4-Element-wise-操作是不可忽略的" class="headerlink" title="G4) Element-wise 操作是不可忽略的"></a>G4) Element-wise 操作是不可忽略的</h2><p>如图2所示，在轻量模型[15,14]中，element-wise 操作占用了相当多的时间，尤其是在GPU上。这里的元素操作符包括ReLU、Add Tensor、Add Bias等。它们的 FLOPs 较小，但 MAC 相对较高。特别地，本文还考虑了深度卷积(depthwise convolution)[12,13,14,15]作为一个 element-wise 运算符的情况，因为它也具有较高的MAC/FLOPs比。</p>
 <p>为了验证本文的想法，本文在ResNet[4]中实验了 “bottleneck” 单元(1×1 conv + 3×3 conv + 1×1 conv, ReLU + Shortcut)。同时分别移除了 ReLU 和 Shortcut 操作。表4展示了不同变体的运行时间。可以看出, 在去除 ReLU 和 Shortcut 后，GPU 和 ARM 均获得了20%左右的加速。</p>
@@ -713,8 +714,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/计算机视觉-SSD-ECCV2016/" rel="prev" title="SSD-Single Shot MultiBox Detector">
-                <i class="fa fa-chevron-left"></i> SSD-Single Shot MultiBox Detector
+              <a href="/z_post/计算机视觉-FaFS-CVPR2017/" rel="prev" title="FaFS (CVPR, 2017)">
+                <i class="fa fa-chevron-left"></i> FaFS (CVPR, 2017)
               </a>
             
           </div>
@@ -723,8 +724,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/计算机视觉-SNIPER/" rel="next" title="SNIPER">
-                SNIPER <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/计算机视觉-网络结构汇总/" rel="next" title="计算机视觉-模型结构小结">
+                计算机视觉-模型结构小结 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -1058,7 +1059,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">41:12</span>
+    <span title="站点阅读时长">41:24</span>
   
 </div>
 

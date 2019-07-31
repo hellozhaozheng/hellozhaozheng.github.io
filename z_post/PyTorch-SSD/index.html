@@ -120,12 +120,10 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="概览SSD 和 YOLO 都是非常主流的 one-stage 目标检测模型, 并且相对于 two-stage 的 RCNN 系列来说, SSD 的实现更加的简明易懂, 接下来我将从以下几个方面展开对 SSD 模型的源码实现讲解:  模型结构定义 DefaultBox 生成候选框 解析预测结果 MultiBox 损失函数 Augmentations Trick 模型训练 模型预测 模型验证 其他辅助">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fx6o47y0w0j215y0r2jz0.jpg">
-<meta property="og:updated_time" content="2019-04-09T08:46:03.427Z">
+<meta property="og:updated_time" content="2019-07-31T12:46:37.821Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SSD 源码实现 (PyTorch)">
 <meta name="twitter:description" content="概览SSD 和 YOLO 都是非常主流的 one-stage 目标检测模型, 并且相对于 two-stage 的 RCNN 系列来说, SSD 的实现更加的简明易懂, 接下来我将从以下几个方面展开对 SSD 模型的源码实现讲解:  模型结构定义 DefaultBox 生成候选框 解析预测结果 MultiBox 损失函数 Augmentations Trick 模型训练 模型预测 模型验证 其他辅助">
-<meta name="twitter:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fx6o47y0w0j215y0r2jz0.jpg">
 
 
 
@@ -483,8 +481,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-04-09T16:46:03+08:00" content="2019-04-09">
-      		  2019-04-09
+    		<time itemprop="dateUpdated" datetime="2019-07-31T20:46:37+08:00" content="2019-07-31">
+      		  2019-07-31
     		</time>
   	  </span>
 	  
@@ -593,7 +591,6 @@
 <li><a href="#模型验证">模型验证</a></li>
 <li><a href="#其他辅助代码">其他辅助代码</a></li>
 </ul>
-<p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fx6o47y0w0j215y0r2jz0.jpg" alt=""></div></p>
 <p>可以看出, 虽然 SSD 模型本身并不复杂, 但是也正是由于 one-stage 模型较简单的原因, 其检测的准确率相对于 two-stage 模型较低, 因此, 通常需要借助许多训练和检测时的 Tricks 来提升模型的精确度, 这些代码我们会放在第三部分讲解. 下面, 我们按照顺序首先对 SSD 模型结构定义的源码进行解析.(项目地址: <a href="https://github.com/amdegroot/ssd.pytorch" target="_blank" rel="noopener">https://github.com/amdegroot/ssd.pytorch</a>)</p>
 <p><span id="模型结构定义"></span></p>
 <h1 id="模型结构定义"><a href="#模型结构定义" class="headerlink" title="模型结构定义"></a>模型结构定义</h1><p>本部分代码主要位于 <code>ssd.py</code> 文件里面, 在本文件中, 定义了SSD的模型结构. 主要包含以下类和函数, 整体概览如下:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ssd.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SSD</span><span class="params">(nn.Module)</span>:</span> <span class="comment"># 自定义SSD网络</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, phase, size, base, extras, head, num_classes)</span>:</span></span><br><span class="line">        <span class="comment"># ... SSD 模型初始化</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        <span class="comment"># ... 定义forward函数, 将设计好的layers和ops应用到输入图片 x 上</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">load_weights</span><span class="params">(self, base_file)</span>:</span></span><br><span class="line">        <span class="comment"># ... 加载参数权重值</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">vgg</span><span class="params">(cfg, i, batch_norm=False)</span>:</span></span><br><span class="line">    <span class="comment"># ... 搭建vgg网络</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_extras</span><span class="params">(cfg, i, batch_norm=False)</span>:</span></span><br><span class="line">    <span class="comment"># ... 向VGG网络中添加额外的层用于feature scaling</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">multibox</span><span class="params">(vgg, extra_layers, cfg, num_classes)</span>:</span></span><br><span class="line">    <span class="comment"># ... 构建multibox结构</span></span><br><span class="line">base = &#123;...&#125; <span class="comment"># vgg 网络结构参数</span></span><br><span class="line">extras = &#123;...&#125; <span class="comment"># extras 层参数</span></span><br><span class="line">mbox = &#123;...&#125; <span class="comment"># multibox 相关参数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_ssd</span><span class="params">(phase, size=<span class="number">300</span>, num_classes=<span class="number">21</span>)</span>:</span></span><br><span class="line">    <span class="comment"># ... 构建模型函数, 调用上面的函数进行构建</span></span><br></pre></td></tr></table></figure></p>
@@ -1056,7 +1053,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">41:12</span>
+    <span title="站点阅读时长">41:24</span>
   
 </div>
 
