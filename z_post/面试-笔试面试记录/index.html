@@ -112,17 +112,17 @@
 
 
 
-  <meta name="description" content="笔试常见坑数字相乘后超出 int 范围, 能用 long long 就用 long longpython 的 sys.stdin.readline()split() 读入的都是字符串, 因此在进行比较时需要注意字符串的比较和数字类型的比较的区别. python 的 append 方法是对列表直接操作, 不会返回任何结果(返回 None) python 的for i in range语法的每一次迭代">
+  <meta name="description" content="笔试常见坑数字相乘后超出 int 范围, 能用 long long 就用 long longpython 的 sys.stdin.readline().split() 读入的都是字符串, 因此在进行比较时需要注意字符串的比较和数字类型的比较的区别. python 的 append 方法是对列表直接操作, 不会返回任何结果(返回 None) python 的for i in range语法的每一次迭">
 <meta property="og:type" content="article">
 <meta property="og:title" content="笔试及面试记录">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/面试-笔试面试记录/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="笔试常见坑数字相乘后超出 int 范围, 能用 long long 就用 long longpython 的 sys.stdin.readline()split() 读入的都是字符串, 因此在进行比较时需要注意字符串的比较和数字类型的比较的区别. python 的 append 方法是对列表直接操作, 不会返回任何结果(返回 None) python 的for i in range语法的每一次迭代">
+<meta property="og:description" content="笔试常见坑数字相乘后超出 int 范围, 能用 long long 就用 long longpython 的 sys.stdin.readline().split() 读入的都是字符串, 因此在进行比较时需要注意字符串的比较和数字类型的比较的区别. python 的 append 方法是对列表直接操作, 不会返回任何结果(返回 None) python 的for i in range语法的每一次迭">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-10T12:44:37.484Z">
+<meta property="og:updated_time" content="2019-08-01T01:52:23.444Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="笔试及面试记录">
-<meta name="twitter:description" content="笔试常见坑数字相乘后超出 int 范围, 能用 long long 就用 long longpython 的 sys.stdin.readline()split() 读入的都是字符串, 因此在进行比较时需要注意字符串的比较和数字类型的比较的区别. python 的 append 方法是对列表直接操作, 不会返回任何结果(返回 None) python 的for i in range语法的每一次迭代">
+<meta name="twitter:description" content="笔试常见坑数字相乘后超出 int 范围, 能用 long long 就用 long longpython 的 sys.stdin.readline().split() 读入的都是字符串, 因此在进行比较时需要注意字符串的比较和数字类型的比较的区别. python 的 append 方法是对列表直接操作, 不会返回任何结果(返回 None) python 的for i in range语法的每一次迭">
 
 
 
@@ -480,8 +480,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-07-10T20:44:37+08:00" content="2019-07-10">
-      		  2019-07-10
+    		<time itemprop="dateUpdated" datetime="2019-08-01T09:52:23+08:00" content="2019-08-01">
+      		  2019-08-01
     		</time>
   	  </span>
 	  
@@ -578,7 +578,7 @@
       
 
       
-        <h1 id="笔试常见坑"><a href="#笔试常见坑" class="headerlink" title="笔试常见坑"></a>笔试常见坑</h1><p>数字相乘后超出 <code>int</code> 范围, 能用 <code>long long</code> 就用 <code>long long</code><br>python 的 sys.stdin.readline()split() 读入的都是字符串, 因此在进行比较时需要注意字符串的比较和数字类型的比较的区别.</p>
+        <h1 id="笔试常见坑"><a href="#笔试常见坑" class="headerlink" title="笔试常见坑"></a>笔试常见坑</h1><p>数字相乘后超出 <code>int</code> 范围, 能用 <code>long long</code> 就用 <code>long long</code><br>python 的 sys.stdin.readline().split() 读入的都是字符串, 因此在进行比较时需要注意字符串的比较和数字类型的比较的区别.</p>
 <p>python 的 append 方法是对列表直接操作, 不会返回任何结果(返回 None)</p>
 <p>python 的<code>for i in range</code>语法的每一次迭代都是基于 range 的, 不会被内部改变, 如下所示, 下面三段程序的输出是一模一样的.<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">        <span class="keyword">if</span> i % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        print(i)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    <span class="keyword">if</span> i % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    print(i)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    <span class="keyword">if</span> i % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        i = <span class="number">3</span></span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    print(i)</span><br></pre></td></tr></table></figure></p>
 <h1 id="商汤科技实习一面"><a href="#商汤科技实习一面" class="headerlink" title="商汤科技实习一面"></a>商汤科技实习一面</h1><p>你有计算过感受野的大小吗<br>你有没有计算过网络结构的感受野大小, 做目标检测的时候<br>根据网络的参数算感受野大小? 可以举个例子吗?<br>你有没有发理论上计算出来的感受野大小和实际网络的效果是有差别的, 偏大还是偏小? 为什么?<br>CNN 具有平移不变性, 这句话是对的吗<br>如果 CNN 中具有全连接层, 你觉得还具有平移不变性吗<br>检测文章还看了哪些比较新的工作?<br>讲一下 MaskRCNN<br>你觉得那些竞赛哪一个比较难<br>网络结构改动最大的是哪一些, 自己重新搭建了一个网络结构?<br>有没有自己去重新构建一个网络结构, 或者说一些组合? resnet , inception, 各种组合, 有尝试过吗(这里可以答 seblock 等等)</p>
@@ -1032,7 +1032,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">41:24</span>
+    <span title="站点阅读时长">41:31</span>
   
 </div>
 
