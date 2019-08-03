@@ -121,7 +121,7 @@
 <meta property="og:description" content="文章: Rich Feature Hierarchies for Accurate Object Detection and Semantic Segmentation作者: Ross Girshick, Jeff Donahue, Trevor Darrell, Jitendra Malik 训练流程 SS 提取出候选区域框; 根据候选区域框与真实框的交并比决定正负样本标签(此时不关心框内物体的">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1g113krcrqdj20xy0exq38.jpg">
-<meta property="og:updated_time" content="2019-03-27T04:52:11.919Z">
+<meta property="og:updated_time" content="2019-08-03T11:51:56.090Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RCNN(CVPR, 2014)">
 <meta name="twitter:description" content="文章: Rich Feature Hierarchies for Accurate Object Detection and Semantic Segmentation作者: Ross Girshick, Jeff Donahue, Trevor Darrell, Jitendra Malik 训练流程 SS 提取出候选区域框; 根据候选区域框与真实框的交并比决定正负样本标签(此时不关心框内物体的">
@@ -481,8 +481,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-27T12:52:11+08:00" content="2019-03-27">
-      		  2019-03-27
+    		<time itemprop="dateUpdated" datetime="2019-08-03T19:51:56+08:00" content="2019-08-03">
+      		  2019-08-03
     		</time>
   	  </span>
 	  
@@ -609,7 +609,7 @@
 <p><strong>正负样本划分</strong>: 与 gt-box 的 IoU 大于 0.5 的认为是正样本, 反之认为是负样本. 训练时, mini-batch 中正样本采样数为32(over all classes), 负样本的采样数为 96. 负样本数量多是因为在真实情况下, 背景的区域数量远大于物体数量.</p>
 <p><strong>分类器</strong>: 为每个类别训练了一个 SVM.</p>
 <h1 id="Appendix"><a href="#Appendix" class="headerlink" title="Appendix"></a>Appendix</h1><h1 id="A-Object-proposal-transformations"><a href="#A-Object-proposal-transformations" class="headerlink" title="A. Object proposal transformations**"></a>A. Object proposal transformations**</h1><p>图片大小归一化.</p>
-<h1 id="B-Positive-vs-negative-examples-and-softmax"><a href="#B-Positive-vs-negative-examples-and-softmax" class="headerlink" title="B. Positive vs. negative examples and softmax**"></a>B. Positive vs. negative examples and softmax**</h1><p>在 fine-tuning CNN 时和训练 SVM 时采用的正负样本的定义是不同的</p>
+<h1 id="B-Positive-vs-negative-examples-and-softmax"><a href="#B-Positive-vs-negative-examples-and-softmax" class="headerlink" title="B. Positive vs. negative examples and softmax"></a>B. Positive vs. negative examples and softmax</h1><p>在 fine-tuning CNN 时和训练 SVM 时采用的正负样本的定义是不同的</p>
 <ul>
 <li>find-tuning: 根据候选框与真实框的交并比决定, 无视框的类别, 我们只在乎前景和后景的区别</li>
 <li>SVM: 当训练某一个类别的 SVM 时, 只认为与当前类别的真实框的交并比大于一定阈值的为正样本, 其他的均为负样本.</li>
@@ -635,8 +635,7 @@
 <h1 id="为什么当-Region-Proposals-和-Ground-Truth-较接近时的-IoU-较大时-可以认为是边框回归函数是线性变换"><a href="#为什么当-Region-Proposals-和-Ground-Truth-较接近时的-IoU-较大时-可以认为是边框回归函数是线性变换" class="headerlink" title="为什么当 Region Proposals 和 Ground Truth 较接近时的 IoU 较大时, 可以认为是边框回归函数是线性变换?"></a>为什么当 Region Proposals 和 Ground Truth 较接近时的 IoU 较大时, 可以认为是边框回归函数是线性变换?</h1><p>当输入的 Proposal 与 Ground Truth 相差较小时(RCNN 设置的是 IoU&gt;0.6)， 可以认为这种变换是一种线性变换， 那么我们就可以用线性回归来建模对窗口进行微调， 否则会导致训练的回归模型不 work (当 Proposal跟 GT 离得较远，就是复杂的非线性问题了，此时用线性回归建模显然不合理). 对于这一段的话解释如下:</p>
 <p>首先, Log 函数肯定不满足线性函数的定义, 但是根据极限的相关定义, 我们如下面的等式成立:</p>
 <script type="math/tex; mode=display">lim_{x\rightarrow0}log(1+x) = x</script><p>根据上面的公式, 我们可以对公式 $t_w$ 作如下推导:</p>
-<p>$$t_w = log(G_w / P_w) = log(\frac{G_w + P_w - P_w}{P_w}) = log(1 + \frac{G_w - P_w}{P_w})$</p>
-<p>从上式我们可以看出, 当 $G_w - P_w = 0$ 的时候, 回归函数 $t_w$ 可以看做是线性函数.</p>
+<script type="math/tex; mode=display">t_w = log(G_w / P_w) = log(\frac{G_w + P_w - P_w}{P_w}) = log(1 + \frac{G_w - P_w}{P_w})</script><p>从上式我们可以看出, 当 $G_w - P_w = 0$ 的时候, 回归函数 $t_w$ 可以看做是线性函数.</p>
 <p>这里还有一点疑问: 从公式来说, $t_x$ 和 $t_y$ 本身就已经是线性函数, 而 $t_w$ 和 $t_h$ 只需要 Proposals 和 Ground Truth 的宽高相似即可满足线性回归条件. 那么为什么必须要 IoU 较大才可以? 不是只要宽高相似就可以吗?</p>
 <p>边框回归(BoundingBoxRegression)详解<br><a href="https://blog.csdn.net/zijin0802034/article/details/77685438" target="_blank" rel="noopener">https://blog.csdn.net/zijin0802034/article/details/77685438</a></p>
 
@@ -676,8 +675,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/计算机视觉-MaskR-CNN-ICCV2017/" rel="prev" title="Mask R-CNN (ICCV, 2017)">
-                <i class="fa fa-chevron-left"></i> Mask R-CNN (ICCV, 2017)
+              <a href="/z_post/计算机视觉-FastR-CNN-ICCV2015/" rel="prev" title="Fast R-CNN (ICCV, 2015)">
+                <i class="fa fa-chevron-left"></i> Fast R-CNN (ICCV, 2015)
               </a>
             
           </div>
@@ -686,8 +685,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/计算机视觉-FastR-CNN-ICCV2015/" rel="next" title="Fast R-CNN (ICCV, 2015)">
-                Fast R-CNN (ICCV, 2015) <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/计算机视觉-MaskR-CNN-ICCV2017/" rel="next" title="Mask R-CNN (ICCV, 2017)">
+                Mask R-CNN (ICCV, 2017) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -975,7 +974,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#训练流程"><span class="nav-text">训练流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#检测流程"><span class="nav-text">检测流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Region-Proposals"><span class="nav-text">Region Proposals</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Appendix"><span class="nav-text">Appendix</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#A-Object-proposal-transformations"><span class="nav-text">A. Object proposal transformations**</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#B-Positive-vs-negative-examples-and-softmax"><span class="nav-text">B. Positive vs. negative examples and softmax**</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-Bounding-box-regression"><span class="nav-text">C. Bounding-box regression</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简述-Selective-Search-的原理"><span class="nav-text">简述 Selective Search 的原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简述-Bounding-Box-的回归方式"><span class="nav-text">简述 Bounding Box 的回归方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bounding-box-回归的时候-为什么不直接对坐标回归-而是采用偏移量和缩放度"><span class="nav-text">Bounding box 回归的时候, 为什么不直接对坐标回归, 而是采用偏移量和缩放度</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么当-Region-Proposals-和-Ground-Truth-较接近时的-IoU-较大时-可以认为是边框回归函数是线性变换"><span class="nav-text">为什么当 Region Proposals 和 Ground Truth 较接近时的 IoU 较大时, 可以认为是边框回归函数是线性变换?</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#训练流程"><span class="nav-text">训练流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#检测流程"><span class="nav-text">检测流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Region-Proposals"><span class="nav-text">Region Proposals</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Appendix"><span class="nav-text">Appendix</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#A-Object-proposal-transformations"><span class="nav-text">A. Object proposal transformations**</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#B-Positive-vs-negative-examples-and-softmax"><span class="nav-text">B. Positive vs. negative examples and softmax</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-Bounding-box-regression"><span class="nav-text">C. Bounding-box regression</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简述-Selective-Search-的原理"><span class="nav-text">简述 Selective Search 的原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简述-Bounding-Box-的回归方式"><span class="nav-text">简述 Bounding Box 的回归方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bounding-box-回归的时候-为什么不直接对坐标回归-而是采用偏移量和缩放度"><span class="nav-text">Bounding box 回归的时候, 为什么不直接对坐标回归, 而是采用偏移量和缩放度</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么当-Region-Proposals-和-Ground-Truth-较接近时的-IoU-较大时-可以认为是边框回归函数是线性变换"><span class="nav-text">为什么当 Region Proposals 和 Ground Truth 较接近时的 IoU 较大时, 可以认为是边框回归函数是线性变换?</span></a></li></ol></div>
             
 
           </div>
@@ -1021,7 +1020,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">42:44</span>
+    <span title="站点阅读时长">42:48</span>
   
 </div>
 
