@@ -112,25 +112,25 @@
 
 
 
-  <meta name="description" content="1.查看磁盘空间  df -hl 查看磁盘剩余空间 df -h 查看每个根路径的分区大小 2.查看文件/文件夹大小 查看指定文件/文件夹大小：du -hs &amp;lt;文件名或文件夹名&amp;gt; 查看当前文件夹下所有文件大小（包括子文件夹）：du -sh  3.查看文件数量 统计当前目录下文件的个数（不包括目录） ls -l | grep “^-“ | wc -l作者：spectre7来源：CSDN原文">
-<meta name="keywords" content="Linux">
+  <meta name="description" content="git rebase回到某个提交状态, 删除之前的1git rebase --onto master~3 master 删除 add 的文件如果要删除文件，最好用 git rm file_name，而不应该直接在工作区直接 rm file_name。 如果一个文件已经add到暂存区，还没有 commit，此时如果不想要这个文件了，有两种方法： 1，用版本库内容清空暂存区，git reset HEA">
+<meta name="keywords" content="CookBook,Git">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux-常用指令助记">
-<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/其他-常用指令助记/index.html">
+<meta property="og:title" content="Git CookBook">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/其他-GitCookBook/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="1.查看磁盘空间  df -hl 查看磁盘剩余空间 df -h 查看每个根路径的分区大小 2.查看文件/文件夹大小 查看指定文件/文件夹大小：du -hs &amp;lt;文件名或文件夹名&amp;gt; 查看当前文件夹下所有文件大小（包括子文件夹）：du -sh  3.查看文件数量 统计当前目录下文件的个数（不包括目录） ls -l | grep “^-“ | wc -l作者：spectre7来源：CSDN原文">
+<meta property="og:description" content="git rebase回到某个提交状态, 删除之前的1git rebase --onto master~3 master 删除 add 的文件如果要删除文件，最好用 git rm file_name，而不应该直接在工作区直接 rm file_name。 如果一个文件已经add到暂存区，还没有 commit，此时如果不想要这个文件了，有两种方法： 1，用版本库内容清空暂存区，git reset HEA">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-28T05:45:24.162Z">
+<meta property="og:updated_time" content="2019-08-01T09:05:27.984Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux-常用指令助记">
-<meta name="twitter:description" content="1.查看磁盘空间  df -hl 查看磁盘剩余空间 df -h 查看每个根路径的分区大小 2.查看文件/文件夹大小 查看指定文件/文件夹大小：du -hs &amp;lt;文件名或文件夹名&amp;gt; 查看当前文件夹下所有文件大小（包括子文件夹）：du -sh  3.查看文件数量 统计当前目录下文件的个数（不包括目录） ls -l | grep “^-“ | wc -l作者：spectre7来源：CSDN原文">
+<meta name="twitter:title" content="Git CookBook">
+<meta name="twitter:description" content="git rebase回到某个提交状态, 删除之前的1git rebase --onto master~3 master 删除 add 的文件如果要删除文件，最好用 git rm file_name，而不应该直接在工作区直接 rm file_name。 如果一个文件已经add到暂存区，还没有 commit，此时如果不想要这个文件了，有两种方法： 1，用版本库内容清空暂存区，git reset HEA">
 
 
 
 
 
 
-  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/其他-常用指令助记/"/>
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/其他-GitCookBook/"/>
 
 
 
@@ -140,7 +140,7 @@
   };
 </script>
 
-  <title>Linux-常用指令助记 | 从零开始的BLOG</title>
+  <title>Git CookBook | 从零开始的BLOG</title>
   
 
 
@@ -248,7 +248,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">268</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">270</span></a>
   </li>
         
         
@@ -328,7 +328,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">41</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">42</span></a>
   </li>
         
         
@@ -429,7 +429,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/其他-常用指令助记/">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/其他-GitCookBook/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZeroZone">
@@ -446,7 +446,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Linux-常用指令助记
+          <h1 class="post-title" itemprop="name headline">Git CookBook
               
             
           </h1>
@@ -472,7 +472,7 @@
                 
               
 
-              <time title="创建时间：2018-10-05 20:35:56" itemprop="dateCreated datePublished" datetime="2018-10-05T20:35:56+08:00">2018-10-05</time>
+              <time title="创建时间：2018-07-11 21:45:32" itemprop="dateCreated datePublished" datetime="2018-07-11T21:45:32+08:00">2018-07-11</time>
             
 
             
@@ -481,8 +481,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-06-28T13:45:24+08:00" content="2019-06-28">
-      		  2019-06-28
+    		<time itemprop="dateUpdated" datetime="2019-08-01T17:05:27+08:00" content="2019-08-01">
+      		  2019-08-01
     		</time>
   	  </span>
 	  
@@ -514,8 +514,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/z_post/其他-常用指令助记/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/z_post/其他-常用指令助记/" itemprop="commentCount"></span>
+                <a href="/z_post/其他-GitCookBook/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/z_post/其他-GitCookBook/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -545,7 +545,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">2.6k</span>
+                <span title="本文字数">2.9k</span>
               
 
               
@@ -559,7 +559,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">2 分钟</span>
+                <span title="阅读时长">3 分钟</span>
               
             </div>
           
@@ -579,37 +579,53 @@
       
 
       
-        <p>1.查看磁盘空间</p>
-<p> df -hl 查看磁盘剩余空间<br> df -h 查看每个根路径的分区大小</p>
-<p>2.查看文件/文件夹大小</p>
-<p>查看指定文件/文件夹大小：du -hs &lt;文件名或文件夹名&gt;</p>
-<p>查看当前文件夹下所有文件大小（包括子文件夹）：du -sh </p>
-<p>3.查看文件数量</p>
-<p>统计当前目录下文件的个数（不包括目录）</p>
-<h2 id="ls-l-grep-“-“-wc-l"><a href="#ls-l-grep-“-“-wc-l" class="headerlink" title="ls -l | grep “^-“ | wc -l"></a>ls -l | grep “^-“ | wc -l</h2><p>作者：spectre7<br>来源：CSDN<br>原文：<a href="https://blog.csdn.net/weixin_41278720/article/details/83591027" target="_blank" rel="noopener">https://blog.csdn.net/weixin_41278720/article/details/83591027</a><br>版权声明：本文为博主原创文章，转载请附上博文链接！</p>
-<p>wget:</p>
-<p>curl<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -O [url]</span><br></pre></td></tr></table></figure></p>
-<h1 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zip [参数]  xxx.zip   [folder | file]</span><br></pre></td></tr></table></figure>
-<p>-a 将文件转成ASCII模式<br>-F 尝试修复损坏的压缩文件<br>-h 显示帮助界面<br>-m 将文件压缩之后，删除源文件</p>
-<p>-n 特定字符串 不压缩具有特定字尾字符串的文件<br>-o 将压缩文件内的所有文件的最新变动时间设为压缩时候的时间<br>-q 安静模式，在压缩的时候不显示指令的执行过程<br>-r 将指定的目录下的所有子目录以及文件一起处理<br>-S 包含系统文件和隐含文件（S是大写）<br>-t 日期 把压缩文件的最后修改日期设为指定的日期，日期格式为mmddyyyy</p>
-<h1 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h1><h1 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h1><h1 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h1><h1 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h1><h2 id="统计文件个数"><a href="#统计文件个数" class="headerlink" title="统计文件个数"></a>统计文件个数</h2><h1 id="更换国内镜像源"><a href="#更换国内镜像源" class="headerlink" title="更换国内镜像源"></a>更换国内镜像源</h1><p>清华源:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://mirrors.tuna.tsinghua.edu.cn/</span><br></pre></td></tr></table></figure></p>
-<p>中科大源:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://mirrors.ustc.edu.cn/help/homebrew-bottles.html</span><br></pre></td></tr></table></figure>
-<p>阿里源:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line"></span><br><span class="line"># apt</span><br><span class="line"></span><br><span class="line"># pip</span><br><span class="line"></span><br><span class="line"># brew</span><br><span class="line"></span><br><span class="line">中科大</span><br></pre></td></tr></table></figure></p>
-<p>cd “$(brew —repo)”<br>git remote set-url origin <a href="https://mirrors.ustc.edu.cn/brew.git" target="_blank" rel="noopener">https://mirrors.ustc.edu.cn/brew.git</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># npm</span><br><span class="line"></span><br><span class="line">https://npm.taobao.org/</span><br></pre></td></tr></table></figure></p>
-<p>npm config set registry <a href="http://registry.npm.taobao.org" target="_blank" rel="noopener">http://registry.npm.taobao.org</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># docker</span><br><span class="line"></span><br><span class="line">从Registry中拉取镜像</span><br></pre></td></tr></table></figure></p>
-<p>sudo docker pull registry.cn-hangzhou.aliyuncs.com/zerozone/non-target-baseline-local:[镜像版本号]<br>sudo docker pull registry.cn-hangzhou.aliyuncs.com/zerozone/non-target-baseline-local:[镜像版本号]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">将镜像推送到Registry</span><br></pre></td></tr></table></figure></p>
-<p>$ sudo docker login —username=ksws840662044 registry.cn-hangzhou.aliyuncs.com<br>$ sudo docker tag [ImageId] registry.cn-hangzhou.aliyuncs.com/zerozone/non-target-baseline-local:[镜像版本号]<br>$ sudo docker push registry.cn-hangzhou.aliyuncs.com/zerozone/non-target-baseline-local:[镜像版本号]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">把容器打包成镜像</span><br></pre></td></tr></table></figure></p>
-<p>docker commit -m  “”   -a  “”   [CONTAINER ID]  [给新的镜像命名]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">查看镜像</span><br></pre></td></tr></table></figure></p>
-<p>docker images<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">将指定的imageid的镜像重命名</span><br></pre></td></tr></table></figure></p>
-<p>$ sudo docker tag [ImageId] registry.cn-hangzhou.aliyuncs.com/zerozone/non-target-baseline-local:[镜像版本号]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">推送</span><br></pre></td></tr></table></figure></p>
-<p>sudo docker push registry.cn-hangzhou.aliyuncs.com/zerozone/non-target-baseline-local:1.0.2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">从本地push到镜像</span><br></pre></td></tr></table></figure></p>
-<p>sudo docker login —username=${uname} registry.cn-shanghai.aliyuncs.com<br>cd ${code_path} # where there is a Dockerfile for build this docker image<br>docker build -t ${docker_image_path}:${tag_version} .<br>docker push ${docker_image_path}:${tag_version}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">查看容器:</span><br></pre></td></tr></table></figure></p>
-<p>docker ps -a<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">启动容器</span><br></pre></td></tr></table></figure></p>
-<h1 id="CONTAINER-ID-a364c4f5ab8a"><a href="#CONTAINER-ID-a364c4f5ab8a" class="headerlink" title="CONTAINER ID = a364c4f5ab8a"></a>CONTAINER ID = a364c4f5ab8a</h1><p>sudo nvidia-docker start a364c4f5ab8a<br>sudo nvidia-docker attach a364c4f5ab8a<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">容器和本地之间的文件拷贝:</span><br><span class="line">将主机`/www/runoob`目录拷贝到容器 96f7f14e99ab(Container ID) 中 `/www` 目录下</span><br></pre></td></tr></table></figure></p>
-<p>docker cp /www/runoob 96f7f14e99ab:/www/<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">反之:</span><br></pre></td></tr></table></figure></p>
-<p>docker cp 96f7f14e99ab:/www/ /www/runoob<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># 命令行光标移动快捷键</span><br><span class="line"></span><br><span class="line">ctrl+a/e: 跳至行首/尾</span><br><span class="line">ctrl+f/b: 左/右移一个字符</span><br><span class="line">alt+f/b: 左/右一个单词</span><br><span class="line">ctrl+h/d: 左/右删除</span><br><span class="line">ctrl+u/k: 删除剩余(u不好使? 会删除所有), 带有剪切功能</span><br><span class="line">ctrl+y: 复制</span><br><span class="line">ctrl + p/n: 上一条/下一条历史记录</span><br><span class="line">alt + p/n: 上一条/下一条最相近的历史记录</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># tmux</span><br><span class="line"></span><br><span class="line">```py</span><br><span class="line">tmux attach-session</span><br><span class="line">tmux at -t session-name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">tmux list-sessions</span><br><span class="line">tmux ls</span><br><span class="line"></span><br><span class="line">tmux attach-session -c 2</span><br></pre></td></tr></table></figure></p>
-<p>重命名窗口:<br>ctrl+b+,<br>重命名session:<br>ctrl+b+$</p>
+        <h1 id="git-rebase"><a href="#git-rebase" class="headerlink" title="git rebase"></a>git rebase</h1><p>回到某个提交状态, 删除之前的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase --onto master~3 master</span><br></pre></td></tr></table></figure></p>
+<h1 id="删除-add-的文件"><a href="#删除-add-的文件" class="headerlink" title="删除 add 的文件"></a>删除 add 的文件</h1><p>如果要删除文件，最好用 git rm file_name，而不应该直接在工作区直接 rm file_name。</p>
+<p>如果一个文件已经add到暂存区，还没有 commit，此时如果不想要这个文件了，有两种方法：</p>
+<p>1，用版本库内容清空暂存区，git reset HEAD</p>
+<p>2，只把特定文件从暂存区删除，git rm —cached xxx</p>
+<h1 id="配置用户密码不用每次输入"><a href="#配置用户密码不用每次输入" class="headerlink" title="配置用户密码不用每次输入"></a>配置用户密码不用每次输入</h1><h2 id="显式配置-不安全"><a href="#显式配置-不安全" class="headerlink" title="显式配置(不安全)"></a>显式配置(不安全)</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">"xxxx"</span></span><br><span class="line">git config --global user.email <span class="string">"xxxx@foxmail.com"</span></span><br><span class="line">git config --global credential.helper store</span><br></pre></td></tr></table></figure>
+<p>上述指令输完后, 会生成<code>~/.gitconfig</code>文件, 内容如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[user]</span><br><span class="line">	name = hellozhaozheng</span><br><span class="line">	email = hellozhaozheng@foxmail.com</span><br><span class="line">[credential]</span><br><span class="line">	helper = store</span><br></pre></td></tr></table></figure></p>
+<p>之后, 再次输入密码, 密码和账号会显式存储在<code>~/.git-credentials</code>文件中.(显式存储, 不安全)</p>
+<h2 id="秘钥配置-ssh"><a href="#秘钥配置-ssh" class="headerlink" title="秘钥配置 ssh"></a>秘钥配置 ssh</h2><p>step 1: 生成公钥<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;hellozhaozheng@foxmail.com&quot;</span><br><span class="line"># Generating public/private rsa key pair...</span><br><span class="line"># 三次回车即可生成 ssh key</span><br></pre></td></tr></table></figure></p>
+<p>step 2: 查看已生成的公钥<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br><span class="line"># ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6eNtGpNGwstc....</span><br></pre></td></tr></table></figure></p>
+<p>step3: 复制已生成的公钥添加到git服务器<br>step4: 使用ssh协议clone远程仓库 or 如果已经用https协议clone到本地了，那么就重新设置远程仓库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote set-url origin git@xxx.com:xxx/xxx.git</span><br></pre></td></tr></table></figure></p>
+<h1 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h1><p>初始化当前本地文件夹为仓库</p>
+<p>git init</p>
+<p>添加文件:</p>
+<p>单个: git add readme.md<br>全部: git add -A  / git add ./</p>
+<p>提交修改: git commit -m “must write commit”</p>
+<p>查看状态: git status</p>
+<p>查看日志: git log</p>
+<p>版本回退:</p>
+<p>回退一个: git reset -hard HRAD^</p>
+<p>回退两个: git reset -hard HARD^^</p>
+<p>回退多个: git reset -hard HEAD~100</p>
+<p>首次连接: git remote add origin https//www.github…</p>
+<p>提交: git push origin master</p>
+<p>更新本地仓库:</p>
+<p>git fetch origin master  获取</p>
+<p>git merge origin/master  合并</p>
+<p>如果将别人的仓库拉到了自己的仓库里,  为了push成功:</p>
+<ol>
+<li>删除.git相关</li>
+<li>git rm rf —cached ./themes/next</li>
+<li>git add ./themes/next</li>
+<li>git commit -m “next”</li>
+<li>git push origin master</li>
+</ol>
+<p>子模块: 可以独立提交</p>
+<h1 id="从远程库更新本地的单个文件"><a href="#从远程库更新本地的单个文件" class="headerlink" title="从远程库更新本地的单个文件"></a>从远程库更新本地的单个文件</h1><p><a href="https://stackoverflow.com/questions/3334475/git-how-to-update-checkout-a-single-file-from-remote-origin-master" target="_blank" rel="noopener">https://stackoverflow.com/questions/3334475/git-how-to-update-checkout-a-single-file-from-remote-origin-master</a></p>
+<h1 id="只显示更改的文件的名字"><a href="#只显示更改的文件的名字" class="headerlink" title="只显示更改的文件的名字"></a>只显示更改的文件的名字</h1><p><a href="https://segmentfault.com/q/1010000006760132" target="_blank" rel="noopener">https://segmentfault.com/q/1010000006760132</a></p>
+<h2 id="git"><a href="#git" class="headerlink" title="git"></a>git</h2><p>git checkout misc: 切换分支<br>git stash: 暂存到缓存里, 新建另一个编辑<br>git stash pop: 从缓存理加载出刚刚的分支, 这里可以和chechout结合使用来切换分支同时将刚刚修改的操作添加到当前分支中</p>
+<p>若要提交新的commit:<br>先切换分支: git checkout misc<br>再查看状态: git status<br>添加修改: git add .<br>提交: git commit -m “..”<br>推送: git push origin misc<br>查看提交结果: git log —oneline —decorate</p>
+<p>更新master到本地分支:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//查询当前远程的版本</span><br><span class="line">$ git remote -v</span><br><span class="line">//获取最新代码到本地(本地当前分支为[branch]，获取的远端的分支为[origin/branch])</span><br><span class="line">$ git fetch origin master  [示例1：获取远端的origin/master分支]</span><br><span class="line">$ git fetch origin dev [示例2：获取远端的origin/dev分支]</span><br><span class="line">//查看版本差异</span><br><span class="line">$ git log -p master..origin/master [示例1：查看本地master与远端origin/master的版本差异]</span><br><span class="line">$ git log -p dev..origin/dev   [示例2：查看本地dev与远端origin/dev的版本差异]</span><br><span class="line">//合并最新代码到本地分支</span><br><span class="line">$ git merge origin/master  [示例1：合并远端分支origin/master到当前分支]</span><br><span class="line">$ git merge origin/dev [示例2：合并远端分支origin/dev到当前分支]</span><br><span class="line">---------------------</span><br><span class="line"></span><br><span class="line">git merge orgin vino</span><br></pre></td></tr></table></figure></p>
+<p><strong>解决冲突:</strong><br>git mergetool<br>:diffg RE<br>:diffg LO</p>
+<p>vimdiff3</p>
+<p>忘记切换分支, 提交到了错误的分支:</p>
+<p>git reset HEAD~1<br>git stash<br>git checkout target_branch<br>git stash pop<br>git add .<br>git commit -m “…”<br>git push origin target_branch</p>
+<p>比较本地分支和远端分支的区别<br>(先要更新本地的远程分支?)<br>git diff vino origin/vino<br>git diff vino origin/master</p>
+<p>用某一个分支的文件覆盖另一个分支的文件<br>用git checkout branch — filename<br>如： 分支test上有一个文件A，你在test1分支上， 此时如果想用test分支上的A文件替换test1分支上的文件的话，可以使用git checkout test1, 然后git checkout test — A</p>
 
       
     </div>
@@ -630,7 +646,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+            <a href="/tags/CookBook/" rel="tag"><i class="fa fa-tag"></i> CookBook</a>
+          
+            <a href="/tags/Git/" rel="tag"><i class="fa fa-tag"></i> Git</a>
           
         </div>
       
@@ -643,8 +661,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/深度学习-集成学习方法/" rel="prev" title="集成学习方法">
-                <i class="fa fa-chevron-left"></i> 集成学习方法
+              <a href="/z_post/计算机视觉-Image_Generation_from_Scene_Graphs/" rel="prev" title="Image-Generation-from-Scene-Graphs">
+                <i class="fa fa-chevron-left"></i> Image-Generation-from-Scene-Graphs
               </a>
             
           </div>
@@ -653,8 +671,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/面试-笔试面试记录/" rel="next" title="笔试及面试记录">
-                笔试及面试记录 <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/PyTorch-官方教程6-FineTuningModels/" rel="next" title="PyTorch官方教程(六)-FineTuning Torchvision Models">
+                PyTorch官方教程(六)-FineTuning Torchvision Models <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -736,7 +754,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">268</span>
+                    <span class="site-state-item-count">270</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -870,7 +888,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">41</span>
+                      
+                    
+                    <span class="site-state-item-count">42</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -942,7 +962,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ls-l-grep-“-“-wc-l"><span class="nav-text">ls -l | grep “^-“ | wc -l</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zip"><span class="nav-text">zip</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tar"><span class="nav-text">tar</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cat"><span class="nav-text">cat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#grep"><span class="nav-text">grep</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ls"><span class="nav-text">ls</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#统计文件个数"><span class="nav-text">统计文件个数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更换国内镜像源"><span class="nav-text">更换国内镜像源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CONTAINER-ID-a364c4f5ab8a"><span class="nav-text">CONTAINER ID = a364c4f5ab8a</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#git-rebase"><span class="nav-text">git rebase</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#删除-add-的文件"><span class="nav-text">删除 add 的文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置用户密码不用每次输入"><span class="nav-text">配置用户密码不用每次输入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#显式配置-不安全"><span class="nav-text">显式配置(不安全)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#秘钥配置-ssh"><span class="nav-text">秘钥配置 ssh</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用指令"><span class="nav-text">常用指令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#从远程库更新本地的单个文件"><span class="nav-text">从远程库更新本地的单个文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#只显示更改的文件的名字"><span class="nav-text">只显示更改的文件的名字</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#git"><span class="nav-text">git</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -979,7 +999,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">2.7m</span>
+    <span title="站点总字数">2.8m</span>
   
 
   
@@ -988,7 +1008,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">41:31</span>
+    <span title="站点阅读时长">42:40</span>
   
 </div>
 
@@ -1165,7 +1185,7 @@
         notify: true,
         appId: 'o5ny24Rtrv0pjlRYjBoj9rfz-gzGzoHsz',
         appKey: 'o9SAGYkO04n5xjXkeWXaq1pm',
-        placeholder: '无需注册即可评论, 支持在 Gravatar(https://cn.gravatar.com) 上自定义头像, 评论时只需填写对应邮箱即可显示自定义头像, 邮箱不会暴露在评论处, 大可放心, 由于无登陆选项, 因此邮箱会作为我联系你的唯一方式',
+        placeholder: '无需注册即可评论, 支持Markdown(可手动预览), 支持在 Gravatar(https://cn.gravatar.com) 上自定义头像, 评论时只需填写对应邮箱即可显示自定义头像, 邮箱不会暴露在评论处, 大可放心, 由于无登陆选项, 因此邮箱会作为我联系你的唯一方式',
         avatar:'',
         guest_info:guest,
         pageSize:'10' || 10,

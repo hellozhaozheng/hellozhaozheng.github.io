@@ -1,0 +1,1882 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="jgw73iXouBAJcOuff0yi9vdSNDecBSOUXacsHJszpmo" />
+<meta name="baidu-site-verification" content="xyf9WD2vvl" />
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/apple-icon-57x57.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_body":"slideDownIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="待整理参考: https://zhuanlan.zhihu.com/p/59205847 本文代码基于PyTorch 1.0版本，需要用到以下包 import collectionsimport osimport shutilimport tqdm import numpy as npimport PIL.Imageimport torchimport torchvision  基础配置检查PyT">
+<meta name="keywords" content="PyTorch,CookBook">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PyTorch CookBook">
+<meta property="og:url" content="https://hellozhaozheng.github.io/z_post/PyTorch-CookBook/index.html">
+<meta property="og:site_name" content="从零开始的BLOG">
+<meta property="og:description" content="待整理参考: https://zhuanlan.zhihu.com/p/59205847 本文代码基于PyTorch 1.0版本，需要用到以下包 import collectionsimport osimport shutilimport tqdm import numpy as npimport PIL.Imageimport torchimport torchvision  基础配置检查PyT">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-01T11:36:44.338Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PyTorch CookBook">
+<meta name="twitter:description" content="待整理参考: https://zhuanlan.zhihu.com/p/59205847 本文代码基于PyTorch 1.0版本，需要用到以下包 import collectionsimport osimport shutilimport tqdm import numpy as npimport PIL.Imageimport torchimport torchvision  基础配置检查PyT">
+
+
+
+
+
+
+  <link rel="canonical" href="https://hellozhaozheng.github.io/z_post/PyTorch-CookBook/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>PyTorch CookBook | 从零开始的BLOG</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?21a4899cc63d3c11a3d90ac58074a19c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">从零开始的BLOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">与其感慨路难行，不如马上出发</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">270</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-计算机视觉">
+    <a href="/categories/计算机视觉/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tripadvisor"></i> <br />计算机视觉</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-深度学习">
+    <a href="/categories/深度学习/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-drupal"></i> <br />深度学习</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-caffe2">
+    <a href="/categories/Caffe2/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br />Caffe2</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-pytorch">
+    <a href="/categories/PyTorch/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-free-code-camp"></i> <br />PyTorch</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-c++">
+    <a href="/categories/Cpp/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-codiepie"></i> <br />C++</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-python">
+    <a href="/categories/Python/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />Python</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-项目">
+    <a href="/categories/项目/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-connectdevelop"></i> <br />项目</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-cuda">
+    <a href="/categories/CUDA/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-braille"></i> <br />CUDA</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-其他">
+    <a href="/categories/其他/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />其他</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">42</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于我</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />站内搜索(首次加载需3~5秒)</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="站内搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/hellozhaozheng" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hellozhaozheng.github.io/z_post/PyTorch-CookBook/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZeroZone">
+      <meta itemprop="description" content="吾乃闪耀的芝士蛋挞!">
+      <meta itemprop="image" content="/images/avatar_zz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="从零开始的BLOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PyTorch CookBook
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+	
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-08-14 22:24:13" itemprop="dateCreated datePublished" datetime="2018-08-14T22:24:13+08:00">2018-08-14</time>
+            
+
+            
+          </span>
+
+	  
+  	    <span class="post-updated">
+    		&nbsp; | &nbsp; 更新于
+    		<time itemprop="dateUpdated" datetime="2019-08-01T19:36:44+08:00" content="2019-08-01">
+      		  2019-08-01
+    		</time>
+  	  </span>
+	  
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/PyTorch/" itemprop="url" rel="index"><span itemprop="name">PyTorch</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/z_post/PyTorch-CookBook/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/z_post/PyTorch-CookBook/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">43k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">39 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="待整理"><a href="#待整理" class="headerlink" title="待整理"></a>待整理</h1><p>参考: <a href="https://zhuanlan.zhihu.com/p/59205847" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/59205847</a></p>
+<p>本文代码基于PyTorch 1.0版本，需要用到以下包</p>
+<p>import collections<br>import os<br>import shutil<br>import tqdm</p>
+<p>import numpy as np<br>import PIL.Image<br>import torch<br>import torchvision</p>
+<ol>
+<li>基础配置<br>检查PyTorch版本</li>
+</ol>
+<p>torch.<strong>version</strong>               # PyTorch version<br>torch.version.cuda              # Corresponding CUDA version<br>torch.backends.cudnn.version()  # Corresponding cuDNN version<br>torch.cuda.get_device_name(0)   # GPU type<br>更新PyTorch</p>
+<p>PyTorch将被安装在anaconda3/lib/python3.7/site-packages/torch/目录下。</p>
+<p>conda update pytorch torchvision -c pytorch<br>固定随机种子</p>
+<p>torch.manual_seed(0)<br>torch.cuda.manual_seed_all(0)<br>指定程序运行在特定GPU卡上</p>
+<p>在命令行指定环境变量</p>
+<p>CUDA_VISIBLE_DEVICES=0,1 python train.py<br>或在代码中指定</p>
+<p>os.environ[‘CUDA_VISIBLE_DEVICES’] = ‘0,1’<br>判断是否有CUDA支持</p>
+<p>torch.cuda.is_available()<br>设置为cuDNN benchmark模式</p>
+<p>Benchmark模式会提升计算速度，但是由于计算中有随机性，每次网络前馈结果略有差异。</p>
+<p>torch.backends.cudnn.benchmark = True<br>如果想要避免这种结果波动，设置</p>
+<p>torch.backends.cudnn.deterministic = True<br>清除GPU存储</p>
+<p>有时Control-C中止运行后GPU存储没有及时释放，需要手动清空。在PyTorch内部可以</p>
+<p>torch.cuda.empty_cache()<br>或在命令行可以先使用ps找到程序的PID，再使用kill结束该进程</p>
+<p>ps aux | grep python<br>kill -9 [pid]<br>或者直接重置没有被清空的GPU</p>
+<p>nvidia-smi —gpu-reset -i [gpu_id]</p>
+<ol>
+<li>张量处理<br>张量基本信息</li>
+</ol>
+<p>tensor.type()   # Data type<br>tensor.size()   # Shape of the tensor. It is a subclass of Python tuple<br>tensor.dim()    # Number of dimensions.<br>数据类型转换</p>
+<h1 id="Set-default-tensor-type-Float-in-PyTorch-is-much-faster-than-double"><a href="#Set-default-tensor-type-Float-in-PyTorch-is-much-faster-than-double" class="headerlink" title="Set default tensor type. Float in PyTorch is much faster than double."></a>Set default tensor type. Float in PyTorch is much faster than double.</h1><p>torch.set_default_tensor_type(torch.FloatTensor)</p>
+<h1 id="Type-convertions"><a href="#Type-convertions" class="headerlink" title="Type convertions."></a>Type convertions.</h1><p>tensor = tensor.cuda()<br>tensor = tensor.cpu()<br>tensor = tensor.float()<br>tensor = tensor.long()<br>torch.Tensor与np.ndarray转换</p>
+<h1 id="torch-Tensor-gt-np-ndarray"><a href="#torch-Tensor-gt-np-ndarray" class="headerlink" title="torch.Tensor -&gt; np.ndarray."></a>torch.Tensor -&gt; np.ndarray.</h1><p>ndarray = tensor.cpu().numpy()</p>
+<h1 id="np-ndarray-gt-torch-Tensor"><a href="#np-ndarray-gt-torch-Tensor" class="headerlink" title="np.ndarray -&gt; torch.Tensor."></a>np.ndarray -&gt; torch.Tensor.</h1><p>tensor = torch.from_numpy(ndarray).float()<br>tensor = torch.from_numpy(ndarray.copy()).float()  # If ndarray has negative stride<br>torch.Tensor与PIL.Image转换</p>
+<p>PyTorch中的张量默认采用N×D×H×W的顺序，并且数据范围在[0, 1]，需要进行转置和规范化。</p>
+<h1 id="torch-Tensor-gt-PIL-Image"><a href="#torch-Tensor-gt-PIL-Image" class="headerlink" title="torch.Tensor -&gt; PIL.Image."></a>torch.Tensor -&gt; PIL.Image.</h1><p>image = PIL.Image.fromarray(torch.clamp(tensor * 255, min=0, max=255<br>    ).byte().permute(1, 2, 0).cpu().numpy())<br>image = torchvision.transforms.functional.to_pil_image(tensor)  # Equivalently way</p>
+<h1 id="PIL-Image-gt-torch-Tensor"><a href="#PIL-Image-gt-torch-Tensor" class="headerlink" title="PIL.Image -&gt; torch.Tensor."></a>PIL.Image -&gt; torch.Tensor.</h1><p>tensor = torch.from_numpy(np.asarray(PIL.Image.open(path))<br>    ).permute(2, 0, 1).float() / 255<br>tensor = torchvision.transforms.functional.to_tensor(PIL.Image.open(path))  # Equivalently way<br>np.ndarray与PIL.Image转换</p>
+<h1 id="np-ndarray-gt-PIL-Image"><a href="#np-ndarray-gt-PIL-Image" class="headerlink" title="np.ndarray -&gt; PIL.Image."></a>np.ndarray -&gt; PIL.Image.</h1><p>image = PIL.Image.fromarray(ndarray.astypde(np.uint8))</p>
+<h1 id="PIL-Image-gt-np-ndarray"><a href="#PIL-Image-gt-np-ndarray" class="headerlink" title="PIL.Image -&gt; np.ndarray."></a>PIL.Image -&gt; np.ndarray.</h1><p>ndarray = np.asarray(PIL.Image.open(path))<br>从只包含一个元素的张量中提取值</p>
+<p>这在训练时统计loss的变化过程中特别有用。否则这将累积计算图，使GPU存储占用量越来越大。</p>
+<p>value = tensor.item()<br>张量形变</p>
+<p>张量形变常常需要用于将卷积层特征输入全连接层的情形。相比torch.view，torch.reshape可以自动处理输入张量不连续的情况。</p>
+<p>tensor = torch.reshape(tensor, shape)<br>打乱顺序</p>
+<p>tensor = tensor[torch.randperm(tensor.size(0))]  # Shuffle the first dimension<br>水平翻转</p>
+<p>PyTorch不支持tensor[::-1]这样的负步长操作，水平翻转可以用张量索引实现。</p>
+<h1 id="Assume-tensor-has-shape-NDH-W"><a href="#Assume-tensor-has-shape-NDH-W" class="headerlink" title="Assume tensor has shape NDH*W."></a>Assume tensor has shape N<em>D</em>H*W.</h1><p>tensor = tensor[:, :, :, torch.arange(tensor.size(3) - 1, -1, -1).long()]<br>复制张量</p>
+<p>有三种复制的方式，对应不同的需求。</p>
+<h1 id="Operation-New-Shared-memory-Still-in-computation-graph"><a href="#Operation-New-Shared-memory-Still-in-computation-graph" class="headerlink" title="Operation                 |  New/Shared memory | Still in computation graph |"></a>Operation                 |  New/Shared memory | Still in computation graph |</h1><p>tensor.clone()            # |        New         |          Yes               |<br>tensor.detach()           # |      Shared        |          No                |<br>tensor.detach.clone()()   # |        New         |          No                |<br>拼接张量</p>
+<p>注意torch.cat和torch.stack的区别在于torch.cat沿着给定的维度拼接，而torch.stack会新增一维。例如当参数是3个10×5的张量，torch.cat的结果是30×5的张量，而torch.stack的结果是3×10×5的张量。</p>
+<p>tensor = torch.cat(list_of_tensors, dim=0)<br>tensor = torch.stack(list_of_tensors, dim=0)<br>将整数标记转换成独热（one-hot）编码</p>
+<p>PyTorch中的标记默认从0开始。</p>
+<p>N = tensor.size(0)<br>one_hot = torch.zeros(N, num_classes).long()<br>one_hot.scatter_(dim=1, index=torch.unsqueeze(tensor, dim=1), src=torch.ones(N, num_classes).long())<br>得到非零/零元素</p>
+<p>torch.nonzero(tensor)               # Index of non-zero elements<br>torch.nonzero(tensor == 0)          # Index of zero elements<br>torch.nonzero(tensor).size(0)       # Number of non-zero elements<br>torch.nonzero(tensor == 0).size(0)  # Number of zero elements<br>判断两个张量相等</p>
+<p>torch.allclose(tensor1, tensor2)  # float tensor<br>torch.equal(tensor1, tensor2)     # int tensor<br>张量扩展</p>
+<h1 id="Expand-tensor-of-shape-64512-to-shape-6451277"><a href="#Expand-tensor-of-shape-64512-to-shape-6451277" class="headerlink" title="Expand tensor of shape 64512 to shape 6451277."></a>Expand tensor of shape 64<em>512 to shape 64</em>512<em>7</em>7.</h1><p>torch.reshape(tensor, (64, 512, 1, 1)).expand(64, 512, 7, 7)<br>矩阵乘法</p>
+<h1 id="Matrix-multiplication-mn-np-gt-mp"><a href="#Matrix-multiplication-mn-np-gt-mp" class="headerlink" title="Matrix multiplication: (mn)  (np) -&gt; (mp)."></a>Matrix multiplication: (m<em>n) </em> (n<em>p) -&gt; (m</em>p).</h1><p>result = torch.mm(tensor1, tensor2)</p>
+<h1 id="Batch-matrix-multiplication-bmn-bnp-gt-bm-p"><a href="#Batch-matrix-multiplication-bmn-bnp-gt-bm-p" class="headerlink" title="Batch matrix multiplication: (bmn)  (bnp) -&gt; (bm*p)."></a>Batch matrix multiplication: (b<em>m</em>n) <em> (b</em>n<em>p) -&gt; (b</em>m*p).</h1><p>result = torch.bmm(tensor1, tensor2)</p>
+<h1 id="Element-wise-multiplication"><a href="#Element-wise-multiplication" class="headerlink" title="Element-wise multiplication."></a>Element-wise multiplication.</h1><p>result = tensor1 * tensor2<br>计算两组数据之间的两两欧式距离</p>
+<h1 id="X1-is-of-shape-m-d"><a href="#X1-is-of-shape-m-d" class="headerlink" title="X1 is of shape m*d."></a>X1 is of shape m*d.</h1><p>X1 = torch.unsqueeze(X1, dim=1).expand(m, n, d)</p>
+<h1 id="X2-is-of-shape-n-d"><a href="#X2-is-of-shape-n-d" class="headerlink" title="X2 is of shape n*d."></a>X2 is of shape n*d.</h1><p>X2 = torch.unsqueeze(X2, dim=0).expand(m, n, d)</p>
+<h1 id="dist-is-of-shape-m-n-where-dist-i-j-sqrt-X1-i-X-j-2"><a href="#dist-is-of-shape-m-n-where-dist-i-j-sqrt-X1-i-X-j-2" class="headerlink" title="dist is of shape m*n, where dist[i][j] = sqrt(|X1[i, :] - X[j, :]|^2)"></a>dist is of shape m*n, where dist[i][j] = sqrt(|X1[i, :] - X[j, :]|^2)</h1><p>dist = torch.sqrt(torch.sum((X1 - X2) ** 2, dim=2))</p>
+<ol>
+<li>模型定义<br>卷积层</li>
+</ol>
+<p>最常用的卷积层配置是</p>
+<p>conv = torch.nn.Conv2d(in_channels, out_channels, kernel_size=3, stride=1, padding=1, bias=True)<br>conv = torch.nn.Conv2d(in_channels, out_channels, kernel_size=1, stride=1, padding=0, bias=True)<br>如果卷积层配置比较复杂，不方便计算输出大小时，可以利用如下可视化工具辅助</p>
+<p>Convolution Visualizer<br>​<br>ezyang.github.io<br>GAP（Global average pooling）层</p>
+<p>gap = torch.nn.AdaptiveAvgPool2d(output_size=1)<br>双线性汇合（bilinear pooling）[1]</p>
+<p>X = torch.reshape(N, D, H <em> W)                        # Assume X has shape N</em>D<em>H</em>W<br>X = torch.bmm(X, torch.transpose(X, 1, 2)) / (H <em> W)  # Bilinear pooling<br>assert X.size() == (N, D, D)<br>X = torch.reshape(X, (N, D </em> D))<br>X = torch.sign(X) * torch.sqrt(torch.abs(X) + 1e-5)   # Signed-sqrt normalization<br>X = torch.nn.functional.normalize(X)                  # L2 normalization<br>多卡同步BN（Batch normalization）</p>
+<p>当使用torch.nn.DataParallel将代码运行在多张GPU卡上时，PyTorch的BN层默认操作是各卡上数据独立地计算均值和标准差，同步BN使用所有卡上的数据一起计算BN层的均值和标准差，缓解了当批量大小（batch size）比较小时对均值和标准差估计不准的情况，是在目标检测等任务中一个有效的提升性能的技巧。</p>
+<p>vacancy/Synchronized-BatchNorm-PyTorch<br>​<br>github.com<br>图标<br>现在PyTorch官方已经支持同步BN操作</p>
+<p>sync_bn = torch.nn.SyncBatchNorm(num_features, eps=1e-05, momentum=0.1, affine=True,<br>                                 track_running_stats=True)<br>将已有网络的所有BN层改为同步BN层</p>
+<p>def convertBNtoSyncBN(module, process_group=None):<br>    ‘’’Recursively replace all BN layers to SyncBN layer.</p>
+<pre><code>Args:
+    module[torch.nn.Module]. Network
+&#39;&#39;&#39;
+if isinstance(module, torch.nn.modules.batchnorm._BatchNorm):
+    sync_bn = torch.nn.SyncBatchNorm(module.num_features, module.eps, module.momentum,
+                                     module.affine, module.track_running_stats, process_group)
+    sync_bn.running_mean = module.running_mean
+    sync_bn.running_var = module.running_var
+    if module.affine:
+        sync_bn.weight = module.weight.clone().detach()
+        sync_bn.bias = module.bias.clone().detach()
+    return sync_bn
+else:
+    for name, child_module in module.named_children():
+        setattr(module, name) = convert_syncbn_model(child_module, process_group=process_group))
+    return module
+</code></pre><p>类似BN滑动平均</p>
+<p>如果要实现类似BN滑动平均的操作，在forward函数中要使用原地（inplace）操作给滑动平均赋值。</p>
+<p>class BN(torch.nn.Module)<br>    def <strong>init</strong>(self):<br>        …<br>        self.register_buffer(‘running_mean’, torch.zeros(num_features))</p>
+<pre><code>def forward(self, X):
+    ...
+    self.running_mean += momentum * (current - self.running_mean)
+</code></pre><p>计算模型整体参数量</p>
+<p>num_parameters = sum(torch.numel(parameter) for parameter in model.parameters())<br>类似Keras的model.summary()输出模型信息</p>
+<p>sksq96/pytorch-summary<br>​<br>github.com<br>图标<br>模型权值初始化</p>
+<p>注意model.modules()和model.children()的区别：model.modules()会迭代地遍历模型的所有子层，而model.children()只会遍历模型下的一层。</p>
+<h1 id="Common-practise-for-initialization"><a href="#Common-practise-for-initialization" class="headerlink" title="Common practise for initialization."></a>Common practise for initialization.</h1><p>for layer in model.modules():<br>    if isinstance(layer, torch.nn.Conv2d):<br>        torch.nn.init.kaiming_normal_(layer.weight, mode=’fan_out’,<br>                                      nonlinearity=’relu’)<br>        if layer.bias is not None:<br>            torch.nn.init.constant_(layer.bias, val=0.0)<br>    elif isinstance(layer, torch.nn.BatchNorm2d):<br>        torch.nn.init.constant_(layer.weight, val=1.0)<br>        torch.nn.init.constant_(layer.bias, val=0.0)<br>    elif isinstance(layer, torch.nn.Linear):<br>        torch.nn.init.xavier_normal_(layer.weight)<br>        if layer.bias is not None:<br>            torch.nn.init.constant_(layer.bias, val=0.0)</p>
+<h1 id="Initialization-with-given-tensor"><a href="#Initialization-with-given-tensor" class="headerlink" title="Initialization with given tensor."></a>Initialization with given tensor.</h1><p>layer.weight = torch.nn.Parameter(tensor)<br>部分层使用预训练模型</p>
+<p>注意如果保存的模型是torch.nn.DataParallel，则当前的模型也需要是torch.nn.DataParallel。torch.nn.DataParallel(model).module == model。</p>
+<p>model.load_state_dict(torch.load(‘model,pth’), strict=False)<br>将在GPU保存的模型加载到CPU</p>
+<p>model.load_state_dict(torch.load(‘model,pth’, map_location=’cpu’))</p>
+<ol>
+<li>数据准备、特征提取与微调<br>图像分块打散（image shuffle）/区域混淆机制（region confusion mechanism，RCM）[2]</li>
+</ol>
+<h1 id="X-is-torch-Tensor-of-size-NDH-W"><a href="#X-is-torch-Tensor-of-size-NDH-W" class="headerlink" title="X is torch.Tensor of size NDH*W."></a>X is torch.Tensor of size N<em>D</em>H*W.</h1><h1 id="Shuffle-rows"><a href="#Shuffle-rows" class="headerlink" title="Shuffle rows"></a>Shuffle rows</h1><p>Q = (torch.unsqueeze(torch.arange(num_blocks), dim=1) * torch.ones(1, num_blocks).long()</p>
+<pre><code> + torch.randint(low=-neighbour, high=neighbour, size=(num_blocks, num_blocks)))
+</code></pre><p>Q = torch.argsort(Q, dim=0)<br>assert Q.size() == (num_blocks, num_blocks)</p>
+<p>X = [torch.chunk(row, chunks=num_blocks, dim=2)<br>     for row in torch.chunk(X, chunks=num_blocks, dim=1)]<br>X = [[X[Q[i, j].item()][j] for j in range(num_blocks)]<br>     for i in range(num_blocks)]</p>
+<h1 id="Shulle-columns"><a href="#Shulle-columns" class="headerlink" title="Shulle columns."></a>Shulle columns.</h1><p>Q = (torch.ones(num_blocks, 1).long() * torch.unsqueeze(torch.arange(num_blocks), dim=0)</p>
+<pre><code> + torch.randint(low=-neighbour, high=neighbour, size=(num_blocks, num_blocks)))
+</code></pre><p>Q = torch.argsort(Q, dim=1)<br>assert Q.size() == (num_blocks, num_blocks)<br>X = [[X[i][Q[i, j].item()] for j in range(num_blocks)]<br>     for i in range(num_blocks)]</p>
+<p>Y = torch.cat([torch.cat(row, dim=2) for row in X], dim=1)<br>得到视频数据基本信息</p>
+<p>import cv2<br>video = cv2.VideoCapture(mp4_path)<br>height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))<br>width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))<br>num_frames = int(video.get(cv2.CAP_PROP_FRAME_COUNT))<br>fps = int(video.get(cv2.CAP_PROP_FPS))<br>video.release()<br>TSN每段（segment）采样一帧视频[3]</p>
+<p>K = self._num_segments<br>if is_train:<br>    if num_frames &gt; K:</p>
+<pre><code>    # Random index for each segment.
+    frame_indices = torch.randint(
+        high=num_frames // K, size=(K,), dtype=torch.long)
+    frame_indices += num_frames // K * torch.arange(K)
+else:
+    frame_indices = torch.randint(
+        high=num_frames, size=(K - num_frames,), dtype=torch.long)
+    frame_indices = torch.sort(torch.cat((
+        torch.arange(num_frames), frame_indices)))[0]
+</code></pre><p>else:<br>    if num_frames &gt; K:</p>
+<pre><code>    # Middle index for each segment.
+    frame_indices = num_frames / K // 2
+    frame_indices += num_frames // K * torch.arange(K)
+else:
+    frame_indices = torch.sort(torch.cat((                              
+        torch.arange(num_frames), torch.arange(K - num_frames))))[0]
+</code></pre><p>assert frame_indices.size() == (K,)<br>return [frame_indices[i] for i in range(K)]<br>提取ImageNet预训练模型某层的卷积特征</p>
+<h1 id="VGG-16-relu5-3-feature"><a href="#VGG-16-relu5-3-feature" class="headerlink" title="VGG-16 relu5-3 feature."></a>VGG-16 relu5-3 feature.</h1><p>model = torchvision.models.vgg16(pretrained=True).features[:-1]</p>
+<h1 id="VGG-16-pool5-feature"><a href="#VGG-16-pool5-feature" class="headerlink" title="VGG-16 pool5 feature."></a>VGG-16 pool5 feature.</h1><p>model = torchvision.models.vgg16(pretrained=True).features</p>
+<h1 id="VGG-16-fc7-feature"><a href="#VGG-16-fc7-feature" class="headerlink" title="VGG-16 fc7 feature."></a>VGG-16 fc7 feature.</h1><p>model = torchvision.models.vgg16(pretrained=True)<br>model.classifier = torch.nn.Sequential(*list(model.classifier.children())[:-3])</p>
+<h1 id="ResNet-GAP-feature"><a href="#ResNet-GAP-feature" class="headerlink" title="ResNet GAP feature."></a>ResNet GAP feature.</h1><p>model = torchvision.models.resnet18(pretrained=True)<br>model = torch.nn.Sequential(collections.OrderedDict(<br>    list(model.named_children())[:-1]))</p>
+<p>with torch.no_grad():<br>    model.eval()<br>    conv_representation = model(image)<br>提取ImageNet预训练模型多层的卷积特征</p>
+<p>class FeatureExtractor(torch.nn.Module):<br>    “””Helper class to extract several convolution features from the given<br>    pre-trained model.</p>
+<pre><code>Attributes:
+    _model, torch.nn.Module.
+    _layers_to_extract, list&lt;str&gt; or set&lt;str&gt;
+
+Example:
+    &gt;&gt;&gt; model = torchvision.models.resnet152(pretrained=True)
+    &gt;&gt;&gt; model = torch.nn.Sequential(collections.OrderedDict(
+            list(model.named_children())[:-1]))
+    &gt;&gt;&gt; conv_representation = FeatureExtractor(
+            pretrained_model=model,
+            layers_to_extract={&#39;layer1&#39;, &#39;layer2&#39;, &#39;layer3&#39;, &#39;layer4&#39;})(image)
+&quot;&quot;&quot;
+def __init__(self, pretrained_model, layers_to_extract):
+    torch.nn.Module.__init__(self)
+    self._model = pretrained_model
+    self._model.eval()
+    self._layers_to_extract = set(layers_to_extract)
+
+def forward(self, x):
+    with torch.no_grad():
+        conv_representation = []
+        for name, layer in self._model.named_children():
+            x = layer(x)
+            if name in self._layers_to_extract:
+                conv_representation.append(x)
+        return conv_representation
+</code></pre><p>其他预训练模型</p>
+<p>Cadene/pretrained-models.pytorch<br>​<br>github.com<br>图标<br>微调全连接层</p>
+<p>model = torchvision.models.resnet18(pretrained=True)<br>for param in model.parameters():<br>    param.requires_grad = False<br>model.fc = nn.Linear(512, 100)  # Replace the last fc layer<br>optimizer = torch.optim.SGD(model.fc.parameters(), lr=1e-2, momentum=0.9, weight_decay=1e-4)<br>以较大学习率微调全连接层，较小学习率微调卷积层</p>
+<p>model = torchvision.models.resnet18(pretrained=True)<br>finetuned_parameters = list(map(id, model.fc.parameters()))<br>conv_parameters = (p for p in model.parameters() if id(p) not in finetuned_parameters)<br>parameters = [{‘params’: conv_parameters, ‘lr’: 1e-3},<br>              {‘params’: model.fc.parameters()}]<br>optimizer = torch.optim.SGD(parameters, lr=1e-2, momentum=0.9, weight_decay=1e-4)</p>
+<ol>
+<li>模型训练<br>常用训练和验证数据预处理</li>
+</ol>
+<p>其中ToTensor操作会将PIL.Image或形状为H×W×D，数值范围为[0, 255]的np.ndarray转换为形状为D×H×W，数值范围为[0.0, 1.0]的torch.Tensor。</p>
+<p>train_transform = torchvision.transforms.Compose([<br>    torchvision.transforms.RandomResizedCrop(size=224,<br>                                             scale=(0.08, 1.0)),<br>    torchvision.transforms.RandomHorizontalFlip(),<br>    torchvision.transforms.ToTensor(),<br>    torchvision.transforms.Normalize(mean=(0.485, 0.456, 0.406),<br>                                     std=(0.229, 0.224, 0.225)),<br> ])<br> val_transform = torchvision.transforms.Compose([<br>    torchvision.transforms.Resize(256),<br>    torchvision.transforms.CenterCrop(224),<br>    torchvision.transforms.ToTensor(),<br>    torchvision.transforms.Normalize(mean=(0.485, 0.456, 0.406),<br>                                     std=(0.229, 0.224, 0.225)),<br>])<br>训练基本代码框架</p>
+<p>for t in epoch(80):<br>    for images, labels in tqdm.tqdm(train_loader, desc=’Epoch %3d’ % (t + 1)):<br>        images, labels = images.cuda(), labels.cuda()<br>        scores = model(images)<br>        loss = loss_function(scores, labels)<br>        optimizer.zero_grad()<br>        loss.backward()<br>        optimizer.step()<br>标记平滑（label smoothing）[4]</p>
+<p>for images, labels in train_loader:<br>    images, labels = images.cuda(), labels.cuda()<br>    N = labels.size(0)</p>
+<pre><code># C is the number of classes.
+smoothed_labels = torch.full(size=(N, C), fill_value=0.1 / (C - 1)).cuda()
+smoothed_labels.scatter_(dim=1, index=torch.unsqueeze(labels, dim=1), value=0.9)
+
+score = model(images)
+log_prob = torch.nn.functional.log_softmax(score, dim=1)
+loss = -torch.sum(log_prob * smoothed_labels) / N
+optimizer.zero_grad()
+loss.backward()
+optimizer.step()
+</code></pre><p>Mixup[5]</p>
+<p>beta_distribution = torch.distributions.beta.Beta(alpha, alpha)<br>for images, labels in train_loader:<br>    images, labels = images.cuda(), labels.cuda()</p>
+<pre><code># Mixup images.
+lambda_ = beta_distribution.sample([]).item()
+index = torch.randperm(images.size(0)).cuda()
+mixed_images = lambda_ * images + (1 - lambda_) * images[index, :]
+
+# Mixup loss.    
+scores = model(mixed_images)
+loss = (lambda_ * loss_function(scores, labels)
+        + (1 - lambda_) * loss_function(scores, labels[index]))
+
+optimizer.zero_grad()
+loss.backward()
+optimizer.step()
+</code></pre><p>L1正则化</p>
+<p>l1_regularization = torch.nn.L1Loss(reduction=’sum’)<br>loss = …  # Standard cross-entropy loss<br>for param in model.parameters():<br>    loss += lambda_ * torch.sum(torch.abs(param))<br>loss.backward()<br>不对偏置项进行L2正则化/权值衰减（weight decay）</p>
+<p>bias_list = (param for name, param in model.named_parameters() if name[-4:] == ‘bias’)<br>others_list = (param for name, param in model.named_parameters() if name[-4:] != ‘bias’)<br>parameters = [{‘parameters’: bias_list, ‘weight_decay’: 0},<br>              {‘parameters’: others_list}]<br>optimizer = torch.optim.SGD(parameters, lr=1e-2, momentum=0.9, weight_decay=1e-4)<br>梯度裁剪（gradient clipping）</p>
+<p>torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=20)<br>计算Softmax输出的准确率</p>
+<p>score = model(images)<br>prediction = torch.argmax(score, dim=1)<br>num_correct = torch.sum(prediction == labels).item()<br>accuruacy = num_correct / labels.size(0)<br>可视化模型前馈的计算图</p>
+<p>szagoruyko/pytorchviz<br>​<br>github.com<br>图标<br>可视化学习曲线</p>
+<p>有Facebook自己开发的Visdom和Tensorboard（仍处于实验阶段）两个选择。</p>
+<p>facebookresearch/visdom<br>​<br>github.com<br>图标<br>torch.utils.tensorboard - PyTorch master documentation<br>​<br>pytorch.org</p>
+<h1 id="Example-using-Visdom"><a href="#Example-using-Visdom" class="headerlink" title="Example using Visdom."></a>Example using Visdom.</h1><p>vis = visdom.Visdom(env=’Learning curve’, use_incoming_socket=False)<br>assert self._visdom.check_connection()<br>self._visdom.close()<br>options = collections.namedtuple(‘Options’, [‘loss’, ‘acc’, ‘lr’])(<br>    loss={‘xlabel’: ‘Epoch’, ‘ylabel’: ‘Loss’, ‘showlegend’: True},<br>    acc={‘xlabel’: ‘Epoch’, ‘ylabel’: ‘Accuracy’, ‘showlegend’: True},<br>    lr={‘xlabel’: ‘Epoch’, ‘ylabel’: ‘Learning rate’, ‘showlegend’: True})</p>
+<p>for t in epoch(80):<br>    tran(…)<br>    val(…)<br>    vis.line(X=torch.Tensor([t + 1]), Y=torch.Tensor([train_loss]),<br>             name=’train’, win=’Loss’, update=’append’, opts=options.loss)<br>    vis.line(X=torch.Tensor([t + 1]), Y=torch.Tensor([val_loss]),<br>             name=’val’, win=’Loss’, update=’append’, opts=options.loss)<br>    vis.line(X=torch.Tensor([t + 1]), Y=torch.Tensor([train_acc]),<br>             name=’train’, win=’Accuracy’, update=’append’, opts=options.acc)<br>    vis.line(X=torch.Tensor([t + 1]), Y=torch.Tensor([val_acc]),<br>             name=’val’, win=’Accuracy’, update=’append’, opts=options.acc)<br>    vis.line(X=torch.Tensor([t + 1]), Y=torch.Tensor([lr]),<br>             win=’Learning rate’, update=’append’, opts=options.lr)<br>得到当前学习率</p>
+<h1 id="If-there-is-one-global-learning-rate-which-is-the-common-case"><a href="#If-there-is-one-global-learning-rate-which-is-the-common-case" class="headerlink" title="If there is one global learning rate (which is the common case)."></a>If there is one global learning rate (which is the common case).</h1><p>lr = next(iter(optimizer.param_groups))[‘lr’]</p>
+<h1 id="If-there-are-multiple-learning-rates-for-different-layers"><a href="#If-there-are-multiple-learning-rates-for-different-layers" class="headerlink" title="If there are multiple learning rates for different layers."></a>If there are multiple learning rates for different layers.</h1><p>all_lr = []<br>for param_group in optimizer.param_groups:<br>    all_lr.append(param_group[‘lr’])<br>学习率衰减</p>
+<h1 id="Reduce-learning-rate-when-validation-accuarcy-plateau"><a href="#Reduce-learning-rate-when-validation-accuarcy-plateau" class="headerlink" title="Reduce learning rate when validation accuarcy plateau."></a>Reduce learning rate when validation accuarcy plateau.</h1><p>scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode=’max’, patience=5, verbose=True)<br>for t in range(0, 80):<br>    train(…); val(…)<br>    scheduler.step(val_acc)</p>
+<h1 id="Cosine-annealing-learning-rate"><a href="#Cosine-annealing-learning-rate" class="headerlink" title="Cosine annealing learning rate."></a>Cosine annealing learning rate.</h1><p>scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=80)</p>
+<h1 id="Reduce-learning-rate-by-10-at-given-epochs"><a href="#Reduce-learning-rate-by-10-at-given-epochs" class="headerlink" title="Reduce learning rate by 10 at given epochs."></a>Reduce learning rate by 10 at given epochs.</h1><p>scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[50, 70], gamma=0.1)<br>for t in range(0, 80):<br>    scheduler.step()<br>    train(…); val(…)</p>
+<h1 id="Learning-rate-warmup-by-10-epochs"><a href="#Learning-rate-warmup-by-10-epochs" class="headerlink" title="Learning rate warmup by 10 epochs."></a>Learning rate warmup by 10 epochs.</h1><p>scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lambda t: t / 10)<br>for t in range(0, 10):<br>    scheduler.step()<br>    train(…); val(…)<br>保存与加载断点</p>
+<p>注意为了能够恢复训练，我们需要同时保存模型和优化器的状态，以及当前的训练轮数。</p>
+<h1 id="Save-checkpoint"><a href="#Save-checkpoint" class="headerlink" title="Save checkpoint."></a>Save checkpoint.</h1><p>is_best = current_acc &gt; best_acc<br>best_acc = max(best_acc, current_acc)<br>checkpoint = {<br>    ‘best_acc’: best_acc,<br>    ‘epoch’: t + 1,<br>    ‘model’: model.state_dict(),<br>    ‘optimizer’: optimizer.state_dict(),<br>}<br>model_path = os.path.join(‘model’, ‘checkpoint.pth.tar’)<br>torch.save(checkpoint, model_path)<br>if is_best:<br>    shutil.copy(‘checkpoint.pth.tar’, model_path)</p>
+<h1 id="Load-checkpoint"><a href="#Load-checkpoint" class="headerlink" title="Load checkpoint."></a>Load checkpoint.</h1><p>if resume:<br>    model_path = os.path.join(‘model’, ‘checkpoint.pth.tar’)<br>    assert os.path.isfile(model_path)<br>    checkpoint = torch.load(model_path)<br>    best_acc = checkpoint[‘best_acc’]<br>    start_epoch = checkpoint[‘epoch’]<br>    model.load_state_dict(checkpoint[‘model’])<br>    optimizer.load_state_dict(checkpoint[‘optimizer’])<br>    print(‘Load checkpoint at epoch %d.’ % start_epoch)<br>计算准确率、查准率（precision）、查全率（recall）</p>
+<h1 id="data-‘label’-and-data-‘prediction’-are-groundtruth-label-and-prediction"><a href="#data-‘label’-and-data-‘prediction’-are-groundtruth-label-and-prediction" class="headerlink" title="data[‘label’] and data[‘prediction’] are groundtruth label and prediction"></a>data[‘label’] and data[‘prediction’] are groundtruth label and prediction</h1><h1 id="for-each-image-respectively"><a href="#for-each-image-respectively" class="headerlink" title="for each image, respectively."></a>for each image, respectively.</h1><p>accuracy = np.mean(data[‘label’] == data[‘prediction’]) * 100</p>
+<h1 id="Compute-recision-and-recall-for-each-class"><a href="#Compute-recision-and-recall-for-each-class" class="headerlink" title="Compute recision and recall for each class."></a>Compute recision and recall for each class.</h1><p>for c in range(len(num_classes)):<br>    tp = np.dot((data[‘label’] == c).astype(int),<br>                (data[‘prediction’] == c).astype(int))<br>    tp_fp = np.sum(data[‘prediction’] == c)<br>    tp_fn = np.sum(data[‘label’] == c)<br>    precision = tp / tp_fp <em> 100<br>    recall = tp / tp_fn </em> 100</p>
+<ol>
+<li>模型测试<br>计算每个类别的查准率（precision）、查全率（recall）、F1和总体指标</li>
+</ol>
+<p>import sklearn.metrics</p>
+<p>all_label = []<br>all_prediction = []<br>for images, labels in tqdm.tqdm(data_loader):</p>
+<pre><code> # Data.
+ images, labels = images.cuda(), labels.cuda()
+
+ # Forward pass.
+ score = model(images)
+
+ # Save label and predictions.
+ prediction = torch.argmax(score, dim=1)
+ all_label.append(labels.cpu().numpy())
+ all_prediction.append(prediction.cpu().numpy())
+</code></pre><h1 id="Compute-RP-and-confusion-matrix"><a href="#Compute-RP-and-confusion-matrix" class="headerlink" title="Compute RP and confusion matrix."></a>Compute RP and confusion matrix.</h1><p>all_label = np.concatenate(all_label)<br>assert len(all_label.shape) == 1<br>all_prediction = np.concatenate(all_prediction)<br>assert all_label.shape == all_prediction.shape<br>micro_p, micro_r, micro_f1, _ = sklearn.metrics.precision_recall_fscore_support(<br>     all_label, all_prediction, average=’micro’, labels=range(num_classes))<br>class_p, class_r, class_f1, class_occurence = sklearn.metrics.precision_recall_fscore_support(<br>     all_label, all_prediction, average=None, labels=range(num_classes))</p>
+<h1 id="Ci-j-y-i-and-hat-y-j"><a href="#Ci-j-y-i-and-hat-y-j" class="headerlink" title="Ci,j = #{y=i and hat_y=j}"></a>Ci,j = #{y=i and hat_y=j}</h1><p>confusion_mat = sklearn.metrics.confusion_matrix(<br>     all_label, all_prediction, labels=range(num_classes))<br>assert confusion_mat.shape == (num_classes, num_classes)<br>将各类结果写入电子表格</p>
+<p>import csv</p>
+<h1 id="Write-results-onto-disk"><a href="#Write-results-onto-disk" class="headerlink" title="Write results onto disk."></a>Write results onto disk.</h1><p>with open(os.path.join(path, filename), ‘wt’, encoding=’utf-8’) as f:<br>     f = csv.writer(f)<br>     f.writerow([‘Class’, ‘Label’, ‘# occurence’, ‘Precision’, ‘Recall’, ‘F1’,<br>                 ‘Confused class 1’, ‘Confused class 2’, ‘Confused class 3’,<br>                 ‘Confused 4’, ‘Confused class 5’])<br>     for c in range(num_classes):<br>         index = np.argsort(confusion_mat[:, c])[::-1][:5]<br>         f.writerow([<br>             label2class[c], c, class_occurence[c], ‘%4.3f’ % class_p[c],<br>                 ‘%4.3f’ % class_r[c], ‘%4.3f’ % class_f1[c],<br>                 ‘%s:%d’ % (label2class[index[0]], confusion_mat[index[0], c]),<br>                 ‘%s:%d’ % (label2class[index[1]], confusion_mat[index[1], c]),<br>                 ‘%s:%d’ % (label2class[index[2]], confusion_mat[index[2], c]),<br>                 ‘%s:%d’ % (label2class[index[3]], confusion_mat[index[3], c]),<br>                 ‘%s:%d’ % (label2class[index[4]], confusion_mat[index[4], c])])<br>         f.writerow([‘All’, ‘’, np.sum(class_occurence), micro_p, micro_r, micro_f1,<br>                     ‘’, ‘’, ‘’, ‘’, ‘’])</p>
+<ol>
+<li>PyTorch其他注意事项<br>模型定义</li>
+</ol>
+<p>建议有参数的层和汇合（pooling）层使用torch.nn模块定义，激活函数直接使用torch.nn.functional。torch.nn模块和torch.nn.functional的区别在于，torch.nn模块在计算时底层调用了torch.nn.functional，但torch.nn模块包括该层参数，还可以应对训练和测试两种网络状态。使用torch.nn.functional时要注意网络状态，如<br>def forward(self, x):<br>    …<br>    x = torch.nn.functional.dropout(x, p=0.5, training=self.training)<br>model(x)前用model.train()和model.eval()切换网络状态。<br>不需要计算梯度的代码块用with torch.no_grad()包含起来。model.eval()和torch.no_grad()的区别在于，model.eval()是将网络切换为测试状态，例如BN和随机失活（dropout）在训练和测试阶段使用不同的计算方法。torch.no_grad()是关闭PyTorch张量的自动求导机制，以减少存储使用和加速计算，得到的结果无法进行loss.backward()。<br>torch.nn.CrossEntropyLoss的输入不需要经过Softmax。torch.nn.CrossEntropyLoss等价于torch.nn.functional.log_softmax + torch.nn.NLLLoss。<br>loss.backward()前用optimizer.zero_grad()清除累积梯度。optimizer.zero_grad()和model.zero_grad()效果一样。<br>PyTorch性能与调试</p>
+<p>torch.utils.data.DataLoader中尽量设置pin_memory=True，对特别小的数据集如MNIST设置pin_memory=False反而更快一些。num_workers的设置需要在实验中找到最快的取值。<br>用del及时删除不用的中间变量，节约GPU存储。<br>使用inplace操作可节约GPU存储，如<br>x = torch.nn.functional.relu(x, inplace=True)<br>此外，还可以通过torch.utils.checkpoint前向传播时只保留一部分中间结果来节约GPU存储使用，在反向传播时需要的内容从最近中间结果中计算得到。</p>
+<p>减少CPU和GPU之间的数据传输。例如如果你想知道一个epoch中每个mini-batch的loss和准确率，先将它们累积在GPU中等一个epoch结束之后一起传输回CPU会比每个mini-batch都进行一次GPU到CPU的传输更快。<br>使用半精度浮点数half()会有一定的速度提升，具体效率依赖于GPU型号。需要小心数值精度过低带来的稳定性问题。<br>时常使用assert tensor.size() == (N, D, H, W)作为调试手段，确保张量维度和你设想中一致。<br>除了标记y外，尽量少使用一维张量，使用n*1的二维张量代替，可以避免一些意想不到的一维张量计算结果。<br>统计代码各部分耗时<br>with torch.autograd.profiler.profile(enabled=True, use_cuda=False) as profile:<br>    …<br>print(profile)<br>或者在命令行运行</p>
+<h1 id="实用工具"><a href="#实用工具" class="headerlink" title="实用工具"></a>实用工具</h1><p>从网上各种资料加上自己实践的可用工具。</p>
+<p>主要包括：</p>
+<p>模型层数：print_layers_num</p>
+<p>模型参数总量：print_model_parm_nums</p>
+<p>模型的计算图：def print_autograd_graph():或者参见tensorboad</p>
+<p>模型滤波器可视化：show_save_tensor</p>
+<p>模型在具体的输入下的尺寸信息summary以及参数量：show_summary</p>
+<p>模型计算量：print_model_parm_flops</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br></pre></td><td class="code"><pre><span class="line">式较混乱，但上述代码均可用，后续会继续整理。</span><br><span class="line"></span><br><span class="line"><span class="comment">#coding:utf8</span></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torchvision</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line"><span class="keyword">import</span> torchvision.models <span class="keyword">as</span> models</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></span><br><span class="line">    model = models.resnet18()</span><br><span class="line">    <span class="keyword">print</span> model.layer1[<span class="number">0</span>].conv1.weight.data</span><br><span class="line"></span><br><span class="line">    <span class="keyword">print</span> model.layer1[<span class="number">0</span>].conv1.__class__<span class="comment">#&lt;class 'torch.nn.modules.conv.Conv2d'&gt;</span></span><br><span class="line">    <span class="keyword">print</span> model.layer1[<span class="number">0</span>].conv1.kernel_size</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    input = torch.autograd.Variable(torch.randn(<span class="number">20</span>, <span class="number">16</span>, <span class="number">50</span>, <span class="number">100</span>))</span><br><span class="line">    <span class="keyword">print</span> input.size()</span><br><span class="line">    <span class="keyword">print</span> np.prod(input.size())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_model_parm_nums</span><span class="params">()</span>:</span></span><br><span class="line">    model = models.alexnet()</span><br><span class="line">    total = sum([param.nelement() <span class="keyword">for</span> param <span class="keyword">in</span> model.parameters()])</span><br><span class="line">    print(<span class="string">'  + Number of params: %.2fM'</span> % (total / <span class="number">1e6</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_model_parm_flops</span><span class="params">()</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># prods = &#123;&#125;</span></span><br><span class="line">    <span class="comment"># def save_prods(self, input, output):</span></span><br><span class="line">        <span class="comment"># print 'flops:&#123;&#125;'.format(self.__class__.__name__)</span></span><br><span class="line">        <span class="comment"># print 'input:&#123;&#125;'.format(input)</span></span><br><span class="line">        <span class="comment"># print '_dim:&#123;&#125;'.format(input[0].dim())</span></span><br><span class="line">        <span class="comment"># print 'input_shape:&#123;&#125;'.format(np.prod(input[0].shape))</span></span><br><span class="line">        <span class="comment"># grads.append(np.prod(input[0].shape))</span></span><br><span class="line"></span><br><span class="line">    prods = &#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">save_hook</span><span class="params">(name)</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">hook_per</span><span class="params">(self, input, output)</span>:</span></span><br><span class="line">            <span class="comment"># print 'flops:&#123;&#125;'.format(self.__class__.__name__)</span></span><br><span class="line">            <span class="comment"># print 'input:&#123;&#125;'.format(input)</span></span><br><span class="line">            <span class="comment"># print '_dim:&#123;&#125;'.format(input[0].dim())</span></span><br><span class="line">            <span class="comment"># print 'input_shape:&#123;&#125;'.format(np.prod(input[0].shape))</span></span><br><span class="line">            <span class="comment"># prods.append(np.prod(input[0].shape))</span></span><br><span class="line">            prods[name] = np.prod(input[<span class="number">0</span>].shape)</span><br><span class="line">            <span class="comment"># prods.append(np.prod(input[0].shape))</span></span><br><span class="line">        <span class="keyword">return</span> hook_per</span><br><span class="line"></span><br><span class="line">    list_1=[]</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">simple_hook</span><span class="params">(self, input, output)</span>:</span></span><br><span class="line">        list_1.append(np.prod(input[<span class="number">0</span>].shape))</span><br><span class="line">    list_2=&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">simple_hook2</span><span class="params">(self, input, output)</span>:</span></span><br><span class="line">        list_2[<span class="string">'names'</span>] = np.prod(input[<span class="number">0</span>].shape)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    multiply_adds = <span class="keyword">False</span></span><br><span class="line">    list_conv=[]</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">conv_hook</span><span class="params">(self, input, output)</span>:</span></span><br><span class="line">        batch_size, input_channels, input_height, input_width = input[<span class="number">0</span>].size()</span><br><span class="line">        output_channels, output_height, output_width = output[<span class="number">0</span>].size()</span><br><span class="line"></span><br><span class="line">        kernel_ops = self.kernel_size[<span class="number">0</span>] * self.kernel_size[<span class="number">1</span>] * (self.in_channels / self.groups) * (<span class="number">2</span> <span class="keyword">if</span> multiply_adds <span class="keyword">else</span> <span class="number">1</span>)</span><br><span class="line">        bias_ops = <span class="number">1</span> <span class="keyword">if</span> self.bias <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span> <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        params = output_channels * (kernel_ops + bias_ops)</span><br><span class="line">        flops = batch_size * params * output_height * output_width</span><br><span class="line"></span><br><span class="line">        list_conv.append(flops)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    list_linear=[]</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">linear_hook</span><span class="params">(self, input, output)</span>:</span></span><br><span class="line">        batch_size = input[<span class="number">0</span>].size(<span class="number">0</span>) <span class="keyword">if</span> input[<span class="number">0</span>].dim() == <span class="number">2</span> <span class="keyword">else</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        weight_ops = self.weight.nelement() * (<span class="number">2</span> <span class="keyword">if</span> multiply_adds <span class="keyword">else</span> <span class="number">1</span>)</span><br><span class="line">        bias_ops = self.bias.nelement()</span><br><span class="line"></span><br><span class="line">        flops = batch_size * (weight_ops + bias_ops)</span><br><span class="line">        list_linear.append(flops)</span><br><span class="line"></span><br><span class="line">    list_bn=[]</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">bn_hook</span><span class="params">(self, input, output)</span>:</span></span><br><span class="line">        list_bn.append(input[<span class="number">0</span>].nelement())</span><br><span class="line"></span><br><span class="line">    list_relu=[]</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">relu_hook</span><span class="params">(self, input, output)</span>:</span></span><br><span class="line">        list_relu.append(input[<span class="number">0</span>].nelement())</span><br><span class="line"></span><br><span class="line">    list_pooling=[]</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pooling_hook</span><span class="params">(self, input, output)</span>:</span></span><br><span class="line">        batch_size, input_channels, input_height, input_width = input[<span class="number">0</span>].size()</span><br><span class="line">        output_channels, output_height, output_width = output[<span class="number">0</span>].size()</span><br><span class="line"></span><br><span class="line">        kernel_ops = self.kernel_size * self.kernel_size</span><br><span class="line">        bias_ops = <span class="number">0</span></span><br><span class="line">        params = output_channels * (kernel_ops + bias_ops)</span><br><span class="line">        flops = batch_size * params * output_height * output_width</span><br><span class="line"></span><br><span class="line">        list_pooling.append(flops)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">(net)</span>:</span></span><br><span class="line">        childrens = list(net.children())</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> childrens:</span><br><span class="line">            <span class="keyword">if</span> isinstance(net, torch.nn.Conv2d):</span><br><span class="line">                <span class="comment"># net.register_forward_hook(save_hook(net.__class__.__name__))</span></span><br><span class="line">                <span class="comment"># net.register_forward_hook(simple_hook)</span></span><br><span class="line">                <span class="comment"># net.register_forward_hook(simple_hook2)</span></span><br><span class="line">                net.register_forward_hook(conv_hook)</span><br><span class="line">            <span class="keyword">if</span> isinstance(net, torch.nn.Linear):</span><br><span class="line">                net.register_forward_hook(linear_hook)</span><br><span class="line">            <span class="keyword">if</span> isinstance(net, torch.nn.BatchNorm2d):</span><br><span class="line">                net.register_forward_hook(bn_hook)</span><br><span class="line">            <span class="keyword">if</span> isinstance(net, torch.nn.ReLU):</span><br><span class="line">                net.register_forward_hook(relu_hook)</span><br><span class="line">            <span class="keyword">if</span> isinstance(net, torch.nn.MaxPool2d) <span class="keyword">or</span> isinstance(net, torch.nn.AvgPool2d):</span><br><span class="line">                net.register_forward_hook(pooling_hook)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">for</span> c <span class="keyword">in</span> childrens:</span><br><span class="line">                foo(c)</span><br><span class="line"></span><br><span class="line">    resnet = models.alexnet()</span><br><span class="line">    foo(resnet)</span><br><span class="line">    input = Variable(torch.rand(<span class="number">3</span>,<span class="number">224</span>,<span class="number">224</span>).unsqueeze(<span class="number">0</span>), requires_grad = <span class="keyword">True</span>)</span><br><span class="line">    out = resnet(input)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    total_flops = (sum(list_conv) + sum(list_linear) + sum(list_bn) + sum(list_relu) + sum(list_pooling))</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'  + Number of FLOPs: %.2fG'</span> % (total_flops / <span class="number">1e9</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># print list_bn</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># print 'prods:&#123;&#125;'.format(prods)</span></span><br><span class="line">    <span class="comment"># print 'list_1:&#123;&#125;'.format(list_1)</span></span><br><span class="line">    <span class="comment"># print 'list_2:&#123;&#125;'.format(list_2)</span></span><br><span class="line">    <span class="comment"># print 'list_final:&#123;&#125;'.format(list_final)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_forward</span><span class="params">()</span>:</span></span><br><span class="line">    model = torchvision.models.resnet18()</span><br><span class="line">    select_layer = model.layer1[<span class="number">0</span>].conv1</span><br><span class="line"></span><br><span class="line">    grads=&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">save_grad</span><span class="params">(name)</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">hook</span><span class="params">(self, input, output)</span>:</span></span><br><span class="line">            grads[name] = input</span><br><span class="line">        <span class="keyword">return</span> hook</span><br><span class="line"></span><br><span class="line">    select_layer.register_forward_hook(save_grad(<span class="string">'select_layer'</span>))</span><br><span class="line"></span><br><span class="line">    input = Variable(torch.rand(<span class="number">3</span>,<span class="number">224</span>,<span class="number">224</span>).unsqueeze(<span class="number">0</span>), requires_grad = <span class="keyword">True</span>)</span><br><span class="line">    out = model(input)</span><br><span class="line">    <span class="comment"># print grads['select_layer']</span></span><br><span class="line">    <span class="keyword">print</span> grads</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_value</span><span class="params">()</span>:</span></span><br><span class="line">    grads = &#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">save_grad</span><span class="params">(name)</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">hook</span><span class="params">(grad)</span>:</span></span><br><span class="line">            grads[name] = grad</span><br><span class="line">        <span class="keyword">return</span> hook</span><br><span class="line"></span><br><span class="line">    x = Variable(torch.randn(<span class="number">1</span>,<span class="number">1</span>), requires_grad=<span class="keyword">True</span>)</span><br><span class="line">    y = <span class="number">3</span>*x</span><br><span class="line">    z = y**<span class="number">2</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># In here, save_grad('y') returns a hook (a function) that keeps 'y' as name</span></span><br><span class="line">    y.register_hook(save_grad(<span class="string">'y'</span>))</span><br><span class="line">    z.register_hook(save_grad(<span class="string">'z'</span>))</span><br><span class="line">    z.backward()</span><br><span class="line">    <span class="keyword">print</span> <span class="string">'HW'</span></span><br><span class="line">    print(<span class="string">"grads['y']: &#123;&#125;"</span>.format(grads[<span class="string">'y'</span>]))</span><br><span class="line">    print(grads[<span class="string">'z'</span>])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_layers_num</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># resnet = models.resnet18()</span></span><br><span class="line">    resnet = models.resnet18()</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">(net)</span>:</span></span><br><span class="line">        childrens = list(net.children())</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> childrens:</span><br><span class="line">            <span class="keyword">if</span> isinstance(net, torch.nn.Conv2d):</span><br><span class="line">                <span class="keyword">print</span> <span class="string">' '</span></span><br><span class="line">                <span class="comment">#可以用来统计不同层的个数</span></span><br><span class="line">                <span class="comment"># net.register_backward_hook(print)</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">        count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> c <span class="keyword">in</span> childrens:</span><br><span class="line">                count += foo(c)</span><br><span class="line">        <span class="keyword">return</span> count</span><br><span class="line">    print(foo(resnet))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_summary</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">torch_summarize</span><span class="params">(model, show_weights=True, show_parameters=True)</span>:</span></span><br><span class="line">        <span class="string">"""Summarizes torch model by showing trainable parameters and weights."""</span></span><br><span class="line">        <span class="keyword">from</span> torch.nn.modules.module <span class="keyword">import</span> _addindent</span><br><span class="line"></span><br><span class="line">        tmpstr = model.__class__.__name__ + <span class="string">' (\n'</span></span><br><span class="line">        <span class="keyword">for</span> key, module <span class="keyword">in</span> model._modules.items():</span><br><span class="line">            <span class="comment"># if it contains layers let call it recursively to get params and weights</span></span><br><span class="line">            <span class="keyword">if</span> type(module) <span class="keyword">in</span> [</span><br><span class="line">                torch.nn.modules.container.Container,</span><br><span class="line">                torch.nn.modules.container.Sequential</span><br><span class="line">            ]:</span><br><span class="line">                modstr = torch_summarize(module)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                modstr = module.__repr__()</span><br><span class="line">            modstr = _addindent(modstr, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">            params = sum([np.prod(p.size()) <span class="keyword">for</span> p <span class="keyword">in</span> module.parameters()])</span><br><span class="line">            weights = tuple([tuple(p.size()) <span class="keyword">for</span> p <span class="keyword">in</span> module.parameters()])</span><br><span class="line"></span><br><span class="line">            tmpstr += <span class="string">'  ('</span> + key + <span class="string">'): '</span> + modstr</span><br><span class="line">            <span class="keyword">if</span> show_weights:</span><br><span class="line">                tmpstr += <span class="string">', weights=&#123;&#125;'</span>.format(weights)</span><br><span class="line">            <span class="keyword">if</span> show_parameters:</span><br><span class="line">                tmpstr +=  <span class="string">', parameters=&#123;&#125;'</span>.format(params)</span><br><span class="line">            tmpstr += <span class="string">'\n'</span>   </span><br><span class="line"></span><br><span class="line">        tmpstr = tmpstr + <span class="string">')'</span></span><br><span class="line">        <span class="keyword">return</span> tmpstr</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Test</span></span><br><span class="line">    <span class="keyword">import</span> torchvision.models <span class="keyword">as</span> models</span><br><span class="line">    model = models.alexnet()</span><br><span class="line">    print(torch_summarize(model))</span><br><span class="line"></span><br><span class="line"><span class="comment">#https://gist.github.com/wassname/0fb8f95e4272e6bdd27bd7df386716b7</span></span><br><span class="line"><span class="comment">#summarize a torch model like in keras, showing parameters and output shape</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_summary</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">from</span> collections <span class="keyword">import</span> OrderedDict</span><br><span class="line">    <span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">    <span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">    <span class="keyword">import</span> torch</span><br><span class="line">    <span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line">    <span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line">    <span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_names_dict</span><span class="params">(model)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Recursive walk to get names including path</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        names = &#123;&#125;</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">_get_names</span><span class="params">(module, parent_name=<span class="string">''</span>)</span>:</span></span><br><span class="line">            <span class="keyword">for</span> key, module <span class="keyword">in</span> module.named_children():</span><br><span class="line">                name = parent_name + <span class="string">'.'</span> + key <span class="keyword">if</span> parent_name <span class="keyword">else</span> key</span><br><span class="line">                names[name]=module</span><br><span class="line">                <span class="keyword">if</span> isinstance(module, torch.nn.Module):</span><br><span class="line">                    _get_names(module, parent_name=name)</span><br><span class="line">        _get_names(model)</span><br><span class="line">        <span class="keyword">return</span> names</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">torch_summarize_df</span><span class="params">(input_size, model, weights=False, input_shape=True, nb_trainable=False)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Summarizes torch model by showing trainable parameters and weights.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        author: wassname</span></span><br><span class="line"><span class="string">        url: https://gist.github.com/wassname/0fb8f95e4272e6bdd27bd7df386716b7</span></span><br><span class="line"><span class="string">        license: MIT</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Modified from:</span></span><br><span class="line"><span class="string">        - https://github.com/pytorch/pytorch/issues/2001#issuecomment-313735757</span></span><br><span class="line"><span class="string">        - https://gist.github.com/wassname/0fb8f95e4272e6bdd27bd7df386716b7/</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Usage:</span></span><br><span class="line"><span class="string">            import torchvision.models as models</span></span><br><span class="line"><span class="string">            model = models.alexnet()</span></span><br><span class="line"><span class="string">            df = torch_summarize_df(input_size=(3, 224,224), model=model)</span></span><br><span class="line"><span class="string">            print(df)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">            #              name class_name        input_shape       output_shape  nb_params</span></span><br><span class="line"><span class="string">            # 1     features=&gt;0     Conv2d  (-1, 3, 224, 224)   (-1, 64, 55, 55)      23296#(3*11*11+1)*64</span></span><br><span class="line"><span class="string">            # 2     features=&gt;1       ReLU   (-1, 64, 55, 55)   (-1, 64, 55, 55)          0</span></span><br><span class="line"><span class="string">            # ...</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">register_hook</span><span class="params">(module)</span>:</span></span><br><span class="line">            <span class="function"><span class="keyword">def</span> <span class="title">hook</span><span class="params">(module, input, output)</span>:</span></span><br><span class="line">                name = <span class="string">''</span></span><br><span class="line">                <span class="keyword">for</span> key, item <span class="keyword">in</span> names.items():</span><br><span class="line">                    <span class="keyword">if</span> item == module:</span><br><span class="line">                        name = key</span><br><span class="line">                <span class="comment">#&lt;class 'torch.nn.modules.conv.Conv2d'&gt;</span></span><br><span class="line">                class_name = str(module.__class__).split(<span class="string">'.'</span>)[<span class="number">-1</span>].split(<span class="string">"'"</span>)[<span class="number">0</span>]</span><br><span class="line">                module_idx = len(summary)</span><br><span class="line"></span><br><span class="line">                m_key = module_idx + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">                summary[m_key] = OrderedDict()</span><br><span class="line">                summary[m_key][<span class="string">'name'</span>] = name</span><br><span class="line">                summary[m_key][<span class="string">'class_name'</span>] = class_name</span><br><span class="line">                <span class="keyword">if</span> input_shape:</span><br><span class="line">                    summary[m_key][</span><br><span class="line">                        <span class="string">'input_shape'</span>] = (<span class="number">-1</span>, ) + tuple(input[<span class="number">0</span>].size())[<span class="number">1</span>:]</span><br><span class="line">                summary[m_key][<span class="string">'output_shape'</span>] = (<span class="number">-1</span>, ) + tuple(output.size())[<span class="number">1</span>:]</span><br><span class="line">                <span class="keyword">if</span> weights:</span><br><span class="line">                    summary[m_key][<span class="string">'weights'</span>] = list(</span><br><span class="line">                        [tuple(p.size()) <span class="keyword">for</span> p <span class="keyword">in</span> module.parameters()])</span><br><span class="line"></span><br><span class="line">    <span class="comment">#             summary[m_key]['trainable'] = any([p.requires_grad for p in module.parameters()])</span></span><br><span class="line">                <span class="keyword">if</span> nb_trainable:</span><br><span class="line">                    params_trainable = sum([torch.LongTensor(list(p.size())).prod() <span class="keyword">for</span> p <span class="keyword">in</span> module.parameters() <span class="keyword">if</span> p.requires_grad])</span><br><span class="line">                    summary[m_key][<span class="string">'nb_trainable'</span>] = params_trainable</span><br><span class="line">                params = sum([torch.LongTensor(list(p.size())).prod() <span class="keyword">for</span> p <span class="keyword">in</span> module.parameters()])</span><br><span class="line">                summary[m_key][<span class="string">'nb_params'</span>] = params</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>  <span class="keyword">not</span> isinstance(module, nn.Sequential) <span class="keyword">and</span> \</span><br><span class="line">                <span class="keyword">not</span> isinstance(module, nn.ModuleList) <span class="keyword">and</span> \</span><br><span class="line">                <span class="keyword">not</span> (module == model):</span><br><span class="line">                hooks.append(module.register_forward_hook(hook))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Names are stored in parent and path+name is unique not the name</span></span><br><span class="line">        names = get_names_dict(model)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># check if there are multiple inputs to the network</span></span><br><span class="line">        <span class="keyword">if</span> isinstance(input_size[<span class="number">0</span>], (list, tuple)):</span><br><span class="line">            x = [Variable(torch.rand(<span class="number">1</span>, *in_size)) <span class="keyword">for</span> in_size <span class="keyword">in</span> input_size]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            x = Variable(torch.rand(<span class="number">1</span>, *input_size))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> next(model.parameters()).is_cuda:</span><br><span class="line">            x = x.cuda()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># create properties</span></span><br><span class="line">        summary = OrderedDict()</span><br><span class="line">        hooks = []</span><br><span class="line"></span><br><span class="line">        <span class="comment"># register hook</span></span><br><span class="line">        model.apply(register_hook)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># make a forward pass</span></span><br><span class="line">        model(x)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># remove these hooks</span></span><br><span class="line">        <span class="keyword">for</span> h <span class="keyword">in</span> hooks:</span><br><span class="line">            h.remove()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># make dataframe</span></span><br><span class="line">        df_summary = pd.DataFrame.from_dict(summary, orient=<span class="string">'index'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> df_summary</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Test on alexnet</span></span><br><span class="line">    <span class="keyword">import</span> torchvision.models <span class="keyword">as</span> models</span><br><span class="line">    model = models.alexnet()</span><br><span class="line">    df = torch_summarize_df(input_size=(<span class="number">3</span>, <span class="number">224</span>, <span class="number">224</span>), model=model)</span><br><span class="line">    print(df)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># # Output</span></span><br><span class="line">    <span class="comment">#              name class_name        input_shape       output_shape  nb_params</span></span><br><span class="line">    <span class="comment"># 1     features=&gt;0     Conv2d  (-1, 3, 224, 224)   (-1, 64, 55, 55)      23296#nn.Conv2d(3, 64, kernel_size=11, stride=4, padding=2),</span></span><br><span class="line">    <span class="comment"># 2     features=&gt;1       ReLU   (-1, 64, 55, 55)   (-1, 64, 55, 55)          0</span></span><br><span class="line">    <span class="comment"># 3     features=&gt;2  MaxPool2d   (-1, 64, 55, 55)   (-1, 64, 27, 27)          0</span></span><br><span class="line">    <span class="comment"># 4     features=&gt;3     Conv2d   (-1, 64, 27, 27)  (-1, 192, 27, 27)     307392</span></span><br><span class="line">    <span class="comment"># 5     features=&gt;4       ReLU  (-1, 192, 27, 27)  (-1, 192, 27, 27)          0</span></span><br><span class="line">    <span class="comment"># 6     features=&gt;5  MaxPool2d  (-1, 192, 27, 27)  (-1, 192, 13, 13)          0</span></span><br><span class="line">    <span class="comment"># 7     features=&gt;6     Conv2d  (-1, 192, 13, 13)  (-1, 384, 13, 13)     663936</span></span><br><span class="line">    <span class="comment"># 8     features=&gt;7       ReLU  (-1, 384, 13, 13)  (-1, 384, 13, 13)          0</span></span><br><span class="line">    <span class="comment"># 9     features=&gt;8     Conv2d  (-1, 384, 13, 13)  (-1, 256, 13, 13)     884992</span></span><br><span class="line">    <span class="comment"># 10    features=&gt;9       ReLU  (-1, 256, 13, 13)  (-1, 256, 13, 13)          0</span></span><br><span class="line">    <span class="comment"># 11   features=&gt;10     Conv2d  (-1, 256, 13, 13)  (-1, 256, 13, 13)     590080</span></span><br><span class="line">    <span class="comment"># 12   features=&gt;11       ReLU  (-1, 256, 13, 13)  (-1, 256, 13, 13)          0</span></span><br><span class="line">    <span class="comment"># 13   features=&gt;12  MaxPool2d  (-1, 256, 13, 13)    (-1, 256, 6, 6)          0</span></span><br><span class="line">    <span class="comment"># 14  classifier=&gt;0    Dropout         (-1, 9216)         (-1, 9216)          0</span></span><br><span class="line">    <span class="comment"># 15  classifier=&gt;1     Linear         (-1, 9216)         (-1, 4096)   37752832</span></span><br><span class="line">    <span class="comment"># 16  classifier=&gt;2       ReLU         (-1, 4096)         (-1, 4096)          0</span></span><br><span class="line">    <span class="comment"># 17  classifier=&gt;3    Dropout         (-1, 4096)         (-1, 4096)          0</span></span><br><span class="line">    <span class="comment"># 18  classifier=&gt;4     Linear         (-1, 4096)         (-1, 4096)   16781312</span></span><br><span class="line">    <span class="comment"># 19  classifier=&gt;5       ReLU         (-1, 4096)         (-1, 4096)          0</span></span><br><span class="line">    <span class="comment"># 20  classifier=&gt;6     Linear         (-1, 4096)         (-1, 1000)    4097000</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_save_tensor</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">import</span> torch</span><br><span class="line">    <span class="keyword">from</span> torchvision <span class="keyword">import</span> utils</span><br><span class="line">    <span class="keyword">import</span> torchvision.models <span class="keyword">as</span> models</span><br><span class="line">    <span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">vis_tensor</span><span class="params">(tensor, ch = <span class="number">0</span>, all_kernels=False, nrow=<span class="number">8</span>, padding = <span class="number">2</span>)</span>:</span></span><br><span class="line">        <span class="string">'''</span></span><br><span class="line"><span class="string">        ch: channel for visualization</span></span><br><span class="line"><span class="string">        allkernels: all kernels for visualization</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">        n,c,h,w = tensor.shape</span><br><span class="line">        <span class="keyword">if</span> all_kernels:</span><br><span class="line">            tensor = tensor.view(n*c ,<span class="number">-1</span>, w, h)</span><br><span class="line">        <span class="keyword">elif</span> c != <span class="number">3</span>:</span><br><span class="line">            tensor = tensor[:, ch,:,:].unsqueeze(dim=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        rows = np.min((tensor.shape[<span class="number">0</span>]//nrow + <span class="number">1</span>, <span class="number">64</span> ))  </span><br><span class="line">        grid = utils.make_grid(tensor, nrow=nrow, normalize=<span class="keyword">True</span>, padding=padding)</span><br><span class="line">        <span class="comment"># plt.figure(figsize=(nrow,rows))</span></span><br><span class="line">        plt.imshow(grid.numpy().transpose((<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>)))<span class="comment">#CHW HWC</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">save_tensor</span><span class="params">(tensor, filename, ch=<span class="number">0</span>, all_kernels=False, nrow=<span class="number">8</span>, padding=<span class="number">2</span>)</span>:</span></span><br><span class="line">        n,c,h,w = tensor.shape</span><br><span class="line">        <span class="keyword">if</span> all_kernels:</span><br><span class="line">            tensor = tensor.view(n*c ,<span class="number">-1</span>, w, h)</span><br><span class="line">        <span class="keyword">elif</span> c != <span class="number">3</span>:</span><br><span class="line">            tensor = tensor[:, ch,:,:].unsqueeze(dim=<span class="number">1</span>)</span><br><span class="line">        utils.save_image(tensor, filename, nrow = nrow,normalize=<span class="keyword">True</span>, padding=padding)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    vgg = models.resnet18(pretrained=<span class="keyword">True</span>)</span><br><span class="line">    mm = vgg.double()</span><br><span class="line">    filters = mm.modules</span><br><span class="line">    body_model = [i <span class="keyword">for</span> i <span class="keyword">in</span> mm.children()][<span class="number">0</span>]</span><br><span class="line">    <span class="comment"># layer1 = body_model[0]</span></span><br><span class="line">    layer1 = body_model</span><br><span class="line">    tensor = layer1.weight.data.clone()</span><br><span class="line">    vis_tensor(tensor)</span><br><span class="line">    save_tensor(tensor,<span class="string">'test.png'</span>)</span><br><span class="line"></span><br><span class="line">    plt.axis(<span class="string">'off'</span>)</span><br><span class="line">    plt.ioff()</span><br><span class="line">    plt.show()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_autograd_graph</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">from</span> graphviz <span class="keyword">import</span> Digraph</span><br><span class="line">    <span class="keyword">import</span> torch</span><br><span class="line">    <span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">make_dot</span><span class="params">(var, params=None)</span>:</span></span><br><span class="line">        <span class="string">""" Produces Graphviz representation of PyTorch autograd graph</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Blue nodes are the Variables that require grad, orange are Tensors</span></span><br><span class="line"><span class="string">        saved for backward in torch.autograd.Function</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Args:</span></span><br><span class="line"><span class="string">            var: output Variable</span></span><br><span class="line"><span class="string">            params: dict of (name, Variable) to add names to node that</span></span><br><span class="line"><span class="string">                require grad (TODO: make optional)</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> params <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">            <span class="comment">#assert all(isinstance(p, Variable) for p in params.values())        </span></span><br><span class="line">            param_map = &#123;id(v): k <span class="keyword">for</span> k, v <span class="keyword">in</span> params.items()&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        node_attr = dict(style=<span class="string">'filled'</span>,</span><br><span class="line">                        shape=<span class="string">'box'</span>,</span><br><span class="line">                        align=<span class="string">'left'</span>,</span><br><span class="line">                        fontsize=<span class="string">'12'</span>,</span><br><span class="line">                        ranksep=<span class="string">'0.1'</span>,</span><br><span class="line">                        height=<span class="string">'0.2'</span>)</span><br><span class="line">        dot = Digraph(node_attr=node_attr, graph_attr=dict(size=<span class="string">"12,12"</span>))</span><br><span class="line">        seen = set()</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">size_to_str</span><span class="params">(size)</span>:</span></span><br><span class="line">            <span class="keyword">return</span> <span class="string">'('</span>+(<span class="string">', '</span>).join([<span class="string">'%d'</span> % v <span class="keyword">for</span> v <span class="keyword">in</span> size])+<span class="string">')'</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">add_nodes</span><span class="params">(var)</span>:</span></span><br><span class="line">            <span class="keyword">if</span> var <span class="keyword">not</span> <span class="keyword">in</span> seen:</span><br><span class="line">                <span class="keyword">if</span> torch.is_tensor(var):</span><br><span class="line">                    dot.node(str(id(var)), size_to_str(var.size()), fillcolor=<span class="string">'orange'</span>)</span><br><span class="line">                <span class="keyword">elif</span> hasattr(var, <span class="string">'variable'</span>):</span><br><span class="line">                    u = var.variable</span><br><span class="line">                    <span class="comment">#name = param_map[id(u)] if params is not None else ''</span></span><br><span class="line">                    <span class="comment">#node_name = '%s\n %s' % (name, size_to_str(u.size()))</span></span><br><span class="line">                    node_name = <span class="string">'%s\n %s'</span> % (param_map.get(id(u.data)), size_to_str(u.size()))</span><br><span class="line">                    dot.node(str(id(var)), node_name, fillcolor=<span class="string">'lightblue'</span>)</span><br><span class="line"></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    dot.node(str(id(var)), str(type(var).__name__))</span><br><span class="line">                seen.add(var)</span><br><span class="line">                <span class="keyword">if</span> hasattr(var, <span class="string">'next_functions'</span>):</span><br><span class="line">                    <span class="keyword">for</span> u <span class="keyword">in</span> var.next_functions:</span><br><span class="line">                        <span class="keyword">if</span> u[<span class="number">0</span>] <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">                            dot.edge(str(id(u[<span class="number">0</span>])), str(id(var)))</span><br><span class="line">                            add_nodes(u[<span class="number">0</span>])</span><br><span class="line">                <span class="keyword">if</span> hasattr(var, <span class="string">'saved_tensors'</span>):</span><br><span class="line">                    <span class="keyword">for</span> t <span class="keyword">in</span> var.saved_tensors:</span><br><span class="line">                        dot.edge(str(id(t)), str(id(var)))</span><br><span class="line">                        add_nodes(t)</span><br><span class="line">        add_nodes(var.grad_fn)</span><br><span class="line">        <span class="keyword">return</span> dot</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">from</span> torchvision <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line">    torch.manual_seed(<span class="number">1</span>)</span><br><span class="line">    inputs = torch.randn(<span class="number">1</span>,<span class="number">3</span>,<span class="number">224</span>,<span class="number">224</span>)</span><br><span class="line">    model = models.resnet18(pretrained=<span class="keyword">False</span>)</span><br><span class="line">    y = model(Variable(inputs))</span><br><span class="line">    <span class="comment">#print(y)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    g = make_dot(y, params=model.state_dict())</span><br><span class="line">    g.view()</span><br><span class="line">    <span class="comment">#g</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">import</span> fire</span><br><span class="line">    fire. Fire()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PyTorch/" rel="tag"><i class="fa fa-tag"></i> PyTorch</a>
+          
+            <a href="/tags/CookBook/" rel="tag"><i class="fa fa-tag"></i> CookBook</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/z_post/CUDA-读书笔记-CUDAByExample/" rel="prev" title="《CUDA By Example》">
+                <i class="fa fa-chevron-left"></i> 《CUDA By Example》
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/z_post/计算机视觉-DenseNet-CVPR2017/" rel="next" title="DenseNet (CVPR, 2017)">
+                DenseNet (CVPR, 2017) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar_zz.png"
+                alt="ZeroZone" />
+            
+              <p class="site-author-name" itemprop="name">ZeroZone</p>
+              <p class="site-description motion-element" itemprop="description">吾乃闪耀的芝士蛋挞!</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">270</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">42</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hellozhaozheng" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:hellozhaozheng@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/ksws0292756" title="零域CSDN博客" target="_blank">零域CSDN博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xinghanzzy.github.io/" title="BoXiao的博客" target="_blank">BoXiao的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://oldpan.me/" title="Oldpan的博客" target="_blank">Oldpan的博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#待整理"><span class="nav-text">待整理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Set-default-tensor-type-Float-in-PyTorch-is-much-faster-than-double"><span class="nav-text">Set default tensor type. Float in PyTorch is much faster than double.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Type-convertions"><span class="nav-text">Type convertions.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#torch-Tensor-gt-np-ndarray"><span class="nav-text">torch.Tensor -&gt; np.ndarray.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#np-ndarray-gt-torch-Tensor"><span class="nav-text">np.ndarray -&gt; torch.Tensor.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#torch-Tensor-gt-PIL-Image"><span class="nav-text">torch.Tensor -&gt; PIL.Image.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PIL-Image-gt-torch-Tensor"><span class="nav-text">PIL.Image -&gt; torch.Tensor.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#np-ndarray-gt-PIL-Image"><span class="nav-text">np.ndarray -&gt; PIL.Image.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PIL-Image-gt-np-ndarray"><span class="nav-text">PIL.Image -&gt; np.ndarray.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Assume-tensor-has-shape-NDH-W"><span class="nav-text">Assume tensor has shape NDH*W.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Operation-New-Shared-memory-Still-in-computation-graph"><span class="nav-text">Operation                 |  New/Shared memory | Still in computation graph |</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Expand-tensor-of-shape-64512-to-shape-6451277"><span class="nav-text">Expand tensor of shape 64512 to shape 6451277.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Matrix-multiplication-mn-np-gt-mp"><span class="nav-text">Matrix multiplication: (mn)  (np) -&gt; (mp).</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Batch-matrix-multiplication-bmn-bnp-gt-bm-p"><span class="nav-text">Batch matrix multiplication: (bmn)  (bnp) -&gt; (bm*p).</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Element-wise-multiplication"><span class="nav-text">Element-wise multiplication.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#X1-is-of-shape-m-d"><span class="nav-text">X1 is of shape m*d.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#X2-is-of-shape-n-d"><span class="nav-text">X2 is of shape n*d.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dist-is-of-shape-m-n-where-dist-i-j-sqrt-X1-i-X-j-2"><span class="nav-text">dist is of shape m*n, where dist[i][j] = sqrt(|X1[i, :] - X[j, :]|^2)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Common-practise-for-initialization"><span class="nav-text">Common practise for initialization.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Initialization-with-given-tensor"><span class="nav-text">Initialization with given tensor.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#X-is-torch-Tensor-of-size-NDH-W"><span class="nav-text">X is torch.Tensor of size NDH*W.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shuffle-rows"><span class="nav-text">Shuffle rows</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shulle-columns"><span class="nav-text">Shulle columns.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VGG-16-relu5-3-feature"><span class="nav-text">VGG-16 relu5-3 feature.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VGG-16-pool5-feature"><span class="nav-text">VGG-16 pool5 feature.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VGG-16-fc7-feature"><span class="nav-text">VGG-16 fc7 feature.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ResNet-GAP-feature"><span class="nav-text">ResNet GAP feature.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Example-using-Visdom"><span class="nav-text">Example using Visdom.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#If-there-is-one-global-learning-rate-which-is-the-common-case"><span class="nav-text">If there is one global learning rate (which is the common case).</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#If-there-are-multiple-learning-rates-for-different-layers"><span class="nav-text">If there are multiple learning rates for different layers.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reduce-learning-rate-when-validation-accuarcy-plateau"><span class="nav-text">Reduce learning rate when validation accuarcy plateau.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cosine-annealing-learning-rate"><span class="nav-text">Cosine annealing learning rate.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reduce-learning-rate-by-10-at-given-epochs"><span class="nav-text">Reduce learning rate by 10 at given epochs.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Learning-rate-warmup-by-10-epochs"><span class="nav-text">Learning rate warmup by 10 epochs.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Save-checkpoint"><span class="nav-text">Save checkpoint.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Load-checkpoint"><span class="nav-text">Load checkpoint.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#data-‘label’-and-data-‘prediction’-are-groundtruth-label-and-prediction"><span class="nav-text">data[‘label’] and data[‘prediction’] are groundtruth label and prediction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#for-each-image-respectively"><span class="nav-text">for each image, respectively.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Compute-recision-and-recall-for-each-class"><span class="nav-text">Compute recision and recall for each class.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Compute-RP-and-confusion-matrix"><span class="nav-text">Compute RP and confusion matrix.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ci-j-y-i-and-hat-y-j"><span class="nav-text">Ci,j = #{y=i and hat_y=j}</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Write-results-onto-disk"><span class="nav-text">Write results onto disk.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实用工具"><span class="nav-text">实用工具</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZeroZone</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">2.8m</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">42:40</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">勤练带来力量</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'o5ny24Rtrv0pjlRYjBoj9rfz-gzGzoHsz',
+        appKey: 'o9SAGYkO04n5xjXkeWXaq1pm',
+        placeholder: '无需注册即可评论, 支持Markdown(可手动预览), 支持在 Gravatar(https://cn.gravatar.com) 上自定义头像, 评论时只需填写对应邮箱即可显示自定义头像, 邮箱不会暴露在评论处, 大可放心, 由于无登陆选项, 因此邮箱会作为我联系你的唯一方式',
+        avatar:'',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>
