@@ -137,7 +137,7 @@
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fxsewgfnp5j21h008rtbh.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fxsewwg162j21eh09j76v.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fxsexjkme6j20ug0ewgxe.jpg">
-<meta property="og:updated_time" content="2019-03-08T13:07:39.332Z">
+<meta property="og:updated_time" content="2019-08-03T13:55:44.663Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Faster R-CNN (NIPS, 2015)">
 <meta name="twitter:description" content="文章: Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks作者: Shaoqing Ren, Kaiming He, Ross Girshick, and Jian Sun 背景介绍核心亮点摘要在本文中, 我们提出了一个候选区域框推荐网络(Region Proposal Network, RP">
@@ -497,8 +497,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-08T21:07:39+08:00" content="2019-03-08">
-      		  2019-03-08
+    		<time itemprop="dateUpdated" datetime="2019-08-03T21:55:44+08:00" content="2019-08-03">
+      		  2019-08-03
     		</time>
   	  </span>
 	  
@@ -597,7 +597,7 @@
         <p><strong>文章:</strong> Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks<br><strong>作者:</strong> Shaoqing Ren, Kaiming He, Ross Girshick, and Jian Sun</p>
 <h1 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h1><h1 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h1><h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>在本文中, 我们提出了一个候选区域框推荐网络(Region Proposal Network, RPN), 该网络可以与检测模型的网络共享图片的卷积计算结果. PRN 是一个可以在每一个位置上同时预测物体边界(object bounds)以及前后景置信度(objectness scores)的全卷积网络. RPN 可以通过端到端(Faster R-CNN 由 RPN 和 Fast R-CNN 组成)的训练来生成高质量的候选框区域, 而这些区域可以提供给 Fast R-CNN 网络来进行目标检测任务. 更进一步地, 本文通过共享卷积特征的方法将 RPN 和 Fast R-CNN 网络融合成了一个单独的网络(RPN 的作用类似于一种注意了机制, 即告诉 Fast R-CNN 应该对哪里进行检测). 当使用深度卷积网络 VGG-16 时, 我们的检测模型可以在 GPU 上达到 5fps 的检测帧率, 同时在 VOC 2007, 2012 和 MS COCO 数据集上达到了 state-of-the-art 的精确度.</p>
 <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>Fast R-CNN 目标检测模型取得了很大的成功, 但是它使用的候选区域框仍然是通过 Selective Search 或者 EdgeBoxes 算法来获得的, 这种方式是在 CPU 上运行的, 相对来说比较慢. 因此, 一个明显的思路就是利用 GPU 来加速候选区域框的生成. 在本文中, 我们提出了一个新的深度网络模型, 可以代替 Selective Search 算法来为 Fast R-CNN 提供候选区域框, 并且与 Fast R-CNN 通过共享卷积计算结果, RPN 可以节省大量的计算成本.<br>我们观察到, 用于检测目标的卷积特征图谱, 同样可以用来生成候选区域框, 因此, 我们在 backbone 卷积网络之上额外添加一些卷积层来构成 RPN 网络, RPN 网络和 Fast R-CNN 网络的分类器和回归器是并列关系.</p>
-<p><strong>注意, RPN 网络和 Fast R-CNN 网络各自可以进行端到端的训练, 但是 Faster R-CNN 网络并非是端到端的, 它需要结合 RPN 和 Fast R-CNN 网络才可以工作*</strong></p>
+<p><strong>注意, RPN 网络和 Fast R-CNN 网络各自可以进行端到端的训练, 但是 Faster R-CNN 网络并非是端到端的, 它需要结合 RPN 和 Fast R-CNN 网络才可以工作</strong></p>
 <p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fxseevwsqkj21n50hctlj.jpg" alt="图1"></p>
 <p>如图1(a)和(b)所示, 目前主流的候选框生成算法都是通过 “图片金字塔” 或者 “过滤器金字塔” 来生成候选框的, 而 RPN 网络通过引入一种新颖的 “anchor” boxes 来达到生成不同尺寸和比例的候选框. 为了融合 RPNs 和 Fast R-CNN 物体检测模型, 我们提出了交替 fine-tuning 候选框生成任务和目标检测任务的训练策略, 在训练其中一个网络时, 将另一个网络固定.</p>
 <h1 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h1><p><strong>Object Proposals:</strong> Selective Search, EdgeBoxes.</p>
