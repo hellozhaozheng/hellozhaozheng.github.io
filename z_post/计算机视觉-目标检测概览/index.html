@@ -123,6 +123,8 @@
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fx6o47y0w0j215y0r2jz0.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fx470hjw5yj213t0o40yg.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fwtpkdiie6j21480trdn7.jpg">
+<meta property="og:image" content="https://zerozone-blog.oss-cn-beijing.aliyuncs.com/YOLOv1/fig2.jpg?x-oss-process=style/blog_img">
+<meta property="og:image" content="https://zerozone-blog.oss-cn-beijing.aliyuncs.com/YOLOv1/fig3.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1g1bxx4mf6aj20oc0cidir.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fx0rot8bcsj20r60fdgus.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fwuvmld7psj21kw0t4agk.jpg">
@@ -139,7 +141,7 @@
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fxuqgrwiu3j21ei0jfjuy.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1g14s1vjmz5j21en0ihdmy.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1g14s31ygnyj21280ocjvp.jpg">
-<meta property="og:updated_time" content="2019-08-05T07:04:47.137Z">
+<meta property="og:updated_time" content="2019-08-05T08:11:07.350Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【置顶】基于深度学习的目标检测">
 <meta name="twitter:description" content="前言下面对每篇文章及模型的亮点和优势进行了简单总结, 点击标题可以跳转至相关论文解读 (难免存在纰漏或者词不达意的地方, 望谅解) 基于深度学习的目标检测发展轨迹下面是自R-CNN以来有关目标检测的文章，其中，加粗的部分为具有标志性意义的检测模型。 R-CNN (CVPR, 2013) $\longrightarrow$ OverFeat (ICLR, 2014) $\longrightarrow">
@@ -503,7 +505,7 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-08-05T15:04:47+08:00" content="2019-08-05">
+    		<time itemprop="dateUpdated" datetime="2019-08-05T16:11:07+08:00" content="2019-08-05">
       		  2019-08-05
     		</time>
   	  </span>
@@ -743,6 +745,8 @@
 <p><span id="FPN"></span></p>
 <h1 id="FPN-CVPR-2017"><a href="#FPN-CVPR-2017" class="headerlink" title="FPN (CVPR, 2017)"></a><a href="../计算机视觉-FPN-CVPR2017">FPN (CVPR, 2017)</a></h1><p><strong>提出了多尺度的特征金字塔结构:</strong><br>将最后一层特征图谱进行不断尽快上采样, 并与每一个金字塔阶级的特征图谱进行加法合并操作, 得到新的表征能力更强的不同金字塔层次的特征图谱, 然后将RoI按照尺寸分别映射到这些特征图谱上, 再在每个特征图谱上进行类别和位置预测. 可以直观感受到, 这种多尺度的特征图谱在面对不同尺寸的物体时, 具有更好的鲁棒性, 尤其是在面对小型物体时. 同时, 这种特征金字塔结构是一种通用的特征提取结构, 可以应用到不同的网络框架中, 显著提高(5~8%)模型的召回率(因为提出了更多不同尺度, 不同特征信息的anchor box), 并且可以广泛提高(2~3%)模型的mAP.</p>
 <p><strong>思想: 浅层特征负责感知和检测小物体, 但是欠缺足够深度的高级语义信息, 因此将具备深层语义信息的特征层通过反卷积的方式扩大 feature map 的 size, 然后结合浅层和深层的特征图谱来进行预测.</strong></p>
+<p><div style="width: 500px; margin: auto"><img src="https://zerozone-blog.oss-cn-beijing.aliyuncs.com/YOLOv1/fig2.jpg?x-oss-process=style/blog_img" alt="YOLOv1%2Ffig2.jpg"></div></p>
+<p><div style="width: 500px; margin: auto"><img src="https://zerozone-blog.oss-cn-beijing.aliyuncs.com/YOLOv1/fig3.jpg?x-oss-process=style/blog_img" alt="YOLOv1%2Ffig3.jpg"></div></p>
 <p><span id="YOLOv2"></span></p>
 <h1 id="YOLOv2-CVPR-2017"><a href="#YOLOv2-CVPR-2017" class="headerlink" title="YOLOv2 (CVPR, 2017)"></a><a href="../计算机视觉-YOLOv2-CVPR2017">YOLOv2 (CVPR, 2017)</a></h1><p>YOLOv1 对于 bbox 的定位不是很好, 同时在精度上和同类网络还有一定差距, 所以 YOLOv2 对于速度和精度都做了很大的优化, 并且吸收了同类网络的有点, 主要包括以下几点:</p>
 <ul>
@@ -1025,8 +1029,6 @@
                     
                       
                     
-                      
-                    
                     <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
@@ -1242,7 +1244,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">46:46</span>
+    <span title="站点阅读时长">47:24</span>
   
 </div>
 
