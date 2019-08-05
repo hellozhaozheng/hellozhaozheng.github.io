@@ -130,7 +130,7 @@
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fy9gzlarcnj20xb09qgn8.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fy9h11hrm5j215d0ie4ff.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fy9h1zwjgaj21ed0lqdzh.jpg">
-<meta property="og:updated_time" content="2019-03-12T10:58:43.932Z">
+<meta property="og:updated_time" content="2019-08-04T07:57:16.220Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FPN (CVPR, 2017)">
 <meta name="twitter:description" content="文章: Feature Pyramid Networks for Object Detectin作者: Tsung-Yi Lin, Piotr Dollar, Ross Girshick, Kaiming He, Bharath Hariharan, and Serge Belongie 核心亮点提出了多尺度的特征金字塔结构将最后一层特征图谱进行不断进行上采样, 并与每一个金字塔阶级的特征图谱进行">
@@ -490,8 +490,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-12T18:58:43+08:00" content="2019-03-12">
-      		  2019-03-12
+    		<time itemprop="dateUpdated" datetime="2019-08-04T15:57:16+08:00" content="2019-08-04">
+      		  2019-08-04
     		</time>
   	  </span>
 	  
@@ -602,7 +602,7 @@
 <h1 id="Feature-Pyramid-Networks"><a href="#Feature-Pyramid-Networks" class="headerlink" title="Feature Pyramid Networks"></a>Feature Pyramid Networks</h1><p>我们的目标是利用 ConvNet 的金字塔式的特征层级, 这种特征层级拥有从低到高的不同级别的语义信息(浅层的语义信息少, 深层的多), 同时建立一个具有具有整体高级语义信息的特征金字塔. 本文我们主要关注 FPN 的建立, 以及在 RPN(sliding window proposers) 中和 Fast R-CNN 中的使用, 同时会在第6节给出在实例分割proposals上的扩展.</p>
 <p>输入: 任意尺寸的单张图片(不进行尺度缩放)<br>输出: 以全卷积的方式, 输出多层次的按比例大小的对应特征图谱映射<br>上面的过程独立于骨干卷积体系结构(backbone convolution architectures), 本文的网络我们使用 ResNets. 构建 FPN 的步骤依次为 bottom-up pathway, top-down pathway 和 lateral connections, 介绍如下:</p>
 <p><strong>自底向上的路径(bottom-up pathway):</strong><br>该步骤是根据 backbone 卷积网络的前馈计算过程进行的. 在前向计算中, 卷积网络会以两倍的缩放系数计算出不同尺寸的 feature maps, 最终形成我们所说的 feature hierarchy. 通常情况下, 会有很多的网络层输出的特征图谱具有相同的尺寸, 我们称这些网络层都处于同一个网络阶段(same network stage). 对于我们的特征金字塔来说, 我们在每一个”network stage”上都定义一个金字塔级别. 然后选择每个阶段的最后一层作为特征图的参考集合(因为每一个 stage 的最深层理应具有最强的特征表示), 我们会丰富(enrich)这个特征图谱来创建金字塔.<br>具体来说, 对于 ResNets, 我们使用了每一个阶段的最后一个残差结构的激活层输出的特征, 将这些残差模块conv2, conv3, conv4, conv5 的输出表示为 $\{C_2, C_3, C_4, C_5\}$, 并且注意到他们相对于输入图像具有 $\{4,8,16,32\}$ 像素的步长(原始图片与特征图谱宽或高的比例). 由于 conv1 的特征图谱占用内存较多, 因此我们没有将它包括在金字塔中.</p>
-<p><strong>自顶向下的路径以及横向连接(Top-down pathway and lateral connections):</strong><br>自顶向下的路径是通过在较粗糙, 但是语义信息较强的高层特征图(深层)上进行上采样来产生(hallucinates)更高分辨率的图谱. 然后将这些上采样之后的 features 与自底向上(自浅而深)的 features 通过横向连接(lateral connections)的方式拼接在一起.(横向连接的feature map的size是一样大的). 每一次横向连接都会将两个 pathway 上的具有相同大小的 feature maps 融合在一起.<br>那些 bottom-up frature maps 具有较为低级的语义信息(低级是指抽象程度低), 但是这些图谱的特征激活信息(重要特征才会被激活)的位置精度更高, 因为它们经过的下采样次数更少.<br>下面的图3显示了构建 top-down feature map 的模块. 对于一个分辨率较粗糙的特征图谱, 首先将其上采样至2倍(为了简单起见, 直接使用最近邻上采样法), 然后将上采样后的特征图谱与对应的自底向上的图谱进行按元素相加合并(element-wise addition, 由于二者通道数不同, 因此合并前自底向上的图谱会将经过1×1卷积降低通道数). 这个过程会一直迭代进行, 直到最浅的卷积图谱也被合并为止. 为了开始迭代, 在最开始的时候, 我们直接用 $1\tiems 1$ 的卷积层作用在 $C_5% 上, 来产生分辨率最粗糙的特征图谱. 最后, 我们会用3×3的卷积层作用在每一个合并后的特征图谱上, 以此来得到最终的特征图谱, 这是为了消除上采样的混叠效应(aliasing effect of unsampling??). 我们将这些最后得到的特征图谱记为 $\{P_2, P_3, P_4, P_5\}$, 他们与$\{C_2, C_3, C_4, C_5\}$ 相对应并且具有相同的大小.</p>
+<p><strong>自顶向下的路径以及横向连接(Top-down pathway and lateral connections):</strong><br>自顶向下的路径是通过在较粗糙, 但是语义信息较强的高层特征图(深层)上进行上采样来产生(hallucinates)更高分辨率的图谱. 然后将这些上采样之后的 features 与自底向上(自浅而深)的 features 通过横向连接(lateral connections)的方式拼接在一起.(横向连接的feature map的size是一样大的). 每一次横向连接都会将两个 pathway 上的具有相同大小的 feature maps 融合在一起.<br>那些 bottom-up frature maps 具有较为低级的语义信息(低级是指抽象程度低), 但是这些图谱的特征激活信息(重要特征才会被激活)的位置精度更高, 因为它们经过的下采样次数更少.<br>下面的图3显示了构建 top-down feature map 的模块. 对于一个分辨率较粗糙的特征图谱, 首先将其上采样至2倍(为了简单起见, 直接使用最近邻上采样法), 然后将上采样后的特征图谱与对应的自底向上的图谱进行按元素相加合并(element-wise addition, 由于二者通道数不同, 因此合并前自底向上的图谱会将经过1×1卷积降低通道数). 这个过程会一直迭代进行, 直到最浅的卷积图谱也被合并为止. 为了开始迭代, 在最开始的时候, 我们直接用 $1\times 1$ 的卷积层作用在 $C_5$ 上, 来产生分辨率最粗糙的特征图谱. 最后, 我们会用3×3的卷积层作用在每一个合并后的特征图谱上, 以此来得到最终的特征图谱, 这是为了消除上采样的混叠效应(aliasing effect of unsampling??). 我们将这些最后得到的特征图谱记为 $\{P_2, P_3, P_4, P_5\}$, 他们与$\{C_2, C_3, C_4, C_5\}$ 相对应并且具有相同的大小.</p>
 <p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fy9guhouhvj217x0hrn4b.jpg" alt="图3"></p>
 <p>由于金字塔的每一层都使用了共享的分类器和回归器(就像传统的 featurized image pyramid 一样), 因此我们固定了每一层特征图谱的深度 $d$(numbers of channels), 本文中, 我们令 $d=256$, 也就是说所有额外添加的卷积层的输出通道数都是 256. <strong>在这些额外添加的卷积层中, 我们没有使用非线性结构, 我们通过实验发现, 这会对最终的结果有轻微的影响</strong>.<br>Simplicity 是本文设计的核心, 同时我们也发现我们的模型对于很多设计选择都具有很强的鲁棒性. 我们实验了更多复杂的模块(eg using multilayer residual blocks as connections)并且也发现了略微更好的结果. 同时也存在其他更好的连接设计, 但本文的主要目的是探讨FPN的有效性, 因此没要尝试过多的连接组合.</p>
 <h1 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h1><p>FPN是一种用于在卷积网络内部建立特征金字塔的一般化的解决方. 在下文中, 我们在 RPN 中使用我们的方法来进行 bounding box proposal generation, 同时在 Fast R-CNN 中使用 FPN 来进行 object detion. 为了证明我们方法的简单性和有效性, 我们仅仅对原始的系统做很小的改变.</p>
@@ -1012,7 +1012,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">42:48</span>
+    <span title="站点阅读时长">42:50</span>
   
 </div>
 

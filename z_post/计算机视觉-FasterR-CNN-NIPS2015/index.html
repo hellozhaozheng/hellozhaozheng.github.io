@@ -137,7 +137,7 @@
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fxsewgfnp5j21h008rtbh.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fxsewwg162j21eh09j76v.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fxsexjkme6j20ug0ewgxe.jpg">
-<meta property="og:updated_time" content="2019-08-03T13:55:44.663Z">
+<meta property="og:updated_time" content="2019-08-04T04:54:54.216Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Faster R-CNN (NIPS, 2015)">
 <meta name="twitter:description" content="文章: Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks作者: Shaoqing Ren, Kaiming He, Ross Girshick, and Jian Sun 背景介绍核心亮点摘要在本文中, 我们提出了一个候选区域框推荐网络(Region Proposal Network, RP">
@@ -497,8 +497,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-08-03T21:55:44+08:00" content="2019-08-03">
-      		  2019-08-03
+    		<time itemprop="dateUpdated" datetime="2019-08-04T12:54:54+08:00" content="2019-08-04">
+      		  2019-08-04
     		</time>
   	  </span>
 	  
@@ -618,7 +618,7 @@
 <p>好的，到此为止，RPN网络的工作就完成了，即我们现在得到的有：在输入RPN网络的 feature map 上，所有可能包含80类物体的Region区域的信息，其他Region（非常多）我们可以直接不考虑了（不用输入后续网络）。接下来的工作就很简单了，假设输入RPN网络的feature map大小为 $64\times 64$，那么我们提取的ROI的尺寸一定小于 $64 \times 64$ ，因为原始图像某一块的物体在feature map上也以同样的比例存在。我们只需要把这些Region从feature map上抠出来，由于每个Region的尺寸可能不一样，因为原始图像上物体大小不一样，所以我们需要将这些抠出来的Region想办法resize到相同的尺寸，这一步方法很多（Pooling或者Interpolation，一般采用Pooling，因为反向传播时求导方便）。假设这些抠出来的ROI Region被我们resize到了 $14\times 14$ 或者 $7\times 7$，那我们接下来将这些Region输入普通的分类网络，即第一张Faster R-CNN的结构图中最上面的部分，即可得到整个网络最终的输出classification，这里的class（车、人、狗。。）才真正对应了COCO数据集80类中的具体类别。同时，<strong>由于我们之前RPN确定的box\region坐标比较粗略</strong>，即大概框出了感兴趣的区域，所以这里我们再来一次精确的微调，根据每个box中的具体内容微微调整一下这个box的坐标，即输出第一张图中右上方的Bounding-box regression。我们网络输出的两个Bounding-box regression，都是输出的坐标偏移量，也就是在初始锚点的基础上做的偏移修正和缩放，并非输出一个原图上的绝对坐标。</p>
 <h2 id="Region-Proposal有什么作用？"><a href="#Region-Proposal有什么作用？" class="headerlink" title="Region Proposal有什么作用？"></a>Region Proposal有什么作用？</h2><p>1、COCO数据集上总共只有80类物体，如果不进行Region Proposal，即网络最后的classification是对所有anchor框定的Region进行识别分类，会严重拖累网络的分类性能，难以收敛。原因在于，存在过多的不包含任何有用的类别（80类之外的，例如各种各样的天空、草地、水泥墙、玻璃反射等等）的Region输入分类网络，而这些无用的Region占了所有Region的很大比例。换句话说，这些Region数量庞大，却并不能为softmax分类器带来有用的性能提升（因为无论怎么预测，其类别都是背景，对于主体的80类没有贡献）。2、大量无用的Region都需要单独进入分类网络，而分类网络由几层卷积层和最后一层全连接层组成，参数众多，十分耗费计算时间，Faster R-CNN本来就不能做到实时，这下更慢了</p>
 <h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><p>为了训练 RPNs, 我们给每个 anchor 都赋予了一个 binary class label. 我们会给两种类型的 anchors 赋予正样本标签: (1), 和真实框具有最大交并比(不一定大于0.7)的 anchor/anchors; (2), 和某一个真实框的交并比大于0.7. <strong>注意, 一个真实框可以被赋值给多个 anchors</strong>. 通常情况下, 第二种情况就已经足够用来决定正样本了, 我们利用第一种情况的原因是在某些极端情况下有可能第二种情况找不到正样本. 如果某一个 anchor 和所有的真实框的交并比都低于0.3, 那么我们就对其赋予负样本标签. 剩下就不是正样本也不是负样本的 anchors 不参与训练过程.<br>通过以上的定义, 我们可以根据 Fast R-CNN 中的多任务损失函数确定训练函数如下:</p>
-<script type="math/tex; mode=display">L(\{p_i\}, \{t_i\}) = \frac{1}{N_{cls}} \sum_i L_{cls}(p_i, p_i^* ) + \lambda \frac{1}{N_{reg}} \sum_i p_i^* L_{reg}(t_i, t_i^* )</script><p>上式中, $i$ 代表 mini-batch 中 anchor 的下标, $p_i$ 代表预测 anchor $i$ 是一个物体的可能性大小. 如果 anchor 是正样本, 则真实标签 $p^*_i$ 为1, 反之, 如果是负样本, 则为0. $t_i$ 是一个 vector, 用来表示参数化以后的边框坐标, $t^*_i$ 是正样本 anchor 对应的真实框的参数化坐标. 分类损失函数 <strong>$L_{cls}$ 是一个二分类 log 损失</strong>. 对于回归损失, 我们使用 $L_{reg}(t_i, t^*_i) = R(t_i - t^*_i)$, 这里 $R$ 代表 robust loss function(smooth L1). $p^*_i L_{reg}$ 代表回归损失仅仅会被正样本的 anchor 所激活.<br>$N_{cls}$ 和 $N_{reg}$ 是两个归一项, 同时 $lambda$ 会调节每一项的权重. 在本文的发行版代码中, $N_{cls}$ 设定为 mini-batch 的大小(256), $N_{reg}$ 设定为 anchor locations 的大小(约2400). 同时 $lambda$ 默认为10, 这样, $cls$ 和 $reg$ 所占的比重大致相等. 我们在表9中给出了 $lambda$ 值在很大范围内对结果的影响并不敏感(这是比较好的, 说明我们不需要过度调整该超参的值). 同时, 我们发现归一化也不是必须的, 可以被简化.</p>
+<script type="math/tex; mode=display">L(\{p_i\}, \{t_i\}) = \frac{1}{N_{cls}} \sum_i L_{cls}(p_i, p_i^* ) + \lambda \frac{1}{N_{reg}} \sum_i p_i^* L_{reg}(t_i, t_i^* )</script><p>上式中, $i$ 代表 mini-batch 中 anchor 的下标, $p_i$ 代表预测 anchor $i$ 是一个物体的可能性大小. 如果 anchor 是正样本, 则真实标签 $p^\ast_i$ 为1, 反之, 如果是负样本, 则为0. $t_i$ 是一个 vector, 用来表示参数化以后的边框坐标, $t^\ast_i$ 是正样本 anchor 对应的真实框的参数化坐标. 分类损失函数 <strong>$L_{cls}$ 是一个二分类 log 损失</strong>. 对于回归损失, 我们使用 $L_{reg}(t_i, t^\ast_i) = R(t_i - t^\ast_i)$, 这里 $R$ 代表 robust loss function(smooth L1). $p^\ast_i L_{reg}$ 代表回归损失仅仅会被正样本的 anchor 所激活.<br>$N_{cls}$ 和 $N_{reg}$ 是两个归一项, 同时 $lambda$ 会调节每一项的权重. 在本文的发行版代码中, $N_{cls}$ 设定为 mini-batch 的大小(256), $N_{reg}$ 设定为 anchor locations 的大小(约2400). 同时 $lambda$ 默认为10, 这样, $cls$ 和 $reg$ 所占的比重大致相等. 我们在表9中给出了 $lambda$ 值在很大范围内对结果的影响并不敏感(这是比较好的, 说明我们不需要过度调整该超参的值). 同时, 我们发现归一化也不是必须的, 可以被简化.</p>
 <h2 id="训练-RPNs"><a href="#训练-RPNs" class="headerlink" title="训练 RPNs"></a>训练 RPNs</h2><p> RPN 可以利用反向传播和 SGD 进行端到端的训练(注意这里是指 RPN, 而不是 Faster R-CNN). 我们依照 “image-centric” 的简单策略来训练网络. 每一个 mini-batch 都从一张单一的图片中得到, 其中包含了许多正样本和负样本. 我们可以对所有的 anchors 进行训练, 但是这样就会导致预测结果偏向于负样本, 因为负样本的数量占据绝对地位. 因此, 我们选择从 <strong>一张图片</strong> 中随机的挑选 256 个 anchors 来组成一个 mini-batch, 其中 <strong>正负样本的比例为 1:1</strong>, 如果图片中的正样本数量不足128, 那么就用负样本补足.<br> 对于新添加的所有网络层, 我们都是用均值方差为(0, 0.01)的高斯分布来初始化, 其它层使用在 ImageNet 上预训练后的权重进行初始化.</p>
 <h1 id="RPN-和-Fast-R-CNN共享卷积参数"><a href="#RPN-和-Fast-R-CNN共享卷积参数" class="headerlink" title="RPN 和 Fast R-CNN共享卷积参数"></a>RPN 和 Fast R-CNN共享卷积参数</h1><p>到目前为止我们已经讨论过如何训练网络来进行 region proposal generation, 但是还没有考虑如何让 region-bases object detection CNN 来使用这些 proposals. 对于目标检测网络, 我们使用 Fast R-CNN 进行预测. 接下来我们将会介绍由 RPN 和 Fast 组成的参数共享的统一网络的算法训练流程.<br>如果 RPN 和 Fast R-CNN 单独训练的话, 那么就会以不同的方式改变他们的卷积层参数. 因此, 我们需要提出一种新的训练策略使得可以在这两个网络之间的参数共享. 为了使RPN和FastRCNN共享卷积参数, 我们讨论了三种不同的训练策略:</p>
 <ul>
@@ -1024,7 +1024,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">42:48</span>
+    <span title="站点阅读时长">42:50</span>
   
 </div>
 

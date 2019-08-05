@@ -139,7 +139,7 @@
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fxuqgrwiu3j21ei0jfjuy.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1g14s1vjmz5j21en0ihdmy.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1g14s31ygnyj21280ocjvp.jpg">
-<meta property="og:updated_time" content="2019-06-22T11:21:27.767Z">
+<meta property="og:updated_time" content="2019-08-04T08:32:58.095Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【置顶】基于深度学习的目标检测">
 <meta name="twitter:description" content="前言下面对每篇文章及模型的亮点和优势进行了简单总结, 点击标题可以跳转至相关论文解读 (难免存在纰漏或者词不达意的地方, 望谅解) 基于深度学习的目标检测发展轨迹下面是自R-CNN以来有关目标检测的文章，其中，加粗的部分为具有标志性意义的检测模型。 R-CNN (CVPR, 2013) $\longrightarrow$ OverFeat (ICLR, 2014) $\longrightarrow">
@@ -503,8 +503,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-06-22T19:21:27+08:00" content="2019-06-22">
-      		  2019-06-22
+    		<time itemprop="dateUpdated" datetime="2019-08-04T16:32:58+08:00" content="2019-08-04">
+      		  2019-08-04
     		</time>
   	  </span>
 	  
@@ -707,9 +707,6 @@
 <p>RPN 最终推荐的候选区域个数为 $W\times H \times k$ , $W\times H$ 为卷积特征图谱size, $k$ 为anchor boxes的数量.</p>
 <p><span id="FCN"></span></p>
 <h1 id="FCN-CVPR-2015"><a href="#FCN-CVPR-2015" class="headerlink" title="FCN (CVPR, 2015)"></a><a href="../计算机视觉-FCN-CVPR2015">FCN (CVPR, 2015)</a></h1><p>全连接层本身可以看做是卷积核大小覆盖整个输入图谱的卷积层, 因此FCN 将传统 CNN 中的全连接层全部都转化成一个个的卷积层. 这么做有两个好处, 一个是可以接受任意尺度的图片输入, 另一个是可以通过让卷积网络在更大的输入图片上以滑动的方式一次性得到多个输出, 从而可以加快模型的计算速度. 在进行分割任务时, FCN 会利用最后一层的特征图谱进行像素级别的类别预测, 但是由于最后一层特征图谱的下采样步长较大, 使得图谱中缺少足够的低级语义信息, 因此, 直接在最后一层特征图谱上进行像素类别预测的效果不是特别好. 因此, FCN 利用反卷积对特征图谱进行放大, 反卷积相对于双线性插值来说有一个好处就是可以参数进行学习, 而不是固定不变的. 将多个反卷积层和激活层堆叠起来甚至可以学习到非线性的上采样过程. 然后将上采样以后的图谱和前一层卷积层输出的具有相同尺度的特征图谱进行融合, 这样, 融合后的特征图谱不仅包含了浅层的低级语义信息, 同时还包含了深层的高级语义信息, 这样预测出来的结果会更加精细, 在 FCN 中, 分别在步长为 16 和 步长为 8 的特征图谱进行了分割预测, 结果也显示越精细的特征图谱, 分割的结果也越好. 只不过随着步长的缩短, 获得的提升也慢慢变小了.</p>
-<ul>
-<li><a href="../计算机视觉-FCN-CVPR2015/#FCN 是如何降低计算量的?">FCN 是如何降低计算量的?</a></li>
-</ul>
 <p><span id="YOLOv1"></span></p>
 <h1 id="YOLOv1-CVPR-2016"><a href="#YOLOv1-CVPR-2016" class="headerlink" title="YOLOv1 (CVPR, 2016)"></a><a href="../计算机视觉-YOLOv1-CVPR2016">YOLOv1 (CVPR, 2016)</a></h1><p>YOLOv1 首先将图像分成 $S\times S$ 的格子(cell), 如果一个目标物体的中心落入格子, 那么该格子就负责检测该目标. 每一个格子都会预测 B 个 bbox, 每一个 bbox 包含 5 个值, 分别是坐标和置信度(表示是否包含物体). YOLOv1 的损失函数综合了坐标, 分类标签和分类置信度三部分, 都使用了平方和损失进行计算, 并且通过不同的权重系数平衡了 loss 之间的贡献度.</p>
 <p>YOLOv1 的缺点: YOLO 的每一个网络只预测两个 boxes 和一套分类概率值(供两个 boxes 共享), 这导致模型对相邻目标的预测准确率下降, 因此, YOLO 对成群的目标识别准确率低</p>
@@ -788,7 +785,7 @@
 <li>采用了biased-minibatch的采样策略, 比如，保证正样本和负样本的比例为1：3进行训练（这其实相当于起到了 $\alpha$ 因子的作用</li>
 </ul>
 <p><span id="Mask R-CNN"></span></p>
-<h1 id="Mask-R-CNN-ICCV-2017"><a href="#Mask-R-CNN-ICCV-2017" class="headerlink" title="Mask R-CNN (ICCV,2017)"></a><a href="../计算机视觉-MaskR-CNN-ICCV2017">Mask R-CNN (ICCV,2017)</a></h1><p>Mask R-CNN 的大体框架还是 Faster R-CNN,  它在 Faster R-CNN 模型中添加了一个与分类和回归分支平行的掩膜预测分支. 掩膜分支(mask branch) 是一个小型的 FCN 网络, 它会作用在每一个 RoI 上, 以像素到像素的方式来预测一个分割掩膜. Mask R-CNN 的掩膜预测分支对于每一个 RoI 的输出维度为 $Km^2$, 也就是每一个类别都会单独输出一个 $m\times m$ 大小的掩膜. 在预测掩膜时非常关键的一点就是要对分类任务和分割任务解耦, 否则对于多分类任务会引起类别之间的竞争, 因此, Mask R-CNN 使用了基于单像素的 sigmoid 二值交叉熵来替换基于单像素的 Softmax 多项式交叉熵. 另外, 在 Faster R-CNN 中使用的 RoI pooling 需要经过两次量化取整(图像坐标到特征图谱坐标, 特征图谱划分固定网格)才能获得固定长度的特征向量. 这种粗糙的量化操作会造成 RoI 和特征向量之间的不对齐, 这对精度要求较高的的分割任务来说有较大影响. 为了克服这个问题, Mask R-CNN 提出了 RoI Align 层来替代 RoI Pooling, RoI Align 的核心思想就是避免在 RoI 边界上或者 bins 中执行任何量化计算. 它在处理每一个 RoI 的时候, 会保持其浮点边界的值而不进行量化操作, 然后将 RoI 划分成的 $k\times k$ 大小的网格, 对于每一个网络, 都会固定四个采样点, 并利用双线性插值法来计算每个采样点的数值, 最后根据这些数值进行池化操作. 除了这些比较重要的点之外, Mask R-CNN 也有一些其他的优化, 比如说更多的 anchor, 更大的 batch size, 更强的 backbone 网络(ResNeXt+FPN)等等.</p>
+<h1 id="Mask-R-CNN-ICCV-2017"><a href="#Mask-R-CNN-ICCV-2017" class="headerlink" title="Mask R-CNN (ICCV,2017)"></a><a href="../计算机视觉-MaskR-CNN-ICCV2017">Mask R-CNN (ICCV,2017)</a></h1><p>Mask R-CNN 的大体框架还是 Faster R-CNN,  它在 Faster R-CNN 模型中添加了一个与分类和回归分支平行的掩膜预测分支. 掩膜分支(mask branch) 是一个小型的 FCN 网络, 它会作用在每一个 RoI 上, 以像素到像素的方式来预测一个分割掩膜. Mask R-CNN 的掩膜预测分支对于每一个 RoI 的输出维度为 $Km^2$, 也就是每一个类别都会单独输出一个 $m\times m$ 大小的掩膜. 在预测掩膜时非常关键的一点就是要对分类任务和分割任务解耦, 否则对于多分类任务会引起类别之间的竞争, 因此, Mask R-CNN 使用了基于单像素的 sigmoid 二值交叉熵来替换基于单像素的 Softmax 多项式交叉熵. 另外, 在 Faster R-CNN 中使用的 RoI pooling 需要经过两次量化取整(图像坐标到特征图谱坐标, 特征图谱划分固定网格)才能获得固定长度的特征向量. 这种粗糙的量化操作会造成 RoI 和特征图谱之间的不对齐, 这对精度要求较高的的分割任务来说有较大影响. 为了克服这个问题, Mask R-CNN 提出了 RoI Align 层来替代 RoI Pooling, RoI Align 的核心思想就是避免在 RoI 边界上或者 bins 中执行任何量化计算. 它在处理每一个 RoI 的时候, 会保持其浮点边界的值而不进行量化操作, 然后将 RoI 划分成的 $k\times k$ 大小的网格, 对于每一个网络, 都会固定四个采样点, 并利用双线性插值法来计算每个采样点的数值, 最后根据这些数值进行池化操作. 除了这些比较重要的点之外, Mask R-CNN 也有一些其他的优化, 比如说更多的 anchor, 更大的 batch size, 更强的 backbone 网络(ResNeXt+FPN)等等.</p>
 <p><span id="YOLOv3"></span></p>
 <h1 id="YOLOv3-Arxiv-2018"><a href="#YOLOv3-Arxiv-2018" class="headerlink" title="YOLOv3 (Arxiv, 2018)"></a><a href="../计算机视觉-YOLOv3-Arxiv2018">YOLOv3 (Arxiv, 2018)</a></h1><p>YOLOv3 加入了更多被验证过的有效技术, 使得 YOLO 模型的 mAP 可以与 SSD 系列相媲美, 同时速度依然很快(约为 SSD 的三倍). YOLOv3 的改进主要如下:</p>
 <ul>
@@ -856,7 +853,7 @@
 <p><div style="width: 550px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1g14s31ygnyj21280ocjvp.jpg" alt="图4"></div></p>
 <p><span id="Bag of Freebies"></span></p>
 <h1 id="Bag-of-Freebies-Arxiv-2019"><a href="#Bag-of-Freebies-Arxiv-2019" class="headerlink" title="Bag of Freebies (Arxiv, 2019)"></a><a href="../计算机视觉-BagofFreebies-Arxiv2019">Bag of Freebies (Arxiv, 2019)</a></h1><h1 id><a href="#" class="headerlink" title></a><a href="../计算机视觉-FCOS-CVPR2019"></a></h1><h1 id="-1"><a href="#-1" class="headerlink" title></a><a href="../计算机视觉-ExtremeNet-CVPR2019"></a></h1><h1 id="-2"><a href="#-2" class="headerlink" title></a><a href="../计算机视觉-FoveaBox-CVPR2019"></a></h1><p>Fovea: 视野(物体)的中心具有最高的视觉敏感度。</p>
-<p>FoveaBox 的整体结构比较简单, 由一个 Backbone 网络和两个分支网络组成, backbone 负责提取特征, 分支网络一个负责像素级别的分类, 另一个在每个像素点上进行 bounding box 的回归预测, 因此, 两个子网络的输出分别是 $W\times H\times K$ 和 $W\times H\times 4$. 同时, FoveaBox 的 backbone 网络上还使用了 FPN 来构建多尺度的特征金字塔, 以此来解决多尺度检测的问题, </p>
+<p>FoveaBox 的整体结构比较简单, 由一个 Backbone 网络和两个分支网络组成, backbone 负责提取特征, 分支网络一个负责像素级别的分类, 另一个在每个像素点上进行 bounding box 的回归预测, 因此, 两个子网络的输出分别是 $W\times H\times K$ 和 $W\times H\times 4$. 同时, FoveaBox 的 backbone 网络上还使用了 FPN 来构建多尺度的特征金字塔, 以此来解决多尺度检测的问题,</p>
 <h1 id="-3"><a href="#-3" class="headerlink" title></a><a href="../计算机视觉-FSAF-CVPR2019"></a></h1><h1 id="参考文献："><a href="#参考文献：" class="headerlink" title="参考文献："></a>参考文献：</h1><ul>
 <li><a href="https://github.com/hoya012/deep_learning_object_detection" target="_blank" rel="noopener">https://github.com/hoya012/deep_learning_object_detection</a></li>
 <li><a href="https://arxiv.org/pdf/1809.02165v1.pdf" target="_blank" rel="noopener">Deep Learning for Generic Object Detection: A Survey</a></li>
@@ -1243,7 +1240,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">42:48</span>
+    <span title="站点阅读时长">42:50</span>
   
 </div>
 
