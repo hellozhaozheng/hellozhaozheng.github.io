@@ -127,7 +127,7 @@
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1g1nf97t0s9j21jf0oyhat.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1g1nfajpr1pj21is0intf8.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1g1nfawjkj3j21j40jaagf.jpg">
-<meta property="og:updated_time" content="2019-07-21T04:07:05.106Z">
+<meta property="og:updated_time" content="2019-08-13T01:10:18.129Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SNIP (CVPR, 2018)">
 <meta name="twitter:description" content="文章: An Analysis of Scale Invariance in Object Detection - SNIP作者: Bharat Singh, Larry S.Davis备注: Maryland 摘要本文分析了在极端尺度变化下的目标识别和检测的各种技术, 通过对不同输入数据配置的检测器进行训练, 比较了尺度固定(scale specific)和尺度不变(scale invarian">
@@ -487,8 +487,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-07-21T12:07:05+08:00" content="2019-07-21">
-      		  2019-07-21
+    		<time itemprop="dateUpdated" datetime="2019-08-13T09:10:18+08:00" content="2019-08-13">
+      		  2019-08-13
     		</time>
   	  </span>
 	  
@@ -605,7 +605,7 @@
 <p><strong>Resolution Specific Classifiers:</strong> 基于上述观察, 提高小目标探测器性能的一个简单的解决方案是在 ImageNet 上对不同步长的分类网络进行预训练. 毕竟, 在 CIFAR10 上获得最佳性能的网络架构不同于 Imagenet. 在 ImageNet 分类网络中, 第一个卷积层的步长为 2, 接着是最大池化层的步长为 2x2, 两次下采样可能会消除小对象中存在的大部分图像信号. 因此, 我们在训练输入为 48x48 的图像时, 将第一层的卷积层核改为 3x3, 步长改为 1, 如图 3 所示. 同样, 同于 96x96 的图像, 将核改为 5x5, 步长改为 2. 同时还是用了一些常用的数据增广技术. 如图 4 所示, 这些网络(CNN-S)的表现均强于 CNN-B. 因此, 对接收低分辨率图像为输入的不同网络结构进行预训练, 然后将其应用于低分辨率目标的检测是一个更好的选择.</p>
 <p><strong>Fine-tuning High-Resolution Classifiers:</strong> 另一个小目标检测的简单解决方案是对上采样的低分辨率图像在 CNN-B 上进行 finetuning, 从而得到 CNN-B-FT(如图 3 所示). 在上采样的低分辨率图像上, CNN-B-FT 的性能优于 CNN-S, 如图 4 所示. 实验结果表明, 在高分辨率图像上学习的 filters 也可以用于低分辨率图像的识别, 因此, 与其将步长减少 2, 不如将图像上采样 2 倍, 然后对使用高分辨率图像预训练的网络进行 fine-tuning.</p>
 <p><div style="width: 550px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1g1nf8hkdmoj21hd0u0hdt.jpg" alt="图4-5"></div></p>
-<p>在训练 object detectors 时, 我们可以使用不太的网络结构对不同分辨率的对象进行训练, 也可以令所有的分辨率都使用同一体系结构. 由于在 ImageNet 上进行训练是有益的, 并且在较大的目标实例上学习的 filters 有助于对较小的目标实例进行分类, 因此对图像进行上采样并使用在高分辨率图像上进行预训练的网络应该比专门用于较小对象进行分类的网络更好. Fortunately, 现有的 object detectors 通过对图像进行上采样来检测较小的对象, 而不是使用不同的网络结构. 本文的分析支持这种做法, 并将其与其他的替代方法进行比较, 以强调差异.</p>
+<p>在训练 object detectors 时, 我们可以使用不同的网络结构对不同分辨率的对象进行训练, 也可以令所有的分辨率都使用同一体系结构. 由于在 ImageNet 上进行训练是有益的, 并且在较大的目标实例上学习的 filters 有助于对较小的目标实例进行分类, 因此对图像进行上采样并使用在高分辨率图像上进行预训练的网络应该比专门用于较小对象进行分类的网络更好. Fortunately, 现有的 object detectors 通过对图像进行上采样来检测较小的对象, 而不是使用不同的网络结构. 本文的分析支持这种做法, 并将其与其他的替代方法进行比较, 以强调差异.</p>
 <h1 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h1><p>Deformable-RFCN</p>
 <h1 id="Data-Variation-or-Correct-Scale"><a href="#Data-Variation-or-Correct-Scale" class="headerlink" title="Data Variation or Correct Scale?"></a>Data Variation or Correct Scale?</h1><p>第三节的研究证明, 在 training 和 testing 阶段之间的使用的分辨率的差异性可以导致性能显著下降. 不幸的是, 这种分辨率上的差异性是当前的 GPU 内存限制造成的, 训练时的分辨率(800x1200)低于测试时(1400x2000)的分辨率. 本节分析了图像分辨率, 目标实例的尺寸和数据变化对 detectors 的影响. 我们在不同的 settings 下对 detectors 进行训练, 并在 1400x2000 的图像上对小物体(低于 32x32 像素)进行检测. 实验结果如表 1 所示.</p>
 <p><div style="width: 550px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1g1nfajpr1pj21is0intf8.jpg" alt="表1-3"></div></p>
@@ -766,6 +766,8 @@
                 <div class="site-state-item site-state-categories">
                   <a href="/categories/index.html">
                     
+                    
+                      
                     
                       
                     

@@ -136,7 +136,7 @@
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/fig6.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/tab9.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/fig7.jpg?x-oss-process=style/blog_img">
-<meta property="og:updated_time" content="2019-07-19T08:29:09.210Z">
+<meta property="og:updated_time" content="2019-08-07T06:36:39.462Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FCOS (CVPR, 2019)">
 <meta name="twitter:description" content="论文: FCOS: Fully Convolutional One-Stage Object Detection作者: Zhi Tian Chunhua Shen Hao Chen Tong He机构: The University of Adelaide, Australia Abstract我们提出了一种全卷积的 one-stage 目标检测器（FCOS, Fully Convolutiona">
@@ -496,8 +496,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-07-19T16:29:09+08:00" content="2019-07-19">
-      		  2019-07-19
+    		<time itemprop="dateUpdated" datetime="2019-08-07T14:36:39+08:00" content="2019-08-07">
+      		  2019-08-07
     		</time>
   	  </span>
 	  
@@ -618,11 +618,11 @@
 <h1 id="Our-Approach"><a href="#Our-Approach" class="headerlink" title="Our Approach"></a>Our Approach</h1><p>在本节中，我们首先以逐像素预测的方式重新构造目标检测任务。 接下来，我们展示了我们如何利用多级预测(multi-level prediction)来改善召回率并解决训练中重叠边界框导致的模糊性。 最后，我们展示了我们提出的 “center-ness” 分支，<strong>它有助于抑制低质量的检测边界框并大幅提高整体性能.</strong></p>
 <h2 id="Fully-Convolutional-One-Stage-Object-Detector"><a href="#Fully-Convolutional-One-Stage-Object-Detector" class="headerlink" title="Fully Convolutional One-Stage Object Detector"></a>Fully Convolutional One-Stage Object Detector</h2><p>设 $F_i \in R^{H×W×C}$ 是 backbone CNN的第 $i$ 层的特征图，$s$ 是该层之前的 total stride。输入图像的 GT box 定义为 $\{B_i\}$，其中 $B_i = (x^{(i)}_0，y^{(i)}_0, x^{(i)}_1, y^{(i)}_1, c^{(i)} \in R^4 \times \{1, 2, …, C\}$. 其中 $(x^{(i)}_0, y^{(i)}_0)$ 和 $(x^{(i)}_1, y^{(i)}_1)$ 表示边界框的左上角和右下角的坐标。$c^(i)$ 是边界框中的对象所属的类。 C是类的数量，COCO数据集为80。</p>
 <p>对于 feature map $F_i$ 上的每个位置 $(x,y)$，我们可以将其映射回输入图像的坐标 $(\frac{s}{2}+xs, \frac{s}{2}+ys)$，它差不多刚好位于位置 $(x, y)$ 的感受野中心附近。 与 anchor based detectors 将输入图像上的位置视为 anchor box 的中心并对这些 anchor box 的目标边界框进行回归不同，我们直接回归每个位置的目标边界框。 换句话说，<strong>我们的 Detector 直接将 location 视为训练样本而不是将 anchor box 视为训练样本</strong>，这与用于语义分割的FCN相同[16]。</p>
-<p>具体而言，如果位置 $(x,y)$ 落入到任何 GT Box 内部, 那么久将其视为正样本, 并且该位置的类标签 $c^\star $ 就是 $B_i$ 的类标签。 否则它就是负样本并且 $c^\star = 0$（背景类）。 除了用于分类的标签之外，我们还有一个 4D 的实数向量 $t^\star = (l^\star，t^\star，r^\star，b^\star)$, 该向量是每个样本的回归目标。 这里 $l^\star，t^\star，r^\star，b^\star$ 是从 location 到 bbox 四条边的距离，如图1（左）所示。<strong>如果某个位置属于多个边界框，则会将其视为模糊样本</strong>。现在，<strong>我们只选择具有最小面积的边界框作为其回归目标(最简单的策略)</strong>。 在下一节中，我们将 <strong>展示通过多级预测，可以显著减少模糊样本的数量</strong>。 形式上，如果位置 $(x,y)$ 与边界框 $B_i$ 相关联，则该位置的训练回归目标可以表示为:</p>
-<script type="math/tex; mode=display">\begin{cases}l^{\star} = x - x^{(i)}_0, t^\star = y - y^{(i)}_0 \\ r^\star = x^{(i)}_1 - x, b^\star = y^{(i)}_1 - y  \end{cases} \tag 1</script><p>值得注意的是，<strong>FCOS 可以利用尽可能多的前景样本来训练回归量。(GT box 内的每个像素点都是正样本)</strong> 它与基于 anchor 的探测器不同，anchor-based detectors 仅仅将与 GT box 具有足够 IOU 的anchor box 作为正样本。<strong>我们认为，这可能是 FCOS 优于 anchor-based 的原因之一。</strong></p>
+<p>具体而言，如果位置 $(x,y)$ 落入到任何 GT Box 内部, 那么久将其视为正样本, 并且该位置的类标签 $c^\ast $ 就是 $B_i$ 的类标签。 否则它就是负样本并且 $c^\ast = 0$（背景类）。 除了用于分类的标签之外，我们还有一个 4D 的实数向量 $t^\ast = (l^\ast，t^\ast，r^\ast，b^\ast)$, 该向量是每个样本的回归目标。 这里 $l^\ast，t^\ast，r^\ast，b^\ast$ 是从 location 到 bbox 四条边的距离，如图1（左）所示。<strong>如果某个位置属于多个边界框，则会将其视为模糊样本</strong>。现在，<strong>我们只选择具有最小面积的边界框作为其回归目标(最简单的策略)</strong>。 在下一节中，我们将 <strong>展示通过多级预测，可以显著减少模糊样本的数量</strong>。 形式上，如果位置 $(x,y)$ 与边界框 $B_i$ 相关联，则该位置的训练回归目标可以表示为:</p>
+<script type="math/tex; mode=display">\begin{cases}l^{\ast} = x - x^{(i)}_0, t^\ast = y - y^{(i)}_0 \\ r^\ast = x^{(i)}_1 - x, b^\ast = y^{(i)}_1 - y  \end{cases} \tag 1</script><p>值得注意的是，<strong>FCOS 可以利用尽可能多的前景样本来训练回归量。(GT box 内的每个像素点都是正样本)</strong> 它与基于 anchor 的探测器不同，anchor-based detectors 仅仅将与 GT box 具有足够 IOU 的anchor box 作为正样本。<strong>我们认为，这可能是 FCOS 优于 anchor-based 的原因之一。</strong></p>
 <p><strong>Network Outputs:</strong><br>对应于 training targets，我们网络的最后一层会预测用于分类的 80D 向量 $\vec p$ 和 bounding box 坐标 4D 向量 $\vec t =(l，t，r，b)$。跟随 R-CNN 的做法，<strong>我们不是训练多类分类器，而是训练 $C$ 个二元分类器</strong>。与 R-CNN 类似，我们在 backbone 网络的特征图谱之后分别为分类和回归分支添加了 <strong>四个卷积层</strong>。此外，由于回归目标总是正的，我们使用 $exp(x)$ 将任意的实数都映射到回归分支顶部的 $(0, \infty)$。<strong>值得注意的是，FCOS 的网络输出变量比常用的 anchor based detectors 少 9 倍，其中每个位置有 9 个 anchor boxes</strong>.</p>
 <p><strong>Loss Function:</strong></p>
-<script type="math/tex; mode=display">L(\{\vec p_{x, y}\}, \{\vec t_{x, y}\}) = \frac{1}{N_{pos}} \sum_{x,y} L_{cls}(\vec p_{x, y}, c^{\star}_{x, y}) + \frac{\lambda}{N_{pos}} \sum_{x,y} I_{c^\star_{x,y} > 0} L_{reg} (\vec t_{x, y}, \vec t^\star_{x,y})  \tag 2</script><p>上式中, $L_{cls}$ 是 Focal Loss, $L_{reg}$ 是 IOU loss (正如 UnitBox 中的一样). N_{pos} 代表 positive samples 的数量, $\lambda$ 在本文中均为 1. 上面的求和是在 feature map $F_i I{c^\star_i &gt;0}$ 上所有的 locations 上进行的.</p>
+<script type="math/tex; mode=display">L(\{\vec p_{x, y}\}, \{\vec t_{x, y}\}) = \frac{1}{N_{pos}} \sum_{x,y} L_{cls}(\vec p_{x, y}, c^{\ast}_{x, y}) + \frac{\lambda}{N_{pos}} \sum_{x,y} I_{c^\ast_{x,y} > 0} L_{reg} (\vec t_{x, y}, \vec t^\ast_{x,y})  \tag 2</script><p>上式中, $L_{cls}$ 是 Focal Loss, $L_{reg}$ 是 IOU loss (正如 UnitBox 中的一样). N_{pos} 代表 positive samples 的数量, $\lambda$ 在本文中均为 1. 上面的求和是在 feature map $F_i I{c^\ast_i &gt;0}$ 上所有的 locations 上进行的.</p>
 <p><strong>Inference:</strong><br>FCOS 的 Inference 很简单。给定输入图像，我们将其放入网络进行一次 forward 计算, 并获得 feature map $F_i$ 上的每个位置的分类分数 $\vec p_{x,y}$ 和回归预测值 $\vec t_{x,y}$。 跟随 R-CNN 的设定，我们选择 $\vec p_{x,y} &gt; 0.05$ 的位置作为正样本并通过反转公式(1)来获得预测的边界框。</p>
 <h2 id="Multi-level-Prediction-with-FPN-for-FCOS"><a href="#Multi-level-Prediction-with-FPN-for-FCOS" class="headerlink" title="Multi-level Prediction with FPN for FCOS"></a>Multi-level Prediction with FPN for FCOS</h2><p>在这里，我们展示了如何通过 FPN 的多级预测来解决所提出的 FCOS 存在的两个可能问题。</p>
 <ol>
@@ -631,11 +631,11 @@
 </ol>
 <p>跟随 FPN 中的设定，我们在 <strong>不同级别的特征图上检测到不同大小的对象</strong>。 具体来说，我们使用定义为 $\{P_3，P_4，P_5，P_6，P_7\}$ 的五个级别的 feature map。$P_3，P_4$ 和 $P_5$ 由 backbone CNN 的特征图 $C_3，C_4$ 和 $C_5$ 和具有横向连接的1×1卷积层产生，如图2所示. $P_6$ 和 $P_7$ 通过分别在 $P_5$ 和 $P_6$ 上使用一个步长为 2 的卷积层产生. 最终，特征层级 $P_3，P_4，P_5，P_6$ 和 $P_7$ 具有的步幅分别为 8,16,32,64和128。</p>
 <p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/fig2.jpg?x-oss-process=style/blog_img" alt="FCOS%2Ffig2.jpg"></div></p>
-<p>与 anchor based detectors 将不同大小的 anchor 分配给不同的特征级别不一样的是，<strong>我们直接限制边界框回归的范围</strong>。 更具体地说，我们首先计算所有特征级别上每个位置的回归目标 $l^\star，t^\star，r^\star$ 和 $b^\star$。 接下来，如果位置满足 $\max(l^\star，t^\star，r^\star，b^\star) &gt; m_i$ 或 $\max(l^\star，t^\star，r^\star，b^\star) &lt; m_{i-1}$ ，我们就将其设置为负样本并且再也不会对该位置进行回归操作。<strong>这里的 $m_i$ 是特征层级 $i$ 需要回归的最大距离</strong>。 在中文中，$m_2，m_3，m_4，m_5，m_6$ 和 $m_7$ 分别设置为 0,64,128,256,512 和 $\infty$。 由于 <strong>具有不同大小的对象被分配给不同的特征级别(这里是与 FoveaBox 的一处重要区别)</strong> 并且 <strong>大多数重叠发生在具有显著不同大小的对象之间</strong>，因此多级预测可以在很大程度上减轻上述模糊性并且将基于 FCN 的检测器提升到与基于 anchor 的检测器相同的检测性能，如我们后面的实验所示。</p>
+<p>与 anchor based detectors 将不同大小的 anchor 分配给不同的特征级别不一样的是，<strong>我们直接限制边界框回归的范围</strong>。 更具体地说，我们首先计算所有特征级别上每个位置的回归目标 $l^\ast，t^\ast，r^\ast$ 和 $b^\ast$。 接下来，如果位置满足 $\max(l^\ast，t^\ast，r^\ast，b^\ast) &gt; m_i$ 或 $\max(l^\ast，t^\ast，r^\ast，b^\ast) &lt; m_{i-1}$ ，我们就将其设置为负样本并且再也不会对该位置进行回归操作。<strong>这里的 $m_i$ 是特征层级 $i$ 需要回归的最大距离</strong>。 在中文中，$m_2，m_3，m_4，m_5，m_6$ 和 $m_7$ 分别设置为 0,64,128,256,512 和 $\infty$。 由于 <strong>具有不同大小的对象被分配给不同的特征级别(这里是与 FoveaBox 的一处重要区别)</strong> 并且 <strong>大多数重叠发生在具有显著不同大小的对象之间</strong>，因此多级预测可以在很大程度上减轻上述模糊性并且将基于 FCN 的检测器提升到与基于 anchor 的检测器相同的检测性能，如我们后面的实验所示。</p>
 <p>最后，跟随 R-CNN 和 Fast R-CNN 的设定，我们 <strong>共享不同特征级别之间的头部(这是与其他 Detector 的不同之处, 其他的都是每个特征层级独立的执行分类和回归)</strong>，这样不仅使检测器参数有效，而且能够提高检测性能。 然而，我们观察到不同的特征水平需要回归不同的尺寸范围（例如，$P_3$ 的尺寸范围是 [0,64] 而 $P_4$ 的尺寸范围是 [64,128]），因此 <strong>在不同的特征层使用相同的回归 heads 是不合理的。 故此, 我们不使用标准的 $exp(x)$，而是使用带有可训练标量 $s_i$ 的 $exp(s_i x)$ 来自动调整特征级 $P_i$ 的指数函数的基数，从而凭经验提高检测性能。</strong></p>
 <h2 id="Center-ness-for-FCOS"><a href="#Center-ness-for-FCOS" class="headerlink" title="Center-ness for FCOS"></a>Center-ness for FCOS</h2><p>在 FCOS 中使用多级预测后，FCOS 和 anchor based 的检测器之间仍存在性能差距。 我们观察到这是由于 <strong>远离物体中心的位置产生的许多低质量预测边界框造成的。</strong></p>
-<p>我们提出了一种简单而有效的策略来抑制这些低质量的检测边界框而不引入任何超参数。 具体来说，<strong>我们添加一个单层分支，与分类分支并行，以预测一个位置的 “中心概率(center-ness)”（即，从该位置到该位置所负责的对象的中心的距离）</strong> 如图2所示， 给定位置的回归目标 $l^\star，t^\star，r^\star$ 和 $b^\star$，center-ness target 定义为</p>
-<script type="math/tex; mode=display">centerness^\star = \sqrt{\frac{\min(l^\star, r^\star)}{\max(l^\star, r^\star)} \times \frac{\min(t^\star, b^\star)}{\max(t^\star, b^\star)}} \tag 3</script><p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/fig3.jpg?x-oss-process=style/blog_img" alt="FCOS%2Ffig3.jpg"></div></p>
+<p>我们提出了一种简单而有效的策略来抑制这些低质量的检测边界框而不引入任何超参数。 具体来说，<strong>我们添加一个单层分支，与分类分支并行，以预测一个位置的 “中心概率(center-ness)”（即，从该位置到该位置所负责的对象的中心的距离）</strong> 如图2所示， 给定位置的回归目标 $l^\ast，t^\ast，r^\ast$ 和 $b^\ast$，center-ness target 定义为</p>
+<script type="math/tex; mode=display">centerness^\ast = \sqrt{\frac{\min(l^\ast, r^\ast)}{\max(l^\ast, r^\ast)} \times \frac{\min(t^\ast, b^\ast)}{\max(t^\ast, b^\ast)}} \tag 3</script><p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FCOS/fig3.jpg?x-oss-process=style/blog_img" alt="FCOS%2Ffig3.jpg"></div></p>
 <p>我们在这里使用 sqrt 来减缓中心的衰减。center-ness 从0到1，因此用 <strong>二元交叉熵（BCE）损失训练</strong>。 损失被添加到损失函数公式(2)中。 在测试时，通过 <strong>将预测的 center-ness 与相应的分类得分相乘来计算最终得分（用于对检测到的边界框进行排名）</strong>。 因此， <strong>center-ness 可以使远离物体中心的边界框的 scores 减小</strong>。 结果，这些低质量的边界框很可能被最终的非最大抑制（NMS）过程滤除，从而显著提高了检测性能。</p>
 <p>基于 anchor 的检测器使用两个 IOU 阈值 $T_{low}$ 和 $T_{high}$ 将 anchor boxes 标记为负、忽略和正样本，center-ness 可以看作是一个 <strong>软阈值</strong>。它是在网络训练中学习的，不需要调整。此外，利用该策略，我们的检测器仍然可以将任何落在 GT Box 中的位置视为正样本，除了上述多层预测中设置为负样本的位置外，这样就可以为回归器使用尽可能多的训练样本。</p>
 <h1 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h1><p><strong>Training Details:</strong> 略…</p>
@@ -814,6 +814,8 @@
                 <div class="site-state-item site-state-categories">
                   <a href="/categories/index.html">
                     
+                    
+                      
                     
                       
                     

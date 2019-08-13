@@ -132,7 +132,7 @@
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/tab3.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/tab4.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/FoveaBox/tab5.jpg?x-oss-process=style/blog_img">
-<meta property="og:updated_time" content="2019-07-18T06:05:57.647Z">
+<meta property="og:updated_time" content="2019-08-07T02:37:45.384Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FoveaBox (CVPR, 2019)">
 <meta name="twitter:description" content="论文: FoveaBox: Beyond Anchor-based Object Detector作者: Tao Kong1 Fuchun Sun1 Huaping Liu1 Yuning Jiang2 Jianbo Shi3机构: 1Department of Computer Science and Technology, Tsinghua University, Beijing Nation">
@@ -492,8 +492,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-07-18T14:05:57+08:00" content="2019-07-18">
-      		  2019-07-18
+    		<time itemprop="dateUpdated" datetime="2019-08-07T10:37:45+08:00" content="2019-08-07">
+      		  2019-08-07
     		</time>
   	  </span>
 	  
@@ -608,7 +608,7 @@
 <h1 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h1><p>Classic Object Detectors: DPM, HOG, SIFT</p>
 <p>Modern Object Detectors: RCNN, RPN, SSD, YOLO</p>
 <h1 id="FoveaBox"><a href="#FoveaBox" class="headerlink" title="FoveaBox"></a>FoveaBox</h1><p>FoveaBox 是一个单一的、统一的网络，<strong>由一个主干网络和两个负责特定任务的子网络组成</strong>。backbone 负责计算整个输入图像上的卷积特征图，是一个现成的卷积网络。<strong>第一个 subnet 会对 backbone 的输出逐像素进行分类;第二个 subnet 在相应的位置上执行 bounding box prediction</strong>。虽然这些组件的细节有许多可能的选择，但为了简单和公平的比较，我们采用了RetinaNet的设计[28]。</p>
-<h2 id="Feature-Pyramid-Network-Backbone"><a href="#Feature-Pyramid-Network-Backbone" class="headerlink" title="Feature Pyramid Network Backbone"></a>Feature Pyramid Network Backbone</h2><p>我们采用特征金字塔网络(FPN)[27]作为后续检测的 backbone network。一般来说，FPN使用自顶向下的体系结构和横向连接，从单尺度的输入图像中构建网络内的特征金字塔。金字塔的每一层都可以用来探测不同尺度的物体。我们构造一个金字塔，其 level 为 ${P_l}, l = 3,4,···,7, 其中 $l$ 表示金字塔级别。$P_l$ 的分辨率是输入图像的 $1/2^l$。所有金字塔级别都有 $C = 256$ 通道。</p>
+<h2 id="Feature-Pyramid-Network-Backbone"><a href="#Feature-Pyramid-Network-Backbone" class="headerlink" title="Feature Pyramid Network Backbone"></a>Feature Pyramid Network Backbone</h2><p>我们采用特征金字塔网络(FPN)[27]作为后续检测的 backbone network。一般来说，FPN使用自顶向下的体系结构和横向连接，从单尺度的输入图像中构建网络内的特征金字塔。金字塔的每一层都可以用来探测不同尺度的物体。我们构造一个金字塔，其 level 为 ${P_l}, l = 3,4,···,7,$ 其中 $l$ 表示金字塔级别。$P_l$ 的分辨率是输入图像的 $1/2^l$。所有金字塔级别都有 $C = 256$ 通道。</p>
 <h2 id="Scale-Assignment"><a href="#Scale-Assignment" class="headerlink" title="Scale Assignment"></a>Scale Assignment</h2><p><strong>虽然我们的目标是预测目标物体的边界，但由于物体的大规模形状变化，直接预测这些数字并不稳定</strong>。 相反，我们 <strong>根据特征金字塔等级的数量将对象的比例划分到若干个 bins 中去</strong>。 每个金字塔的金字塔等级 $P_3$ 到 $P_7$ 的基本面积分别为 $32^2$ 到 $512^2$。 因此，对于级别 $P_l$，基本面积 $S_l$ 由下面的公式计算得到:</p>
 <script type="math/tex; mode=display">S_l = 4^l \cdot S_0 \tag 1</script><p>类似于使用 $C4$ 作为单尺度特征图的基于ResNet的 Faster R-CNN系统，我们将 $S_0$ 设置为 16 (也就是 $4^2$). 在FoveaBox中，每个特征金字塔会学习响应特定尺度的对象。 金字塔等级 $l$ 的目标框的有效比例范围计算为</p>
 <script type="math/tex; mode=display">[S_l / \eta^2, S_l \cdot \eta^2] \tag 2</script><p>其中 $\eta$ 是根据经验设置的，以控制每个金字塔的比例范围。在训练过程中忽略不在相应尺度范围内的目标对象。注意，<strong>一个对象可能被网络的多个金字塔检测到，这与以前只将对象映射到一个特征金字塔的做法不同(FPN, MaskRCNN).</strong></p>
@@ -700,8 +700,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/z_post/计算机视觉-CenterNet-Triplets-CVPR2019/" rel="prev" title="CenterNet(Triplets) (Arxiv, 2019)">
-                <i class="fa fa-chevron-left"></i> CenterNet(Triplets) (Arxiv, 2019)
+              <a href="/z_post/计算机视觉-CenterNet-Triplets-CVPR2019/" rel="prev" title="CenterNet(Triplets) (CVPR, 2019)">
+                <i class="fa fa-chevron-left"></i> CenterNet(Triplets) (CVPR, 2019)
               </a>
             
           </div>
@@ -803,6 +803,8 @@
                 <div class="site-state-item site-state-categories">
                   <a href="/categories/index.html">
                     
+                    
+                      
                     
                       
                     
