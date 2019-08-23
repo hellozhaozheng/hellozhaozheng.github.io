@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="字符串固定字数, 不足的空格补齐12345str.ljust(10) # 左对齐 字符串长10位rjust，ljust和center三个方法来给字符串补全空格rjust，向右对其，在左边补空格ljust，向左对其，在右边补空格center，让字符串居中，在左右补空格 排序sorted: 返回一个新的 listlist.sort(): 改变 list 自身的值reverse 参数: 默认为 Fals">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-20T02:37:56.801Z">
+<meta property="og:updated_time" content="2019-08-23T03:53:41.170Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python 手册">
 <meta name="twitter:description" content="字符串固定字数, 不足的空格补齐12345str.ljust(10) # 左对齐 字符串长10位rjust，ljust和center三个方法来给字符串补全空格rjust，向右对其，在左边补空格ljust，向左对其，在右边补空格center，让字符串居中，在左右补空格 排序sorted: 返回一个新的 listlist.sort(): 改变 list 自身的值reverse 参数: 默认为 Fals">
@@ -479,8 +479,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-07-20T10:37:56+08:00" content="2019-07-20">
-      		  2019-07-20
+    		<time itemprop="dateUpdated" datetime="2019-08-23T11:53:41+08:00" content="2019-08-23">
+      		  2019-08-23
     		</time>
   	  </span>
 	  
@@ -556,7 +556,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">12 分钟</span>
+                <span title="阅读时长">13 分钟</span>
               
             </div>
           
@@ -702,7 +702,8 @@
 <h1 id="堆-heapq"><a href="#堆-heapq" class="headerlink" title="堆 heapq"></a>堆 heapq</h1><p>heapq 模块只有最小堆的功能, 要实现最大堆, 需要在入堆和出堆的时候取反, 并且 heapq 模块只能作用于数值型类型.</p>
 <p><a href="https://stackoverflow.com/questions/2501457/what-do-i-use-for-a-max-heap-implementation-in-python" target="_blank" rel="noopener">https://stackoverflow.com/questions/2501457/what-do-i-use-for-a-max-heap-implementation-in-python</a><br>最大堆: <code>_heapify_max(), _heappop_max()</code></p>
 <p>给定一组数据, 创建堆, 两种方式(二者等价):<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line">data = [<span class="number">1</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">2</span>,<span class="number">8</span>,<span class="number">5</span>]</span><br><span class="line">heap = []</span><br><span class="line"><span class="keyword">for</span> d <span class="keyword">in</span> data:</span><br><span class="line">    heapq.heappush(heap, n) <span class="comment"># 方法一 逐个构建</span></span><br><span class="line"></span><br><span class="line">heapq.heapify(data) <span class="comment"># 方法二 原地构建, 效率更高</span></span><br></pre></td></tr></table></figure></p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">heap = [<span class="number">1</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">2</span>,<span class="number">8</span>,<span class="number">5</span>]</span><br><span class="line">heap.heapify(heap)</span><br><span class="line">heapq.heappop(heap) <span class="comment"># 返回并删除堆顶</span></span><br><span class="line">heapq.heapreplace(heap, <span class="number">10</span>) <span class="comment"># 删除堆顶并添加新值</span></span><br><span class="line">heapq.heappushpop(heap, <span class="number">10</span>) <span class="comment"># 先将新值加入堆中, 然后立刻弹出堆顶</span></span><br></pre></td></tr></table></figure>
+<p>小顶堆:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">heap = [<span class="number">1</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">2</span>,<span class="number">8</span>,<span class="number">5</span>]</span><br><span class="line">heapq.heapify(heap)</span><br><span class="line">heapq.heappop(heap) <span class="comment"># 返回并删除堆顶</span></span><br><span class="line">heapq.heapreplace(heap, <span class="number">10</span>) <span class="comment"># 删除堆顶并添加新值</span></span><br><span class="line">heapq.heappushpop(heap, <span class="number">10</span>) <span class="comment"># 先将新值加入堆中, 然后立刻弹出堆顶</span></span><br><span class="line">print(heap[<span class="number">0</span>]) <span class="comment"># 查看堆顶</span></span><br></pre></td></tr></table></figure></p>
+<p>大顶堆:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方法一: 取负值</span></span><br><span class="line">heap = [<span class="number">-1</span>,<span class="number">-3</span>,<span class="number">-6</span>,<span class="number">-2</span>,<span class="number">-8</span>,<span class="number">-5</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法二: 内置方法</span></span><br><span class="line">heap = [<span class="number">1</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">2</span>,<span class="number">8</span>,<span class="number">5</span>]</span><br><span class="line">heapq._heapify_max(heap) <span class="comment"># max_heap</span></span><br><span class="line">print(heap[<span class="number">0</span>]) <span class="comment"># 查看堆顶, 8</span></span><br><span class="line">heapq._heappop_max(heap) <span class="comment"># po from maxheap</span></span><br><span class="line">print(heap[<span class="number">0</span>]) <span class="comment"># 6</span></span><br><span class="line">heapq._heapreplace_max(heap, <span class="number">10</span>)</span><br><span class="line">print(heap[<span class="number">0</span>]) <span class="comment"># 10</span></span><br><span class="line"><span class="comment"># heapq._heappushpop_max(heap, 10) # 注意, 没有 _heappushpop_max 函数</span></span><br></pre></td></tr></table></figure></p>
 <h1 id="Python-刷题常用"><a href="#Python-刷题常用" class="headerlink" title="Python 刷题常用"></a>Python 刷题常用</h1><p>队列:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Queue</span><br><span class="line">base_queue = Queue.Queue() <span class="comment"># 基本队列, 先进先出</span></span><br><span class="line">base_queue.put(x)</span><br><span class="line">base_queue.get()</span><br><span class="line"></span><br><span class="line">lifo_queue = Queue.LifoQueue() <span class="comment"># 先进后出, 类似栈</span></span><br><span class="line">lifo_queue.put(x)</span><br><span class="line">lifo_queue.get()</span><br><span class="line"></span><br><span class="line">prio_queue = Queue.PriorityQueue() <span class="comment"># 优先队列, 与C++中priority_queue类似, 可实现堆的功能</span></span><br><span class="line">prio_queue.put(x)</span><br><span class="line">prio_queue.get()</span><br></pre></td></tr></table></figure></p>
 
       
@@ -1082,7 +1083,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">44:44</span>
+    <span title="站点阅读时长">44:58</span>
   
 </div>
 
