@@ -133,7 +133,7 @@
 <meta property="og:image" content="http://wx3.sinaimg.cn/large/d7b90c85ly1fxngsjxjyag20cd0a9q6x.gif">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fxnm0ibh7vj20jc0ggadn.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fxr32nc4xoj215u0guq3p.jpg">
-<meta property="og:updated_time" content="2019-08-26T08:38:39.070Z">
+<meta property="og:updated_time" content="2019-08-27T01:51:34.523Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LeetCode 算法题全解">
 <meta name="twitter:description" content="001. 两数之和Description: 求出能组合出目标数的两个元素给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。 你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。 Example: Given nums = [2, 7, 11, 15], target = 9, Because num">
@@ -493,8 +493,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-08-26T16:38:39+08:00" content="2019-08-26">
-      		  2019-08-26
+    		<time itemprop="dateUpdated" datetime="2019-08-27T09:51:34+08:00" content="2019-08-27">
+      		  2019-08-27
     		</time>
   	  </span>
 	  
@@ -556,7 +556,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">568k</span>
+                <span title="本文字数">569k</span>
               
 
               
@@ -570,7 +570,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">8:36</span>
+                <span title="阅读时长">8:37</span>
               
             </div>
           
@@ -1741,6 +1741,7 @@
 <h2 id="解法一-DFS-哈希"><a href="#解法一-DFS-哈希" class="headerlink" title="解法一: DFS + 哈希"></a>解法一: DFS + 哈希</h2><p>该题是典型的图遍历, 主要难点在于如何在遍历的时候将该节点的邻居副本加入到列表中, 由于要保证快速的找到相应的副本, 因此我们可以利用哈希表来实现, 其中, <code>key</code>为原始的<code>node</code>, 而<code>val</code>为对应的副本.</p>
 <p><strong>C++ 实现:</strong><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">// Definition for a Node.</span></span><br><span class="line"><span class="comment">class Node &#123;</span></span><br><span class="line"><span class="comment">public:</span></span><br><span class="line"><span class="comment">    int val;</span></span><br><span class="line"><span class="comment">    vector&lt;Node*&gt; neighbors;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    Node() &#123;&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    Node(int _val, vector&lt;Node*&gt; _neighbors) &#123;</span></span><br><span class="line"><span class="comment">        val = _val;</span></span><br><span class="line"><span class="comment">        neighbors = _neighbors;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">&#125;;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line">    <span class="function">Node* <span class="title">dfs</span><span class="params">(Node* node, <span class="built_in">unordered_map</span>&lt;Node*, Node*&gt; &amp; hash)</span> </span>&#123; <span class="comment">// hash: node, copy</span></span><br><span class="line">        <span class="keyword">if</span> (node == <span class="literal">nullptr</span>) <span class="keyword">return</span> node;</span><br><span class="line">        <span class="keyword">if</span> (hash.count(node)) <span class="keyword">return</span> hash[node]; <span class="comment">// 如果副本已经存在, 则直接返回</span></span><br><span class="line">        Node* copy = <span class="keyword">new</span> Node(node-&gt;val); <span class="comment">// 若不存在, 则应该新建一个副本</span></span><br><span class="line">        hash[node] = copy;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; node-&gt;neighbors.size(); i++) &#123; <span class="comment">// DFS, 递归遍历, 并将node中的邻居副本加入到copy中</span></span><br><span class="line">            copy-&gt;neighbors.emplace_back(dfs(node-&gt;neighbors[i], hash));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> copy;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">    <span class="function">Node* <span class="title">cloneGraph</span><span class="params">(Node* node)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;Node*, Node*&gt; hash; <span class="comment">// key: node, val: copy</span></span><br><span class="line">        <span class="keyword">return</span> dfs(node, hash);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 <p><strong>Python 实现:</strong><br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string"># Definition for a Node.</span></span><br><span class="line"><span class="string">class Node:</span></span><br><span class="line"><span class="string">    def __init__(self, val, neighbors):</span></span><br><span class="line"><span class="string">        self.val = val</span></span><br><span class="line"><span class="string">        self.neighbors = neighbors</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">cloneGraph</span><span class="params">(self, node: <span class="string">'Node'</span>)</span> -&gt; 'Node':</span></span><br><span class="line">        node_copy = dict()</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">dfs</span><span class="params">(node)</span>:</span></span><br><span class="line">            <span class="keyword">if</span> node <span class="keyword">is</span> <span class="keyword">None</span>: <span class="keyword">return</span> node</span><br><span class="line">            <span class="keyword">if</span> node <span class="keyword">not</span> <span class="keyword">in</span> node_copy:</span><br><span class="line">                node_copy[node] = Node(node.val, [])</span><br><span class="line">                node_copy[node].neighbors = list(map(dfs, node.neighbors))</span><br><span class="line">            <span class="keyword">return</span> node_copy[node]</span><br><span class="line">        <span class="keyword">return</span> dfs(node)</span><br></pre></td></tr></table></figure></p>
+<p><strong>Python 实现2:</strong><br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string"># Definition for a Node.</span></span><br><span class="line"><span class="string">class Node:</span></span><br><span class="line"><span class="string">    def __init__(self, val, neighbors):</span></span><br><span class="line"><span class="string">        self.val = val</span></span><br><span class="line"><span class="string">        self.neighbors = neighbors</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">cloneGraph</span><span class="params">(self, node: <span class="string">'Node'</span>)</span> -&gt; 'Node':</span></span><br><span class="line">        visited = dict()</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">dfs</span><span class="params">(node)</span>:</span></span><br><span class="line">            <span class="keyword">for</span> adj_node <span class="keyword">in</span> node.neighbors:</span><br><span class="line">                <span class="keyword">if</span> adj_node <span class="keyword">not</span> <span class="keyword">in</span> visited:</span><br><span class="line">                    visited[adj_node] = Node(adj_node.val, [])</span><br><span class="line">                    dfs(adj_node)</span><br><span class="line">                visited[node].neighbors.append(visited[adj_node])</span><br><span class="line">        visited[node] = Node(node.val, [])</span><br><span class="line">        dfs(node)</span><br><span class="line">        <span class="keyword">return</span> visited[node]</span><br></pre></td></tr></table></figure></p>
 <h1 id="134-Gas-Station"><a href="#134-Gas-Station" class="headerlink" title="134. Gas Station"></a>134. Gas Station</h1><p>加油站问题, 根据油量和消耗量判断是否能走完一圈</p>
 <h2 id="Description-40"><a href="#Description-40" class="headerlink" title="Description"></a>Description</h2><p>There are N gas stations along a circular route, where the amount of gas at station i is gas[i].</p>
 <p>You have a car with an unlimited gas tank and it costs cost[i] of gas to travel from station i to its next station (i+1). You begin the journey with an empty tank at one of the gas stations.</p>
@@ -3428,7 +3429,7 @@ AB -&gt; 28
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">3m</span>
+    <span title="站点总字数">3.1m</span>
   
 
   
@@ -3437,7 +3438,7 @@ AB -&gt; 28
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">45:29</span>
+    <span title="站点阅读时长">46:55</span>
   
 </div>
 

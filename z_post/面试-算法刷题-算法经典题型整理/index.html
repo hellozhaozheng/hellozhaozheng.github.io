@@ -144,7 +144,7 @@
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fyfv96duh4j20wd095754.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fyfx303ghvj20y107p74w.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fyfx3ex4fbj20zq09u3zb.jpg">
-<meta property="og:updated_time" content="2019-08-26T09:12:27.567Z">
+<meta property="og:updated_time" content="2019-08-27T01:19:39.945Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法经典题型整理">
 <meta name="twitter:description" content="LeetCode 算法题(Easy)LeetCode 算法题(Medium)LeetCode 算法题(Hard)剑指 offer 排序排序算法概览 比较排序算法: 冒泡, 选择, 插入, 归并, 堆排, 快排 非比较排序算法: 计数, 基数, 桶排 稳定性: 7 个常用算法, 3 稳(冒泡, 插入, 归并) 4 不稳 (选择, 希尔, 快排, 堆排)      排序算法 平均时间复杂度 最坏/最好">
@@ -504,8 +504,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-08-26T17:12:27+08:00" content="2019-08-26">
-      		  2019-08-26
+    		<time itemprop="dateUpdated" datetime="2019-08-27T09:19:39+08:00" content="2019-08-27">
+      		  2019-08-27
     		</time>
   	  </span>
 	  
@@ -567,7 +567,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">39k</span>
+                <span title="本文字数">40k</span>
               
 
               
@@ -961,7 +961,8 @@
 <h2 id="图的构建"><a href="#图的构建" class="headerlink" title="图的构建"></a>图的构建</h2><p>利用 Python 的字典, 可以构建图片的有向邻接表.</p>
 <p>假设传入的是 <code>(u, v, w)</code> 三元组构成的边的列表, 三元组的元素分别代表: 起始点, 终止点, 权重. 那么, 可以构建出图结构如下:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">graph = dict()</span><br><span class="line"><span class="keyword">for</span> (u, v, w) <span class="keyword">in</span> edges:</span><br><span class="line">    graph[u] = graph.get(u, dict())</span><br><span class="line">    graph[u][v] = w</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用时, 可以直接利用起点和终点来访问边的权重, 非常方便:</span></span><br><span class="line">graph[u][v] <span class="comment"># 前提是该边存在</span></span><br></pre></td></tr></table></figure></p>
 <h2 id="图的遍历"><a href="#图的遍历" class="headerlink" title="图的遍历"></a>图的遍历</h2><p><strong>BFS:</strong></p>
-<p><strong>DFS:</strong></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">node = start <span class="comment"># node 指向起始节点</span></span><br><span class="line"><span class="comment">#res = [] # 遍历图得到值的集合</span></span><br><span class="line">visited = [] <span class="comment"># 存在访问过的节点</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bfs</span><span class="params">(node)</span>:</span></span><br><span class="line">    q = queue.Queue()</span><br><span class="line">    q.put(node)</span><br><span class="line">    visited.append(node)</span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> q.empty():</span><br><span class="line">        cur_node = q.get()</span><br><span class="line">        <span class="keyword">for</span> adj_node <span class="keyword">in</span> graph[cur_node].keys():</span><br><span class="line">            <span class="keyword">if</span> adj_node <span class="keyword">not</span> <span class="keyword">in</span> visited:</span><br><span class="line">                q.put(adj_node)</span><br><span class="line">                visited.append(adj_node)</span><br></pre></td></tr></table></figure>
+<p><strong>DFS:</strong><br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">node = start <span class="comment"># node 指向起始节点</span></span><br><span class="line">res = [] <span class="comment"># 遍历图得到值的集合</span></span><br><span class="line">visited = [] <span class="comment"># 存在访问过的节点</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dfs</span><span class="params">(node)</span>:</span></span><br><span class="line">    visited.append(node)</span><br><span class="line">    <span class="keyword">for</span> adj_node <span class="keyword">in</span> graph[node].keys():</span><br><span class="line">        <span class="keyword">if</span> adj_node <span class="keyword">not</span> <span class="keyword">in</span> visited:</span><br><span class="line">            res.append([node, adj_node, graph[node][adj_node]])</span><br><span class="line">            dfs(adj_node)</span><br><span class="line"></span><br><span class="line">dfs(node)</span><br></pre></td></tr></table></figure></p>
 <h2 id="相关题目-1"><a href="#相关题目-1" class="headerlink" title="相关题目"></a>相关题目</h2><h1 id="最小生成树"><a href="#最小生成树" class="headerlink" title="最小生成树"></a>最小生成树</h1><p>定义: 对于一个给定的带权图, 有 V 个节点, 找到连接这 V 个节点的 V-1 条边, 使得所有节点互相可达, 同时, 这 V-1 条边组成的权值之和是最小的.(各个节点均连通, 且连通成本最小). 此时成这个边的子集为该图的最小生成树</p>
 <p>两种解决方法: Prim(普利姆), Kruskal(克鲁斯卡尔)</p>
 <p><strong>切分定理(Cut Property):</strong> 把图中的结点分为两部分, 成为一个切分(Cut), 如果一个边的两个端点, 属于切分(Cut)不同的两边, 这个边就称为横切边(Crossing Edge). <strong>给定任意切分, 横切边中权重最小的边必然属于最小生成树.</strong></p>
@@ -1596,7 +1597,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">3m</span>
+    <span title="站点总字数">3.1m</span>
   
 
   
@@ -1605,7 +1606,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">45:29</span>
+    <span title="站点阅读时长">46:55</span>
   
 </div>
 

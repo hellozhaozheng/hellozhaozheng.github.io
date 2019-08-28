@@ -132,7 +132,7 @@
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/fig6.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/tab6.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CenterNet_Points/tab7.jpg?x-oss-process=style/blog_img">
-<meta property="og:updated_time" content="2019-08-10T10:56:34.567Z">
+<meta property="og:updated_time" content="2019-08-28T00:44:50.288Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CenterNet(Points) (CVPR, 2019)">
 <meta name="twitter:description" content="文章: Objects as Points作者: Xingyi Zhou, Dequan Wang, Philipp Kra ̈henbu ̈hl机构: UT Austin, UC Berkeley, UT Austin 摘要检测任务将物体标识为图像中的轴对齐框。大多数成功的物体检测器都枚举了潜在物体位置的几乎详尽的候选区域, 并对每个物体进行分类。这种方法是比较耗费资源且低效的，并且需要额外的后">
@@ -492,8 +492,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-08-10T18:56:34+08:00" content="2019-08-10">
-      		  2019-08-10
+    		<time itemprop="dateUpdated" datetime="2019-08-28T08:44:50+08:00" content="2019-08-28">
+      		  2019-08-28
     		</time>
   	  </span>
 	  
@@ -610,8 +610,8 @@
 <h1 id="Preliminary"><a href="#Preliminary" class="headerlink" title="Preliminary"></a>Preliminary</h1><p>设 $I\in R^{W×H×3}$ 是宽度 $W$ 高度 $H$ 的输入图像。我们的目的是产生关键点热图 $\hat Y\in [0,1]^{\frac{W}{R}×\frac{H}{R}×C}$，其中 $R$ 是输出步幅，$C$ 是关键点(物体)类型数。 关键点类型可以人类姿势估计中的 $C = 17$ 个人体关节[4,55]，或者物体检测中的 $C = 80$ 个物体类别[30,61]。 <strong>我们使用文献[4,40,42]中 $R = 4$ 的默认输出步幅。</strong> 输出步幅通过因子 $R$ 对输出预测进行下采样。我们设 $\hat Y_{x,y,c} = 1$ 对应于检测到的关键点，而 $\hat Y_{x,y,c} = 0$ 是背景。 我们使用几种不同的 fully-convolutional encoder-decoder 网络来预测图像 $I$ 中的 $\hat Y$: stacked hourglass network[30,40]，ResNet[22,55]和 DLA[58]。</p>
 <p>我们参考 CornerNet 的工作来训练 keypoint prediction network. 对于每一个 GT keypoint $p\in R^2$, 其类别为 $c$, 我们先计算出相应的低分辨率的 location $\tilde p = \lfloor \frac{p}{R} \rfloor$. <strong>然后，我们使用高斯核 $Y_{xyc} = exp\big(-\frac{(x-\tilde p_x)^2 + (y - \tilde p_y)^2}{2\sigma^2_p} \big)$ 将所有 GT 关键点划分到热图 $Y \in [0, 1]^{\frac{W}{R}\times \frac{H}{R} \times C}$ 上，其中 $\sigma_p$ 是根据物体大小自适应的标准差</strong>. 如果两个高斯核对应的关键点是相同的类别, 那么我们就利用 element-wise maximum 来确定它的值. 训练函数是使用 <strong>focal loss 的 penalty-reduced pixel-wise logistic regression.</strong></p>
 <script type="math/tex; mode=display">L_k = \frac{-1}{N} \sum_{xyc} \begin{cases} (1-\hat Y_{xyc})^{\alpha} log(\hat Y_{xyc}) && Y_{xyc} = 1 \\ (1-Y_{xyc})^{\beta} (\hat Y_{xyc})^{\alpha} log (1-\hat Y_{xyc}) && otherwise \end{cases}\tag 1</script><p>上式中 $\alpha$ 和 $\beta$ 是 focal loss 的超参数, $N$ 是图像 $I$ 中的 keypoints 数量. 我们选择 $N$ 的标准化以使所有 positive focal loss 实例归一化到 1。我们根据 CornerNet 采用 $\alpha = 2$, $\beta=4$ 的设置.</p>
-<p>为了恢复由输出步幅引起的离散化误差，我们另外预测每个中心点的 local offset $\hat O\in R^{\frac{W}{R} \times \frac{H}{R}\times 2}. 所有的类别 $c$ 都共享相同的偏移预测。我们通过L1损失来训练 offset:</p>
-<script type="math/tex; mode=display">L_{off} = \frac{1}{N}\sum_p | \tilde O_{\tilde p} - (\frac{p}{R} - \tilde p) |\tag 2</script><p>该函数的监督行为只针对关键点 location $\tilde p$, 所有的其他位置都被忽略.</p>
+<p>为了恢复由输出步幅引起的离散化误差，我们另外预测每个中心点的 local offset $\hat O\in R^{\frac{W}{R} \times \frac{H}{R}\times 2}$. 所有的类别 $c$ 都共享相同的偏移预测。我们通过L1损失来训练 offset:</p>
+<script type="math/tex; mode=display">L_{off} = \frac{1}{N}\sum_p | \hat O_{\tilde p} - (\frac{p}{R} - \tilde p) |\tag 2</script><p>该函数的监督行为只针对关键点 location $\tilde p$, 所有的其他位置都被忽略.</p>
 <h1 id="Objects-as-Points"><a href="#Objects-as-Points" class="headerlink" title="Objects as Points"></a>Objects as Points</h1><p>令 $(x^{(k)}_1, y^{(k)}_1, x^{(k)}_2, y^{(k)}_2)$ 代表物体 $k$ 的 bbox, 其类别为 $c_k$. 它的 center points 为 $p_k = (\frac{x^{(k)}_1 + x^{(k)}_2}{2}, \frac{y^{(k)}_1 + y^{(k)}_2}{2})$, 我们利用 keypoint estimator $\hat Y$ 去预测所有的 center points. 除此以外, 我们还会回归物体 $k$ 的尺寸 $s_k = (x^{(k)}_2 - x^{(k)}_1, y^{(k)}_2 - y^{(k)}_1)$. 为了控制计算成本, 我们对所有的物体类别都使用 single size 的预测, $\hat S \in R^{\frac{W}{R} \times \frac{H}{R} \times 2}$. 我们在 center point 使用类似公式2的 L1 损失:</p>
 <script type="math/tex; mode=display">L_{size} = \frac{1}{N} \sum_{k=1}^N |\hat S_{P_k} - s_k | \tag 3</script><p>我们不对 scale 进行归一化, 而是直接使用 raw pixel coordinates. 然后我们利用一个常量 $\lambda_{size}$ 将 loss 缩放, 整体的训练损失为:</p>
 <script type="math/tex; mode=display">L_{det} = L_k + \lambda_{size} L_{size} + \lambda_{off} L_{off}\tag 4</script><p>除非另有说明，否则我们在所有实验中都设置 $\lambda_{size}= 0.1$, $\lambda_{off}= 1$。 <strong>我们使用同一个网络来预测关键点 $\hat Y$，offsets $\hat O$ 和 size $\hat S$.</strong> 整个网络在每个位置的输出总共 $C + 4$ 维。 所有的输出都共享同一个 fully-convolutional backbone 网络。对于每种 modality，backbone 的特征会通过单独的3×3卷积，ReLU和另一个1×1卷积进行传播。 图4显示了网络输出的 overview。</p>
@@ -1024,7 +1024,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">3m</span>
+    <span title="站点总字数">3.1m</span>
   
 
   
@@ -1033,7 +1033,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">45:29</span>
+    <span title="站点阅读时长">46:55</span>
   
 </div>
 

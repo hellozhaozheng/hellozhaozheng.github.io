@@ -132,7 +132,7 @@
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/tab3.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/fig8.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/tab4.jpg?x-oss-process=style/blog_img">
-<meta property="og:updated_time" content="2019-07-18T06:06:37.290Z">
+<meta property="og:updated_time" content="2019-08-28T02:18:07.917Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CornerNet (ECCV, 2018)">
 <meta name="twitter:description" content="文章: CornerNet: Detecting Objects as Paired Keypoints作者: Hei Law, Jia Deng机构: University of Michigan 摘要本文提出了一种新的检测方法, 即利用一对关键点(左上角和右下角)来检测物体, 我们仅用了单一的神经网络来搭建该模型, 并命名为 CornerNet. 通过一对关键点来检测物体, 可以省去设计 an">
@@ -492,8 +492,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-07-18T14:06:37+08:00" content="2019-07-18">
-      		  2019-07-18
+    		<time itemprop="dateUpdated" datetime="2019-08-28T10:18:07+08:00" content="2019-08-28">
+      		  2019-08-28
     		</time>
   	  </span>
 	  
@@ -605,7 +605,7 @@
 <h2 id="Detecting-Corners"><a href="#Detecting-Corners" class="headerlink" title="Detecting Corners"></a>Detecting Corners</h2><p>我们预测两组热图, 每一组热图都具有 $C$ 个通道, $C$ 代表了物体类别的数量, 热图的尺寸为 $H\times W$. <strong>注意, 这里没有背景的通道(background channel)</strong>. 每一个 channel 都是一个二值的 mask, 用于指示某个类别的角点位置.<br>对于每个角点来说, 都会有一个 gt positive location, 而其他的 locations 都将是负样本. 在训练阶段, <strong>我们不会等价的惩罚负样本, 我们减少了在正样本的一定半径内负样本的惩罚. 这是因为对于一对假的角点检测来说, 如果它们接近各自的真实位置, 那么就仍然可以产生一个与真实框差不多的框, 如图5所示.</strong> 我们通过确保半径内的一对点将生成一个至少与真实框具有 $t$ IoU ($t=0.7$)以上的边界框, 从而根据物体的大小来确定半径的值. 在给定半径以后, 减少惩罚的数量通过一个非规范的 2D 高斯分布给出: $e^{-\frac{x^2 + y^2}{2\sigma^2}}$, 其中心位于正样本的位置, $\sigma$ 的大小是半径的三分之一.</p>
 <p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/CornerNet/fig5.jpg?x-oss-process=style/blog_img" alt="CornerNet%2Ffig5.jpg"></div></p>
 <p>设 $p_{cij}$ 为预测热图中 $c$ 类在位置 $(i,j)$ 处的得分，$y_{cij}$ 为使用 unnormalized 高斯增广的 gt 热图。我们设计了一种 focal loss[23]的变体:</p>
-<script type="math/tex; mode=display">L_{det} = \frac{-1}{N}\sum_{c=1}^{C} \sum_{i=1}^{H} \sum_{j=1}^{W} \begin{cases} (1-p_{cij})^\alpha log(p_{cij}) && y_{cij} = 1 \\ (1-y_{cij})^{beta} (p_{cij})^\alpha log(1 - p_{cij}) && otherwise \end{cases} \tag 1</script><p>其中 $N$ 是图像中物体的数量, $\alpha$ 和 $\beta$ 是用于控制每个点贡献度的超参数. (我们在所有实验中设置 $alpha=2, \beta=4$)。$y_{cij}$ 使用 Gaussian bumps 进行编码，$(1-y_{cij})$ 项减少了对 gt locations 的惩罚。</p>
+<script type="math/tex; mode=display">L_{det} = \frac{-1}{N}\sum_{c=1}^{C} \sum_{i=1}^{H} \sum_{j=1}^{W} \begin{cases} (1-p_{cij})^\alpha log(p_{cij}) && y_{cij} = 1 \\ (1-y_{cij})^{\beta} (p_{cij})^\alpha log(1 - p_{cij}) && otherwise \end{cases} \tag 1</script><p>其中 $N$ 是图像中物体的数量, $\alpha$ 和 $\beta$ 是用于控制每个点贡献度的超参数. (我们在所有实验中设置 $alpha=2, \beta=4$)。$y_{cij}$ 使用 Gaussian bumps 进行编码，$(1-y_{cij})$ 项减少了对 gt locations 的惩罚。</p>
 <p>许多网络[15,28]使用向下采样层来收集全局信息同时减少内存使用。当它们应用于完全卷积的图像时，输出的大小通常小于图像。因此，需要将图像中的位置 $(x, y)$ 映射到 heatmap 中的位置 $(x/n, y/n)$ ，其中 $n$ 为下采样因子。当我们将热图中的位置重新映射到输入图像时，可能会丢失一些精度，这将极大地影响 gt 和小边界框的 IoU 大小。为了解决这个问题，我们预测 location offsets，以便在将它们重新映射到输入分辨率之前稍微调整转角位置。</p>
 <script type="math/tex; mode=display">o_k = \bigg(\frac{x_k}{n} - \bigg\lfloor \frac{x_k}{n} \bigg\rfloor, \frac{y_k}{n} - \bigg\lfloor \frac{y_k}{n} \bigg\rfloor \bigg) \tag 2</script><p>其中 $o_k$ 为 offsets，$x_k$ 和 $y_k$ 为角点 $k$ 的 $x$ 和 $y$坐标，我们会预测一组被左上角所共享的 offsets, 以及另一组被右下角所共享的 offets. 在训练阶段，我们在 ground-truth corner 位置使用 smooth L1 Loss.</p>
 <script type="math/tex; mode=display">L_{off} = \frac{1}{N} \sum_{k=1}^{N} SmoothL1Loss(o_k, \hat o_k) \tag 3</script><h2 id="Grouping-Corners"><a href="#Grouping-Corners" class="headerlink" title="Grouping Corners"></a>Grouping Corners</h2><p>图像中可能出现多个对象，因此可以检测到多个左上角和右下角。我们需要确定左上角和右下角的一对是否来自同一个边框。我们的方法受到Newell等人提出的用于多人姿态估计任务的 Associative Embedding 的启发。Newell等人检测了所有的人类关节，并为每个检测到的关节生成一个 embeddings。他们根据 embeddings 之间的距离对关节进行分组。<br>我们遵循Newell等人的方法使用一维的 embeddings。设 $e_{t_k}$ 为对象 $k$ 的左上角的 embeddings，$e_{b_k}$ 为对象 $k$ 的右下角的 embeddings。与[26]一样，我们使用 “pull” loss 训练网络对各个角进行分组，使用 “push” loss 分离各个角点:</p>
@@ -1004,7 +1004,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">3m</span>
+    <span title="站点总字数">3.1m</span>
   
 
   
@@ -1013,7 +1013,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">45:29</span>
+    <span title="站点阅读时长">46:55</span>
   
 </div>
 
