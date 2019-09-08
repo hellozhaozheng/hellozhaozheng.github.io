@@ -130,7 +130,7 @@
 <meta property="og:image" content="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw5i3k7yjzj20ws0rp43x.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/mw690/d7b90c85ly1fw5if40q6lj20vw1fu163.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw5ifyu74ij20x00ql47d.jpg">
-<meta property="og:updated_time" content="2019-03-01T13:43:17.176Z">
+<meta property="og:updated_time" content="2019-09-08T04:32:27.349Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OverFeat (ICLR, 2014)">
 <meta name="twitter:description" content="文章: OverFeat: Integrated Recognition, Localization and Detectin using Convolutional Networks 作者: 核心亮点Multi-Scale Classification:在分类任务上, 虽然训练时采用和AlexNet相同的multi crop方法, 但是在预测阶段没有使用AlexNet的crop投票策略, 而是提">
@@ -490,8 +490,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-01T21:43:17+08:00" content="2019-03-01">
-      		  2019-03-01
+    		<time itemprop="dateUpdated" datetime="2019-09-08T12:32:27+08:00" content="2019-09-08">
+      		  2019-09-08
     		</time>
   	  </span>
 	  
@@ -621,7 +621,7 @@
 <p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw5f5me3b3j20t608o0ub.jpg" alt></div></p>
 <p>具体过程如下:</p>
 <ol>
-<li>对于一个给定的scale的图片,  我们从第5层, 还未pooling的特征图谱开始</li>
+<li>对于一个给定的scale的图片,  作者从第5层, 还未pooling的特征图谱开始</li>
 <li>对于每一个未经过pooling的特征图谱, 进行 3×3 的pooling操作(非重叠池化), 重复 3×3 次($\Delta x, \Delta y)$ 以不同的offset {0,1,2}).  </li>
 <li>这样可以得到 3×3 个pooling后的特征图谱.</li>
 <li>分类器(6,7,8层)具有一个 5×5 的固定的输入大小, 同时对于每一个location的土整图谱都会生成 C 维的输出向量</li>
@@ -630,7 +630,7 @@
 <p>下面的图以一维向量为例讲解了offset pooling的原理, 可以类推到3维结构中</p>
 <p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw5g21ruxgj20vu0g0gox.jpg" alt></div></p>
 <p>上面的操作可以看做是以一个像素为单位, 在特征图谱上进行了位移操作, 进而得到了不同角度下的图谱结果用于分类, 与之前的crop方法相比, 这个方法没有对图片进行裁剪, 但同时又达到了获取同一张图片不同视角结果的目的. 这样做最大的优点在于: <strong>对于一张图片, 可以宏观的将网络分成两个部分, 分别是特征提取层和分类层, 在特征提取部分, 同一张图片只会进行一次前向计算, 在这计算角度来说, 大大提高了计算效率, 减少了荣冗余计算.</strong></p>
-<p>这种极致的pooling策略(exhaustive pooling scheme) 确保了我们可以在分类器和特征图的对象之间获得准确的边界对齐.</p>
+<p>这种极致的pooling策略(exhaustive pooling scheme) 确保了作者可以在分类器和特征图的对象之间获得准确的边界对齐.</p>
 <h3 id="3-4-结果"><a href="#3-4-结果" class="headerlink" title="3.4 结果"></a>3.4 结果</h3><p>实验结果如下表所示:</p>
 <p><div style="width: 600px; margin: auto"><img src="https://wx1.sinaimg.cn/mw690/d7b90c85ly1fw5h2ottzhj20vz0d0whr.jpg" alt></div></p>
 <p>分类错误率在18个队伍中的排名为第5 (主要本篇文章的两点也不在分类, 还是在目标检测上)</p>
@@ -638,7 +638,7 @@
 <p><div style="width: 600px; margin: auto"><img src="https://wx4.sinaimg.cn/mw690/d7b90c85ly1fw5hncxz5yj20vz0lmtip.jpg" alt></div></p>
 <p>// TODO  这块还是不是很懂</p>
 <h2 id="4-定位-Localization"><a href="#4-定位-Localization" class="headerlink" title="4. 定位 Localization"></a>4. 定位 Localization</h2><p>用回归网络代替分类网络, 同时训练网络使其在每一个空间location和scale下预测目标物体的bounding boxes.  然后将回归预测结果与每个位置的分类结果结合在一起.</p>
-<h3 id="4-1-生成预测"><a href="#4-1-生成预测" class="headerlink" title="4.1 生成预测"></a>4.1 生成预测</h3><p>由于可以共享特征提取层的计算结果, 因此只需要重新计算最终的回归层即可. 因为每个位置的分类结果为所有的类别都赋予了一个置信度, 因此, 我们可以将这个置信度作为bounding box的置信度使用.</p>
+<h3 id="4-1-生成预测"><a href="#4-1-生成预测" class="headerlink" title="4.1 生成预测"></a>4.1 生成预测</h3><p>由于可以共享特征提取层的计算结果, 因此只需要重新计算最终的回归层即可. 因为每个位置的分类结果为所有的类别都赋予了一个置信度, 因此, 作者可以将这个置信度作为bounding box的置信度使用.</p>
 <h3 id="4-2-回归训练-Regressor-Training"><a href="#4-2-回归训练-Regressor-Training" class="headerlink" title="4.2 回归训练 Regressor Training"></a>4.2 回归训练 Regressor Training</h3><p>回归网络将第5层的池化后的特征图谱作为输入. 后面接入两个全连接层, 隐藏神经元个数分别为4096和1024. 最终的输出层具有4个神经元, 用于指定bounding box的坐标. 和分类网络一样, 也是用了基于offset的pooling策略.  该网络的结构如下图所示</p>
 <p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/mw690/d7b90c85ly1fw5i3k7yjzj20ws0rp43x.jpg" alt></div></p>
 <p>训练时, 固定前5层的特征提取层, 然后使用每个样本的真实边界与预测边界之间的L2损失(平方损失)来训练回归网络. 最后的这个回归层根据与特定类相关的, 每一个类都会有一个回归层(也就是说有1000个不同的回归层版本).</p>
@@ -1026,7 +1026,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">51:34</span>
+    <span title="站点阅读时长">51:41</span>
   
 </div>
 

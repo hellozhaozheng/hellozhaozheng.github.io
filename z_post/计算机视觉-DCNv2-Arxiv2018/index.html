@@ -112,13 +112,13 @@
 
 
 
-  <meta name="description" content="文章: Deformable ConvNets v2: More Deformable, Better Results作者: Xizhou Zhu, Han Hu, Stephen Lin, Jifeng Dai机构: 中科大, Microsoft Research Asia 摘要可变形卷积网络的优越性能源于其对目标几何变化的适应能力。通过对其自适应行为的考察，我们发现，虽然其自然特征的空间支持比">
+  <meta name="description" content="文章: Deformable ConvNets v2: More Deformable, Better Results作者: Xizhou Zhu, Han Hu, Stephen Lin, Jifeng Dai机构: 中科大, Microsoft Research Asia 摘要可变形卷积网络的优越性能源于其对目标几何变化的适应能力。通过对其自适应行为的考察，作者发现，虽然其自然特征的空间支持比">
 <meta name="keywords" content="计算机视觉">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DCN v2 (Arxiv, 2018)">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-DCNv2-Arxiv2018/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="文章: Deformable ConvNets v2: More Deformable, Better Results作者: Xizhou Zhu, Han Hu, Stephen Lin, Jifeng Dai机构: 中科大, Microsoft Research Asia 摘要可变形卷积网络的优越性能源于其对目标几何变化的适应能力。通过对其自适应行为的考察，我们发现，虽然其自然特征的空间支持比">
+<meta property="og:description" content="文章: Deformable ConvNets v2: More Deformable, Better Results作者: Xizhou Zhu, Han Hu, Stephen Lin, Jifeng Dai机构: 中科大, Microsoft Research Asia 摘要可变形卷积网络的优越性能源于其对目标几何变化的适应能力。通过对其自适应行为的考察，作者发现，虽然其自然特征的空间支持比">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/fig1.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/fig2.jpg?x-oss-process=style/blog_img">
@@ -132,10 +132,10 @@
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/tab5.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/tab6.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/tab7.jpg?x-oss-process=style/blog_img">
-<meta property="og:updated_time" content="2019-07-18T06:06:45.804Z">
+<meta property="og:updated_time" content="2019-09-08T04:29:16.243Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DCN v2 (Arxiv, 2018)">
-<meta name="twitter:description" content="文章: Deformable ConvNets v2: More Deformable, Better Results作者: Xizhou Zhu, Han Hu, Stephen Lin, Jifeng Dai机构: 中科大, Microsoft Research Asia 摘要可变形卷积网络的优越性能源于其对目标几何变化的适应能力。通过对其自适应行为的考察，我们发现，虽然其自然特征的空间支持比">
+<meta name="twitter:description" content="文章: Deformable ConvNets v2: More Deformable, Better Results作者: Xizhou Zhu, Han Hu, Stephen Lin, Jifeng Dai机构: 中科大, Microsoft Research Asia 摘要可变形卷积网络的优越性能源于其对目标几何变化的适应能力。通过对其自适应行为的考察，作者发现，虽然其自然特征的空间支持比">
 <meta name="twitter:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/fig1.jpg?x-oss-process=style/blog_img">
 
 
@@ -492,8 +492,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-07-18T14:06:45+08:00" content="2019-07-18">
-      		  2019-07-18
+    		<time itemprop="dateUpdated" datetime="2019-09-08T12:29:16+08:00" content="2019-09-08">
+      		  2019-09-08
     		</time>
   	  </span>
 	  
@@ -590,28 +590,28 @@
 
       
         <p><strong>文章:</strong> Deformable ConvNets v2: More Deformable, Better Results<br><strong>作者:</strong> Xizhou Zhu, Han Hu, Stephen Lin, Jifeng Dai<br><strong>机构:</strong> 中科大, Microsoft Research Asia</p>
-<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>可变形卷积网络的优越性能源于其对目标几何变化的适应能力。通过对其自适应行为的考察，我们发现，虽然其自然特征的空间支持比规则的ConvNets更接近于对象结构，但这种支持可能 <strong>远远超出了感兴趣的区域，导致特征受到不相关图像内容的影响</strong>。为了解决这个问题，我们提出了一种新的可变形卷积神经网络，通过增加建模能力和更强的训练，提高了它对相关图像区域的 <strong>聚焦能力</strong>。通过在网络内部对可变形卷积进行更全面的集成，引入一种可以扩展变形建模范围的 modulation mechanism，增强了建模能力。为了有效利用这种丰富的建模能力，我们提出了一种 feature mimicking scheme 来指导网络训练，帮助网络学习反映R-CNN特征的对象焦点和分类能力的特征。在本文的贡献下，这个可变形ConvNets的新版本在原始模型的基础上获得了显著的性能提升，并在用于对象检测和实例分割的COCO基准上产生了领先的结果。</p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>可变形卷积网络的优越性能源于其对目标几何变化的适应能力。通过对其自适应行为的考察，作者发现，虽然其自然特征的空间支持比规则的ConvNets更接近于对象结构，但这种支持可能 <strong>远远超出了感兴趣的区域，导致特征受到不相关图像内容的影响</strong>。为了解决这个问题，作者提出了一种新的可变形卷积神经网络，通过增加建模能力和更强的训练，提高了它对相关图像区域的 <strong>聚焦能力</strong>。通过在网络内部对可变形卷积进行更全面的集成，引入一种可以扩展变形建模范围的 modulation mechanism，增强了建模能力。为了有效利用这种丰富的建模能力，作者提出了一种 feature mimicking scheme 来指导网络训练，帮助网络学习反映R-CNN特征的对象焦点和分类能力的特征。在本文的贡献下，这个可变形ConvNets的新版本在原始模型的基础上获得了显著的性能提升，并在用于对象检测和实例分割的COCO基准上产生了领先的结果。</p>
 <p>由于尺度、姿态、视点和零件变形等因素引起的几何变化是物体识别和检测的主要挑战。目前解决这一问题的最先进的方法是可变形卷积网络(DCNv1)[8]，它引入了两个模块来帮助CNNs对这种变化进行建模。其中一个模块是可变形卷积(deformable convolution)，其中标准卷积的网格采样位置都是通过相对于前面的特征图所学习到的位移来偏移的。另一个是可变形的RoIpooling，在这里可以学习RoIpooling[16]中bin位置的偏移量。将这些模块合并到一个神经网络中，使其能够适应对象的配置，特别是通过变形其采样和池化模式来适应对象的结构。利用该方法，可以大大提高目标检测的精度。</p>
-<p>在本文中，我们提出了一种新的变形卷积算法，称为Deformable ConvNets v2 (DCNv2)，它增强了学习可变形卷积的建模能力。这种建模能力的增加来自于两种互补的形式。首先是网络中可变形卷积层的扩展使用。使用偏移学习能力装备更多的卷积层允许DCNv2在更大范围的特征级别上控制采样。第二种是可变形卷积模块中的 modulation mechanism，其中每个样本不仅要经过学习偏移量，而且还要经过学习到的特征幅值的 modulated(调制)。因此，网络模块能够改变空间分布及其样本的相对影响。(The network module is thus given the ability to vary both the spatial distribution and the relative influence of its samples.)</p>
-<p>为了充分利用DCNv2不断增长的建模能力，需要进行有效的 training。受神经网络中知识蒸馏工作的启发[2,22]，我们利用 teacher network 来实现这一目的，teacher 会在 training 过程中提供指导。我们特别使用 R-CNN[17] 作为 teacher。由于R-CNN是一个训练有素的对裁剪后的图像内容进行分类的网络，它可以学习不受感兴趣区域之外无关信息影响的特征。为了模拟这个特性，DCNv2在其训练中加入了一个模拟损失的特性，这有助于学习与R-CNN一致的特性。这样，DCNv2的增强变形采样得到了较强的训练信号。</p>
-<p>通过以上提议的更改，可变形模块仍然是轻量级的，并且可以轻松地集成到现有的网络体系结构中。具体来说，我们将DCNv2合并到 Faster R-CNN[33]和 Mask R-CNN[20]系统中，使用多种骨干网络。在 COCO benchmark 上的大量实验表明，在对象检测和实例分割方面，DCNv2比DCNv1有显著的改进。DCNv2的代码将会发布。</p>
-<h1 id="Analysis-of-Deformable-ConvNet-Behavior"><a href="#Analysis-of-Deformable-ConvNet-Behavior" class="headerlink" title="Analysis of Deformable ConvNet Behavior"></a>Analysis of Deformable ConvNet Behavior</h1><h2 id="Spatial-Support-Visualization"><a href="#Spatial-Support-Visualization" class="headerlink" title="Spatial Support Visualization"></a>Spatial Support Visualization</h2><p>为了更好地理解可变形卷积网络的行为，我们通过网络节点的有效感受野(Effective receptive fileds)[31]、有效采样位置(Effective sampling/bin locations)和误差有界显著性区域(Error-bounded saliency regions)来形象化网络节点的空间支持。这三种模式提供了不同的和互补的观点，可以帮助理解图像区域对于神经网络节点的响应。</p>
-<p><strong>Effective receptive fields:</strong> 并不是网络节点感受野内的所有像素都对其响应做出相同的贡献。这些贡献的差异由一个有效的感受野表示，其值计算为节点响应相对于每个图像像素[31]的强度扰动的梯度。我们利用有效感受野来检验单个像素对网络节点的相对影响，但注意，该方法不能反映完整图像区域的结构化影响。</p>
-<p><strong>Effective sampling/bin locations:</strong> 在[8]中，为了理解可变形卷积网络的行为，可视化了(堆叠)卷积层的采样位置和RoIpooling层中的 sampling bins。但是，这些采样位置对网络节点的相对贡献没有被揭示。相反，我们将包含此信息的有效抽样位置可视化，计算为网络节点相对于 sampling / bin locations的梯度，以便了解它们的贡献强度。</p>
-<p><strong>Error-bounded saliency regions:</strong> 最近关于图像显著性的研究[41,44,13,7]表明，去除不影响网络节点的图像区域，网络节点的响应不会发生变化。基于此属性，我们可以在一个小的误差范围内，将节点的支持区域确定为与完整图像响应相同的最小图像区域。我们将此称为错误有界显著性区域(Error-bounded saliency regions)，它可以通过逐步屏蔽图像的部分并计算得到的节点响应来找到，详见附录。误差有界显著性区域便于比较不同网络的支持区域。</p>
-<h2 id="Spatial-Support-of-Deformable-ConvNets"><a href="#Spatial-Support-of-Deformable-ConvNets" class="headerlink" title="Spatial Support of Deformable ConvNets"></a>Spatial Support of Deformable ConvNets</h2><p>本文分析了可变形卷积网络在目标检测中的视觉支持区域。我们使用常规的 ConvNet 作为 baseline，包括一个 Faster R-CNN + ResNet-50[21]对象检测器与 Aligned RoIpooling1[20]。ResNet-50中的所有卷积层都应用于整个输入图像。conv5阶段的有效步长由32个像素降低到16个像素，提高了 feature map 的分辨率。RPN[33]头是在ResNet-101的 conv4 特征的基础上添加的。在 conv5 特征的基础上，我们添加了 Faster R-CNN 头部[16]，它由 Aligned RoIpooling和两个完全连接(fc)层组成，然后是分类和 bbox 回归分支。我们按照[8]中的步骤将目标检测器转换为 Deformable 的对应网络。将conv5阶段的3×3卷积层替换为可变形卷积层。此外，将 Aligned RoIpooling 替换为 Deformable RoIpooling。这两个网络都是在COCO基准上训练和可视化的。值得一提的是，当 offset 的学习率设置为零时，Deformable Faster R-CNN检测器会退化为规则的 Faster R-CNN with aligned RoIpooling.</p>
+<p>在本文中，作者提出了一种新的变形卷积算法，称为Deformable ConvNets v2 (DCNv2)，它增强了学习可变形卷积的建模能力。这种建模能力的增加来自于两种互补的形式。首先是网络中可变形卷积层的扩展使用。使用偏移学习能力装备更多的卷积层允许DCNv2在更大范围的特征级别上控制采样。第二种是可变形卷积模块中的 modulation mechanism，其中每个样本不仅要经过学习偏移量，而且还要经过学习到的特征幅值的 modulated(调制)。因此，网络模块能够改变空间分布及其样本的相对影响。(The network module is thus given the ability to vary both the spatial distribution and the relative influence of its samples.)</p>
+<p>为了充分利用DCNv2不断增长的建模能力，需要进行有效的 training。受神经网络中知识蒸馏工作的启发[2,22]，作者利用 teacher network 来实现这一目的，teacher 会在 training 过程中提供指导。作者特别使用 R-CNN[17] 作为 teacher。由于R-CNN是一个训练有素的对裁剪后的图像内容进行分类的网络，它可以学习不受感兴趣区域之外无关信息影响的特征。为了模拟这个特性，DCNv2在其训练中加入了一个模拟损失的特性，这有助于学习与R-CNN一致的特性。这样，DCNv2的增强变形采样得到了较强的训练信号。</p>
+<p>通过以上提议的更改，可变形模块仍然是轻量级的，并且可以轻松地集成到现有的网络体系结构中。具体来说，作者将DCNv2合并到 Faster R-CNN[33]和 Mask R-CNN[20]系统中，使用多种骨干网络。在 COCO benchmark 上的大量实验表明，在对象检测和实例分割方面，DCNv2比DCNv1有显著的改进。DCNv2的代码将会发布。</p>
+<h1 id="Analysis-of-Deformable-ConvNet-Behavior"><a href="#Analysis-of-Deformable-ConvNet-Behavior" class="headerlink" title="Analysis of Deformable ConvNet Behavior"></a>Analysis of Deformable ConvNet Behavior</h1><h2 id="Spatial-Support-Visualization"><a href="#Spatial-Support-Visualization" class="headerlink" title="Spatial Support Visualization"></a>Spatial Support Visualization</h2><p>为了更好地理解可变形卷积网络的行为，作者通过网络节点的有效感受野(Effective receptive fileds)[31]、有效采样位置(Effective sampling/bin locations)和误差有界显著性区域(Error-bounded saliency regions)来形象化网络节点的空间支持。这三种模式提供了不同的和互补的观点，可以帮助理解图像区域对于神经网络节点的响应。</p>
+<p><strong>Effective receptive fields:</strong> 并不是网络节点感受野内的所有像素都对其响应做出相同的贡献。这些贡献的差异由一个有效的感受野表示，其值计算为节点响应相对于每个图像像素[31]的强度扰动的梯度。作者利用有效感受野来检验单个像素对网络节点的相对影响，但注意，该方法不能反映完整图像区域的结构化影响。</p>
+<p><strong>Effective sampling/bin locations:</strong> 在[8]中，为了理解可变形卷积网络的行为，可视化了(堆叠)卷积层的采样位置和RoIpooling层中的 sampling bins。但是，这些采样位置对网络节点的相对贡献没有被揭示。相反，作者将包含此信息的有效抽样位置可视化，计算为网络节点相对于 sampling / bin locations的梯度，以便了解它们的贡献强度。</p>
+<p><strong>Error-bounded saliency regions:</strong> 最近关于图像显著性的研究[41,44,13,7]表明，去除不影响网络节点的图像区域，网络节点的响应不会发生变化。基于此属性，作者可以在一个小的误差范围内，将节点的支持区域确定为与完整图像响应相同的最小图像区域。作者将此称为错误有界显著性区域(Error-bounded saliency regions)，它可以通过逐步屏蔽图像的部分并计算得到的节点响应来找到，详见附录。误差有界显著性区域便于比较不同网络的支持区域。</p>
+<h2 id="Spatial-Support-of-Deformable-ConvNets"><a href="#Spatial-Support-of-Deformable-ConvNets" class="headerlink" title="Spatial Support of Deformable ConvNets"></a>Spatial Support of Deformable ConvNets</h2><p>本文分析了可变形卷积网络在目标检测中的视觉支持区域。作者使用常规的 ConvNet 作为 baseline，包括一个 Faster R-CNN + ResNet-50[21]对象检测器与 Aligned RoIpooling1[20]。ResNet-50中的所有卷积层都应用于整个输入图像。conv5阶段的有效步长由32个像素降低到16个像素，提高了 feature map 的分辨率。RPN[33]头是在ResNet-101的 conv4 特征的基础上添加的。在 conv5 特征的基础上，作者添加了 Faster R-CNN 头部[16]，它由 Aligned RoIpooling和两个完全连接(fc)层组成，然后是分类和 bbox 回归分支。作者按照[8]中的步骤将目标检测器转换为 Deformable 的对应网络。将conv5阶段的3×3卷积层替换为可变形卷积层。此外，将 Aligned RoIpooling 替换为 Deformable RoIpooling。这两个网络都是在COCO基准上训练和可视化的。值得一提的是，当 offset 的学习率设置为零时，Deformable Faster R-CNN检测器会退化为规则的 Faster R-CNN with aligned RoIpooling.</p>
 <p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/fig1.jpg?x-oss-process=style/blog_img" alt="DCNv2%2Ffig1.jpg"></div></p>
-<p>使用这三种可视化模式，我们检查了conv5阶段的最后一层节点的空间支持, 如图 1 (a)~(b) 所示。并给出了在[8]中分析的采样位置。通过这些可视化，我们得出以下观察结果:</p>
+<p>使用这三种可视化模式，作者检查了conv5阶段的最后一层节点的空间支持, 如图 1 (a)~(b) 所示。并给出了在[8]中分析的采样位置。通过这些可视化，作者得出以下观察结果:</p>
 <ol>
 <li>规则的ConvNets可以在一定程度上对几何变化进行建模，这可以从图像内容在空间支持方面的变化得到证明。由于深卷积的强大表示能力，网络权值能够适应一定程度的几何变换。</li>
 <li>通过引入可变形卷积，网络对几何变换建模的能力大大增强，即使在具有挑战性的COCO基准上也是如此。空间支持更适合于图像内容，前景的节点拥有覆盖整个对象的支持，而后景的节点则扩展了包含更大上下文的支持。然而，空间支持的范围可能是不精确的，包括与检测无关的背景区域在内的前景节点的有效感受野和误差有界显著性区域。</li>
 <li>这三种类型的空间支持可视化比[8]中使用的采样位置提供更多的信息。这一点可以在规则的ConvNets中看到，规则ConvNets在网格中具有固定的采样位置，但实际上通过网络权重调整其有效的空间支持。可变形卷积网络也是如此，它的预测受到学习偏移量和网络权重的共同影响。就像在[8]中所做的那样，单独检查采样位置可能会导致关于可变形卷积网络的错误结论。<br>图2 (a)∼(b)显示了每个roi检测头中2fc节点的空间支持，紧接着是分类和边界框回归分支。有效bin位置的可视化表明，目标前景上的bin通常会从分类分支获得较大的梯度，从而对预测产生较大的影响。这种观察适用于 Aligned RoIpooling和 Deformable RoIpooling。在 Deformable RoIpooling中，由于引入了可学习的bin偏移量，与 Aligned RoIpooling相比，覆盖对象前景的bin比例要大得多。因此，下游 Faster R-CNN head可以获得更多相关 bins 的信息。同时，Aligned RoIpooling和 Deformable RoIpooling中误差有界的显著性区域都没有完全聚焦于对象前景，这 <strong>说明RoI外的图像内容影响预测结果</strong>。根据最近的一项研究[6]，这种特征干扰可能对检测有害。</li>
 </ol>
 <p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/fig2.jpg?x-oss-process=style/blog_img" alt="DCNv2%2Ffig2.jpg"></div></p>
-<p><strong>虽然与常规卷积网相比，可变形卷积网对几何变化的适应能力明显提高，但也可以看出，它们的空间支持可以扩展到感兴趣的区域之外。因此，我们寻求升级可变形卷积网络，使其能够更好地聚焦于相关的图像内容，并提供更高的检测精度。(这是 DCN v2 的核心优化点)</strong></p>
-<h1 id="More-Deformable-ConvNets"><a href="#More-Deformable-ConvNets" class="headerlink" title="More Deformable ConvNets"></a>More Deformable ConvNets</h1><p>为了提高网络适应几何变化的能力，我们提出了一些变化来增强其建模能力，并帮助它利用这种增强后的能力。</p>
-<h2 id="Stacking-More-Deformable-Conv-Layers"><a href="#Stacking-More-Deformable-Conv-Layers" class="headerlink" title="Stacking More Deformable Conv Layers"></a>Stacking More Deformable Conv Layers</h2><p>在可变形卷积网络能够有效地对具有挑战性的基准进行几何变换建模这一观察结果的鼓舞下，我们大胆地用可变形卷积层替换更多的常规卷积层。我们希望通过叠加更多的可变形conv层，进一步增强整个网络的几何变换建模能力。</p>
-<p>本文将 ResNet-50 的 conv3、conv4、conv5 阶段中的所有 3×3 卷积层都替换成了可变形卷积。因此，网络中有12层可变形卷积。相比之下，[8]中只使用了三层可变形卷积，全部处于conv5阶段。<strong>在[8]中可以观察到，在相对简单和小规模的PASCAL VOC基准测试中，当叠加超过三层时，性能达到饱和。此外，对COCO的误导偏移可视化可能阻碍了对更具挑战性的基准的进一步探索。</strong> 在实验中，我们观察到将可变形层应用到 conv3-conv5 阶段可以达到对COCO目标检测的精度和效率之间的 best tradeoff。详见5.2节。</p>
+<p><strong>虽然与常规卷积网相比，可变形卷积网对几何变化的适应能力明显提高，但也可以看出，它们的空间支持可以扩展到感兴趣的区域之外。因此，作者寻求升级可变形卷积网络，使其能够更好地聚焦于相关的图像内容，并提供更高的检测精度。(这是 DCN v2 的核心优化点)</strong></p>
+<h1 id="More-Deformable-ConvNets"><a href="#More-Deformable-ConvNets" class="headerlink" title="More Deformable ConvNets"></a>More Deformable ConvNets</h1><p>为了提高网络适应几何变化的能力，作者提出了一些变化来增强其建模能力，并帮助它利用这种增强后的能力。</p>
+<h2 id="Stacking-More-Deformable-Conv-Layers"><a href="#Stacking-More-Deformable-Conv-Layers" class="headerlink" title="Stacking More Deformable Conv Layers"></a>Stacking More Deformable Conv Layers</h2><p>在可变形卷积网络能够有效地对具有挑战性的基准进行几何变换建模这一观察结果的鼓舞下，作者大胆地用可变形卷积层替换更多的常规卷积层。作者希望通过叠加更多的可变形conv层，进一步增强整个网络的几何变换建模能力。</p>
+<p>本文将 ResNet-50 的 conv3、conv4、conv5 阶段中的所有 3×3 卷积层都替换成了可变形卷积。因此，网络中有12层可变形卷积。相比之下，[8]中只使用了三层可变形卷积，全部处于conv5阶段。<strong>在[8]中可以观察到，在相对简单和小规模的PASCAL VOC基准测试中，当叠加超过三层时，性能达到饱和。此外，对COCO的误导偏移可视化可能阻碍了对更具挑战性的基准的进一步探索。</strong> 在实验中，作者观察到将可变形层应用到 conv3-conv5 阶段可以达到对COCO目标检测的精度和效率之间的 best tradeoff。详见5.2节。</p>
 <h2 id="Modulated-Deformable-Modules"><a href="#Modulated-Deformable-Modules" class="headerlink" title="Modulated Deformable Modules"></a>Modulated Deformable Modules</h2><p>为了进一步增强可变形卷积神经网络对空间支持区域的控制能力，提出了一种调制机制(Modulation Mechanism)。使用该机制, 可变形 ConvNets 模块不仅可以在感知输入特征时调整偏移量，还可以从不同的 spatial locations/bins 中调节输入的特征幅值(feature amplitude)。在极端情况下，模块可以通过将特征振幅设置为零来决定不接收来自特定 location / bin 的信号。因此，来自相应空间位置的图像内容会大大减少或不影响模块输出。也可以说，调制机制为网络模块提供了另一个自由度来调整其空间支持区域。</p>
 <p>给定 $K$ 个采样点的卷积核，令 $w_k$ 和 $p_k$ 分别表示第 $K$ 个采样点的权值和预先指定的偏移量。例如，$K = 9, pk∈{(- 1，- 1)，(- 1,0)，…，(1,1)}$ 定义了一个膨胀为 1 的 $3×3$ 卷积核。设 $x(p)$ 和 $y(p)$ 分别表示输入特征图 $x$ 和输出特征图 $y$ 中位置 $p$ 处的特征。那么调制(modulated)后的可变形卷积可表示为:</p>
 <script type="math/tex; mode=display">y(p) = \sum^K_{k=1} w_k \cdot x(p + p_k + \Delta p_k) \cdot \Delta m_k</script><p>上式中 $\Delta p_k$ 和 $\Delta m_k$ 分别为第 $k$ 个位置的学习参数偏移量和调制标量。调制标量 $\Delta m_k$ 位于 $[0,1]$ 范围内，$\Delta p_k$ 为实数，取值范围无约束。由于 $p + p_k +\Delta p_k$ 为分数形式，因此在计算 $x(p + p_k +\Delta p_k)$ 时采用了双线性插值，和[8]相同。 $\Delta p_k$ 和 $\Delta m_k$ 都是通过在相同的输入 feature map $x$ 上应用一个单独的卷积层得到的，这个卷积层与当前卷积层具有相同的空间分辨率和膨胀。输出为 $3K$ 通道，其中第一个 $2K$ 通道对应于学习到的偏移量 $\{\Delta p_k\}^K_{k=1}$，其余 $K$ 通道进一步送入 <strong>sigmoid层</strong>，得到调制标量 $\{\Delta m_k\}^K_{k=1}$。在这个单独的卷积层中，内核权值初始化为零。因此，$\Delta p_k$ 和 $\Delta m_k$ 的初始值分别为 0 和 0.5。新添加的用于偏移和调制学习的conv层的学习率设置为现有层的0.1倍。</p>
@@ -619,11 +619,11 @@
 <script type="math/tex; mode=display">y(k) = \sum^{n_k}{j=1} x(p_{kj} + \Delta p_k) \cdot m_k / n_k</script><p>其中 $p_{kj}$ 为第 $k$ 个 $bin$ 中第 $j$ 个网格单元的采样位置，$n_k$ 为采样网格单元的个数。采用双线性插值获取特征 $x(p_{kj} +\Delta p_k)$。$\Delta p_k$ 和 $\Delta m_k$ 的值由输入的 feature map 上的同级分支产生。在这个分支中，RoIpooling在RoI上生成特征，然后是 1024 维的两个fc层(初始化的值为标准差为0.01的高斯分布)。在此之上，新添加一个额外 fc 层生成 $3K$ 通道的输出(初始化的值为零)。其中第一个 $2K$ 通道是归一化的可学习偏移量(normalized learnable offsets)，其中会会根据 RoI 的宽和高使用 element-wise multiplications，以此获得 $\{\Delta p_k\}^K_{k=1}$。其余的 $K$ 个通道用一个 sigmoid 层进行归一化，以此生成 $\{\Delta m_k\}^K_{k=1}$。新添加的fc层用于学习 offset 的学习率与现有层相同。</p>
 <h2 id="R-CNN-Feature-Mimicking"><a href="#R-CNN-Feature-Mimicking" class="headerlink" title="R-CNN Feature Mimicking"></a>R-CNN Feature Mimicking</h2><p>如图2所示，对于常规的卷积网和可变形卷积网，每个RoI分类节点的误差有界显著性区域都可以超出RoI。RoI外的图像内容可能会影响提取的特征，从而降低目标检测的最终结果。</p>
 <p>在[6]中，作者发现冗余上下文可能是 Faster R-CNN 检测错误的来源。结合其他动机(如分类和边界盒回归分支之间共享较少的特征)，作者提出将 Faster R-CNN 和 R-CNN 的分类得分结合起来，得到最终的检测得分。由于 R-CNN 分类得分主要集中在从输入RoI中裁剪的图像内容上，将其合并将有助于缓解冗余上下文问题，提高检测精度。然而，由于 Faster R-CNN 和 R-CNN 分支都需要同时应用于训练和推理，因此组合后的系统速度较慢。</p>
-<p>同时，可变形卷积网络在调节空间支持区域方面具有强大的功能。对于 DCNv2 来说，Modulated Deformable RoIpooling 模块可以通过简单地设置 bin 的调制量(Modulated Scalars)，来排除冗余上下文。<strong>然而，我们在第5.3节的实验表明，即使使用 Modulated Deformable 模块，也不能通过标准的 Faster R-CNN 训练程序很好地学习这种表征。</strong> 我们怀疑这是因为传统的 Faster R-CNN 的训练损失不能有效地驱动这种表征的学习。因此需要额外的 guidance 来指导 training。</p>
-<p>受最近关于特征模仿的研究[2,22,28]的启发，我们在 Deformable Faster R-CNN 的每个 RoI 特征上加入了一个特征模拟损失(feature mimic loss)，以迫使它们类似于从裁剪图像中提取的 R-CNN 特征。这个辅助训练目标的目的是驱动 Deformable Faster R-CNN 学习更多的“聚焦”特征表示(“focused” feature representations)，就像 R-CNN 一样。我们注意到，基于图2中可视化的空间支持区域，对于图像背景上的 negative RoIs，聚焦特征表示很可能不是最优的。因为对于背景区域，可能需要考虑更多的上下文信息，以免产生假阳性检测。因此，特征模拟损失只在和那些与 ground-truth objects 有足够重叠的 positive RoIs 上强制执行。</p>
+<p>同时，可变形卷积网络在调节空间支持区域方面具有强大的功能。对于 DCNv2 来说，Modulated Deformable RoIpooling 模块可以通过简单地设置 bin 的调制量(Modulated Scalars)，来排除冗余上下文。<strong>然而，作者在第5.3节的实验表明，即使使用 Modulated Deformable 模块，也不能通过标准的 Faster R-CNN 训练程序很好地学习这种表征。</strong> 作者怀疑这是因为传统的 Faster R-CNN 的训练损失不能有效地驱动这种表征的学习。因此需要额外的 guidance 来指导 training。</p>
+<p>受最近关于特征模仿的研究[2,22,28]的启发，作者在 Deformable Faster R-CNN 的每个 RoI 特征上加入了一个特征模拟损失(feature mimic loss)，以迫使它们类似于从裁剪图像中提取的 R-CNN 特征。这个辅助训练目标的目的是驱动 Deformable Faster R-CNN 学习更多的“聚焦”特征表示(“focused” feature representations)，就像 R-CNN 一样。作者注意到，基于图2中可视化的空间支持区域，对于图像背景上的 negative RoIs，聚焦特征表示很可能不是最优的。因为对于背景区域，可能需要考虑更多的上下文信息，以免产生假阳性检测。因此，特征模拟损失只在和那些与 ground-truth objects 有足够重叠的 positive RoIs 上强制执行。</p>
 <p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/fig3.jpg?x-oss-process=style/blog_img" alt="DCNv2%2Ffig3.jpg"></div></p>
 <p>训练 Deformable Faster R-CNN 的网络结构如图3所示。除了 Faster R-CNN 网络之外，还增加了一个R-CNN分支，用于模拟特征。给定一个用于特征模仿的 RoI $b$，裁剪相应的图像块并将其大小调整到224×224像素。在R-CNN分支中，主干网对 resized image patch 进行操作，生成14×14空间分辨率的feature map。在特征图的顶部应用 (Modulated) Deformable RoIpooling 层，其中 input RoI 覆盖整个 resized image patch(左上角为(0,0)，高度和宽度为224像素)。然后，应用两个 1024 维的 fc 层，对输 input image patch 生成 R-CNN 特征表示，用 $f_{RCNN}(b)$ 表示。在 fc 层之后, 一个 $(C+1)$ 维的 Softmax 分类器紧跟其后, $C$ 代表类别数, 加一代表背景. 特征模拟损失是在 R-CNN 特征表示 $f_{RCNN}(b)$ 和 Faster R-CNN 对应的 $f_{FRCNN}(b)$ 之间进行的，后者也是1024维，由 Fast R-CNN 头部的2个fc层产生。特征模仿损失(feature mimic loss)由 $f_{RCNN}(b)$ 与 $f_{FRCNN}(b)$ 的余弦相似度定义，计算如下:</p>
-<script type="math/tex; mode=display">L_{mimic} = \sum_{b\in \Omega} [1 -  \cos(f_{RCNN}(b), f_{FRCNN}(b))]</script><p>上式中 $\Omega$ 表示用于 feature mimic training的 RoIs 采样集合. 。在 SGD 训练中, 给定一个输入图像, RPN 会产生 32 个 positive region proposals 采样样本添加到 $\Omega$ 当中。在 R-CNN 的 classification head 上, 我们使用了交叉熵损失, 同时也会计算 $\Omega$ 中的 RoIs。网络训练是由特征模拟损失和 R-CNN 分类损失以及 Faster R-CNN 的原始损失项驱动的。两个新引入的损失项的权重是原来 Faster R-CNN 损失项的0.1倍。R-CNN中对应模块与 Faster R-CNN 分支之间的网络参数是共享的，包括主干网络、(Modulated) Deformable RoIpooling 和2个fc头(两个分支中的分类头是不共享的)。在推理过程中，对测试图像只使用 Faster R-CNN网络，不使用辅助的R-CNN分支。因此，R-CNN feature mimicking 在 inference 中没有引入额外的计算。</p>
+<script type="math/tex; mode=display">L_{mimic} = \sum_{b\in \Omega} [1 -  \cos(f_{RCNN}(b), f_{FRCNN}(b))]</script><p>上式中 $\Omega$ 表示用于 feature mimic training的 RoIs 采样集合. 。在 SGD 训练中, 给定一个输入图像, RPN 会产生 32 个 positive region proposals 采样样本添加到 $\Omega$ 当中。在 R-CNN 的 classification head 上, 作者使用了交叉熵损失, 同时也会计算 $\Omega$ 中的 RoIs。网络训练是由特征模拟损失和 R-CNN 分类损失以及 Faster R-CNN 的原始损失项驱动的。两个新引入的损失项的权重是原来 Faster R-CNN 损失项的0.1倍。R-CNN中对应模块与 Faster R-CNN 分支之间的网络参数是共享的，包括主干网络、(Modulated) Deformable RoIpooling 和2个fc头(两个分支中的分类头是不共享的)。在推理过程中，对测试图像只使用 Faster R-CNN网络，不使用辅助的R-CNN分支。因此，R-CNN feature mimicking 在 inference 中没有引入额外的计算。</p>
 <h1 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h1><p>Deformation Modeling: SIFT, ORB, DPM, STN(Spatial translation-invariant)<br>Relation Networks and Attention Modules<br>Spatial Support Manipulation<br>Effective Receptive Field and Salient Region<br>Network Mimicking and Distillation</p>
 <h1 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h1><h2 id="Enriched-Deformation-Modeling"><a href="#Enriched-Deformation-Modeling" class="headerlink" title="Enriched Deformation Modeling"></a>Enriched Deformation Modeling</h2><p>从表1所示的消融实验中检验了 enriched deformable 模型的效果。</p>
 <p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/tab1.jpg?x-oss-process=style/blog_img" alt="DCNv2%2Ftab1.jpg"></div></p>
@@ -633,7 +633,7 @@
 <p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/tab3.jpg?x-oss-process=style/blog_img" alt="DCNv2%2Ftab3.jpg"></div></p>
 <h2 id="Application-on-Stronger-Backbones"><a href="#Application-on-Stronger-Backbones" class="headerlink" title="Application on Stronger Backbones"></a>Application on Stronger Backbones</h2><p>将ResNet-50替换为ResNet-101和ResNext-101[39]，得到的结果如表4所示。</p>
 <p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/tab4.jpg?x-oss-process=style/blog_img" alt="DCNv2%2Ftab4.jpg"></div></p>
-<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>尽管可变形卷积网络在几何变化建模方面具有优越的性能，但其空间支持远远超出了感兴趣的区域，导致特征受到无关图像内容的影响。在本文中，我们提出了一种新的可变形的卷积神经网络，通过增强建模能力和更强的训练策略，提高了它对相关图像区域的聚焦能力。在用于对象检测和实例分割的COCO基准上获得了显著的性能提升。</p>
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>尽管可变形卷积网络在几何变化建模方面具有优越的性能，但其空间支持远远超出了感兴趣的区域，导致特征受到无关图像内容的影响。在本文中，作者提出了一种新的可变形的卷积神经网络，通过增强建模能力和更强的训练策略，提高了它对相关图像区域的聚焦能力。在用于对象检测和实例分割的COCO基准上获得了显著的性能提升。</p>
 <h1 id="A1-Error-bounded-Image-Saliency"><a href="#A1-Error-bounded-Image-Saliency" class="headerlink" title="A1. Error-bounded Image Saliency"></a>A1. Error-bounded Image Saliency</h1><h1 id="A2-DCNv2-with-Various-Image-Resolution"><a href="#A2-DCNv2-with-Various-Image-Resolution" class="headerlink" title="A2. DCNv2 with Various Image Resolution"></a>A2. DCNv2 with Various Image Resolution</h1><p>图4为常规的 ConvNets 和 DCNv2 在不同分辨率图像上的应用结果。</p>
 <p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/DCNv2/fig4.jpg?x-oss-process=style/blog_img" alt="DCNv2%2Ffig4.jpg"></div></p>
 <p>如图5所示，常规ConvNets的空间支持只能覆盖如此高分辨率大对象的一小部分，精度受到影响。同时，DCNv2的空间支持可以有效地适应不同分辨率的物体。</p>
@@ -1018,7 +1018,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">51:34</span>
+    <span title="站点阅读时长">51:41</span>
   
 </div>
 

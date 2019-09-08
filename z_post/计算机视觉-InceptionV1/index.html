@@ -124,7 +124,7 @@
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fvn6q3t8hfj20j01x2qcf.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fvn98ano6mj20ps0f5778.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fvn6do3nmnj20un08y75k.jpg">
-<meta property="og:updated_time" content="2019-07-30T11:12:43.541Z">
+<meta property="og:updated_time" content="2019-09-08T04:30:44.371Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Inception V1 (GoogLeNet)">
 <meta name="twitter:description" content="文章: Going Deeper with Convolutions作者: Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, Andrew Rabinovich备注: Google, Inception">
@@ -484,8 +484,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-07-30T19:12:43+08:00" content="2019-07-30">
-      		  2019-07-30
+    		<time itemprop="dateUpdated" datetime="2019-09-08T12:30:44+08:00" content="2019-09-08">
+      		  2019-09-08
     		</time>
   	  </span>
 	  
@@ -627,7 +627,7 @@
 <p>将四个结果进行连接，对这四部分输出结果的第三维并联，即128+192+96+64=480，最终输出输出为28x28x480</p>
 <p>第四层（4a,4b,4c,4d,4e）、第五层（5a,5b）……，与3a、3b类似，在此就不再重复。</p>
 <p><span id="简述一下 GoogLeNet 采用多个卷积核的原因"></span></p>
-<h1 id="简述一下-GoogLeNet-采用多个卷积核的原因"><a href="#简述一下-GoogLeNet-采用多个卷积核的原因" class="headerlink" title="简述一下 GoogLeNet 采用多个卷积核的原因"></a>简述一下 GoogLeNet 采用多个卷积核的原因</h1><p>Inception Module这类结构非常看中模型在局部区域的拟合能力。它们认为：一张图像通常具有总体特征和细节特征这两类特征，一般小卷积核能够更好的捕捉一些细节特征，随着深层网络的小卷积不断计算下去，总体特征也会慢慢的被提炼出来，但是这样存在一个问题，那就是在如果只采用小卷积，那么网络结构的前段一般只有细节特征，后段才慢慢有一些总体特征，而我们希望这两方面的特征总是能够一起发挥作用，因此，Inception 模型考虑采用更多不同尺寸的卷积核来提取特征，并把这些特征连接起来，一起送到后面的网络中去计算，使得网络可以获取到更多的特征信息。</p>
+<h1 id="简述一下-GoogLeNet-采用多个卷积核的原因"><a href="#简述一下-GoogLeNet-采用多个卷积核的原因" class="headerlink" title="简述一下 GoogLeNet 采用多个卷积核的原因"></a>简述一下 GoogLeNet 采用多个卷积核的原因</h1><p>Inception Module这类结构非常看中模型在局部区域的拟合能力。它们认为：一张图像通常具有总体特征和细节特征这两类特征，一般小卷积核能够更好的捕捉一些细节特征，随着深层网络的小卷积不断计算下去，总体特征也会慢慢的被提炼出来，但是这样存在一个问题，那就是在如果只采用小卷积，那么网络结构的前段一般只有细节特征，后段才慢慢有一些总体特征，而作者希望这两方面的特征总是能够一起发挥作用，因此，Inception 模型考虑采用更多不同尺寸的卷积核来提取特征，并把这些特征连接起来，一起送到后面的网络中去计算，使得网络可以获取到更多的特征信息。</p>
 <p><span id="Inception 中为什么使用 1×1 卷积层"></span></p>
 <h1 id="Inception-中为什么使用-1×1-卷积层"><a href="#Inception-中为什么使用-1×1-卷积层" class="headerlink" title="Inception 中为什么使用 1×1 卷积层"></a>Inception 中为什么使用 1×1 卷积层</h1><p>关于Inception Module，有一种很直接的做法就是将1×1,3×3,5×5卷积和3×3 max pooling直接连接起来，如下面的左图所示，但是这样的话就有个问题，那就是计算量增长太快了。</p>
 <p><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1fvn6do3nmnj20un08y75k.jpg" alt></p>
@@ -1025,7 +1025,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">51:34</span>
+    <span title="站点阅读时长">51:41</span>
   
 </div>
 

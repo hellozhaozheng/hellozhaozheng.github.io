@@ -131,7 +131,7 @@
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fxdeflviorj215f0qa46c.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fxdeg2ul5kj215m0rn0xc.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fxdegbnnovj219107gjtf.jpg">
-<meta property="og:updated_time" content="2019-02-25T11:50:04.486Z">
+<meta property="og:updated_time" content="2019-09-08T04:30:16.347Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RFB Net (ECCV, 2018)">
 <meta name="twitter:description" content="文章: Receptive Field Block Net for Accurate and Fast Object Detection作者: Songtao Liu, Di Huang, and Yunhong Wang备注: Beihang University 核心亮点本文从感受野大小的角度出发, 提出了 RFB 模块, 可以融合多个感受野特征, 进而提升轻量级网络(SSD)的特征表达能力相">
@@ -491,8 +491,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-02-25T19:50:04+08:00" content="2019-02-25">
-      		  2019-02-25
+    		<time itemprop="dateUpdated" datetime="2019-09-08T12:30:16+08:00" content="2019-09-08">
+      		  2019-09-08
     		</time>
   	  </span>
 	  
@@ -591,10 +591,10 @@
         <p><strong>文章:</strong> Receptive Field Block Net for Accurate and Fast Object Detection<br><strong>作者:</strong> Songtao Liu, Di Huang, and Yunhong Wang<br><strong>备注:</strong> Beihang University</p>
 <h1 id="核心亮点"><a href="#核心亮点" class="headerlink" title="核心亮点"></a>核心亮点</h1><p><strong>本文从感受野大小的角度出发, 提出了 RFB 模块, 可以融合多个感受野特征, 进而提升轻量级网络(SSD)的特征表达能力</strong><br>相比于不断增加模型复杂度(深度,宽度)来增强特征的表达能力, 本文通过一种人工设计的机制来增强轻量级模型的特征表达能力, 以期获得一种既快又好的检测模型.</p>
 <p><div style="width: 600px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fxdebnztlgj215z0tw4qp.jpg" alt></div></p>
-<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>目前精确度最高的目标检测模型往往面临着巨大的计算开销, 而轻量级的目标检测模型在精度上却不够高. 本文通过利用人工设计来增强轻量级模型的特征, 以期获得一个既快又好的检测模型. 受到人类视觉系统感受野的启发, 文本提出了一个感受野模块(RF Block module), 它将 RFs 的 size 和 eccentricity 之间的关系考虑在内, 来增强特征的分辨能力和鲁棒性. 之后, 我们将 RFB 集成到了 SSD 之中, 建立了一个 RFB Net 检测器. 实验结果显示, 本文的 RFB Net 可以达到目前最高的性能表现.</p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>目前精确度最高的目标检测模型往往面临着巨大的计算开销, 而轻量级的目标检测模型在精度上却不够高. 本文通过利用人工设计来增强轻量级模型的特征, 以期获得一个既快又好的检测模型. 受到人类视觉系统感受野的启发, 文本提出了一个感受野模块(RF Block module), 它将 RFs 的 size 和 eccentricity 之间的关系考虑在内, 来增强特征的分辨能力和鲁棒性. 之后, 作者将 RFB 集成到了 SSD 之中, 建立了一个 RFB Net 检测器. 实验结果显示, 本文的 RFB Net 可以达到目前最高的性能表现.</p>
 <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>通过讨论 two-stage 和 one-stage 模型各自的特点和优势, 本文发现, 相比于不断增加模型复杂度(深度,宽度)来增强特征的表达能力, 另一种可选的做法通过一种人工设计的机制来增强轻量级模型的特征表达能力, 以期获得一种既快又好的检测模型. 另一方面, 多项研究发现, 感受野的大小是视网膜图谱离心率的函数, 并且在不同的图谱上, 离心率会逐渐升高, 如图1所示.</p>
 <p><div style="width: 600px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fxdebh1h8ej20zo0u01kx.jpg" alt></div></p>
-<p>目前的深度网络模型, 大多将不同层之间的感受野设置成相同大小, 这就有可能降低提取到的特征的表达能力. Inception 系列虽然融合了多个尺寸的感受野特征, 但是所有的卷积核仍然是在同一个中心进行采样的. Deformable CNN 尝试自适应的改变卷积核采样点, 尽管采样网格十分灵活, 但是依然没有考虑感受野的 eccentricity 属性, 这使得所有处于感受野当中的像素点都都输出响应具有同等的贡献度, 这会导致一些更重要的信息没有被突出出来.<br>本文根据人类视觉感受野的机制, 提出了 Receptive Field Block(RFB), 来增强轻量级的特征学习能力, 使得他们可以组建出更快更好的检测模型. 具体来说, RFB 通过使用不同大小的卷积核来实现多分支的 pooling 操作, 应用空洞卷积(dilated convolution)来控制它们的离心率(eccentricities), 并且进行 reshape 之后生成最终的特征表示, 如图2所示. 之后, 我们会将该模块集成到 SSD 网络之中, 形成一个更快更好的 one-stage 目标检测模型, 称为 RFB Net.</p>
+<p>目前的深度网络模型, 大多将不同层之间的感受野设置成相同大小, 这就有可能降低提取到的特征的表达能力. Inception 系列虽然融合了多个尺寸的感受野特征, 但是所有的卷积核仍然是在同一个中心进行采样的. Deformable CNN 尝试自适应的改变卷积核采样点, 尽管采样网格十分灵活, 但是依然没有考虑感受野的 eccentricity 属性, 这使得所有处于感受野当中的像素点都都输出响应具有同等的贡献度, 这会导致一些更重要的信息没有被突出出来.<br>本文根据人类视觉感受野的机制, 提出了 Receptive Field Block(RFB), 来增强轻量级的特征学习能力, 使得他们可以组建出更快更好的检测模型. 具体来说, RFB 通过使用不同大小的卷积核来实现多分支的 pooling 操作, 应用空洞卷积(dilated convolution)来控制它们的离心率(eccentricities), 并且进行 reshape 之后生成最终的特征表示, 如图2所示. 之后, 作者会将该模块集成到 SSD 网络之中, 形成一个更快更好的 one-stage 目标检测模型, 称为 RFB Net.</p>
 <p>本文的贡献主要有以下三点:</p>
 <ul>
 <li>提出了 RFB 模块, 用于提升轻量级 CNN 网络的特征表达能力</li>
@@ -1000,7 +1000,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">51:34</span>
+    <span title="站点阅读时长">51:41</span>
   
 </div>
 

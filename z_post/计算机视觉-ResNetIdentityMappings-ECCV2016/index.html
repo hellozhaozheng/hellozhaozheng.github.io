@@ -124,7 +124,7 @@
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fvod04no6qj20da035weh.jpg">
 <meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1fvodw0dpnmj20sr0p2433.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1fvoe4wy57wj20su0iatbc.jpg">
-<meta property="og:updated_time" content="2019-02-26T13:19:10.539Z">
+<meta property="og:updated_time" content="2019-09-08T04:32:11.554Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IdentityMappings (ECCV, 2016)">
 <meta name="twitter:description" content="文章: Identity Mappings in Deep Residual Networks作者: Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun备注: MSRA 核心亮点摘要Identity Mappings在第一篇ResNet论文中提到, 1202层的ResNet出现了性能退化的问题.  本文主要是对residual block的一">
@@ -484,8 +484,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-02-26T21:19:10+08:00" content="2019-02-26">
-      		  2019-02-26
+    		<time itemprop="dateUpdated" datetime="2019-09-08T12:32:11+08:00" content="2019-09-08">
+      		  2019-09-08
     		</time>
   	  </span>
 	  
@@ -586,7 +586,7 @@
 <p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fvoavon0q5j20rp0dvac3.jpg" alt></p>
 <h1 id="关于Deep-ResNet的分析"><a href="#关于Deep-ResNet的分析" class="headerlink" title="关于Deep ResNet的分析"></a>关于Deep ResNet的分析</h1><p><a href="https://blog.csdn.net/wspba/article/details/60750007" target="_blank" rel="noopener">https://blog.csdn.net/wspba/article/details/60750007</a></p>
 <h1 id="用简单缩放来代替恒等连接"><a href="#用简单缩放来代替恒等连接" class="headerlink" title="用简单缩放来代替恒等连接"></a>用简单缩放来代替恒等连接</h1><p>设计一个简单的缩放: $h(x_l) = \lambda_l x_l$ 来代替恒等连接:</p>
-<script type="math/tex; mode=display">x_{l+1} = \lambda_l x_l + F(x_l, W_l)</script><p>于是,继续通过递归我们可以得到:</p>
+<script type="math/tex; mode=display">x_{l+1} = \lambda_l x_l + F(x_l, W_l)</script><p>于是,继续通过递归作者可以得到:</p>
 <script type="math/tex; mode=display">x_L =(\prod_{i=l}^{L-1}) x_l + \sum_{i=l}^{L-1}{\hat F(x_i, W_i)}</script><p>对上面的式子求导, 可以得到:</p>
 <p><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1fvod04no6qj20da035weh.jpg" alt></p>
 <p>可以看到, 在该式子中, 由于 $\lambda$ 连乘项的存在, 可能会使这个因子变的很大或者消失, 从而阻断从短接反向传来的信号, 进而对优化造成困难</p>
@@ -599,15 +599,15 @@
 <p><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1fvodw0dpnmj20sr0p2433.jpg" alt></p>
 <p>对以上形式讨论如下:</p>
 <p><strong>BN after addition:</strong> 图b, 此种做法正好反其道而行之, 此时 $f$ 不仅包含了 ReLU, 还包含了BN, 最终导致的结果就是阻碍了信息的传递, 是性能下降</p>
-<p><strong>ReLU before addition:</strong>  图c, 这是一种很直接的做法, 也很天真,  直接将ReLU移动到加法之前, 这导致了F的输出非负, 然我们我们希望残差函数的值是在政府无穷区间内的</p>
+<p><strong>ReLU before addition:</strong>  图c, 这是一种很直接的做法, 也很天真,  直接将ReLU移动到加法之前, 这导致了F的输出非负, 然作者作者希望残差函数的值是在政府无穷区间内的</p>
 <p><strong>Post-activation or Pre-activation:</strong> 如图c和d, 图d通过一种非对称的转换, 使得当前块的激活函数成为一个块的预激活项, 具体转换如下图所示:</p>
 <p><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1fvoe4wy57wj20su0iatbc.jpg" alt></p>
 <p>对上图的解释就是, 在原始的设计中, 激活函数会对两条路径的下一个残差单元造成影响:</p>
 <script type="math/tex; mode=display">y_{l+1} = f(y_l) + F(f(y_l), W_{l+1})</script><p>而通过这种非对称的转换, 能够让激活函数 $\hat f$ 对于任意的　$l$ , 都只对$F$ 路径造成影响:</p>
 <script type="math/tex; mode=display">y_{l+1} = y_l + F(\hat f(y_l), W_{l+1})</script><p>于是, 新的激活函数就变成了一个恒等映射.</p>
-<p>后激活与预激活的区别是有元素级加法的存在而造成的,一个含有N层的平铺网络，包含有N−1个激活层(BN/ReLU)，而我们如何考虑它们是否是后激活或者预激活都不要紧。但是对附加的分支层来说，激活函数的位置就变得很重要了。只使用ReLU预激活的结果与原始ResNet-110/164的已经很接近。</p>
+<p>后激活与预激活的区别是有元素级加法的存在而造成的,一个含有N层的平铺网络，包含有N−1个激活层(BN/ReLU)，而作者如何考虑它们是否是后激活或者预激活都不要紧。但是对附加的分支层来说，激活函数的位置就变得很重要了。只使用ReLU预激活的结果与原始ResNet-110/164的已经很接近。</p>
 <p><strong>只是用ReLU的预激活vs完全预激活</strong></p>
-<p>从图d中, 我们可以看到, ReLU层不与BN层连接使用，因此无法共享BN所带来的好处, 因此, 很自然的,我们将BN层移到ReLU的前面, 最终, 性能获得了较大的提升, 超过了原始ResNet-110/164</p>
+<p>从图d中, 作者可以看到, ReLU层不与BN层连接使用，因此无法共享BN所带来的好处, 因此, 很自然的,作者将BN层移到ReLU的前面, 最终, 性能获得了较大的提升, 超过了原始ResNet-110/164</p>
 <h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>文章发现预激活的影响具有两个方面:</p>
 <ul>
 <li>由于$f$变成了恒等映射,优化变的更加简单</li>
@@ -660,8 +660,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/z_post/计算机视觉-R2CNN-Arxiv2017/" rel="next" title="R2CNN (Arxiv, 2017)">
-                R2CNN (Arxiv, 2017) <i class="fa fa-chevron-right"></i>
+              <a href="/z_post/计算机视觉-ResNeXt-CVPR2017/" rel="next" title="ResNeXt (CVPR, 2017)">
+                ResNeXt (CVPR, 2017) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -991,7 +991,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">51:34</span>
+    <span title="站点阅读时长">51:41</span>
   
 </div>
 

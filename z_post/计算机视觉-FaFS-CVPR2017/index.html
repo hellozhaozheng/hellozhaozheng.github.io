@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="文章: Fully-adaptive feature sharing in multi-task networks with applications in person attribute classification作者: Yongxi Lu, Abhishek Kumar, Shuangfei Zhai备注: https://blog.csdn.net/cv_family_z/article">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-22T00:14:49.216Z">
+<meta property="og:updated_time" content="2019-09-08T04:29:28.482Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FaFS (CVPR, 2017)">
 <meta name="twitter:description" content="文章: Fully-adaptive feature sharing in multi-task networks with applications in person attribute classification作者: Yongxi Lu, Abhishek Kumar, Shuangfei Zhai备注: https://blog.csdn.net/cv_family_z/article">
@@ -479,8 +479,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-06-22T08:14:49+08:00" content="2019-06-22">
-      		  2019-06-22
+    		<time itemprop="dateUpdated" datetime="2019-09-08T12:29:28+08:00" content="2019-09-08">
+      		  2019-09-08
     		</time>
   	  </span>
 	  
@@ -584,9 +584,9 @@
 <hr>
 <h2 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h2><p>首先从一个教 “薄” 的网络开始, 令 thin-w 代表 “瘦身后” 的模型，$w$ 是瘦身因子，瘦身版的模型与原始VGG-16对比为图1所示:</p>
 <p>最小化目标函数如下面的公式2所示:</p>
-<p>接着我们使用贪心算法 SOMP 找到近似解 $w^* (l)$, 如算法2所示:</p>
+<p>接着作者使用贪心算法 SOMP 找到近似解 $w^* (l)$, 如算法2所示:</p>
 <p>网络分割成两个或多个子网络或分支，对于行人属性，每个子网络的预测是sigmoid单元，生成归一化的属性置信度得分。<br>论文仅在结合点加宽网络，扩展后新增加的矩阵参数与扩展器参数矩阵大小相同，网络在扩展点有多个输出, 具体的过程如图2所示.</p>
-<p>在进行任务之间的聚合时, 直观上可以知道, 对于相似度较小的两个任务, 我们应该提前将它们分割, 因为它们之间需要共享的特征较少, 也就是说, 对于相同的特征, 其中一个任务可以较好的识别, 但是另一个任务就无法识别了, 任务之间的关系描述为公式6所示:</p>
+<p>在进行任务之间的聚合时, 直观上可以知道, 对于相似度较小的两个任务, 作者应该提前将它们分割, 因为它们之间需要共享的特征较少, 也就是说, 对于相同的特征, 其中一个任务可以较好的识别, 但是另一个任务就无法识别了, 任务之间的关系描述为公式6所示:</p>
 <p>两个分支的密切关系为公式 7 和 8 所示:</p>
 <h2 id="Experiment-Detail"><a href="#Experiment-Detail" class="headerlink" title="Experiment Detail"></a>Experiment Detail</h2><p>CelebA人脸属性分类和DeepFashion衣物属性分类如表1所示</p>
 <p>不同方法之间的 acc, speed, 和 compactness 的比较如表2所示</p>
@@ -971,7 +971,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">51:34</span>
+    <span title="站点阅读时长">51:41</span>
   
 </div>
 

@@ -125,7 +125,7 @@
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1g1iigzgq6jj217p0osqda.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1g1iillqjl8j21r00u07op.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1g1iinaxqhfj21750g8q65.jpg">
-<meta property="og:updated_time" content="2019-07-05T07:59:29.443Z">
+<meta property="og:updated_time" content="2019-09-08T04:32:42.765Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MobileNet">
 <meta name="twitter:description" content="文章: MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications作者: Andrew G.Howard, Menglong Zhu, Bo Chen, Dmitry Kalenichenko, Weijun Wang, Tobias Weyand, Marco Andreetto, Hart">
@@ -485,8 +485,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-07-05T15:59:29+08:00" content="2019-07-05">
-      		  2019-07-05
+    		<time itemprop="dateUpdated" datetime="2019-09-08T12:32:42+08:00" content="2019-09-08">
+      		  2019-09-08
     		</time>
   	  </span>
 	  
@@ -583,27 +583,27 @@
 
       
         <p><strong>文章:</strong> MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications<br><strong>作者:</strong> Andrew G.Howard, Menglong Zhu, Bo Chen, Dmitry Kalenichenko, Weijun Wang, Tobias Weyand, Marco Andreetto, Hartwig Adam<br><strong>机构:</strong> Google<br><strong>URL:</strong> <a href="https://arxiv.org/abs/1704.04861" target="_blank" rel="noopener">https://arxiv.org/abs/1704.04861</a></p>
-<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>我们提出了 <strong>一类</strong> 针对移动和嵌入式视觉应用的有效模型, 称之为 MobileNets. MobileNets 基于一种流线型结构(streamlined architecture), 并且使用 <strong>深度可分离卷积(depthwise separable convolutions)</strong> 来构建轻量级的深度神经网络. 我们引入了两个简单的全局超参数, 它们可以有效的在速度和精度之间权衡. 这些超参数允许模型构建器根据问题的约束为其应用程序选择适当大小的模型. 我们在资源分配和模型精度的权衡上进行了大量的实验, 并与其它流行的 ImageNet 分类模型相比, 表现出了较强的性能. 然后, 我们演示了 MobileNets 在各个领域的有效性, 包括目标检测, 细粒度分类, 人脸属性识别和大规模地理定位等.</p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>作者提出了 <strong>一类</strong> 针对移动和嵌入式视觉应用的有效模型, 称之为 MobileNets. MobileNets 基于一种流线型结构(streamlined architecture), 并且使用 <strong>深度可分离卷积(depthwise separable convolutions)</strong> 来构建轻量级的深度神经网络. 作者引入了两个简单的全局超参数, 它们可以有效的在速度和精度之间权衡. 这些超参数允许模型构建器根据问题的约束为其应用程序选择适当大小的模型. 作者在资源分配和模型精度的权衡上进行了大量的实验, 并与其它流行的 ImageNet 分类模型相比, 表现出了较强的性能. 然后, 作者演示了 MobileNets 在各个领域的有效性, 包括目标检测, 细粒度分类, 人脸属性识别和大规模地理定位等.</p>
 <p><div style="width: 550px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1g1iibxslymj214i0h9an9.jpg" alt="图1"></div></p>
 <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>本文介绍了一种高效的网络架构和两个超参数, 以便构建非常小的, 低延迟的模型, 这些模型可以很容易的匹配移动和嵌入式视觉应用程序的设计需求.</p>
 <h1 id="前人工作"><a href="#前人工作" class="headerlink" title="前人工作"></a>前人工作</h1><p>SqueezeNet, Factorized CNN, Quantized CNN.</p>
 <p>MobileNets 的目的是减少模型大小的同时加速模型速度.(有些 papers 只关注模型大小)</p>
-<h1 id="MobileNet-Architecture"><a href="#MobileNet-Architecture" class="headerlink" title="MobileNet Architecture"></a>MobileNet Architecture</h1><p>本节我们将介绍 MobileNet 中的核心网络层, 即深度可分离卷积层(depthwise separable). 然后会介绍 MobileNet 的网络结构和两个超参数: width multiplier, resolution multiplier.</p>
+<h1 id="MobileNet-Architecture"><a href="#MobileNet-Architecture" class="headerlink" title="MobileNet Architecture"></a>MobileNet Architecture</h1><p>本节作者将介绍 MobileNet 中的核心网络层, 即深度可分离卷积层(depthwise separable). 然后会介绍 MobileNet 的网络结构和两个超参数: width multiplier, resolution multiplier.</p>
 <h2 id="Depthwise-Separable-Convolution"><a href="#Depthwise-Separable-Convolution" class="headerlink" title="Depthwise Separable Convolution"></a>Depthwise Separable Convolution</h2><p>深度可分离卷积实际上是一个卷积分解的形式, 它将标准的卷积分解为深度卷积(depthwise convolution)和 $1\times 1$ 卷积(也叫点卷积). 对于 MobileNets 来说, 深度卷积会对 <strong>每个输入通道</strong> 应用一个单独的过滤器(filter). 然后点卷积(pointwise convolution)会使用 $1\times 1$ 的卷积来融合深度卷积层的输出. 一个标准的卷积层会在使用 filters 的同时将输入融合启动, 并形成一个新的输出. 但是深度可分离卷积将这个过程分为了两层, 一层用于 filtering, 另一层用于 combining. 这种分解可以大大减少计算量和模型大小. 图2(a)代表标准卷积, (b)代表深度卷积, (c)代表点卷积.</p>
 <p><div style="width: 550px; margin: auto"><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1g1iieb7cquj219m0to44t.jpg" alt="图2,图3,表2"></div></p>
 <p>如果标准卷积接受一个尺度为 $D_F\times D_F\times M$ 的特征图谱 <strong>F</strong>, 输出一个尺度为 $D_G\times D_G\times N$ 的特征图谱 <strong>G</strong>, 那么 $M$ 就是输入图谱的通道数(input depth), $N$ 就是核的数量, 也是输出图谱的通道数. 该卷积层的参数量为: $D_K\times D_K\times M\times N$, $D_K$ 代表卷积核的大小. 标准卷积核的计算成本(乘法次数)为 $D_K\times D_K\times M\times N\times D_F\times D_F$, 即: $卷积乘法次数 = 核尺寸\times 输入通道数\times 输出通道数\times 输入图谱尺寸$.</p>
 <p>深度可分离卷积由两个网络层组成: depthwise conv 和 pointwise conv. 前者对每个输入通道 <strong>分别应用</strong> filter(可以理解成分为多个 group, 每个 group 内的特征图谱的深度为 1), 后者用于组合前者的输出. MobileNets 在这两个网络层中都使用了 BN 和 ReLU.</p>
 <p>Depthwise Conv 可以用公式表达如下(with one filter per input channel):</p>
 <script type="math/tex; mode=display">\hat G_{k, l, m} = \sum_{i, j}\hat K_{i,j,m} \cdot F_{k+i-1, l+j-1, m}</script><p>Depthwise Conv 的计算成本(乘法次数)为 $D_K\times D_K\times M\times D_F\times D_F$, 可以看出, 由于 Depthwise Conv 是对每个通道单独进行 filter, 所以其乘法次数无需计入输出图谱的通道数.</p>
-<p>虽然 Depthwise Conv 可以大大节省参数量和计算成本, 但是它仅仅对每个通道进行的 filter 操作, 而没有将这些通道结合起来, 因此, 我们添加额外的一层 $1\times 1$ 的卷积网络来计算这些 Depthwise Conv 输出值的线性组合. Depthwise Conv 和 Pointwise Conv 的联合使用就被称为深度可分离卷积, 他们计算成本为 $D_K\cdot D_K\cdot M\cdot D_F\cdot D_F + M\cdot N\cdot D_F\cdot D_F$, 其中, $D_K$ 代表核的大小, $N, M$ 分别代表输入输出通道数, $D_F$ 代表输入图谱的大小.<br>最终, 计算成本的降低程度如下所示:</p>
+<p>虽然 Depthwise Conv 可以大大节省参数量和计算成本, 但是它仅仅对每个通道进行的 filter 操作, 而没有将这些通道结合起来, 因此, 作者添加额外的一层 $1\times 1$ 的卷积网络来计算这些 Depthwise Conv 输出值的线性组合. Depthwise Conv 和 Pointwise Conv 的联合使用就被称为深度可分离卷积, 他们计算成本为 $D_K\cdot D_K\cdot M\cdot D_F\cdot D_F + M\cdot N\cdot D_F\cdot D_F$, 其中, $D_K$ 代表核的大小, $N, M$ 分别代表输入输出通道数, $D_F$ 代表输入图谱的大小.<br>最终, 计算成本的降低程度如下所示:</p>
 <script type="math/tex; mode=display">\frac{D_K\cdot D_K\cdot M\cdot D_F\cdot D_F + M\cdot N\cdot \cdot D_F\cdot D_F}{D_K\cdot D_K\cdot M\cdot N\cdot D_F\cdot D_F} = \frac{1}{N} + \frac{1}{D_K^2}</script><p>MobileNet 使用了 $3\times 3$ 的深度可分离卷积, 它的计算量比标准卷积低了 8~9 倍, 并且精度只降低了一点.<br>空间维度的卷积分解(InceptionV3 中使用的)并不能节省很多额外的计算, 因为只有很少的计算花费在深度卷积上.</p>
-<h2 id="Network-Structure-and-Training"><a href="#Network-Structure-and-Training" class="headerlink" title="Network Structure and Training"></a>Network Structure and Training</h2><p>MobileNet 除了第一层是一个完整的卷积之外, 其余层都是建立在深度可分离卷积层之上的. 通过这种简单的卷积结构, 我们可以很容易的探索网络的拓扑结构, 从而找到一个较好的网络模型. MobileNet 的网络结构如表1所示. <strong>所有的网络层后面都具有 BatchNorm 层和 ReLU 层, 网络最后的分类层由 GAP + FC + Sofmax 组成.</strong> 图3显示了标准卷积以及深度可分离卷积之间的区别. MobileNet 中的下采样操作同时通过步长为2的深度卷积(Conv dw/s2)完成的. 如果将 Depthwise Conv 和 Pointwise Conv 算作独立的层, 那么 MobileNet 的深度就为 28 层.</p>
-<p>仅仅根据较少的乘法加法操作(Mult-Adds)来确定网络的结构是不够的, <strong>同样重要的是确保这些操作能够有效的实现.</strong> 举例来说, 除非具有非常高的稀疏程度, 否则非结构化的稀疏矩阵运算通常不会比密集矩阵的运算速度快. <strong>我们的模型结构几乎将所有的计算都放在了密集的 $1\times 1$ 卷积当中.</strong> 这可以通过高度优化的通用矩阵乘法(GEMM)函数来实现. <strong>卷积操作通常由 GEMM 实现</strong>, 但是需要在内存进行名为 im2col 的初始重新排序, 以便将其映射到 GEMM 当中. <strong>而 $1\times 1$ 卷积不需要在内存中重新排序, 可以直接使用 GEMM 实现. 并且, MobileNets 95% 的计算时间都花费在 $1\times 1$ 卷积中, 同时其 75% 的参数都存在于 $1\times 1$ 卷积中, 具体如表2所示</strong></p>
+<h2 id="Network-Structure-and-Training"><a href="#Network-Structure-and-Training" class="headerlink" title="Network Structure and Training"></a>Network Structure and Training</h2><p>MobileNet 除了第一层是一个完整的卷积之外, 其余层都是建立在深度可分离卷积层之上的. 通过这种简单的卷积结构, 作者可以很容易的探索网络的拓扑结构, 从而找到一个较好的网络模型. MobileNet 的网络结构如表1所示. <strong>所有的网络层后面都具有 BatchNorm 层和 ReLU 层, 网络最后的分类层由 GAP + FC + Sofmax 组成.</strong> 图3显示了标准卷积以及深度可分离卷积之间的区别. MobileNet 中的下采样操作同时通过步长为2的深度卷积(Conv dw/s2)完成的. 如果将 Depthwise Conv 和 Pointwise Conv 算作独立的层, 那么 MobileNet 的深度就为 28 层.</p>
+<p>仅仅根据较少的乘法加法操作(Mult-Adds)来确定网络的结构是不够的, <strong>同样重要的是确保这些操作能够有效的实现.</strong> 举例来说, 除非具有非常高的稀疏程度, 否则非结构化的稀疏矩阵运算通常不会比密集矩阵的运算速度快. <strong>作者的模型结构几乎将所有的计算都放在了密集的 $1\times 1$ 卷积当中.</strong> 这可以通过高度优化的通用矩阵乘法(GEMM)函数来实现. <strong>卷积操作通常由 GEMM 实现</strong>, 但是需要在内存进行名为 im2col 的初始重新排序, 以便将其映射到 GEMM 当中. <strong>而 $1\times 1$ 卷积不需要在内存中重新排序, 可以直接使用 GEMM 实现. 并且, MobileNets 95% 的计算时间都花费在 $1\times 1$ 卷积中, 同时其 75% 的参数都存在于 $1\times 1$ 卷积中, 具体如表2所示</strong></p>
 <p><div style="width: 550px; margin: auto"><img src="https://wx1.sinaimg.cn/large/d7b90c85ly1g1iigzgq6jj217p0osqda.jpg" alt="表1-5"></div></p>
-<p>相比于训练大模型, 我们在训练小模型的时候会使用更少的正则化技术和数据增广技术, <strong>因为小模型通常不太容易过拟合(参数少)</strong>. 另外, 由于 Depthwise Conv 的参数非常少, 因此在 Depthwise Conv 上需要很少或者不添加 weight decay(L2), 这一点是非常重要的.</p>
-<h2 id="Width-Multiplier-Thinner-Models"><a href="#Width-Multiplier-Thinner-Models" class="headerlink" title="Width Multiplier: Thinner Models"></a>Width Multiplier: Thinner Models</h2><p>尽管 MobileNet 的网络结构已经非常小并且延迟性很低, 但是对于某些特殊的应用场景我们也许需要使用模型更小, 更快. 为此, 我们引入了一个非常简单的超参数 $\alpha$, 称之为 width multiplier. 它的作用是 <strong>使网络在每一层均匀的变薄</strong>. 当给定一个网络层和 width multiplier $\alpha$ 时, 该网络层的输入通道数 $M$ 会变成 $\alpha M$, 输出通道数 $N$ 会变成 $alpha N$. 如此一来, 深度可分离卷积的计算成本就变成了:</p>
+<p>相比于训练大模型, 作者在训练小模型的时候会使用更少的正则化技术和数据增广技术, <strong>因为小模型通常不太容易过拟合(参数少)</strong>. 另外, 由于 Depthwise Conv 的参数非常少, 因此在 Depthwise Conv 上需要很少或者不添加 weight decay(L2), 这一点是非常重要的.</p>
+<h2 id="Width-Multiplier-Thinner-Models"><a href="#Width-Multiplier-Thinner-Models" class="headerlink" title="Width Multiplier: Thinner Models"></a>Width Multiplier: Thinner Models</h2><p>尽管 MobileNet 的网络结构已经非常小并且延迟性很低, 但是对于某些特殊的应用场景作者也许需要使用模型更小, 更快. 为此, 作者引入了一个非常简单的超参数 $\alpha$, 称之为 width multiplier. 它的作用是 <strong>使网络在每一层均匀的变薄</strong>. 当给定一个网络层和 width multiplier $\alpha$ 时, 该网络层的输入通道数 $M$ 会变成 $\alpha M$, 输出通道数 $N$ 会变成 $alpha N$. 如此一来, 深度可分离卷积的计算成本就变成了:</p>
 <script type="math/tex; mode=display">D_K\cdot D_K\cdot \alpha M\cdot D_F\cdot D_F + \alpha M\cdot \alpha N \cdot D_F\cdot D_F</script><p>当 $\alpha = 1$ 时, MobileNet 不发生变化, 当 $alpha &lt; 1$ 时, MobileNet 的参数量和计算量会减少, $\alpha$ 的取值一般为 1, 0.75, 0.5 或 0.25. Width multiplier 可以使得网络的计算成本和参数量大约降低 $\alpha^2$.</p>
-<h2 id="Resolution-Multiplier-Reduced-Representation"><a href="#Resolution-Multiplier-Reduced-Representation" class="headerlink" title="Resolution Multiplier: Reduced Representation"></a>Resolution Multiplier: Reduced Representation</h2><p>超参数 Resolution Multiplier($\rho$) 会用在 input image 和每一层的特征图谱上, 会将 resolution 降低相同的比例. 在实际使用中, 我们是通过设置输入图谱的分辨率来隐式的使用 $rho$ 的. 当同时使用 $alpha$ 和 $rho$ 以后, 深度可分解卷积的计算成本就变成了:</p>
+<h2 id="Resolution-Multiplier-Reduced-Representation"><a href="#Resolution-Multiplier-Reduced-Representation" class="headerlink" title="Resolution Multiplier: Reduced Representation"></a>Resolution Multiplier: Reduced Representation</h2><p>超参数 Resolution Multiplier($\rho$) 会用在 input image 和每一层的特征图谱上, 会将 resolution 降低相同的比例. 在实际使用中, 作者是通过设置输入图谱的分辨率来隐式的使用 $rho$ 的. 当同时使用 $alpha$ 和 $rho$ 以后, 深度可分解卷积的计算成本就变成了:</p>
 <script type="math/tex; mode=display">D_K\cdot D_K\cdot \alpha M\cdot \rho D_F\cdot \rho D_F + \alpha M\cdot \alpha N \cdot \rho D_F\cdot \rho D_F</script><p>Resolution multiplier 可以使计算量降低 $\rho^2$.</p>
 <p>表3展示了标准的 $3\times 3$ 卷积层在 $14\times 14\times 512$ 的特征图谱上的乘法加法操作和参数量与深度可分离卷积之间的对比.</p>
 <h1 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h1><p>Model Choices<br>Model Shrinking Hyperparameters</p>
@@ -990,7 +990,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">51:34</span>
+    <span title="站点阅读时长">51:41</span>
   
 </div>
 

@@ -112,13 +112,13 @@
 
 
 
-  <meta name="description" content="论文: EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks作者: Mingxing Tan, Quoc V.Le机构: Google Brain 摘要卷积神经网络(ConvNets)通常是在固定的资源预算下开发的，如果有更多的资源可用，则会进行扩展以获得更高的精度。在本文中，我们系统地研究了模型缩放，并发">
+  <meta name="description" content="论文: EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks作者: Mingxing Tan, Quoc V.Le机构: Google Brain 摘要卷积神经网络(ConvNets)通常是在固定的资源预算下开发的，如果有更多的资源可用，则会进行扩展以获得更高的精度。在本文中，作者系统地研究了模型缩放，并发">
 <meta name="keywords" content="目标检测,计算机视觉,论文解读">
 <meta property="og:type" content="article">
 <meta property="og:title" content="EfficientNet (ICML, 2019)">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-EfficientNet-ICML2019/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="论文: EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks作者: Mingxing Tan, Quoc V.Le机构: Google Brain 摘要卷积神经网络(ConvNets)通常是在固定的资源预算下开发的，如果有更多的资源可用，则会进行扩展以获得更高的精度。在本文中，我们系统地研究了模型缩放，并发">
+<meta property="og:description" content="论文: EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks作者: Mingxing Tan, Quoc V.Le机构: Google Brain 摘要卷积神经网络(ConvNets)通常是在固定的资源预算下开发的，如果有更多的资源可用，则会进行扩展以获得更高的精度。在本文中，作者系统地研究了模型缩放，并发">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/EfficientNet/fig2.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/EfficientNet/tab1.jpg?x-oss-process=style/blog_img">
@@ -135,10 +135,10 @@
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/EfficientNet/fig8.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/EfficientNet/tab7.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/EfficientNet/fig7.jpg?x-oss-process=style/blog_img">
-<meta property="og:updated_time" content="2019-07-18T06:06:04.920Z">
+<meta property="og:updated_time" content="2019-09-08T04:29:24.395Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="EfficientNet (ICML, 2019)">
-<meta name="twitter:description" content="论文: EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks作者: Mingxing Tan, Quoc V.Le机构: Google Brain 摘要卷积神经网络(ConvNets)通常是在固定的资源预算下开发的，如果有更多的资源可用，则会进行扩展以获得更高的精度。在本文中，我们系统地研究了模型缩放，并发">
+<meta name="twitter:description" content="论文: EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks作者: Mingxing Tan, Quoc V.Le机构: Google Brain 摘要卷积神经网络(ConvNets)通常是在固定的资源预算下开发的，如果有更多的资源可用，则会进行扩展以获得更高的精度。在本文中，作者系统地研究了模型缩放，并发">
 <meta name="twitter:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/EfficientNet/fig2.jpg?x-oss-process=style/blog_img">
 
 
@@ -495,8 +495,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-07-18T14:06:04+08:00" content="2019-07-18">
-      		  2019-07-18
+    		<time itemprop="dateUpdated" datetime="2019-09-08T12:29:24+08:00" content="2019-09-08">
+      		  2019-09-08
     		</time>
   	  </span>
 	  
@@ -593,46 +593,46 @@
 
       
         <p><strong>论文:</strong> EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks<br><strong>作者:</strong> Mingxing Tan, Quoc V.Le<br><strong>机构:</strong> Google Brain</p>
-<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>卷积神经网络(ConvNets)通常是在固定的资源预算下开发的，如果有更多的资源可用，则会进行扩展以获得更高的精度。在本文中，我们系统地研究了模型缩放，并发现仔细平衡网络的深度、宽度和分辨率可以获得更好的性能。在此基础上，我们提出了一种新的 Scaling 方法，该方法使用一个简单而高效的复合系数来均匀地 scale 深度/宽度/分辨率的所有维度。我们证明了该方法在扩展mobilenet和ResNet方面的有效性。<br>更进一步地，我们使用 <strong>神经结构搜索</strong> 设计了一个新的基线网络，并将其扩展，以获得一系列被称为efficient entnets的模型，这些模型比以前的ConvNets具有更好的准确性和效率。特别是，我们的 EfficientNet-B7 在 ImageNet 上实现了最先进的84.4%的top-1 / 97.1%的top-5精度，同时比现有最好的ConvNet小8.4倍，推理速度快6.1倍。在CIFAR-100(91.7%)、Flowers(98.8%)和其他3个传输学习数据集上，我们的高效网络传输效果也很好，并且达到了最先进的精度，参数少了一个数量级。</p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>卷积神经网络(ConvNets)通常是在固定的资源预算下开发的，如果有更多的资源可用，则会进行扩展以获得更高的精度。在本文中，作者系统地研究了模型缩放，并发现仔细平衡网络的深度、宽度和分辨率可以获得更好的性能。在此基础上，作者提出了一种新的 Scaling 方法，该方法使用一个简单而高效的复合系数来均匀地 scale 深度/宽度/分辨率的所有维度。作者证明了该方法在扩展mobilenet和ResNet方面的有效性。<br>更进一步地，作者使用 <strong>神经结构搜索</strong> 设计了一个新的基线网络，并将其扩展，以获得一系列被称为efficient entnets的模型，这些模型比以前的ConvNets具有更好的准确性和效率。特别是，作者的 EfficientNet-B7 在 ImageNet 上实现了最先进的84.4%的top-1 / 97.1%的top-5精度，同时比现有最好的ConvNet小8.4倍，推理速度快6.1倍。在CIFAR-100(91.7%)、Flowers(98.8%)和其他3个传输学习数据集上，作者的高效网络传输效果也很好，并且达到了最先进的精度，参数少了一个数量级。</p>
 <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>为了获得更好的精度，人们广泛使用了放大的ConvNets。例如，通过使用更多的层，可以将ResNet从ResNet-18扩展到ResNet-200;最近，GPipe将基准模型扩大了四倍，实现了84.3%的ImageNet top-1精度。然而，扩展ConvNets的过程从来没有被很好地理解过，目前有很多方法可以做到这一点。最常见的方法是加深网络的深度或者宽度。另一种不太常见但越来越流行的方法是通过图像分辨率放大模型。在以前的工作中，通常只缩放三个维度中的一个——深度、宽度和图像大小。虽然可以任意缩放两个或三个维度，但是任意缩放需要繁琐的手工调优，而且常常会产生次优的精度和效率。</p>
-<p>在这篇论文中，我们想研究和重新思考扩大 ConvNets 的过程。我们研究的中心问题是: <strong>有没有一种原则性的方法来扩大对流，从而达到更好的精度和效率?</strong> 我们的实证研究表明，<strong>平衡网络宽度/深度/分辨率的所有维度是至关重要的</strong>，令人惊讶的是，这种平衡可以通过简单地按比例缩放每个维度来实现。在此基础上观察,我们提出一个简单但有效的复合比例法。与传统的任意缩放这些因子的方法不同，我们的方法使用一组固定的缩放系数来均匀地缩放网络的宽度、深度和分辨率。例如,如果我们想使用 $2^N$ 倍的计算资源,然后我们可以简单地增加网络由 &amp;\alpha^N$ 深度,宽度变成 $\beta^N$, 图像大小变成 $\gamma^N$, $\alpha, \beta, \gamma$ 是常系数, 它们是由小网格搜索在原始小模型上搜索出来的结果。图2说明了我们的缩放方法和传统方法之间的区别。</p>
+<p>在这篇论文中，作者想研究和重新思考扩大 ConvNets 的过程。作者研究的中心问题是: <strong>有没有一种原则性的方法来扩大对流，从而达到更好的精度和效率?</strong> 作者的实证研究表明，<strong>平衡网络宽度/深度/分辨率的所有维度是至关重要的</strong>，令人惊讶的是，这种平衡可以通过简单地按比例缩放每个维度来实现。在此基础上观察,作者提出一个简单但有效的复合比例法。与传统的任意缩放这些因子的方法不同，作者的方法使用一组固定的缩放系数来均匀地缩放网络的宽度、深度和分辨率。例如,如果作者想使用 $2^N$ 倍的计算资源,然后作者可以简单地增加网络由 &amp;\alpha^N$ 深度,宽度变成 $\beta^N$, 图像大小变成 $\gamma^N$, $\alpha, \beta, \gamma$ 是常系数, 它们是由小网格搜索在原始小模型上搜索出来的结果。图2说明了作者的缩放方法和传统方法之间的区别。</p>
 <p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/EfficientNet/fig2.jpg?x-oss-process=style/blog_img" alt="EfficientNet%2Ffig2.jpg"></div></p>
-<p>直观地说，复合缩放方法是有意义的，因为如果输入图像更大，那么网络需要更多的层来增加感受野，需要更多的通道来捕捉更大图像上更细粒度的模式。事实上，之前的理论和实证结果都表明网络宽度和深度之间存在一定的关系，但据我们所知，我们是第一个对网络宽度、深度和分辨率三个维度之间的关系进行实证量化的人。</p>
-<p>我们证明了我们的缩放方法在现有的 MobileNet 和 ResNet 上运行良好。值得注意的是，模型缩放的有效性在很大程度上取决于 Baseline Network;为了更进一步，我们使用神经架构搜索来开发一个新的基线网络，并将其扩展以获得一系列模型，称为 EfficientNets。图1总结了ImageNet的性能，其中我们的 EfficientNets 明显优于其他convnet。特别的是，我们的EfficientNet-B7超过了现有的最佳GPipe精度，但是使用的参数少了8.4倍，并且在推断时运行速度快了6.1倍。与广泛使用的ResNet-50相比，我们的 EfficientNet-B4 在类似 FLOPs 的情况下，将 top-1 的精度从 76.3% 提高到了 82.6%(+6.3%)。除了ImageNet, EfficientNets 还可以很好地迁移到 8 个广泛使用的数据集中的 5 个，并达到最先进的精度，同时比现有ConvNets减少了21倍的参数。</p>
+<p>直观地说，复合缩放方法是有意义的，因为如果输入图像更大，那么网络需要更多的层来增加感受野，需要更多的通道来捕捉更大图像上更细粒度的模式。事实上，之前的理论和实证结果都表明网络宽度和深度之间存在一定的关系，但据作者所知，作者是第一个对网络宽度、深度和分辨率三个维度之间的关系进行实证量化的人。</p>
+<p>作者证明了作者的缩放方法在现有的 MobileNet 和 ResNet 上运行良好。值得注意的是，模型缩放的有效性在很大程度上取决于 Baseline Network;为了更进一步，作者使用神经架构搜索来开发一个新的基线网络，并将其扩展以获得一系列模型，称为 EfficientNets。图1总结了ImageNet的性能，其中作者的 EfficientNets 明显优于其他convnet。特别的是，作者的EfficientNet-B7超过了现有的最佳GPipe精度，但是使用的参数少了8.4倍，并且在推断时运行速度快了6.1倍。与广泛使用的ResNet-50相比，作者的 EfficientNet-B4 在类似 FLOPs 的情况下，将 top-1 的精度从 76.3% 提高到了 82.6%(+6.3%)。除了ImageNet, EfficientNets 还可以很好地迁移到 8 个广泛使用的数据集中的 5 个，并达到最先进的精度，同时比现有ConvNets减少了21倍的参数。</p>
 <h1 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h1><ul>
 <li>ConvNet Acc: GPipe(过大), 虽然这些模型主要是为ImageNet设计的，但最近的研究表明，更好的ImageNet模型在各种迁移学习数据集和其他计算机视觉任务(如目标检测)中也表现得更好</li>
-<li>ConvNet Efficiency: 模型压缩, SqueezeNet, MobileNet, ShuffleNet. 在本文中，我们的目标是研究超大型超精确 ConvNets 的模型效率。为了实现这个目标，我们采用模型缩放。</li>
-<li>Model Scaling: 络的深度和宽度对ConvNet的表达能力都很重要，如何有效地缩放ConvNet以获得更好的效率和准确性仍然是一个有待解决的问题。我们的工作系统地和经验地研究了网络宽度、深度和分辨率三个维度的 ConvNet 缩放。</li>
+<li>ConvNet Efficiency: 模型压缩, SqueezeNet, MobileNet, ShuffleNet. 在本文中，作者的目标是研究超大型超精确 ConvNets 的模型效率。为了实现这个目标，作者采用模型缩放。</li>
+<li>Model Scaling: 络的深度和宽度对ConvNet的表达能力都很重要，如何有效地缩放ConvNet以获得更好的效率和准确性仍然是一个有待解决的问题。作者的工作系统地和经验地研究了网络宽度、深度和分辨率三个维度的 ConvNet 缩放。</li>
 </ul>
-<h1 id="Compound-Model-Scaling-复合模型扩展"><a href="#Compound-Model-Scaling-复合模型扩展" class="headerlink" title="Compound Model Scaling(复合模型扩展)"></a>Compound Model Scaling(复合模型扩展)</h1><p>在本节中，我们将阐述缩放问题，研究不同的方法，并提出我们新的缩放方法。</p>
+<h1 id="Compound-Model-Scaling-复合模型扩展"><a href="#Compound-Model-Scaling-复合模型扩展" class="headerlink" title="Compound Model Scaling(复合模型扩展)"></a>Compound Model Scaling(复合模型扩展)</h1><p>在本节中，作者将阐述缩放问题，研究不同的方法，并提出作者新的缩放方法。</p>
 <h2 id="Problem-Formulation"><a href="#Problem-Formulation" class="headerlink" title="Problem Formulation"></a>Problem Formulation</h2><p>…</p>
 <p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/EfficientNet/tab1.jpg?x-oss-process=style/blog_img" alt="EfficientNet%2Ftab1.jpg"></div></p>
 <h2 id="Scaling-Dimensions"><a href="#Scaling-Dimensions" class="headerlink" title="Scaling Dimensions"></a>Scaling Dimensions</h2><p>问题2的主要难点是最优的d、w、r相互依赖，且在不同的资源约束条件下值会发生变化。由于这一困难，传统的方法大多在这些三维中的某一维进行卷积网络的缩放.</p>
-<h3 id="Depth-d"><a href="#Depth-d" class="headerlink" title="Depth(d)"></a>Depth(d)</h3><p>扩展网络深度是许多ConvNets最常用的方法。直观的感觉是，更深层次的ConvNet可以捕获更丰富、更复杂的特性，并很好地概括新的任务。然而，由于梯度消失问题，更深层次的网络也更加难以训练。虽然一些技术，如skip connections 和batch normalization 可以缓解训练问题，但是非常深的网络的精度增益会降低:例如，ResNet-1000的精度与ResNet-101相似，尽管它有更多的层。图3(中)显示了我们对不同深度系数d的基线模型进行缩放的实证研究，进一步表明深度卷积网的精度收益递减。</p>
+<h3 id="Depth-d"><a href="#Depth-d" class="headerlink" title="Depth(d)"></a>Depth(d)</h3><p>扩展网络深度是许多ConvNets最常用的方法。直观的感觉是，更深层次的ConvNet可以捕获更丰富、更复杂的特性，并很好地概括新的任务。然而，由于梯度消失问题，更深层次的网络也更加难以训练。虽然一些技术，如skip connections 和batch normalization 可以缓解训练问题，但是非常深的网络的精度增益会降低:例如，ResNet-1000的精度与ResNet-101相似，尽管它有更多的层。图3(中)显示了作者对不同深度系数d的基线模型进行缩放的实证研究，进一步表明深度卷积网的精度收益递减。</p>
 <p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/EfficientNet/fig3.jpg?x-oss-process=style/blog_img" alt="EfficientNet%2Ffig3.jpg"></div></p>
-<h3 id="宽度-w"><a href="#宽度-w" class="headerlink" title="宽度(w)"></a>宽度(w)</h3><p>缩放网络宽度通常用于小尺寸模型。如前所述，更广泛的网络往往能够捕获更细粒度的特性，并且更易于培训。然而，非常宽而浅的网络往往很难捕捉到更高层次的特征。我们在图3(左)中得到的经验结果表明，当网络越宽，w越大时，准确率会迅速饱和。</p>
+<h3 id="宽度-w"><a href="#宽度-w" class="headerlink" title="宽度(w)"></a>宽度(w)</h3><p>缩放网络宽度通常用于小尺寸模型。如前所述，更广泛的网络往往能够捕获更细粒度的特性，并且更易于培训。然而，非常宽而浅的网络往往很难捕捉到更高层次的特征。作者在图3(左)中得到的经验结果表明，当网络越宽，w越大时，准确率会迅速饱和。</p>
 <h3 id="分辨率-r"><a href="#分辨率-r" class="headerlink" title="分辨率(r)"></a>分辨率(r)</h3><p>使用更高分辨率的输入图像，ConvNets可以捕获更细粒度的模式。从早期ConvNets的224x224开始，现代ConvNets倾向于使用299x299或331x331来获得更好的精度。最近，GPipe以480x480分辨率实现了最先进的ImageNet精度。更高的分辨率，如600x600，也广泛用于目标检测卷积。图3(右)显示了缩放网络分辨率的结果，确实更高的分辨率可以提高精度，但是对于非常高的分辨率，精度增益会减小(r = 1.0表示分辨率224x224, r = 2.5表示分辨率560x560)。</p>
-<p>以上分析使我们得出第一个观察结果:<br><strong>Observation 1: 扩展网络宽度、深度或分辨率的任何维度都可以提高精度，但是对于较大的模型，精度增益会降低。</strong></p>
-<h1 id="Compound-Scaling"><a href="#Compound-Scaling" class="headerlink" title="Compound Scaling"></a>Compound Scaling</h1><p>我们从经验上观察到，对不同的维度进行放缩并不是独立的。直观地说，对于高分辨率的图像，我们应该增加网络深度，这样更大的感受野可以帮助捕获包含更大图像中更多像素的类似特性。相应地，我们也应该在分辨率较高的情况下增加网络宽度，以便在高分辨率图像中以更多的像素捕获更多的细粒度模式。这些直觉表明，我们需要协调和平衡不同的维度放缩比例，而不是传统的对单一维度进行放缩.</p>
+<p>以上分析使作者得出第一个观察结果:<br><strong>Observation 1: 扩展网络宽度、深度或分辨率的任何维度都可以提高精度，但是对于较大的模型，精度增益会降低。</strong></p>
+<h1 id="Compound-Scaling"><a href="#Compound-Scaling" class="headerlink" title="Compound Scaling"></a>Compound Scaling</h1><p>作者从经验上观察到，对不同的维度进行放缩并不是独立的。直观地说，对于高分辨率的图像，作者应该增加网络深度，这样更大的感受野可以帮助捕获包含更大图像中更多像素的类似特性。相应地，作者也应该在分辨率较高的情况下增加网络宽度，以便在高分辨率图像中以更多的像素捕获更多的细粒度模式。这些直觉表明，作者需要协调和平衡不同的维度放缩比例，而不是传统的对单一维度进行放缩.</p>
 <p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/EfficientNet/fig4.jpg?x-oss-process=style/blog_img" alt="EfficientNet%2Ffig4.jpg"></div></p>
-<p>为了验证我们的直觉，我们比较了不同网络深度和分辨率下的宽度缩放，如图4所示。如果我们只缩放网络宽度w而不改变深度(d=1.0)和分辨率(r=1.0)，那么精度很快就会饱和。随着深度(d=2.0)和分辨率(r=2.0)的提高，宽度缩放在相同的 FLOPs 成本下实现了更高的精度。这些结果使我们得出第二个观察结果:</p>
+<p>为了验证作者的直觉，作者比较了不同网络深度和分辨率下的宽度缩放，如图4所示。如果作者只缩放网络宽度w而不改变深度(d=1.0)和分辨率(r=1.0)，那么精度很快就会饱和。随着深度(d=2.0)和分辨率(r=2.0)的提高，宽度缩放在相同的 FLOPs 成本下实现了更高的精度。这些结果使作者得出第二个观察结果:</p>
 <p><strong>Observation 2: 为了追求更高的精度和效率，在ConvNet缩放过程中平衡网络宽度、深度和分辨率的所有维度是至关重要的。</strong></p>
 <p>事实上，之前的一些工作已经尝试过任意平衡网络的宽度和深度，但是它们都需要繁琐的手工调优。</p>
-<p>在本文中,我们提出一个新的复合缩放(Compound Scaling)方法,使用一个复合系数 $\phi$ 以一种 principled way 来调节网络宽度、深度和分辨率.</p>
+<p>在本文中,作者提出一个新的复合缩放(Compound Scaling)方法,使用一个复合系数 $\phi$ 以一种 principled way 来调节网络宽度、深度和分辨率.</p>
 <script type="math/tex; mode=display">d = \alpha^\phi</script><script type="math/tex; mode=display">w = \beta^\phi</script><script type="math/tex; mode=display">r = \gamma^\phi</script><script type="math/tex; mode=display">s.t. \alpha \cdot \beta^2 \cdot \gamma^2 \approx 2, \alpha \geq 1, \beta \geq 1, \gamma \geq 1</script><p>上式中, balabala…</p>
-<h1 id="EfficientNet-Architecture"><a href="#EfficientNet-Architecture" class="headerlink" title="EfficientNet Architecture"></a>EfficientNet Architecture</h1><p>由于模型缩放不更改 baseline network 中的网络层算子 $\hat F_i$, 因此有一个好的基线网络也很重要。我们将使用现有的ConvNets来评估我们的缩放方法，但是为了更好地证明我们的缩放方法的有效性，我们还开发了一个新的 mobile-size baseline, 称为 EfficientNet.</p>
-<p>受(Tan et al.， 2019)的启发，我们开发了我们的基线网络，利用多目标神经结构搜索，优化 acc 和 FLOPs。具体来说,我们使用相同的搜索空间(Tan et al ., 2019),并使用 $ACC(m)×(FLOPs(m) / T)^w$ 作为优化目标, $ACC(m)$ 和 $FLOPs(m)$ 表示的准确性和模型的 FLOPs.  $T$ 是 target FLOPs, w = -0.07, 这是一个 hyperparameter, 用于控制准确性和 FLOPs 之间的权衡。不像(Tan等，2019;Cai等人，2019)，这里我们优化了 FLOPs 而不是 latency(延时)，因为我们没有针对任何特定的硬件设备。我们的搜索产生了一个高效的网络，我们将其命名为 EfficientNet-B0。由于我们使用的搜索空间与(Tan et al.， 2019)相同，所以架构类似于 MnasNet，只是我们的 EfficientNet-B0 稍大一些，因为 FLOPs 目标更大(我们的FLOPS目标是400M)。Table 1给出了 EfficientBet-B0 的体系结构。其主要构建块是 Mobile Inverted Bottlenect MBConv (San- dler et al.,2018);此外，我们还添加了 Squeeze-and-Excitation(Hu et al., 2018)。</p>
-<p>从基线 EffectiveNet-B0 开始，我们使用我们的复合缩放方法将其放大，分为两个步骤:</p>
+<h1 id="EfficientNet-Architecture"><a href="#EfficientNet-Architecture" class="headerlink" title="EfficientNet Architecture"></a>EfficientNet Architecture</h1><p>由于模型缩放不更改 baseline network 中的网络层算子 $\hat F_i$, 因此有一个好的基线网络也很重要。作者将使用现有的ConvNets来评估作者的缩放方法，但是为了更好地证明作者的缩放方法的有效性，作者还开发了一个新的 mobile-size baseline, 称为 EfficientNet.</p>
+<p>受(Tan et al.， 2019)的启发，作者开发了作者的基线网络，利用多目标神经结构搜索，优化 acc 和 FLOPs。具体来说,作者使用相同的搜索空间(Tan et al ., 2019),并使用 $ACC(m)×(FLOPs(m) / T)^w$ 作为优化目标, $ACC(m)$ 和 $FLOPs(m)$ 表示的准确性和模型的 FLOPs.  $T$ 是 target FLOPs, w = -0.07, 这是一个 hyperparameter, 用于控制准确性和 FLOPs 之间的权衡。不像(Tan等，2019;Cai等人，2019)，这里作者优化了 FLOPs 而不是 latency(延时)，因为作者没有针对任何特定的硬件设备。作者的搜索产生了一个高效的网络，作者将其命名为 EfficientNet-B0。由于作者使用的搜索空间与(Tan et al.， 2019)相同，所以架构类似于 MnasNet，只是作者的 EfficientNet-B0 稍大一些，因为 FLOPs 目标更大(作者的FLOPS目标是400M)。Table 1给出了 EfficientBet-B0 的体系结构。其主要构建块是 Mobile Inverted Bottlenect MBConv (San- dler et al.,2018);此外，作者还添加了 Squeeze-and-Excitation(Hu et al., 2018)。</p>
+<p>从基线 EffectiveNet-B0 开始，作者使用作者的复合缩放方法将其放大，分为两个步骤:</p>
 <ul>
-<li>步骤1: 我们首先固定 $\phi = 1$,假设具有两倍多新资源可用, 首先做一个小网格搜索, 得到 $\alpha, \beta, \gamma$。特别的, 我们找到最佳值 EfficientNet-B0 的配置为: $\alpha = 1.2, \beta=1.1, \gamma = 1.15$, 该配置处于 $\alpha \cdot \beta^2 \cdot gamma^2 \approx 2$ 的条件下.</li>
-<li>步骤2: 然后我们固定 $\alpha, \beta, \gamma$ 为常量, 同时利用 $\phi$ 来扩展 baseline network 这样就可以获得 EfficientNet-B1 to B7.(细节如表2所示)。</li>
+<li>步骤1: 作者首先固定 $\phi = 1$,假设具有两倍多新资源可用, 首先做一个小网格搜索, 得到 $\alpha, \beta, \gamma$。特别的, 作者找到最佳值 EfficientNet-B0 的配置为: $\alpha = 1.2, \beta=1.1, \gamma = 1.15$, 该配置处于 $\alpha \cdot \beta^2 \cdot gamma^2 \approx 2$ 的条件下.</li>
+<li>步骤2: 然后作者固定 $\alpha, \beta, \gamma$ 为常量, 同时利用 $\phi$ 来扩展 baseline network 这样就可以获得 EfficientNet-B1 to B7.(细节如表2所示)。</li>
 </ul>
 <p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/EfficientNet/tab2.jpg?x-oss-process=style/blog_img" alt="EfficientNet%2Ftab2.jpg"></div></p>
-<p>值得注意的是, 直接围绕一个大模型来搜索 $\alpha, \beta, phi$ 可以获得更好的性能, 但是搜索成本却贵得让人望而却步。因此我们的方法只在小型基线网络上搜索一次(步骤1)，然后对所有其他模型使用相同的比例系数(步骤2)，从而解决了这个问题。</p>
-<h1 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h1><p>在本节中，我们将首先评估我们对现有的 ConvNets 和新提出的 EfficientNet 的缩放方法。</p>
-<h2 id="Scaling-Up-MobileNets-and-ResNets"><a href="#Scaling-Up-MobileNets-and-ResNets" class="headerlink" title="Scaling Up MobileNets and ResNets"></a>Scaling Up MobileNets and ResNets</h2><p>作为简单的理论证明，我们首先将我们的缩放方法应用于广泛使用的 MobileNet 和 ResNet。表3显示了以不同方式缩放它们的ImageNet结果。与其他单维尺度法相比，本文提出的复合缩放法提高了所有模型的精度，表明本文提出的缩放法对一般已有的卷积神经网络是有效的。</p>
+<p>值得注意的是, 直接围绕一个大模型来搜索 $\alpha, \beta, phi$ 可以获得更好的性能, 但是搜索成本却贵得让人望而却步。因此作者的方法只在小型基线网络上搜索一次(步骤1)，然后对所有其他模型使用相同的比例系数(步骤2)，从而解决了这个问题。</p>
+<h1 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h1><p>在本节中，作者将首先评估作者对现有的 ConvNets 和新提出的 EfficientNet 的缩放方法。</p>
+<h2 id="Scaling-Up-MobileNets-and-ResNets"><a href="#Scaling-Up-MobileNets-and-ResNets" class="headerlink" title="Scaling Up MobileNets and ResNets"></a>Scaling Up MobileNets and ResNets</h2><p>作为简单的理论证明，作者首先将作者的缩放方法应用于广泛使用的 MobileNet 和 ResNet。表3显示了以不同方式缩放它们的ImageNet结果。与其他单维尺度法相比，本文提出的复合缩放法提高了所有模型的精度，表明本文提出的缩放法对一般已有的卷积神经网络是有效的。</p>
 <p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/EfficientNet/tab3.jpg?x-oss-process=style/blog_img" alt="EfficientNet%2Ftab3.jpg"></div></p>
-<h2 id="ImageNet-Results-for-EfficientNet"><a href="#ImageNet-Results-for-EfficientNet" class="headerlink" title="ImageNet Results for EfficientNet"></a>ImageNet Results for EfficientNet</h2><p>我们在ImageNet上使用类似的设置(Tan等，2019)来训练我们的有效网络模型:</p>
+<h2 id="ImageNet-Results-for-EfficientNet"><a href="#ImageNet-Results-for-EfficientNet" class="headerlink" title="ImageNet Results for EfficientNet"></a>ImageNet Results for EfficientNet</h2><p>作者在ImageNet上使用类似的设置(Tan等，2019)来训练作者的有效网络模型:</p>
 <ul>
 <li>RMSProp optimizer, 0.9 decay, 0.9 momentum</li>
 <li>batch norm momentum 0.99</li>
@@ -643,24 +643,24 @@
 <li>stochastic depth with drop connect ratio 0.2</li>
 <li>As commonly known that bigger models need more regularization, we linearly increase dropout (Srivastava et al., 2014) ratio from 0.2 for EfficientNet-B0 to 0.5 for EfficientNet-B7</li>
 </ul>
-<p>表2显示了从相同基线 Effecentnet-B0 扩展而来的所有 EffecentNet 模型的性能。我们的 EfficientNet 模型通常参数数量和 FLOPs 更少, 但是却具有和其他 ConvNets 相当的精度。其中，我们的 EffectiveNet-B7 以 66M 参数和 37B FLOPs 实现了 84.4% 的 top1 和 97.1% 的 top5 精度，比之前的最佳的 GPipe精度高, 但是比它小了8.4倍(Huang et al.， 2018)。</p>
-<p>图1和图5展示了典型的 ConvNets 的参数量-精确度和FLOPS-精确度曲线，其中我们的 scaled EfficientNet 模型在参数和FLOPS都比其他ConvNets少得多的情况下获得了更好的精确度。值得注意的是，我们的有效网络模型不仅体积小，而且计算成本更低。例如，我们的 EfficientNet-B3 比 ResNeXt-101 (Xie et al.， 2017)使用少于18x的 FLOPs, 但是却获得了更高的精度。</p>
+<p>表2显示了从相同基线 Effecentnet-B0 扩展而来的所有 EffecentNet 模型的性能。作者的 EfficientNet 模型通常参数数量和 FLOPs 更少, 但是却具有和其他 ConvNets 相当的精度。其中，作者的 EffectiveNet-B7 以 66M 参数和 37B FLOPs 实现了 84.4% 的 top1 和 97.1% 的 top5 精度，比之前的最佳的 GPipe精度高, 但是比它小了8.4倍(Huang et al.， 2018)。</p>
+<p>图1和图5展示了典型的 ConvNets 的参数量-精确度和FLOPS-精确度曲线，其中作者的 scaled EfficientNet 模型在参数和FLOPS都比其他ConvNets少得多的情况下获得了更好的精确度。值得注意的是，作者的有效网络模型不仅体积小，而且计算成本更低。例如，作者的 EfficientNet-B3 比 ResNeXt-101 (Xie et al.， 2017)使用少于18x的 FLOPs, 但是却获得了更高的精度。</p>
 <p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/EfficientNet/fig1.jpg?x-oss-process=style/blog_img" alt="EfficientNet%2Ffig1.jpg"></div></p>
 <p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/EfficientNet/fig5.jpg?x-oss-process=style/blog_img" alt="EfficientNet%2Ffig5.jpg"></div></p>
-<p>为了验证计算成本，我们还测量了真实CPU上几个典型covnet的推断延迟，如表4所示，我们统计了超过20次运行的平均延迟。我们的EfficientNet-B1运行速度比广泛使用的ResNet-152快5.7倍(He et al.， 2016)，而EfficientNet-B7运行速度大约比GPipe快6.1倍(Huang et al.， 2018)，这表明我们的efficient net在实际硬件上确实是很快的。</p>
+<p>为了验证计算成本，作者还测量了真实CPU上几个典型covnet的推断延迟，如表4所示，作者统计了超过20次运行的平均延迟。作者的EfficientNet-B1运行速度比广泛使用的ResNet-152快5.7倍(He et al.， 2016)，而EfficientNet-B7运行速度大约比GPipe快6.1倍(Huang et al.， 2018)，这表明作者的efficient net在实际硬件上确实是很快的。</p>
 <p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/EfficientNet/tab4.jpg?x-oss-process=style/blog_img" alt="EfficientNet%2Ftab4.jpg"></div></p>
-<h2 id="Transfer-Learning-Results-for-EfficientNet"><a href="#Transfer-Learning-Results-for-EfficientNet" class="headerlink" title="Transfer Learning Results for EfficientNet"></a>Transfer Learning Results for EfficientNet</h2><p>我们还在一系列常用的迁移学习数据集列表上评估了我们的 EfficientNet，如表6所示。我们借鉴了(Kornblith et al.， 2019)和(Huang et al.， 2018)相同的训练设置，在新数据集上使用ImageNet预训练模型并在新的数据集上进行 finetuning.</p>
+<h2 id="Transfer-Learning-Results-for-EfficientNet"><a href="#Transfer-Learning-Results-for-EfficientNet" class="headerlink" title="Transfer Learning Results for EfficientNet"></a>Transfer Learning Results for EfficientNet</h2><p>作者还在一系列常用的迁移学习数据集列表上评估了作者的 EfficientNet，如表6所示。作者借鉴了(Kornblith et al.， 2019)和(Huang et al.， 2018)相同的训练设置，在新数据集上使用ImageNet预训练模型并在新的数据集上进行 finetuning.</p>
 <p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/EfficientNet/tab6.jpg?x-oss-process=style/blog_img" alt="EfficientNet%2Ftab6.jpg"></div></p>
-<p>表5显示了转移学习的性能:(1)与NASNet-A (Zoph et al.， 2018)和 Inception-v4 (Szegedy et al.， 2017)等公共可用模型相比，我们的 EffectiveNet模型的精度更高，平均参数降低4.7倍(高达21倍)。(2)与动态综合训练数据的DAT (Ngiam et al.， 2018)和使用专用管道并行性训练的GPipe (Huang et al.， 2018)等最先进的模型相比，我们的效率网模型在8个数据集中有5个数据集的精度超过了它们，但是使用的参数少了9.6倍</p>
+<p>表5显示了转移学习的性能:(1)与NASNet-A (Zoph et al.， 2018)和 Inception-v4 (Szegedy et al.， 2017)等公共可用模型相比，作者的 EffectiveNet模型的精度更高，平均参数降低4.7倍(高达21倍)。(2)与动态综合训练数据的DAT (Ngiam et al.， 2018)和使用专用管道并行性训练的GPipe (Huang et al.， 2018)等最先进的模型相比，作者的效率网模型在8个数据集中有5个数据集的精度超过了它们，但是使用的参数少了9.6倍</p>
 <p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/EfficientNet/tab5.jpg?x-oss-process=style/blog_img" alt="EfficientNet%2Ftab5.jpg"></div></p>
-<p>图6比较了各种模型的精度-参数曲线。总的来说，我们的效率网在参数比现有模型少一个数量级的情况下，始终能够达到更好的精度，包括ResNet (He et al.， 2016)、DenseNet (Huang et al.， 2017)、Inception (Szegedy et al.， 2017)和NASNet (Zoph et al.， 2018)。</p>
+<p>图6比较了各种模型的精度-参数曲线。总的来说，作者的效率网在参数比现有模型少一个数量级的情况下，始终能够达到更好的精度，包括ResNet (He et al.， 2016)、DenseNet (Huang et al.， 2017)、Inception (Szegedy et al.， 2017)和NASNet (Zoph et al.， 2018)。</p>
 <p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/EfficientNet/fig6.jpg?x-oss-process=style/blog_img" alt="EfficientNet%2Ffig6.jpg"></div></p>
-<h1 id="Discussion"><a href="#Discussion" class="headerlink" title="Discussion"></a>Discussion</h1><p>为了将我们提出的缩放方法从 EffecentNet 体系结构中分离出来，图8比较了相同 EffecentNet-B0 baseline networks 中不同缩放方法的ImageNet性能。总的来说，所有的缩放方法都可以提高精度，但代价是更多的 FLOPs，但我们的复合缩放方法可以进一步提高精度，比其他一维缩放方法多提高2.5%的精度，这表明我们提出的复合缩放的重要性。</p>
+<h1 id="Discussion"><a href="#Discussion" class="headerlink" title="Discussion"></a>Discussion</h1><p>为了将作者提出的缩放方法从 EffecentNet 体系结构中分离出来，图8比较了相同 EffecentNet-B0 baseline networks 中不同缩放方法的ImageNet性能。总的来说，所有的缩放方法都可以提高精度，但代价是更多的 FLOPs，但作者的复合缩放方法可以进一步提高精度，比其他一维缩放方法多提高2.5%的精度，这表明作者提出的复合缩放的重要性。</p>
 <p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/EfficientNet/fig8.jpg?x-oss-process=style/blog_img" alt="EfficientNet%2Ffig8.jpg"></div></p>
-<p>为了进一步理解为什么我们的复合缩放方法比其他方法更好，图7比较了几种具有代表性的模型的 class activation map(Zhou et al.， 2016)。所有这些模型都是从相同的基线进行缩放的，它们的统计数据如表7所示。从ImageNet验证集中随机抽取图像。如图所示，compound scaling 模型更倾向于关注具有更多对象细节的相关区域，而其他模型要么缺乏对象细节，要么无法捕获图像中的所有对象。</p>
+<p>为了进一步理解为什么作者的复合缩放方法比其他方法更好，图7比较了几种具有代表性的模型的 class activation map(Zhou et al.， 2016)。所有这些模型都是从相同的基线进行缩放的，它们的统计数据如表7所示。从ImageNet验证集中随机抽取图像。如图所示，compound scaling 模型更倾向于关注具有更多对象细节的相关区域，而其他模型要么缺乏对象细节，要么无法捕获图像中的所有对象。</p>
 <p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/EfficientNet/tab7.jpg?x-oss-process=style/blog_img" alt="EfficientNet%2Ftab7.jpg"></div></p>
 <p><div style="width: 500px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/EfficientNet/fig7.jpg?x-oss-process=style/blog_img" alt="EfficientNet%2Ffig7.jpg"></div></p>
-<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>在本文中，我们系统地研究了ConvNet缩放，并发现仔细平衡网络的宽度、深度和分辨率是一个重要但缺少的部分，这阻碍了我们获得更好的精度和效率。为了解决这个问题，我们提出了一种简单高效的复合缩放方法，使我们能够更有原则地将基线卷积网络缩放到任何目标资源约束，同时保持模型的效率。通过这种复合缩放方法，我们证明了在ImageNet和五种常用的传输学习数据集上，一个移动尺寸的有效网络模型可以非常有效地缩放，以一个数量级更少的参数和更少的失败来超越最先进的精度。</p>
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>在本文中，作者系统地研究了ConvNet缩放，并发现仔细平衡网络的宽度、深度和分辨率是一个重要但缺少的部分，这阻碍了作者获得更好的精度和效率。为了解决这个问题，作者提出了一种简单高效的复合缩放方法，使作者能够更有原则地将基线卷积网络缩放到任何目标资源约束，同时保持模型的效率。通过这种复合缩放方法，作者证明了在ImageNet和五种常用的传输学习数据集上，一个移动尺寸的有效网络模型可以非常有效地缩放，以一个数量级更少的参数和更少的失败来超越最先进的精度。</p>
 
       
     </div>
@@ -1039,7 +1039,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">51:34</span>
+    <span title="站点阅读时长">51:41</span>
   
 </div>
 

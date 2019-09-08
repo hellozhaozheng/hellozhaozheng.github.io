@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="文章: Scalable Object Detection using Deep Neural Networks作者: Dumitru Erhan, Christian Szegedy, Alexander Toshev, and Dragomir Anguelov 核心亮点(1) 回归问题:将物体检测问题定义为输出多个bounding box的回归问题. 同时每个bounding box会输出关">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-25T12:02:39.531Z">
+<meta property="og:updated_time" content="2019-09-08T04:32:39.531Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MultiBox-CVPR2014">
 <meta name="twitter:description" content="文章: Scalable Object Detection using Deep Neural Networks作者: Dumitru Erhan, Christian Szegedy, Alexander Toshev, and Dragomir Anguelov 核心亮点(1) 回归问题:将物体检测问题定义为输出多个bounding box的回归问题. 同时每个bounding box会输出关">
@@ -479,8 +479,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-02-25T20:02:39+08:00" content="2019-02-25">
-      		  2019-02-25
+    		<time itemprop="dateUpdated" datetime="2019-09-08T12:32:39+08:00" content="2019-09-08">
+      		  2019-09-08
     		</time>
   	  </span>
 	  
@@ -590,9 +590,9 @@
 <p><strong>Bounding Box:</strong> 将左上角和右下角的坐标分别作为四个神经元的输出值. 这些坐标都是经过归一化的.</p>
 <p><strong>Confidence:</strong> 每个Box对应的置信度会单独作为一个神经元节点输出.</p>
 <p>在预测阶段, 可以利用该模型输出 $K$ 个bounding box预测结果, 同时可以利用NMS算法得到置信度更高的Box集合, 然后将这些集合送到分类器中进行分类.</p>
-<p><strong>训练目标:</strong> 假设对于一个训练样本, 具有 $M$ 个已经标注好的GT bounding box. 然后, 检测器会生成 $K$ 个预测的bounding box, $K$ 的值一般远远大于 $M$. 因此, 我们仅仅需要优化 $K$ 中与 $M$ 个GT匹配度最高的一个子集合. 优化的时候, 我们尽可能的提高这些子集合内部的预测框的置信度, 同时降低其他那些不在子集合里面的框的置信度. 对此, 形式化描述为下面的函数:</p>
+<p><strong>训练目标:</strong> 假设对于一个训练样本, 具有 $M$ 个已经标注好的GT bounding box. 然后, 检测器会生成 $K$ 个预测的bounding box, $K$ 的值一般远远大于 $M$. 因此, 作者仅仅需要优化 $K$ 中与 $M$ 个GT匹配度最高的一个子集合. 优化的时候, 作者尽可能的提高这些子集合内部的预测框的置信度, 同时降低其他那些不在子集合里面的框的置信度. 对此, 形式化描述为下面的函数:</p>
 <script type="math/tex; mode=display">F_{match}(x,l) = \frac{1}{2} \sum_{i,j} x_{ij} \|l_i - g_j\|_2^2</script><p>上式中, $x_{ij}=1$ 当且仅当第 $i$ 个预测框与第 $j$ 个真实框匹配. $l_i$ 和 $g_j$ 分别是预测框和真实框的归一化后的坐标.</p>
-<p>此外, 我们还希望对预测框的置信度进行优化, 将匹配框的置信度最大化, 这个过程转换成最小化下面的式子:</p>
+<p>此外, 作者还希望对预测框的置信度进行优化, 将匹配框的置信度最大化, 这个过程转换成最小化下面的式子:</p>
 <script type="math/tex; mode=display">F_{conf}(x,c) = -\sum{i,j} x_{i,j} log(c_i) - \sum_i (1 - \sum_j x_{ij}) log(1-c_i)</script><p>从上式可以看到, $\sum_j x_{ij} = 1$ 当且仅当预测框 $i$ 可以匹配到某个真实框. 在这种情况下, $c_i$ 将王越来越大的方向优化. 上面这个式子正式交叉熵.</p>
 <p>结合上面的两个公式, 最终的损失函数如下所示, 其中 $\alpha$ 用于调节两部分的权重:</p>
 <script type="math/tex; mode=display">F(x,l,c) = \alpha F_{match}(x,l) + F_{conf}(x,c)</script><p><strong>优化:</strong> 对于每一个训练样本, 都希望按照如下最优化问题求得 $x^*$ (也就是最优化预测框与真实框的匹配方案) :</p>
@@ -975,7 +975,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">51:34</span>
+    <span title="站点阅读时长">51:41</span>
   
 </div>
 

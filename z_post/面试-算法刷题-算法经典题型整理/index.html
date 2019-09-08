@@ -144,7 +144,7 @@
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fyfv96duh4j20wd095754.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1fyfx303ghvj20y107p74w.jpg">
 <meta property="og:image" content="https://wx2.sinaimg.cn/large/d7b90c85ly1fyfx3ex4fbj20zq09u3zb.jpg">
-<meta property="og:updated_time" content="2019-09-07T01:49:40.096Z">
+<meta property="og:updated_time" content="2019-09-07T08:29:21.529Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法经典题型整理">
 <meta name="twitter:description" content="LeetCode 算法题(Easy)LeetCode 算法题(Medium)LeetCode 算法题(Hard)剑指 offer 哈希构造方法:  直接寻址法：取关键字或关键字的某个线性函数值为散列地址。即H(key)=key或H(key) = a?key + b，其中a和b为常数（这种散列函数叫做自身函数） 数字分析法：分析一组数据，比如一组员工的出生年月日，这时我们发现出生年月日的前几位数字大">
@@ -504,7 +504,7 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-09-07T09:49:40+08:00" content="2019-09-07">
+    		<time itemprop="dateUpdated" datetime="2019-09-07T16:29:21+08:00" content="2019-09-07">
       		  2019-09-07
     		</time>
   	  </span>
@@ -1349,12 +1349,12 @@
 </ol>
 <p>其他符合卡特兰数的特征:</p>
 <ol>
-<li>令 $h(0)=1, h(1)=1$, 卡特兰树满足递推式: $h(n)=h(0)\times h(n-1) + h(1)\times h(n-2) + … + h(n-1) \times h(0)$</li>
+<li>令 $h(0)=1, h(1)=1$, 卡特兰树满足递推式:<script type="math/tex; mode=display">h(n)=h(0)\times h(n-1) + h(1)\times h(n-2) + ... + h(n-1) \times h(0)</script></li>
 <li>卡特兰数满足递推式: $h(n) = \frac{4n-2}{n+1} h(n-1)$, 写代码时多用: $h(n+1) = \frac{4n+2}{n+2} h(n)$</li>
 <li>卡特兰数的解为: $h(n) = \frac{1}{n+1} C_{2n}^{n}$</li>
 <li>卡特兰数的解为: $h(n) = C_{2n}^{n} - C_{2n}^{n-1}$</li>
 </ol>
-<h2 id="常见题型"><a href="#常见题型" class="headerlink" title="常见题型"></a>常见题型</h2><h3 id="0-1-类"><a href="#0-1-类" class="headerlink" title="0-1 类"></a>0-1 类</h3><p>n 个 0 与 n 个 1 随机组合, 要求从左到右数时, 确保每一个数之前 0 的个数不少于 1 个个数.</p>
+<h2 id="常见题型"><a href="#常见题型" class="headerlink" title="常见题型"></a>常见题型</h2><h3 id="0-1-类"><a href="#0-1-类" class="headerlink" title="0-1 类"></a>0-1 类</h3><p>n 个 0 与 n 个 1 随机组合, 要求从左到右数时, 确保每一个数之前 0 的个数不少于 1 个个数.<br>解: 考虑 n 对 01, 先固定一对 01, 然后, 在这对的前面, 所有的子序列都是符合要求的, 因此, 结果为: 0 对 <em> n-1 对 + 1 对 </em> n-2 对 + 2 对 * n-3 对…., 所以这是一个卡特兰数.</p>
 <p>实际题型举例:</p>
 <ol>
 <li>括号化问题。一个合法的表达式由()包围, ()可以嵌套和连接, 如(())()也是合法 表达式；现在有 n 对(), 它们可以组成的合法表达式的个数为</li>
@@ -1368,6 +1368,7 @@
 </ol>
 <h3 id="多边形类"><a href="#多边形类" class="headerlink" title="多边形类"></a>多边形类</h3><p>将多边行划分为三角形问题。将一个凸N+2多边形区域分成三角形区域的方法数?类似：一位大城市的律师在她住所以北n个街区和以东n个街区处工作。每天她走2n个街区去上班。如果她从不穿越（但可以碰到）从家到办公室的对角线, 那么有多少条可能的道路？类似：在圆上选择2n个点,将这些点成对连接起来使得所得到的n条线段不相交的方法数</p>
 <h3 id="二叉树类"><a href="#二叉树类" class="headerlink" title="二叉树类"></a>二叉树类</h3><p>给顶节点组成二叉树的问题。给定N个节点, 能构成多少种不同的二叉树</p>
+<p>固定根节点, 所有的情况为 左边的情况 <em> 右边的情况. 故而, 所以最终为: 0 </em> n-1 对 + 1 <em> n-2 对 + 2 </em> n-3 对 + … , 所以也是卡特兰数.</p>
 <p>不同的二叉搜索树: <a href="https://leetcode-cn.com/problems/unique-binary-search-trees/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/unique-binary-search-trees/</a></p>
 <h1 id="贪心"><a href="#贪心" class="headerlink" title="贪心"></a>贪心</h1><h2 id="045-跳跃游戏-II"><a href="#045-跳跃游戏-II" class="headerlink" title="045. 跳跃游戏 II"></a>045. 跳跃游戏 II</h2><p>给定一个非负整数数组，你最初位于数组的第一个位置。</p>
 <p>数组中的每个元素代表你在该位置可以跳跃的最大长度。</p>
@@ -1791,7 +1792,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">51:34</span>
+    <span title="站点阅读时长">51:41</span>
   
 </div>
 

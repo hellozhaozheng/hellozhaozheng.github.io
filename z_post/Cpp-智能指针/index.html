@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="C++ 提供了四个智能指针模板类, 分别是: auto_ptr, unique_ptr, shared_ptr和weak_ptr. (auto_ptr是 C++98 提供的解决方案, C++11 已经将其摒弃, 并提供了另外三种解决方案). 这三个智能指针模板都定义了类似指针的对象, 可以将new获得(直接或间接)的地址赋给这种对象. 当智能指针过期时, 其析构函数将使用delete来释放内存.">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-19T06:04:49.266Z">
+<meta property="og:updated_time" content="2019-09-07T12:28:01.677Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++ 中的智能指针">
 <meta name="twitter:description" content="C++ 提供了四个智能指针模板类, 分别是: auto_ptr, unique_ptr, shared_ptr和weak_ptr. (auto_ptr是 C++98 提供的解决方案, C++11 已经将其摒弃, 并提供了另外三种解决方案). 这三个智能指针模板都定义了类似指针的对象, 可以将new获得(直接或间接)的地址赋给这种对象. 当智能指针过期时, 其析构函数将使用delete来释放内存.">
@@ -479,8 +479,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-03-19T14:04:49+08:00" content="2019-03-19">
-      		  2019-03-19
+    		<time itemprop="dateUpdated" datetime="2019-09-07T20:28:01+08:00" content="2019-09-07">
+      		  2019-09-07
     		</time>
   	  </span>
 	  
@@ -542,7 +542,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.1k</span>
+                <span title="本文字数">1.2k</span>
               
 
               
@@ -581,6 +581,7 @@
 <li>auto_ptr: 当进行赋值时, 会将旧指针的所有权转让, 使得 <strong>对于特定的对象, 只能有一个智能指针可以拥有它</strong>.</li>
 <li>unique_ptr: 当进行赋值时, 会将旧指针的所有权转让, 使得 <strong>对于特定的对象, 只能有一个智能指针可以拥有它</strong>. unique_ptr 相比于 auto_ptr 会执行更加严格的所有权转让策略</li>
 <li>shared_ptr: 通过引用计数(reference counting), 跟踪引用特定特定对象的智能指针数. 当发生赋值操作时, 计数增1, 当指针过期时, 计数减1. 仅当最后一个指针过期时, 才调用 delete.</li>
+<li>weak_ptr: 不控制对象声明周期的智能指针, 它指向一个 shared_ptr 管理的对象, 而进行内存管理的只有 shared_ptr. weak_ptr 主要用来帮助解决循环引用问题, 它的构造和析构不会引起引用计数的增加或者减少. weak_ptr 一般都是配合 shared_ptr 使用, 通常不会单独使用.</li>
 </ul>
 <h1 id="unique-ptr-和-auto-ptr-的区别"><a href="#unique-ptr-和-auto-ptr-的区别" class="headerlink" title="unique_ptr 和 auto_ptr 的区别?"></a>unique_ptr 和 auto_ptr 的区别?</h1><ul>
 <li>所有权转让机制不同: auto_ptr 允许通过直接赋值进行转让, 但是这样会留下危险的 <strong>悬挂指针</strong>, 容易使得程序在运行阶段崩溃. unique_ptr 仅仅允许将临时右值进行赋值, 否则会在编译阶段发生错误, 这样更加安全(编译阶段错误比潜在的程序崩溃更安全).</li>
@@ -966,7 +967,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">51:34</span>
+    <span title="站点阅读时长">51:41</span>
   
 </div>
 

@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="从零开始的BLOG">
 <meta property="og:description" content="一. 基础篇基础问题 C++ 在 C 的基础上加了什么 define 宏定义 C++ 的编译和链接过程 结构体和联合体有什么区别 封装, 继承, 多态, 重载, 重写/覆盖概念解析 简单介绍一下 C++ 的继承机制 子类不能从父类继承的函数 重载, 隐藏和重写/覆盖的区别 友元类和友元函数 嵌套类 范围解析运算符 避免文件被多次编译 float 与 0 比较时需要注意什么 什么情况下会发生运行时错">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-07T01:47:22.923Z">
+<meta property="og:updated_time" content="2019-09-07T12:30:44.472Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++ 面试总结">
 <meta name="twitter:description" content="一. 基础篇基础问题 C++ 在 C 的基础上加了什么 define 宏定义 C++ 的编译和链接过程 结构体和联合体有什么区别 封装, 继承, 多态, 重载, 重写/覆盖概念解析 简单介绍一下 C++ 的继承机制 子类不能从父类继承的函数 重载, 隐藏和重写/覆盖的区别 友元类和友元函数 嵌套类 范围解析运算符 避免文件被多次编译 float 与 0 比较时需要注意什么 什么情况下会发生运行时错">
@@ -479,7 +479,7 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-09-07T09:47:22+08:00" content="2019-09-07">
+    		<time itemprop="dateUpdated" datetime="2019-09-07T20:30:44+08:00" content="2019-09-07">
       		  2019-09-07
     		</time>
   	  </span>
@@ -542,7 +542,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">7.6k</span>
+                <span title="本文字数">8.1k</span>
               
 
               
@@ -1065,6 +1065,14 @@
 <h1 id="三-高级篇"><a href="#三-高级篇" class="headerlink" title="三. 高级篇"></a>三. 高级篇</h1><h1 id="lambda-表达式"><a href="#lambda-表达式" class="headerlink" title="lambda 表达式"></a>lambda 表达式</h1><p><a href="../Cpp-lambda表达式">C++中的lambda表达式</a></p>
 <h1 id="C-中的协变与逆变"><a href="#C-中的协变与逆变" class="headerlink" title="C++中的协变与逆变"></a>C++中的协变与逆变</h1><p><a href="https://www.jianshu.com/p/db76a8b08694" target="_blank" rel="noopener">https://www.jianshu.com/p/db76a8b08694</a></p>
 <h1 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h1><p><a href="../Cpp-智能指针">C++ 中的智能指针</a></p>
+<ul>
+<li>unique_ptr: 当进行赋值时, 会将旧指针的所有权转让, 使得 <strong>对于特定的对象, 只能有一个智能指针可以拥有它</strong>. unique_ptr 相比于 auto_ptr 会执行更加严格的所有权转让策略</li>
+<li>shared_ptr: 通过引用计数(reference counting), 跟踪引用特定特定对象的智能指针数. 当发生赋值操作时, 计数增1, 当指针过期时, 计数减1. 仅当最后一个指针过期时, 才调用 delete.</li>
+<li>weak_ptr: 不控制对象声明周期的智能指针, 它指向一个 shared_ptr 管理的对象, 而进行内存管理的只有 shared_ptr. weak_ptr 主要用来帮助解决循环引用问题, 它的构造和析构不会引起引用计数的增加或者减少. weak_ptr 一般都是配合 shared_ptr 使用, 通常不会单独使用.</li>
+</ul>
+<p>C++ 的智能指针会带来循环引用问题, 引发内存泄露.</p>
+<p>两个类, 类里面各有两个 shared_ptr, 然后一个对象互相指向, 造成循环引用.<br>sp1 指向 sp2, sp2 指向 sp1, 这样二者的引用计数都是 2, 到到期时, 二者的引用数目都不能达到 0, 因此不会自动释放内存.</p>
+<p>解决方法, 用 weak_ptr</p>
 <h1 id="栈内存与文字常量区"><a href="#栈内存与文字常量区" class="headerlink" title="栈内存与文字常量区"></a>栈内存与文字常量区</h1><h1 id="C-11-新特性"><a href="#C-11-新特性" class="headerlink" title="C++ 11 新特性"></a>C++ 11 新特性</h1><p>右值引用, 泛化常量表达式<br>初始化列表, 类型推导(auto), 范围for循环, lambda表达式, final关键字<br>override<br>空指针 nullptr<br>default, delete<br>长整数(long, long)<br>智能指针, 哈希表(unordered_map)</p>
 
       
@@ -1442,7 +1450,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">51:34</span>
+    <span title="站点阅读时长">51:41</span>
   
 </div>
 

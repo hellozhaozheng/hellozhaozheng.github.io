@@ -129,7 +129,7 @@
 <meta property="og:image" content="https://zerozone-blog.oss-cn-beijing.aliyuncs.com/CBAM/tab2.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="https://zerozone-blog.oss-cn-beijing.aliyuncs.com/CBAM/tab3.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="https://zerozone-blog.oss-cn-beijing.aliyuncs.com/CBAM/tab4.jpg?x-oss-process=style/blog_img">
-<meta property="og:updated_time" content="2019-08-02T05:13:55.791Z">
+<meta property="og:updated_time" content="2019-09-08T04:31:04.930Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CBAM (ECCV, 2018)">
 <meta name="twitter:description" content="CBAM: Convolutional Block Attention Module 摘要作者指出, 目前的大量工作, 在对 backbone 网络进行改进时, 大多会从三个方面进行改进: depth, width, and cardinality. 而作者从另外一个角度: attention 进行改进. 相比于之前的 SE-Block attention 工作, 作者不仅利用了特征图谱中通道之间">
@@ -489,8 +489,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-08-02T13:13:55+08:00" content="2019-08-02">
-      		  2019-08-02
+    		<time itemprop="dateUpdated" datetime="2019-09-08T12:31:04+08:00" content="2019-09-08">
+      		  2019-09-08
     		</time>
   	  </span>
 	  
@@ -596,7 +596,7 @@
 <p><div style="width: 500px; margin: auto"><img src="https://zerozone-blog.oss-cn-beijing.aliyuncs.com/CBAM/fig2.jpg?x-oss-process=style/blog_img" alt="CBAM%2Ffig2.jpg"></div></p>
 <p>首先是 channel attention module, 该模块的思想和 SE-Block 类似, 都是强调 ‘what’ is meaningful given an input image. 利用了通道间的关系来使用 attention. 和 SE-Block 不同的是, 作者不仅使用了 Global Average Pooling, 同时还使用了 Global Max Pooling. channel attention module 的实现和作用机制可以用下面的公式 2 来概括:</p>
 <p><div style="width: 500px; margin: auto"><img src="https://zerozone-blog.oss-cn-beijing.aliyuncs.com/CBAM/form2.jpg?x-oss-process=style/blog_img" alt="CBAM%2Fform2.jpg"></div></p>
-<p>接下来是 Spatial attention module, 和 channel attention module 不同的是, Spatial attention module 是在 channel 维度上进行 pooling 的, 这样, 最终生成的特征图谱的深度就会变成 1. 从直观感受上我们可以看出, Different from the channel attention, the spatial attention focuses on ‘where’ is an informative part. 这一 attention 模块的实现和作用机制可以用下面的公式 3 来概括:</p>
+<p>接下来是 Spatial attention module, 和 channel attention module 不同的是, Spatial attention module 是在 channel 维度上进行 pooling 的, 这样, 最终生成的特征图谱的深度就会变成 1. 从直观感受上作者可以看出, Different from the channel attention, the spatial attention focuses on ‘where’ is an informative part. 这一 attention 模块的实现和作用机制可以用下面的公式 3 来概括:</p>
 <p><div style="width: 500px; margin: auto"><img src="https://zerozone-blog.oss-cn-beijing.aliyuncs.com/CBAM/form3.jpg?x-oss-process=style/blog_img" alt="CBAM%2Fform3.jpg"></div></p>
 <p>作者建议 CBAM 插入到 backbone 网络的 basic block 部分, 如下图 3 所示.</p>
 <p><div style="width: 500px; margin: auto"><img src="https://zerozone-blog.oss-cn-beijing.aliyuncs.com/CBAM/fig3.jpg?x-oss-process=style/blog_img" alt="CBAM%2Ffig3.jpg"></div></p>
@@ -973,7 +973,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">51:34</span>
+    <span title="站点阅读时长">51:41</span>
   
 </div>
 

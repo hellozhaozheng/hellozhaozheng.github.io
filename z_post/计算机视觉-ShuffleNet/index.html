@@ -112,13 +112,13 @@
 
 
 
-  <meta name="description" content="文章: ShuffleNet: An Extremely Efficient Convolutional Neural Network for Mobile Devices作者: Xiangyu Zhang, Xinyu Zhou, Mengxiao Lin, Jian Sun备注: Megvii Inc 摘要我们介绍了一种计算效率极高的 CNN 结构, 名为 ShuffleNet, 它是专门为计">
+  <meta name="description" content="文章: ShuffleNet: An Extremely Efficient Convolutional Neural Network for Mobile Devices作者: Xiangyu Zhang, Xinyu Zhou, Mengxiao Lin, Jian Sun备注: Megvii Inc 摘要作者介绍了一种计算效率极高的 CNN 结构, 名为 ShuffleNet, 它是专门为计">
 <meta name="keywords" content="计算机视觉,网络结构,论文解读">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ShuffleNet">
 <meta property="og:url" content="https://hellozhaozheng.github.io/z_post/计算机视觉-ShuffleNet/index.html">
 <meta property="og:site_name" content="从零开始的BLOG">
-<meta property="og:description" content="文章: ShuffleNet: An Extremely Efficient Convolutional Neural Network for Mobile Devices作者: Xiangyu Zhang, Xinyu Zhou, Mengxiao Lin, Jian Sun备注: Megvii Inc 摘要我们介绍了一种计算效率极高的 CNN 结构, 名为 ShuffleNet, 它是专门为计">
+<meta property="og:description" content="文章: ShuffleNet: An Extremely Efficient Convolutional Neural Network for Mobile Devices作者: Xiangyu Zhang, Xinyu Zhou, Mengxiao Lin, Jian Sun备注: Megvii Inc 摘要作者介绍了一种计算效率极高的 CNN 结构, 名为 ShuffleNet, 它是专门为计">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1g1jpz4z41nj217i0ijn0e.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1g1jpzhxydej217o0jvgoi.jpg">
@@ -126,10 +126,10 @@
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1g1jq09fei8j20xf0atacn.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/d7b90c85ly1g1jq0lbp91j21790m3q97.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/d7b90c85ly1g1jq0xl5qrj21810u07e3.jpg">
-<meta property="og:updated_time" content="2019-07-31T10:58:51.589Z">
+<meta property="og:updated_time" content="2019-09-08T04:32:01.080Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ShuffleNet">
-<meta name="twitter:description" content="文章: ShuffleNet: An Extremely Efficient Convolutional Neural Network for Mobile Devices作者: Xiangyu Zhang, Xinyu Zhou, Mengxiao Lin, Jian Sun备注: Megvii Inc 摘要我们介绍了一种计算效率极高的 CNN 结构, 名为 ShuffleNet, 它是专门为计">
+<meta name="twitter:description" content="文章: ShuffleNet: An Extremely Efficient Convolutional Neural Network for Mobile Devices作者: Xiangyu Zhang, Xinyu Zhou, Mengxiao Lin, Jian Sun备注: Megvii Inc 摘要作者介绍了一种计算效率极高的 CNN 结构, 名为 ShuffleNet, 它是专门为计">
 <meta name="twitter:image" content="https://wx3.sinaimg.cn/large/d7b90c85ly1g1jpz4z41nj217i0ijn0e.jpg">
 
 
@@ -486,8 +486,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-07-31T18:58:51+08:00" content="2019-07-31">
-      		  2019-07-31
+    		<time itemprop="dateUpdated" datetime="2019-09-08T12:32:01+08:00" content="2019-09-08">
+      		  2019-09-08
     		</time>
   	  </span>
 	  
@@ -584,24 +584,24 @@
 
       
         <p><strong>文章:</strong> ShuffleNet: An Extremely Efficient Convolutional Neural Network for Mobile Devices<br><strong>作者:</strong> Xiangyu Zhang, Xinyu Zhou, Mengxiao Lin, Jian Sun<br><strong>备注:</strong> Megvii Inc</p>
-<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>我们介绍了一种计算效率极高的 CNN 结构, 名为 ShuffleNet, 它是专门为计算能力非常有限的移动设备设计的. 这个新的网络结构采用了两种新的计算操作: 点态组卷积(pointwise group convolution) 和 通道洗牌(channel shuffle). 实验显示, 效果很好.</p>
-<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>我们注意到, 最先进的架构, 如 Xception 和 ResNeXt, 在非常小的网络中, 由于成本较高的密集 1x1 卷积, 使得计算效率变的较低. 因此, 本文提出使用点态组卷积(pointwise group convolution)来降低 1x1 卷积的计算复杂度. 为了克服 group convolution 带来的副作用, 我们提出了一种新的 channel shuffle 操作来帮助信息在特征信道间流动. 基于这两种技术, 我们构建了一个名为 ShuffleNet 的高效结构.</p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>作者介绍了一种计算效率极高的 CNN 结构, 名为 ShuffleNet, 它是专门为计算能力非常有限的移动设备设计的. 这个新的网络结构采用了两种新的计算操作: 点态组卷积(pointwise group convolution) 和 通道洗牌(channel shuffle). 实验显示, 效果很好.</p>
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>作者注意到, 最先进的架构, 如 Xception 和 ResNeXt, 在非常小的网络中, 由于成本较高的密集 1x1 卷积, 使得计算效率变的较低. 因此, 本文提出使用点态组卷积(pointwise group convolution)来降低 1x1 卷积的计算复杂度. 为了克服 group convolution 带来的副作用, 作者提出了一种新的 channel shuffle 操作来帮助信息在特征信道间流动. 基于这两种技术, 作者构建了一个名为 ShuffleNet 的高效结构.</p>
 <h1 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h1><p><strong>Efficient Model Designs:</strong> GoogLeNet, SqueezeNet, ResNet, SENet, NASNet</p>
 <p><strong>Group Convolution:</strong> AlexNet 首先提供 group conv 的概念, ResNeXt, Xception, MobileNet.</p>
 <p><strong>Channel Shuffle Operation:</strong> Interleaved group convolutions for deep neural networks (paper)</p>
 <p><strong>Model Acceleration(在 Inference 阶段加速以训练好的模型):</strong> Pruning network connections, Channels Reduce, Quantization, Factorization. <strong>利用 FFT 或者其他方法优化卷积计算</strong>, 大模型到小模型的知识迁移.</p>
-<h1 id="Approach"><a href="#Approach" class="headerlink" title="Approach"></a>Approach</h1><h2 id="Channel-Shuffle-for-Group-Convolutions"><a href="#Channel-Shuffle-for-Group-Convolutions" class="headerlink" title="Channel Shuffle for Group Convolutions"></a>Channel Shuffle for Group Convolutions</h2><p>现代的卷积神经网络通常由相同结构的 building blocks 组成. 其中, Xception 和 ResNeXt 在 building blocks 中引入了高效的深度可分离卷积(Depthwise Separable Conv)和组卷积(Group Conv), 从而在表征能力和计算成本之间取得了很好的平衡. <strong>但是, 我们注意到这两种设计没有完全对 1x1 卷积进行分析, 而实际上该卷积也需要较大的计算量.</strong> 例如, 在 ResNeXt 中, 只有 3x3 卷积层配置了 Group Conv, 因此, 对于 ResNeXt 中的每一个残差单元来说, Pointwise Conv 都要占用 93.4% 的乘法加法操作. 在微型网络中, 成本高的 Pointwise Conv 会利用有限的通道数来满足复杂度的约束, 但是这样可能会损害精度.</p>
+<h1 id="Approach"><a href="#Approach" class="headerlink" title="Approach"></a>Approach</h1><h2 id="Channel-Shuffle-for-Group-Convolutions"><a href="#Channel-Shuffle-for-Group-Convolutions" class="headerlink" title="Channel Shuffle for Group Convolutions"></a>Channel Shuffle for Group Convolutions</h2><p>现代的卷积神经网络通常由相同结构的 building blocks 组成. 其中, Xception 和 ResNeXt 在 building blocks 中引入了高效的深度可分离卷积(Depthwise Separable Conv)和组卷积(Group Conv), 从而在表征能力和计算成本之间取得了很好的平衡. <strong>但是, 作者注意到这两种设计没有完全对 1x1 卷积进行分析, 而实际上该卷积也需要较大的计算量.</strong> 例如, 在 ResNeXt 中, 只有 3x3 卷积层配置了 Group Conv, 因此, 对于 ResNeXt 中的每一个残差单元来说, Pointwise Conv 都要占用 93.4% 的乘法加法操作. 在微型网络中, 成本高的 Pointwise Conv 会利用有限的通道数来满足复杂度的约束, 但是这样可能会损害精度.</p>
 <p>为了解决这个问题, 一个简单的解决方案是利用通道稀疏连接(channel sparse connections). 通过确保每个卷积只对对应的输入通道进行运算, 例如利用 Group Conv 显著降低计算成本. 但是, 如果将多个 Group conv 叠加在一起, 就会产生一个副作用: 来自某个通道的输出只来自于一小部分的输入通道. 图1(a)展示了两个 Group Conv 叠加的情况, 很明显, 某个 Group 的输出至于 Group 内的输入有关, 这种性质会阻塞通道之间的信息流, 降低表征能力.</p>
 <p><div style="width: 550px; margin: auto"><img src="https://wx3.sinaimg.cn/large/d7b90c85ly1g1jpz4z41nj217i0ijn0e.jpg" alt="图1"></div></p>
-<p>如果我们允许 Group Conv 获取来自不同 groups 的输入数据, 如图1(b)所示, 那么输入和输出通道将会完全相关. 具体来说, 对于前一个 group layer 生成的 feature map, 我们可以先将每个 group 内部的通道划分成若干个 subgroups, 然后给下一个 group layer 的中每一个 group 提供不同的 subgroups. <strong>这可以利用通道洗牌(channel shuffle)操作高效且优雅的实现, 如图1(c)所示:</strong> 假设一个卷积层具有 $g$ 个 groups, 它的输出通道数为 $g\times n$. 我们首先将输出的通道数 reshape 成 $(g, n)$, 然后利用 transposing 进行转置, 最后利用 flatten 将其开展, 并作为下一层的输入. 注意到, 即使两个卷积层的组数不同, 该操作依然有效. 此外, channel shuffle 也是可微的, 这意味着它可以嵌入到网络结构中进行端到端的训练. 信道洗牌操作使得构建具有多组卷积层的更强大的结构成为可能。在下一小节中，我们将介绍一种具有信道洗牌和组卷积的高效网络单元</p>
-<h2 id="ShuffleNet-Unit"><a href="#ShuffleNet-Unit" class="headerlink" title="ShuffleNet Unit"></a>ShuffleNet Unit</h2><p>利用 channel shuffle 的优势, 我们提出了一种专为小型网络设计的 ShuffleNet unit. 我们从 ResNet 的 bottleneck 的设计原则开始. 首先, 我们将残差分支的 3x3 卷积换成计算效益更高的 Depthwise Conv, 如图2(a)所示. 然后, 我们将第一个 1x1 卷积层换成 Group Conv(Pointwise) 和 Channel Shuffle, 如图2(b)所示, 第二个 Group Conv(Pointwise) 的目的是恢复通道数以匹配 shortcut 连接, 为了简单起见, 我们没有这里使用额外的 Channel Shuffle 操作, 因为这已经可以产生不错的效果了. BN 和 ReLU 会用在每个卷积层之后, 只不过根据 Xception 的建议, <strong>我们没有在 Depthwise Conv 之后使用 ReLU.</strong> 对于需要下采样(with stride)的情况, 我们做了两点修改, 如图2(c)所示: 首先, 在 shortcut path 上添加一个 3x3 的 avg pooling; 然后, 用 channel concatenation 操作替换 element-wise addition 操作, 这使得在不增加额外计算成本的情况下, 可以方便的扩大通道尺寸.</p>
+<p>如果作者允许 Group Conv 获取来自不同 groups 的输入数据, 如图1(b)所示, 那么输入和输出通道将会完全相关. 具体来说, 对于前一个 group layer 生成的 feature map, 作者可以先将每个 group 内部的通道划分成若干个 subgroups, 然后给下一个 group layer 的中每一个 group 提供不同的 subgroups. <strong>这可以利用通道洗牌(channel shuffle)操作高效且优雅的实现, 如图1(c)所示:</strong> 假设一个卷积层具有 $g$ 个 groups, 它的输出通道数为 $g\times n$. 作者首先将输出的通道数 reshape 成 $(g, n)$, 然后利用 transposing 进行转置, 最后利用 flatten 将其开展, 并作为下一层的输入. 注意到, 即使两个卷积层的组数不同, 该操作依然有效. 此外, channel shuffle 也是可微的, 这意味着它可以嵌入到网络结构中进行端到端的训练. 信道洗牌操作使得构建具有多组卷积层的更强大的结构成为可能。在下一小节中，作者将介绍一种具有信道洗牌和组卷积的高效网络单元</p>
+<h2 id="ShuffleNet-Unit"><a href="#ShuffleNet-Unit" class="headerlink" title="ShuffleNet Unit"></a>ShuffleNet Unit</h2><p>利用 channel shuffle 的优势, 作者提出了一种专为小型网络设计的 ShuffleNet unit. 作者从 ResNet 的 bottleneck 的设计原则开始. 首先, 作者将残差分支的 3x3 卷积换成计算效益更高的 Depthwise Conv, 如图2(a)所示. 然后, 作者将第一个 1x1 卷积层换成 Group Conv(Pointwise) 和 Channel Shuffle, 如图2(b)所示, 第二个 Group Conv(Pointwise) 的目的是恢复通道数以匹配 shortcut 连接, 为了简单起见, 作者没有这里使用额外的 Channel Shuffle 操作, 因为这已经可以产生不错的效果了. BN 和 ReLU 会用在每个卷积层之后, 只不过根据 Xception 的建议, <strong>作者没有在 Depthwise Conv 之后使用 ReLU.</strong> 对于需要下采样(with stride)的情况, 作者做了两点修改, 如图2(c)所示: 首先, 在 shortcut path 上添加一个 3x3 的 avg pooling; 然后, 用 channel concatenation 操作替换 element-wise addition 操作, 这使得在不增加额外计算成本的情况下, 可以方便的扩大通道尺寸.</p>
 <p><div style="width: 550px; margin: auto"><img src="https://wx4.sinaimg.cn/large/d7b90c85ly1g1jpzhxydej217o0jvgoi.jpg" alt="图2"></div></p>
-<p>得益于 Pointwise Group Conv 和 Channel Shuffle 的结合, ShuffleNet 中的所有组件都可以高效的进行计算. 和 ResNet 与 ResNeXt 相比, 我们的结构在相同的设定下具有更少的复杂度. 例如, 当给定输入尺寸为 $c\times h\times w$, 而 bottleneck 的通道数为 $m$ 时, ResNet unit 需要 $hw(2cm + 9m^2)$ FLOPs, ResNeXt 需要 $hw(2cm + 9m^2/g)$ FLOPs, 而 ShuffleNet 只需要 $hw(2cm/g + 9m)$ FLOPs. 也就说, 当给定计算资源限制后, ShuffleNet 可以使用更大的特征图谱, 这对于小型网络来说非常重要, 因为小型网络通畅没有足够的通道来处理信息.</p>
-<p>此外, ShuffleNet 中的 Depthwise Conv 只在 bottleneck 的特征图谱上执行. 虽然深度卷积通常具有非常低的理论复杂度, 但我们发现在低功耗移动设备上很难有效地实现, 这可能是因为与其他密集操作相比, Depthwise Conv 的计算/内存访问率更低.</p>
-<h2 id="Network-Architecture"><a href="#Network-Architecture" class="headerlink" title="Network Architecture"></a>Network Architecture</h2><p>基于 ShuffleNet Units, 我们在表1中给出了整个 ShuffleNet 的网络结构. 该网络主要有一系列的 ShuffleNet units 组成, 并且可以划分为三个阶段. <strong>每个阶段的第一个 building block 的步长为2(stride=2).</strong> 每个 Stage 内的其他超参数都相同, 并且当进入下一个 Stage 时, Channels 的输出数量都翻倍. 和 ResNet 类似, 我们设置 bottleneck 的 channels 的数量为最终输出通道数量的 1/4. <strong>我们的目标是提供一个尽可能简单的参考设计, 尽管我们发现更进一步的超参数调优可能会产生更好的结果.</strong></p>
+<p>得益于 Pointwise Group Conv 和 Channel Shuffle 的结合, ShuffleNet 中的所有组件都可以高效的进行计算. 和 ResNet 与 ResNeXt 相比, 作者的结构在相同的设定下具有更少的复杂度. 例如, 当给定输入尺寸为 $c\times h\times w$, 而 bottleneck 的通道数为 $m$ 时, ResNet unit 需要 $hw(2cm + 9m^2)$ FLOPs, ResNeXt 需要 $hw(2cm + 9m^2/g)$ FLOPs, 而 ShuffleNet 只需要 $hw(2cm/g + 9m)$ FLOPs. 也就说, 当给定计算资源限制后, ShuffleNet 可以使用更大的特征图谱, 这对于小型网络来说非常重要, 因为小型网络通畅没有足够的通道来处理信息.</p>
+<p>此外, ShuffleNet 中的 Depthwise Conv 只在 bottleneck 的特征图谱上执行. 虽然深度卷积通常具有非常低的理论复杂度, 但作者发现在低功耗移动设备上很难有效地实现, 这可能是因为与其他密集操作相比, Depthwise Conv 的计算/内存访问率更低.</p>
+<h2 id="Network-Architecture"><a href="#Network-Architecture" class="headerlink" title="Network Architecture"></a>Network Architecture</h2><p>基于 ShuffleNet Units, 作者在表1中给出了整个 ShuffleNet 的网络结构. 该网络主要有一系列的 ShuffleNet units 组成, 并且可以划分为三个阶段. <strong>每个阶段的第一个 building block 的步长为2(stride=2).</strong> 每个 Stage 内的其他超参数都相同, 并且当进入下一个 Stage 时, Channels 的输出数量都翻倍. 和 ResNet 类似, 作者设置 bottleneck 的 channels 的数量为最终输出通道数量的 1/4. <strong>作者的目标是提供一个尽可能简单的参考设计, 尽管作者发现更进一步的超参数调优可能会产生更好的结果.</strong></p>
 <p><div style="width: 550px; margin: auto"><img src="https://wx2.sinaimg.cn/large/d7b90c85ly1g1jpzzw2hwj21780q9dmy.jpg" alt="表1-2"></div></p>
-<p>在 ShuffleNet units 中, Group 的数量 $g$ 控制了 Pointwise Conv 的连接稀疏性. 表1研究了不同组数带来的影响, 同时我们会适当调节输出通道数, 以确保总体的计算成本不变. 很明显, 在给定计算资源限制的情况下, 更多的组数可以具有更多的输出通道数, 这样可以对更多的信息编码, 但是由于相应的输入通道有限, 因此这也可能导致单个卷积 filter 的性能下降.</p>
-<p>要将网络自定义为所需的复杂性, 我们可以简单地在通道的数量上应用一个比例因子 $s$. 例如, 我们将表1中的网络表示为 “ShuffleNet 1x”, 那么 “ShuffleNet sx” 表示将 ShuffleNet 1x 中的 filters 数量乘以 $s$, 因此总体复杂度大约是 ShuffleNet 1x 的 $s^2$ 倍.</p>
+<p>在 ShuffleNet units 中, Group 的数量 $g$ 控制了 Pointwise Conv 的连接稀疏性. 表1研究了不同组数带来的影响, 同时作者会适当调节输出通道数, 以确保总体的计算成本不变. 很明显, 在给定计算资源限制的情况下, 更多的组数可以具有更多的输出通道数, 这样可以对更多的信息编码, 但是由于相应的输入通道有限, 因此这也可能导致单个卷积 filter 的性能下降.</p>
+<p>要将网络自定义为所需的复杂性, 作者可以简单地在通道的数量上应用一个比例因子 $s$. 例如, 作者将表1中的网络表示为 “ShuffleNet 1x”, 那么 “ShuffleNet sx” 表示将 ShuffleNet 1x 中的 filters 数量乘以 $s$, 因此总体复杂度大约是 ShuffleNet 1x 的 $s^2$ 倍.</p>
 <h1 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h1><p>weight decay: 4e-5.<br>lr: linear-decay learning rate policy.<br>batch size: 1024</p>
 <p>Pointwise Group Convolutions: 如表2所示</p>
 <p>Channel Shuffle: 如表3所示, 当 group 越大时, Channel Shuffle 带来的效益越高</p>
@@ -994,7 +994,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">51:34</span>
+    <span title="站点阅读时长">51:41</span>
   
 </div>
 

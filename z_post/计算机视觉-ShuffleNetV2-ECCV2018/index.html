@@ -135,7 +135,7 @@
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/ShuffleNetV2/tab6.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/ShuffleNetV2/Atab2.jpg?x-oss-process=style/blog_img">
 <meta property="og:image" content="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/ShuffleNetV2/tab7.jpg?x-oss-process=style/blog_img">
-<meta property="og:updated_time" content="2019-07-31T14:21:21.468Z">
+<meta property="og:updated_time" content="2019-09-08T04:30:19.186Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ShuffleNetV2 (ECCV, 2018)">
 <meta name="twitter:description" content="文章: ShuffleNet V2: Practical Guidelines for Efficient CNN Architecture Design作者: Ningning Ma, Xiangyu Zhang, Hai-Tao Zheng, Jian Sun备注: Megvii 摘要目前，神经网络体系结构设计主要以计算复杂度的 间接度量 为指导，即, FLOPs。然而，速度等直接指标也取决于">
@@ -495,8 +495,8 @@
 	  
   	    <span class="post-updated">
     		&nbsp; | &nbsp; 更新于
-    		<time itemprop="dateUpdated" datetime="2019-07-31T22:21:21+08:00" content="2019-07-31">
-      		  2019-07-31
+    		<time itemprop="dateUpdated" datetime="2019-09-08T12:30:19+08:00" content="2019-09-08">
+      		  2019-09-08
     		</time>
   	  </span>
 	  
@@ -663,17 +663,17 @@
 <p>最后，图1(a)(b)总结了精度与速度(直接度量)之间的关系。本文得出结论，ShuffeNet v2在GPU和ARM上都是最好的。</p>
 <h2 id="与其他方法的兼容性"><a href="#与其他方法的兼容性" class="headerlink" title="与其他方法的兼容性"></a>与其他方法的兼容性</h2><p>ShuffeNet v2可以与其他技术相结合，进一步提高性能。当使用 Squeeze-and-excitation(SE)模块[8]时，ShuffleNet v2的分类精度提高了0.5%，并且保证不会有大的速度损失。block 结构如下面的附录图2(b)所示。结果见表8(底部部分)。</p>
 <p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/ShuffleNetV2/Afig2.jpg?x-oss-process=style/blog_img" alt="ShuffleNetV2%2FAfig2.jpg"></div></p>
-<h2 id="对大型模型的泛化。"><a href="#对大型模型的泛化。" class="headerlink" title="对大型模型的泛化。"></a>对大型模型的泛化。</h2><p>虽然我们的消融主要用于轻重量的情况下，ShuffleNet v2可以用于大型模型(e.g, FLOPs≥2G)。表6比较了50层ShuffleNet v2(详见附录)与ShuffleNet v1[15]和ResNet-50[4]的对应版本。ShuffleNet v2仍然在2.3GFLOPs上优于ShuffleNet v1，并且以40%的更少的FLOPs超过ResNet-50。</p>
-<p>对于非常深的ShuffleNet v2(例如超过100层)，为了使训练更快地收敛，我们通过添加一个残差路径(详见附录)来稍微修改基本的ShuffleNet v2单元。表6给出了一个包含164层的ShuffleNet v2模型，其中包含SE[8]组件(详见附录图2)。与以前的最先进的型号[8]相比，它在更少的 FLOPs 下获得了更高的精度。</p>
+<h2 id="对大型模型的泛化。"><a href="#对大型模型的泛化。" class="headerlink" title="对大型模型的泛化。"></a>对大型模型的泛化。</h2><p>虽然作者的消融主要用于轻重量的情况下，ShuffleNet v2可以用于大型模型(e.g, FLOPs≥2G)。表6比较了50层ShuffleNet v2(详见附录)与ShuffleNet v1[15]和ResNet-50[4]的对应版本。ShuffleNet v2仍然在2.3GFLOPs上优于ShuffleNet v1，并且以40%的更少的FLOPs超过ResNet-50。</p>
+<p>对于非常深的ShuffleNet v2(例如超过100层)，为了使训练更快地收敛，作者通过添加一个残差路径(详见附录)来稍微修改基本的ShuffleNet v2单元。表6给出了一个包含164层的ShuffleNet v2模型，其中包含SE[8]组件(详见附录图2)。与以前的最先进的型号[8]相比，它在更少的 FLOPs 下获得了更高的精度。</p>
 <p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/ShuffleNetV2/tab6.jpg?x-oss-process=style/blog_img" alt="ShuffleNetV2%2Ftab6.jpg"></div></p>
 <p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/ShuffleNetV2/Atab2.jpg?x-oss-process=style/blog_img" alt="ShuffleNetV2%2FAtab2.jpg"></div></p>
-<h2 id="目标检测"><a href="#目标检测" class="headerlink" title="目标检测"></a>目标检测</h2><p>为了评估目标检测的泛化能力，我们还测试了COCO目标检测[38]任务。我们使用最先进的轻型检测: Light-Head RCNN[34] 作为我们的框架，并遵循相同的 training 和 testing 策略。只替换骨干网络。模型在ImageNet上进行预处理，然后对检测任务进行细化。除了minival set中的5000张图片外，我们使用COCO中的train+val set进行训练，并使用minival set进行测试。精度指标为COCO标准mmAP，即在box IoU阈值0.5到0.95之间的平均 mAPs。</p>
+<h2 id="目标检测"><a href="#目标检测" class="headerlink" title="目标检测"></a>目标检测</h2><p>为了评估目标检测的泛化能力，作者还测试了COCO目标检测[38]任务。作者使用最先进的轻型检测: Light-Head RCNN[34] 作为作者的框架，并遵循相同的 training 和 testing 策略。只替换骨干网络。模型在ImageNet上进行预处理，然后对检测任务进行细化。除了minival set中的5000张图片外，作者使用COCO中的train+val set进行训练，并使用minival set进行测试。精度指标为COCO标准mmAP，即在box IoU阈值0.5到0.95之间的平均 mAPs。</p>
 <p>将ShuffleNet v2与其他三个轻量级模型:Xception[12,34]、ShuffleNet v1[15]和MobileNet v2[14]在四个复杂级别上进行比较。表7中的结果显示ShuffleNet v2的性能最好。</p>
 <p><div style="width: 600px; margin: auto"><img src="http://zerozone-blog.oss-cn-beijing.aliyuncs.com/ShuffleNetV2/tab7.jpg?x-oss-process=style/blog_img" alt="ShuffleNetV2%2Ftab7.jpg"></div></p>
-<p>将检测结果(表7)与分类结果(表8)进行比较，有趣的是，在分类时，准确率等级为ShuffleNet v2≥MobileNet v2 &gt; ShuffeNet v1 &gt; Xception，而在检测时，准确率等级变为ShuffleNet v2 &gt; Xception≥ShuffleNet v1≥MobileNet v2。这说明，Xception在检测任务上表现良好。这可能是由于Xception构建块的感受野大于其他构建块(7 vs. 3)。受此启发，我们还通过在每个构建块的第一个点卷积之前引入额外的3×3深度卷积，来扩大ShuffleNet v2的接受域。这个变体表示为ShuffleNet v2*。在只增加少数额外的 FLOPs 情况，它可以进一步提高准确性。</p>
-<p>我们还在GPU上测试运行时。为了公平比较，批处理大小被设置为4，以确保GPU的充分利用。由于数据复制(分辨率高达800×1200)等检测专用操作(如PSRoI池[34])的开销，不同模型之间的速度差距小于分类。尽管如此，ShuffleNet v2的性能仍然优于其他软件，例如，它比ShuffleNet v1快40%左右，比MobileNet v2快16%。</p>
-<p>此外，变体ShuffleNet v2<em>具有最好的精度，仍然比其他方法更快。这引发了一个实际的问题:<em>*如何增加接受域的大小?这对于高分辨率图像[39]中的目标检测至关重要。</em></em> 我们以后会研究这个话题。</p>
-<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>我们提出了网络架构设计应考虑速度等直接指标，而不是FLOPs等间接指标。同时还提出了实用的指导方针和一个新的架构，ShuffleNet v2。综合实验验证了该模型的有效性。我们希望这项工作能够启发未来的网络架构设计工作，使其更具有平台意识和实用性.</p>
+<p>将检测结果(表7)与分类结果(表8)进行比较，有趣的是，在分类时，准确率等级为ShuffleNet v2≥MobileNet v2 &gt; ShuffeNet v1 &gt; Xception，而在检测时，准确率等级变为ShuffleNet v2 &gt; Xception≥ShuffleNet v1≥MobileNet v2。这说明，Xception在检测任务上表现良好。这可能是由于Xception构建块的感受野大于其他构建块(7 vs. 3)。受此启发，作者还通过在每个构建块的第一个点卷积之前引入额外的3×3深度卷积，来扩大ShuffleNet v2的接受域。这个变体表示为ShuffleNet v2*。在只增加少数额外的 FLOPs 情况，它可以进一步提高准确性。</p>
+<p>作者还在GPU上测试运行时。为了公平比较，批处理大小被设置为4，以确保GPU的充分利用。由于数据复制(分辨率高达800×1200)等检测专用操作(如PSRoI池[34])的开销，不同模型之间的速度差距小于分类。尽管如此，ShuffleNet v2的性能仍然优于其他软件，例如，它比ShuffleNet v1快40%左右，比MobileNet v2快16%。</p>
+<p>此外，变体ShuffleNet v2<em>具有最好的精度，仍然比其他方法更快。这引发了一个实际的问题:<em>*如何增加接受域的大小?这对于高分辨率图像[39]中的目标检测至关重要。</em></em> 作者以后会研究这个话题。</p>
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>作者提出了网络架构设计应考虑速度等直接指标，而不是FLOPs等间接指标。同时还提出了实用的指导方针和一个新的架构，ShuffleNet v2。综合实验验证了该模型的有效性。作者希望这项工作能够启发未来的网络架构设计工作，使其更具有平台意识和实用性.</p>
 
       
     </div>
@@ -1052,7 +1052,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">51:34</span>
+    <span title="站点阅读时长">51:41</span>
   
 </div>
 
